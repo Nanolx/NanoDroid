@@ -1,6 +1,6 @@
 set_progress(0.0);
 ui_print(" ");
-ui_print("NanoMod 20161204");
+ui_print("NanoMod 20161211");
 ui_print(" ");
 set_progress(0.1);
 
@@ -14,6 +14,7 @@ run_program("/sbin/mount", "/cache");
 
 package_extract_file("nano.sh", "/tmp/nano.sh");
 set_metadata("/tmp/nano.sh", "uid", 0, "gid", 0, "mode", 0777);
+run_program("/tmp/nano.sh", "mkdir");
 
 set_progress(0.2);
 ui_print("> Installing Optimus Kernel");
@@ -143,6 +144,8 @@ ui_print("> Unmounting Partitions");
 unmount("/system");
 unmount("/data");
 unmount("/cache");
+
+run_program("/tmp/nano.sh", "rmdir");
 
 ui_print("> Done!");
 set_progress(1.0);
