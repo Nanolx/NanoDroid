@@ -2,15 +2,15 @@ set_progress(0.0);
 ui_print(" ");
 ui_print("NanoMod 20161211");
 ui_print(" ");
+ui_print("+++ Lux +++");
+ui_print(" ");
 set_progress(0.1);
 
 ui_print("> Mounting Partitions");
-ifelse(is_mounted("/system") == "/system", unmount("/system"));
-ifelse(is_mounted("/cache") == "/cache", unmount("/cache"));
-ifelse(is_mounted("/data") == "/data", unmount("/data"));
-run_program("/sbin/mount", "/system");
-run_program("/sbin/mount", "/data");
-run_program("/sbin/mount", "/cache");
+
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
 
 package_extract_file("nano.sh", "/tmp/nano.sh");
 set_metadata("/tmp/nano.sh", "uid", 0, "gid", 0, "mode", 0777);
@@ -22,12 +22,9 @@ package_extract_file("Optimus.zip", "/tmp/optimus/optimus.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/optimus/optimus.zip", "META-INF/com/google/android/*", "-d", "/tmp/optimus");
 run_program("/sbin/busybox", "sh", "/tmp/optimus/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/optimus/optimus.zip");
 
-ifelse(is_mounted("/system") == "/system", unmount("/system"));
-ifelse(is_mounted("/cache") == "/cache", unmount("/cache"));
-ifelse(is_mounted("/data") == "/data", unmount("/data"));
-run_program("/sbin/mount", "/system");
-run_program("/sbin/mount", "/data");
-run_program("/sbin/mount", "/cache");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
 
 set_progress(0.3);
 ui_print("> Installing microG");
@@ -42,12 +39,9 @@ package_extract_file("bash.zip", "/tmp/bash/bash.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/bash/bash.zip", "META-INF/com/google/android/*", "-d", "/tmp/bash");
 run_program("/sbin/busybox", "sh", "/tmp/bash/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/bash/bash.zip");
 
-ifelse(is_mounted("/system") == "/system", unmount("/system"));
-ifelse(is_mounted("/cache") == "/cache", unmount("/cache"));
-ifelse(is_mounted("/data") == "/data", unmount("/data"));
-run_program("/sbin/mount", "/system");
-run_program("/sbin/mount", "/data");
-run_program("/sbin/mount", "/cache");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
 
 set_progress(0.5);
 ui_print("> Debloating System");
@@ -96,54 +90,42 @@ package_extract_file("Magisk.zip", "/tmp/magisk/magisk.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
 run_program("/sbin/busybox", "sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");
 
-ifelse(is_mounted("/system") == "/system", unmount("/system"));
-ifelse(is_mounted("/cache") == "/cache", unmount("/cache"));
-ifelse(is_mounted("/data") == "/data", unmount("/data"));
-run_program("/sbin/mount", "/system");
-run_program("/sbin/mount", "/data");
-run_program("/sbin/mount", "/cache");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
 
 ui_print("> Installing PHH SuperUser");
 package_extract_file("phh.zip", "/tmp/phh/phh.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/phh/phh.zip", "META-INF/com/google/android/*", "-d", "/tmp/phh");
 run_program("/sbin/busybox", "sh", "/tmp/phh/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/phh/phh.zip");
 
-ifelse(is_mounted("/system") == "/system", unmount("/system"));
-ifelse(is_mounted("/cache") == "/cache", unmount("/cache"));
-ifelse(is_mounted("/data") == "/data", unmount("/data"));
-run_program("/sbin/mount", "/system");
-run_program("/sbin/mount", "/data");
-run_program("/sbin/mount", "/cache");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
 
 ui_print("> Installing Nano-Init");
 package_extract_file("nano-init.zip", "/tmp/nano-init/nano-init.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/nano-init/nano-init.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-init");
 run_program("/sbin/busybox", "sh", "/tmp/nano-init/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-init/nano-init.zip");
 
-ifelse(is_mounted("/system") == "/system", unmount("/system"));
-ifelse(is_mounted("/cache") == "/cache", unmount("/cache"));
-ifelse(is_mounted("/data") == "/data", unmount("/data"));
-run_program("/sbin/mount", "/system");
-run_program("/sbin/mount", "/data");
-run_program("/sbin/mount", "/cache");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
 
 ui_print("> Installing Nano-Miitomo");
 package_extract_file("nano-miitomo.zip", "/tmp/nano-miitomo/nano-miitomo.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/nano-miitomo/nano-miitomo.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-miitomo");
-run_program("/sbin/busybox", "sh", "/tmp/nano-miitomo/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-init/nano-miitomo.zip");
+run_program("/sbin/busybox", "sh", "/tmp/nano-miitomo/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-miitomo/nano-miitomo.zip");
 
-ifelse(is_mounted("/system") == "/system", unmount("/system"));
-ifelse(is_mounted("/cache") == "/cache", unmount("/cache"));
-ifelse(is_mounted("/data") == "/data", unmount("/data"));
-run_program("/sbin/mount", "/system");
-run_program("/sbin/mount", "/data");
-run_program("/sbin/mount", "/cache");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
 
 set_progress(0.9);
 ui_print("> Unmounting Partitions");
-unmount("/system");
-unmount("/data");
-unmount("/cache");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
+run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
 
 run_program("/tmp/nano.sh", "rmdir");
 

@@ -36,6 +36,7 @@ mount_image() {
         fi
         if (is_mounted $2); then
           ui_print "- Mounting $1 to $2"
+          echo "$LOOPDEVICE" > /tmp/loopdevice
           break;
         fi
       fi
