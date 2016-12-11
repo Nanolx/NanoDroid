@@ -17,33 +17,13 @@ set_metadata("/tmp/nano.sh", "uid", 0, "gid", 0, "mode", 0777);
 run_program("/tmp/nano.sh", "mkdir");
 
 set_progress(0.2);
-ui_print("> Installing Optimus Kernel");
-package_extract_file("Optimus.zip", "/tmp/optimus/optimus.zip");
-run_program("/sbin/busybox", "unzip", "/tmp/optimus/optimus.zip", "META-INF/com/google/android/*", "-d", "/tmp/optimus");
-run_program("/sbin/busybox", "sh", "/tmp/optimus/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/optimus/optimus.zip");
-
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
-
-set_progress(0.3);
 ui_print("> Installing microG");
 package_extract_dir("microG", "/system");
 
 ui_print("> Installing Play Store");
 package_extract_dir("PlayStore", "/system");
 
-set_progress(0.4);
-ui_print("> Installing GNU Bash");
-package_extract_file("bash.zip", "/tmp/bash/bash.zip");
-run_program("/sbin/busybox", "unzip", "/tmp/bash/bash.zip", "META-INF/com/google/android/*", "-d", "/tmp/bash");
-run_program("/sbin/busybox", "sh", "/tmp/bash/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/bash/bash.zip");
-
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
-
-set_progress(0.5);
+set_progress(0.3);
 ui_print("> Debloating System");
 delete_recursive("/system/app/BasicDreams");
 delete_recursive("/system/app/CMFileManager");
@@ -68,7 +48,7 @@ delete_recursive("/system/priv-app/Screencast");
 delete_recursive("/system/priv-app/Snap");
 delete_recursive("/system/priv-app/Tag");
 
-set_progress(0.6);
+set_progress(0.4);
 ui_print("> Installing Apps and Sounds");
 package_extract_dir("system", "/system");
 package_extract_dir("userapps/com.termux", "/data/app/com.termux");
@@ -84,48 +64,33 @@ ui_print("> Removing stock SuperUser");
 delete("/system/bin/su");
 delete("/system/xbin/su");
 
+set_progress(0.6);
+ui_print("> Installing Optimus Kernel");
+package_extract_file("Optimus.zip", "/tmp/optimus/optimus.zip");
+run_program("/sbin/busybox", "unzip", "/tmp/optimus/optimus.zip", "META-INF/com/google/android/*", "-d", "/tmp/optimus");
+run_program("/sbin/busybox", "sh", "/tmp/optimus/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/optimus/optimus.zip");
+
+
 set_progress(0.7);
 ui_print("> Installing Magisk");
 package_extract_file("Magisk.zip", "/tmp/magisk/magisk.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
 run_program("/sbin/busybox", "sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");
 
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
-
 ui_print("> Installing PHH SuperUser");
 package_extract_file("phh.zip", "/tmp/phh/phh.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/phh/phh.zip", "META-INF/com/google/android/*", "-d", "/tmp/phh");
 run_program("/sbin/busybox", "sh", "/tmp/phh/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/phh/phh.zip");
-
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
 
 ui_print("> Installing Nano-Init");
 package_extract_file("nano-init.zip", "/tmp/nano-init/nano-init.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/nano-init/nano-init.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-init");
 run_program("/sbin/busybox", "sh", "/tmp/nano-init/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-init/nano-init.zip");
 
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
-
 ui_print("> Installing Nano-Miitomo");
 package_extract_file("nano-miitomo.zip", "/tmp/nano-miitomo/nano-miitomo.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/nano-miitomo/nano-miitomo.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-miitomo");
 run_program("/sbin/busybox", "sh", "/tmp/nano-miitomo/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-miitomo/nano-miitomo.zip");
-
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
-
-set_progress(0.9);
-ui_print("> Unmounting Partitions");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
 
 run_program("/tmp/nano.sh", "rmdir");
 
