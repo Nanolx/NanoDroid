@@ -16,6 +16,19 @@ package_extract_file("nano.sh", "/tmp/nano.sh");
 set_metadata("/tmp/nano.sh", "uid", 0, "gid", 0, "mode", 0777);
 
 set_progress(0.2);
+ui_print("> Installing Optimus Kernel");
+package_extract_file("Optimus.zip", "/tmp/optimus/optimus.zip");
+run_program("/sbin/busybox", "unzip", "/tmp/optimus/optimus.zip", "META-INF/com/google/android/*", "-d", "/tmp/optimus");
+run_program("/sbin/busybox", "sh", "/tmp/optimus/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/optimus/optimus.zip");
+
+ifelse(is_mounted("/system") == "/system", unmount("/system"));
+ifelse(is_mounted("/cache") == "/cache", unmount("/cache"));
+ifelse(is_mounted("/data") == "/data", unmount("/data"));
+run_program("/sbin/mount", "/system");
+run_program("/sbin/mount", "/data");
+run_program("/sbin/mount", "/cache");
+
+set_progress(0.3);
 ui_print("> Installing microG");
 package_extract_dir("microG", "/system");
 
@@ -23,6 +36,19 @@ ui_print("> Installing Play Store");
 package_extract_dir("PlayStore", "/system");
 
 set_progress(0.4);
+ui_print("> Installing GNU Bash");
+package_extract_file("bash.zip", "/tmp/bash/bash.zip");
+run_program("/sbin/busybox", "unzip", "/tmp/bash/bash.zip", "META-INF/com/google/android/*", "-d", "/tmp/bash");
+run_program("/sbin/busybox", "sh", "/tmp/bash/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/bash/bash.zip");
+
+ifelse(is_mounted("/system") == "/system", unmount("/system"));
+ifelse(is_mounted("/cache") == "/cache", unmount("/cache"));
+ifelse(is_mounted("/data") == "/data", unmount("/data"));
+run_program("/sbin/mount", "/system");
+run_program("/sbin/mount", "/data");
+run_program("/sbin/mount", "/cache");
+
+set_progress(0.5);
 ui_print("> Debloating System");
 delete_recursive("/system/app/BasicDreams");
 delete_recursive("/system/app/CMFileManager");
@@ -35,9 +61,14 @@ delete_recursive("/system/app/PacProcessor");
 delete_recursive("/system/app/PhotoTable");
 delete_recursive("/system/app/PicoTts");
 delete_recursive("/system/app/SoundRecorder");
+delete_recursive("/system/app/LatinIME");
+delete_recursive("/system/app/NexusLauncher");
 delete_recursive("/system/app/messaging");
+delete_recursive("/system/app/Wallpaper");
+delete_recursive("/system/app/WallpaperBackup");
 delete_recursive("/system/priv-app/FMRadio");
 delete_recursive("/system/priv-app/Gallery2");
+delete_recursive("/system/priv-app/OmniSwitch");
 delete_recursive("/system/priv-app/Screencast");
 delete_recursive("/system/priv-app/Snap");
 delete_recursive("/system/priv-app/Tag");
