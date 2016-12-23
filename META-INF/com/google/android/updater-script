@@ -1,6 +1,6 @@
 set_progress(0.0);
 ui_print(" ");
-ui_print("NanoMod 20161211");
+ui_print("NanoMod 20161221");
 ui_print(" ");
 ui_print("+++ Lux +++");
 ui_print(" ");
@@ -77,10 +77,10 @@ package_extract_file("Magisk.zip", "/tmp/magisk/magisk.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
 run_program("/sbin/busybox", "sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");
 
-ui_print("> Installing PHH SuperUser");
-package_extract_file("phh.zip", "/tmp/phh/phh.zip");
-run_program("/sbin/busybox", "unzip", "/tmp/phh/phh.zip", "META-INF/com/google/android/*", "-d", "/tmp/phh");
-run_program("/sbin/busybox", "sh", "/tmp/phh/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/phh/phh.zip");
+#ui_print("> Installing PHH SuperUser");
+#package_extract_file("phh.zip", "/tmp/phh/phh.zip");
+#run_program("/sbin/busybox", "unzip", "/tmp/phh/phh.zip", "META-INF/com/google/android/*", "-d", "/tmp/phh");
+#run_program("/sbin/busybox", "sh", "/tmp/phh/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/phh/phh.zip");
 
 ui_print("> Installing Nano-Init");
 package_extract_file("nano-init.zip", "/tmp/nano-init/nano-init.zip");
