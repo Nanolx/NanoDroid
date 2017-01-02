@@ -41,6 +41,7 @@ delete_recursive("/system/app/NexusLauncher");
 delete_recursive("/system/app/messaging");
 delete_recursive("/system/app/Wallpaper");
 delete_recursive("/system/app/WallpaperBackup");
+delete_recursive("/system/priv-app/mGerrit");
 delete_recursive("/system/priv-app/FMRadio");
 delete_recursive("/system/priv-app/Gallery2");
 delete_recursive("/system/priv-app/OmniSwitch");
@@ -65,10 +66,10 @@ delete("/system/bin/su");
 delete("/system/xbin/su");
 
 set_progress(0.6);
-ui_print("> Installing Squid Kernel");
-package_extract_file("Squid.zip", "/tmp/squid/squid.zip");
-run_program("/sbin/busybox", "unzip", "/tmp/squid/squid.zip", "META-INF/com/google/android/*", "-d", "/tmp/squid");
-run_program("/sbin/busybox", "sh", "/tmp/squid/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/squid/squid.zip");
+ui_print("> Installing Optimus Kernel");
+package_extract_file("Optimus.zip", "/tmp/optimus/optimus.zip");
+run_program("/sbin/busybox", "unzip", "/tmp/optimus/optimus.zip", "META-INF/com/google/android/*", "-d", "/tmp/optimus");
+run_program("/sbin/busybox", "sh", "/tmp/optimus/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/optimus/optimus.zip");
 
 set_progress(0.7);
 ui_print("> Installing Magisk");
