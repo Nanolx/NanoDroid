@@ -1,6 +1,6 @@
 set_progress(0.0);
 ui_print(" ");
-ui_print("NanoMod 20161221");
+ui_print("NanoMod 20170102");
 ui_print(" ");
 ui_print("+++ Lux +++");
 ui_print(" ");
