@@ -87,6 +87,11 @@ package_extract_file("nano-miitomo.zip", "/tmp/nano-miitomo/nano-miitomo.zip");
 run_program("/sbin/busybox", "unzip", "/tmp/nano-miitomo/nano-miitomo.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-miitomo");
 run_program("/sbin/busybox", "sh", "/tmp/nano-miitomo/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-miitomo/nano-miitomo.zip");
 
+ui_print("> Installing Nano-Selinux-Enforce");
+package_extract_file("nano-selinux-enforce.zip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip");
+run_program("/sbin/busybox", "unzip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-selinux-enforce");
+run_program("/sbin/busybox", "sh", "/tmp/nano-selinux-enforce/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip");
+
 run_program("/tmp/nano.sh", "rmdir");
 
 ui_print("> Done!");

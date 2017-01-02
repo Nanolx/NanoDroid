@@ -59,16 +59,14 @@ elif [[ ${1} == dataperms ]]; then
 	find /data/app -type d | xargs chmod 0771
 elif [[ ${1} == mkdir ]]; then
 	mkdir /tmp/magisk
-	mkdir /tmp/phh
 	mkdir /tmp/nano-init
 	mkdir /tmp/nano-miitomo
+	mkdir /tmp/nano-selinux-enfoce
 	mkdir /tmp/optimus
-	mkdir /tmp/bash
 elif [[ ${1} == rmdir ]]; then
 	rm -rf /tmp/magisk
-	rm -rf /tmp/phh
 	rm -rf /tmp/nano-init
 	rm -rf /tmp/nano-miitomo
+	rm -rf /tmp/nano-selinux-enfoce
 	rm -rf /tmp/optimus
-	rm -rf /tmp/bash
 fi
