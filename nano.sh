@@ -61,12 +61,12 @@ elif [[ ${1} == mkdir ]]; then
 	mkdir /tmp/magisk
 	mkdir /tmp/nano-init
 	mkdir /tmp/nano-miitomo
-	mkdir /tmp/nano-selinux-enfoce
+	mkdir /tmp/nano-selinux-enforce
 	mkdir /tmp/optimus
 elif [[ ${1} == rmdir ]]; then
 	rm -rf /tmp/magisk
 	rm -rf /tmp/nano-init
 	rm -rf /tmp/nano-miitomo
-	rm -rf /tmp/nano-selinux-enfoce
+	rm -rf /tmp/nano-selinux-enforce
 	rm -rf /tmp/optimus
 fi
