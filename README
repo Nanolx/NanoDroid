@@ -117,6 +117,7 @@ The following The Legend of Zelda tunes will be installed:
 Installation
 ============
 
+* create zip file from this repository and copy on your device
 * perform full wipe
 * install desired ROM (make sure it does NOT include GApps!)
 * install desired Kernel (if any)
@@ -154,8 +155,8 @@ you'll now notice a new 'Magisk Hide' settings tab. In this tab
 you can select any application root should be hidden for. No reboot
 is required for this to take effect.
 
-Note: don' select too many apps (10+), else Magisk Hide may be slow,
-to actually hide root before the application checks for it.
+Note: don't select too many apps (10+), else Magisk Hide may be too
+slow to actually hide root before the application checks for it.
 
 FAQ
 ===
