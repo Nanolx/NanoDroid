@@ -34,7 +34,6 @@ delete_recursive("/system/app/PacProcessor");
 delete_recursive("/system/app/PhotoTable");
 delete_recursive("/system/app/PicoTts");
 delete_recursive("/system/app/SoundRecorder");
-delete_recursive("/system/app/LatinIME");
 delete_recursive("/system/app/NexusLauncher");
 delete_recursive("/system/app/messaging");
 delete_recursive("/system/app/Wallpaper");
