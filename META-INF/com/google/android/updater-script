@@ -1,8 +1,6 @@
 set_progress(0.0);
 ui_print(" ");
-ui_print("NanoMod 20170102");
-ui_print(" ");
-ui_print("+++ Lux +++");
+ui_print("NanoMod 20170103");
 ui_print(" ");
 set_progress(0.1);
 
@@ -64,12 +62,6 @@ run_program("/tmp/nano.sh", "dataperms");
 ui_print("> Removing stock SuperUser");
 delete("/system/bin/su");
 delete("/system/xbin/su");
-
-set_progress(0.6);
-ui_print("> Installing Optimus Kernel");
-package_extract_file("Optimus.zip", "/tmp/optimus/optimus.zip");
-run_program("/sbin/busybox", "unzip", "/tmp/optimus/optimus.zip", "META-INF/com/google/android/*", "-d", "/tmp/optimus");
-run_program("/sbin/busybox", "sh", "/tmp/optimus/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/optimus/optimus.zip");
 
 set_progress(0.7);
 ui_print("> Installing Magisk");
