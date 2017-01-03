@@ -1,0 +1,170 @@
+NanoMod
+=======
+
+NanoMod makes several modifications to your ROM:
+
+* debloat ROM and remove stock CM su binary
+* install microG and Play Store
+  for more information on microG visit: http://www.microg.org
+* install F-Droid and many OpenSource applications
+  for more information on F-Droid visit: http://www.fdroid.org
+* install The Legend of Zelda tunes
+* install Magisk and companion modules
+  for more information on Magisk visit: https://forum.xda-developers.com/apps/magisk
+* install GNU Bash Shell
+
+Details
+=======
+
+The following applications are removed from ROM (note: many
+will be replaced by OSS applications):
+
+* Basic Dreams
+* CM File Manager
+* Eleven (Audio Player)
+* E-Mail
+* Exchange2
+* Browser, Gello (Browser)
+* Pac Processor
+* PhotoTable
+* PicoTts
+* Sound Recorder
+* Nexus Launcher
+* messaging (SMS & MMS)
+* Wallpaper (Google Wallpaper application)
+* Wallpaper Backup
+* mGerrit
+* FM Radio
+* Gallery2
+* OmniSwitch
+* Screencast
+* Snap
+* Tag
+
+CyanogenMod su binary will be removed:
+
+* /system/bin/su
+* /system/xbin/su
+
+The following system applications will be installed:
+
+* AdAway
+* Amaze (File Manager)
+* Face Slim (Facebook client)
+* F-Droid
+* Hacker's Keyboard
+* K9-Mail
+* Kernel-Adiutor
+* LeafPic (Gallery)
+* Lightning (Browser)
+* Magisk Manager
+* New Pipe (YouTube client)
+* Open Camera
+* QK SMS
+* SuperUser
+* Twidere (Twitter client)
+
+The following user applications will be installed:
+
+* Termux
+* XDA Labs
+* VLC (Audio/Video Player)
+
+The following Magisk Modules will be installed:
+
+* Nano-Init (a few init scripts)
+* Nano-Miitomo (prevents Miitomo crashes on Custom ROMs)
+* Nano-Selinux-Enforce (enforces Selinux, aids in passing SafetyNet)
+
+The following The Legend of Zelda tunes will be installed:
+
+::Notification sounds
+
+* Flute
+* Gold Bug Catch
+* Hey Listen
+* Intro
+* Midna Alert
+* Secret
+* Start
+* Vessel
+
+::Ringtones
+
+* Bolero of Fire
+* Gerudo Valley
+* House Remix (original title theme)
+* Lost Woods Dubstep
+* Lost Woods
+* Market Theme
+* Minuet of Forest
+* Nocturne of Shadows
+* Prelude of Light
+* Requiem of Spirits
+* Sarias Song
+* Serenade of Water
+* Shadow World
+* Song of Storms
+* Song of Time
+
+::User Interface Sounds
+
+* Effect_Tick (sound when pressing something)
+* Lock
+* LowBattery
+* Unlock
+
+Installation
+============
+
+* perform full wipe
+* install desired ROM (make sure it does NOT include GApps!)
+* install desired Kernel (if any)
+* install NanoMod
+* in TWRP mount system partition
+  - get Tingle from https://github.com/ale5000-git/tingle
+  - execute Tingle and choose ADB as source for framework
+  - Tingle will now patch your framework.jar in order for
+    microG to work
+* reboot into system
+* go into 'microG settings' and set up everything, check results
+  in 'self check' lists, once done, reboot
+* go to playstore, setup account as usual and install yer apps
+
+Root not working
+================
+
+Open the Super User app once and take the quick guide. It may
+*sometimes* happen, that the root prompt won't show up otherwise.
+
+SafetyNet
+=========
+
+To pass SafetyNet enable Magisk Hide in Magisk Settings. The
+Nano-Selinux-Enforce module ensures selinux is enforcing, else
+your device will not pass SafetyNet regardless of Magisk Hide.
+
+After enabling Magisk Hide reboot.
+
+Hiding Root from Apps
+=====================
+
+After enabling Magisk Hide and reboot go to Magisk Manager again,
+you'll now notice a new 'Magisk Hide' settings tab. In this tab
+you can select any application root should be hidden for. No reboot
+is required for this to take effect.
+
+Note: don' select too many apps (10+), else Magisk Hide may be slow,
+to actually hide root before the application checks for it.
+
+FAQ
+===
+
+Q: will there be a GApps version, instead of microG?
+A: no.
+
+Q: will there be an AROMA version?
+A: eventually, no ETA, though.
+
+Q: will there be support for x86?
+A: x86 support is not planned currently.
