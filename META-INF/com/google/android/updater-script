@@ -45,6 +45,7 @@ delete_recursive("/system/priv-app/OmniSwitch");
 delete_recursive("/system/priv-app/Screencast");
 delete_recursive("/system/priv-app/Snap");
 delete_recursive("/system/priv-app/Tag");
+delete_recursive("/system/priv-app/SnapdragonCamera")
 
 set_progress(0.4);
 ui_print("> Installing Apps and Sounds");
@@ -54,19 +55,19 @@ package_extract_dir("userapps/com.xda.labs", "/data/app/com.xda.labs");
 
 # vlc has separate builds for arm and arm64!
 if getprop("ro.product.cpu.abi") == "armeabi" then
-	package_extract_dir("userapps/org.videolan.vlc.arm", "/data/app/org.videolan.vlc");
+	package_extract_dir("userapps/org.videolan.vlc-arm", "/data/app/org.videolan.vlc");
 endif;
 
 if getprop("ro.product.cpu.abi") == "armeabi-v7a" then
-	package_extract_dir("userapps/org.videolan.vlc.arm", "/data/app/org.videolan.vlc");
+	package_extract_dir("userapps/org.videolan.vlc-arm", "/data/app/org.videolan.vlc");
 endif;
 
 if getprop("ro.product.cpu.abi") == "arm64" then
-	package_extract_dir("userapps/org.videolan.vlc.arm64", "/data/app/org.videolan.vlc");
+	package_extract_dir("userapps/org.videolan.vlc-arm64", "/data/app/org.videolan.vlc");
 endif;
 
 if getprop("ro.product.cpu.abi") == "arm64-v8a" then
-	package_extract_dir("userapps/org.videolan.vlc.arm64", "/data/app/org.videolan.vlc");
+	package_extract_dir("userapps/org.videolan.vlc-arm64", "/data/app/org.videolan.vlc");
 endif;
 
 ui_print("> Setting permissions");
