@@ -45,7 +45,7 @@ delete_recursive("/system/priv-app/OmniSwitch");
 delete_recursive("/system/priv-app/Screencast");
 delete_recursive("/system/priv-app/Snap");
 delete_recursive("/system/priv-app/Tag");
-delete_recursive("/system/priv-app/SnapdragonCamera")
+delete_recursive("/system/priv-app/SnapdragonCamera");
 
 set_progress(0.4);
 ui_print("> Installing Apps and Sounds");
