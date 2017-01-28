@@ -38,6 +38,8 @@ delete_recursive("/system/app/NexusLauncher");
 delete_recursive("/system/app/messaging");
 delete_recursive("/system/app/Wallpaper");
 delete_recursive("/system/app/WallpaperBackup");
+delete_recursive("/system/app/Slimperience");
+delete_recursive("/system/app/WallpaperPickerGoogle");
 delete_recursive("/system/priv-app/mGerrit");
 delete_recursive("/system/priv-app/FMRadio");
 delete_recursive("/system/priv-app/Gallery2");
