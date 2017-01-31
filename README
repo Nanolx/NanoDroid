@@ -63,9 +63,12 @@ The following system applications will be installed:
 * Odyssey (Audio player)
 * Open Camera
 * QK SMS
+* Substratum (App and Compiler)¹
 * SuperUser
 * Twidere (Twitter client)
 * Yahoo Weather Provider
+
+¹ will run in legacy mode on non-OMS ROMs
 
 The following user applications will be installed:
 
