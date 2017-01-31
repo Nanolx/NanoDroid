@@ -6,9 +6,9 @@ set_progress(0.1);
 
 ui_print("> Mounting Partitions");
 
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/system", "/system");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/userdata", "/data");
-run_program("/sbin/mount", "/dev/block/platform/soc.0/by-name/cache", "/cache");
+run_program("/sbin/mount", "/system");
+run_program("/sbin/mount", "/data");
+run_program("/sbin/mount", "/cache");
 
 package_extract_file("nano.sh", "/tmp/nano.sh");
 set_metadata("/tmp/nano.sh", "uid", 0, "gid", 0, "mode", 0777);
@@ -84,23 +84,23 @@ delete("/system/xbin/su");
 set_progress(0.7);
 ui_print("> Installing Magisk");
 package_extract_file("Magisk.zip", "/tmp/magisk/magisk.zip");
-run_program("/sbin/busybox", "unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
-run_program("/sbin/busybox", "sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");
+run_program("/sbin/unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
+run_program("/sbin/sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");
 
 ui_print("> Installing Nano-Init");
 package_extract_file("nano-init.zip", "/tmp/nano-init/nano-init.zip");
-run_program("/sbin/busybox", "unzip", "/tmp/nano-init/nano-init.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-init");
-run_program("/sbin/busybox", "sh", "/tmp/nano-init/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-init/nano-init.zip");
+run_program("/sbin/unzip", "/tmp/nano-init/nano-init.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-init");
+run_program("/sbin/sh", "/tmp/nano-init/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-init/nano-init.zip");
 
 ui_print("> Installing Nano-Miitomo");
 package_extract_file("nano-miitomo.zip", "/tmp/nano-miitomo/nano-miitomo.zip");
-run_program("/sbin/busybox", "unzip", "/tmp/nano-miitomo/nano-miitomo.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-miitomo");
-run_program("/sbin/busybox", "sh", "/tmp/nano-miitomo/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-miitomo/nano-miitomo.zip");
+run_program("/sbin/unzip", "/tmp/nano-miitomo/nano-miitomo.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-miitomo");
+run_program("/sbin/sh", "/tmp/nano-miitomo/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-miitomo/nano-miitomo.zip");
 
 ui_print("> Installing Nano-Selinux-Enforce");
 package_extract_file("nano-selinux-enforce.zip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip");
-run_program("/sbin/busybox", "unzip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-selinux-enforce");
-run_program("/sbin/busybox", "sh", "/tmp/nano-selinux-enforce/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip");
+run_program("/sbin/unzip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-selinux-enforce");
+run_program("/sbin/sh", "/tmp/nano-selinux-enforce/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip");
 
 run_program("/tmp/nano.sh", "rmdir");
 
