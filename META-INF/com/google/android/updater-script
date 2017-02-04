@@ -78,7 +78,7 @@ endif;
 if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.7") == "1" then
 	ui_print(" << SoundRecorder");
 	delete_recursive("/system/app/SoundRecorder");
-	delete_recursive("/system/app/Recorder");
+	delete_recursive("/system/priv-app/Recorder");
 endif;
 
 if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.8") == "1" then
