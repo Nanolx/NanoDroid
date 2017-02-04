@@ -365,7 +365,7 @@ run_program("/sbin/umount", "/cache");
 
 ui_print(" <>>  <<>");
 ui_print("< Installation is completed! >");
-ui_print("< Thanks for using NanoMod   >");
+ui_print("< Thanks for using NanoMod >");
 ui_print(" <<>  <>>");
 
 set_progress(1.0);

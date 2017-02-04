@@ -71,7 +71,7 @@ checkbox(
 	"icons/personalize",
 	"debloat.prop",
 
-	"Select Custom ROM apps to remove (replacements are provided in next step)", "", 2, #-- Group 1
+	"Select Custom ROM apps to remove (replacements are provided)", "", 2, #-- Group 1
 	"Basic Dreams",		"Basic Dreams Screensaver",		1,
 	"CM File Manager",	"Cyanogen Filemanager",			1,
 	"Eleven",		"Audio Player",				1,
