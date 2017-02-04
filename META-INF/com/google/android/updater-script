@@ -334,6 +334,8 @@ endif;
 ##############################
 
 set_progress(0.9);
+run_program("/sbin/mount", "/system");
+
 if file_getprop("/tmp/aroma-data/features.prop", "item.1.1") == "1" then
 	ui_print("> Installing GNU Bash");
 	package_extract_dir("bash", "/system");
