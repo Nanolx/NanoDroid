@@ -3,6 +3,7 @@ NanoMod
 
 NanoMod makes several modifications to your ROM:
 
+* user-friendly AROMA installer
 * debloat ROM and remove stock CM su binary
 * install microG and Play Store
   for more information on microG visit: http://www.microg.org
@@ -12,12 +13,12 @@ NanoMod makes several modifications to your ROM:
 * install Magisk and companion modules
   for more information on Magisk visit: https://forum.xda-developers.com/apps/magisk
 * install GNU Bash Shell
+* install GNU Nano Shell Editor
 
 Details
 =======
 
-The following applications are removed from ROM (note: many
-will be replaced by (other) OSS applications):
+The following applications can be choosen to be removed:
 
 * Basic Dreams
 * CM File Manager
@@ -25,10 +26,8 @@ will be replaced by (other) OSS applications):
 * E-Mail
 * Exchange2
 * Browser, Gello,Slimperience (Browser)
-* Pac Processor
 * PhotoTable
-* PicoTts
-* Sound Recorder
+* Sound Recorder, Recorder
 * Nexus Launcher
 * messaging (SMS & MMS)
 * Wallpaper, WallpaperPickerGoogle (Google Wallpaper application)
@@ -39,14 +38,13 @@ will be replaced by (other) OSS applications):
 * OmniSwitch
 * Screencast
 * Snap, Snapdragon Camera (Camera)
-* Tag
 
 CyanogenMod su binary will be removed:
 
 * /system/bin/su
 * /system/xbin/su
 
-The following system applications will be installed:
+The following system applications can be choosen to be installed:
 
 * AdAway
 * Amaze (File Manager)
@@ -70,19 +68,20 @@ The following system applications will be installed:
 
 ¹ will run in legacy mode on non-OMS ROMs
 
-The following user applications will be installed:
+The following user applications can be choosen to be installed:
 
 * Termux
 * XDA Labs
 * VLC (Audio/Video Player)
 
-The following Magisk Modules will be installed:
+The following Magisk Modules can be choosen to be installed:
 
+* Magisk (with builtin PHH SuperUser)
 * Nano-Init (a few init scripts)
 * Nano-Miitomo (prevents Miitomo crashes on Custom ROMs)
 * Nano-Selinux-Enforce (enforces Selinux, aids in passing SafetyNet)
 
-The following The Legend of Zelda tunes will be installed:
+The following The Legend of Zelda can be choosen to be installed (all or none):
 
 ::Notification sounds
 
@@ -169,9 +168,6 @@ FAQ
 
 Q: will there be a GApps version, instead of microG?
 A: no.
-
-Q: will there be an AROMA version?
-A: eventually, no ETA, though.
 
 Q: will there be support for x86?
 A: x86 support is not planned currently.
