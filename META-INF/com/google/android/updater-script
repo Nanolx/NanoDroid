@@ -47,94 +47,94 @@ if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "1" then
 	delete_recursive("/system/app/BasicDreams");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "2" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.2") == "1" then
 	ui_print(" << CMFileManager");
 	delete_recursive("/system/app/CMFileManager");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "3" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.3") == "1" then
 	ui_print(" << Eleven");
 	delete_recursive("/system/app/Eleven");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "4" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.4") == "1" then
 	ui_print(" << Email");
 	delete_recursive("/system/app/Email");
 	delete_recursive("/system/app/Exchange2");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "5" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.5") == "1" then
 	ui_print(" << Browser");
 	delete_recursive("/system/app/Browser");
 	delete_recursive("/system/app/Gello");
 	delete_recursive("/system/app/Slimperience");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "6" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.6") == "1" then
 	ui_print(" << PhotoTable");
 	delete_recursive("/system/app/PhotoTable");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "7" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.7") == "1" then
 	ui_print(" << SoundRecorder");
 	delete_recursive("/system/app/SoundRecorder");
 	delete_recursive("/system/app/Recorder");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "8" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.8") == "1" then
 	ui_print(" << NexusLauncher");
 	delete_recursive("/system/app/NexusLauncher");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "9" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.9") == "1" then
 	ui_print(" << messaging");
 	delete_recursive("/system/app/messaging");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "10" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.10") == "1" then
 	ui_print(" << Wallpaper");
 	delete_recursive("/system/app/Wallpaper");
 	delete_recursive("/system/app/WallpaperBackup");
 	delete_recursive("/system/app/WallpaperPickerGoogle");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "11" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.11") == "1" then
 	ui_print(" << mGerrit");
 	delete_recursive("/system/priv-app/mGerrit");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "12" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.12") == "1" then
 	ui_print(" << FMRadio");
 	delete_recursive("/system/priv-app/FMRadio");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "13" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.13") == "1" then
 	ui_print(" << Gallery2");
 	delete_recursive("/system/priv-app/Gallery2");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "14" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.14") == "1" then
 	ui_print(" << OmniSwitch");
 	delete_recursive("/system/priv-app/OmniSwitch");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "15" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.15") == "1" then
 	ui_print(" << Screencast");
 	delete_recursive("/system/priv-app/Screencast");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "16" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.16") == "1" then
 	ui_print(" << Camera");
 	delete_recursive("/system/priv-app/Snap");
 	delete_recursive("/system/priv-app/SnapdragonCamera");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "17" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.17") == "1" then
 	ui_print(" << ResurrectionStats");
 	delete_recursive("/system/app/ResurrectionStats");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "18" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.18") == "1" then
 	ui_print(" << Stk");
 	delete_recursive("/system/app/Stk");
 endif;
@@ -153,88 +153,88 @@ if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "1" then
 	package_extract_dir("apps/AdAway", "/system/app/AdAway");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "2" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.2") == "1" then
 	ui_print(" << Amaze");
 	package_extract_dir("apps/Amaze", "/system/app/Amaze");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "3" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.3") == "1" then
 	ui_print(" << FaceSlim");
 	package_extract_dir("apps/FaceSlim", "/system/app/FaceSlim");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "4" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.4") == "1" then
 	ui_print(" << FaceSlim");
 	package_extract_dir("apps/FaceSlim", "/system/app/FaceSlim");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "5" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.5") == "1" then
 	ui_print(" << HackerKeyboard");
 	package_extract_dir("apps/HackerKeyboard", "/system/app/HackerKeyboard");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "6" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.6") == "1" then
 	ui_print(" << K9Mail");
 	package_extract_dir("apps/K9Mail", "/system/app/K9Mail");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "7" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.7") == "1" then
 	ui_print(" << Kernel Adiutor");
 	package_extract_dir("apps/KernelAdiutor", "/system/app/KernelAdiutor");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "8" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.8") == "1" then
 	ui_print(" << LeafPic");
 	package_extract_dir("apps/LeafPic", "/system/app/LeafPic");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "9" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.9") == "1" then
 	ui_print(" << Lightning");
 	package_extract_dir("apps/Lightning", "/system/app/Lightning");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "10" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.10") == "1" then
 	ui_print(" << NewPipe");
 	package_extract_dir("apps/NewPipe", "/system/app/NewPipe");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "11" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.11") == "1" then
 	ui_print(" << Oandbackup");
 	package_extract_dir("apps/Oandbackup", "/system/app/Oandbackup");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "12" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.12") == "1" then
 	ui_print(" << Odyssey");
 	package_extract_dir("apps/Odyssey", "/system/app/Odyssey");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "13" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.13") == "1" then
 	ui_print(" << OpenCamera");
 	package_extract_dir("apps/OpenCamera", "/system/app/OpenCamera");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "14" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.14") == "1" then
 	ui_print(" << QKSMS");
 	package_extract_dir("apps/QKSMS", "/system/app/QKSMS");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "15" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.15") == "1" then
 	ui_print(" << Substratum");
 	package_extract_dir("apps/Substratum", "/system/app/Substratum");
 	package_extract_dir("substratum", "/system/bin");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "16" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.16") == "1" then
 	ui_print(" << Termux");
 	package_extract_dir("userapps/com.termux", "/data/app/com.termux");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "17" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.17") == "1" then
 	ui_print(" << Twidere");
 	package_extract_dir("apps/Twidere", "/system/app/Twidere");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "18" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.18") == "1" then
 	ui_print(" << VLC");
 	# vlc has separate builds for arm and arm64!
 	if getprop("ro.product.cpu.abi") == "armeabi" then
@@ -254,12 +254,12 @@ if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "18" then
 	endif;
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "19" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.19") == "1" then
 	ui_print(" << XDA Labs");
 	package_extract_dir("userapps/com.xda.labs", "/data/app/com.xda.labs");
 endif;
 
-if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "20" then
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.20") == "1" then
 	ui_print(" << YahooWeatherProvider");
 	package_extract_dir("apps/YahooWeatherProvider", "/system/app/YahooWeatherProvider");
 endif;
@@ -298,26 +298,29 @@ if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.1") == "1" then
 	package_extract_file("Magisk.zip", "/tmp/magisk/magisk.zip");
 	run_program("/sbin/unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
 	run_program("/sbin/sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");
+
+	run_program("/sbin/mount", "/system");
 	package_extract_dir("apps/MagiskManager", "/system/app/MagiskManager");
 	package_extract_dir("apps/SuperUser", "/system/app/SuperUser");
+
 	set_metadata_recursive("/system/app", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 endif;
 
-if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.1") == "2" then
+if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.2") == "1" then
 	ui_print(" << Installing Nano-Init");
 	package_extract_file("nano-init.zip", "/tmp/nano-init/nano-init.zip");
 	run_program("/sbin/unzip", "/tmp/nano-init/nano-init.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-init");
 	run_program("/sbin/sh", "/tmp/nano-init/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-init/nano-init.zip");
 endif;
 
-if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.1") == "3" then
+if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.3") == "1" then
 	ui_print(" << Installing Nano-Miitomo");
 	package_extract_file("nano-miitomo.zip", "/tmp/nano-miitomo/nano-miitomo.zip");
 	run_program("/sbin/unzip", "/tmp/nano-miitomo/nano-miitomo.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-miitomo");
 	run_program("/sbin/sh", "/tmp/nano-miitomo/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-miitomo/nano-miitomo.zip");
 endif;
 
-if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.1") == "4" then
+if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.4") == "1" then
 	ui_print(" << Installing Nano-Selinux-Enforce");
 	package_extract_file("nano-selinux-enforce.zip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip");
 	run_program("/sbin/unzip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-selinux-enforce");
@@ -336,12 +339,12 @@ if file_getprop("/tmp/aroma-data/features.prop", "item.1.1") == "1" then
 	package_extract_dir("bash", "/system");
 endif;
 
-if file_getprop("/tmp/aroma-data/features.prop", "item.1.1") == "2" then
+if file_getprop("/tmp/aroma-data/features.prop", "item.1.2") == "1" then
 	ui_print("> Installing GNU Nano");
 	package_extract_dir("nano", "/system");
 endif;
 
-if file_getprop("/tmp/aroma-data/features.prop", "item.1.1") == "3" then
+if file_getprop("/tmp/aroma-data/features.prop", "item.1.3") == "1" then
 	ui_print("> Installing Zelda Ringtones");
 	package_extract_dir("zelda-ringtones", "/system/media");
 endif;

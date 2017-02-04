@@ -81,7 +81,7 @@ checkbox(
 	"SoundRecorder",	"Sound Recorder",			1,
 	"Nexus Launcher",	"Nexus Launcher",			1,
 	"messaging",		"Standard SMS/MMS App",			1,
-	"Wallpaper",		"Google Wallpaper App and Backup"	1,
+	"Wallpaper",		"Google Wallpaper App and Backup",	1,
 	"mGerrit",		"mGerrit",				1,
 	"FMRadio",		"Radio Application",			1,
 	"Gallery2",		"Standard Gallery Application",		1,
@@ -119,7 +119,7 @@ checkbox(
 	"VLC",				"Powerful media player",		1,
 	"XDA Labs",			"XDA at the palm of your hands",	1,
 	"YahooWeatherProvider",		"Weather Provider using Yahoo",		1
-};
+);
 
 checkbox(
 	"Features",
@@ -131,7 +131,7 @@ checkbox(
 	"Bash Shell",		"GNU Bash Shell",		1,
 	"Nano",			"GNU Nano Shell Editor",	1,
 	"Zelda Ringtones",	"Various Zelda Ringtones",	1
-};
+);
 
 viewbox(
     "Ready",
