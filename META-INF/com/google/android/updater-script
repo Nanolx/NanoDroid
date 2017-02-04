@@ -1,11 +1,16 @@
 set_progress(0.0);
-ui_print(" ");
-ui_print("NanoMod 20170131");
-ui_print(" ");
+ui_print(" <>>  <<>");
+ui_print("< NanoMod 3.0 20170204 >");
+ui_print(" <<>  <>>");
 set_progress(0.1);
 
-ui_print("> Mounting Partitions");
+##############################
+#
+# Preparations
+#
+##############################
 
+ui_print("> Mounting Partitions");
 run_program("/sbin/mount", "/system");
 run_program("/sbin/mount", "/data");
 run_program("/sbin/mount", "/cache");
@@ -14,95 +19,350 @@ package_extract_file("nano.sh", "/tmp/nano.sh");
 set_metadata("/tmp/nano.sh", "uid", 0, "gid", 0, "mode", 0777);
 run_program("/tmp/nano.sh", "mkdir");
 
-set_progress(0.2);
-ui_print("> Installing microG");
-package_extract_dir("microG", "/system");
+##############################
+#
+# Install microG and PlayStore
+#
+##############################
 
-ui_print("> Installing Play Store");
-package_extract_dir("PlayStore", "/system");
+set_progress(0.2);
+if file_getprop("/tmp/aroma-data/gapps.prop", "selected.1") == "1" then
+	ui_print("> Installing microG");
+	package_extract_dir("microG", "/system");
+	ui_print("> Installing Play Store");
+	package_extract_dir("PlayStore", "/system");
+endif;
+
+##############################
+#
+# Debloat System
+#
+##############################
 
 set_progress(0.3);
 ui_print("> Debloating System");
-delete_recursive("/system/app/BasicDreams");
-delete_recursive("/system/app/CMFileManager");
-delete_recursive("/system/app/Eleven");
-delete_recursive("/system/app/Email");
-delete_recursive("/system/app/Exchange2");
-delete_recursive("/system/app/Browser");
-delete_recursive("/system/app/Gello");
-delete_recursive("/system/app/PacProcessor");
-delete_recursive("/system/app/PhotoTable");
-delete_recursive("/system/app/PicoTts");
-delete_recursive("/system/app/SoundRecorder");
-delete_recursive("/system/app/NexusLauncher");
-delete_recursive("/system/app/messaging");
-delete_recursive("/system/app/Wallpaper");
-delete_recursive("/system/app/WallpaperBackup");
-delete_recursive("/system/app/Slimperience");
-delete_recursive("/system/app/WallpaperPickerGoogle");
-delete_recursive("/system/priv-app/mGerrit");
-delete_recursive("/system/priv-app/FMRadio");
-delete_recursive("/system/priv-app/Gallery2");
-delete_recursive("/system/priv-app/OmniSwitch");
-delete_recursive("/system/priv-app/Screencast");
-delete_recursive("/system/priv-app/Snap");
-delete_recursive("/system/priv-app/Tag");
-delete_recursive("/system/priv-app/SnapdragonCamera");
 
-set_progress(0.4);
-ui_print("> Installing Apps and Sounds");
-package_extract_dir("system", "/system");
-package_extract_dir("userapps/com.termux", "/data/app/com.termux");
-package_extract_dir("userapps/com.xda.labs", "/data/app/com.xda.labs");
-
-# vlc has separate builds for arm and arm64!
-if getprop("ro.product.cpu.abi") == "armeabi" then
-	package_extract_dir("userapps/org.videolan.vlc-arm", "/data/app/org.videolan.vlc");
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "1" then
+	ui_print(" << Basic Dreams");
+	delete_recursive("/system/app/BasicDreams");
 endif;
 
-if getprop("ro.product.cpu.abi") == "armeabi-v7a" then
-	package_extract_dir("userapps/org.videolan.vlc-arm", "/data/app/org.videolan.vlc");
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "2" then
+	ui_print(" << CMFileManager");
+	delete_recursive("/system/app/CMFileManager");
 endif;
 
-if getprop("ro.product.cpu.abi") == "arm64" then
-	package_extract_dir("userapps/org.videolan.vlc-arm64", "/data/app/org.videolan.vlc");
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "3" then
+	ui_print(" << Eleven");
+	delete_recursive("/system/app/Eleven");
 endif;
 
-if getprop("ro.product.cpu.abi") == "arm64-v8a" then
-	package_extract_dir("userapps/org.videolan.vlc-arm64", "/data/app/org.videolan.vlc");
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "4" then
+	ui_print(" << Email");
+	delete_recursive("/system/app/Email");
+	delete_recursive("/system/app/Exchange2");
 endif;
 
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "5" then
+	ui_print(" << Browser");
+	delete_recursive("/system/app/Browser");
+	delete_recursive("/system/app/Gello");
+	delete_recursive("/system/app/Slimperience");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "6" then
+	ui_print(" << PhotoTable");
+	delete_recursive("/system/app/PhotoTable");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "7" then
+	ui_print(" << SoundRecorder");
+	delete_recursive("/system/app/SoundRecorder");
+	delete_recursive("/system/app/Recorder");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "8" then
+	ui_print(" << NexusLauncher");
+	delete_recursive("/system/app/NexusLauncher");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "9" then
+	ui_print(" << messaging");
+	delete_recursive("/system/app/messaging");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "10" then
+	ui_print(" << Wallpaper");
+	delete_recursive("/system/app/Wallpaper");
+	delete_recursive("/system/app/WallpaperBackup");
+	delete_recursive("/system/app/WallpaperPickerGoogle");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "11" then
+	ui_print(" << mGerrit");
+	delete_recursive("/system/priv-app/mGerrit");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "12" then
+	ui_print(" << FMRadio");
+	delete_recursive("/system/priv-app/FMRadio");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "13" then
+	ui_print(" << Gallery2");
+	delete_recursive("/system/priv-app/Gallery2");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "14" then
+	ui_print(" << OmniSwitch");
+	delete_recursive("/system/priv-app/OmniSwitch");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "15" then
+	ui_print(" << Screencast");
+	delete_recursive("/system/priv-app/Screencast");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "16" then
+	ui_print(" << Camera");
+	delete_recursive("/system/priv-app/Snap");
+	delete_recursive("/system/priv-app/SnapdragonCamera");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "17" then
+	ui_print(" << ResurrectionStats");
+	delete_recursive("/system/app/ResurrectionStats");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.1") == "18" then
+	ui_print(" << Stk");
+	delete_recursive("/system/app/Stk");
+endif;
+
+##############################
+#
+# Install Applications
+#
+##############################
+
+set_progress(0.5);
+ui_print("> Installing Apps");
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "1" then
+	ui_print(" << AdAway");
+	package_extract_dir("apps/AdAway", "/system/app/AdAway");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "2" then
+	ui_print(" << Amaze");
+	package_extract_dir("apps/Amaze", "/system/app/Amaze");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "3" then
+	ui_print(" << FaceSlim");
+	package_extract_dir("apps/FaceSlim", "/system/app/FaceSlim");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "4" then
+	ui_print(" << FaceSlim");
+	package_extract_dir("apps/FaceSlim", "/system/app/FaceSlim");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "5" then
+	ui_print(" << HackerKeyboard");
+	package_extract_dir("apps/HackerKeyboard", "/system/app/HackerKeyboard");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "6" then
+	ui_print(" << K9Mail");
+	package_extract_dir("apps/K9Mail", "/system/app/K9Mail");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "7" then
+	ui_print(" << Kernel Adiutor");
+	package_extract_dir("apps/KernelAdiutor", "/system/app/KernelAdiutor");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "8" then
+	ui_print(" << LeafPic");
+	package_extract_dir("apps/LeafPic", "/system/app/LeafPic");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "9" then
+	ui_print(" << Lightning");
+	package_extract_dir("apps/Lightning", "/system/app/Lightning");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "10" then
+	ui_print(" << NewPipe");
+	package_extract_dir("apps/NewPipe", "/system/app/NewPipe");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "11" then
+	ui_print(" << Oandbackup");
+	package_extract_dir("apps/Oandbackup", "/system/app/Oandbackup");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "12" then
+	ui_print(" << Odyssey");
+	package_extract_dir("apps/Odyssey", "/system/app/Odyssey");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "13" then
+	ui_print(" << OpenCamera");
+	package_extract_dir("apps/OpenCamera", "/system/app/OpenCamera");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "14" then
+	ui_print(" << QKSMS");
+	package_extract_dir("apps/QKSMS", "/system/app/QKSMS");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "15" then
+	ui_print(" << Substratum");
+	package_extract_dir("apps/Substratum", "/system/app/Substratum");
+	package_extract_dir("substratum", "/system/bin");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "16" then
+	ui_print(" << Termux");
+	package_extract_dir("userapps/com.termux", "/data/app/com.termux");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "17" then
+	ui_print(" << Twidere");
+	package_extract_dir("apps/Twidere", "/system/app/Twidere");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "18" then
+	ui_print(" << VLC");
+	# vlc has separate builds for arm and arm64!
+	if getprop("ro.product.cpu.abi") == "armeabi" then
+		package_extract_dir("userapps/org.videolan.vlc-arm", "/data/app/org.videolan.vlc");
+	endif;
+
+	if getprop("ro.product.cpu.abi") == "armeabi-v7a" then
+		package_extract_dir("userapps/org.videolan.vlc-arm", "/data/app/org.videolan.vlc");
+	endif;
+
+	if getprop("ro.product.cpu.abi") == "arm64" then
+		package_extract_dir("userapps/org.videolan.vlc-arm64", "/data/app/org.videolan.vlc");
+	endif;
+
+	if getprop("ro.product.cpu.abi") == "arm64-v8a" then
+		package_extract_dir("userapps/org.videolan.vlc-arm64", "/data/app/org.videolan.vlc");
+	endif;
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "19" then
+	ui_print(" << XDA Labs");
+	package_extract_dir("userapps/com.xda.labs", "/data/app/com.xda.labs");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "20" then
+	ui_print(" << YahooWeatherProvider");
+	package_extract_dir("apps/YahooWeatherProvider", "/system/app/YahooWeatherProvider");
+endif;
+
+##############################
+#
+# Permissions
+#
+##############################
+
+set_progress(0.7);
 ui_print("> Setting permissions");
 set_metadata_recursive("/system/app", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata_recursive("/system/priv-app", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 run_program("/tmp/nano.sh", "dataperms");
 
+##############################
+#
+# Remove stock SuperUser
+#
+##############################
+
 ui_print("> Removing stock SuperUser");
 delete("/system/bin/su");
 delete("/system/xbin/su");
 
-set_progress(0.7);
-ui_print("> Installing Magisk");
-package_extract_file("Magisk.zip", "/tmp/magisk/magisk.zip");
-run_program("/sbin/unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
-run_program("/sbin/sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");
+##############################
+#
+# Magisk
+#
+##############################
 
-ui_print("> Installing Nano-Init");
-package_extract_file("nano-init.zip", "/tmp/nano-init/nano-init.zip");
-run_program("/sbin/unzip", "/tmp/nano-init/nano-init.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-init");
-run_program("/sbin/sh", "/tmp/nano-init/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-init/nano-init.zip");
+set_progress(0.8);
+if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.1") == "1" then
+	ui_print("> Installing Magisk");
+	package_extract_file("Magisk.zip", "/tmp/magisk/magisk.zip");
+	run_program("/sbin/unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
+	run_program("/sbin/sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");
+	package_extract_dir("apps/MagiskManager", "/system/app/MagiskManager");
+	package_extract_dir("apps/SuperUser", "/system/app/SuperUser");
+	set_metadata_recursive("/system/app", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+endif;
 
-ui_print("> Installing Nano-Miitomo");
-package_extract_file("nano-miitomo.zip", "/tmp/nano-miitomo/nano-miitomo.zip");
-run_program("/sbin/unzip", "/tmp/nano-miitomo/nano-miitomo.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-miitomo");
-run_program("/sbin/sh", "/tmp/nano-miitomo/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-miitomo/nano-miitomo.zip");
+if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.1") == "2" then
+	ui_print(" << Installing Nano-Init");
+	package_extract_file("nano-init.zip", "/tmp/nano-init/nano-init.zip");
+	run_program("/sbin/unzip", "/tmp/nano-init/nano-init.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-init");
+	run_program("/sbin/sh", "/tmp/nano-init/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-init/nano-init.zip");
+endif;
 
-ui_print("> Installing Nano-Selinux-Enforce");
-package_extract_file("nano-selinux-enforce.zip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip");
-run_program("/sbin/unzip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-selinux-enforce");
-run_program("/sbin/sh", "/tmp/nano-selinux-enforce/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip");
+if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.1") == "3" then
+	ui_print(" << Installing Nano-Miitomo");
+	package_extract_file("nano-miitomo.zip", "/tmp/nano-miitomo/nano-miitomo.zip");
+	run_program("/sbin/unzip", "/tmp/nano-miitomo/nano-miitomo.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-miitomo");
+	run_program("/sbin/sh", "/tmp/nano-miitomo/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-miitomo/nano-miitomo.zip");
+endif;
 
+if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.1") == "4" then
+	ui_print(" << Installing Nano-Selinux-Enforce");
+	package_extract_file("nano-selinux-enforce.zip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip");
+	run_program("/sbin/unzip", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-selinux-enforce");
+	run_program("/sbin/sh", "/tmp/nano-selinux-enforce/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-selinux-enforce/nano-selinux-enforce.zip");
+endif;
+
+##############################
+#
+# Extras
+#
+##############################
+
+set_progress(0.9);
+if file_getprop("/tmp/aroma-data/features.prop", "item.1.1") == "1" then
+	ui_print("> Installing GNU Bash");
+	package_extract_dir("bash", "/system");
+endif;
+
+if file_getprop("/tmp/aroma-data/features.prop", "item.1.1") == "2" then
+	ui_print("> Installing GNU Nano");
+	package_extract_dir("nano", "/system");
+endif;
+
+if file_getprop("/tmp/aroma-data/features.prop", "item.1.1") == "3" then
+	ui_print("> Installing Zelda Ringtones");
+	package_extract_dir("zelda-ringtones", "/system/media");
+endif;
+
+##############################
+#
+# Clean-Up
+#
+##############################
+
+ui_print("> Clean-Up");
 run_program("/tmp/nano.sh", "rmdir");
 
-ui_print("> Done!");
+ui_print("> Unmounting Partitions");
+run_program("/sbin/umount", "/system");
+run_program("/sbin/umount", "/data");
+run_program("/sbin/umount", "/cache");
+
+ui_print(" <>>  <<>");
+ui_print("< Installation is completed! >");
+ui_print("< Thanks for using NanoMod   >");
+ui_print(" <<>  <>>");
+
 set_progress(1.0);

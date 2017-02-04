@@ -1,0 +1,18 @@
+<@center><b><#selectbg_g>Terms of Service</#></b>
+
+By using this package, you take full responsibility of it's use, I (setialpha/Nanolx) am not responsible of any damage this package may cause to your device.
+
+
+<@center><b><#selectbg_g>Read before installation</#>
+<@left>
+Welcome to the NanoMod Installer Package.
+
+With this Aroma installer you can install NanoMod.
+
+Check "I Agree with this" and press Next.
+
+
+<@center><#selectbg_g>ChangeLog:</#></b>
+<@left>
+3.0 20170204:
+- initial AROMA version

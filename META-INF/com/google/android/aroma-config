@@ -1,0 +1,165 @@
+ini_set("rom_name",	"NanoMod");
+ini_set("rom_version",	"3.0");
+ini_set("rom_author",	"setialpha");
+ini_set("rom_device",	"Generic (arm/arm64) non-stock Custom ROM");
+ini_set("rom_date",	"February, 04 2017");
+
+anisplash(
+    0, "splash/nanolx.png", 1500
+);
+
+fontresload( "0", "ttf/DroidSans.ttf;", "12" );
+theme("touchwiz");
+
+viewbox(
+	"Welcome",
+	"You are about to install NanoMod\n\n<b>"+
+	"Relevant information of the Package:\n\n"+
+	"	Rom\t		<b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
+	"	Version\t		<b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
+	"	Date\t		<b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n\n",
+	"@welcome"
+);
+
+agreebox(
+  #-- Title
+    "READ THIS",
+  
+  #-- Subtitle / Description
+    "Please read before going further",
+  
+  #-- Icon
+    "@license",
+  
+  #-- Text Content ( Read from <AROMA Resource Dir>/license.txt )
+    resread("license.txt"),
+  
+  #-- Checkbox Text
+    "I Agree with this",
+  
+  #-- Unchecked Alert Message
+    "Please check the Agree box first"
+);
+
+selectbox(
+	"Google Apps",
+	"Google Apps",
+	"icons/update",
+	"gapps.prop",
+
+	"Select the Google Apps you want", "", 2, #-- Group 1. key = "selected.1"
+	"microG",	"Flash microG Open Source",	1,	#-- selected.1 = 1
+	"Nothing",	"Nothing",			0	#-- selected.1 = 2
+);
+
+checkbox(
+	"Magisk",
+	"Magisk",
+	"icons/personalize",
+	"magisk.prop",
+
+	"Select Magisk and desired modules", "", 2, #-- Group 1
+	"Magisk",		"Magisk with PHH SuperUser",		1,
+	"Nano-Init",		"NanoMod init scripts",			1,
+	"Nano-Miitomo",		"Prevent Miitomo from crashing",	1,
+	"Nano-Selinux-Enforce",	"Set Selinux to Enforcing",		1
+);
+
+checkbox(
+	"Debloat",
+	"debloat",
+	"icons/personalize",
+	"debloat.prop",
+
+	"Select Custom ROM apps to remove (replacements are provided in next step)", "", 2, #-- Group 1
+	"Basic Dreams",		"Basic Dreams Screensaver",		1,
+	"CM File Manager",	"Cyanogen Filemanager",			1,
+	"Eleven",		"Audio Player",				1,
+	"EMail",		"Standard Mail App",			1,
+	"Browser",		"Standard Web Browser",			1,
+	"PhotoTable",		"Photo Table",				1,
+	"SoundRecorder",	"Sound Recorder",			1,
+	"Nexus Launcher",	"Nexus Launcher",			1,
+	"messaging",		"Standard SMS/MMS App",			1,
+	"Wallpaper",		"Google Wallpaper App and Backup"	1,
+	"mGerrit",		"mGerrit",				1,
+	"FMRadio",		"Radio Application",			1,
+	"Gallery2",		"Standard Gallery Application",		1,
+	"OmniSwitch",		"Alternative Recent Apps View",		1,
+	"Screencast",		"Screen Recorder",			1,
+	"Camera",		"Standard Camera Applications",		1,
+	"ResurrectionStats",	"Resurrection Remix Statistics",	1,
+	"Stk",			"SIM Card Toolkit",			1
+);
+
+checkbox(
+	"Install",
+	"install",
+	"icons/personalize",
+	"install.prop",
+
+	"Select applications to install", "", 2, #-- Group 1
+	"AdAway",			"Powerful ad blocker (requires root)",	1,
+	"Amaze",			"Amazing File Manager",			1,
+	"FaceSlim",			"Facebook client",			1,
+	"FDroid",			"OpenSource app shop",			1,
+	"HackerKeyboard",		"Full fletched PC-like Keyboard",	1,
+	"K9Mail",			"Powerful Mail client",			1,
+	"Kernel Adiutor",		"Kernel Settings Manager",		1,
+	"LeafPic",			"Gallery Application",			1,
+	"Lightning",			"Blazing fast Web Browser",		1,
+	"NewPipe",			"YouTube frontend and downloader",	1,
+	"Oandbackup",			"Backup and Restore apps",		1,
+	"Odyssey",			"Audio Player",				1,
+	"OpenCamera",			"Camera Application",			1,
+	"QKSMS",			"Great SMS / MMS messenger",		1,
+	"Substratum",			"Substratum Theme Manager",		1,
+	"Termux",			"Powerful Terminal Emulator",		1,
+	"Twidere",			"Customizable Twitter Client",		1,
+	"VLC",				"Powerful media player",		1,
+	"XDA Labs",			"XDA at the palm of your hands",	1,
+	"YahooWeatherProvider",		"Weather Provider using Yahoo",		1
+};
+
+checkbox(
+	"Features",
+	"Features",
+	"icons/personalize",
+	"features.prop",
+
+	"Select additional features to install", "", 2, #-- Group 1
+	"Bash Shell",		"GNU Bash Shell",		1,
+	"Nano",			"GNU Nano Shell Editor",	1,
+	"Zelda Ringtones",	"Various Zelda Ringtones",	1
+};
+
+viewbox(
+    "Ready",
+    "The wizard is ready to begin the process.\n\n"+
+	"Press <b>Next</b> to begin the process.\n\n"+
+	"If you want to review or change any of your selection, press <b>Back</b>.",
+    "@install"
+);
+
+setvar("retstatus",
+  install(
+	#-- Title
+      "Please Wait...",
+	
+	#-- Installation Process message
+	  "<b>"+ini_get("rom_name")+"</b>\n\n"+
+      "Please wait while processing your selection...
+	   This may take several minutes.",
+	
+	#-- Installation Icon
+      "@install",
+	
+	#-- Installation Finish Message
+      "The process has successfully ended.
+	   Press Next to continue."
+  )
+);
+
+ini_set("text_next", "Finish");
+
+#---- FINISH

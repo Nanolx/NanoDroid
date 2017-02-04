@@ -16,17 +16,17 @@ cp -r ${NM}/PlayStore ${NR}/system/
 # Apps
 for app in AdAway Amaze FaceSlim FDroid K9Mail Lightning \
 	NewPipe QKSMS Twidere; do
-	cp -r ${NM}/system/app/${app} \
+	cp -r ${NM}/apps/${app} \
 		${NR}/apps/
 done
 
-cp -r ${NM}/system/app/OpenCamera ${NR}/alt/Camera/fdroid/
-cp -r ${NM}/system/app/LeafPic ${NR}/alt/Gallery/LeafPic/app/
-cp -r ${NM}/system/app/HackerKeyboard/HackerKeyboard.apk \
+cp -r ${NM}/apps/OpenCamera ${NR}/alt/Camera/fdroid/
+cp -r ${NM}/apps/LeafPic ${NR}/alt/Gallery/LeafPic/app/
+cp -r ${NM}/apps/HackerKeyboard/HackerKeyboard.apk \
 	${NR}/alt/Keyboard/HackersKeyboard/app/HackersKeyboard/HackersKeyboard.apk
-cp -r ${NM}/system/app/KernelAdiutor \
+cp -r ${NM}/apps/KernelAdiutor \
 	${NR}/system/kernel/adiutor/app/
-cp -r ${NM}/system/app/SuperUser/ \
+cp -r ${NM}/apps/SuperUser/ \
 	${NR}/system/supersu/app/
 
 # UserApps
@@ -38,5 +38,5 @@ cp -r ${NM}/userapps/org.videolan.vlc-arm64/* \
 
 # Magisk
 cp -r ${NM}/Magisk.zip ${NR}/system/magisk/magisk.zip
-cp -r ${NM}/system/app/MagiskManager \
+cp -r ${NM}/apps/MagiskManager \
 	${NR}/system/magisk/app/
