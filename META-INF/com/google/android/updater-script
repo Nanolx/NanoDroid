@@ -301,8 +301,6 @@ if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.1") == "1" then
 
 	run_program("/sbin/mount", "/system");
 	package_extract_dir("apps/MagiskManager", "/system/app/MagiskManager");
-	package_extract_dir("apps/SuperUser", "/system/app/SuperUser");
-
 	set_metadata_recursive("/system/app", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 endif;
 
