@@ -79,7 +79,10 @@ The following Magisk Modules can be choosen to be installed:
 * Magisk (with builtin PHH SuperUser)
 * Nano-Init (a few init scripts)
 * Nano-Miitomo (prevents Miitomo crashes on Custom ROMs)
-* Nano-Selinux-Enforce (enforces Selinux, aids in passing SafetyNet)
+* Nano-Selinux-Enforce (enforces Selinux, aids in passing SafetyNet)¹
+
+¹ not installed by default since version 3.1, as Magisk does now have pseudo
+  enforcing mode built-in
 
 The following The Legend of Zelda can be choosen to be installed (all or none):
 

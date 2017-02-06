@@ -62,7 +62,7 @@ checkbox(
 	"Magisk",		"Magisk with PHH SuperUser",		1,
 	"Nano-Init",		"NanoMod init scripts",			1,
 	"Nano-Miitomo",		"Prevent Miitomo from crashing",	1,
-	"Nano-Selinux-Enforce",	"Set Selinux to Enforcing",		1
+	"Nano-Selinux-Enforce",	"Set Selinux to Enforcing",		0
 );
 
 checkbox(
