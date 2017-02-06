@@ -3,7 +3,7 @@
 # create zip file from repository
 #
 
-VERSION="3.0.20170204"
+VERSION="3.1.20170206"
 
 for part in apps bash META-INF microG nano PlayStore \
 	substratum userapps zelda-ringtones Magisk.zip \
