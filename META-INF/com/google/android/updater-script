@@ -222,6 +222,7 @@ if file_getprop("/tmp/aroma-data/install.prop", "item.1.15") == "1" then
 	ui_print(" << Substratum");
 	package_extract_dir("apps/Substratum", "/system/app/Substratum");
 	package_extract_dir("substratum", "/system/bin");
+	run_program("/tmp/nano.sh", "subsperms");
 endif;
 
 if file_getprop("/tmp/aroma-data/install.prop", "item.1.16") == "1" then
@@ -337,11 +338,13 @@ run_program("/sbin/mount", "/system");
 if file_getprop("/tmp/aroma-data/features.prop", "item.1.1") == "1" then
 	ui_print("> Installing GNU Bash");
 	package_extract_dir("bash", "/system");
+	run_program("/tmp/nano.sh", "bashperms");
 endif;
 
 if file_getprop("/tmp/aroma-data/features.prop", "item.1.2") == "1" then
 	ui_print("> Installing GNU Nano");
 	package_extract_dir("nano", "/system");
+	run_program("/tmp/nano.sh", "nanoperms");
 endif;
 
 if file_getprop("/tmp/aroma-data/features.prop", "item.1.3") == "1" then
