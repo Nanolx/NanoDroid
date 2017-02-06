@@ -127,7 +127,7 @@ Installation
 
 * create zip file from this repository and copy on your device
   * on GNU/Linux or BSD (or compatible) you can use the provided
-    makezip.sh script
+    mod.sh script like `mod.sh zip`
 * perform full wipe
 * install desired ROM (make sure it does NOT include GApps!)
 * install desired Kernel (if any)
