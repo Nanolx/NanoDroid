@@ -1,0 +1,24 @@
+3.1.20170207
+- Updates
+  * update NewPipe (0.8.9)
+  * update Twidere (3.4.26)
+  * update PlayStore (7.5.08.M)
+  * update Magisk (11.1)
+  * update Magisk Manager (4.1)
+- Fixes
+  * fix permissions for GNU Bash installation
+  * fix permissions for GNU Nano installation
+- Other Changes
+  * Remove SuperUser application (now handled
+    by Magisk Manager)
+  * Don't install Nano-Selinux-Enforce Magisk
+    Module by default (Magisk 11 features an
+    pseudo-enforcing Selinux Mode)
+- Notes:
+  * If updating from 3.0 remove the SuperUser
+    app from /system/app/SuperUser before the
+    first boot after flashing 3.1, as Magisk
+    Manager does the SuperUser handling now
+
+3.0.20170204
+- initial AROMA release
