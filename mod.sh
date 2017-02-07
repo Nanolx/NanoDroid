@@ -50,7 +50,12 @@ case ${1} in
 		for part in apps bash META-INF microG nano PlayStore \
 			substratum userapps zelda-ringtones Magisk.zip \
 			nano-*.zip nano.sh README; do
-			zip -r NanoMod-"${VERSION}".zip ${part} || exit 1
+			if [[ -d "${2}" ]]; then
+				rm -f "${2}"/NanoMod-"${VERSION}".zip
+				zip -r "${2}"/NanoMod-"${VERSION}".zip ${part} || exit 1
+			else	rm -f NanoMod-"${VERSION}".zip
+				zip -r NanoMod-"${VERSION}".zip ${part} || exit 1
+			fi
 		done
 
 		echo "Zipfile NanoMod-${VERSION} created"
@@ -61,4 +66,16 @@ case ${1} in
 		sed -e "s/< NanoMod.*/< NanoMod ${2} >\");/" -i \
 			${PWD}/META-INF/com/google/android/updater-script
 	;;
+
+	*)
+	echo -e "
+** NanoMod ${VERSION} helper script **
+
+usage:	mod.sh [opt] [arg]
+
+possible opts:
+	push		| push NanoMod to NanoROM (dev-only)
+	zip	[dir]	| create zip file from repo (in [dir] if provided)
+	ver	[ver]	| bump version
+"
 esac
