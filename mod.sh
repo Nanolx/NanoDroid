@@ -49,7 +49,7 @@ case ${1} in
 	zip)
 		for part in apps bash META-INF microG nano PlayStore \
 			substratum userapps zelda-ringtones Magisk.zip \
-			nano-*.zip nano.sh README; do
+			nano-*.zip nano.sh README.md; do
 			if [[ -d "${2}" ]]; then
 				rm -f "${2}"/NanoMod-"${VERSION}".zip
 				zip -r "${2}"/NanoMod-"${VERSION}".zip ${part} || exit 1
