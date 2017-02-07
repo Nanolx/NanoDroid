@@ -133,7 +133,7 @@ Installation
   - on GNU/Linux or BSD (or compatible) you can use the provided
     mod.sh script like `mod.sh zip`
 * perform full wipe
-* install desired ROM (make sure it does NOT include GApps!)
+* install desired ROM (make sure it does NOT include GApps, if you choose microG!)
 * install desired Kernel (if any)
 * install NanoMod
   * if you have choosen microG
