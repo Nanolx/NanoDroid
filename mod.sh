@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=3.1.20170206
+VERSION=3.1.20170207
 
 case ${1} in
 	push)
