@@ -27,7 +27,7 @@ The following applications can be choosen to be removed:
 * Eleven (Audio Player)
 * E-Mail
 * Exchange2
-* Browser, Gello,Slimperience (Browser)
+* Browser, Gello, Slimperience (Browser)
 * PhotoTable
 * Sound Recorder, Recorder
 * Nexus Launcher
@@ -40,6 +40,8 @@ The following applications can be choosen to be removed:
 * OmniSwitch
 * Screencast
 * Snap, Snapdragon Camera (Camera)
+* Resurrection Remix Statistics
+* Sim Toolkit
 
 CyanogenMod su binary will be removed:
 
@@ -151,21 +153,21 @@ Installation
 SafetyNet
 =========
 
-To pass SafetyNet enable Magisk Hide in Magisk Settings. Make sure
-your ROM/Kernel sets Selinux to permissive, as Magisk v11 does have
-it's own pseudo-enforcing Selinux mode.
+To pass SafetyNet enable MagiskHide in MagiskManager. Make sure
+your ROM/Kernel sets Selinux to permissive, as Magisk v11 does
+have it's own pseudo-enforcing Selinux mode.
 
-After enabling Magisk Hide reboot.
+After enabling Magisk Hidereboot.
 
 Hiding Root from Apps
 =====================
 
-After enabling Magisk Hide and reboot go to Magisk Manager again,
-you'll now notice a new 'Magisk Hide' settings tab. In this tab
+After enabling Magisk Hide and reboot go to MagiskManager again,
+you'll now notice a new 'MagiskHide' settings tab. In this tab
 you can select any application root should be hidden for. No reboot
 is required for this to take effect.
 
-Note: don't select too many apps (10+), else Magisk Hide may be too
+Note: don't select too many apps (10+), else MagiskHide may be too
 slow to actually hide root before the application checks for it.
 
 FAQ
