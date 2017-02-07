@@ -125,35 +125,33 @@ The following The Legend of Zelda can be choosen to be installed (all or none):
 Installation
 ============
 
-* create zip file from this repository and copy on your device
-  * on GNU/Linux or BSD (or compatible) you can use the provided
+* Download stable release from:
+  - https://www.androidfilehost.com/?a=show&w=files&flid=150729
+* or create zip file from this repository
+  - on GNU/Linux or BSD (or compatible) you can use the provided
     mod.sh script like `mod.sh zip`
 * perform full wipe
 * install desired ROM (make sure it does NOT include GApps!)
 * install desired Kernel (if any)
 * install NanoMod
-* in TWRP mount system partition
-  - get Tingle from https://github.com/ale5000-git/tingle
-  - execute Tingle and choose ADB as source for framework
-  - Tingle will now patch your framework.jar in order for
+  * if you have choosen microG
+    - in TWRP mount system partition
+    - get Tingle from https://github.com/ale5000-git/tingle
+    - execute Tingle and choose ADB as source for framework
+    - Tingle will now patch your framework.jar in order for
     microG to work
 * reboot into system
-* go into 'microG settings' and set up everything, check results
-  in 'self check' lists, once done, reboot
-* go to playstore, setup account as usual and install yer apps
-
-Root not working
-================
-
-Open the Super User app once and take the quick guide. It may
-*sometimes* happen, that the root prompt won't show up otherwise.
+  * if you have choosen microG
+    - go into 'microG settings' and set up everything, check results
+      in 'self check' lists, once done, reboot
+    - go to playstore, setup account as usual and install yer apps
 
 SafetyNet
 =========
 
-To pass SafetyNet enable Magisk Hide in Magisk Settings. The
-Nano-Selinux-Enforce module ensures selinux is enforcing, else
-your device will not pass SafetyNet regardless of Magisk Hide.
+To pass SafetyNet enable Magisk Hide in Magisk Settings. Make sure
+your ROM/Kernel sets Selinux to permissive, as Magisk v11 does have
+it's own pseudo-enforcing Selinux mode.
 
 After enabling Magisk Hide reboot.
 
@@ -172,7 +170,8 @@ FAQ
 ===
 
 Q: will there be a GApps version, instead of microG?
-A: no.
+A: no, but you can opt-in to not install microG, then flash
+   OpenGApps if you feel like.
 
 Q: will there be support for x86?
 A: x86 support is not planned currently.
