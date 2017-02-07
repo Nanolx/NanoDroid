@@ -6,7 +6,9 @@ NanoMod makes several modifications to your ROM:
 * user-friendly AROMA installer
 * debloat ROM and remove stock CM su binary
 * install microG and Play Store
-  for more information on microG visit: http://www.microg.org
+  - for more information on microG visit: http://www.microg.org
+  - with Mozilla location provider backend
+  - with Nominatim adress provider backend
 * install F-Droid and many OpenSource applications
   for more information on F-Droid visit: http://www.fdroid.org
 * install The Legend of Zelda tunes
