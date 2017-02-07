@@ -47,15 +47,16 @@ case ${1} in
 	;;
 	
 	zip)
+		if [[ -d "${2}" ]]; then
+			ZIP="${2}/NanoMod-${VERSION}".zip
+			rm -f "${ZIP}"
+		else	ZIP="NanoMod-${VERSION}".zip
+			rm -f "${ZIP}"
+		fi
 		for part in apps bash META-INF microG nano PlayStore \
 			substratum userapps zelda-ringtones Magisk.zip \
 			nano-*.zip nano.sh README.md; do
-			if [[ -d "${2}" ]]; then
-				rm -f "${2}"/NanoMod-"${VERSION}".zip
-				zip -r "${2}"/NanoMod-"${VERSION}".zip ${part} || exit 1
-			else	rm -f NanoMod-"${VERSION}".zip
-				zip -r NanoMod-"${VERSION}".zip ${part} || exit 1
-			fi
+			zip -r "${ZIP}" "${part}"
 		done
 
 		echo "Zipfile NanoMod-${VERSION} created"
