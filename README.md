@@ -56,17 +56,16 @@ The following system applications can be choosen to be installed:
 * F-Droid
 * Hacker's Keyboard
 * K9-Mail
-* Kernel-Adiutor
+* Kernel Adiutor
 * LeafPic (Gallery)
 * Lightning (Browser)
-* Magisk Manager
+* MagiskManager
 * New Pipe (YouTube client)
 * Oandbackup (App backup and restore)
 * Odyssey (Audio player)
 * Open Camera
 * QK SMS
 * Substratum (App and Compiler)¹
-* SuperUser
 * Twidere (Twitter client)
 * Yahoo Weather Provider
 
