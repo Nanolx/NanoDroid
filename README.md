@@ -52,6 +52,7 @@ The following system applications can be choosen to be installed:
 
 * AdAway
 * Amaze (File Manager)
+* Anysoft Keyboard
 * Face Slim (Facebook client)
 * F-Droid
 * Hacker's Keyboard
