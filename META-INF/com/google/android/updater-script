@@ -265,6 +265,11 @@ if file_getprop("/tmp/aroma-data/install.prop", "item.1.20") == "1" then
 	package_extract_dir("apps/YahooWeatherProvider", "/system/app/YahooWeatherProvider");
 endif;
 
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.21") == "1" then
+	ui_print(" << Anysoft Keyboard");
+	package_extract_dir("apps/AnysoftKeyboard", "/system/app/AnysoftKeyboard");
+endif;
+
 ##############################
 #
 # Permissions

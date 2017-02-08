@@ -2,6 +2,9 @@
 - Updates
   * update Nominatim Nlp Backend (1.2.0)
   * update microG (0.2.4-62) 
+  * update Twidere (3,4,27)
+- Added applications
+  * Anysoft Keyboard
 - Other Changes
     * non-debug build for microG GsfProxy
 
