@@ -1,6 +1,8 @@
 3.2.2017XXXX
 - Updates
   * update Nominatim Nlp Backend (1.2.0)
+- Other Changes
+  * non-debug build for microG GsfProxy
 
 3.1.20170207
 - Updates
