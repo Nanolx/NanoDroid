@@ -25,8 +25,7 @@ The following applications can be choosen to be removed:
 * Basic Dreams
 * CM File Manager
 * Eleven (Audio Player)
-* E-Mail
-* Exchange2
+* E-Mail + Exchange2
 * Browser, Gello, Slimperience (Browser)
 * PhotoTable
 * Sound Recorder, Recorder
@@ -80,7 +79,7 @@ The following user applications can be choosen to be installed:
 
 The following Magisk Modules can be choosen to be installed:
 
-* Magisk (with builtin PHH SuperUser)
+* Magisk (with builtin SuperUser)
 * Nano-Init (a few init scripts)
 * Nano-Miitomo (prevents Miitomo crashes on Custom ROMs)
 * Nano-Selinux-Enforce (enforces Selinux, aids in passing SafetyNet)¹
@@ -157,12 +156,12 @@ To pass SafetyNet enable MagiskHide in MagiskManager. Make sure
 your ROM/Kernel sets Selinux to permissive, as Magisk v11 does
 have it's own pseudo-enforcing Selinux mode.
 
-After enabling Magisk Hidereboot.
+After enabling MagiskHide reboot.
 
 Hiding Root from Apps
 =====================
 
-After enabling Magisk Hide and reboot go to MagiskManager again,
+After enabling MagiskHide and reboot go to MagiskManager again,
 you'll now notice a new 'MagiskHide' settings tab. In this tab
 you can select any application root should be hidden for. No reboot
 is required for this to take effect.
