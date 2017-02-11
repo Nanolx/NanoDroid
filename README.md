@@ -85,10 +85,6 @@ The following Magisk Modules can be choosen to be installed:
 * Magisk (with builtin SuperUser)
 * Nano-Init (a few init scripts)
 * Nano-Miitomo (prevents Miitomo crashes on Custom ROMs)
-* Nano-Selinux-Enforce (enforces Selinux, aids in passing SafetyNet)¹
-
-¹ not installed by default since version 3.1, as Magisk does now have pseudo
-  enforcing mode built-in
 
 The following The Legend of Zelda can be choosen to be installed (all or none):
 
@@ -132,25 +128,37 @@ Installation
 ============
 
 * Download stable release from:
-  - https://www.androidfilehost.com/?a=show&w=files&flid=150729
+  - [Androidfilehost](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
 * or create zip file from this repository
   - on GNU/Linux or BSD (or compatible) you can use the provided
     mod.sh script like `mod.sh zip`
 * perform full wipe
-* install desired ROM (make sure it does NOT include GApps, if you choose microG!)
+* install desired ROM
+  - make sure it does NOT include GApps, if you choose microG!)
 * install desired Kernel (if any)
 * install NanoMod
   * if you have choosen microG
     - in TWRP mount system partition
-    - get Tingle from https://github.com/ale5000-git/tingle
+    - get [Tingle](https://github.com/ale5000-git/tingle)
     - execute Tingle and choose ADB as source for framework
-    - Tingle will now patch your framework.jar in order for
-    microG to work
+    - your framework.jar will now be patched for microG to work
 * reboot into system
   * if you have choosen microG
-    - go into 'microG settings' and set up everything, check results
-      in 'self check' lists, once done, reboot
-    - go to playstore, setup account as usual and install yer apps
+    - go into 'microG settings' and set up everything like:
+      + check results in 'Self-Check', grant missing
+        permissions (by tapping on them)
+      + enable 'Google device registration'
+      + enable 'Google Cloud Messaging' (only if you want to
+        receive push messages from your applications)
+      + enable 'Google SafetyNet' (only if you you want to
+        be able to use applications that require SafetyNet,
+        for example AndroidPay, Pokemon GO, ...), set to
+        use the official servers
+      + under 'UnifiedNlp Settings' choose
+        x 'Mozilla Location Backend' as Geolocation backend
+        x 'Nominatim' as Address lockup backend
+    - after everything is done, reboot
+    - go to playstore, setup account and install your apps
 
 SafetyNet
 =========
