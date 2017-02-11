@@ -42,7 +42,8 @@ The following applications can be choosen to be removed:
 * Resurrection Remix Statistics
 * Sim Toolkit
 
-CyanogenMod su binary will be removed:
+CyanogenMod su binary will be removed if Magisk is choosen to
+be installed:
 
 * /system/bin/su
 * /system/xbin/su
@@ -57,13 +58,15 @@ The following system applications can be choosen to be installed:
 * Hacker's Keyboard
 * K9-Mail
 * Kernel Adiutor
+* KeyPassDroid (Password Safe)
 * LeafPic (Gallery)
 * Lightning (Browser)
 * MagiskManager
 * New Pipe (YouTube client)
 * Oandbackup (App backup and restore)
 * Odyssey (Audio player)
-* Open Camera
+* OpenCamera
+* OpenVPN
 * QK SMS
 * Substratum (App and Compiler)¹
 * Twidere (Twitter client)
