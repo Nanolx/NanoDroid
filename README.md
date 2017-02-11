@@ -186,5 +186,5 @@ Q: what devices was this tested on?
 A: Moto X Play (lux), Samsung Galaxy Tab 4 (matissewifi)
 
 Q: what ROMs was this tested on?
-A: Resurrection Remix, AICP, AOSP Extended, should work on any
-   LineageOS based ROM.
+A: Resurrection Remix, AICP, AOSP Extended, crDroid, should work
+   on any LineageOS based ROM.
