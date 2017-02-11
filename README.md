@@ -155,8 +155,8 @@ Installation
         for example AndroidPay, Pokemon GO, ...), set to
         use the official servers
       + under 'UnifiedNlp Settings' choose
-        x 'Mozilla Location Backend' as Geolocation backend
-        x 'Nominatim' as Address lockup backend
+        + 'Mozilla Location Backend' as Geolocation backend
+        + 'Nominatim' as Address lockup backend
     - after everything is done, reboot
     - go to playstore, setup account and install your apps
 
@@ -183,16 +183,16 @@ slow to actually hide root before the application checks for it.
 FAQ
 ===
 
-Q: will there be a GApps version, instead of microG?
-A: no, but you can opt-in to not install microG, then flash
+* Q: will there be a GApps version, instead of microG?
+* A: no, but you can opt-in to not install microG, then flash
    OpenGApps if you feel like.
 
-Q: will there be support for x86?
-A: x86 support is not planned currently.
+* Q: will there be support for x86?
+* A: x86 support is not planned currently.
 
-Q: what devices was this tested on?
-A: Moto X Play (lux), Samsung Galaxy Tab 4 (matissewifi)
+* Q: what devices was this tested on?
+* A: Moto X Play (lux), Samsung Galaxy Tab 4 (matissewifi)
 
-Q: what ROMs was this tested on?
-A: Resurrection Remix, AICP, AOSP Extended, crDroid, should work
+* Q: what ROMs was this tested on?
+* A: Resurrection Remix, AICP, AOSP Extended, crDroid, should work
    on any LineageOS based ROM.
