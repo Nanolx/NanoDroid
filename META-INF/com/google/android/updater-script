@@ -151,6 +151,7 @@ ui_print("> Installing Apps");
 if file_getprop("/tmp/aroma-data/install.prop", "item.1.1") == "1" then
 	ui_print(" << AdAway");
 	package_extract_dir("apps/AdAway", "/system/app/AdAway");
+	delete_recursive("/system/app/Adaway");
 endif;
 
 if file_getprop("/tmp/aroma-data/install.prop", "item.1.2") == "1" then
