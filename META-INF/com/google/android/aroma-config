@@ -17,7 +17,7 @@ viewbox(
 	"Relevant information of the Package:\n\n"+
 	"	Rom\t		<b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
 	"	Version\t		<b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
-	"	Date\t		<b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n\n"+
+	"	Date\t		<b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n\n",
 	"@welcome"
 );
 

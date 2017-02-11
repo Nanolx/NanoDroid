@@ -13,8 +13,7 @@ Check "I Agree with this" and press Next.
 
 
 <@center><#selectbg_g>ChangeLog:</#></b>
-<@left>
-3.2.20170211
+<@left>3.2.20170211
 - Updates
   * update Nominatim Nlp Backend (1.2.1)
   * update microG (0.2.4-64)
