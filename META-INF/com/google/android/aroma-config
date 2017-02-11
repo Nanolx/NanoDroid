@@ -1,8 +1,8 @@
 ini_set("rom_name",	"NanoMod");
-ini_set("rom_version",	"3.1");
+ini_set("rom_version",	"3.2");
 ini_set("rom_author",	"setialpha");
 ini_set("rom_device",	"Generic (arm/arm64) non-stock Custom ROM");
-ini_set("rom_date",	"February, 07 2017");
+ini_set("rom_date",	"February, 11 2017");
 
 anisplash(
     0, "splash/nanolx.png", 1500
@@ -16,8 +16,8 @@ viewbox(
 	"You are about to install NanoMod\n\n<b>"+
 	"Relevant information of the Package:\n\n"+
 	"	Rom\t		<b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
-	"	Version\t		<b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
-	"	Date\t		<b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n\n",
+	"	Version\t		<b><#selectbg_g>"+ini_get("rom_version",	"3.2");
+	"	Date\t		<b><#selectbg_g>"+ini_get("rom_date",	"February, 11 2017");
 	"@welcome"
 );
 
@@ -61,8 +61,7 @@ checkbox(
 	"Select Magisk and desired modules", "", 2, #-- Group 1
 	"Magisk",		"Magisk with PHH SuperUser",		1,
 	"Nano-Init",		"NanoMod init scripts",			1,
-	"Nano-Miitomo",		"Prevent Miitomo from crashing",	1,
-	"Nano-Selinux-Enforce",	"Set Selinux to Enforcing",		0
+	"Nano-Miitomo",		"Prevent Miitomo from crashing",	1
 );
 
 checkbox(
@@ -119,7 +118,9 @@ checkbox(
 	"VLC",				"Powerful media player",		1,
 	"XDA Labs",			"XDA at the palm of your hands",	1,
 	"YahooWeatherProvider",		"Weather Provider using Yahoo",		1,
-	"Anysoft Keyboard",		"Feature rich Keyboard",		1
+	"AnySoftKeyboard",		"Feature rich Keyboard",		1,
+	"KeePassDroid",			"Keepass compatible password safe",	1,
+	"OpenVPN",			"OpenVPN client",			1
 );
 
 checkbox(
