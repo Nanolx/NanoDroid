@@ -127,11 +127,9 @@ The following The Legend of Zelda can be choosen to be installed (all or none):
 Installation
 ============
 
-* Download stable release from:
-  - [Androidfilehost](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
+* Download stable release from [Androidfilehost](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
 * or create zip file from this repository
-  - on GNU/Linux or BSD (or compatible) you can use the provided
-    mod.sh script like `mod.sh zip`
+  - on Linux you can use the provided mod.sh script: `mod.sh zip`
 * perform full wipe
 * install desired ROM
   - make sure it does NOT include GApps, if you choose microG!)
@@ -139,7 +137,7 @@ Installation
 * install NanoMod
   * if you have choosen microG
     - in TWRP mount system partition
-    - get [Tingle](https://github.com/ale5000-git/tingle)
+    - get [Tingle](https://github.com/ale5000-git/tingle) framework patcher
     - execute Tingle and choose ADB as source for framework
     - your framework.jar will now be patched for microG to work
 * reboot into system
