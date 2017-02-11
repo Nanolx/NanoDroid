@@ -16,8 +16,8 @@ viewbox(
 	"You are about to install NanoMod\n\n<b>"+
 	"Relevant information of the Package:\n\n"+
 	"	Rom\t		<b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
-	"	Version\t		<b><#selectbg_g>"+ini_get("rom_version",	"3.2");
-	"	Date\t		<b><#selectbg_g>"+ini_get("rom_date",	"February, 11 2017");
+	"	Version\t		<b><#selectbg_g>"+ini_get("rom_version");
+	"	Date\t		<b><#selectbg_g>"+ini_get("rom_date");
 	"@welcome"
 );
 

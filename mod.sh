@@ -64,10 +64,10 @@ case ${1} in
 		sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i ${PWD}/mod.sh
 		sed -e "s/< NanoMod.*/< NanoMod ${2}.${3} >\");/" -i \
 			${PWD}/META-INF/com/google/android/updater-script
-		sed -e "s/rom_version.*/rom_version\",	\"${2}\");/" -i \
+		sed -e "s/ini_set(\"rom_version.*/ini_set(\"rom_version\",	\"${2}\");/" -i \
 			${PWD}/META-INF/com/google/android/aroma-config
 		DATE=$(LANG=C date -d "${3}" +'%B, %d %Y')
-		sed -e "s/rom_date.*/rom_date\",	\"${DATE}\");/" -i \
+		sed -e "s/ini_set(\"rom_date.*/ini_set(\"rom_date\",	\"${DATE}\");/" -i \
 			${PWD}/META-INF/com/google/android/aroma-config
 	;;
 
