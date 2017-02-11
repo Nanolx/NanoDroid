@@ -30,8 +30,6 @@ case ${1} in
 			${NR}/alt/Keyboard/HackersKeyboard/app/HackersKeyboard/HackersKeyboard.apk
 		cp -r ${NM}/apps/KernelAdiutor \
 			${NR}/system/kernel/adiutor/app/
-		cp -r ${NM}/apps/SuperUser/ \
-			${NR}/system/supersu/app/
 
 		# UserApps
 		cp -r ${NM}/userapps/{com.termux,com.xda.labs} \
