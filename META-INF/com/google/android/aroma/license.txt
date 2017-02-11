@@ -14,5 +14,20 @@ Check "I Agree with this" and press Next.
 
 <@center><#selectbg_g>ChangeLog:</#></b>
 <@left>
-3.0 20170204:
-- initial AROMA version
+3.2.20170211
+- Updates
+  * update Nominatim Nlp Backend (1.2.1)
+  * update microG (0.2.4-64)
+  * update Twidere (3.4.27)
+- Added applications
+  * AnySoftKeyboard (1.8.503)
+  * KeePassDroid (2.0.6.4)
+  * OpenVPN (0.6.64)
+- Other Changes
+  * non-debug build for microG GsfProxy
+  * only remove CyanogenMod built-in su,
+    if Magisk was choosen to be installed
+  * Remove Nano-Selinux-Senforce Magisk Module
+  * some ROMs have AdAway pre-installed, remove
+    that version if NanoMod provided version is
+    choosen to be installed
