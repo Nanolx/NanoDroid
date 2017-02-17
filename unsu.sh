@@ -9,9 +9,6 @@
 # added support for re-flashing boot image
 # in case of system less SuperSU
 
-OUTFD=/proc/self/fd/$2;
-ui_print() { echo -e "ui_print $1\nui_print" > $OUTFD; }
-
 find_boot_image() {
   if [ -z "$BOOTIMAGE" ]; then
     for PARTITION in kern-a KERN-A android_boot ANDROID_BOOT kernel KERNEL boot BOOT lnx LNX; do
