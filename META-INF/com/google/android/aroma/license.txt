@@ -13,11 +13,13 @@ Check "I Agree with this" and press Next.
 
 
 <@center><#selectbg_g>ChangeLog:</#></b>
-<@left>3.2.20170211
+<@left>4.0.20170217
 - Updates
   * update Nominatim Nlp Backend (1.2.1)
   * update microG (0.2.4-64)
-  * update Twidere (3.4.27)
+  * update Twidere (3.4.29)
+  * update Magisk (12~beta.20170217)
+  * update MagiskManager (12~beta.20170217)
 - Added applications
   * AnySoftKeyboard (1.8.503)
   * KeePassDroid (2.0.6.4)
@@ -30,3 +32,8 @@ Check "I Agree with this" and press Next.
   * some ROMs have AdAway pre-installed, remove
     that version if NanoMod provided version is
     choosen to be installed
+  * include customized version of osm0sis' unSU
+    script to fully remove any existing root
+    * re-flashes boot image backup in case system
+      less SuperUser was installed
+  * drop option to remove Nexus Launcher
