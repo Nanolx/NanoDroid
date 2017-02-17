@@ -41,11 +41,9 @@ The following applications can be choosen to be removed:
 * Resurrection Remix Statistics
 * Sim Toolkit
 
-CyanogenMod su binary will be removed if Magisk is choosen to
-be installed:
-
-* /system/bin/su
-* /system/xbin/su
+If Magisk is choosen to be installed, any previously installed
+root solution will be removed. NanoMod will also re-flash the
+boot image backup if you had system less SuperUser installed.
 
 The following system applications can be choosen to be installed:
 

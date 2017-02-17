@@ -19,6 +19,8 @@
     choosen to be installed
   * include customized version of osm0sis' unSU
     script to fully remove any existing root
+    * re-flashes boot image backup in case system
+      less SuperUser was installed
   * drop option to remove Nexus Launcher
 
 3.1.20170207

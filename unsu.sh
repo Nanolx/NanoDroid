@@ -2,19 +2,55 @@
 # unSU Script: Recovery Flashable Zip
 # osm0sis @ xda-developers
 
+# NanoMod changes:
+#
+# added find_boot_image() from Magisk
+#  by topjohnwu @ xda-developers
+# added support for re-flashing boot image
+# in case of system less SuperSU
+
 OUTFD=/proc/self/fd/$2;
 ui_print() { echo -e "ui_print $1\nui_print" > $OUTFD; }
 
+find_boot_image() {
+  if [ -z "$BOOTIMAGE" ]; then
+    for PARTITION in kern-a KERN-A android_boot ANDROID_BOOT kernel KERNEL boot BOOT lnx LNX; do
+      BOOTIMAGE=`readlink /dev/block/by-name/$PARTITION || readlink /dev/block/platform/*/by-name/$PARTITION || readlink /dev/block/platform/*/*/by-name/$PARTITION`
+      if [ ! -z "$BOOTIMAGE" ]; then break; fi
+    done
+  fi
+  if [ -z "$BOOTIMAGE" ]; then
+    FSTAB="/etc/recovery.fstab"
+    [ ! -f "$FSTAB" ] && FSTAB="/etc/recovery.fstab.bak"
+    [ -f "$FSTAB" ] && BOOTIMAGE=`grep -E '\b/boot\b' "$FSTAB" | grep -oE '/dev/[a-zA-Z0-9_./-]*'`
+  fi
+}
+
+flash_orig_boot() {
+  mv -f /data/stock_boot_*.gz /data/stock_boot.img.gz 2>/dev/null
+  gzip -d /data/stock_boot.img.gz 2>/dev/null
+  rm -f /data/stock_boot.img.gz 2>/dev/null
+
+  find_boot_image
+
+  if [ -f /data/stock_boot.img -a ! -z "$BOOTIMAGE" ]; then
+    dd if=/data/stock_boot.img of=$BOOTIMAGE bs=4096
+    rm -f /data/stock_boot.img;
+  fi
+}
+
 if [ -e /data/su ]; then
   rm -rf /data/app/me.phh.superuser* /data/data/me.phh.superuser* /data/su;
-  bootmsg=1;
+
+  flash_orig_boot
 fi;
 
 if [ -e /cache/su.img -o -e /data/su.img ]; then
   umount /su;
 
+  flash_orig_boot
+
   rm -rf /cache/.supersu /cache/su.img /cache/SuperSU.apk /data/.supersu /data/stock_boot_*.img.gz /data/su.img /data/SuperSU.apk /data/app/eu.chainfire.supersu* /data/data/eu.chainfire.supersu*;
-  bootmsg=1;
 fi;
 
 if [ -e /system/bin/.ext/.su ]; then
