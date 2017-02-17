@@ -135,7 +135,10 @@ Installation
   - make sure it does NOT include GApps, if you choose microG!)
 * install desired Kernel (if any)
 * install NanoMod
-  * if you have choosen microG
+  * if you have choosen microG you need to patch the framework for signature
+    spoofing. Some ROMs already include support for that, for example crDroid.
+    If your ROM does not have signature spoofing included (very likely), patch
+    the framework manually like:
     - in TWRP mount system partition
     - get [Tingle](https://github.com/ale5000-git/tingle) framework patcher
     - execute Tingle and choose ADB as source for framework
