@@ -29,7 +29,6 @@ The following applications can be choosen to be removed:
 * Browser, Gello, Slimperience (Browser)
 * PhotoTable
 * Sound Recorder, Recorder
-* Nexus Launcher
 * messaging (SMS & MMS)
 * Wallpaper, WallpaperPickerGoogle (Google Wallpaper application)
 * Wallpaper Backup

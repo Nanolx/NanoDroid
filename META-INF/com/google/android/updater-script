@@ -85,59 +85,54 @@ if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.7") == "1" then
 endif;
 
 if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.8") == "1" then
-	ui_print(" << NexusLauncher");
-	delete_recursive("/system/app/NexusLauncher");
-endif;
-
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.9") == "1" then
 	ui_print(" << messaging");
 	delete_recursive("/system/app/messaging");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.10") == "1" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.9") == "1" then
 	ui_print(" << Wallpaper");
 	delete_recursive("/system/app/Wallpaper");
 	delete_recursive("/system/app/WallpaperBackup");
 	delete_recursive("/system/app/WallpaperPickerGoogle");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.11") == "1" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.10") == "1" then
 	ui_print(" << mGerrit");
 	delete_recursive("/system/priv-app/mGerrit");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.12") == "1" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.11") == "1" then
 	ui_print(" << FMRadio");
 	delete_recursive("/system/priv-app/FMRadio");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.13") == "1" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.12") == "1" then
 	ui_print(" << Gallery2");
 	delete_recursive("/system/priv-app/Gallery2");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.14") == "1" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.13") == "1" then
 	ui_print(" << OmniSwitch");
 	delete_recursive("/system/priv-app/OmniSwitch");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.15") == "1" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.14") == "1" then
 	ui_print(" << Screencast");
 	delete_recursive("/system/priv-app/Screencast");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.16") == "1" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.15") == "1" then
 	ui_print(" << Camera");
 	delete_recursive("/system/priv-app/Snap");
 	delete_recursive("/system/priv-app/SnapdragonCamera");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.17") == "1" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.16") == "1" then
 	ui_print(" << ResurrectionStats");
 	delete_recursive("/system/app/ResurrectionStats");
 endif;
 
-if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.18") == "1" then
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.17") == "1" then
 	ui_print(" << Stk");
 	delete_recursive("/system/app/Stk");
 endif;

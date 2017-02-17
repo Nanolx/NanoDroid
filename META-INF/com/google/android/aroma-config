@@ -78,7 +78,6 @@ checkbox(
 	"Browser",		"Standard Web Browser",			1,
 	"PhotoTable",		"Photo Table",				1,
 	"SoundRecorder",	"Sound Recorder",			1,
-	"Nexus Launcher",	"Nexus Launcher",			1,
 	"messaging",		"Standard SMS/MMS App",			1,
 	"Wallpaper",		"Google Wallpaper App and Backup",	1,
 	"mGerrit",		"mGerrit",				1,

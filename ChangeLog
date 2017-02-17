@@ -1,4 +1,4 @@
-3.2.20170211
+3.2.201702XX
 - Updates
   * update Nominatim Nlp Backend (1.2.1)
   * update microG (0.2.4-64)
@@ -19,6 +19,7 @@
     choosen to be installed
   * include customized version of osm0sis' unSU
     script to fully remove any existing root
+  * drop option to remove Nexus Launcher
 
 3.1.20170207
 - Updates
