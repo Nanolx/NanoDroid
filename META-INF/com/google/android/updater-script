@@ -1,6 +1,6 @@
 set_progress(0.0);
 ui_print(" <>>  <<>");
-ui_print("< NanoMod 3.2.20170211 >");
+ui_print("< NanoMod 4.0.20170217 >");
 ui_print(" <<>  <>>");
 set_progress(0.1);
 
