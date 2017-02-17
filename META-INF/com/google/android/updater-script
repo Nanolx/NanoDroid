@@ -19,6 +19,9 @@ package_extract_file("nano.sh", "/tmp/nano.sh");
 set_metadata("/tmp/nano.sh", "uid", 0, "gid", 0, "mode", 0777);
 run_program("/tmp/nano.sh", "mkdir");
 
+package_extract_file("unsu.sh", "/tmp/unsu.sh");
+set_metadata("/tmp/unsu.sh", "uid", 0, "gid", 0, "mode", 0777);
+
 ##############################
 #
 # Install microG and PlayStore
@@ -301,9 +304,8 @@ run_program("/tmp/nano.sh", "dataperms");
 
 set_progress(0.8);
 if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.1") == "1" then
-	ui_print("> Removing stock SuperUser");
-	delete("/system/bin/su");
-	delete("/system/xbin/su");
+	ui_print("> Removing existing SuperUser");
+	run_program("/tmp/unsu.sh");
 
 	ui_print("> Installing Magisk");
 	package_extract_file("Magisk.zip", "/tmp/magisk/magisk.zip");
