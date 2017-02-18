@@ -11,8 +11,6 @@
   * OpenVPN (0.6.64)
 - Other Changes
   * non-debug build for microG GsfProxy
-  * only remove CyanogenMod built-in su,
-    if Magisk was choosen to be installed
   * Remove Nano-Selinux-Senforce Magisk Module
   * some ROMs have AdAway pre-installed, remove
     that version if NanoMod provided version is
@@ -21,6 +19,7 @@
     script to fully remove any existing root
     * re-flashes boot image backup in case system
       less SuperUser was installed
+    * only unSU if Magisk is to be installed
   * drop option to remove Nexus Launcher
 
 3.1.20170207
