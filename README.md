@@ -84,9 +84,8 @@ fork of PHH SuperUser) and an companion application.
 
 If Magisk is choosen to be installed, any previously installed
 root solution will be removed. NanoMod will also re-flash the
-boot image backup if you had system less SuperUser installed.
-
-That is to ensure MagiskSU is properly installed and working.
+boot image backup if you had system less SuperUser installed,
+that is to ensure MagiskSU is properly installed and working.
 
 The following Magisk/Modules can be choosen to be installed:
 
