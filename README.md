@@ -57,7 +57,6 @@ The following system applications can be choosen to be installed:
 * KeyPassDroid (Password Safe)
 * LeafPic (Gallery)
 * Lightning (Browser)
-* MagiskManager
 * New Pipe (YouTube client)
 * Oandbackup (App backup and restore)
 * Odyssey (Audio player)
@@ -79,21 +78,35 @@ The following user applications can be choosen to be installed:
 Magisk & root
 =============
 
+Magisk allows modifying the ROM in system less fashion, it also
+brings it's own root solution (MagiskSU, which apparently is a
+fork of PHH SuperUser) and an companion application.
+
 If Magisk is choosen to be installed, any previously installed
 root solution will be removed. NanoMod will also re-flash the
 boot image backup if you had system less SuperUser installed.
 
-The following Magisk Modules can be choosen to be installed:
+That is to ensure MagiskSU is properly installed and working.
 
-* Magisk (with builtin SuperUser)
-* Nano-Init (a few init scripts)
+The following Magisk/Modules can be choosen to be installed:
+
+* Magisk
+  - with builtin SuperUser
+  - with MagiskManager companion application
+* Nano-Init (init scripts)
+  - fstrim (optimize filesystems)
+  - logscleaner (clean old logfiles)
+  - sqlite (optimize sqlite databases)
 * Nano-Miitomo (prevents Miitomo crashes on Custom ROMs)
+  - Miitomo does not crash because of rooted devices,
+    but it does crash if 'ro.debuggable' is '1'. This
+    Magisk module uses `resetprop` to set it to '0'.
 
 SafetyNet
 =========
 
 To pass SafetyNet enable MagiskHide in MagiskManager. Make sure
-your ROM/Kernel sets Selinux to permissive, as Magisk v11 does
+your ROM/Kernel sets Selinux to permissive, as Magisk v11+ does
 have it's own pseudo-enforcing Selinux mode.
 
 After enabling MagiskHide reboot.
