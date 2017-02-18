@@ -20,6 +20,9 @@ NanoMod makes several modifications to your ROM:
 Details
 =======
 
+Applications
+============
+
 The following applications can be choosen to be removed:
 
 * Basic Dreams
@@ -40,10 +43,6 @@ The following applications can be choosen to be removed:
 * Snap, Snapdragon Camera (Camera)
 * Resurrection Remix Statistics
 * Sim Toolkit
-
-If Magisk is choosen to be installed, any previously installed
-root solution will be removed. NanoMod will also re-flash the
-boot image backup if you had system less SuperUser installed.
 
 The following system applications can be choosen to be installed:
 
@@ -77,11 +76,41 @@ The following user applications can be choosen to be installed:
 * XDA Labs
 * VLC (Audio/Video Player)
 
+Magisk & root
+=============
+
+If Magisk is choosen to be installed, any previously installed
+root solution will be removed. NanoMod will also re-flash the
+boot image backup if you had system less SuperUser installed.
+
 The following Magisk Modules can be choosen to be installed:
 
 * Magisk (with builtin SuperUser)
 * Nano-Init (a few init scripts)
 * Nano-Miitomo (prevents Miitomo crashes on Custom ROMs)
+
+SafetyNet
+=========
+
+To pass SafetyNet enable MagiskHide in MagiskManager. Make sure
+your ROM/Kernel sets Selinux to permissive, as Magisk v11 does
+have it's own pseudo-enforcing Selinux mode.
+
+After enabling MagiskHide reboot.
+
+Hiding Root from Apps
+=====================
+
+After enabling MagiskHide and reboot go to MagiskManager again,
+you'll now notice a new 'MagiskHide' settings tab. In this tab
+you can select any application root should be hidden for. No reboot
+is required for this to take effect.
+
+Note: don't select too many apps (10+), else MagiskHide may be too
+slow to actually hide root before the application checks for it.
+
+Zelda Ringtones
+===============
 
 The following The Legend of Zelda can be choosen to be installed (all or none):
 
@@ -157,26 +186,6 @@ Installation
         + 'Nominatim' as Address lockup backend
     - after everything is done, reboot
     - go to playstore, setup account and install your apps
-
-SafetyNet
-=========
-
-To pass SafetyNet enable MagiskHide in MagiskManager. Make sure
-your ROM/Kernel sets Selinux to permissive, as Magisk v11 does
-have it's own pseudo-enforcing Selinux mode.
-
-After enabling MagiskHide reboot.
-
-Hiding Root from Apps
-=====================
-
-After enabling MagiskHide and reboot go to MagiskManager again,
-you'll now notice a new 'MagiskHide' settings tab. In this tab
-you can select any application root should be hidden for. No reboot
-is required for this to take effect.
-
-Note: don't select too many apps (10+), else MagiskHide may be too
-slow to actually hide root before the application checks for it.
 
 FAQ
 ===
