@@ -17,6 +17,15 @@ NanoMod makes several modifications to your ROM:
 * install GNU Bash Shell
 * install GNU Nano Shell Editor
 
+Why was this created?
+=====================
+
+Because I wanted to have a simple way to achieve my desired setup on any device
+or any ROM. That's it, basically. And since it already exists, I thought I'd push
+it to XDA aswell. Actually this is the generic version of my NanoROM for Galaxy S6,
+where I basically made the same changes to the ROM (except NanoMod is for LOS/AOSP
+based ROMs, not TouchWiz).
+
 Support
 =======
 
