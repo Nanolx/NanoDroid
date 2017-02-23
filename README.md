@@ -17,6 +17,11 @@ NanoMod makes several modifications to your ROM:
 * install GNU Bash Shell
 * install GNU Nano Shell Editor
 
+Support
+=======
+
+[XDA-Developers Thread](https://forum.xda-developers.com/android/development/nanomod-3-0-20170204-microg-magisk-foss-t3550800)
+
 Details
 =======
 
