@@ -13,30 +13,12 @@ Check "I Agree with this" and press Next.
 
 
 <@center><#selectbg_g>ChangeLog:</#></b>
-<@left>4.0.20170217
+<@left>
+4.1.2017XXXX
 - Updates
-  * update Nominatim Nlp Backend (1.2.1)
-  * update microG (0.2.4-76)
-  * update Twidere (3.4.29)
-  * update Face Slim (3.1.0)
-  * update NewPipe (0.8.10)
-  * update Open Camera (1.37)
-  * update Lightning (4.4.2)
-  * update Magisk (12~beta.20170218)
-  * update MagiskManager (4.2.6)
+  * update AnySoft Keyboard (1.8.585)
 - Added applications
-  * AnySoftKeyboard (1.8.503)
-  * KeePassDroid (2.0.6.4)
-  * OpenVPN (0.6.64)
+  * OpenKeyChain
 - Other Changes
-  * non-debug build for microG GsfProxy
-  * Remove Nano-Selinux-Senforce Magisk Module
-  * some ROMs have AdAway pre-installed, remove
-    that version if NanoMod provided version is
-    choosen to be installed
-  * include customized version of osm0sis' unSU
-    script to fully remove any existing root
-    * re-flashes boot image backup in case system
-      less SuperUser was installed
-    * only unSU if Magisk is to be installed
-  * drop option to remove Nexus Launcher
+  * only re-flash boot image backup if
+    it is a SuperSU backup
