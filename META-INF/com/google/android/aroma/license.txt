@@ -16,7 +16,8 @@ Check "I Agree with this" and press Next.
 <@left>
 4.1.2017XXXX
 - Updates
-  * update AnySoft Keyboard (1.8.585)
+  * AnySoft Keyboard (1.8.585)
+  * VLC (2.1.0~beta)
 - Added applications
   * OpenKeyChain
 - Other Changes
