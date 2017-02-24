@@ -1,6 +1,6 @@
 set_progress(0.0);
 ui_print(" <>>  <<>");
-ui_print("< NanoMod 4.0.20170223 >");
+ui_print("< NanoMod 4.1.20171231 >");
 ui_print(" <<>  <>>");
 set_progress(0.1);
 
@@ -277,6 +277,11 @@ endif;
 if file_getprop("/tmp/aroma-data/install.prop", "item.1.23") == "1" then
 	ui_print(" << OpenVPN");
 	package_extract_dir("apps/OpenVPN", "/system/app/OpenVPN");
+endif;
+
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.24") == "1" then
+	ui_print(" << OpenKeyChain");
+	package_extract_dir("apps/OpenKeyChain", "/system/app/OpenKeyChain");
 endif;
 
 ##############################

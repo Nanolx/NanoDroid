@@ -1,8 +1,8 @@
 ini_set("rom_name",	"NanoMod");
-ini_set("rom_version",	"4.0");
+ini_set("rom_version",	"4.1");
 ini_set("rom_author",	"setialpha");
 ini_set("rom_device",	"Generic (arm/arm64) non-stock Custom ROM");
-ini_set("rom_date",	"February, 23 2017");
+ini_set("rom_date",	"December, 31 2017");
 
 anisplash(
     0, "splash/nanolx.png", 1500
@@ -119,7 +119,8 @@ checkbox(
 	"YahooWeatherProvider",		"Weather Provider using Yahoo",		1,
 	"AnySoftKeyboard",		"Feature rich Keyboard",		1,
 	"KeePassDroid",			"Keepass compatible password safe",	1,
-	"OpenVPN",			"OpenVPN client",			1
+	"OpenVPN",			"OpenVPN client",			1,
+	"OpenKeyChain",			"Encrypt communications with OpenPGP",	1
 );
 
 checkbox(
