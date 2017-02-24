@@ -25,14 +25,16 @@ find_boot_image() {
 
 flash_orig_boot() {
   mv -f /data/stock_boot_*.gz /data/stock_boot.img.gz 2>/dev/null
-  gzip -d /data/stock_boot.img.gz 2>/dev/null
-  rm -f /data/stock_boot.img.gz 2>/dev/null
+  if [ -f /data/stock_boot.img.gz ]; then
+    gzip -d /data/stock_boot.img.gz 2>/dev/null
+    rm -f /data/stock_boot.img.gz 2>/dev/null
 
-  find_boot_image
+    find_boot_image
 
-  if [ -f /data/stock_boot.img -a ! -z "$BOOTIMAGE" ]; then
-    dd if=/data/stock_boot.img of=$BOOTIMAGE bs=4096
-    rm -f /data/stock_boot.img;
+    if [ -f /data/stock_boot.img -a ! -z "$BOOTIMAGE" ]; then
+      dd if=/data/stock_boot.img of=$BOOTIMAGE bs=4096
+      rm -f /data/stock_boot.img;
+    fi
   fi
 }
 
