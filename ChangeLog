@@ -8,7 +8,7 @@
   * OpenKeyChain
 - Other Changes
   * only re-flash boot image backup if
-    it is a SuperSU backup
+    it is a SuperSU backup (unsu.sh)
 
 4.0.20170223
 - Updates
