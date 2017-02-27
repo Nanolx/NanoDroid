@@ -5,7 +5,7 @@ NanoMod makes several modifications to your ROM:
 
 * user-friendly AROMA installer
 * debloat ROM and remove stock CM su binary
-* install microG and Play Store
+* install microG with either unofficial YalpStore or official PlayStore
   - for more information on microG visit [microG Homepage](http://www.microg.org)
   - with Mozilla location provider backend
   - with Nominatim adress provider backend
