@@ -10,12 +10,17 @@
 - Added applications
   * OpenKeyChain
   * YalpStore
+  * FakeStore
 - Other Changes
   * unsu.sh: only re-flash boot image backup if
     it is a SuperSU backup
   * installer: let the user choose whether to
     install microG with official PlayStore or
     with unofficial YalpStore
+  * When YalpStore is installed, also install
+    FakeStore, so that apps that expect PlayStore
+    still work. This also ensures SafetyNet
+    responses work as they should.
 
 4.0.20170223
 - Updates
