@@ -53,7 +53,7 @@ case ${1} in
 		fi
 		for part in apps bash META-INF microG nano PlayStore \
 			substratum userapps zelda-ringtones Magisk.zip \
-			nano-*.zip nano.sh README.md; do
+			nano-*.zip nano.sh README.md YalpStore; do
 			zip -r "${ZIP}" "${part}"
 		done
 
