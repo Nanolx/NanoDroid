@@ -4,11 +4,18 @@
   * VLC (2.1.0~beta)
   * Magisk (12~beta.20170225)
   * microG GmsCore (0.24-79)
+  * F-Droid (0.102.1)
+  * K9-Mail (5.205)
+  * Odyssey (1.1.4)
 - Added applications
   * OpenKeyChain
+  * YalpStore
 - Other Changes
-  * only re-flash boot image backup if
-    it is a SuperSU backup (unsu.sh)
+  * unsu.sh: only re-flash boot image backup if
+    it is a SuperSU backup
+  * installer: let the user choose whether to
+    install microG with official PlayStore or
+    with unofficial YalpStore
 
 4.0.20170223
 - Updates

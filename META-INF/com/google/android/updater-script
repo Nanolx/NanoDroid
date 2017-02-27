@@ -36,6 +36,13 @@ if file_getprop("/tmp/aroma-data/gapps.prop", "selected.1") == "1" then
 	package_extract_dir("PlayStore", "/system");
 endif;
 
+if file_getprop("/tmp/aroma-data/gapps.prop", "selected.1") == "2" then
+	ui_print("> Installing microG");
+	package_extract_dir("microG", "/system");
+	ui_print("> Installing Yalp Store");
+	package_extract_dir("YalpStore", "/system");
+endif;
+
 ##############################
 #
 # Debloat System
