@@ -8,7 +8,7 @@ case ${1} in
 		# NanoROM for Galaxy S6. Users won't need it.
 
 		NM=/storage/projects/NanoMod
-		NR=/android/NanoROM/ROM/nano
+		NR=/android/NewROM/nano
 
 		# microG
 		cp -r ${NM}/microG ${NR}/
