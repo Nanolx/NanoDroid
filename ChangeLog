@@ -12,9 +12,9 @@
   * PlayStore (7.6.07.N)
   * Termux (0.48)
 - Added applications
-  * OpenKeyChain
-  * YalpStore
-  * FakeStore
+  * OpenKeyChain (4.2.4)
+  * YalpStore (0.10)
+  * FakeStore (0.0.2)
 - Other Changes
   * unsu.sh: only re-flash boot image backup if
     it is a SuperSU backup
