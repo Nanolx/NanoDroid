@@ -31,6 +31,8 @@ there version is one of:
 device desired to patch must be connected through
 TWRP and /system mounted read-write."
 
+exit 0
+
 }
 
 case "${1}" in
@@ -58,22 +60,18 @@ git clone "${GITHUB_URL}" || error "Failed to down haystack!"
 
 cd ${PWD}/haystack
 
-${PWD}/pull-filset mydevice || error "Failed to pull files from device!"
+${PWD}/pull-fileset mydevice || error "Failed to pull files from device!"
 
 ${PWD}/patch-fileset ${PWD}/patches/${PATCH_HOOK} ${API} ${PWD}/mydevice \
 	|| error "Failed applying sigspoof hook patch!"
 
 ${PWD}/patch-fileset ${PWD}/patches/${PATCH_CORE} ${API} \
 	${PWD}/mydevice__${PATCH_HOOK} \
-	|| error "Failed applying core patch!"
-
-${PWD}/patch-fileset ${PWD}/patches/${PATCH_CORE} ${API} \
-	${PWD}/mydevice__${PATCH_HOOK} \
 	|| error "Failed applying sigspoof core patch!"
 
 ${PWD}/patch-fileset ${PWD}/patches/${PATCH_UI} ${API} \
-	${PWD}/mydevice__${PATCH_HOOK}_${PATCH_CORE} \
+	${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE} \
 	|| error "Failed applying sigspoof ui patch!"
 
-${PWD}/push-fileset ${PWD}/mydevice__${PATCH_HOOK}_${PATCH_CORE}_${PATCH_UI} \
+${PWD}/push-fileset ${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}__${PATCH_UI} \
 	|| error "Failed to push files to device!"
