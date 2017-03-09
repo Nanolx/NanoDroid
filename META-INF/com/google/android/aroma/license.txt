@@ -24,12 +24,14 @@ Check "I Agree with this" and press Next.
   * F-Droid (0.102.1)
   * K9-Mail (5.205)
   * Odyssey (1.1.4)
-  * Substratum (563)
+  * Substratum (603)
   * PlayStore (7.6.07.N)
   * Termux (0.48)
+  * Kernel Adiutor (0.9.6.7)
+  * Update NewPipe (0.8.11)
 - Added applications
   * OpenKeyChain (4.2.4)
-  * YalpStore (0.10)
+  * YalpStore (0.11)
   * FakeStore (0.0.2)
 - Other Changes
   * unsu.sh: only re-flash boot image backup if
