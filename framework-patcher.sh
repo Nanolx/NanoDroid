@@ -70,6 +70,8 @@ git clone "${GITHUB_URL}" || error "Failed to down haystack!"
 
 cd ${PWD}/haystack
 
+adb shell "mount -orw /system"
+
 ${PWD}/pull-fileset mydevice || error "Failed to pull files from device!"
 
 ${PWD}/patch-fileset ${PWD}/patches/${PATCH_HOOK} ${API} ${PWD}/mydevice \
