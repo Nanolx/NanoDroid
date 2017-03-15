@@ -2,8 +2,8 @@
 - Updates
   * AnySoft Keyboard (1.8.585)
   * VLC (2.1.1~beta)
-  * Magisk (12~beta.20170304)
-  * MagiskManager (5~beta.20170304)
+  * Magisk (12~beta.20170312)
+  * MagiskManager (5~beta.20170312)
   * microG GmsCore (0.24-79)
   * F-Droid (0.102.1)
   * K9-Mail (5.205)
@@ -12,7 +12,8 @@
   * PlayStore (7.6.08.N)
   * Termux (0.48)
   * Kernel Adiutor (0.9.6.7)
-  * Update NewPipe (0.8.11)
+  * NewPipe (0.8.12)
+  * Nano-init (4)
 - Added applications
   * OpenKeyChain (4.2.4)
   * YalpStore (0.11)
