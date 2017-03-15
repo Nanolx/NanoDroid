@@ -15,7 +15,7 @@ help () {
 echo -e "haystack framework patcher helper
 
 provide Android Version like:
-	haystack [version]
+	haystack [version] [--gui]
 
 there version is one of:
 	4.1	[JB]
@@ -27,6 +27,14 @@ there version is one of:
 	6.0	[MM]
 	7.0	[N]
 	7.1	[N]
+
+if you want to have signature spoofing as an
+option in Developer Settings, pass:
+
+	--gui
+
+as second parameter. Else signature spoofing
+will always be active.
 
 device desired to patch must be connected through
 TWRP and /system mounted read-write."
@@ -47,6 +55,8 @@ case "${1}" in
 	7.1 )	API=25	;;
 	*   )	help	;;
 esac
+
+[[ ${2} == --gui ]] && APPLY_GUI_HOOK=True
 
 if [[ ${API} -lt 24 ]]; then
 	PATCH_HOOK="sigspoof-hook-4.1-6.0"
@@ -69,9 +79,14 @@ ${PWD}/patch-fileset ${PWD}/patches/${PATCH_CORE} ${API} \
 	${PWD}/mydevice__${PATCH_HOOK} \
 	|| error "Failed applying sigspoof core patch!"
 
-${PWD}/patch-fileset ${PWD}/patches/${PATCH_UI} ${API} \
-	${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE} \
-	|| error "Failed applying sigspoof ui patch!"
+if [[ ${APPLY_GUI_HOOK} == True ]]; then
+	${PWD}/patch-fileset ${PWD}/patches/${PATCH_UI} ${API} \
+		${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE} \
+		|| error "Failed applying sigspoof ui patch!"
 
-${PWD}/push-fileset ${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}__${PATCH_UI} \
+	${PWD}/push-fileset ${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}__${PATCH_UI} \
 	|| error "Failed to push files to device!"
+else
+	${PWD}/push-fileset ${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE} \
+		|| error "Failed to push files to device!"
+fi
