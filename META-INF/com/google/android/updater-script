@@ -116,6 +116,7 @@ endif;
 if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.12") == "1" then
 	ui_print(" << Gallery2");
 	delete_recursive("/system/priv-app/Gallery2");
+	delete_recursive("/system/app/Gallery2");
 endif;
 
 if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.13") == "1" then
@@ -130,6 +131,7 @@ endif;
 
 if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.15") == "1" then
 	ui_print(" << Camera");
+	delete_recursive("/system/app/Camera2");
 	delete_recursive("/system/priv-app/Snap");
 	delete_recursive("/system/priv-app/SnapdragonCamera");
 endif;
