@@ -48,8 +48,8 @@ selectbox(
 	"gapps.prop",
 
 	"Select the Google Apps you want", "", 2, #-- Group 1. key = "selected.1"
-	"microG / PlayStore",	"Flash microG Open Source with original PlayStore",	0,	#-- selected.1 = 1
-	"microG / YalpStore",	"Flash microG Open Source with unofficial YalpStore ",	1,	#-- selected.1 = 2
+	"microG / PlayStore",	"Flash microG Open Source with original PlayStore",	1,	#-- selected.1 = 1
+	"microG / YalpStore",	"Flash microG Open Source with unofficial YalpStore ",	0,	#-- selected.1 = 2
 	"Nothing",		"Nothing",						0	#-- selected.1 = 3
 );
 
