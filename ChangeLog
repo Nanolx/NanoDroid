@@ -31,6 +31,11 @@
     FakeStore, so that apps that expect PlayStore
     still work. This also ensures SafetyNet
     responses work as they should.
+  * installer: when installing PlayStore, remove
+    FakeStore and YalpStore, or remove PlayStore,
+    before installing YalpStore, makes it much more
+    easy to try out both variants without having to
+    manually remove system apps or re-flashing ROM
 
 4.0.20170223
 - Updates
