@@ -98,7 +98,6 @@ endif;
 
 if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.9") == "1" then
 	ui_print(" << Wallpaper");
-	delete_recursive("/system/app/Wallpaper");
 	delete_recursive("/system/app/WallpaperBackup");
 	delete_recursive("/system/app/WallpaperPickerGoogle");
 endif;
