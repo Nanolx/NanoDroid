@@ -105,11 +105,12 @@ The following Magisk/Modules can be choosen to be installed:
 
 * Magisk
   - with builtin SuperUser
-  - with MagiskManager companion application
+  - with Magisk Manager companion application
 * Nano-Init (init scripts)
   - fstrim (optimize filesystems)
   - logscleaner (clean old logfiles)
   - sqlite (optimize sqlite databases)
+  - selinux (apply changes to selinux files for Samsung devices)
 * Nano-Miitomo (prevents Miitomo crashes on Custom ROMs)
   - Miitomo does not crash because of rooted devices,
     but it does crash if 'ro.debuggable' is '1'. This
@@ -189,12 +190,13 @@ Installation
 * install NanoMod
   * if you have choosen microG you need to patch the framework for signature
     spoofing. Some ROMs already include support for that, for example crDroid.
-    If your ROM does not have signature spoofing included (very likely), patch
-    the framework manually like:
-    - in TWRP mount system partition
-    - get [Tingle](https://github.com/ale5000-git/tingle) framework patcher
-    - execute Tingle and choose ADB as source for framework
-    - your framework.jar will now be patched for microG to work
+    If your ROM does not have signature spoofing included (very likely), use
+    the supplied framework-patcher.sh. This shell script for GNU Bash (and
+    compatible shells) works on GNU/Linux, *BSD, Solaris and the-like. It
+    automizes the process of downloading [Haystack](https://github.com/Lanchon/haystack),
+    pulling files from phone, mounting /system read-write in TWRP, patching files
+    and pushing modified files to the device. See `framework-patcher.sh --help`
+    for more information.
 * reboot into system
   * if you have choosen microG
     - go into 'microG settings' and set up everything like:
