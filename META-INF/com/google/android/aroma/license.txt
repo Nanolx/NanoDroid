@@ -14,11 +14,11 @@ Check "I Agree with this" and press Next.
 
 <@center><#selectbg_g>ChangeLog:</#></b>
 <@left>
-4.1.2017XXXX
+4.1.20170321
 - Updates
   * AnySoft Keyboard (1.8.585)
-  * VLC (2.1.1~beta)
-  * Magisk (11.5)
+  * VLC (2.1.2~beta)
+  * Magisk (11.6)
   * MagiskManager (4.2.7)
   * microG GmsCore (0.24-79)
   * F-Droid (0.102.2)
@@ -47,3 +47,8 @@ Check "I Agree with this" and press Next.
     FakeStore, so that apps that expect PlayStore
     still work. This also ensures SafetyNet
     responses work as they should.
+  * installer: when installing PlayStore, remove
+    FakeStore and YalpStore, or remove PlayStore,
+    before installing YalpStore, makes it much more
+    easy to try out both variants without having to
+    manually remove system apps or re-flashing ROM
