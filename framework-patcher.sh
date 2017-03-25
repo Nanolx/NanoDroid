@@ -65,30 +65,30 @@ else	PATCH_HOOK="sigspoof-hook-7.0"
 	PATCH_UI="sigspoof-ui-global-7.0"
 fi
 
-[[ -d ${PWD}/haystack ]] && rm -rf ${PWD}/haystack
+[[ -d ${PWD}/haystack ]] && rm -rf "${PWD}/haystack"
 git clone "${GITHUB_URL}" || error "Failed to down haystack!"
 
-cd ${PWD}/haystack
+cd "${PWD}/haystack"
 
 adb shell "mount -orw /system"
 
-${PWD}/pull-fileset mydevice || error "Failed to pull files from device!"
+"${PWD}/pull-fileset" mydevice || error "Failed to pull files from device!"
 
-${PWD}/patch-fileset ${PWD}/patches/${PATCH_HOOK} ${API} ${PWD}/mydevice \
+"${PWD}/patch-fileset" "${PWD}/patches/${PATCH_HOOK}" "${API}" "${PWD}/mydevice" \
 	|| error "Failed applying sigspoof hook patch!"
 
-${PWD}/patch-fileset ${PWD}/patches/${PATCH_CORE} ${API} \
-	${PWD}/mydevice__${PATCH_HOOK} \
+"${PWD}/patch-fileset" "${PWD}/patches/${PATCH_CORE}" "${API}" \
+	"${PWD}/mydevice__${PATCH_HOOK}" \
 	|| error "Failed applying sigspoof core patch!"
 
 if [[ ${APPLY_GUI_HOOK} == True ]]; then
-	${PWD}/patch-fileset ${PWD}/patches/${PATCH_UI} ${API} \
-		${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE} \
+	"${PWD}/patch-fileset" "${PWD}/patches/${PATCH_UI}" "${API}" \
+		"${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}" \
 		|| error "Failed applying sigspoof ui patch!"
 
-	${PWD}/push-fileset ${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}__${PATCH_UI} \
+	"${PWD}/push-fileset" "${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}__${PATCH_UI}" \
 	|| error "Failed to push files to device!"
 else
-	${PWD}/push-fileset ${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE} \
+	"${PWD}/push-fileset" "${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}" \
 		|| error "Failed to push files to device!"
 fi
