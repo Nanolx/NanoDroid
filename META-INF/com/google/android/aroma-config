@@ -123,7 +123,8 @@ checkbox(
 	"AnySoftKeyboard",		"Feature rich Keyboard",		1,
 	"KeePassDroid",			"Keepass compatible password safe",	1,
 	"OpenVPN",			"OpenVPN client",			1,
-	"OpenKeyChain",			"Encrypt communications with OpenPGP",	1
+	"OpenKeyChain",			"Encrypt communications with OpenPGP",	1,
+	"OpenLauncher",			"Open Source Launcher",			1
 );
 
 checkbox(

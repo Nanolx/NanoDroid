@@ -310,6 +310,11 @@ if file_getprop("/tmp/aroma-data/install.prop", "item.1.24") == "1" then
 	package_extract_dir("apps/OpenKeyChain", "/system/app/OpenKeyChain");
 endif;
 
+if file_getprop("/tmp/aroma-data/install.prop", "item.1.25") == "1" then
+	ui_print(" << OpenLauncher");
+	package_extract_dir("apps/OpenLauncher", "/system/app/OpenLauncher");
+endif;
+
 ##############################
 #
 # Permissions
