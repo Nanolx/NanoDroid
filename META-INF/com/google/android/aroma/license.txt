@@ -14,41 +14,20 @@ Check "I Agree with this" and press Next.
 
 <@center><#selectbg_g>ChangeLog:</#></b>
 <@left>
-4.1.20170321
+4.2.20171231
 - Updates
-  * AnySoft Keyboard (1.8.585)
-  * VLC (2.1.2~beta)
-  * Magisk (11.6)
-  * MagiskManager (4.2.7)
-  * microG GmsCore (0.24-79)
-  * F-Droid (0.102.2)
-  * K9-Mail (5.206)
-  * Odyssey (1.1.4)
-  * Substratum (604)
-  * PlayStore (7.6.08.N)
-  * Termux (0.48)
-  * Kernel Adiutor (0.9.6.7)
-  * NewPipe (0.8.12)
-  * Nano-init (4)
-    - let's several more Samsung devices pass
-      SafetyNet (though, not all)
-  * Twidere (3.4.39)
-- Added applications
-  * OpenKeyChain (4.2.4)
-  * YalpStore (0.11)
-  * FakeStore (0.0.2)
-- Other Changes
-  * unsu.sh: only re-flash boot image backup if
-    it is a SuperSU backup
-  * installer: let the user choose whether to
-    install microG with official PlayStore or
-    with unofficial YalpStore
-  * When YalpStore is installed, also install
-    FakeStore, so that apps that expect PlayStore
-    still work. This also ensures SafetyNet
-    responses work as they should.
-  * installer: when installing PlayStore, remove
-    FakeStore and YalpStore, or remove PlayStore,
-    before installing YalpStore, makes it much more
-    easy to try out both variants without having to
-    manually remove system apps or re-flashing ROM
+  * Kernel Adiutor (0.9.6.9)
+  * microG GmsCore (0.24-81)
+  * Substratum (627)
+  * Twidere (3.4.44)
+  * YalpStore (0.12)
+- Replaced Applications
+  * LeafPic => (Simple) Gallery
+    - (Simple) Gallery allows changing the
+      wallpaper (unlike LeafPic)
+  * Lightning => Privacy Browser
+- New Applications
+  * OpenLauncher
+- Installer
+  - allow removal of Trebuchet
+  - allow removal of Pixel Launcher
