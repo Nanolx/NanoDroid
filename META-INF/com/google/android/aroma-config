@@ -48,8 +48,8 @@ selectbox(
 	"gapps.prop",
 
 	"Select the Google Apps you want", "", 2, #-- Group 1. key = "selected.1"
-	"microG / PlayStore",	"Flash microG Open Source with original PlayStore",	1,	#-- selected.1 = 1
-	"microG / YalpStore",	"Flash microG Open Source with unofficial YalpStore ",	0,	#-- selected.1 = 2
+	"microG / PlayStore",	"Flash microG Open Source with original PlayStore",	0,	#-- selected.1 = 1
+	"microG / YalpStore",	"Flash microG Open Source with unofficial YalpStore ",	1,	#-- selected.1 = 2
 	"Nothing",		"Nothing",						0	#-- selected.1 = 3
 );
 
@@ -88,7 +88,9 @@ checkbox(
 	"Screencast",		"Screen Recorder",			1,
 	"Camera",		"Standard Camera Applications",		1,
 	"ResurrectionStats",	"Resurrection Remix Statistics",	1,
-	"Stk",			"SIM Card Toolkit",			1
+	"Stk",			"SIM Card Toolkit",			1,
+	"Trebuchet",		"LineageOS default launcher",		1,
+	"Pixel Launcher",	"Pixel launcher",			1
 );
 
 checkbox(
@@ -105,8 +107,8 @@ checkbox(
 	"HackerKeyboard",		"Full fletched PC-like Keyboard",	1,
 	"K9Mail",			"Powerful Mail client",			1,
 	"Kernel Adiutor",		"Kernel Settings Manager",		1,
-	"LeafPic",			"Gallery Application",			1,
-	"Lightning",			"Blazing fast Web Browser",		1,
+	"Simple Gallery",		"Gallery Application",			1,
+	"Privacy Browser",		"Fast and secure Web Browser",		1,
 	"NewPipe",			"YouTube frontend and downloader",	1,
 	"Oandbackup",			"Backup and Restore apps",		1,
 	"Odyssey",			"Audio Player",				1,

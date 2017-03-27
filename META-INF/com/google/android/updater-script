@@ -153,6 +153,16 @@ if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.17") == "1" then
 	delete_recursive("/system/app/Stk");
 endif;
 
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.18") == "1" then
+	ui_print(" << Trebuchet");
+	delete_recursive("/system/priv-app/Trebuchet");
+endif;
+
+if file_getprop("/tmp/aroma-data/debloat.prop", "item.1.19") == "1" then
+	ui_print(" << Pixel Launcher");
+	delete_recursive("/system/app/NexusLauncher");
+endif;
+
 ##############################
 #
 # Install Applications
@@ -199,13 +209,13 @@ if file_getprop("/tmp/aroma-data/install.prop", "item.1.7") == "1" then
 endif;
 
 if file_getprop("/tmp/aroma-data/install.prop", "item.1.8") == "1" then
-	ui_print(" << LeafPic");
-	package_extract_dir("apps/LeafPic", "/system/app/LeafPic");
+	ui_print(" << Simple Gallery");
+	package_extract_dir("apps/SimpleGallery", "/system/app/SimpleGallery");
 endif;
 
 if file_getprop("/tmp/aroma-data/install.prop", "item.1.9") == "1" then
-	ui_print(" << Lightning");
-	package_extract_dir("apps/Lightning", "/system/app/Lightning");
+	ui_print(" << PrivacyBrowser");
+	package_extract_dir("apps/PrivacyBrowser", "/system/app/PrivacyBrowser");
 endif;
 
 if file_getprop("/tmp/aroma-data/install.prop", "item.1.10") == "1" then
