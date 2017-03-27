@@ -57,6 +57,8 @@ The following applications can be choosen to be removed:
 * Snap, Snapdragon Camera (Camera)
 * Resurrection Remix Statistics
 * Sim Toolkit
+* Pixel Launcher
+* Trebuchet
 
 The following system applications can be choosen to be installed:
 
@@ -69,8 +71,8 @@ The following system applications can be choosen to be installed:
 * K9-Mail
 * Kernel Adiutor
 * KeyPassDroid (Password Safe)
-* LeafPic (Gallery)
-* Lightning (Browser)
+* (Simple) Gallery
+* Privacy Browser
 * New Pipe (YouTube client)
 * Oandbackup (App backup and restore)
 * Odyssey (Audio player)
@@ -80,6 +82,7 @@ The following system applications can be choosen to be installed:
 * Substratum (App and Compiler)¹
 * Twidere (Twitter client)
 * Yahoo Weather Provider
+* OpenLauncher
 
 ¹ will run in legacy mode on non-OMS ROMs
 
