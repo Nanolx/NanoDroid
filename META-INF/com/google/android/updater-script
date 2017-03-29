@@ -355,13 +355,6 @@ if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.2") == "1" then
 	run_program("/sbin/sh", "/tmp/nano-init/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-init/nano-init.zip");
 endif;
 
-if file_getprop("/tmp/aroma-data/magisk.prop", "item.1.3") == "1" then
-	ui_print(" << Installing Nano-Miitomo");
-	package_extract_file("nano-miitomo.zip", "/tmp/nano-miitomo/nano-miitomo.zip");
-	run_program("/sbin/unzip", "/tmp/nano-miitomo/nano-miitomo.zip", "META-INF/com/google/android/*", "-d", "/tmp/nano-miitomo");
-	run_program("/sbin/sh", "/tmp/nano-miitomo/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/nano-miitomo/nano-miitomo.zip");
-endif;
-
 ##############################
 #
 # Extras

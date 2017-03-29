@@ -60,9 +60,8 @@ checkbox(
 	"magisk.prop",
 
 	"Select Magisk and desired modules", "", 2, #-- Group 1
-	"Magisk",		"Magisk with PHH SuperUser",		1,
-	"Nano-Init",		"NanoMod init scripts",			1,
-	"Nano-Miitomo",		"Prevent Miitomo from crashing",	1
+	"Magisk",		"Magisk with MagiskSU,			1,
+	"Nano-Init",		"NanoMod init scripts",			1
 );
 
 checkbox(

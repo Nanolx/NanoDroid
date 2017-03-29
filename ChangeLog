@@ -9,6 +9,9 @@
   * LeafPic => (Simple) Gallery
     - (Simple) Gallery allows changing the
       wallpaper (unlike LeafPic)
+- Removed Magisk Modules:
+  * Nano-Miitomo (ro.debuggable is now disabled
+    by Magisk by default)
 - New Applications
   * OpenLauncher
 - Installer
