@@ -214,8 +214,8 @@ if file_getprop("/tmp/aroma-data/install.prop", "item.1.8") == "1" then
 endif;
 
 if file_getprop("/tmp/aroma-data/install.prop", "item.1.9") == "1" then
-	ui_print(" << PrivacyBrowser");
-	package_extract_dir("apps/PrivacyBrowser", "/system/app/PrivacyBrowser");
+	ui_print(" << Lightning");
+	package_extract_dir("apps/Lightning", "/system/app/Lightning");
 endif;
 
 if file_getprop("/tmp/aroma-data/install.prop", "item.1.10") == "1" then

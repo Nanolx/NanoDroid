@@ -72,7 +72,7 @@ The following system applications can be choosen to be installed:
 * Kernel Adiutor
 * KeyPassDroid (Password Safe)
 * (Simple) Gallery
-* Privacy Browser
+* Lightning (Browser)
 * New Pipe (YouTube client)
 * Oandbackup (App backup and restore)
 * Odyssey (Audio player)
