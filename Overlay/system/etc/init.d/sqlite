@@ -1,0 +1,38 @@
+#!/system/bin/sh
+
+mount -o rw,remount rootfs /
+
+chown 0:0 /data/sqlite.log
+chmod 755 /data/sqlite.log
+
+LOG_FILE=/data/sqlite.log
+
+rm $LOG_FILE;
+
+echo "SQLite database VACUUM and REINDEX started at $( date +"%m-%d-%Y %H:%M:%S" )" | tee -a $LOG_FILE;
+
+for i in `busybox find /data/* -iname "*.db"`; do
+sqlite3 $i 'VACUUM;';
+resVac=$?
+if [ $resVac == 0 ]; then
+resVac="SUCCESS";
+else
+resVac="ERRCODE-$resVac";
+fi;
+
+sqlite3 $i 'REINDEX;';
+resIndex=$?
+if [ $resIndex == 0 ]; then
+resIndex="SUCCESS";
+else
+resIndex="ERRCODE-$resIndex";
+fi;
+echo "Database $i:  VACUUM=$resVac  REINDEX=$resIndex" | tee -a $LOG_FILE;
+done
+  
+echo "SQLite database VACUUM and REINDEX finished at $( date +"%m-%d-%Y %H:%M:%S" )" | tee -a $LOG_FILE;
+
+chown 0:0 /data/sqlite.log
+chmod 755 /data/sqlite.log
+
+mount -o ro,seclabel,remount rootfs /

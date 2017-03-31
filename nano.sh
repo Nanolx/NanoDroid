@@ -35,7 +35,6 @@ mount_image() {
           fi
         fi
         if (is_mounted $2); then
-          ui_print "- Mounting $1 to $2"
           echo "$LOOPDEVICE" > /tmp/loopdevice
           break;
         fi
@@ -57,19 +56,10 @@ elif [[ ${1} == dataperms ]]; then
 	chown -R 1000:1000 /data/app
 	find /data/app -type f | xargs chmod 0644
 	find /data/app -type d | xargs chmod 0771
-elif [[ ${1} == nanoperms ]]; then
-	chmod 0755 /system/bin/nano*
-elif [[ ${1} == bashperms ]]; then
-	chmod 0755 /system/bin/bash*
-elif [[ ${1} == subsperms ]]; then
-	chmod 0755 /system/bin/aapt
-	chmod 0755 /system/bin/aopt
 elif [[ ${1} == mkdir ]]; then
 	mkdir /tmp/magisk
-	mkdir /tmp/nano-init
-	mkdir /tmp/nano-miitomo
+	mkdir /tmp/overlay
 elif [[ ${1} == rmdir ]]; then
 	rm -rf /tmp/magisk
-	rm -rf /tmp/nano-init
-	rm -rf /tmp/nano-miitomo
+	rm -rf /tmp/overlay
 fi

@@ -1,0 +1,9 @@
+#!/system/bin/sh
+
+if [ -e /sys/fs/selinux/enforce ]; then
+	chmod 0640 /sys/fs/selinux/enforce
+fi
+
+if [ -e /sys/fs/selinux/policy ]; then
+	chmod 0440 /sys/fs/selinux/policy
+fi

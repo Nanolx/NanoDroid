@@ -1,0 +1,10 @@
+#!/system/bin/sh
+
+if [ -e /init.fstrim.sh ]; then
+	fstrim -v /preload
+else
+	fstrim -v /cache
+	fstrim -v /system
+	fstrim -v /data
+	fstrim -v /preload
+fi

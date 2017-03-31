@@ -1,0 +1,35 @@
+#!/system/bin/sh
+
+mount -o rw,remount rootfs /
+
+chown 0:0 /data/clean.log
+chmod 755 /data/clean.log
+
+LOG_FILE=/data/clean.log
+
+rm $LOG_FILE;
+
+echo "Starting Automatic Cleaning $( date +"%m-%d-%Y %H:%M:%S" )" | tee -a $LOG_FILE;
+busybox find /data/data -type d -iname "*cache*" -exec busybox rm -f {}/* ';' -exec echo "Cleared {}" ';'
+rm -f /data/data/*/*/*/*.tmp
+rm -f /data/data/*/*/*/*/*.tmp
+rm -f /data/local/*.apk
+rm -f /data/local/tmp/*.apk
+rm -f /data/log/*
+rm -f /data/slog/*
+rm -f /cache/*.*
+rm -f /cache/recovery/*.*
+rm -f /data/system/dropbox/*.*
+rm -f /data/backup/pending/*.tmp
+rm -f /data/tombstones/*
+rm -f /data/system/usagestats/0/daily/*
+rm -f /data/system/usagestats/0/monthly/*
+rm -f /data/system/usagestats/0/weekly/*
+rm -f /data/system/usagestats/0/yearly/*
+
+echo "Automatic Cleaning finished at $( date +"%m-%d-%Y %H:%M:%S" )" | tee -a $LOG_FILE;
+
+chown 0:0 /data/clean.log
+chmod 755 /data/clean.log
+
+mount -o ro,seclabel,remount rootfs /

@@ -1,10 +1,33 @@
-4.2.20171231
+5.0.20170331
+- Internal Changes
+  * NanoMod is now (mostly) and Magisk Module
+    - referrenced to as "Overlay"
+  * Nano-Init merged into NanoMod Overlay
+  * AROMA installer removed
+    - if you don't want a specific system
+      application to be made unavailable,
+      remove the dummy folder from
+        /magisk/NanoMod/system/
+      for example remove
+        /magisk/NanoMod/system/app/Gallery2
+      if you want to use the stock Gallery
+    - Needs to be redone after each update of
+      NanoMod as of now, though I plan to add
+      a init script that will read-out a file
+      in /data that holds your desired setup
+  * Updated framework-patcher.sh to install
+    files modified by haystack directly into
+    the NanoMod Overlay
+    - framework-patcher needs to be re-run
+      everytime you install NanoMod
+    - it's suggested to re-run framework-patcher
+      on every ROM update, too, so that you get
+      to patch your ROMs current framework files
 - Updates
   * Kernel Adiutor (0.9.6.9)
   * microG GmsCore (0.24-81)
   * Substratum (627)
   * Twidere (3.4.48)
-  * YalpStore (0.12)
   * Magisk (12.0)
   * Magiks Manager (4.3.1)
   * VLC (2.1.3~beta)
@@ -12,14 +35,15 @@
   * LeafPic => (Simple) Gallery
     - (Simple) Gallery allows changing the
       wallpaper (unlike LeafPic)
-- Removed Magisk Modules:
+- Removed Applications
+  * YalpStore
+  * FakeStore
+- Removed Magisk Modules
   * Nano-Miitomo (ro.debuggable is now disabled
     by Magisk by default)
+  * Nano-Init (merged in the Overlay)
 - New Applications
   * OpenLauncher
-- Installer
-  - allow removal of Trebuchet
-  - allow removal of Pixel Launcher
 
 4.1.20170321
 - Updates
