@@ -78,10 +78,8 @@ adb shell "chmod 0755 /tmp/nano.sh"
 adb shell "/tmp/nano.sh mount-magisk"
 adb shell "mkdir /magisk/NanoMod/system/framework"
 
-for file in framework.jar ext.jar services.jar; do
-	adb push "${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}/${file}" \
+adb push "${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}/services.jar" \
 		"/magisk/NanoMod/system/framework"
-done
 
 adb shell "/tmp/nano.sh umount-magisk"
 adb shell "rm /tmp/nano.sh"
