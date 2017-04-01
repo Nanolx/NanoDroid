@@ -56,6 +56,8 @@ elif [[ ${1} == dataperms ]]; then
 	chown -R 1000:1000 /data/app
 	find /data/app -type f | xargs chmod 0644
 	find /data/app -type d | xargs chmod 0771
+	chown 1000:1000 /data/media/0/.nanomod-overlay
+	chmod 0644 /data/media/0/.nanomod-overlay
 elif [[ ${1} == mkdir ]]; then
 	mkdir /tmp/magisk
 	mkdir /tmp/overlay
