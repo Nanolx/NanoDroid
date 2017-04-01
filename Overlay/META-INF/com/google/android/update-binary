@@ -263,8 +263,6 @@ mkdir -p $MODPATH
 # Copy files
 ui_print "- Copying files"
 unzip -o "$ZIP" "system/*" -d $MODPATH
-unzip -o "$ZIP" "PlayStore/*" -d $MODPATH
-unzip -o "$ZIP" "YalpStore/*" -d $MODPATH
 
 # Handle replace folders
 for TARGET in $REPLACE; do
