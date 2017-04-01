@@ -1,0 +1,109 @@
+#!/system/bin/bash
+
+cfg=/data/media/.nanomod-overlay 
+
+if [[ ! -d /magisk/NanoMod ]]; then
+	echo "dafuq?"
+	exit 1
+fi
+
+if [[ -f ${cfg} ]]; then
+	source ${cfg}
+else	echo "${cfg} does not exist!"
+	exit 1
+fi
+
+_add_override () {
+
+	mkdir -p "/magisk/NanoMod/system/${1}" && \
+		touch "/magisk/NanoMod/system/${1}/.replace" || \
+			_error "${1}"
+
+}
+
+_remove_override () {
+
+	rm -rf "/magisk/NanoMod/system/${1}"
+
+}
+
+_error () {
+
+	echo "Failed to create override for \"${app}\"!"
+	exit 1
+
+	}
+
+case ${1} in
+	-l | --list )
+		echo "Overrides exist for following applications
+* in /system/app:
+
+${APPS[*]}
+
+* in /system/priv-app:
+
+${PRIV_APPS[*]}"
+	;;
+
+	-a | --add )
+		if [[ -d /system/app/${2} ]]; then
+			echo "Adding override for app: \"${2}\""
+			echo "APPS=(
+${APPS[*]}
+${2}
+)
+PRIV_APPS=(
+${PRIV_APPS[*]}
+)" > "${cfg}"
+			_add_override "app/${2}"
+		elif [[ -d /system/priv-app/${2} ]]; then
+			echo "Adding override for priv-app \"${2}\""
+			echo "APPS=(
+${APPS[*]}
+)
+PRIV_APPS=(
+${PRIV_APPS[*]}
+${2}
+)" > "${cfg}"
+			_add_override "priv-app/${2}"
+		else	echo "\"${2}\" not found in /system/app or /system/priv-app"
+		fi
+	;;
+
+	-r | --remove )
+		if grep -q " ${2} " "${cfg}"; then
+			sed -e "/^${2}/d" -i "${cfg}"
+			if [[ ${APPS[*]} == *${2}* ]]; then
+				echo "Removing override for app: \"${2}\""
+				remove_override "app/${2}"
+			elif [[ ${PRIV_APPS[*]} == *${2}* ]]; then
+				echo "Removing override for priv-app: \"${2}\""
+				remove_override "priv-app/${2}"
+			fi
+		else	echo "No override for \"${2}\" found"
+		fi
+	;;
+
+	-u | --update )
+		for app in "${APPS[@]}"; do
+			_add_override "app/${2}"
+		done
+
+		for app in "${PRIV_APPS[@]}"; do
+			_add_override "priv-app/${2}"
+		done
+	;;
+
+	-h | --help )
+		echo "nanomod-overlay helper script
+
+Options:
+-a | --add	[appname]	add override for app [appname]
+-r | --remove	[appname]	remove override for app [appname]
+-l | --list			list all overrides
+-u | --update			update all overrides
+-h | --help			this message"
+	;;
+
+esac
