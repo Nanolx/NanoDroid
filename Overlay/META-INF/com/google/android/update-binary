@@ -264,6 +264,9 @@ mkdir -p $MODPATH
 ui_print "- Copying files"
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
+# Setup Overrides
+$MODPATH/system/bin/nanomod-overlay --update
+
 # Handle replace folders
 for TARGET in $REPLACE; do
   mktouch $MODPATH$TARGET/.replace
