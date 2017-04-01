@@ -4,17 +4,10 @@
     - referrenced to as "Overlay"
   * Nano-Init merged into NanoMod Overlay
   * AROMA installer removed
-    - if you don't want a specific system
-      application to be made unavailable,
-      remove the dummy folder from
-        /magisk/NanoMod/system/
-      for example remove
-        /magisk/NanoMod/system/app/Gallery2
-      if you want to use the stock Gallery
-    - Needs to be redone after each update of
-      NanoMod as of now, though I plan to add
-      a init script that will read-out a file
-      in /data that holds your desired setup
+    - the list of applications to override
+      is now in the file '.nanomod-overlay'
+      in the internal data storage. You can
+      edit the file to your liking
   * Updated framework-patcher.sh to install
     files modified by haystack directly into
     the NanoMod Overlay
