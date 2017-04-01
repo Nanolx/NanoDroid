@@ -50,20 +50,20 @@ ${PRIV_APPS[*]}"
 		if [[ -d /system/app/${2} ]]; then
 			echo "Adding override for app: \"${2}\""
 			echo "APPS=(
-${APPS[*]}
+$(printf '%s\n' ${APPS[*]})
 ${2}
 )
 PRIV_APPS=(
-${PRIV_APPS[*]}
+$(printf '%s\n' ${PRIV_APPS[*]})
 )" > "${cfg}"
 			_add_override "app/${2}"
 		elif [[ -d /system/priv-app/${2} ]]; then
 			echo "Adding override for priv-app \"${2}\""
 			echo "APPS=(
-${APPS[*]}
+$(printf '%s\n' ${APPS[*]})
 )
 PRIV_APPS=(
-${PRIV_APPS[*]}
+$(printf '%s\n' ${PRIV_APPS[*]})
 ${2}
 )" > "${cfg}"
 			_add_override "priv-app/${2}"
