@@ -39,31 +39,31 @@ case ${1} in
 		echo "Overrides exist for following applications
 * in /system/app:
 
-$(printf '  * %s\n' ${APPS[*]})
+$(printf '  * %s\n' "${APPS[*]}")
 
 * in /system/priv-app:
 
-$(printf '  * %s\n' ${PRIV_APPS[*]})"
+$(printf '  * %s\n' "${PRIV_APPS[*]}")"
 	;;
 
 	-a | --add )
 		if [[ -d /system/app/${2} ]]; then
 			echo "Adding override for app: \"${2}\""
 			echo "APPS=(
-$(printf '%s\n' ${APPS[*]})
+$(printf '%s\n' "${APPS[*]}")
 ${2}
 )
 PRIV_APPS=(
-$(printf '%s\n' ${PRIV_APPS[*]})
+$(printf '%s\n' "${PRIV_APPS[*]}")
 )" > "${cfg}"
 			_add_override "app/${2}"
 		elif [[ -d /system/priv-app/${2} ]]; then
 			echo "Adding override for priv-app \"${2}\""
 			echo "APPS=(
-$(printf '%s\n' ${APPS[*]})
+$(printf '%s\n' "${APPS[*]}")
 )
 PRIV_APPS=(
-$(printf '%s\n' ${PRIV_APPS[*]})
+$(printf '%s\n' "${PRIV_APPS[*]}")
 ${2}
 )" > "${cfg}"
 			_add_override "priv-app/${2}"
@@ -87,8 +87,8 @@ ${2}
 
 	-u | --update )
 
-		find "/magisk/NanoMod/system" -name *.replace | xargs rm -f
-		find "/magisk/NanoMod/system" -type d -empty | xargs rm -rf
+		find "/magisk/NanoMod/system" -print0 -name "*.replace" | xargs -0 rm -f
+		find "/magisk/NanoMod/system" -print0 -type d -empty | xargs -0 rm -rf
 
 		for app in "${APPS[@]}"; do
 			_add_override "app/${2}"
