@@ -15,9 +15,9 @@ fi
 
 _add_override () {
 
-	mkdir -p "/magisk/NanoMod/system/${1}" && \
-		touch "/magisk/NanoMod/system/${1}/.replace" || \
-			_error "${1}"
+	mkdir -p "/magisk/NanoMod/system/${1}"
+	touch "/magisk/NanoMod/system/${1}/${2}/${2}.apk"
+	touch "/magisk/NanoMod/system/${1}/${2}/.override"
 
 }
 
@@ -26,13 +26,6 @@ _remove_override () {
 	rm -rf "/magisk/NanoMod/system/${1}"
 
 }
-
-_error () {
-
-	echo "Failed to create override for \"${app}\"!"
-	exit 1
-
-	}
 
 case ${1} in
 	-l | --list )
@@ -87,7 +80,7 @@ ${2}
 
 	-u | --update )
 
-		LIST=($(find "/magisk/NanoMod/system" -name "*.replace"))
+		LIST=($(find "/magisk/NanoMod/system" -name "*.override"))
 
 		if [[ ${LIST[*]} != "" ]]; then
 			for app in "${LIST[@]}"; do
@@ -96,11 +89,11 @@ ${2}
 		fi
 
 		for app in "${APPS[@]}"; do
-			_add_override "app/${app}"
+			_add_override app "${app}"
 		done
 
 		for app in "${PRIV_APPS[@]}"; do
-			_add_override "priv-app/${app}"
+			_add_override priv-app ${app}"
 		done
 	;;
 

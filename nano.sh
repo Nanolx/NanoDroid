@@ -51,7 +51,6 @@ elif [[ ${1} == umount-magisk ]]; then
 		losetup -d $(cat /tmp/loopdevice)
 		rm /tmp/loopdevice
 	fi
-	losetup -d /dev/block/loop0
 elif [[ ${1} == dataperms ]]; then
 	chown -R 1000:1000 /data/app
 	find /data/app -type f | xargs chmod 0644
