@@ -87,11 +87,11 @@ ${2}
 
 	-u | --update )
 
-		LIST=$(find "/magisk/NanoMod/system" -name "*.replace")
+		LIST=($(find "/magisk/NanoMod/system" -name "*.replace"))
 
-		if [[ ${LIST} != "" ]]; then
-			for app in "${LIST}"; do
-				rm -rvf $(dirname "${app}")
+		if [[ ${LIST[*]} != "" ]]; then
+			for app in "${LIST[@]}"; do
+				rm -rf "$(dirname "${app}")"
 			done
 		fi
 
