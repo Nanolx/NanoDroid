@@ -75,10 +75,6 @@ if [ -e /system/bin/su -a "$(strings /system/xbin/su | grep koush)" ]; then
   rm -rf /system/app/Superuser.apk /system/bin/su /system/etc/.has_su_daemon /system/etc/.installed_su_daemon /system/xbin/su /cache/su /cache/Superuser.apk /cache/install-recovery-sh /data/app/com.koushikdutta.superuser* /data/data/com.koushikdutta.superuser*;
 fi;
 
-# from NanoMod < 3.1
-mount -o rw,remount /system;
-rm -rf /system/app/SuperUser;
-
 if [ -e /system/bin/su -o -e /system/xbin/su ]; then
   mount -o rw,remount /system;
 

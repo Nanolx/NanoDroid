@@ -15,7 +15,7 @@ fi
 
 _add_override () {
 
-	mkdir -p "/magisk/NanoMod/system/${1}"
+	mkdir -p "/magisk/NanoMod/system/${1}/${2}"
 	touch "/magisk/NanoMod/system/${1}/${2}/${2}.apk"
 	touch "/magisk/NanoMod/system/${1}/${2}/.override"
 
@@ -93,7 +93,7 @@ ${2}
 		done
 
 		for app in "${PRIV_APPS[@]}"; do
-			_add_override priv-app ${app}"
+			_add_override priv-app "${app}"
 		done
 	;;
 

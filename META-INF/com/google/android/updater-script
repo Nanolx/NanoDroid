@@ -89,7 +89,6 @@ run_program("/sbin/sh", "/tmp/magisk/META-INF/com/google/android/update-binary",
 ##############################
 
 set_progress(0.8);
-run_program("/sbin/mount", "/system");
 ui_print("> Installing Overlay");
 package_extract_file("Overlay.zip", "/tmp/overlay/overlay.zip");
 run_program("/sbin/unzip", "/tmp/overlay/overlay.zip", "META-INF/com/google/android/*", "-d", "/tmp/overlay");
