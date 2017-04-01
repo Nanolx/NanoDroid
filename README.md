@@ -3,6 +3,10 @@ NanoMod
 
 NanoMod makes several modifications to your ROM:
 
+!!! Note: this README is for versions until 4.2
+!!!       for version 5.0 (currently alpha some
+!!!       things no longer apply as-is)
+
 * user-friendly AROMA installer
 * debloat ROM and remove stock CM su binary
 * install microG with either unofficial YalpStore or official PlayStore
