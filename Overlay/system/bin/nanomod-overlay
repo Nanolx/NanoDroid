@@ -1,6 +1,6 @@
 #!/system/bin/bash
 
-cfg=/data/media/.nanomod-overlay 
+cfg=/data/media/0/.nanomod-overlay
 
 if [[ ! -d /magisk/NanoMod ]]; then
 	echo "dafuq?"
@@ -86,6 +86,10 @@ ${2}
 	;;
 
 	-u | --update )
+
+		find "/magisk/NanoMod/system" -name *.replace | xargs rm -f
+		find "/magisk/NanoMod/system" -type d -empty | xargs rm -rf
+
 		for app in "${APPS[@]}"; do
 			_add_override "app/${2}"
 		done
