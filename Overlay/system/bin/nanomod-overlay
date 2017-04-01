@@ -39,11 +39,11 @@ case ${1} in
 		echo "Overrides exist for following applications
 * in /system/app:
 
-${APPS[*]}
+$(printf '  * %s\n' ${APPS[*]})
 
 * in /system/priv-app:
 
-${PRIV_APPS[*]}"
+$(printf '  * %s\n' ${PRIV_APPS[*]})"
 	;;
 
 	-a | --add )
