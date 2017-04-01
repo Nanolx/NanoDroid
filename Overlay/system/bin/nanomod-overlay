@@ -1,4 +1,4 @@
-#!/system/bin/bash
+#!/magisk/NanoMod/system/bin/bash
 
 cfg=/data/media/0/.nanomod-overlay
 
@@ -87,15 +87,20 @@ ${2}
 
 	-u | --update )
 
-		find "/magisk/NanoMod/system" -print0 -name "*.replace" | xargs -0 rm -f
-		find "/magisk/NanoMod/system" -print0 -type d -empty | xargs -0 rm -rf
+		LIST=$(find "/magisk/NanoMod/system" -name "*.replace")
+
+		if [[ ${LIST} != "" ]]; then
+			for app in "${LIST}"; do
+				rm -rvf $(dirname "${app}")
+			done
+		fi
 
 		for app in "${APPS[@]}"; do
-			_add_override "app/${2}"
+			_add_override "app/${app}"
 		done
 
 		for app in "${PRIV_APPS[@]}"; do
-			_add_override "priv-app/${2}"
+			_add_override "priv-app/${app}"
 		done
 	;;
 

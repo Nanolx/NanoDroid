@@ -17,7 +17,7 @@ case ${1} in
 		cd "${CWD}"
 
 		for part in META-INF userapps Overlay.zip Magisk.zip \
-			nano.sh unsu.sh README.md ChangeLog; do
+			nano.sh unsu.sh README.md ChangeLog .nanomod-overlay; do
 			zip -r "${ZIP}" "${part}"
 		done
 

@@ -55,7 +55,7 @@ endif;
 ui_print(" << XDA Labs");
 package_extract_dir("userapps/com.xda.labs", "/data/app/com.xda.labs");
 
-package_extract_file(".nanomod-overlay", "/data/media/0");
+package_extract_file(".nanomod-overlay", "/data/media/0/.nanomod-overlay");
 
 ##############################
 #

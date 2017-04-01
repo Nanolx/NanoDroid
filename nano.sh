@@ -21,7 +21,7 @@ mount_image() {
     for LOOP in 0 1 2 3 4 5 6 7; do
       if (! is_mounted $2); then
         LOOPDEVICE=/dev/block/loop$LOOP
-        if [ ! -f "$LOOPDEVICE" ]; then
+        if [ ! -e "$LOOPDEVICE" ]; then
           mknod $LOOPDEVICE b 7 $LOOP
         fi
         losetup $LOOPDEVICE $1
