@@ -44,6 +44,7 @@ mount_image() {
 }
 
 if [[ ${1} == mount-magisk ]]; then
+	mount /data &>/dev/null
 	mount_image /data/magisk.img /magisk
 elif [[ ${1} == umount-magisk ]]; then
 	if (is_mounted /magisk); then

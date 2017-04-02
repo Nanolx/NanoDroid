@@ -21,6 +21,7 @@ case ${1} in
 			zip -r "${ZIP}" "${part}"
 		done
 
+		rm -f "${CWD}/Overlay.zip"
 		echo "Zipfile NanoMod-${VERSION} created"
 	;;
 

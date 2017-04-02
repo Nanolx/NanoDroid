@@ -73,7 +73,6 @@ adb shell "mount -orw /system"
 	|| error "Failed applying sigspoof core patch!"
 
 adb push "${CWD}/nano.sh" /tmp/
-adb shell "mount /data"
 adb shell "chmod 0755 /tmp/nano.sh"
 adb shell "/tmp/nano.sh mount-magisk"
 adb shell "mkdir /magisk/NanoMod/system/framework"
