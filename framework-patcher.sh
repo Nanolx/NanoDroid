@@ -56,12 +56,12 @@ else	PATCH_HOOK="sigspoof-hook-7.0"
 	PATCH_UI="sigspoof-ui-global-7.0"
 fi
 
-[[ -d ${PWD}/haystack ]] && rm -rf "${PWD}/haystack"
+[[ -d ${CWD}/haystack ]] && rm -rf "${CWD}/haystack"
 git clone "${GITHUB_URL}" || error "Failed to down haystack!"
 
-cd "${PWD}/haystack"
+cd "${CWD}/haystack"
 
-adb shell "mount -orw /system"
+adb shell "mount -oro /system" || error "Failed to mount /system"
 
 "${PWD}/pull-fileset" mydevice || error "Failed to pull files from device!"
 
@@ -72,13 +72,20 @@ adb shell "mount -orw /system"
 	"${PWD}/mydevice__${PATCH_HOOK}" \
 	|| error "Failed applying sigspoof core patch!"
 
-adb push "${CWD}/nano.sh" /tmp/
-adb shell "chmod 0755 /tmp/nano.sh"
-adb shell "/tmp/nano.sh mount-magisk"
-adb shell "mkdir /magisk/NanoMod/system/framework"
+adb push "${CWD}/nano.sh" /tmp/ || error "Failed to push helper script to device"
+adb shell "chmod 0755 /tmp/nano.sh" || \
+	error "Failed to set permissions for helper script"
+adb shell "/tmp/nano.sh mount-magisk" || \
+	error "Failed to mount Magisk image"
+adb shell "mkdir /magisk/NanoMod/system/framework" || \
+	error "Failed to create framework directory"
 
 adb push "${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}/services.jar" \
-		"/magisk/NanoMod/system/framework"
+		"/magisk/NanoMod/system/framework" || \
+		error "Failed to push services.jar to device"
 
-adb shell "/tmp/nano.sh umount-magisk"
-adb shell "rm /tmp/nano.sh"
+adb shell "/tmp/nano.sh umount-magisk" || error "Failed to unmount Magisk"
+
+echo "Now reboot device and enjoy microG!"
+
+rm -rf "${CWD}/haystack"
