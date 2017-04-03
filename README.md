@@ -58,8 +58,11 @@ on your phone, which can also be accessed / created as
 populate it with the following content
 
 `nanomod.unsu=1
+
 nanomod.magisk=1
+
 nanomod.userapps=1
+
 nanomod.reinstall=0`
 
 where `1` means `on` and `0` means `off`. Description:
