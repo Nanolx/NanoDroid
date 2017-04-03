@@ -253,8 +253,10 @@ FAQ
 * A: x86 support is not planned currently.
 
 * Q: what devices was this tested on?
-* A: Moto X Play (lux), Samsung Galaxy Tab 4 (matissewifi)
+* A: Moto X Play (lux), Samsung Galaxy Tab 4 (matissewifi), Samsung
+     Galaxy S6 (zeroflte)
 
 * Q: what ROMs was this tested on?
-* A: Resurrection Remix, AICP, AOSP Extended, crDroid, should work
-   on any LineageOS based ROM.
+* A: LineageOS, Resurrection Remix, AICP, AOSP Extended, crDroid,
+     should work on any LineageOS / AOSP based ROM that is working
+     with Magisk.
