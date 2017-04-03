@@ -16,8 +16,10 @@
     - it's suggested to re-run framework-patcher
       on every ROM update, too, so that you get
       to patch your ROMs current framework files
+  * microG GmsCore and Play Store are modified to
+    allow in-app purchases
 - Updates
-  * Kernel Adiutor (0.9.6.9)
+  * Kernel Adiutor (0.9.6.11)
   * microG GmsCore (0.24-81)
   * Substratum (627)
   * Twidere (3.4.48)
