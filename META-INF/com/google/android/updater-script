@@ -31,6 +31,9 @@ set_metadata("/tmp/unsu.sh", "uid", 0, "gid", 0, "mode", 0777);
 set_progress(0.2);
 ui_print("> Installing User Apps");
 
+ui_print(" << DroidGuard Helper");
+package_extract_dir("userapps/com.microg.gms.droidguard", "/data/app/com.microg.gms.droidguard");
+
 ui_print(" << Termux");
 package_extract_dir("userapps/com.termux", "/data/app/com.termux");
 
