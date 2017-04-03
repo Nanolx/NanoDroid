@@ -149,9 +149,7 @@ installed and working.
 SafetyNet
 =========
 
-To pass SafetyNet enable MagiskHide in MagiskManager. Make sure
-your ROM/Kernel sets Selinux to permissive, as Magisk v11+ does
-have it's own pseudo-enforcing Selinux mode.
+To pass SafetyNet enable MagiskHide in MagiskManager.
 
 After enabling MagiskHide reboot.
 
@@ -169,7 +167,7 @@ slow to actually hide root before the application checks for it.
 Zelda Ringtones
 ===============
 
-The following The Legend of Zelda can be choosen to be installed (all or none):
+The following The Legend of Zelda are part of the Overlay:
 
 ::Notification sounds
 
