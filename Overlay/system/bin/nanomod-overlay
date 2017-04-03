@@ -97,7 +97,7 @@ ${2}
 		done
 	;;
 
-	-h | --help )
+	* )
 		echo "nanomod-overlay helper script
 
 Options:
