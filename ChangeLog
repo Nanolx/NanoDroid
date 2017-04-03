@@ -6,8 +6,12 @@
   * AROMA installer removed
     - the list of applications to override
       is now in the file '.nanomod-overlay'
-      in the internal data storage. You can
-      edit the file to your liking
+      in the internal data storage. See the
+      README for more information.
+    - you can alter the setup process to some
+      degree by editing the file '.nanomod-setup'
+      in the internal data storage. See the file
+      README for more information.
   * Updated framework-patcher.sh to install
     files modified by haystack directly into
     the NanoMod Overlay

@@ -47,11 +47,15 @@ Details
 Alter Installation
 ==================
 
-To alter the installation you can create a file in
+To alter the installation you can create the file
 
-`/data/media/0/.nanmod-setup`
+`/data/media/0/.nanomod-setup`
 
-with the following content
+on your phone, which can also be accessed / created as
+
+`/sdcard/.nanomod-setup`
+
+populate it with the following content
 
 `nanomod.unsu=1
 nanomod.magisk=1
