@@ -3,21 +3,27 @@ NanoMod
 
 NanoMod makes several modifications to your ROM:
 
-!!! Note: this README is for versions until 4.2
-!!!       for version 5.0 (currently alpha some
-!!!       things no longer apply as-is)
+!!! Note: this README is for version 5.0 and newer (currently in-development)
 
-* user-friendly AROMA installer
-* debloat ROM and remove stock CM su binary
-* install microG with either unofficial YalpStore or official PlayStore
+* install Magisk and NanoMod Magisk-Module
+  - actual NanoMod is an Overlay to /system which holds the apps
+  - allows for a user-defined list of system apps to be made unavailable
+    (let's call this pseudo-debloat feature)
+  - disabling the NanoMod module in Magisk will revert everything, as it's
+    not actually doing any changes to /system
+  - boot process may take a bit longer as NanoMod is a pretty big Magisk Module
+  - for more information on Magisk visit [XDA Magisk Thread](https://forum.xda-developers.com/apps/magisk)
+* remove stock CM su binary
+  - required to pass SafetyNet
+  - since LineageOS now often does no longer include that no actual change
+    to /system is done
+* install microG with official PlayStore
   - for more information on microG visit [microG Homepage](http://www.microg.org)
   - with Mozilla location provider backend
   - with Nominatim adress provider backend
+  - microG GmsCore and Play Store modified to allow (in-)app-purchases
 * install F-Droid and many OpenSource applications
   - for more information on F-Droid visit [F-Droid Homepage](http://www.fdroid.org)
-* install The Legend of Zelda tunes
-* install Magisk and companion modules
-  - for more information on Magisk visit [XDA Magisk Thread](https://forum.xda-developers.com/apps/magisk)
 * install GNU Bash Shell
 * install GNU Nano Shell Editor
 
@@ -41,7 +47,7 @@ Details
 Applications
 ============
 
-The following applications can be choosen to be removed:
+The following applications are pseudo-debloated by default:
 
 * Basic Dreams
 * CM File Manager
@@ -64,7 +70,7 @@ The following applications can be choosen to be removed:
 * Pixel Launcher
 * Trebuchet
 
-The following system applications can be choosen to be installed:
+The following applications are magic-mounted as system applications:
 
 * AdAway
 * Amaze (File Manager)
@@ -90,7 +96,7 @@ The following system applications can be choosen to be installed:
 
 ¹ will run in legacy mode on non-OMS ROMs
 
-The following user applications can be choosen to be installed:
+The following user applications are directly installed to /data:
 
 * Termux
 * XDA Labs
@@ -103,25 +109,14 @@ Magisk allows modifying the ROM in system less fashion, it also
 brings it's own root solution (MagiskSU, which apparently is a
 fork of PHH SuperUser) and an companion application.
 
-If Magisk is choosen to be installed, any previously installed
-root solution will be removed. NanoMod will also re-flash the
-boot image backup if you had system less SuperUser installed,
-that is to ensure MagiskSU is properly installed and working.
+Upon Magisk installation, any previously installed root solution
+will be removed. This is not a Magisk requirement, as Magisk also
+works with SuperSU, but it's a NanoMod requirement, as I do not
+support SuperSU, now, where we have a fully OpenSource root solution.
 
-The following Magisk/Modules can be choosen to be installed:
-
-* Magisk
-  - with builtin SuperUser
-  - with Magisk Manager companion application
-* Nano-Init (init scripts)
-  - fstrim (optimize filesystems)
-  - logscleaner (clean old logfiles)
-  - sqlite (optimize sqlite databases)
-  - selinux (apply changes to selinux files for Samsung devices)
-* Nano-Miitomo (prevents Miitomo crashes on Custom ROMs)
-  - Miitomo does not crash because of rooted devices,
-    but it does crash if 'ro.debuggable' is '1'. This
-    Magisk module uses `resetprop` to set it to '0'.
+NanoMod will also re-flash the boot image backup if you had system
+less SuperUser installed, that is to ensure MagiskSU is properly
+installed and working.
 
 SafetyNet
 =========
@@ -201,7 +196,7 @@ Installation
     the supplied framework-patcher.sh. This shell script for GNU Bash (and
     compatible shells) works on GNU/Linux, *BSD, Solaris and the-like. It
     automizes the process of downloading [Haystack](https://github.com/Lanchon/haystack),
-    pulling files from phone, mounting /system read-write in TWRP, patching files
+    pulling files from phone, mounting /magisk read-write in TWRP, patching files
     and pushing modified files to the device. See `framework-patcher.sh --help`
     for more information.
 * reboot into system
