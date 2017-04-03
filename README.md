@@ -70,6 +70,28 @@ The following applications are pseudo-debloated by default:
 * Pixel Launcher
 * Trebuchet
 
+You can add or remove applications from the list by modifying the file
+
+'/data/media/0/.nanomod-overlay'
+
+which is also accesible from the device as
+
+'/sdcard/.nanmod-overlay'
+
+See here for the [default settings](.nanomod-overlay). The syntax is pretty simple:
+
+- one item per line
+- name must be an exact match
+- apps in /system/app inside APPS=( ... )
+- apps in /system/priv-app inside PRIV_APPS=( ... )
+
+After you made your changes, issue the following command on your phone,
+either using adb shell or Termux:
+
+'nanomod-overlay --update'
+
+After reboot your changes are applied.
+
 The following applications are magic-mounted as system applications:
 
 * AdAway
