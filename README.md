@@ -72,11 +72,11 @@ The following applications are pseudo-debloated by default:
 
 You can add or remove applications from the list by modifying the file
 
-'/data/media/0/.nanomod-overlay'
+`/data/media/0/.nanomod-overlay`
 
 which is also accesible from the device as
 
-'/sdcard/.nanmod-overlay'
+`/sdcard/.nanmod-overlay`
 
 See here for the [default settings](.nanomod-overlay). The syntax is pretty simple:
 
@@ -88,9 +88,11 @@ See here for the [default settings](.nanomod-overlay). The syntax is pretty simp
 After you made your changes, issue the following command on your phone,
 either using adb shell or Termux:
 
-'nanomod-overlay --update'
+`nanomod-overlay --update`
 
-After reboot your changes are applied.
+After reboot your changes are applied. For more options, check:
+
+`nanomod-overlay --help`
 
 The following applications are magic-mounted as system applications:
 
