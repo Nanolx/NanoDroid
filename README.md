@@ -57,7 +57,8 @@ on your phone, which can also be accessed / created as
 
 populate it with the following content
 
-```nanomod.unsu=1
+```
+nanomod.unsu=1
 nanomod.magisk=1
 nanomod.userapps=1
 nanomod.reinstall=0
@@ -85,7 +86,8 @@ updated or changed the ROM, re-run `framework-patcher.sh`
 instead. See "Installation" below.
 
 If no `/data/media/0/.nanmod-setup` is found, the default
-one will be installed where all three options are `1`.
+one will be installed where the first three options are `1`
+and the last is `0`.
 
 Applications
 ============
