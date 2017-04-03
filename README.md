@@ -74,9 +74,9 @@ You can add or remove applications from the list by modifying the file
 
 `/data/media/0/.nanomod-overlay`
 
-which is also accesible from the device as
+on your device, which is also accesible as
 
-`/sdcard/.nanmod-overlay`
+`/sdcard/.nanomod-overlay`
 
 See here for the [default settings](.nanomod-overlay). The syntax is pretty simple:
 
@@ -89,6 +89,10 @@ After you made your changes, issue the following command on your phone,
 either using adb shell or Termux:
 
 `nanomod-overlay --update`
+
+This needs to be done in normal environment, not from recovery, unless
+you manually mount `/magisk` while in recovery, before issueing the
+above command.
 
 After reboot your changes are applied. For more options, check:
 
