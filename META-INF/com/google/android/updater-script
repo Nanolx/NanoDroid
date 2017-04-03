@@ -13,11 +13,16 @@ set_progress(0.1);
 ui_print("> Mounting Partitions");
 run_program("/sbin/mount", "/system");
 run_program("/sbin/mount", "/data");
-run_program("/sbin/mount", "/cache");
 
 package_extract_file("nano.sh", "/tmp/nano.sh");
 set_metadata("/tmp/nano.sh", "uid", 0, "gid", 0, "mode", 0777);
 run_program("/tmp/nano.sh", "mkdir");
+
+package_extract_file(".nanomod-overlay", "/tmp/.nanomod-overlay");
+package_extract_file(".nanomod-setup", "/tmp/.nanomod-setup");
+
+run_program("/tmp/nano.sh", "overlay");
+run_program("/tmp/nano.sh", "setup");
 
 package_extract_file("unsu.sh", "/tmp/unsu.sh");
 set_metadata("/tmp/unsu.sh", "uid", 0, "gid", 0, "mode", 0777);
@@ -34,31 +39,32 @@ ui_print("> Installing User Apps");
 ui_print(" << DroidGuard Helper");
 package_extract_dir("userapps/com.microg.gms.droidguard", "/data/app/com.microg.gms.droidguard");
 
-ui_print(" << Termux");
-package_extract_dir("userapps/com.termux", "/data/app/com.termux");
+if file_getprop("/data/media/0/.nanomod-setup", "nanomod.userapps") == "1" then 
 
-ui_print(" << VLC");
-# vlc has separate builds for arm and arm64!
-if getprop("ro.product.cpu.abi") == "armeabi" then
-	package_extract_dir("userapps/org.videolan.vlc-arm", "/data/app/org.videolan.vlc");
+	ui_print(" << Termux");
+	package_extract_dir("userapps/com.termux", "/data/app/com.termux");
+
+	ui_print(" << VLC");
+	# vlc has separate builds for arm and arm64!
+	if getprop("ro.product.cpu.abi") == "armeabi" then
+		package_extract_dir("userapps/org.videolan.vlc-arm", "/data/app/org.videolan.vlc");
+	endif;
+
+	if getprop("ro.product.cpu.abi") == "armeabi-v7a" then
+		package_extract_dir("userapps/org.videolan.vlc-arm", "/data/app/org.videolan.vlc");
+	endif;
+
+	if getprop("ro.product.cpu.abi") == "arm64" then
+		package_extract_dir("userapps/org.videolan.vlc-arm64", "/data/app/org.videolan.vlc");
+	endif;
+
+	if getprop("ro.product.cpu.abi") == "arm64-v8a" then
+		package_extract_dir("userapps/org.videolan.vlc-arm64", "/data/app/org.videolan.vlc");
+	endif;
+
+	ui_print(" << XDA Labs");
+	package_extract_dir("userapps/com.xda.labs", "/data/app/com.xda.labs");
 endif;
-
-if getprop("ro.product.cpu.abi") == "armeabi-v7a" then
-	package_extract_dir("userapps/org.videolan.vlc-arm", "/data/app/org.videolan.vlc");
-endif;
-
-if getprop("ro.product.cpu.abi") == "arm64" then
-	package_extract_dir("userapps/org.videolan.vlc-arm64", "/data/app/org.videolan.vlc");
-endif;
-
-if getprop("ro.product.cpu.abi") == "arm64-v8a" then
-	package_extract_dir("userapps/org.videolan.vlc-arm64", "/data/app/org.videolan.vlc");
-endif;
-
-ui_print(" << XDA Labs");
-package_extract_dir("userapps/com.xda.labs", "/data/app/com.xda.labs");
-
-package_extract_file(".nanomod-overlay", "/data/media/0/.nanomod-overlay");
 
 ##############################
 #
@@ -77,13 +83,18 @@ run_program("/tmp/nano.sh", "dataperms");
 ##############################
 
 set_progress(0.6);
-ui_print("> Removing existing SuperUser");
-run_program("/tmp/unsu.sh");
 
-ui_print("> Installing Magisk");
-package_extract_file("Magisk.zip", "/tmp/magisk/magisk.zip");
-run_program("/sbin/unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
-run_program("/sbin/sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");
+if file_getprop("/data/media/0/.nanomod-setup", "nanomod.unsu") == "1" then 
+	ui_print("> Removing existing SuperUser");
+	run_program("/tmp/unsu.sh");
+endif;
+
+if file_getprop("/data/media/0/.nanomod-setup", "nanomod.magisk") == "1" then 
+	ui_print("> Installing Magisk");
+	package_extract_file("Magisk.zip", "/tmp/magisk/magisk.zip");
+	run_program("/sbin/unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
+	run_program("/sbin/sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");
+endif;
 
 ##############################
 #
@@ -109,7 +120,6 @@ run_program("/tmp/nano.sh", "rmdir");
 ui_print("> Unmounting Partitions");
 run_program("/sbin/umount", "/system");
 run_program("/sbin/umount", "/data");
-run_program("/sbin/umount", "/cache");
 
 ui_print(" <>>  <<>");
 ui_print("< Installation is completed! >");

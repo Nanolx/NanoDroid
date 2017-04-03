@@ -44,6 +44,36 @@ Support
 Details
 =======
 
+Alter Installation
+==================
+
+To alter the installation you can create a file in
+
+`/data/media/0/.nanmod-setup`
+
+with the following content
+
+`nanomod.unsu=1
+nanomod.magisk=1
+nanomod.userapps=1`
+
+where `1` means `on` and `0` means `off`. Description:
+
+`nanomod.unsu=[0|1]`
+
+whether to unroot the phone before installing Magisk.
+
+`nanomod.magisk=[0|1]`
+
+whether to install Magisk.
+
+`nanomod.userapps=[0|1]`
+
+whether to install user apps.
+
+If no `/data/media/0/.nanmod-setup` is found, the default
+one will be installed where all three options are `1`.
+
 Applications
 ============
 
