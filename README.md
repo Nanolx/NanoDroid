@@ -59,7 +59,8 @@ populate it with the following content
 
 `nanomod.unsu=1
 nanomod.magisk=1
-nanomod.userapps=1`
+nanomod.userapps=1
+nanomod.reinstall=0`
 
 where `1` means `on` and `0` means `off`. Description:
 
@@ -74,6 +75,13 @@ whether to install Magisk.
 `nanomod.userapps=[0|1]`
 
 whether to install user apps.
+
+`nanmod.reinstall=[0|1]`
+
+whether to backup `services.jar` and re-use it. Only use
+this, when you re-install NanoMod on the same ROM. If you
+updated or changed the ROM, re-run `framework-patcher.sh`
+instead. See "Installation" below.
 
 If no `/data/media/0/.nanmod-setup` is found, the default
 one will be installed where all three options are `1`.

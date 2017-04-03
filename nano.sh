@@ -74,4 +74,20 @@ elif [[ ${1} == setup ]]; then
 		chown 1000:1000 /data/media/0/.nanomod-setup
 		chmod 0644 /data/media/0/.nanomod-setup
 	fi
+elif [[ ${1} == backup-servicesjar ]]; then
+	mount /data &>/dev/null
+	mount_image /data/magisk.img /magisk
+	cp /magisk/NanoMod/system/framework/services.jar \
+		/tmp/services.jar
+	umount /magisk
+	losetup -d $(cat /tmp/loopdevice)
+	rm /tmp/loopdevice
+elif [[ ${1} == restore-servicesjar ]]; then
+	mount /data &>/dev/null
+	mount_image /data/magisk.img /magisk
+	cp /tmp/services.jar \
+		/magisk/NanoMod/system/framework/services.jar
+	umount /magisk
+	losetup -d $(cat /tmp/loopdevice)
+	rm /tmp/loopdevice
 fi
