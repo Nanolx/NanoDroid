@@ -249,8 +249,7 @@ FAQ
 ===
 
 * Q: will there be a GApps version, instead of microG?
-* A: no, but you can opt-in to not install microG, then flash
-   OpenGApps if you feel like.
+* A: no.
 
 * Q: will there be support for x86?
 * A: x86 support is not planned currently.
