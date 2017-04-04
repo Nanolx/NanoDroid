@@ -16,7 +16,7 @@ case ${1} in
 		zip -r "${CWD}/Overlay.zip" *
 		cd "${CWD}"
 
-		for part in META-INF userapps Overlay.zip Magisk.zip \
+		for part in META-INF org.*guard Overlay.zip Magisk.zip \
 			nano.sh unsu.sh README.md ChangeLog \
 			.nanomod-overlay .nanomod-setup; do
 			zip -r "${ZIP}" "${part}"
