@@ -89,6 +89,7 @@ elif [[ ${1} == backup-servicesjar ]]; then
 	umount_magisk
 elif [[ ${1} == restore-servicesjar ]]; then
 	mount_magisk
+	mkdir /magisk/NanoMod/system/framework/
 	cp /tmp/services.jar \
 		/magisk/NanoMod/system/framework/services.jar
 	umount_magisk
