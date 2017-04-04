@@ -79,10 +79,10 @@ whether to populate **F-Droid** and apps (see below).
 
 whether to populate **microG**.
 
-`nanomod.play=[0|1]`
+`nanomod.play=[0|1|2]`
 
-what app store to use. `0` will populate **Yalp Store**, while
-`1` will populate **Play Store**.
+what app store to use. `0` will not populate any app store, `1` will
+populate **Play Store**, `2` will populate **Yalp Store**.
 
 `nanomod.overlay=[0|1]`
 

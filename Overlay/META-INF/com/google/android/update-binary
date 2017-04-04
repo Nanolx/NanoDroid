@@ -179,13 +179,13 @@ unzip -o "$ZIP" "common/*" module.prop
 # Main
 ##########################################################################################
 
-# Print mod name
-print_modname
-
 # Please leave this message in your flashable zip for credits :)
+ui_print " "
 ui_print "******************************"
+ui_print "      NanoMod 5.0~beta2       "
 ui_print "Powered by Magisk (@topjohnwu)"
 ui_print "******************************"
+ui_print " "
 
 mount -o ro /system 2>/dev/null
 mount -o ro /vendor 2>/dev/null
@@ -304,7 +304,7 @@ if grep -q nanomod.play=1 $nanomodcfg; then
 		rm -rf $MODPATH/system/priv-app/$app
 	done
 	ui_print " << with Play Store"
-elif grep -q nanomod.play=0 $nanomodcfg; then
+elif grep -q nanomod.play=2 $nanomodcfg; then
 	for app in Phonesky; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
