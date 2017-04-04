@@ -207,7 +207,8 @@ they can't be used as `/system` applications for given reasons:
 
 * microG DroidGuard Helper
   - there's currently an issue with **Magisk** that prevents it from
-    properly working when magic-mounted as `/system` application
+    properly working when magic-mounted as `/system` application, see
+    [Magisk Issue #155](https://github.com/topjohnwu/Magisk/issues/155)
 
 ## Magisk & root
 
