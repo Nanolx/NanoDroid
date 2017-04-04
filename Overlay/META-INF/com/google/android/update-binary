@@ -264,27 +264,45 @@ mkdir -p $MODPATH
 ui_print "- Copying files"
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
+mkdir $MODPATH/system/app
+mkdir $MODPATH/system/priv-app
+
 if grep -q nanomod.microg=1 /data/media/0/.nanomod-setup; then
 	unzip -o "$ZIP" "microg/system/*" -d $MODPATH
+	mv $MODPATH/microg/system/app/* $MODPATH/system/app/
+	mv $MODPATH/microg/system/priv-app/* $MODPATH/system/priv-app/
+	rm -rf $MODPATH/microg
 fi
 
 if grep -q nanomod.apps=1 /data/media/0/.nanomod-setup; then
 	unzip -o "$ZIP" "apps/system/*" -d $MODPATH
+	mv $MODPATH/apps/system/app/* $MODPATH/system/app/
+	rm -rf $MODPATH/apps
+
 	if [[ ${ARCH} == arm ]]; then
 		unzip -o "$ZIP" "vlc32/system/*" -d $MODPATH
 	elif [[ ${ARCH} == arm64 ]]; then
 		unzip -o "$ZIP" "vlc64/system/*" -d $MODPATH
 	fi
+
+	mv $MODPATH/vlc??/system/app/* $MODPATH/system/app/
+	rm -rf $MODPATH/vlc??
 fi
 
 if grep -q nanomod.play=1 /data/media/0/.nanomod-setup; then
 	unzip -o "$ZIP" "play/system/*" -d $MODPATH
+	mv $MODPATH/play/system/priv-app/* $MODPATH/system/priv-app/
+	rm -rf $MODPATH/play
 elif grep -q nanomod.play=0 /data/media/0/.nanomod-setup; then
 	unzip -o "$ZIP" "yalp/system/*" -d $MODPATH
+	mv $MODPATH/yalp/system/priv-app/* $MODPATH/system/priv-app/
+	rm -rf $MODPATH/yalp
 fi
 
 # Setup Overrides
-$MODPATH/system/bin/nanomod-overlay --update
+if grep -q nanomod.overlay=1 /data/media/0/.nanomod-setup; then
+	$MODPATH/system/bin/nanomod-overlay --update
+fi
 
 # Handle replace folders
 for TARGET in $REPLACE; do

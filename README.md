@@ -57,6 +57,7 @@ nanomod.microg=1
 nanomod.apps=1
 nanomod.play=1
 nanomod.reinstall=0
+nanomod.overlay=1
 ```
 
 where `1` means `on` and `0` means `off`. Description:
@@ -81,6 +82,11 @@ whether to populate **microG**.
 
 what app store to use. `0` will populate **Yalp Store**, while
 `1` will populate **Play Store**.
+
+`nanomod.overlay=[0|1]`
+
+whether to populate the overlay to pseudo-debloat `/system`
+applications.
 
 `nanomod.reinstall=[0|1]`
 
