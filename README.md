@@ -57,7 +57,7 @@ nanomod.microg=1
 nanomod.apps=1
 nanomod.play=1
 nanomod.reinstall=0
-nanomod.override=1
+nanomod.overlay=1
 ```
 
 where `1` means `on` and `0` means `off`. Description:
