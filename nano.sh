@@ -43,15 +43,23 @@ mount_image() {
   fi
 }
 
-if [[ ${1} == mount-magisk ]]; then
+mount_magisk () {
 	mount /data &>/dev/null
 	mount_image /data/magisk.img /magisk
-elif [[ ${1} == umount-magisk ]]; then
+}
+
+umount_magisk () {
 	if (is_mounted /magisk); then
 		umount /magisk
 		losetup -d $(cat /tmp/loopdevice)
 		rm /tmp/loopdevice
 	fi
+}
+
+if [[ ${1} == mount-magisk ]]; then
+	mount_magisk
+elif [[ ${1} == umount-magisk ]]; then
+	umount_magisk
 elif [[ ${1} == dataperms ]]; then
 	chown -R 1000:1000 /data/app
 	find /data/app -type f | xargs chmod 0644
@@ -75,19 +83,13 @@ elif [[ ${1} == setup ]]; then
 		chmod 0644 /data/media/0/.nanomod-setup
 	fi
 elif [[ ${1} == backup-servicesjar ]]; then
-	mount /data &>/dev/null
-	mount_image /data/magisk.img /magisk
+	mount_magisk
 	cp /magisk/NanoMod/system/framework/services.jar \
 		/tmp/services.jar
-	umount /magisk
-	losetup -d $(cat /tmp/loopdevice)
-	rm /tmp/loopdevice
+	umount_magisk
 elif [[ ${1} == restore-servicesjar ]]; then
-	mount /data &>/dev/null
-	mount_image /data/magisk.img /magisk
+	mount_magisk
 	cp /tmp/services.jar \
 		/magisk/NanoMod/system/framework/services.jar
-	umount /magisk
-	losetup -d $(cat /tmp/loopdevice)
-	rm /tmp/loopdevice
+	umount_magisk
 fi
