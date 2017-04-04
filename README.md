@@ -2,7 +2,7 @@
 
 **!!! Note: this README is for version 5.0 and newer (currently in-development)**
 
-* install **Magisk** and NanoMod Magisk-Module
+* install **Magisk** and **NanoMod** Magisk-Module
   - actually **NanoMod** is an **Overlay** to `/system` which holds the apps
   - allows for a user-defined list of system apps to be made unavailable
     (let's call this pseudo-debloat feature)
@@ -57,7 +57,7 @@ nanomod.microg=1
 nanomod.apps=1
 nanomod.play=1
 nanomod.reinstall=0
-nanomod.overlay=1
+nanomod.override=1
 ```
 
 where `1` means `on` and `0` means `off`. Description:
@@ -68,7 +68,8 @@ whether to *unroot* the phone before installing **Magisk**.
 
 `nanomod.magisk=[0|1]`
 
-whether to install **Magisk**.
+whether to install **Magisk**. Note: **NanoMod** only works with
+**Magisk**, if you choose `0` you likely have it already installed.
 
 `nanomod.apps=[0|1]`
 

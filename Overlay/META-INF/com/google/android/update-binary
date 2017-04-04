@@ -64,7 +64,6 @@ mount_image() {
           fi
         fi
         if (is_mounted $2); then
-          ui_print "- Mounting $1 to $2"
           break;
         fi
       fi
@@ -188,7 +187,6 @@ ui_print "******************************"
 ui_print "Powered by Magisk (@topjohnwu)"
 ui_print "******************************"
 
-ui_print "- Mounting /system(ro), /vendor(ro), /data, /cache"
 mount -o ro /system 2>/dev/null
 mount -o ro /vendor 2>/dev/null
 mount /data 2>/dev/null
@@ -237,16 +235,13 @@ fi
 request_size_check "$ZIP"
 
 if [ -f "$IMG" ]; then
-  ui_print "- $IMG detected!"
   image_size_check $IMG
   if [ "$reqSizeM" -gt "$curFreeM" ]; then
     SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-    ui_print "- Resizing $IMG to ${SIZE}M..."
     resize2fs $IMG ${SIZE}M
   fi
 else
   SIZE=$((reqSizeM / 32 * 32 + 64));
-  ui_print "- Creating $IMG with size ${SIZE}M"
   make_ext4fs -l ${SIZE}M -a /magisk -S $INSTALLER/common/file_contexts_image $IMG
 fi
 
@@ -260,48 +255,68 @@ fi
 rm -rf $MODPATH 2>/dev/null
 mkdir -p $MODPATH
 
+nanomodcfg=/data/media/0/.nanomod-setup
+
 # Copy files
-ui_print "- Copying files"
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
-mkdir $MODPATH/system/app
-mkdir $MODPATH/system/priv-app
-
-if grep -q nanomod.microg=1 /data/media/0/.nanomod-setup; then
-	unzip -o "$ZIP" "microg/system/*" -d $MODPATH
-	mv $MODPATH/microg/system/app/* $MODPATH/system/app/
-	mv $MODPATH/microg/system/priv-app/* $MODPATH/system/priv-app/
-	rm -rf $MODPATH/microg
+# remove microG if not requested
+if grep -q nanomod.microg=0 $nanomodcfg; then
+	for app in nlpBackendIchnaea nlpBackendNomiantim \
+		DroidGuard GmsCore GsfProxy; do
+		rm -rf $MODPATH/system/app/$app
+		rm -rf $MODPATH/system/priv-app/$app
+	done
+	ui_print " << without microG"
+else	ui_print " << with microG"
 fi
 
-if grep -q nanomod.apps=1 /data/media/0/.nanomod-setup; then
-	unzip -o "$ZIP" "apps/system/*" -d $MODPATH
-	mv $MODPATH/apps/system/app/* $MODPATH/system/app/
-	rm -rf $MODPATH/apps
-
+# remove apps if not requested
+# exceptions:
+# * Magisk Manager
+# * Substratum
+# * YahooWeatherProvider
+if grep -q nanomod.apps=0 $nanomodcfg; then
+	for app in AdAway Amaze AnysoftKeyboard FaceSlim \
+		FDroid HackerKeyboard K9Mail KeePassDroid \
+		KernelAdiutor Lightning NewPipe Oandbackup \
+		Odyssey OpenCamera OpenKeyChain OpenLauncher \
+		OpenVPN QKSMS SimpleGallery Termux Twidere \
+		VLC32 VLC64 XDALabs; do
+		rm -rf $MODPATH/system/app/$app
+		rm -rf $MODPATH/system/priv-app/$app
+	done
+	ui_print " << without applications"
+else
+	# remove arm64 VLC on arm and vice-versa
 	if [[ ${ARCH} == arm ]]; then
-		unzip -o "$ZIP" "vlc32/system/*" -d $MODPATH
+		rm -rf $MODPATH/system/app/VLC64
 	elif [[ ${ARCH} == arm64 ]]; then
-		unzip -o "$ZIP" "vlc64/system/*" -d $MODPATH
+		rm -rf $MODPATH/system/app/VLC32
 	fi
-
-	mv $MODPATH/vlc??/system/app/* $MODPATH/system/app/
-	rm -rf $MODPATH/vlc??
+	ui_print " << with applications"
 fi
 
-if grep -q nanomod.play=1 /data/media/0/.nanomod-setup; then
-	unzip -o "$ZIP" "play/system/*" -d $MODPATH
-	mv $MODPATH/play/system/priv-app/* $MODPATH/system/priv-app/
-	rm -rf $MODPATH/play
-elif grep -q nanomod.play=0 /data/media/0/.nanomod-setup; then
-	unzip -o "$ZIP" "yalp/system/*" -d $MODPATH
-	mv $MODPATH/yalp/system/priv-app/* $MODPATH/system/priv-app/
-	rm -rf $MODPATH/yalp
+# remove Yalp Store if Play Store requested and vice-versa
+if grep -q nanomod.play=1 $nanomodcfg; then
+	for app in FakeStore YalpStore; do
+		rm -rf $MODPATH/system/app/$app
+		rm -rf $MODPATH/system/priv-app/$app
+	done
+	ui_print " << with Play Store"
+elif grep -q nanomod.play=0 $nanomodcfg; then
+	for app in Phonesky; do
+		rm -rf $MODPATH/system/app/$app
+		rm -rf $MODPATH/system/priv-app/$app
+	done
+	ui_print " << with Yalp Store"
 fi
 
 # Setup Overrides
-if grep -q nanomod.overlay=1 /data/media/0/.nanomod-setup; then
+if grep -q nanomod.overlay=1 $nanomodcfg; then
 	$MODPATH/system/bin/nanomod-overlay --update
+	ui_print " << with /system applications override"
+else	ui_print " << without /system applications override"
 fi
 
 # Handle replace folders
@@ -337,10 +352,7 @@ if $LATESTARTSERVICE; then
   cp -af $INSTALLER/common/service.sh $MODPATH/service.sh
 fi
 
-ui_print "- Setting permissions"
 set_permissions
-
-ui_print "- Unmounting partitions"
 
 umount $MOUNTPATH
 losetup -d $LOOPDEVICE
@@ -350,7 +362,6 @@ rmdir $MOUNTPATH
 image_size_check $IMG
 NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
 if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-  ui_print "- Shrinking $IMG to ${NEWDATASIZE}M..."
   resize2fs $IMG ${NEWDATASIZE}M
 fi
 
@@ -359,5 +370,4 @@ if ! $BOOTMODE; then
   umount /vendor 2>/dev/null
 fi
 
-ui_print "- Done"
 exit 0
