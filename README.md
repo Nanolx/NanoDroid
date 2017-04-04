@@ -3,22 +3,22 @@
 !!! Note: this README is for version 5.0 and newer (currently in-development)
 
 * install **Magisk** and NanoMod Magisk-Module
-  - actually **NanoMod** is an **Overlay** to /system which holds the apps
+  - actually **NanoMod** is an **Overlay** to `/system` which holds the apps
   - allows for a user-defined list of system apps to be made unavailable
     (let's call this pseudo-debloat feature)
   - disabling the **NanoMod** module in **Magisk** will revert everything, as it's
-    not actually doing any changes to /system
+    not actually doing any changes to `/system`
   - boot process may take a bit longer as **NanoMod** is a pretty big **Magisk** Module
   - for more information on **Magisk** visit [XDA Magisk Thread](https://forum.xda-developers.com/apps/magisk)
-* remove stock CM su binary
+* remove stock **CyanogenMod**/**LineageOS** `su` binary
   - required to pass **SafetyNet**
-  - since LineageOS now often does no longer include that no actual change
-    to /system is done
+  - since **LineageOS** (and derivates) now often no longer includes the old `su` implementation
+    no actual change to `/system` is done
 * install **microG** with official Play Store
   - for more information on microG visit [microG Homepage](http://www.microg.org)
-  - with Mozilla location provider backend
-  - with Nominatim adress provider backend
-  - microG GmsCore and Play Store modified to allow (in-)app-purchases
+  - with **Mozilla** location provider backend
+  - with **Nominatim** adress provider backend
+  - **microG** GmsCore and **Play Store** modified to allow (in-)app-purchases
 * install **F-Droid** and many OpenSource applications
   - for more information on F-Droid visit [F-Droid Homepage](http://www.fdroid.org)
 * install GNU **Bash** Shell
@@ -44,7 +44,7 @@ To alter the installation you can create the file
 
 `/data/media/0/.nanomod-setup`
 
-on your phone, which can also be accessed / created as
+on your phone, which can also be accessed or created as
 
 `/sdcard/.nanomod-setup`
 
@@ -73,7 +73,8 @@ whether to install user apps.
 
 `nanomod.reinstall=[0|1]`
 
-whether to backup an already patched `services.jar` and re-use it.
+whether to backup an **already patched** `services.jar` and re-use
+it.
 
 **Only use this, when you re-install NanoMod on the same ROM.
 If you updated or changed the ROM, re-run `framework-patcher.sh`
@@ -138,13 +139,21 @@ how to manually mount `/magisk` in recovery, you can update the overlay using:
 
 `/magisk/NanoMod/system/bin/nanomod-overlay --update`
 
-After reboot your changes are applied. For more options, check:
+from recovery, aswell.
+
+After reboot your changes get applied. For more options, check:
 
 `nanomod-overlay --help`
 
+respectively
+
+`/magisk/NanoMod/system/bin/nanomod-overlay --help`
+
+from recovery.
+
 ### Applications provided by NanoMod
 
-The following applications are magic-mounted as system applications
+The following applications are magic-mounted as `/system` applications
 
 * AdAway
 * Amaze (File Manager)
@@ -173,16 +182,21 @@ The following applications are magic-mounted as system applications
 ### User-Applications provided by NanoMod
 
 The following user applications are directly installed to `/data`,
-they can't be used as magic-mounted system applications for different
-reasons:
+they can't be used as `/system` applications for various reasons:
 
+* microG DroidGuard Helper
+  - there's currently an issue with **Magisk** that prevents it from
+    properly working when magic-mounted as `/system` application
 * Termux
+  - can't install it's support files as `/system` application
 * XDA Labs
+  - crashes as `/system` application
 * VLC (Audio/Video Player)
+  - crashes as `/system` application
 
 ## Magisk & root
 
-Magisk allows modifying the ROM in system less fashion, it also
+**Magisk** allows modifying the ROM in system less fashion, it also
 brings it's own root solution (**MagiskSU**, which apparently is
 a fork of **PHH SuperUser**) and an companion application.
 
