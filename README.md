@@ -187,29 +187,26 @@ The following applications are magic-mounted as `/system` applications
 * Oandbackup (App backup and restore)
 * Odyssey (Audio player)
 * OpenCamera
+* OpenLauncher
 * OpenVPN
 * QK SMS
 * Substratum (App and Compiler)¹
+* Termux
 * Twidere (Twitter client)
+* VLC (Audio/Video Player)
+* XDA Labs
 * Yahoo Weather Provider
-* OpenLauncher
 
 ¹ will run in legacy mode on non-OMS ROMs
 
 ### User-Applications provided by NanoMod
 
 The following user applications are directly installed to `/data`,
-they can't be used as `/system` applications for various reasons:
+they can't be used as `/system` applications for given reasons:
 
 * microG DroidGuard Helper
   - there's currently an issue with **Magisk** that prevents it from
     properly working when magic-mounted as `/system` application
-* Termux
-  - can't install it's support files as `/system` application
-* XDA Labs
-  - crashes as `/system` application
-* VLC (Audio/Video Player)
-  - crashes as `/system` application
 
 ## Magisk & root
 
