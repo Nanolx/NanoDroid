@@ -13,7 +13,6 @@ mount_image() {
   if [ ! -d "$2" ]; then
     mount -o rw,remount rootfs /
     mkdir -p $2 2>/dev/null
-    ($BOOTMODE) && mount -o ro,remount rootfs /
     [ ! -d "$2" ] && return 1
   fi
   if (! is_mounted $2); then

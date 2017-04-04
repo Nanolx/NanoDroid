@@ -264,6 +264,25 @@ mkdir -p $MODPATH
 ui_print "- Copying files"
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
+if grep -q nanomod.microg=1 /data/media/0/.nanomod-setup; then
+	unzip -o "$ZIP" "microg/system/*" -d $MODPATH
+fi
+
+if grep -q nanomod.apps=1 /data/media/0/.nanomod-setup; then
+	unzip -o "$ZIP" "apps/system/*" -d $MODPATH
+	if [[ ${ARCH} == arm ]]; then
+		unzip -o "$ZIP" "vlc32/system/*" -d $MODPATH
+	elif [[ ${ARCH} == arm64 ]]; then
+		unzip -o "$ZIP" "vlc64/system/*" -d $MODPATH
+	fi
+fi
+
+if grep -q nanomod.play=1 /data/media/0/.nanomod-setup; then
+	unzip -o "$ZIP" "play/system/*" -d $MODPATH
+elif grep -q nanomod.play=0 /data/media/0/.nanomod-setup; then
+	unzip -o "$ZIP" "yalp/system/*" -d $MODPATH
+fi
+
 # Setup Overrides
 $MODPATH/system/bin/nanomod-overlay --update
 

@@ -3,7 +3,7 @@ NanoMod
 
 NanoMod makes several modifications to your ROM:
 
-!!! Note: this README is for version 5.0 and newer (currently in-development)
+**!!! Note: this README is for version 5.0 and newer (currently in-development)**
 
 * install Magisk and NanoMod Magisk-Module
   - actual NanoMod is an Overlay to /system which holds the apps
