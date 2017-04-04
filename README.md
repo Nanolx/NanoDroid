@@ -14,7 +14,7 @@
   - required to pass **SafetyNet**
   - since **LineageOS** (and derivates) now often no longer includes the old `su` implementation
     no actual change to `/system` is done
-* install **microG** with official Play Store
+* install **microG** with either official **Play Store** or unofficial **Yalp Store**
   - for more information on microG visit [microG Homepage](http://www.microg.org)
   - with **Mozilla** location provider backend
   - with **Nominatim** adress provider backend
@@ -53,7 +53,9 @@ populate it with the following content
 ```
 nanomod.unsu=1
 nanomod.magisk=1
-nanomod.userapps=1
+nanomod.microg=1
+nanomod.apps=1
+nanomod.play=1
 nanomod.reinstall=0
 ```
 
@@ -67,9 +69,18 @@ whether to *unroot* the phone before installing **Magisk**.
 
 whether to install **Magisk**.
 
-`nanomod.userapps=[0|1]`
+`nanomod.apps=[0|1]`
 
-whether to install user apps.
+whether to populate **F-Droid** and apps (see below).
+
+`nanomod.microg=[0|1]`
+
+whether to populate **microG**.
+
+`nanomod.play=[0|1]`
+
+what app store to use. `0` will populate **Yalp Store**, while
+`1` will populate **Play Store**.
 
 `nanomod.reinstall=[0|1]`
 
@@ -229,7 +240,7 @@ slow to actually hide root before the application checks for it.*
 
 ## Zelda ringtones & sounds
 
-The following **The Legend of Zelda** sounds are part of the Overlay:
+The following **The Legend of Zelda** sounds will be populated
 
 ### Notification sounds
 
@@ -303,7 +314,7 @@ The following **The Legend of Zelda** sounds are part of the Overlay:
 
 ```
 Q: will there be a GApps version, instead of microG?
-A: no.
+A: no. but you can choose not to populate microG.
 
 Q: will there be support for x86?
 A: x86 support is not planned currently.
