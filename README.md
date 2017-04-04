@@ -287,7 +287,7 @@ The following **The Legend of Zelda** sounds are part of the Overlay:
 
 ## FAQ
 
-````
+```
 Q: will there be a GApps version, instead of microG?
 A: no.
 
