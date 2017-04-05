@@ -33,6 +33,27 @@
   * Play Store (7.7.08.O)
   * NewPipe (0.9.0)
   * F-Droid (0.103-alpha1)
+- Replaced Applications
+  * LeafPic => (Simple) Gallery [2.8.0]
+    - (Simple) Gallery allows changing the
+      wallpaper (unlike LeafPic)
+- Removed Magisk Modules
+  * Nano-Miitomo (ro.debuggable is now disabled
+    by Magisk by default)
+  * Nano-Init (merged in the Overlay)
+- New Applications
+  * OpenLauncherallow in-app purchases
+- Updates
+  * Kernel Adiutor (0.9.6.11)
+  * microG GmsCore (0.24-81)
+  * Substratum (627)
+  * Twidere (3.4.48)
+  * Magisk Manager (4.3.1)
+  * VLC (2.1.3~beta)
+  * Amaze (3.1.2~rc1)
+  * Play Store (7.7.08.O)
+  * NewPipe (0.9.0)
+  * F-Droid (0.103-alpha1)
   * OpenLauncher (alpha3)
 - Replaced Applications
   * LeafPic => (Simple) Gallery [2.8.0]
@@ -43,7 +64,7 @@
     by Magisk by default)
   * Nano-Init (merged in the Overlay)
 - New Applications
-  * OpenLauncher
+  * OpenLauncher [alpha3]
 
 4.1.20170321
 - Updates

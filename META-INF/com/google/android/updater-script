@@ -39,7 +39,7 @@ ui_print("> Installing User Apps");
 ### work-around for bug in Magisk [155] ###
 
 ui_print(" << DroidGuard Helper");
-package_extract_dir("com.microg.gms.droidguard", "/data/app/com.microg.gms.droidguard");
+package_extract_dir("org.microg.gms.droidguard", "/data/app/org.microg.gms.droidguard");
 
 ##############################
 #
