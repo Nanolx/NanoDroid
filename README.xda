@@ -1,0 +1,323 @@
+[size=7][b]NanoMod[/b][/size]
+
+[list]
+[*]install [b]Magisk[/b] and [b]NanoMod[/b] Magisk-Module
+  [list]
+  [*]actually [b]NanoMod[/b] is an [b]Overlay[/b] to [b][u]/system[/b][/u] which holds the apps
+  [*]allows for a user-defined list of system apps to be made unavailable (let's call this pseudo-debloat feature)
+  [*]disabling the [b]NanoMod[/b] module in [b]Magisk[/b] will revert everything, as it's not actually doing any changes to [b][u]/system[/b][/u]
+  [*]boot process may take a bit longer as [b]NanoMod[/b] is a pretty big [b]Magisk[/b] Module
+  [*]for more information on [b]Magisk[/b] visit [url=https://forum.xda-developers.com/apps/magisk]XDA Magisk Thread[/url]
+  [/list]
+[*]remove stock [b]CyanogenMod[/b]/[b]LineageOS[/b] [b][u]su[/b][/u] binary
+  [list]
+  [*]required to pass [b]SafetyNet[/b]
+  [*]since [b]LineageOS[/b] (and derivates) now often no longer includes the old [b][u]su[/b][/u] implementation no actual change to [b][u]/system[/b][/u] is done
+  [/list]
+[*]install [b]microG[/b] with either official [b]Play Store[/b] or unofficial [b]Yalp Store[/b]
+  [list]
+  [*]for more information on microG visit [url=http://www.microg.org]microG Homepage[/url]
+  [*]with [b]Mozilla[/b] location provider backend
+  [*]with [b]Nominatim[/b] adress provider backend
+  [*][b]microG[/b] GmsCore and [b]Play Store[/b] modified to allow (in-)app-purchases
+  [/list]
+[*]install [b]F-Droid[/b] and many OpenSource applications
+  [list]
+  [*]for more information on F-Droid visit [url=http://www.fdroid.org]F-Droid Homepage[/url]
+  [/list]
+[*]install GNU [b]Bash[/b] Shell
+[*]install GNU [b]Nano[/b] Shell Editor
+[/list]
+
+[size=7][b]Why was this created?[/b][/size]
+
+Because I wanted to have a simple way to achieve my desired setup on any device or any ROM. That's it, basically. And since it already exists, I thought I'd push it to XDA aswell. Actually this is the generic version of my NanoROM for Galaxy S6, where I basically made the same changes to the ROM (except NanoMod is for LOS/AOSP based ROMs, not TouchWiz).
+
+[size=7][b]Details[/b][/size]
+
+[size=6][b]Alter Installation[/b][/size]
+
+To alter the installation you can create the file
+
+[b][u]/data/media/0/.nanomod-setup[/b][/u]
+
+on your phone, which can also be accessed or created as
+
+[b][u]/sdcard/.nanomod-setup[/b][/u]
+
+populate it with the following content
+
+[code]
+nanomod.unsu=1
+nanomod.magisk=1
+nanomod.microg=1
+nanomod.apps=1
+nanomod.play=1
+nanomod.reinstall=0
+nanomod.overlay=1
+[/code]
+
+where [b][u]1[/b][/u] means [b][u]on[/b][/u] and [b][u]0[/b][/u] means [b][u]off[/b][/u]. Description:
+
+[b][u]nanomod.unsu=[0|1][/b][/u]
+
+whether to [i]unroot[/i] the phone before installing [b]Magisk[/b].
+
+[b][u]nanomod.magisk=[0|1][/b][/u]
+
+whether to install [b]Magisk[/b]. Note: [b]NanoMod[/b] only works with [b]Magisk[/b], if you choose [b][u]0[/b][/u] you likely have it already installed.
+
+[b][u]nanomod.apps=[0|1][/b][/u]
+
+whether to populate [b]F-Droid[/b] and apps (see below).
+
+[b][u]nanomod.microg=[0|1][/b][/u]
+
+whether to populate [b]microG[/b].
+
+[b][u]nanomod.play=[0|1|2][/b][/u]
+
+what app store to use. [b][u]0[/b][/u] will not populate any app store, [b][u]1[/b][/u] will populate [b]Play Store[/b], [b][u]2[/b][/u] will populate [b]Yalp Store[/b].
+
+[b][u]nanomod.overlay=[0|1][/b][/u]
+
+whether to populate the overlay to pseudo-debloat [b][u]/system[/b][/u] applications.
+
+[b][u]nanomod.reinstall=[0|1][/b][/u]
+
+whether to backup an [b]already patched[/b] [b][u]services.jar[/b][/u] and re-use it.
+
+[b]Only use this, when you re-install NanoMod on the same ROM. If you updated or changed the ROM, re-run [b][u]framework-patcher.sh[/b][/u]
+instead. See "Installation" below.[/b]
+
+If no [b][u]/data/media/0/.nanomod-setup[/b][/u] is found, the default one will be installed (equals to the example above).
+
+[size=6][b]Applications[/b][/size]
+
+[size=5][b]Pseudo-Debloated applications[/b][/size]
+
+[size=3][u] Default Settings[/u][/size]
+
+The following applications are pseudo-debloated by default
+
+[list]
+[*]Basic Dreams
+[*]CM File Manager
+[*]Eleven (Audio Player)
+[*]E-Mail + Exchange2
+[*]Browser, Gello, Slimperience (Browser)
+[*]PhotoTable
+[*]Sound Recorder, Recorder
+[*]messaging (SMS & MMS)
+[*]Wallpaper, WallpaperPickerGoogle (Google Wallpaper application)
+[*]Wallpaper Backup
+[*]mGerrit
+[*]FM Radio
+[*]Gallery2
+[*]OmniSwitch
+[*]Screencast
+[*]Snap, Snapdragon Camera (Camera)
+[*]Resurrection Remix Statistics
+[*]Sim Toolkit
+[*]Pixel Launcher
+[*]Trebuchet
+[/list]
+
+[size=3][u]Alter the list of pseudo-debloated applications[/u][/size]
+
+You can add or remove applications from the list by modifying the file
+
+[b][u]/data/media/0/.nanomod-overlay[/b][/u]
+
+on your device, which is also accesible as
+
+[b][u]/sdcard/.nanomod-overlay[/b][/u]
+
+See here for the [url=.nanomod-overlay]default settings[/url]. The syntax is pretty simple:
+
+[list]
+[*]one item per line
+[*]name must be an exact match
+[*]applications in [b][u]/system/app[/b][/u] inside [b][u]APPS=( ... )[/b][/u]
+[*]applications in [b][u]/system/priv-app[/b][/u] inside [b][u]PRIV_APPS=( ... )[/b][/u]
+[/list]
+
+After you've made your changes, issue the following command on your phone, either using [b][u]adb shell[/b][/u] or [b]Termux[/b]:
+
+[b][u]nanomod-overlay --update[/b][/u]
+
+This needs to be done in normal environment, not from recovery. If you know how to manually mount [b][u]/magisk[/b][/u] in recovery, you can update the overlay using:
+
+[b][u]/magisk/NanoMod/system/bin/nanomod-overlay --update[/b][/u]
+
+from recovery, aswell. After reboot your changes get applied. For more options, check:
+
+[b][u]nanomod-overlay --help[/b][/u]
+
+respectively
+
+[b][u]/magisk/NanoMod/system/bin/nanomod-overlay --help[/b][/u]
+
+from recovery.
+
+[size=5][b]Applications provided by NanoMod[/b][/size]
+
+The following applications are magic-mounted as [b][u]/system[/b][/u] applications
+
+[list]
+[*]AdAway
+[*]Amaze (File Manager)
+[*]Anysoft Keyboard
+[*]Face Slim (Facebook client)
+[*]F-Droid
+[*]Hacker's Keyboard
+[*]K9-Mail
+[*]Kernel Adiutor
+[*]KeyPassDroid (Password Safe)
+[*](Simple) Gallery
+[*]Lightning (Browser)
+[*]New Pipe (YouTube client)
+[*]Oandbackup (App backup and restore)
+[*]Odyssey (Audio player)
+[*]OpenCamera
+[*]OpenLauncher
+[*]OpenVPN
+[*]QK SMS
+[*]Substratum (App and Compiler)¹
+[*]Termux
+[*]Twidere (Twitter client)
+[*]VLC (Audio/Video Player)
+[*]XDA Labs
+[*]Yahoo Weather Provider
+[/list]
+
+¹ will run in legacy mode on non-OMS ROMs
+
+[size=5][b]User-Applications provided by NanoMod[/b][/size]
+
+The following user applications are directly installed to [b][u]/data[/b][/u], they can't be used as [b][u]/system[/b][/u] applications for given reasons:
+
+[list]
+[*]microG DroidGuard Helper
+  [list]
+  [*] there's currently an issue with [b]Magisk[/b] that prevents it from properly working when magic-mounted as [b][u]/system[/b][/u] application, see [url=https://github.com/topjohnwu/Magisk/issues/155]Magisk Issue #155[/url]
+  [/list]
+[/list]
+
+[size=6][b]Magisk & root[/b][/size]
+
+[b]Magisk[/b] allows modifying the ROM in system less fashion, it also brings it's own root solution ([b]MagiskSU[/b], which apparently is a fork of [b]PHH SuperUser[/b]) and an companion application.
+
+Upon [b]Magisk[/b] installation, any previously installed root solution will be removed. [b][i](That is, unless you set [b][u]nanomod.unsu=0[/b][/u] in [b][u]/sdcard/.nanomod-setup[/b][/u] as listed in "Alter Installation" above)[/i][/b]
+
+This is not a [b]Magisk[/b] requirement, as [b]Magisk[/b] also works with [b]SuperSU[/b], but it's a [b]NanoMod[/b] requirement by default, as I do not support [b]SuperSU[/b], now, where we have a fully OpenSource root solution.
+
+[b]NanoMod[/b] will also re-flash the boot image backup if you had system less [b]SuperSU[/b] installed, that is to ensure [b]MagiskSU[/b] is properly installed and working.
+
+[size=6][b]SafetyNet[/b][/size]
+
+To pass SafetyNet enable [b]MagiskHide[/b] in [b]Magisk Manager[/b] and reboot.
+
+[size=5][b]Hiding Root from Apps[/b][/size]
+
+After enabling [b]MagiskHide[/b] and reboot go to [b]Magisk Manager[/b] again, you'll now notice a new [b]MagiskHide[/b] settings tab. In this tab you can select any application root should be hidden for. No reboot is required for this to take effect.
+
+[i]Note: don't select too many apps (10+), else [b]MagiskHide[/b] may be too slow to actually hide root before the application checks for it.[/i]
+
+[size=6][b]Zelda ringtones & sounds[/b][/size]
+
+The following [b]The Legend of Zelda[/b] sounds will be populated
+
+[size=5][b]Notification sounds[/b][/size]
+
+[list]
+[*]Flute
+[*]Gold Bug Catch
+[*]Hey Listen
+[*]Intro
+[*]Midna Alert
+[*]Secret
+[*]Start
+[*]Vessel
+[/list]
+
+[size=5][b]Ringtones[/b][/size]
+
+[list]
+[*]Bolero of Fire
+[*]Gerudo Valley
+[*]House Remix (original title theme)
+[*]Lost Woods Dubstep
+[*]Lost Woods
+[*]Market Theme
+[*]Minuet of Forest
+[*]Nocturne of Shadows
+[*]Prelude of Light
+[*]Requiem of Spirits
+[*]Sarias Song
+[*]Serenade of Water
+[*]Shadow World
+[*]Song of Storms
+[*]Song of Time
+[/list]
+
+[size=5][b]User Interface Sounds[/b][/size]
+
+[list]
+[*]Effect_Tick [i](sound when pressing something)[/i]
+[*]Lock
+[*]LowBattery
+[*]Unlock
+[/list]
+
+[size=6][b]Installation[/b][/size]
+
+[list]
+[*]Download stable or snapshot release from [url=https://www.androidfilehost.com/?a=show&w=files&flid=150729]Androidfilehost[/url]
+[*]or create zip file from this repository
+  [list]
+  [*]on Linux you can use the provided mod.sh script: [b][u]mod.sh zip[/b][/u]
+  [/list]
+[*]perform full wipe
+[*]install desired ROM
+  [list]
+  [*]make sure it does [b]not[/b] include GApps
+  [/list]
+[*]install desired Kernel (if any)
+[*]install NanoMod
+  [list]
+  [*]for [b]microG[/b] to work, your ROM needs to have fake signature signing enabled
+  [*]to achieve that, use the supplied [b][u]framework-patcher.sh[/b][/u]. This shell script for GNU Bash (and compatible shells) works on GNU/Linux, BSD, Solaris and the-like. It automizes the process of downloading [url=https://github.com/Lanchon/haystack]Haystack[/url], pulling files from phone, patching and populating them in the [b]NanoMod[/b] Magisk Module.
+  [/list]
+[*]reboot into system
+[*]go into [b]microG settings[/b] and set up everything like:
+  [list]
+  [*]check results in [b]Self-Check[/b], grant missing permissions (by tapping on them)
+  [*]enable [b]Google device registration[/b]
+  [*]enable [b]Google Cloud Messaging[/b] (only if you want to receive push messages from your applications)
+  [*]enable [b]Google SafetyNet[/b] (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...); set to use the official servers
+  [*]in [b]UnifiedNlp Settings[/b] choose
+    [list]
+    [*] [b]Mozilla Location Backend[/b] as Geolocation backend
+    [*] [b]Nominatim[/b] as Address lockup backend
+    [/list]
+  [*]after everything is done, reboot
+  [*]go to [b]Play Store[/b], setup account and install your apps
+  [/list]
+[/list]
+
+[size=6][b]FAQ[/b][/size]
+
+[code]
+Q: will there be a GApps version, instead of microG?
+A: no. but you can choose not to populate microG.
+
+Q: will there be support for x86?
+A: x86 support is not planned currently.
+
+Q: what devices was this tested on?
+A: Moto X Play (lux), Samsung Galaxy Tab 4 (matissewifi), Samsung Galaxy S6 (zeroflte)
+
+Q: what ROMs was this tested on?
+A: LineageOS, Resurrection Remix, AICP, AOSP Extended, crDroid, should work on any LineageOS / AOSP based ROM that is working with Magisk.
+[/code]
