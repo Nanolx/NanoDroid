@@ -25,7 +25,7 @@ Because I wanted to have a simple way to achieve my desired setup on any device 
 
 # Support
 
-[XDA-Developers Thread](https://forum.xda-developers.com/android/development/nanomod-3-0-20170204-microg-magisk-foss-t3550800)
+[XDA-Developers Thread](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928)
 
 # Details
 
