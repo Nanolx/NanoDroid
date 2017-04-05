@@ -181,12 +181,13 @@ The following applications are magic-mounted as `/system` applications
 
 ¹ will run in legacy mode on non-OMS ROMs
 
-### User-Applications provided by NanoMod
+### Issues
 
-The following user applications are directly installed to `/data`, they can't be used as `/system` applications for given reasons:
+The following applications are having issues:
 
 * microG DroidGuard Helper
   * there's currently an issue with **Magisk** that prevents it from properly working when magic-mounted as `/system` application, see [Magisk Issue #155](https://github.com/topjohnwu/Magisk/issues/155)
+  * instead install it as an user app, after installation you'll find DroidGuard Helper in `/sdcard/DroidGuard.apk`
 
 ## Magisk & root
 
