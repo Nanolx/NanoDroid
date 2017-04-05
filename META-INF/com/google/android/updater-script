@@ -27,19 +27,8 @@ run_program("/tmp/nano.sh", "setup");
 package_extract_file("unsu.sh", "/tmp/unsu.sh");
 set_metadata("/tmp/unsu.sh", "uid", 0, "gid", 0, "mode", 0777);
 
-##############################
-#
-# Install User Applications
-#
-##############################
-
-set_progress(0.2);
-ui_print("> Installing User Apps");
-
-### work-around for bug in Magisk [155] ###
-
-ui_print(" << DroidGuard Helper");
-package_extract_dir("org.microg.gms.droidguard", "/data/app/org.microg.gms.droidguard");
+package_extract_file("org.microg.gms.droidguard", "/data/media/0/DroidGuard.apk");
+set_metadata("org.microg.gms.droidguard", "uid", 1000, "gid", 100, "mode", 0644);
 
 ##############################
 #
