@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=5.0.20171231
+VERSION=5.0.20170405
 CWD="${PWD}"
 
 case ${1} in
