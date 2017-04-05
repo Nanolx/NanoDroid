@@ -16,8 +16,7 @@ fi
 _add_override () {
 
 	mkdir -p "/magisk/NanoMod/system/${1}/${2}"
-	touch "/magisk/NanoMod/system/${1}/${2}/${2}.apk"
-	touch "/magisk/NanoMod/system/${1}/${2}/.override"
+	touch "/magisk/NanoMod/system/${1}/${2}/.replace"
 
 }
 
@@ -80,7 +79,7 @@ ${2}
 
 	-u | --update )
 
-		LIST=($(find "/magisk/NanoMod/system" -name "*.override"))
+		LIST=($(find "/magisk/NanoMod/system" -name "*.replace"))
 
 		if [[ ${LIST[*]} != "" ]]; then
 			for app in "${LIST[@]}"; do
