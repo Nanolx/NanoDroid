@@ -30,6 +30,8 @@ case ${1} in
 		sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i ${PWD}/mod.sh
 		sed -e "s/< NanoMod.*/< NanoMod ${2}.${3} >\");/" -i \
 			${PWD}/META-INF/com/google/android/updater-script
+		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
+			${PWD}/Overlay/META-INF/com/google/android/update-binary
 	;;
 
 	*)
