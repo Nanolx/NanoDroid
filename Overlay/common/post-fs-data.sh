@@ -7,5 +7,4 @@ MODDIR=${0%/*}
 # More info in the main Magisk thread
 ${MODDIR}/system/etc/init.d/fstrim
 ${MODDIR}/system/etc/init.d/logscleaner
-${MODDIR}/system/etc/init.d/selinux
 ${MODDIR}/system/etc/init.d/sqlite
