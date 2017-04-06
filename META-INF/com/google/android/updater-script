@@ -27,8 +27,10 @@ run_program("/tmp/nano.sh", "setup");
 package_extract_file("unsu.sh", "/tmp/unsu.sh");
 set_metadata("/tmp/unsu.sh", "uid", 0, "gid", 0, "mode", 0777);
 
-package_extract_file("DroidGuard.apk", "/data/media/0/DroidGuard.apk");
-set_metadata("DroidGuard.apk", "uid", 1000, "gid", 100, "mode", 0644);
+if file_getprop("/data/media/0/.nanomod-setup", "nanomod.microg") == "1" then 
+	package_extract_file("DroidGuard.apk", "/data/media/0/DroidGuard.apk");
+	set_metadata("DroidGuard.apk", "uid", 1000, "gid", 100, "mode", 0644);
+endif;
 
 ##############################
 #

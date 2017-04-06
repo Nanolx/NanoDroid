@@ -1,3 +1,10 @@
+5.1.2017XXXX:
+- Internal Changes
+  * only copy DroidGuard.apk to /sdcard if
+    'nanomod.microg' is '1' in /sdcard/.nanomod-setup
+- Updates
+  * Play Store (7.7.09.O)
+
 5.0.20170405:
 - Internal Changes
   * NanoMod is now (mostly) and Magisk Module

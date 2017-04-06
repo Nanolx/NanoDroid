@@ -133,7 +133,7 @@ on your device, which is also accesible as
 
 [b][u]/sdcard/.nanomod-overlay[/b][/u]
 
-See here for the [url=.nanomod-overlay]default settings[/url]. The syntax is pretty simple:
+See here for the [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-overlay]default settings[/url]. The syntax is pretty simple:
 
 [list]
 [*]one item per line
