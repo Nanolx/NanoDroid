@@ -5,10 +5,13 @@
   * 'nanomod-overlay' '-l', respectively '--list'
     parameter has now properly formated output
   * 'nanomod-overlay' now as '-s', respectively
-    '--show' paramter whichs shows all non
+    '--show' parameter whichs shows all non
     pseudo-debloated system applications
   * 'nanomod-overlay' '-a', respectively '--add'
     now properly formats the created file
+  * 'nanomod-overlay' now has '-d', respectively
+    '--delete' parameter, which will remove all
+    overrides (thus re-enabling all apps)
 - Updates
   * Play Store (7.7.09.O)
   * Magisk (beta.13.20170405)

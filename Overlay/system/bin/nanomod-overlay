@@ -23,6 +23,16 @@ _show_name () {
 		${awk} -F \' '/application: label/{print $2}'
 }
 
+_rm_overrides () {
+	LIST=($(find "/magisk/NanoMod/system" -name "*.replace"))
+
+	if [[ ${LIST[*]} != "" ]]; then
+		for app in "${LIST[@]}"; do
+			rm -rf "$(dirname "${app}")"
+		done
+	fi
+}
+
 _add_override () {
 
 	mkdir -p "/magisk/NanoMod/system/${1}/${2}"
@@ -89,13 +99,7 @@ ${2}
 
 	-u | --update )
 
-		LIST=($(find "/magisk/NanoMod/system" -name "*.replace"))
-
-		if [[ ${LIST[*]} != "" ]]; then
-			for app in "${LIST[@]}"; do
-				rm -rf "$(dirname "${app}")"
-			done
-		fi
+		_delete_overrides
 
 		for app in "${APPS[@]}"; do
 			_add_override app "${app}"
@@ -137,6 +141,10 @@ $(printf '* %s\n' "${S_PRIV_APPS[@]}")
 
 	;;
 
+	-d | --delete )
+		_delete_overrides
+	;;
+
 	* )
 		echo "nanomod-overlay helper script
 
@@ -146,6 +154,7 @@ Options:
 -s | --show			show non-overriden /system applications
 -l | --list			show all overriden /system applications
 -u | --update			update all overrides
+-d | --delete			delete all overrides
 -h | --help			this message"
 	;;
 
