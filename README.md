@@ -49,6 +49,7 @@ nanomod.apps=1
 nanomod.play=1
 nanomod.reinstall=0
 nanomod.overlay=1
+nanomod.zelda=1
 ```
 
 where `1` means `on` and `0` means `off`. Description:
@@ -76,6 +77,10 @@ what app store to use. `0` will not populate any app store, `1` will populate **
 `nanomod.overlay=[0|1]`
 
 whether to populate the overlay to pseudo-debloat `/system` applications.
+
+`nanomod.zelda=[0|1]`
+
+whether to populate Zelda ringtones and sounds.
 
 `nanomod.reinstall=[0|1]`
 

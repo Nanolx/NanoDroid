@@ -55,6 +55,7 @@ nanomod.apps=1
 nanomod.play=1
 nanomod.reinstall=0
 nanomod.overlay=1
+nanomod.zelda=1
 [/code]
 
 where [b][u]1[/b][/u] means [b][u]on[/b][/u] and [b][u]0[/b][/u] means [b][u]off[/b][/u]. Description:
@@ -78,6 +79,10 @@ whether to populate [b]microG[/b].
 [b][u]nanomod.play=[0|1|2][/b][/u]
 
 what app store to use. [b][u]0[/b][/u] will not populate any app store, [b][u]1[/b][/u] will populate [b]Play Store[/b], [b][u]2[/b][/u] will populate [b]Yalp Store[/b].
+
+[b][u]nanomod.play=[0|1][/b][/u]
+
+whether to populate Zelda ringtones and sounds.
 
 [b][u]nanomod.overlay=[0|1][/b][/u]
 

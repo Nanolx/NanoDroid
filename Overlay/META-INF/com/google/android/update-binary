@@ -313,6 +313,10 @@ elif grep -q nanomod.play=2 $nanomodcfg; then
 	ui_print " << with Yalp Store"
 fi
 
+if grep -q nanomod.zelda=0 $nanomodcfg; then
+	rm -rf $MODPATH/system/media
+fi
+
 # Setup Overrides
 if grep -q nanomod.overlay=1 $nanomodcfg; then
 	$MODPATH/system/bin/nanomod-overlay --update
