@@ -1,22 +1,25 @@
 5.1.2017XXXX:
 - Internal Changes
   * only copy DroidGuard.apk to /sdcard if
-    'nanomod.microg' is '1' in /sdcard/.nanomod-setup
-  * 'nanomod-overlay' '-l', respectively '--list'
-    parameter has now properly formated output
-  * 'nanomod-overlay' now as '-s', respectively
-    '--show' parameter whichs shows all non
-    pseudo-debloated system applications
-  * 'nanomod-overlay' '-a', respectively '--add'
-    now properly formats the created file
-  * 'nanomod-overlay' now has '-d', respectively
-    '--delete' parameter, which will remove all
-    overrides (thus re-enabling all apps)
-  * 'nanomod-overlay' '-r', respectively '--remove'
-    parameter will now only remove exact matches
+    'nanomod.microg' is '1' in 'nanomod-setup'
+    configuration file
   * add new option 'nanomod.zelda' to 'nanomod-setup'
-    configuration file, allows to control whether to
-    install or not install Zelda ringtones and sounds
+  configuration file, allows to control whether to
+  install or not install Zelda ringtones and sounds
+- nanomod-overlay Script Changes
+  * parameter '-l', respectively '--list' now has
+    properly formatted output
+  * parameter '-r', respectively '--remove' now
+    only removed exact matches from config file
+  * parameter '-a', respectively '--add' now
+    properly formats config file
+  * new parameter '-s', respectively '--show' which
+    shows all non pseudo-debloated system applications
+  * new paramter '-d', respectively '--delete' which
+    will remove all overrides and thus re-enable all
+    applications, unlike '-r' / '--remove' this will
+    not change the config file, so you can re-debloat
+    using '-u' / '--update' again
 - Updates
   * Play Store (7.7.09.O)
   * Magisk (beta.13.20170405)
