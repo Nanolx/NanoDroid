@@ -15,6 +15,7 @@
   * with **Nominatim** adress provider backend
   * **microG** GmsCore and **Play Store** modified to allow (in-)app-purchases
 * install **F-Droid** and many OpenSource applications
+  * including the privileged extension, so you don't need to enable 'Unkown Sources' to use F-Droid
   * for more information on F-Droid visit [F-Droid Homepage](http://www.fdroid.org)
 * install GNU **Bash** Shell
 * install GNU **Nano** Shell Editor
@@ -163,7 +164,7 @@ The following applications are magic-mounted as `/system` applications
 * Amaze (File Manager)
 * Anysoft Keyboard
 * Face Slim (Facebook client)
-* F-Droid
+* F-Droid (FOSS app store, including privileged extension)
 * Hacker's Keyboard
 * K9-Mail
 * Kernel Adiutor

@@ -23,6 +23,7 @@
   [/list]
 [*]install [b]F-Droid[/b] and many OpenSource applications
   [list]
+  [*]including the privileged extension, so you don't need to enable 'Unkown Sources' to use F-Droid
   [*]for more information on F-Droid visit [url=http://www.fdroid.org]F-Droid Homepage[/url]
   [/list]
 [*]install GNU [b]Bash[/b] Shell
@@ -174,7 +175,7 @@ The following applications are magic-mounted as [b][u]/system[/b][/u] applicatio
 [*]Amaze (File Manager)
 [*]Anysoft Keyboard
 [*]Face Slim (Facebook client)
-[*]F-Droid
+[*]F-Droid (FOSS app store, including privileged extension)
 [*]Hacker's Keyboard
 [*]K9-Mail
 [*]Kernel Adiutor
