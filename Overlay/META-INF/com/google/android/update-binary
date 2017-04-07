@@ -258,6 +258,7 @@ mkdir -p $MODPATH
 nanomodcfg=/data/media/0/.nanomod-setup
 
 # Copy files
+ui_print " > Installing NanoMod"
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
 # remove microG if not requested
@@ -315,6 +316,8 @@ fi
 
 if grep -q nanomod.zelda=0 $nanomodcfg; then
 	rm -rf $MODPATH/system/media
+	ui_print " << without Zelda sounds"
+else	ui_print " << with Zelda sounds"
 fi
 
 # Setup Overrides
