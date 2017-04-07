@@ -12,11 +12,18 @@
   * 'nanomod-overlay' now has '-d', respectively
     '--delete' parameter, which will remove all
     overrides (thus re-enabling all apps)
+  * add new option 'nanomod.zelda' to 'nanomod-setup'
+    configuration file, allows to control whether to
+    install or not install Zelda ringtones and sounds
 - Updates
   * Play Store (7.7.09.O)
   * Magisk (beta.13.20170405)
+  * VLC (2.1.4~beta)
 - Added applications
   * F-Droid Privileged Extension (0.2.2)
+    - allows installation of apps using F-Droid
+      without enabling 'Unknown Sources' in the
+      security settings of your device
 
 5.0.20170405:
 - Internal Changes
