@@ -278,11 +278,12 @@ fi
 # * YahooWeatherProvider
 if grep -q nanomod.apps=0 $nanomodcfg; then
 	for app in AdAway Amaze AnysoftKeyboard FaceSlim \
-		FDroid HackerKeyboard K9Mail KeePassDroid \
-		KernelAdiutor Lightning NewPipe Oandbackup \
-		Odyssey OpenCamera OpenKeyChain OpenLauncher \
-		OpenVPN QKSMS SimpleGallery Termux Twidere \
-		VLC32 VLC64 XDALabs; do
+		FDroid FDroidPrivileged HackerKeyboard \
+		K9Mail KeePassDroid KernelAdiutor Lightning \
+		NewPipe Oandbackup Odyssey OpenCamera \
+		OpenKeyChain OpenLauncher OpenVPN QKSMS \
+		SimpleGallery Termux Twidere VLC32 VLC64 \
+		XDALabs; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
 	done
