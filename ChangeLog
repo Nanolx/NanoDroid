@@ -12,6 +12,8 @@
   * 'nanomod-overlay' now has '-d', respectively
     '--delete' parameter, which will remove all
     overrides (thus re-enabling all apps)
+  * 'nanomod-overlay' '-r', respectively '--remove'
+    parameter will now only remove exact matches
   * add new option 'nanomod.zelda' to 'nanomod-setup'
     configuration file, allows to control whether to
     install or not install Zelda ringtones and sounds

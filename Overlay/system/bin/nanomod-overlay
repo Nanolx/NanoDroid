@@ -85,7 +85,7 @@ ${2}
 
 	-r | --remove )
 		if grep -q " ${2} " "${cfg}"; then
-			sed -e "/^${2}/d" -i "${cfg}"
+			sed -e "/^${2}$/d" -i "${cfg}"
 			if [[ ${APPS[*]} == *${2}* ]]; then
 				echo "Removing override for app: \"${2}\""
 				remove_override "app/${2}"
