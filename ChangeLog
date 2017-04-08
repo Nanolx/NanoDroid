@@ -14,8 +14,13 @@
     aapt utility
   * microG package: microG only
   * framework-patcher.sh updated to support both modules
-- Removed files
+- Removed files / features
   * Effect_Tick Zelda sound
+    - I admit, that one was too annoying
+  * Magisk installation
+  * unsu Script
+    - Read: NanoMod is now only the Module, no longer
+            includes Magisk itself
 - nanomod-overlay Script Changes
   * parameter '-l', respectively '--list' now has
     properly formatted output

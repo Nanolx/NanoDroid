@@ -1,7 +1,7 @@
 [size=7][b]NanoMod[/b][/size]
 
 [list]
-[*]install [b]Magisk[/b] and [b]NanoMod[/b] Magisk-Module
+[*]install [b]NanoMod[/b] or [b]NanoMod-microG[/b] Magisk-Module
   [list]
   [*]actually [b]NanoMod[/b] is an [b]Overlay[/b] to [b][u]/system[/b][/u] which holds the apps
   [*]allows for a user-defined list of system apps to be made unavailable (let's call this pseudo-debloat feature)

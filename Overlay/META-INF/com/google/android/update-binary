@@ -253,6 +253,58 @@ fi
 
 ui_print " > Installing NanoMod"
 
+if [[ ! -f /data/media/0/.nanomod-overlay ]]; then
+	echo "APPS=(
+Adaway
+BasicDreams
+Browser
+CMFileManager
+Camera2
+Eleven
+Email
+Exchange2
+Gallery2
+Gello
+NexusLauncher
+PhotoTable
+ResurrectionStats
+Slimperience
+SoundRecorder
+Stk
+Wallpaper
+WallpaperBackup
+WallpaperPickerGoogle
+messaging
+)
+
+PRIV_APPS=(
+FMRadio
+Gallery2
+OmniSwitch
+Recorder
+Screencast
+Snap
+SnapdragonCamera
+Trebuchet
+mGerrit
+)"	> /data/media/0/.nanomod-overlay
+	chown 1000:1000 /data/media/0/.nanomod-overlay
+	chmod 0644 /data/media/0/.nanomod-overlay
+fi
+
+if [[ ! -f /data/media/0/.nanomod-setup ]]; then
+	echo "nanomod.unsu=1
+nanomod.magisk=1
+nanomod.reinstall=0
+nanomod.microg=1
+nanomod.apps=1
+nanomod.play=1
+nanomod.overlay=1
+nanomod.zelda=1" > /data/media/0/.nanomod-setup
+	chown 1000:1000 /data/media/0/.nanomod-setup
+	chmod 0644 /data/media/0/.nanomod-setup
+fi
+
 nanomodcfg=/data/media/0/.nanomod-setup
 
 if grep -q nanomod.reinstall=1 $nanomodcfg; then

@@ -59,26 +59,4 @@ if [[ ${1} == mount-magisk ]]; then
 	mount_magisk
 elif [[ ${1} == umount-magisk ]]; then
 	umount_magisk
-elif [[ ${1} == dataperms ]]; then
-	chown -R 1000:1000 /data/app
-	find /data/app -type f | xargs chmod 0644
-	find /data/app -type d | xargs chmod 0771
-elif [[ ${1} == mkdir ]]; then
-	mkdir /tmp/magisk
-	mkdir /tmp/overlay
-elif [[ ${1} == rmdir ]]; then
-	rm -rf /tmp/magisk
-	rm -rf /tmp/overlay
-elif [[ ${1} == overlay ]]; then
-	if [[ ! -f /data/media/0/.nanomod-overlay ]]; then
-		cp /tmp/.nanomod-overlay /data/media/0/.nanomod-overlay
-		chown 1000:1000 /data/media/0/.nanomod-overlay
-		chmod 0644 /data/media/0/.nanomod-overlay
-	fi
-elif [[ ${1} == setup ]]; then
-	if [[ ! -f /data/media/0/.nanomod-setup ]]; then
-		cp /tmp/.nanomod-setup /data/media/0/.nanomod-setup
-		chown 1000:1000 /data/media/0/.nanomod-setup
-		chmod 0644 /data/media/0/.nanomod-setup
-	fi
 fi
