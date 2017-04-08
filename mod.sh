@@ -29,9 +29,37 @@ case ${1} in
 	ver)
 		sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i ${PWD}/mod.sh
 		sed -e "s/< NanoMod.*/< NanoMod ${2}.${3} >\");/" -i \
-			${PWD}/META-INF/com/google/android/updater-script
+			"${PWD}"/META-INF/com/google/android/updater-script
 		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
-			${PWD}/Overlay/META-INF/com/google/android/update-binary
+			"${PWD}"/Overlay/META-INF/com/google/android/update-binary
+	;;
+
+	microg )
+		mkdir -p "${PWD}"/microG/system/{priv-,}app
+
+		for app in nlpBackendIchnaea nlpBackendNomiantim; do
+			cp -r "${PWD}"/Overlay/system/app/"${app}" \
+				"${PWD}"/microG/system/app/
+		done
+
+		for app in DroidGuard FakeStore GmsCore GsfProxy Phonesky YalpStore; do
+			cp -r "${PWD}"/Overlay/system/priv-app/"${app}" \
+				"${PWD}"/microG/system/priv-app/
+		done
+
+		if [[ -d "${2}" ]]; then
+			ZIP="${2}/NanoMod-microG-${VERSION}".zip
+			rm -f "${ZIP}"
+		else	ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
+			rm -f "${ZIP}"
+		fi
+
+		cd "${CWD}"/microG
+		zip -r "${ZIP}" *
+		cd "${CWD}"
+
+		rm -rf "${PWD}"/microG/system
+
 	;;
 
 	*)
@@ -41,7 +69,10 @@ case ${1} in
 usage:	mod.sh [opt] [arg]
 
 possible opts:
-	zip	[dir]		| create zip file from repo (in [dir] if provided)
+	zip	[dir]		| create zip file from repo *full package*
+				  (in [dir] if provided)
+	microg	[dir]		| create zip file from repo *microG only*
+				  (in [dir] if provided)
 	ver	[ver] [date]	| bump version
 "
 esac

@@ -77,11 +77,25 @@ adb shell "chmod 0755 /tmp/nano.sh" || \
 	error "Failed to set permissions for helper script"
 adb shell "/tmp/nano.sh mount-magisk" || \
 	error "Failed to mount Magisk image"
-adb shell "mkdir -p /magisk/NanoMod/system/framework" || \
-	error "Failed to create framework directory"
 
+echo -e "\nWhat module are you using?
+
+1)	NanoMod (full package)
+2)	NanoMod (microG only)
+
+enter either 1 or 2"
+read -r MOD
+
+case $MOD in
+	1 )	MODPATH="NanoMod"	;;
+	2 )	MODPATH="NanoModmicroG"	;;
+	* )	error "wrong module given" ;;
+esac
+
+adb shell "mkdir -p /magisk/${MODPATH}/system/framework" || \
+	error "Failed to create framework directory"
 adb push "${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}/services.jar" \
-		"/magisk/NanoMod/system/framework" || \
+		"/magisk/${MODPATH}/system/framework" || \
 		error "Failed to push services.jar to device"
 
 adb shell "/tmp/nano.sh umount-magisk" || error "Failed to unmount Magisk"
