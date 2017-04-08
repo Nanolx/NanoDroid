@@ -8,8 +8,14 @@
   install or not install Zelda ringtones and sounds
   * 'nanomod.play=0' now actually works and does not
     install any app store
+- Variants
+  * full package: microG, F-Droid & apps, pseudo-debloat
+    feature, Zelda ringtones & sounds, GNU Bash, GNU Nano,
+    aapt utility
+  * microG package: microG only
+  * framework-patcher.sh updated to support both modules
 - Removed files
-  - Effect_Tick Zelda sound
+  * Effect_Tick Zelda sound
 - nanomod-overlay Script Changes
   * parameter '-l', respectively '--list' now has
     properly formatted output
