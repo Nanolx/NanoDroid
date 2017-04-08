@@ -46,6 +46,9 @@ case ${1} in
 		zip -r "${ZIP}" *
 		cd "${CWD}"
 
+		zip "${ZIP}" README.md
+		zip "${ZIP}" ChangeLog
+
 		rm -rf "${PWD}"/microG/system
 		echo "Zipfile ${ZIP} created"
 	;;
