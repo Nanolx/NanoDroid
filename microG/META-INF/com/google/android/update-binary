@@ -252,6 +252,13 @@ if ! is_mounted $MOUNTPATH; then
   exit 1
 fi
 
+nanomodcfg=/data/media/0/.nanomod-setup
+
+if grep -q nanomod.reinstall=1 $nanomodcfg; then
+	cp $MODPATH/system/framework/services.jar \
+		/tmp/services.jar
+fi
+
 # Create mod paths
 rm -rf $MODPATH 2>/dev/null
 mkdir -p $MODPATH
@@ -266,7 +273,7 @@ chown 1000:1000 $MODPATH/system/priv-app/DroidGuard
 chmod 0644 $MODPATH/system/priv-app/DroidGuard
 
 # remove Yalp Store if Play Store requested and vice-versa
-if grep -q nanomod.play=2 /data/media/0/.nanomod-setup; then
+if grep -q nanomod.play=2 $nanomodcfg; then
 	for app in Phonesky; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
@@ -278,6 +285,12 @@ else
 		rm -rf $MODPATH/system/priv-app/$app
 	done
 	ui_print " << with Play Store"
+fi
+
+if grep -q nanomod.reinstall=1 $nanomodcfg; then
+	mkdir $MODPATH/system/framework
+	cp /tmp/services.jar \
+		$MODPATH/system/framework/services.jar
 fi
 
 # Handle replace folders
