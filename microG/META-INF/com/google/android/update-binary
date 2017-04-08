@@ -274,6 +274,7 @@ rm -rf $MODPATH 2>/dev/null
 mkdir -p $MODPATH
 
 # Copy files
+ui_print " << populating module"
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
 # copy DroidGuard to internal storage
