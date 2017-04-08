@@ -312,6 +312,12 @@ elif grep -q nanomod.play=2 $nanomodcfg; then
 		rm -rf $MODPATH/system/priv-app/$app
 	done
 	ui_print " << with Yalp Store"
+else
+	for app in FakeStore YalpStore Phonesky; do
+		rm -rf $MODPATH/system/app/$app
+		rm -rf $MODPATH/system/priv-app/$app
+	done
+	ui_print " << without App Store"
 fi
 
 if grep -q nanomod.zelda=0 $nanomodcfg; then
