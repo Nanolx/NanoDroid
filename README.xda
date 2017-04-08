@@ -36,6 +36,56 @@ Because I wanted to have a simple way to achieve my desired setup on any device 
 
 [size=7][b]Details[/b][/size]
 
+[size=6][b]Versions[/b][/size]
+
+[list]
+[*]Full package contains **everything** mentioned above
+[*]microG package **only** contains microG and nothing else
+[/list]
+
+[size=6][b]Installation[/b][/size]
+
+[list]
+[*]Download release build from [url=https://www.androidfilehost.com/?a=show&w=files&flid=150729]Androidfilehost[/url]
+[*]or create zip file from the [url=https://www.github.com/Nanolx/NanoMod]github[/url] repository
+  [list]
+  [*]on Linux you can use the provided mod.sh script
+    [list]
+    [*][b][u]mod.sh zip[/b][/u] for the full package
+    [*][b][u]mod.sh microg[/b][/u] for the microg package
+    [/list]
+  [/list]
+[*]perform full wipe
+[*]install desired ROM
+  [list]
+  [*]make sure it does [b]not[/b] include GApps
+  [/list]
+[*]install desired Kernel (if any)
+[*]install NanoMod
+  [list]
+  [*]for [b]microG[/b] to work, your ROM needs to have fake signature signing enabled
+  [*]to achieve that, use the supplied [b][u]framework-patcher.sh[/b][/u]. This shell script for GNU Bash (and compatible shells) works on GNU/Linux, BSD, Solaris and the-like. It automizes the process of downloading [url=https://github.com/Lanchon/haystack]Haystack[/url], pulling files from phone, patching and populating them in the [b]NanoMod[/b] Magisk Module.
+  [/list]
+[*]reboot into system
+[*]go into [b]microG settings[/b] and set up everything like:
+  [list]
+  [*]check results in [b]Self-Check[/b], grant missing permissions (by tapping on them)
+    [list]
+    [*]especially the [b]Battery Optimization[/b] item
+    [/list]
+  [*]enable [b]Google device registration[/b]
+  [*]enable [b]Google Cloud Messaging[/b] (only if you want to receive push messages from your applications)
+  [*]enable [b]Google SafetyNet[/b] (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...); set to use the official servers
+  [*]in [b]UnifiedNlp Settings[/b] choose
+    [list]
+    [*] [b]Mozilla Location Backend[/b] as Geolocation backend
+    [*] [b]Nominatim[/b] as Address lockup backend
+    [/list]
+  [*]after everything is done, reboot
+  [*]go to [b]Play Store[/b], setup account and install your apps
+  [/list]
+[/list]
+
 [size=6][b]Alter Installation[/b][/size]
 
 To alter the installation you can create the file
@@ -274,42 +324,6 @@ The following [b]The Legend of Zelda[/b] sounds will be populated
 [*]Lock
 [*]LowBattery
 [*]Unlock
-[/list]
-
-[size=6][b]Installation[/b][/size]
-
-[list]
-[*]Download stable or snapshot release from [url=https://www.androidfilehost.com/?a=show&w=files&flid=150729]Androidfilehost[/url]
-[*]or create zip file from this repository
-  [list]
-  [*]on Linux you can use the provided mod.sh script: [b][u]mod.sh zip[/b][/u]
-  [/list]
-[*]perform full wipe
-[*]install desired ROM
-  [list]
-  [*]make sure it does [b]not[/b] include GApps
-  [/list]
-[*]install desired Kernel (if any)
-[*]install NanoMod
-  [list]
-  [*]for [b]microG[/b] to work, your ROM needs to have fake signature signing enabled
-  [*]to achieve that, use the supplied [b][u]framework-patcher.sh[/b][/u]. This shell script for GNU Bash (and compatible shells) works on GNU/Linux, BSD, Solaris and the-like. It automizes the process of downloading [url=https://github.com/Lanchon/haystack]Haystack[/url], pulling files from phone, patching and populating them in the [b]NanoMod[/b] Magisk Module.
-  [/list]
-[*]reboot into system
-[*]go into [b]microG settings[/b] and set up everything like:
-  [list]
-  [*]check results in [b]Self-Check[/b], grant missing permissions (by tapping on them)
-  [*]enable [b]Google device registration[/b]
-  [*]enable [b]Google Cloud Messaging[/b] (only if you want to receive push messages from your applications)
-  [*]enable [b]Google SafetyNet[/b] (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...); set to use the official servers
-  [*]in [b]UnifiedNlp Settings[/b] choose
-    [list]
-    [*] [b]Mozilla Location Backend[/b] as Geolocation backend
-    [*] [b]Nominatim[/b] as Address lockup backend
-    [/list]
-  [*]after everything is done, reboot
-  [*]go to [b]Play Store[/b], setup account and install your apps
-  [/list]
 [/list]
 
 [size=6][b]FAQ[/b][/size]

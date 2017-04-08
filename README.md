@@ -30,6 +30,38 @@ Because I wanted to have a simple way to achieve my desired setup on any device 
 
 # Details
 
+## Versions
+
+* Full package contains **everything** mentioned above
+* microG package **only** contains microG and nothing else
+
+## Installation
+
+* Download release build from [Androidfilehost](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
+* or create zip file from this repository
+  * on Linux/BSD you can use the provided mod.sh script, either
+    * `mod.sh zip` for the full package
+    * `mod.sh microg` for the microg only package
+* perform full wipe
+* install desired ROM
+  * make sure it does **not** include GApps
+* install desired Kernel (if any)
+* install NanoMod
+  * for **microG** to work, your ROM needs to have fake signature signing enabled
+  * to achieve that, use the supplied `framework-patcher.sh`. This shell script for GNU Bash (and compatible shells) works on GNU/Linux, BSD, Solaris and the-like. It automizes the process of downloading [Haystack](https://github.com/Lanchon/haystack), pulling files from phone, patching and populating them in the **NanoMod** Magisk Module.
+* reboot into system
+  * go into **microG settings** and set up everything like:
+    * check results in **Self-Check**, grant missing permissions (by tapping on them)
+      * especially the 'Battery Optimization' item
+    * enable **Google device registration**
+    * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
+    * enable **Google SafetyNet** (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...); set to use the official servers
+    * in **UnifiedNlp Settings** choose
+      * **Mozilla Location Backend** as Geolocation backend
+      * **Nominatim** as Address lockup backend
+    * after everything is done, reboot
+    * go to **Play Store**, setup account and install your apps
+
 ## Alter Installation
 
 To alter the installation you can create the file
@@ -253,30 +285,6 @@ The following **The Legend of Zelda** sounds will be populated
 * Lock
 * LowBattery
 * Unlock
-
-## Installation
-
-* Download stable or snapshot release from [Androidfilehost](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
-* or create zip file from this repository
-  * on Linux you can use the provided mod.sh script: `mod.sh zip`
-* perform full wipe
-* install desired ROM
-  * make sure it does **not** include GApps
-* install desired Kernel (if any)
-* install NanoMod
-  * for **microG** to work, your ROM needs to have fake signature signing enabled
-  * to achieve that, use the supplied `framework-patcher.sh`. This shell script for GNU Bash (and compatible shells) works on GNU/Linux, BSD, Solaris and the-like. It automizes the process of downloading [Haystack](https://github.com/Lanchon/haystack), pulling files from phone, patching and populating them in the **NanoMod** Magisk Module.
-* reboot into system
-  * go into **microG settings** and set up everything like:
-    * check results in **Self-Check**, grant missing permissions (by tapping on them)
-    * enable **Google device registration**
-    * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
-    * enable **Google SafetyNet** (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...); set to use the official servers
-    * in **UnifiedNlp Settings** choose
-      * **Mozilla Location Backend** as Geolocation backend
-      * **Nominatim** as Address lockup backend
-    * after everything is done, reboot
-    * go to **Play Store**, setup account and install your apps
 
 ## FAQ
 
