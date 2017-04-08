@@ -81,15 +81,4 @@ elif [[ ${1} == setup ]]; then
 		chown 1000:1000 /data/media/0/.nanomod-setup
 		chmod 0644 /data/media/0/.nanomod-setup
 	fi
-elif [[ ${1} == backup-servicesjar ]]; then
-	mount_magisk
-	cp /magisk/NanoMod/system/framework/services.jar \
-		/tmp/services.jar
-	umount_magisk
-elif [[ ${1} == restore-servicesjar ]]; then
-	mount_magisk
-	mkdir /magisk/NanoMod/system/framework/
-	cp /tmp/services.jar \
-		/magisk/NanoMod/system/framework/services.jar
-	umount_magisk
 fi

@@ -252,9 +252,12 @@ if ! is_mounted $MOUNTPATH; then
   exit 1
 fi
 
+ui_print " > Installing NanoMod"
+
 nanomodcfg=/data/media/0/.nanomod-setup
 
 if grep -q nanomod.reinstall=1 $nanomodcfg; then
+	ui_print " << backup services.jar"
 	cp $MODPATH/system/framework/services.jar \
 		/tmp/services.jar
 fi
@@ -264,7 +267,6 @@ rm -rf $MODPATH 2>/dev/null
 mkdir -p $MODPATH
 
 # Copy files
-ui_print " > Installing microG"
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
 # copy DroidGuard to internal storage
@@ -294,6 +296,7 @@ else
 fi
 
 if grep -q nanomod.reinstall=1 $nanomodcfg; then
+	ui_print " << restore services.jar"
 	mkdir $MODPATH/system/framework
 	cp /tmp/services.jar \
 		$MODPATH/system/framework/services.jar

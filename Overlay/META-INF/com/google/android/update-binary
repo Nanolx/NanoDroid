@@ -251,14 +251,21 @@ if ! is_mounted $MOUNTPATH; then
   exit 1
 fi
 
+ui_print " > Installing NanoMod"
+
+nanomodcfg=/data/media/0/.nanomod-setup
+
+if grep -q nanomod.reinstall=1 $nanomodcfg; then
+	ui_print " << backup services.jar"
+	cp $MODPATH/system/framework/services.jar \
+		/tmp/services.jar
+fi
+
 # Create mod paths
 rm -rf $MODPATH 2>/dev/null
 mkdir -p $MODPATH
 
-nanomodcfg=/data/media/0/.nanomod-setup
-
 # Copy files
-ui_print " > Installing NanoMod"
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
 # remove microG if not requested
@@ -331,6 +338,13 @@ if grep -q nanomod.overlay=1 $nanomodcfg; then
 	$MODPATH/system/bin/nanomod-overlay --update
 	ui_print " << with /system applications override"
 else	ui_print " << without /system applications override"
+fi
+
+if grep -q nanomod.reinstall=1 $nanomodcfg; then
+	ui_print " << restore services.jar"
+	mkdir $MODPATH/system/framework
+	cp /tmp/services.jar \
+		$MODPATH/system/framework/services.jar
 fi
 
 # Handle replace folders

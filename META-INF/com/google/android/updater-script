@@ -71,19 +71,9 @@ endif;
 set_progress(0.8);
 ui_print("> Installing Overlay");
 
-if file_getprop("/data/media/0/.nanomod-setup", "nanomod.reinstall") == "1" then 
-	ui_print("> Back-Up patched services.jar [as requested]");
-	run_program("/tmp/nano.sh", "backup-servicesjar");
-endif;
-
 package_extract_file("Overlay.zip", "/tmp/overlay/overlay.zip");
 run_program("/sbin/unzip", "/tmp/overlay/overlay.zip", "META-INF/com/google/android/*", "-d", "/tmp/overlay");
 run_program("/sbin/sh", "/tmp/overlay/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/overlay/overlay.zip");
-
-if file_getprop("/data/media/0/.nanomod-setup", "nanomod.reinstall") == "1" then 
-	ui_print("> Restore patched services.jar [as requested]");
-	run_program("/tmp/nano.sh", "restore-servicesjar");
-endif;
 
 ##############################
 #
