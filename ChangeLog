@@ -6,7 +6,9 @@
   * add new option 'nanomod.zelda' to 'nanomod-setup'
   configuration file, allows to control whether to
   install or not install Zelda ringtones and sounds
-- Removed files:
+  * 'nanomod.play=0' now actually works and does not
+    install any app store
+- Removed files
   - Effect_Tick Zelda sound
 - nanomod-overlay Script Changes
   * parameter '-l', respectively '--list' now has
