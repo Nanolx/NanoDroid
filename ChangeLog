@@ -1,4 +1,4 @@
-5.1.2017XXXX:
+5.1.20170408:
 - Internal Changes
   * only copy DroidGuard.apk to /sdcard if
     'nanomod.microg' is '1' in 'nanomod-setup'
