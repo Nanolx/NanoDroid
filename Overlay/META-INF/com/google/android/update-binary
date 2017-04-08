@@ -276,7 +276,12 @@ if grep -q nanomod.microg=0 $nanomodcfg; then
 		rm -rf $MODPATH/system/priv-app/$app
 	done
 	ui_print " << without microG"
-else	ui_print " << with microG"
+else
+	# copy DroidGuard to internal storage
+	cp $MODPATH/system/priv-app/DroidGuard/DroidGuard.apk /sdcard
+	chown 1000:1000 /sdcard/DroidGuard.apk
+	chmod 0644 /sdcard/DroidGuard.apk
+	ui_print " << with microG"
 fi
 
 # remove apps if not requested

@@ -270,9 +270,9 @@ mkdir -p $MODPATH
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
 # copy DroidGuard to internal storage
-cp $MODPATH/system/priv-app/DroidGuard /sdcard
-chown 1000:1000 $MODPATH/system/priv-app/DroidGuard
-chmod 0644 $MODPATH/system/priv-app/DroidGuard
+cp $MODPATH/system/priv-app/DroidGuard/DroidGuard.apk /sdcard
+chown 1000:1000 /sdcard/DroidGuard.apk
+chmod 0644 /sdcard/DroidGuard.apk
 
 # remove Yalp Store if Play Store requested and vice-versa
 if grep -q nanomod.play=1 $nanomodcfg; then
