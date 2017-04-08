@@ -440,6 +440,10 @@ fi
 
 set_permissions
 
+ui_print " "
+ui_print " Thanks for using NanoMod "
+ui_print " "
+
 umount $MOUNTPATH
 losetup -d $LOOPDEVICE
 rmdir $MOUNTPATH
