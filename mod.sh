@@ -32,6 +32,8 @@ case ${1} in
 			"${PWD}"/META-INF/com/google/android/updater-script
 		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
 			"${PWD}"/Overlay/META-INF/com/google/android/update-binary
+		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
+			"${PWD}"/microG/META-INF/com/google/android/update-binary
 	;;
 
 	microg )
