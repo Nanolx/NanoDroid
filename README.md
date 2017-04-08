@@ -75,8 +75,6 @@ on your phone, which can also be accessed or created as
 populate it with the following content for the **full package**
 
 ```
-nanomod.unsu=1
-nanomod.magisk=1
 nanomod.microg=1
 nanomod.apps=1
 nanomod.play=1
@@ -93,14 +91,6 @@ nanomod.reinstall=0
 ```
 
 where `1` means `on` and `0` means `off`. Description:
-
-`nanomod.unsu=[0|1]`
-
-whether to *unroot* the phone before installing **Magisk**.
-
-`nanomod.magisk=[0|1]`
-
-whether to install **Magisk**. Note: **NanoMod** only works with **Magisk**, if you choose `0` you likely have it already installed.
 
 `nanomod.apps=[0|1]`
 
