@@ -96,7 +96,7 @@ on your phone, which can also be accessed or created as
 
 [b][u]/sdcard/.nanomod-setup[/b][/u]
 
-populate it with the following content
+populate it with the following content for the [b]full package[/b]
 
 [code]
 nanomod.unsu=1
@@ -107,6 +107,13 @@ nanomod.play=1
 nanomod.reinstall=0
 nanomod.overlay=1
 nanomod.zelda=1
+[/code]
+
+the [b]microg only package[/b] only supports the following options
+
+[code]
+nanomod.play=1
+nanomod.reinstall=0
 [/code]
 
 where [b][u]1[/b][/u] means [b][u]on[/b][/u] and [b][u]0[/b][/u] means [b][u]off[/b][/u]. Description:
