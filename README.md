@@ -250,7 +250,6 @@ The following **The Legend of Zelda** sounds will be populated
 
 ### User Interface Sounds
 
-* Effect_Tick *(sound when pressing something)*
 * Lock
 * LowBattery
 * Unlock
