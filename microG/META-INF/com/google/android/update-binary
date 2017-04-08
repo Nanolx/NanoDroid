@@ -273,18 +273,24 @@ chown 1000:1000 $MODPATH/system/priv-app/DroidGuard
 chmod 0644 $MODPATH/system/priv-app/DroidGuard
 
 # remove Yalp Store if Play Store requested and vice-versa
-if grep -q nanomod.play=2 $nanomodcfg; then
+if grep -q nanomod.play=1 $nanomodcfg; then
+	for app in FakeStore YalpStore; do
+		rm -rf $MODPATH/system/app/$app
+		rm -rf $MODPATH/system/priv-app/$app
+	done
+	ui_print " << with Play Store"
+elif grep -q nanomod.play=2 $nanomodcfg; then
 	for app in Phonesky; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
 	done
 	ui_print " << with Yalp Store"
 else
-	for app in FakeStore YalpStore; do
+	for app in FakeStore YalpStore Phonesky; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
 	done
-	ui_print " << with Play Store"
+	ui_print " << without App Store"
 fi
 
 if grep -q nanomod.reinstall=1 $nanomodcfg; then
