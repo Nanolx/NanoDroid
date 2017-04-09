@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=5.1.20170408
+VERSION=5.2.20171231
 CWD="${PWD}"
 
 case ${1} in
@@ -24,6 +24,22 @@ case ${1} in
 			"${PWD}"/Overlay/META-INF/com/google/android/update-binary
 		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
 			"${PWD}"/microG/META-INF/com/google/android/update-binary
+		sed -e "s/version=.*/version=v${2}.${3}/" -i \
+			"${PWD}"/Overlay/module.prop
+		sed -e "s/version=.*/version=v${2}.${3}/" -i \
+			"${PWD}"/microG/module.prop
+	;;
+
+	bump)
+		eval $(grep versionCode "${PWD}"/Overlay/module.prop)
+		versionCode=$((versionCode+1))
+		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
+			-i "${PWD}"/Overlay/module.prop
+
+		eval $(grep versionCode "${PWD}"/microG/module.prop)
+		versionCode=$((versionCode+1))
+		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
+			-i "${PWD}"/microG/module.prop
 	;;
 
 	microg )
