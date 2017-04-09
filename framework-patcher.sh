@@ -72,10 +72,10 @@ adb shell "mount -oro /system" || error "Failed to mount /system"
 	"${PWD}/mydevice__${PATCH_HOOK}" \
 	|| error "Failed applying sigspoof core patch!"
 
-adb push "${CWD}/nano.sh" /tmp/ || error "Failed to push helper script to device"
-adb shell "chmod 0755 /tmp/nano.sh" || \
+adb push "${CWD}/mount-magisk.sh" /tmp/ || error "Failed to push helper script to device"
+adb shell "chmod 0755 /tmp/mount-magisk.sh" || \
 	error "Failed to set permissions for helper script"
-adb shell "/tmp/nano.sh mount-magisk" || \
+adb shell "/tmp/mount-magisk.sh mount-magisk" || \
 	error "Failed to mount Magisk image"
 
 echo -e "\nWhat module are you using?
@@ -98,7 +98,7 @@ adb push "${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}/services.jar" \
 		"/magisk/${MODPATH}/system/framework" || \
 		error "Failed to push services.jar to device"
 
-adb shell "/tmp/nano.sh umount-magisk" || error "Failed to unmount Magisk"
+adb shell "/tmp/mount-magisk.sh umount-magisk" || error "Failed to unmount Magisk"
 
 echo -e "\nNow reboot device and enjoy microG!"
 
