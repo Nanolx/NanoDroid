@@ -16,6 +16,8 @@
   * for more information on F-Droid visit [F-Droid Homepage](http://www.fdroid.org)
 * install GNU **Bash** Shell
 * install GNU **Nano** Shell Editor
+* install **The Legend of Zelda** rintones and sounds
+  * it's dangerous to root alone
 
 # Why was this created?
 
