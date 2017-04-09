@@ -6,9 +6,6 @@
   * disabling the **NanoMod** module in **Magisk** will revert everything, as it's not actually doing any changes to `/system`
   * boot process may take a bit longer as **NanoMod** is a pretty big **Magisk** Module
   * for more information on **Magisk** visit [XDA Magisk Thread](https://forum.xda-developers.com/apps/magisk)
-* remove stock **CyanogenMod**/**LineageOS** `su` binary
-  * required to pass **SafetyNet**
-  * since **LineageOS** (and derivates) now often no longer includes the old `su` implementation no actual change to `/system` is done
 * install **microG** with either official **Play Store** or unofficial **Yalp Store**
   * for more information on microG visit [microG Homepage](http://www.microg.org)
   * with **Mozilla** location provider backend

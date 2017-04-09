@@ -9,11 +9,6 @@
   [*]boot process may take a bit longer as [b]NanoMod[/b] is a pretty big [b]Magisk[/b] Module
   [*]for more information on [b]Magisk[/b] visit [url=https://forum.xda-developers.com/apps/magisk]XDA Magisk Thread[/url]
   [/list]
-[*]remove stock [b]CyanogenMod[/b]/[b]LineageOS[/b] [b][u]su[/b][/u] binary
-  [list]
-  [*]required to pass [b]SafetyNet[/b]
-  [*]since [b]LineageOS[/b] (and derivates) now often no longer includes the old [b][u]su[/b][/u] implementation no actual change to [b][u]/system[/b][/u] is done
-  [/list]
 [*]install [b]microG[/b] with either official [b]Play Store[/b] or unofficial [b]Yalp Store[/b]
   [list]
   [*]for more information on microG visit [url=http://www.microg.org]microG Homepage[/url]
