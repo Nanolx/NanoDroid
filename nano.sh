@@ -42,21 +42,13 @@ mount_image() {
   fi
 }
 
-mount_magisk () {
+if [[ ${1} == mount-magisk ]]; then
 	mount /data &>/dev/null
 	mount_image /data/magisk.img /magisk
-}
-
-umount_magisk () {
+elif [[ ${1} == umount-magisk ]]; then
 	if (is_mounted /magisk); then
 		umount /magisk
 		losetup -d $(cat /tmp/loopdevice)
 		rm /tmp/loopdevice
 	fi
-}
-
-if [[ ${1} == mount-magisk ]]; then
-	mount_magisk
-elif [[ ${1} == umount-magisk ]]; then
-	umount_magisk
 fi
