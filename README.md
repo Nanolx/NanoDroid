@@ -43,7 +43,8 @@ Because I wanted to have a simple way to achieve my desired setup on any device 
 * install desired ROM
   * make sure it does **not** include GApps
 * install desired Kernel (if any)
-* install NanoMod
+* install **Magisk**
+* install **NanoMod**
   * for **microG** to work, your ROM needs to have fake signature signing enabled
   * to achieve that, use the supplied `framework-patcher.sh`. This shell script for GNU Bash (and compatible shells) works on GNU/Linux, BSD, Solaris and the-like. It automizes the process of downloading [Haystack](https://github.com/Lanchon/haystack), pulling files from phone, patching and populating them in the **NanoMod** Magisk Module.
 * reboot into system
@@ -224,12 +225,6 @@ The following applications are having issues:
 ## Magisk & root
 
 **Magisk** allows modifying the ROM in system less fashion, it also brings it's own root solution (**MagiskSU**, which apparently is a fork of **PHH SuperUser**) and an companion application.
-
-Upon **Magisk** installation, any previously installed root solution will be removed. ***(That is, unless you set `nanomod.unsu=0` in `/sdcard/.nanomod-setup` as listed in "Alter Installation" above)***
-
-This is not a **Magisk** requirement, as **Magisk** also works with **SuperSU**, but it's a **NanoMod** requirement by default, as I do not support **SuperSU**, now, where we have a fully OpenSource root solution.
-
-**NanoMod** will also re-flash the boot image backup if you had system less **SuperSU** installed, that is to ensure **MagiskSU** is properly installed and working.
 
 ## SafetyNet
 
