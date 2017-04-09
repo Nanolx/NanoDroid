@@ -79,5 +79,6 @@ possible opts:
 	zip			| create zip file from repo *full package*
 	microg			| create zip file from repo *microG only*
 	ver	[ver] [date]	| bump version
+	bump			| bump versionCode in Magisk Modules
 "
 esac
