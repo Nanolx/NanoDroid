@@ -1,3 +1,10 @@
+5.2.2017XXXX:
+- Internal Changes:
+  - no longer copy DroidGuard.apk to /sdcard
+- Updates:
+  - F-Droid Privileged Extension (0.2.3)
+  - Yalp Store (0.13)
+
 5.1.20170408:
 - Internal Changes
   * only copy DroidGuard.apk to /sdcard if
