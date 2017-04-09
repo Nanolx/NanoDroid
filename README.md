@@ -219,8 +219,11 @@ The following applications are magic-mounted as `/system` applications
 The following applications are having issues:
 
 * microG DroidGuard Helper
-  * there's currently an issue with **Magisk** that prevents it from properly working when magic-mounted as `/system` application, see [Magisk Issue #155](https://github.com/topjohnwu/Magisk/issues/155)
-  * instead install it as an user app, after installation you'll find DroidGuard Helper in `/sdcard/DroidGuard.apk`
+  * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as `/system` application, see [Magisk Issue #155](https://github.com/topjohnwu/Magisk/issues/155)
+  * this does not happen on all devices
+  * if you are affected of this issue, instead install them as an user app, by installing the apk from
+    * `/system/priv-app/DroidGuardHelper/DroidGuardHelper.apk` for microG DroidGuard Helper
+    * `/system/priv-app/Phonesky/Phonesky.apk` for Play Store
 
 ## Magisk & root
 

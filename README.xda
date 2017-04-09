@@ -248,9 +248,15 @@ The following applications are having issues:
 
 [list]
 [*]microG DroidGuard Helper
+[*]Play Store
   [list]
-  [*] there's currently an issue with [b]Magisk[/b] that prevents it from properly working when magic-mounted as [b][u]/system[/b][/u] application, see [url=https://github.com/topjohnwu/Magisk/issues/155]Magisk Issue #155[/url]
-  [*]instead install it as an user app, after installation you'll find DroidGuard Helper in [b][u]/sdcard/DroidGuard.apk[b][u]
+  [*]there's currently an issue with [b]Magisk[/b] that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as [b][u]/system[/b][/u] application, see [url=https://github.com/topjohnwu/Magisk/issues/155]Magisk Issue #155[/url]
+  [*]this does not happen on all devices
+  [*]if you are affected of this issue, instead install them as an user app, by installing the apk from
+    [list]
+    [*][b][u]/system/priv-app/DroidGuardHelper/DroidGuardHelper.apk[/b][/u] for microG DroidGuard Helper
+    [*][b][u]/system/priv-app/Phonesky/Phonesky.apk[/b][/u] for Play Store
+    [/list]
   [/list]
 [/list]
 
