@@ -16,7 +16,7 @@ help () {
 echo -e "haystack framework patcher helper
 
 provide Android Version like:
-	haystack [version] [--gui]
+	framework-patcher.sh [version]
 
 there version is one of:
 	4.1	[JB]
@@ -29,8 +29,7 @@ there version is one of:
 	7.0	[N]
 	7.1	[N]
 
-device desired to patch must be connected through
-TWRP and /system mounted read-write."
+your device must be in TWRP and connected to PC."
 
 exit 0
 
