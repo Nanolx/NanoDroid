@@ -3,6 +3,11 @@
   - no longer copy DroidGuard.apk to /sdcard
   - add 'nanomod.fdroid' configuration variable
     defines whether to install F-Droid or not
+  - add '-p', respectively '--permission'
+    parameter to 'nanomod-overlay', which will
+    grant fakesign permission to microG GmsCore
+    and Play Store, aswell as ignore battery
+    optimization permission to microG GmsCore
 - Updates:
   - F-Droid Privileged Extension (0.2.3)
   - Yalp Store (0.13)

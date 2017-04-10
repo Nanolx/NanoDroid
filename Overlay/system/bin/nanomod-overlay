@@ -145,6 +145,12 @@ $(printf '* %s\n' "${S_PRIV_APPS[@]}")
 		_delete_overrides
 	;;
 
+	-p | --permissions )
+		pm grant com.google.android.gms android.permission.FAKE_PACKAGE_SIGNATURE
+		pm grant com.google.android.gms android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+		pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE
+	;;
+
 	* )
 		echo "nanomod-overlay helper script
 
@@ -155,6 +161,9 @@ Options:
 -l | --list			show all overriden /system applications
 -u | --update			update all overrides
 -d | --delete			delete all overrides
+-p | --permission		grant fakesign permission to microG GmsCore
+				and Play Store, aswell as ignore battery
+				optimization permission to microG GmsCore
 -h | --help			this message"
 	;;
 
