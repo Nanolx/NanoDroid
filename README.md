@@ -7,7 +7,7 @@
   * boot process may take a bit longer as **NanoMod** is a pretty big **Magisk** Module
   * for more information on **Magisk** visit [XDA Magisk Thread](https://forum.xda-developers.com/apps/magisk)
 * install **microG** with either official **Play Store** or unofficial **Yalp Store**
-  * for more information on microG visit [microG Homepage](http://www.microg.org)
+  * for more information on microG visit [microG Homepage](http://microg.org)
   * with **Mozilla** location provider backend
   * with **Nominatim** adress provider backend
   * **microG** GmsCore and **Play Store** modified to allow (in-)app-purchases
