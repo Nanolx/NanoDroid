@@ -76,6 +76,7 @@ populate it with the following content for the **full package**
 
 ```
 nanomod.microg=1
+nanomod.fdroid=1
 nanomod.apps=1
 nanomod.play=1
 nanomod.reinstall=0
@@ -92,9 +93,13 @@ nanomod.reinstall=0
 
 where `1` means `on` and `0` means `off`. Description:
 
+`nanomod.fdroid=[0|1]`
+
+whether to populate **F-Droid**.
+
 `nanomod.apps=[0|1]`
 
-whether to populate **F-Droid** and apps (see below).
+whether to populate FOSS apps (see below).
 
 `nanomod.microg=[0|1]`
 

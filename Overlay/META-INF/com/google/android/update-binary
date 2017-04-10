@@ -293,8 +293,7 @@ mGerrit
 fi
 
 if [[ ! -f /data/media/0/.nanomod-setup ]]; then
-	echo "nanomod.unsu=1
-nanomod.magisk=1
+	echo "nanomod.fdroid=1
 nanomod.reinstall=0
 nanomod.microg=1
 nanomod.apps=1
@@ -332,19 +331,26 @@ if grep -q nanomod.microg=0 $nanomodcfg; then
 else	ui_print " << with microG"
 fi
 
+# remove F-Droid if not requested
+if grep -q nanomod.fdroid=0 $nanomodcfg; then
+	for app in FDroid FDroidPrivileged; do
+		rm -rf $MODPATH/system/app/$app
+		rm -rf $MODPATH/system/priv-app/$app
+	done
+	ui_print " << without F-Droid"
+else	ui_print " << with F-Droid"
+fi
+
 # remove apps if not requested
 # exceptions:
 # * Magisk Manager
-# * Substratum
-# * YahooWeatherProvider
 if grep -q nanomod.apps=0 $nanomodcfg; then
 	for app in AdAway Amaze AnysoftKeyboard FaceSlim \
-		FDroid FDroidPrivileged HackerKeyboard \
-		K9Mail KeePassDroid KernelAdiutor Lightning \
-		NewPipe Oandbackup Odyssey OpenCamera \
+		HackerKeyboard K9Mail KeePassDroid KernelAdiutor \
+		Lightning NewPipe Oandbackup Odyssey OpenCamera \
 		OpenKeyChain OpenLauncher OpenVPN QKSMS \
-		SimpleGallery Termux Twidere VLC32 VLC64 \
-		XDALabs; do
+		SimpleGallery Substratum Termux Twidere VLC32 \
+		VLC64 XDALabs YahooWeatherProvider; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
 	done

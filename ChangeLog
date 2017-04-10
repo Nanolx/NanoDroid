@@ -1,6 +1,8 @@
 5.2.2017XXXX:
 - Internal Changes:
   - no longer copy DroidGuard.apk to /sdcard
+  - add 'nanomod.fdroid' configuration variable
+    defines whether to install F-Droid or not
 - Updates:
   - F-Droid Privileged Extension (0.2.3)
   - Yalp Store (0.13)
