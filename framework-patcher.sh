@@ -60,6 +60,20 @@ git clone "${GITHUB_URL}" || error "Failed to down haystack!"
 
 cd "${CWD}/haystack"
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if ! [ -x "$(command -v brew)" ]; then
+      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
+  if ! [ -x "$(command -v greadlink)" ]; then
+      brew install coreutils
+  fi
+  if ! [ -x "$(command -v gsed)" ]; then
+      brew install gnu-sed
+  fi
+  find . -type f -name "*" -print0 | xargs -0 gsed -i'' -e 's/readlink/greadlink/g'
+  find . -type f -name "*" -print0 | xargs -0 gsed -i'' -e 's/cp/gcp/g'
+fi
+
 adb shell "mount -oro /system" || error "Failed to mount /system"
 
 "${PWD}/pull-fileset" mydevice || error "Failed to pull files from device!"
