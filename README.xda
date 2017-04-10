@@ -253,10 +253,10 @@ The following applications are magic-mounted as [b][u]/system[/b][/u] applicatio
 
 [size=5][b]Issues[/b][/size]
 
-The following applications are having issues:
+List of known issues
 
 [list]
-[*]microG DroidGuard Helper
+[*]microG DroidGuard Helper or Play Store crashing
 [*]Play Store
   [list]
   [*]there's currently an issue with [b]Magisk[/b] that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as [b][u]/system[/b][/u] application, see [url=https://github.com/topjohnwu/Magisk/issues/155]Magisk Issue #155[/url]
