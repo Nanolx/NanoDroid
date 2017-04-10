@@ -231,6 +231,10 @@ List of known issues
   * if you are affected of this issue, instead install them as an user app, by installing the apk from
     * `/system/priv-app/DroidGuardHelper/DroidGuardHelper.apk` for microG DroidGuard Helper
     * `/system/priv-app/Phonesky/Phonesky.apk` for Play Store
+* Play Store lacks fake sign permission
+  * on ROMs like **crDroid** or **OmniROM**, that have built-in fake signing and don't require running `framework-patcher.sh`, in some cases the Play Store is not granted fake sign permission, to fix this issue one of the following commands as root on your phone
+    * `nanomod-overlay --permission`
+    * `pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE`
 
 ## Magisk & root
 
