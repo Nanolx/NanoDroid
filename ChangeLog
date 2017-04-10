@@ -1,7 +1,7 @@
 5.2.2017XXXX:
 - Internal Changes:
   - no longer copy DroidGuard.apk to /sdcard
-  - add 'nanomod.fdroid' configuration variable
+  - add 'nanomod.fdroid' setup variable
     defines whether to install F-Droid or not
   - add '-p', respectively '--permission'
     parameter to 'nanomod-overlay', which will
