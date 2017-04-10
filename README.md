@@ -29,7 +29,11 @@ Because I wanted to have a simple way to achieve my desired setup on any device 
 
 # Details
 
-## Versions
+## License
+
+Each provided application under it's original license. My own work (NanoMod itself) is licensed under the [GNU General Public License version 3 or newer](https://www.gnu.org/licenses/gpl-3.0.txt)
+
+## Variants
 
 * Full package contains **everything** mentioned above
 * microG package **only** contains microG and nothing else
