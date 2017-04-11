@@ -8,6 +8,8 @@
     grant fakesign permission to microG GmsCore
     and Play Store, aswell as ignore battery
     optimization permission to microG GmsCore
+  - 'framework-patcher' revised to support Mac OSX
+    thanks to victor141516
 - Updates:
   - F-Droid Privileged Extension (0.2.3)
   - Yalp Store (0.13)
