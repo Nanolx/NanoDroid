@@ -70,8 +70,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   if ! [ -x "$(command -v gsed)" ]; then
       brew install gnu-sed
   fi
-  find . -type f -name "*" -print0 | xargs -0 gsed -i'' -e 's/readlink/greadlink/g'
-  find . -type f -name "*" -print0 | xargs -0 gsed -i'' -e 's/cp/gcp/g'
+  alias readlink=greadlink
+  alias cp=gcp
 fi
 
 adb shell "mount -oro /system" || error "Failed to mount /system"
