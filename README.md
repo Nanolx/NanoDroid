@@ -48,6 +48,7 @@ Each provided application under it's original license. My own work (NanoMod itse
 
 * Full package contains **everything** mentioned above
 * microG package **only** contains microG and nothing else
+* F-Droid package **only** contains F-Droid and it's Privileged Extension
 
 ## Installation
 
@@ -56,6 +57,7 @@ Each provided application under it's original license. My own work (NanoMod itse
   * on GNU/Linux or BSD you can use the provided mod.sh script, either
     * `mod.sh zip` for the full package
     * `mod.sh microg` for the microg only package
+    * `mod.sh fdroid` for the F-Droid only package
 * perform full wipe
   * recommended, but not required
 * install desired ROM
