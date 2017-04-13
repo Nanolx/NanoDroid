@@ -4,6 +4,8 @@
 
 5.2.20170413
 
+# Description
+
 * install **NanoMod** or **NanoMod-microG** Magisk-Module
   * actually **NanoMod** is an **Overlay** to `/system` which holds the apps
   * allows for a user-defined list of system apps to be made unavailable (let's call this pseudo-debloat feature)
