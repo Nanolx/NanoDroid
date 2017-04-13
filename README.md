@@ -4,8 +4,8 @@
 
 5.2.20170413
 
-* Stable Downloads [Androidfilehost](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
-* Archived Downloads [Androidfilehost](https://www.androidfilehost.com/?w=files&flid=156387)
+* Stable Downloads [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
+* Archived Downloads [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?w=files&flid=156387)
 
 # Description
 
@@ -52,7 +52,7 @@ Each provided application under it's original license. My own work (NanoMod itse
 
 ## Installation
 
-* Download release build from [Androidfilehost](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
+* Download release build [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
 * or create zip file from this repository
   * on GNU/Linux or BSD you can use the provided mod.sh script, either
     * `mod.sh zip` for the full package
