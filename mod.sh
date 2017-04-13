@@ -3,6 +3,17 @@
 VERSION=5.3.20171231
 CWD="${PWD}"
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if ! [ -x "$(command -v brew)" ]; then
+      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
+  if ! [ -x "$(command -v gsed)" ]; then
+      brew install gnu-sed
+  fi
+  alias sed=gsed
+fi
+
+
 case ${1} in
 	zip)
 		ZIP="${CWD}/NanoMod-${VERSION}".zip
