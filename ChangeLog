@@ -1,4 +1,17 @@
 5.3.2017XXXX:
+- Internal Changes:
+  * there's now an F-Droid only variant
+  * added 'fdroid' parameter to 'mod.sh', to
+    create the F-Droid only package from git
+  * revised 'mod.sh' (cleaner code)
+  * revised 'mod.sh' (should now be fully
+    functional on Mac OSX)
+  * revised README in many places
+  * README now features many graphical links
+    for most things featured in full package,
+    pointing to F-Droid pages, github repos,
+    or the-like, to make it much easier to get
+    additional information
 - Updates:
   * F-Droid (0.103.alpha2)
   * AnySoftKeyboard (1.8.735)
