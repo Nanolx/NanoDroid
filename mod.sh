@@ -31,26 +31,22 @@ case ${1} in
 
 	ver)
 		sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i "${PWD}"/mod.sh
-		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
-			"${PWD}"/Overlay/META-INF/com/google/android/update-binary
-		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
-			"${PWD}"/microG/META-INF/com/google/android/update-binary
-		sed -e "s/version=.*/version=v${2}.${3}/" -i \
-			"${PWD}"/Overlay/module.prop
-		sed -e "s/version=.*/version=v${2}.${3}/" -i \
-			"${PWD}"/microG/module.prop
+		
+		for module in Overlay microG fdroid; do
+			sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
+				"${PWD}"/"${module}"/META-INF/com/google/android/update-binary
+			sed -e "s/version=.*/version=v${2}.${3}/" -i \
+				"${PWD}"/"${module}"/module.prop
+		done
 	;;
 
 	bump)
-		eval $(grep versionCode "${PWD}"/Overlay/module.prop)
-		versionCode=$((versionCode+1))
-		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
-			-i "${PWD}"/Overlay/module.prop
-
-		eval $(grep versionCode "${PWD}"/microG/module.prop)
-		versionCode=$((versionCode+1))
-		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
-			-i "${PWD}"/microG/module.prop
+		for module in Overlay microG fdroid; do
+			eval $(grep versionCode "${PWD}"/"${module}"/module.prop)
+			versionCode=$((versionCode+1))
+			sed -e "s/versionCode.*/versionCode=${versionCode}/" \
+				-i "${PWD}"/"${module}"/module.prop
+		done
 	;;
 
 	microg )
@@ -80,6 +76,29 @@ case ${1} in
 		echo "Zipfile ${ZIP} created"
 	;;
 
+	fdroid )
+		mkdir -p "${PWD}"/fdroid/system/{priv-,}app
+
+		cp -r "${PWD}"/Overlay/system/app/FDroid \
+			"${PWD}"/fdroid/system/app/
+
+		cp -r "${PWD}"/Overlay/system/priv-app/FDroidPrivileged \
+			"${PWD}"/fdroid/system/priv-app/
+
+		ZIP="${CWD}/NanoMod-fdroid-${VERSION}".zip
+		rm -f "${ZIP}"
+
+		cd "${CWD}"/fdroid
+		zip -r "${ZIP}" *
+		cd "${CWD}"
+
+		zip "${ZIP}" README.md
+		zip "${ZIP}" ChangeLog
+
+		rm -rf "${PWD}"/fdroid/system
+		echo "Zipfile ${ZIP} created"
+	;;
+
 	*)
 	echo -e "
 ** NanoMod ${VERSION} helper script **
@@ -87,8 +106,9 @@ case ${1} in
 usage:	mod.sh [opt] [arg]
 
 possible opts:
-	zip			| create zip file from repo *full package*
-	microg			| create zip file from repo *microG only*
+	zip			| create module zip from repo *full package*
+	microg			| create module zip from repo *microG only*
+	fdroid			| create module zip from repo *fdroid only*
 	ver	[ver] [date]	| bump version
 	bump			| bump versionCode in Magisk Modules
 "
