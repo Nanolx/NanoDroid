@@ -1,4 +1,4 @@
-5.2.2017XXXX:
+5.2.20170413:
 - Internal Changes:
   - no longer copy DroidGuard.apk to /sdcard
   - add 'nanomod.fdroid' setup variable
