@@ -17,9 +17,9 @@
 * install **F-Droid** and many OpenSource applications
   * including the privileged extension, so you don't need to enable 'Unkown Sources' to use F-Droid
   * for more information on F-Droid visit [F-Droid Homepage](http://www.fdroid.org)
-* install GNU **Bash** Shell
-* install GNU **Nano** Shell Editor
-* install **The Legend of Zelda** rintones and sounds
+* install GNU **Bash** Shell [![GNU Link](images/gnu.png)](https://www.gnu.org/software/bash/)
+* install GNU **Nano** Shell Editor [![GNU Link](images/gnu.png)](https://www.nano-editor.org/)
+* install **The Legend of Zelda** rintones and sounds [![Nintendo Link](images/zelda.png)](http://www.zelda.com/)
   * it's dangerous to root alone
 
 # Why was this created?
