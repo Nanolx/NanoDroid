@@ -67,9 +67,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   if ! [ -x "$(command -v greadlink)" ]; then
       brew install coreutils
   fi
-  if ! [ -x "$(command -v gsed)" ]; then
-      brew install gnu-sed
-  fi
   alias readlink=greadlink
   alias cp=gcp
 fi
