@@ -190,15 +190,26 @@ See the default settings [![GitHub Link](images/github.png)](.nanomod-overlay). 
 * applications in `/system/app` inside `APPS=( ... )`
 * applications in `/system/priv-app` inside `PRIV_APPS=( ... )`
 
-After you've made your changes, issue the following command on your phone, either using `adb shell` or **Termux**:
+After you've made your changes, issue the following command on your phone, either using `adb shell` or **Termux** as root:
 
 `nanomod-overlay --update`
 
-This needs to be done in normal environment, not from recovery. If you know how to manually mount `/magisk` in recovery, you can update the overlay using:
+This needs to be done in normal environment. If you're in **TWRP** you'll have to manually mount `/magisk`. For this you can use the supplied `mount-magisk.sh` script, connect phone to PC while in **TWRP** and run the following commands
+
+`adb push mount-magisk.sh /tmp/
+adb shell
+chmod 0755 /tmp/mount-magisk.sh
+/tmp/mount-magisk.sh`
+
+afterwards you can call `nanomod-overlay` like
 
 `/magisk/NanoMod/system/bin/nanomod-overlay --update`
 
-from recovery, aswell. After reboot your changes get applied. For more options, check:
+from **TWRP**, aswell. Issue
+
+`/tmp/mount-magisk.sh`
+
+again to unmount `/magisk`. Reboot for your changes get to applied. For more options, check:
 
 `nanomod-overlay --help`
 
@@ -206,7 +217,7 @@ respectively
 
 `/magisk/NanoMod/system/bin/nanomod-overlay --help`
 
-from recovery.
+from **TWRP**.
 
 ### Applications provided by NanoMod
 
