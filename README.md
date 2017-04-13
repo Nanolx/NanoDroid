@@ -198,7 +198,7 @@ from recovery.
 
 The following applications are magic-mounted as `/system` applications
 
-* AdAway
+* AdAway [[F-Droid Logo](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=adaway&fdid=org.adaway)
 * Amaze (File Manager)
 * Anysoft Keyboard
 * Face Slim (Facebook client)
