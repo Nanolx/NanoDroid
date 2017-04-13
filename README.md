@@ -196,10 +196,10 @@ After you've made your changes, issue the following command on your phone, eithe
 
 This needs to be done in normal environment. If you're in **TWRP** you'll have to manually mount `/magisk`. For this you can use the supplied `mount-magisk.sh` script, connect phone to PC while in **TWRP** and run the following commands
 
-`adb push mount-magisk.sh /tmp/
+```adb push mount-magisk.sh /tmp/
 adb shell
 chmod 0755 /tmp/mount-magisk.sh
-/tmp/mount-magisk.sh`
+/tmp/mount-magisk.sh```
 
 afterwards you can call `nanomod-overlay` like
 
