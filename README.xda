@@ -272,7 +272,7 @@ List of known issues
   [/list]
 [*]Play Store lacks fake sign permission
   [list]
-  [*]on ROMs like **crDroid** or **OmniROM**, that have built-in fake signing and don't require running `framework-patcher.sh`, in some cases the Play Store is not granted fake sign permission, to fix this issue one of the following commands as root on your phone
+  [*]on ROMs like [b]crDroid[/b] or [b]OmniROM[/b], that have built-in fake signing and don't require running `framework-patcher.sh`, in some cases the Play Store is not granted fake sign permission, to fix this issue one of the following commands as root on your phone
     [list]
     [*][b][u]nanomod-overlay --permission[/b][/u]
     [*][b][u]pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE[/b][/u]
