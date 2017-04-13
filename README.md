@@ -6,11 +6,14 @@
   * disabling the **NanoMod** module in **Magisk** will revert everything, as it's not actually doing any changes to `/system`
   * boot process may take a bit longer as **NanoMod** is a pretty big **Magisk** Module
   * for more information on **Magisk** visit [XDA Magisk Thread](https://forum.xda-developers.com/apps/magisk)
-* install **microG** with either official **Play Store** or unofficial **Yalp Store**
+* install **microG**
   * for more information on microG visit [microG Homepage](http://microg.org)
-  * with **Mozilla** location provider backend
-  * with **Nominatim** adress provider backend
-  * **microG** GmsCore and **Play Store** modified to allow (in-)app-purchases
+  * with **Mozilla** location provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
+  * with **Nominatim** adress provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
+  * with **microG** GsfProxy [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GsfProxy)
+  * with **microG** DroidGuard Helper [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
+  * choose between official **Play Store** [![APK Mirror Link](images/apkmirror.png)](https://www.apkmirror.com/apk/google-inc/google-play-store/) or unofficial **Yalp Store** [![GitHub Link](images/github.png)](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
+  * **microG** GmsCore [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GmsCore) and **Play Store** modified to allow (in-)app-purchases
 * install **F-Droid** and many OpenSource applications
   * including the privileged extension, so you don't need to enable 'Unkown Sources' to use F-Droid
   * for more information on F-Droid visit [F-Droid Homepage](http://www.fdroid.org)
