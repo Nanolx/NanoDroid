@@ -5,10 +5,8 @@ PATCH_CORE="sigspoof-core"
 CWD="${PWD}"
 
 error () {
-
-	echo "${@}"
+	echo -e "${@}"
 	exit 1
-
 }
 
 help () {
@@ -61,28 +59,30 @@ git clone "${GITHUB_URL}" || error "Failed to down haystack!"
 cd "${CWD}/haystack"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  if ! [ -x "$(command -v brew)" ]; then
-      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  fi
-  if ! [ -x "$(command -v greadlink)" ]; then
-      brew install coreutils
-  fi
-  alias readlink=greadlink
-  alias cp=gcp
+	if ! [ -x "$(command -v brew)" ]; then
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	fi
+	if ! [ -x "$(command -v greadlink)" ]; then
+		brew install coreutils
+	fi
+	alias readlink=greadlink
+	alias cp=gcp
 fi
 
 adb shell "mount -oro /system" || error "Failed to mount /system"
 
 "${PWD}/pull-fileset" mydevice || error "Failed to pull files from device!"
 
-"${PWD}/patch-fileset" "${PWD}/patches/${PATCH_HOOK}" "${API}" "${PWD}/mydevice" \
-	|| error "Failed applying sigspoof hook patch!"
+"${PWD}/patch-fileset" "${PWD}/patches/${PATCH_HOOK}" \
+	"${API}" "${PWD}/mydevice" || \
+	error "Failed applying sigspoof hook patch!"
 
 "${PWD}/patch-fileset" "${PWD}/patches/${PATCH_CORE}" "${API}" \
 	"${PWD}/mydevice__${PATCH_HOOK}" \
 	|| error "Failed applying sigspoof core patch!"
 
-adb push "${CWD}/mount-magisk.sh" /tmp/ || error "Failed to push helper script to device"
+adb push "${CWD}/mount-magisk.sh" /tmp/ || \
+	error "Failed to push helper script to device"
 adb shell "chmod 0755 /tmp/mount-magisk.sh" || \
 	error "Failed to set permissions for helper script"
 adb shell "/tmp/mount-magisk.sh mount-magisk" || \
@@ -96,7 +96,7 @@ echo -e "\nWhat module are you using?
 enter either 1 or 2"
 read -r MOD
 
-case $MOD in
+case ${MOD} in
 	1 )	MODPATH="NanoMod"	;;
 	2 )	MODPATH="NanoModmicroG"	;;
 	* )	error "wrong module given" ;;
@@ -108,7 +108,8 @@ adb push "${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}/services.jar" \
 		"/magisk/${MODPATH}/system/framework" || \
 		error "Failed to push services.jar to device"
 
-adb shell "/tmp/mount-magisk.sh umount-magisk" || error "Failed to unmount Magisk"
+adb shell "/tmp/mount-magisk.sh umount-magisk" || \
+	error "Failed to unmount Magisk"
 
 echo -e "\nNow reboot device and enjoy microG!"
 
