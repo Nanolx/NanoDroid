@@ -54,17 +54,18 @@ Each provided application under it's original license. My own work (NanoMod itse
 
 * Download release build from [Androidfilehost](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
 * or create zip file from this repository
-  * on Linux/BSD you can use the provided mod.sh script, either
+  * on GNU/Linux or BSD you can use the provided mod.sh script, either
     * `mod.sh zip` for the full package
     * `mod.sh microg` for the microg only package
 * perform full wipe
+  * recommended, but not required
 * install desired ROM
   * make sure it does **not** include GApps
 * install desired Kernel (if any)
 * install **Magisk**
 * install **NanoMod**
   * for **microG** to work, your ROM needs to have fake signature signing enabled
-  * to achieve that, use the supplied `framework-patcher.sh`. This shell script for GNU Bash (and compatible shells) works on GNU/Linux, BSD, Solaris and the-like. It automizes the process of downloading [Haystack](https://github.com/Lanchon/haystack), pulling files from phone, patching and populating them in the **NanoMod** Magisk Module.
+  * to achieve that, use the supplied `framework-patcher.sh`. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading [Haystack](https://github.com/Lanchon/haystack), pulling files from phone, patching and populating them in the **NanoMod** Magisk Module.
 * reboot into system
   * go into **microG settings** and set up everything like:
     * check results in **Self-Check**, grant missing permissions (by tapping on them)
