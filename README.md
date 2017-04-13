@@ -198,32 +198,34 @@ from recovery.
 
 The following applications are magic-mounted as `/system` applications
 
-* AdAway [![F-Droid Logo](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=adaway&fdid=org.adaway)
-* Amaze (File Manager)
-* Anysoft Keyboard
-* Face Slim (Facebook client)
-* F-Droid (FOSS app store, including privileged extension)
-* Hacker's Keyboard
-* K9-Mail
-* Kernel Adiutor
-* KeyPassDroid (Password Safe)
-* (Simple) Gallery
-* Lightning (Browser)
-* New Pipe (YouTube client)
-* Oandbackup (App backup and restore)
-* Odyssey (Audio player)
-* OpenCamera
-* OpenLauncher
-* OpenVPN
-* QK SMS
-* Substratum (App and Compiler)¹
-* Termux
-* Twidere (Twitter client)
-* VLC (Audio/Video Player)
-* XDA Labs
-* Yahoo Weather Provider
-
-¹ will run in legacy mode on non-OMS ROMs
+* AdAway [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=adaway&fdid=org.adaway)
+* Amaze (File Manager) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=amaze&fdid=com.amaze.filemanager)
+* AnySoftKeyboard [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=anysoftkeyboard&fdid=com.menny.android.anysoftkeyboard)
+* Face Slim (Facebook client) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=face+slim&fdid=org.indywidualni.fblite)
+* F-Droid (FOSS app store) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid)
+  * F-Droid Privileged Extension [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged)
+* Hacker's Keyboard [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=hacker&fdid=org.pocketworkstation.pckeyboard)
+* K-9 Mail [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=k9&fdid=com.fsck.k9)
+* Kernel Adiutor [![GitHub Link](images/github.png)](https://github.com/Grarak/KernelAdiutor)
+* KeyPassDroid (Password Safe) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=keepass&fdid=com.android.keepass)
+* (Simple) Gallery [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=gallery&fdid=com.simplemobiletools.gallery)
+* Lightning (Browser) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=lightning&fdid=acr.browser.lightning)
+* New Pipe (YouTube client) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=newpipe&fdid=org.schabi.newpipe)
+* Oandbackup (App backup and restore) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=Oandbackup&fdid=dk.jens.backup)
+* Odyssey (Audio player) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=odyssey&fdid=org.gateshipone.odyssey)
+* OpenCamera [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=open+camera&fdid=net.sourceforge.opencamera)
+* OpenKeyChain [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=Oandbackup&fdid=org.sufficientlysecure.keychain)
+* OpenLauncher [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=openlauncher&fdid=com.benny.openlauncher)
+* OpenVPN [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=openvpn&fdid=de.blinkt.openvpn)
+* QKSMS [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=qk&fdid=com.moez.QKSMS)
+* Substratum (App and Compiler) [![GitHub Link](images/github.png)](https://github.com/substratum/substratum)
+  * will run in legacy mode on non-OMS ROMs
+* Termux [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=termux&fdid=com.termux)
+* Twidere (Twitter client) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=twidere&fdid=org.mariotaku.twidere)
+* VLC (Audio/Video Player) [![GitLab Link](images/gitlab.png)](https://code.videolan.org/videolan/vlc-android)
+* XDA Labs [![XDA Link](images/xda.png)](https://forum.xda-developers.com/android/apps-games/labs-t3241866)
+  * source not (yet) available
+* Yahoo Weather Provider [![GitHub Link](images/github.png)](https://github.com/CyanogenMod/android_packages_apps_YahooWeatherProvider)
 
 ### Issues
 
