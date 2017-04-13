@@ -4,6 +4,9 @@
 
 5.2.20170413
 
+* Stable Downloads [Androidfilehost](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
+* Archived Downloads [Androidfilehost](https://www.androidfilehost.com/?w=files&flid=156387)
+
 # Description
 
 * install **NanoMod** or **NanoMod-microG** Magisk-Module
