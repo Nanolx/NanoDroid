@@ -1,5 +1,14 @@
 [size=7][b]NanoMod[/b][/size]
 
+[size=6][b]Current Stable Release[/b][/size]
+
+5.2.20170413
+
+* Stable Downloads [url="https://www.androidfilehost.com/?a=show&w=files&flid=150729"]Androidfilehost[/url]
+* Archived Downloads [url="https://www.androidfilehost.com/?w=files&flid=156387"]Androidfilehost[/url]
+
+[size=7][b]Description[/b][/size]
+
 [list]
 [*]install [b]NanoMod[/b] or [b]NanoMod-microG[/b] Magisk-Module
   [list]
@@ -14,6 +23,8 @@
   [*]for more information on microG visit [url=http://microg.org]microG Homepage[/url]
   [*]with [b]Mozilla[/b] location provider backend
   [*]with [b]Nominatim[/b] adress provider backend
+  [*]with [b]microG GsfProxy[/b]
+  [*]with [b]microG DroidGuard Helper[/b]
   [*][b]microG[/b] GmsCore and [b]Play Store[/b] modified to allow (in-)app-purchases
   [/list]
 [*]install [b]F-Droid[/b] and many OpenSource applications
@@ -44,6 +55,7 @@ Each provided application under it's original license. My own work (NanoMod itse
 [list]
 [*]Full package contains [b]everything[/b] mentioned above
 [*]microG package [b]only[/b] contains microG and nothing else
+[*]F-Droid package [b]only[/b] contains F-Droid and it's Privileged Extension
 [/list]
 
 [size=6][b]Installation[/b][/size]
@@ -52,13 +64,17 @@ Each provided application under it's original license. My own work (NanoMod itse
 [*]Download release build from [url=https://www.androidfilehost.com/?a=show&w=files&flid=150729]Androidfilehost[/url]
 [*]or create zip file from the [url=https://www.github.com/Nanolx/NanoMod]github[/url] repository
   [list]
-  [*]on Linux you can use the provided mod.sh script
+  [*]on GNU/Linux, BSD or Mac OSX you can use the provided mod.sh script
     [list]
     [*][b][u]mod.sh zip[/b][/u] for the full package
-    [*][b][u]mod.sh microg[/b][/u] for the microg package
+    [*][b][u]mod.sh microg[/b][/u] for the microG package
+    [*][b][u]mod.sh fdroid[/b][/u] for the F-Droid package
     [/list]
   [/list]
 [*]perform full wipe
+  [list]
+  [*]recommended, but not required
+  [/list]
 [*]install desired ROM
   [list]
   [*]make sure it does [b]not[/b] include GApps
@@ -68,7 +84,7 @@ Each provided application under it's original license. My own work (NanoMod itse
 [*]install [b]NanoMod[/b]
   [list]
   [*]for [b]microG[/b] to work, your ROM needs to have fake signature signing enabled
-  [*]to achieve that, use the supplied [b][u]framework-patcher.sh[/b][/u]. This shell script for GNU Bash (and compatible shells) works on GNU/Linux, BSD, Solaris and the-like. It automizes the process of downloading [url=https://github.com/Lanchon/haystack]Haystack[/url], pulling files from phone, patching and populating them in the [b]NanoMod[/b] Magisk Module.
+  [*]to achieve that, use the supplied [b][u]framework-patcher.sh[/b][/u]. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading [url=https://github.com/Lanchon/haystack]Haystack[/url], pulling files from phone, patching and populating them in the [b]NanoMod[/b] Magisk Module.
   [/list]
 [*]reboot into system
 [*]go into [b]microG settings[/b] and set up everything like:
