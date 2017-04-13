@@ -14,9 +14,8 @@
   * allows for a user-defined list of system apps to be made unavailable (let's call this pseudo-debloat feature)
   * disabling the **NanoMod** module in **Magisk** will revert everything, as it's not actually doing any changes to `/system`
   * boot process may take a bit longer as **NanoMod** is a pretty big **Magisk** Module
-  * for more information on **Magisk** visit [XDA Magisk Thread](https://forum.xda-developers.com/apps/magisk)
-* install **microG**
-  * for more information on microG visit [microG Homepage](http://microg.org)
+  * for more information on **Magisk** [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk)
+* install **microG** [![Web Link](images/microg.png)](http://microg.org/)
   * with **Mozilla** location provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
   * with **Nominatim** adress provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
   * with **microG** GsfProxy [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GsfProxy)
@@ -25,7 +24,7 @@
   * **microG** GmsCore [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GmsCore) and **Play Store** modified to allow (in-)app-purchases
 * install **F-Droid** and many OpenSource applications
   * including the privileged extension, so you don't need to enable 'Unkown Sources' to use F-Droid
-  * for more information on F-Droid visit [F-Droid Homepage](http://www.fdroid.org)
+  * for more information on F-Droid visit [![F-Droid Link](images/fdroid.png)](http://www.fdroid.org)
 * install GNU **Bash** Shell [![GNU Link](images/gnu.png)](https://www.gnu.org/software/bash/)
 * install GNU **Nano** Shell Editor [![GNU Link](images/gnu.png)](https://www.nano-editor.org/)
 * install **The Legend of Zelda** rintones and sounds [![Nintendo Link](images/zelda.png)](http://www.zelda.com/)
@@ -37,13 +36,13 @@ Because I wanted to have a simple way to achieve my desired setup on any device 
 
 # Support
 
-[XDA-Developers Thread](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928)
+XDA Support Thread [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928)
 
 # Details
 
 ## License
 
-Each provided application under it's original license. My own work (NanoMod itself) is licensed under the [GNU General Public License version 3 or newer](https://www.gnu.org/licenses/gpl-3.0.txt)
+Each provided application under it's original license. My own work (NanoMod itself) is licensed under the GNU General Public License version 3 or newer [![GNU Link](images/gnu.png)](https://www.gnu.org/licenses/gpl-3.0.txt)
 
 ## Variants
 
@@ -65,7 +64,7 @@ Each provided application under it's original license. My own work (NanoMod itse
 * install **Magisk**
 * install **NanoMod**
   * for **microG** to work, your ROM needs to have fake signature signing enabled
-  * to achieve that, use the supplied `framework-patcher.sh`. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading [Haystack](https://github.com/Lanchon/haystack), pulling files from phone, patching and populating them in the **NanoMod** Magisk Module.
+  * to achieve that, use the supplied `framework-patcher.sh`. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](images/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and populating them in the **NanoMod** Magisk Module.
 * reboot into system
   * go into **microG settings** and set up everything like:
     * check results in **Self-Check**, grant missing permissions (by tapping on them)
@@ -182,7 +181,7 @@ on your device, which is also accesible as
 
 `/sdcard/.nanomod-overlay`
 
-See here for the [default settings](.nanomod-overlay). The syntax is pretty simple:
+See the default settings [![GitHub Link](images/github.png)](.nanomod-overlay). The syntax is pretty simple:
 
 * one item per line
 * name must be an exact match
@@ -246,7 +245,7 @@ The following applications are magic-mounted as `/system` applications
 List of known issues
 
 * microG DroidGuard Helper or Play Store crashing
-  * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as `/system` application, see [Magisk Issue #155](https://github.com/topjohnwu/Magisk/issues/155)
+  * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as `/system` application, see Magisk Issue 155 [![GitHub Link](images/github.png)](https://github.com/topjohnwu/Magisk/issues/155)
   * this does not happen on all devices
   * if you are affected of this issue, instead install them as an user app, by installing the apk from
     * `/system/priv-app/DroidGuardHelper/DroidGuardHelper.apk` for microG DroidGuard Helper
