@@ -209,7 +209,7 @@ from **TWRP**, aswell. Issue
 
 `/tmp/mount-magisk.sh`
 
-again to unmount `/magisk`. Reboot for your changes get to applied. For more options, check:
+again to unmount `/magisk`. Reboot for your changes to get applied. For more options, check:
 
 `nanomod-overlay --help`
 
