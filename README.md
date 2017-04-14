@@ -40,6 +40,10 @@ XDA Support Thread [![XDA Link](images/xda.png)](https://forum.xda-developers.co
 
 # Details
 
+## ChangeLog
+
+ChangeLog.md [![GitHub Link](images/github.png)](ChangeLog.md)
+
 ## License
 
 Each provided application under it's original license. My own work (NanoMod itself) is licensed under the GNU General Public License version 3 or newer [![GNU Link](images/gnu.png)](https://www.gnu.org/licenses/gpl-3.0.txt)
