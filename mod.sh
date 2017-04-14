@@ -24,7 +24,7 @@ case ${1} in
 		cd "${CWD}"
 
 		zip "${ZIP}" README.md
-		zip "${ZIP}" ChangeLog
+		zip "${ZIP}" ChangeLog.md
 
 		echo "Zipfile ${ZIP} created"
 	;;
@@ -70,7 +70,7 @@ case ${1} in
 		cd "${CWD}"
 
 		zip "${ZIP}" README.md
-		zip "${ZIP}" ChangeLog
+		zip "${ZIP}" ChangeLog.md
 
 		rm -rf "${PWD}"/microG/system
 		echo "Zipfile ${ZIP} created"
@@ -93,7 +93,7 @@ case ${1} in
 		cd "${CWD}"
 
 		zip "${ZIP}" README.md
-		zip "${ZIP}" ChangeLog
+		zip "${ZIP}" ChangeLog.md
 
 		rm -rf "${PWD}"/fdroid/system
 		echo "Zipfile ${ZIP} created"
