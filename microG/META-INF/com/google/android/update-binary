@@ -338,6 +338,7 @@ if $LATESTARTSERVICE; then
   cp -af $INSTALLER/common/service.sh $MODPATH/service.sh
 fi
 
+ui_print "<< setting permissions"
 set_permissions
 
 ui_print " "
