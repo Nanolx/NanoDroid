@@ -38,6 +38,10 @@ case ${1} in
 			sed -e "s/version=.*/version=v${2}.${3}/" -i \
 				"${PWD}"/"${module}"/module.prop
 		done
+
+		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
+			"${PWD}"/framework-patcher/META-INF/com/google/android/update-binary
+
 	;;
 
 	bump)
