@@ -3,6 +3,11 @@
 OUTFD=$2
 ZIP=$3
 
+# XXX globally export LD_LIBRARY_PATH override, as
+# XXX there have been faulty TWRPs spotted in the wild
+# XXX which have a default value of ".:/sbin" (sic!)
+export LD_LIBRARY_PATH="/system/lib:/system/lib64:$LD_LIBRARY_PATH"
+
 readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
 if [ "$?" -eq "0" ]; then
   OUTFD=0
@@ -37,11 +42,6 @@ BASEDIR="/tmp/dexpatcher"
 
 SDK_VERSION=$(getprop ro.build.version.sdk)
 ABI=$(getprop ro.product.cpu.abi)
-
-# XXX globally export LD_LIBRARY_PATH override, as
-# XXX there have been faulty TWRPs spotted in the wild
-# XXX which have a default value of ".:/sbin" (sic!)
-export LD_LIBRARY_PATH="/system/lib:/system/lib64"
 
 error () {
 	echo "${@}"
