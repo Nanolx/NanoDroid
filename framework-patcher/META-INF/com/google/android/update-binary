@@ -20,17 +20,137 @@ if [ "$?" -eq "0" ]; then
 fi
 
 ui_print() {
-  echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
+  echo -n -e "ui_print $@\n" >> /proc/self/fd/$OUTFD
   echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
 }
 
+ui_print_sh() {
+	while IFS= read -r line; do
+		ui_print "$line"
+		if [[ $line == *failed* ]]; then
+			exit 1
+		fi
+	done
+}
+
+BASEDIR="/tmp/dexpatcher"
+
+SDK_VERSION=$(getprop ro.build.version.sdk)
+ABI=$(getprop ro.product.cpu.abi)
+
+# XXX globally export LD_LIBRARY_PATH override, as
+# XXX there have been faulty TWRPs spotted in the wild
+# XXX which have a default value of ".:/sbin" (sic!)
+export LD_LIBRARY_PATH="/system/lib:/system/lib64"
+
+error () {
+	echo "${@}"
+	exit 1
+}
+
+is_mounted() {
+  if [ ! -z "$2" ]; then
+    cat /proc/mounts | grep $1 | grep $2, >/dev/null
+  else
+    cat /proc/mounts | grep $1 >/dev/null
+  fi
+  return $?
+}
+
+
+mount_image() {
+  if [ ! -d "$2" ]; then
+    mount -o rw,remount rootfs /
+    mkdir -p $2 2>/dev/null
+    [ ! -d "$2" ] && return 1
+  fi
+  if (! is_mounted $2); then
+    LOOPDEVICE=
+    for LOOP in 0 1 2 3 4 5 6 7; do
+      if (! is_mounted $2); then
+        LOOPDEVICE=/dev/block/loop$LOOP
+        if [ ! -e "$LOOPDEVICE" ]; then
+          mknod $LOOPDEVICE b 7 $LOOP
+        fi
+        losetup $LOOPDEVICE $1
+        if [ "$?" -eq "0" ]; then
+          mount -t ext4 -o loop $LOOPDEVICE $2
+          if (! is_mounted $2); then
+            /system/bin/toolbox mount -t ext4 -o loop $LOOPDEVICE $2
+          fi
+          if (! is_mounted $2); then
+            /system/bin/toybox mount -t ext4 -o loop $LOOPDEVICE $2
+          fi
+        fi
+        if (is_mounted $2); then
+          echo "$LOOPDEVICE" > /tmp/loopdevice
+          break;
+        fi
+      fi
+    done
+  fi
+}
+
+_dalvikvm () {
+	dalvikvm -cp "/tmp/dexpatcher/dexpatcher.dex" \
+		lanchon.dexpatcher.Main \
+		"${DEX_OPTS}" --api-level "${SDK_VERSION}" \
+		--verbose --output "${1}" "${2}" "${3}" 2>1 || \
+			error " !! dexpatcher failed"
+}
+
+_zipd () {
+	/system/xbin/zip -d "${1}" 'classes*.dex' 2>1 || \
+		error " !! zip failed"
+}
+
+_zipj () {
+	/system/xbin/zip -j "${2}" "${1}"/classes*.dex 2>1 || \
+		error " !! zip failed"
+}
+
+apply_patch () {
+
+	if [ ${SDK_VERSION} -gt 21 ]; then
+		mkdir -p "${1}"
+	fi
+
+	# XXX yes, this shitty
+	# XXX	"(func(a || b)) | c) || exit"
+	# XXX indeed works!
+	(_dalvikvm "${@}" | ui_print_sh) || exit 1
+	(_zipd "${2}" | ui_print_sh) || exit 1
+	(_zipj "${1}" "${2}" | ui_print_sh) || exit 1
+
+	rm -rf "${1}"
+
+}
+
+if [ ${SDK_VERSION} -gt 25 ]; then
+	ui_print " !! Android versions beyond Nougat are not yet supported"
+	exit 1
+fi
+
+if [ ${SDK_VERSION} -lt 16 ]; then
+	ui_print " !! Android versions before Jelly Bean are not supported"
+	exit 1
+fi
+
 ui_print " "
 ui_print "********************************"
-ui_print "      NanoMod 5.3.20171231      "
+ui_print "      NanoMod 5.2.20171231      "
 ui_print "       Framework Patcher        "
 ui_print "Powered by DexPatcher (@lanchon)"
 ui_print "********************************"
 ui_print " "
+
+if [ ${SDK_VERSION} -lt 24 ]; then
+	ui_print " > Android 4.1 - 6.0 detected"
+	PATCH_HOOK="hook_4.1-6.0_services.jar.dex"
+else
+	ui_print " > Android 7.x detected"
+	PATCH_HOOK="hook_7.x_services.jar.dex"
+fi
 
 ui_print " > preparing environment"
 
@@ -41,12 +161,79 @@ ui_print " "
 ui_print " << this might take a few minutes,"
 ui_print " << depending on your device's power"
 ui_print " "
-ui_print " << in case something is wrong, see"
-ui_print " << /tmp/recovery.log for more info"
+
+if [ ${SDK_VERSION} -gt 21 ]; then
+	DEX_OPTS="--multi-dex"
+fi
+
+if ! (is_mounted /system); then
+	mount -oro /system
+fi
+
+if ! (is_mounted /data); then
+	mount -orw /data
+fi
+
+if [ -f /data/magisk.img ]; then
+	mount_image /data/magisk.img /magisk
+fi
+
+cp /system/framework/services.jar \
+	/tmp/services.jar || \
+	error " !! failed to copy services.jar"
+
+ui_print " >> applying hook patch"
+apply_patch /tmp/services.jar-hook \
+	/tmp/services.jar \
+	"${BASEDIR}/${PATCH_HOOK}" || \
+	error "failed to patch services.jar with ${PATCH_HOOK}"
+
 ui_print " "
+ui_print " >> applying core patch"
+apply_patch /tmp/services.jar-hook-core \
+	/tmp/services.jar \
+	"${BASEDIR}/${PATCH_CORE}" || \
+	error "failed to patch services.jar with ${PATCH_CORE}"
 
-/tmp/dexpatcher/framework-patcher.sh
+ui_print " "
+if [ -d /magisk/NanoMod ]; then
+	ui_print " >> installing services.jar to: NanoMod (full)"
+	mkdir -p /magisk/NanoMod/system/framework/
+	cp /tmp/services.jar \
+		/magisk/NanoMod/system/framework/services.jar || \
+		error " !! failed to install services.jar to: NanoMod (full)"
+	chown root:root /magisk/NanoMod/system/framework/services.jar
+	chmod 0644 /magisk/NanoMod/system/framework/services.jar
+elif [ -d /magisk/NanoModmicroG ]; then
+	ui_print " >> installing services.jar to: NanoMod (microG)"
+	mkdir -p /magisk/NanoModmicroG/system/framework/
+	cp /tmp/services.jar \
+		/magisk/NanoModmicroG/system/framework//services.jar || \
+		error " !! failed to install services.jar into NanoMod (microG)"
+	chown root:root /magisk/NanoModmicroG/system/framework/services.jar
+	chmod 0644 /magisk/NanoModmicroG/system/framework/services.jar
+else
+	ui_print " >> installing services.jar to: ROM"
+	mount -orw,remount /system >/dev/null
+	cp /tmp/services.jar \
+		/system/framework//services.jar || \
+		error " !! failed to install services.jar to: ROM"
+	chown root:root /system/framework/services.jar
+	chmod 0644 /system/framework/services.jar
+fi
 
+ui_print " >> clean up"
+if (is_mounted /magisk); then
+	umount /magisk
+	losetup -d $(cat /tmp/loopdevice)
+	rm /tmp/loopdevice
+fi
+
+mount -oro,remount /system >/dev/null
+
+rm /tmp/services.jar
+
+ui_print " "
 ui_print " > Done!"
 ui_print " "
 ui_print "Thanks for using NanoMod"
