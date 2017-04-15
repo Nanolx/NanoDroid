@@ -66,6 +66,9 @@ case ${1} in
 				"${PWD}"/microG/system/priv-app/
 		done
 
+		cp -r "${PWD}"/Overlay/system/{etc,framework}/ \
+			"${PWD}"/microG/system/
+
 		ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
 		rm -f "${ZIP}"
 
