@@ -3,11 +3,6 @@
 OUTFD=$2
 ZIP=$3
 
-# XXX globally export LD_LIBRARY_PATH override, as
-# XXX there have been faulty TWRPs spotted in the wild
-# XXX which have a default value of ".:/sbin" (sic!)
-export LD_LIBRARY_PATH="/system/lib:/system/lib64:$LD_LIBRARY_PATH"
-
 readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
 if [ "$?" -eq "0" ]; then
   OUTFD=0
@@ -96,7 +91,8 @@ mount_image() {
 }
 
 _dalvikvm () {
-	dalvikvm -cp "${BASEDIR}/dexpatcher.dex" \
+	LD_LIBRARY_PATH="/system/lib:/system/lib64:$LD_LIBRARY_PATH" \
+		dalvikvm -cp "${BASEDIR}/dexpatcher.dex" \
 		lanchon.dexpatcher.Main \
 		"${DEX_OPTS}" --api-level "${SDK_VERSION}" \
 		--verbose --output "${1}" "${2}" "${3}" 2>1 || \
@@ -104,12 +100,14 @@ _dalvikvm () {
 }
 
 _zipd () {
-	/system/xbin/zip -d "${1}" 'classes*.dex' 2>1 || \
+	LD_LIBRARY_PATH="/system/lib:/system/lib64:$LD_LIBRARY_PATH" \
+		/system/xbin/zip -d "${1}" 'classes*.dex' 2>1 || \
 		error " !! zip failed"
 }
 
 _zipj () {
-	/system/xbin/zip -j "${2}" "${1}"/classes*.dex 2>1 || \
+	LD_LIBRARY_PATH="/system/lib:/system/lib64:$LD_LIBRARY_PATH" \
+		/system/xbin/zip -j "${2}" "${1}"/classes*.dex 2>1 || \
 		error " !! zip failed"
 }
 
