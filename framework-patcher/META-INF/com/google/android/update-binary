@@ -1,0 +1,55 @@
+#!/sbin/sh
+
+OUTFD=$2
+ZIP=$3
+
+readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
+if [ "$?" -eq "0" ]; then
+  OUTFD=0
+
+  for FD in `ls /proc/$$/fd`; do
+    readlink /proc/$$/fd/$FD 2>/dev/null | grep pipe >/dev/null
+    if [ "$?" -eq "0" ]; then
+      ps | grep " 3 $FD " | grep -v grep >/dev/null
+      if [ "$?" -eq "0" ]; then
+        OUTFD=$FD
+        break
+      fi
+    fi
+  done
+fi
+
+ui_print() {
+  echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
+  echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+}
+
+ui_print " "
+ui_print "********************************"
+ui_print "      NanoMod 5.3.20171231      "
+ui_print "       Framework Patcher        "
+ui_print "Powered by DexPatcher (@lanchon)"
+ui_print "********************************"
+ui_print " "
+
+ui_print " > preparing environment"
+
+unzip -o "$3" "dexpatcher/*" -d /tmp
+
+ui_print " > patching services.jar"
+ui_print " "
+ui_print " << this might take a few minutes,"
+ui_print " << depending on your device's power"
+ui_print " "
+ui_print " << in case something is wrong, see"
+ui_print " << /tmp/recovery.log for more info"
+ui_print " "
+
+/tmp/dexpatcher/framework-patcher.sh
+
+ui_print " > Done!"
+ui_print " "
+ui_print "Thanks for using NanoMod"
+ui_print " "
+
+exit 0

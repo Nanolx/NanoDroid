@@ -99,6 +99,21 @@ case ${1} in
 		echo "Zipfile ${ZIP} created"
 	;;
 
+	patcher )
+
+		ZIP="${CWD}/NanoMod-patcher-${VERSION}".zip
+		rm -f "${ZIP}"
+
+		cd "${CWD}"/framework-patcher
+		zip -r "${ZIP}" *
+		cd "${CWD}"
+
+		zip "${ZIP}" README.md
+		zip "${ZIP}" ChangeLog.md
+
+		echo "Zipfile ${ZIP} created"
+	;;
+
 	*)
 	echo -e "
 ** NanoMod ${VERSION} helper script **
@@ -109,6 +124,7 @@ possible opts:
 	zip			| create module zip from repo *full package*
 	microg			| create module zip from repo *microG only*
 	fdroid			| create module zip from repo *fdroid only*
+	patcher			| create framework-patcher from repo
 	ver	[ver] [date]	| bump version
 	bump			| bump versionCode in Magisk Modules
 "

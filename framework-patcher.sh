@@ -48,9 +48,7 @@ esac
 
 if [[ ${API} -lt 24 ]]; then
 	PATCH_HOOK="sigspoof-hook-4.1-6.0"
-	PATCH_UI="sigspoof-ui-global-4.1-6.0"
 else	PATCH_HOOK="sigspoof-hook-7.0"
-	PATCH_UI="sigspoof-ui-global-7.0"
 fi
 
 [[ -d ${CWD}/haystack ]] && rm -rf "${CWD}/haystack"
