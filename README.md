@@ -111,6 +111,7 @@ nanomod.play=1
 nanomod.reinstall=0
 nanomod.overlay=1
 nanomod.zelda=1
+nanomod.mapsv1=0
 ```
 
 the **microg only package** only supports the following options
@@ -133,6 +134,10 @@ whether to populate FOSS apps (see below).
 `nanomod.microg=[0|1]`
 
 whether to populate **microG**.
+
+`nanomod.mapsv1=[0|1]`
+
+whether to provide **microG** Maps API v1.
 
 `nanomod.play=[0|1|2]`
 

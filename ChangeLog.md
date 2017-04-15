@@ -11,6 +11,7 @@
   * added `patcher` parameter to `mod.sh`, to create the on-device framework-patcher package from git
   * revised `mod.sh` (cleaner code)
   * revised `mod.sh` (should now be fully functional on Mac OSX)
+  * added `nanomod.mapsv1` setup variable to `nanomod-setup` configuration file
   * revised README in many places
   * README now features many graphical links for most things featured in full package, pointing to F-Droid pages, github repos, or the-like, to make it much easier to get additional information
 * Updates

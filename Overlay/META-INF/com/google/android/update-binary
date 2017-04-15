@@ -299,7 +299,8 @@ nanomod.microg=1
 nanomod.apps=1
 nanomod.play=1
 nanomod.overlay=1
-nanomod.zelda=1" > /data/media/0/.nanomod-setup
+nanomod.zelda=1
+nanomod.mapsv1=0" > /data/media/0/.nanomod-setup
 	chown 1000:1000 /data/media/0/.nanomod-setup
 	chmod 0644 /data/media/0/.nanomod-setup
 fi
@@ -329,6 +330,14 @@ if grep -q nanomod.microg=0 $nanomodcfg; then
 	done
 	ui_print " << without microG"
 else	ui_print " << with microG"
+fi
+
+# remove mapsv1 if not requested
+if grep -q nanomod.mapsv1=1 $nanomodcfg; then
+	ui_print " << with Maps API version 1"
+else	rm $MODPATH/system/etc/permissions/com.google.android.maps.xml
+	rm $MODPATH/system/framework/com.google.android.maps.jar
+	ui_print " << without Maps API version 1"
 fi
 
 # remove F-Droid if not requested
