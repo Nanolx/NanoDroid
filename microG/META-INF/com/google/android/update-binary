@@ -256,7 +256,8 @@ ui_print " > Installing NanoMod"
 
 if [[ ! -f /data/media/0/.nanomod-setup ]]; then
 	echo "nanomod.reinstall=0
-nanomod.play=1" > /data/media/0/.nanomod-setup
+nanomod.play=1
+nanomod.mapsv1=0" > /data/media/0/.nanomod-setup
 	chown 1000:1000 /data/media/0/.nanomod-setup
 	chmod 0644 /data/media/0/.nanomod-setup
 fi
@@ -276,6 +277,14 @@ mkdir -p $MODPATH
 # Copy files
 ui_print " << populating module"
 unzip -o "$ZIP" "system/*" -d $MODPATH
+
+# remove mapsv1 if not requested
+if grep -q nanomod.mapsv1=1 $nanomodcfg; then
+	ui_print " << with Maps API version 1"
+else	rm $MODPATH/system/etc/permissions/com.google.android.maps.xml
+	rm $MODPATH/system/framework/com.google.android.maps.jar
+	ui_print " << without Maps API version 1"
+fi
 
 # remove Yalp Store if Play Store requested and vice-versa
 if grep -q nanomod.play=1 $nanomodcfg; then
