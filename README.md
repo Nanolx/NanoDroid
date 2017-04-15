@@ -53,7 +53,7 @@ Each provided application under it's original license. My own work (NanoMod itse
 ## Variants
 
 * Full package contains **everything** mentioned above
-* microG package **only** contains microG and nothing else
+* microG package **only** contains microG, it's companions and `nanomod-overlay` script
   * don't flash this, if you already have the Full package
 * F-Droid package **only** contains F-Droid and it's Privileged Extension
   * don't flash this, if you already have the Full package

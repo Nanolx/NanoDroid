@@ -55,6 +55,7 @@ case ${1} in
 
 	microg )
 		mkdir -p "${PWD}"/microG/system/{priv-,}app
+		mkdir -p "${PWD}"/microG/system/bin
 
 		for app in nlpBackendIchnaea nlpBackendNomiantim; do
 			cp -r "${PWD}"/Overlay/system/app/"${app}" \
@@ -65,6 +66,9 @@ case ${1} in
 			cp -r "${PWD}"/Overlay/system/priv-app/"${app}" \
 				"${PWD}"/microG/system/priv-app/
 		done
+
+		cp "${PWD}"/Overlay/system/bin/nanomod-overlay \
+			"${PWD}"/microG/system/bin
 
 		cp -r "${PWD}"/Overlay/system/{etc,framework}/ \
 			"${PWD}"/microG/system/
