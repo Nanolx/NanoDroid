@@ -3,9 +3,14 @@
 ## in-dev
 * Internal Changes
   * there's now an F-Droid only variant
-  * added 'fdroid' parameter to 'mod.sh', to create the F-Droid only package from git
-  * revised 'mod.sh' (cleaner code)
-  * revised 'mod.sh' (should now be fully functional on Mac OSX)
+  * there's now an on-device framework-patcher
+    * for reference: on Moto X Play / Galaxy Tab 4 the patching process takes about 3 - 4 Minutes
+  * ensure all binaries installed by NanoMod (full package) are executable
+  * minor fix in `nanomod-overlay` script
+  * added `fdroid` parameter to `mod.sh`, to create the F-Droid only package from git
+  * added `patcher` parameter to `mod.sh`, to create the on-device framework-patcher package from git
+  * revised `mod.sh` (cleaner code)
+  * revised `mod.sh` (should now be fully functional on Mac OSX)
   * revised README in many places
   * README now features many graphical links for most things featured in full package, pointing to F-Droid pages, github repos, or the-like, to make it much easier to get additional information
 * Updates
