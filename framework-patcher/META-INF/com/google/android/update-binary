@@ -3,6 +3,8 @@
 OUTFD=$2
 ZIP=$3
 
+OLD_LD="${LD_LIBRARY_PATH}"
+
 readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
 if [ "$?" -eq "0" ]; then
   OUTFD=0
@@ -120,9 +122,9 @@ apply_patch () {
 	# XXX yes, this shitty
 	# XXX	"(func(a || b)) | c) || exit"
 	# XXX indeed works!
-	(_dalvikvm "${@}" | ui_print_sh) || exit 1
-	(_zipd "${2}" | ui_print_sh) || exit 1
-	(_zipj "${1}" "${2}" | ui_print_sh) || exit 1
+	(_dalvikvm "${@}" | LD_LIBRARY_PATH="${OLD_LD}" ui_print_sh) || exit 1
+	(_zipd "${2}" | LD_LIBRARY_PATH="${OLD_LD}" ui_print_sh) || exit 1
+	(_zipj "${1}" "${2}" | LD_LIBRARY_PATH="${OLD_LD}" ui_print_sh) || exit 1
 
 	rm -rf "${1}"
 
