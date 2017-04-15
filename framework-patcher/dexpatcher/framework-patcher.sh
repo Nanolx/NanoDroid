@@ -116,7 +116,7 @@ if [ -d /magisk/NanoMod ]; then
 	cp /tmp/services.jar \
 		/magisk/NanoMod/system/framework/services.jar || \
 		error "failed to install services.jar into NanoMod (full)"
-	chown 1000:1000 /magisk/NanoMod/system/framework/services.jar
+	chown root:root /magisk/NanoMod/system/framework/services.jar
 	chmod 0644 /magisk/NanoMod/system/framework/services.jar
 elif [ -d /magisk/NanoModmicroG ]; then
 	echo "installing services.jar into NanoMod (microG)"
@@ -124,7 +124,7 @@ elif [ -d /magisk/NanoModmicroG ]; then
 	cp /tmp/services.jar \
 		/magisk/NanoModmicroG/system/framework//services.jar || \
 		error "failed to install services.jar into NanoMod (microG)"
-	chown 1000:1000 /magisk/NanoModmicroG/system/framework/services.jar
+	chown root:root /magisk/NanoModmicroG/system/framework/services.jar
 	chmod 0644 /magisk/NanoModmicroG/system/framework/services.jar
 else
 	echo "installing services.jar into ROM :/"
@@ -132,7 +132,7 @@ else
 	cp /tmp/services.jar \
 		/system/framework//services.jar || \
 		error "failed to install services.jar into ROM"
-	chown 1000:1000 /system/framework/services.jar
+	chown root:root /system/framework/services.jar
 	chmod 0644 /system/framework/services.jar
 fi
 
