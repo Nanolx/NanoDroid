@@ -22,7 +22,8 @@
   * with **microG** DroidGuard Helper [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
   * choose between official **Play Store** [![APK Mirror Link](images/apkmirror.png)](https://www.apkmirror.com/apk/google-inc/google-play-store/) or unofficial **Yalp Store** [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
   * **microG** GmsCore [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GmsCore) and **Play Store** modified to allow (in-)app-purchases
-  * on-device framework-patcher is available, see **Variants** and **Installation** below
+  * support for Maps API version 1 optionally available (see **Alter Installation** below)
+  * both on-pc and on-device framework-patchers available (see **Variants** and **Installation** below)
 * install **F-Droid** and many OpenSource applications
   * including the privileged extension, so you don't need to enable 'Unkown Sources' to use F-Droid
   * for more information on F-Droid visit [![F-Droid Link](images/fdroid.png)](http://www.fdroid.org)
