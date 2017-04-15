@@ -281,7 +281,7 @@ List of known issues
   * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as `/system` application, see Magisk Issue 155 [![GitHub Link](images/github.png)](https://github.com/topjohnwu/Magisk/issues/155)
   * this does not happen on all devices
   * if you are affected of this issue, instead install them as an user app, by installing the apk from
-    * `/system/priv-app/DroidGuardHelper/DroidGuardHelper.apk` for microG DroidGuard Helper
+    * `/system/priv-app/DroidGuard/DroidGuard.apk` for microG DroidGuard Helper
     * `/system/priv-app/Phonesky/Phonesky.apk` for Play Store
 * Play Store lacks fake sign permission
   * on ROMs like **crDroid** or **OmniROM**, that have built-in fake signing and don't require running `framework-patcher.sh`, in some cases the Play Store is not granted fake sign permission, to fix this issue one of the following commands as root on your phone
