@@ -29,7 +29,7 @@ ui_print() {
 ui_print_sh() {
 	while IFS= read -r line; do
 		ui_print "$line"
-		if [ "$line" = "*failed*" ]; then
+		if [ -z "${line##*failed*}" ]; then
 			exit 1
 		fi
 	done
