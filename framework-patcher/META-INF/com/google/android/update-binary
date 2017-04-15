@@ -29,10 +29,19 @@ ui_print() {
 ui_print_sh() {
 	while IFS= read -r line; do
 		ui_print "$line"
-		if [[ $line == *failed* ]]; then
+		if [ "$line" = "*failed*" ]; then
 			exit 1
 		fi
 	done
+}
+
+is_mounted() {
+  if [ ! -z "$2" ]; then
+    cat /proc/mounts | grep $1 | grep $2, >/dev/null
+  else
+    cat /proc/mounts | grep $1 >/dev/null
+  fi
+  return $?
 }
 
 if ! (is_mounted /system); then
@@ -48,16 +57,6 @@ error () {
 	echo "${@}"
 	exit 1
 }
-
-is_mounted() {
-  if [ ! -z "$2" ]; then
-    cat /proc/mounts | grep $1 | grep $2, >/dev/null
-  else
-    cat /proc/mounts | grep $1 >/dev/null
-  fi
-  return $?
-}
-
 
 mount_image() {
   if [ ! -d "$2" ]; then
@@ -95,10 +94,10 @@ mount_image() {
 _dalvikvm () {
 	LD_LIBRARY_PATH="/system/lib:/system/lib64:$LD_LIBRARY_PATH" \
 		dalvikvm -cp "${BASEDIR}/dexpatcher.dex" \
-		lanchon.dexpatcher.Main \
-		"${DEX_OPTS}" --api-level "${SDK_VERSION}" \
-		--verbose --output "${1}" "${2}" "${3}" 2>1 || \
-			error " !! dexpatcher failed"
+			lanchon.dexpatcher.Main \
+			"${DEX_OPTS}" --api-level "${SDK_VERSION}" \
+			--verbose --output "${1}" "${2}" "${3}" 2>1 || \
+				error " !! dexpatcher failed"
 }
 
 _zipd () {
@@ -156,6 +155,8 @@ else
 	PATCH_HOOK="hook_7.x_services.jar.dex"
 fi
 
+PATCH_CORE="core_services.jar.dex"
+
 ui_print " > preparing environment"
 
 unzip -o "$3" "dexpatcher/*" -d /tmp
@@ -198,29 +199,23 @@ apply_patch /tmp/services.jar-hook-core \
 
 ui_print " "
 if [ -d /magisk/NanoMod ]; then
-	ui_print " >> installing services.jar to: NanoMod (full)"
+	ui_print " << installing services.jar to: NanoMod (full)"
 	mkdir -p /magisk/NanoMod/system/framework/
 	cp /tmp/services.jar \
 		/magisk/NanoMod/system/framework/services.jar || \
 		error " !! failed to install services.jar to: NanoMod (full)"
-	chown root:root /magisk/NanoMod/system/framework/services.jar
-	chmod 0644 /magisk/NanoMod/system/framework/services.jar
 elif [ -d /magisk/NanoModmicroG ]; then
-	ui_print " >> installing services.jar to: NanoMod (microG)"
+	ui_print " << installing services.jar to: NanoMod (microG)"
 	mkdir -p /magisk/NanoModmicroG/system/framework/
 	cp /tmp/services.jar \
 		/magisk/NanoModmicroG/system/framework//services.jar || \
 		error " !! failed to install services.jar into NanoMod (microG)"
-	chown root:root /magisk/NanoModmicroG/system/framework/services.jar
-	chmod 0644 /magisk/NanoModmicroG/system/framework/services.jar
 else
-	ui_print " >> installing services.jar to: ROM"
+	ui_print " << installing services.jar to: ROM"
 	mount -orw,remount /system >/dev/null
 	cp /tmp/services.jar \
 		/system/framework//services.jar || \
 		error " !! failed to install services.jar to: ROM"
-	chown root:root /system/framework/services.jar
-	chmod 0644 /system/framework/services.jar
 fi
 
 ui_print " >> clean up"
