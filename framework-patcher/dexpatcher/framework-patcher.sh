@@ -120,7 +120,7 @@ if [ -d /magisk/NanoMod ]; then
 	chmod 0644 /magisk/NanoMod/system/framework/services.jar
 elif [ -d /magisk/NanoModmicroG ]; then
 	echo "installing services.jar into NanoMod (microG)"
-	/magisk/NanoModmicroG/system/framework/
+	mkdir -p /magisk/NanoModmicroG/system/framework/
 	cp /tmp/services.jar \
 		/magisk/NanoModmicroG/system/framework//services.jar || \
 		error "failed to install services.jar into NanoMod (microG)"
