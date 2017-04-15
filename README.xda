@@ -28,6 +28,8 @@
   [*]with [b]microG GsfProxy[/b]
   [*]with [b]microG DroidGuard Helper[/b]
   [*][b]microG[/b] GmsCore and [b]Play Store[/b] modified to allow (in-)app-purchases
+  [*]support for Maps API version 1 optionally available (see [b]Alter Installation[/b] below)
+  [*]both on-pc and on-device framework-patchers available (see [b]Variants[/b] and [b]Installation[/b] below)
   [/list]
 [*]install [b]F-Droid[/b] and many OpenSource applications
   [list]
@@ -56,8 +58,15 @@ Each provided application under it's original license. My own work (NanoMod itse
 
 [list]
 [*]Full package contains [b]everything[/b] mentioned above
-[*]microG package [b]only[/b] contains microG and nothing else
+[*]microG package [b]only[/b] contains microG, it's companions and [b][u]nanomod-overlay[/b][/u] script
+  [list]
+  [*]don't flash this, if you already have the Full package
+  [/list]
 [*]F-Droid package [b]only[/b] contains F-Droid and it's Privileged Extension
+  [list]
+  [*]don't flash this, if you already have the Full package
+  [/list]
+[*]patcher package use [b]in addition[/b] to Full or microG package to patch the framework to support fake signature spoofing (required for microG to work)
 [/list]
 
 [size=6][b]Installation[/b][/size]
@@ -71,6 +80,7 @@ Each provided application under it's original license. My own work (NanoMod itse
     [*][b][u]mod.sh zip[/b][/u] for the full package
     [*][b][u]mod.sh microg[/b][/u] for the microG package
     [*][b][u]mod.sh fdroid[/b][/u] for the F-Droid package
+    [*][b][u]mod.sh patcher[/b][/u] for the on-device framework-patcher package
     [/list]
   [/list]
 [*]perform full wipe
@@ -86,7 +96,11 @@ Each provided application under it's original license. My own work (NanoMod itse
 [*]install [b]NanoMod[/b]
   [list]
   [*]for [b]microG[/b] to work, your ROM needs to have fake signature signing enabled
-  [*]to achieve that, use the supplied [b][u]framework-patcher.sh[/b][/u]. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading [url=https://github.com/Lanchon/haystack]Haystack[/url], pulling files from phone, patching and populating them in the [b]NanoMod[/b] Magisk Module.
+  [*]to achieve that either
+    [list]
+    [*]flash the on-device framework-patcher zip after flashing NanoMod (or a ROM update) this will directly patch the framework for fake signature spoofing support (for reference: on Moto X Play / Galaxy Tab 4 this process takes about 3 - 4 Minutes)
+    [*]use the supplied [b][u]framework-patcher.sh[/b][/u] on your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading [url=https://github.com/Lanchon/haystack]Haystack[/url], pulling files from phone, patching and populating them in the [b]NanoMod[/b] Magisk Module.
+    [/list]
   [/list]
 [*]reboot into system
 [*]go into [b]microG settings[/b] and set up everything like:
@@ -128,6 +142,7 @@ nanomod.play=1
 nanomod.reinstall=0
 nanomod.overlay=1
 nanomod.zelda=1
+nanomod.mapsv1=0
 [/code]
 
 the [b]microg only package[/b] only supports the following options
@@ -135,6 +150,7 @@ the [b]microg only package[/b] only supports the following options
 [code]
 nanomod.play=1
 nanomod.reinstall=0
+nanomod.mapsv1=0
 [/code]
 
 where [b][u]1[/b][/u] means [b][u]on[/b][/u] and [b][u]0[/b][/u] means [b][u]off[/b][/u]. Description:
@@ -150,6 +166,10 @@ whether to populate FOSS apps (see below).
 [b][u]nanomod.microg=[0|1][/b][/u]
 
 whether to populate [b]microG[/b].
+
+[b][u]nanomod.mapsv1=[0|1][/b][/u]
+
+whether to provide [b]microG[/b] Maps API v1.
 
 [b][u]nanomod.play=[0|1|2][/b][/u]
 
