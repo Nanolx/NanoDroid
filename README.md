@@ -53,6 +53,7 @@ Each provided application under it's original license. My own work (NanoMod itse
 * Full package contains **everything** mentioned above
 * microG package **only** contains microG and nothing else
 * F-Droid package **only** contains F-Droid and it's Privileged Extension
+* patcher package use **in addition** to Full or microG package to patch the framework to support fake signature spoofing (required for microG to work)
 
 ## Installation
 
@@ -62,6 +63,7 @@ Each provided application under it's original license. My own work (NanoMod itse
     * `mod.sh zip` for the full package
     * `mod.sh microg` for the microg only package
     * `mod.sh fdroid` for the F-Droid only package
+    * `mod.sh patcher` for the on-device framework-patcher package
 * perform full wipe
   * recommended, but not required
 * install desired ROM
@@ -69,8 +71,10 @@ Each provided application under it's original license. My own work (NanoMod itse
 * install desired Kernel (if any)
 * install **Magisk**
 * install **NanoMod**
-  * for **microG** to work, your ROM needs to have fake signature signing enabled
-  * to achieve that, use the supplied `framework-patcher.sh`. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](images/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and populating them in the **NanoMod** Magisk Module.
+  * for **microG** to work, your ROM needs to have fake signature spoofing enabled
+  * to achieve that either
+    * flash the on-device framework-patcher zip after flashing NanoMod (or a ROM update) this will directly patch the framework for fake signature spoofing support (for reference: on Moto X Play / Galaxy Tab 4 this process takes about 3 - 4 Minutes)
+    * use the supplied `framework-patcher.sh` from your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](images/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and populating them in the **NanoMod** Magisk Module.
 * reboot into system
   * go into **microG settings** and set up everything like:
     * check results in **Self-Check**, grant missing permissions (by tapping on them)
