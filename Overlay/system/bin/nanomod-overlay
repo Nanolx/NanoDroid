@@ -13,7 +13,7 @@ else	echo "${cfg} does not exist!"
 	exit 1
 fi
 
-if ! which awk; then
+if ! which awk >/dev/null; then
 	awk="/data/magisk/busybox awk"
 else	awk="$(which awk)"
 fi
@@ -147,7 +147,6 @@ $(printf '* %s\n' "${S_PRIV_APPS[@]}")
 
 	-p | --permissions )
 		pm grant com.google.android.gms android.permission.FAKE_PACKAGE_SIGNATURE
-		pm grant com.google.android.gms android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
 		pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE
 	;;
 
