@@ -92,7 +92,7 @@ mount_image() {
 }
 
 _dalvikvm () {
-	dalvikvm -cp "/tmp/dexpatcher/dexpatcher.dex" \
+	dalvikvm -cp "${BASEDIR}/dexpatcher.dex" \
 		lanchon.dexpatcher.Main \
 		"${DEX_OPTS}" --api-level "${SDK_VERSION}" \
 		--verbose --output "${1}" "${2}" "${3}" 2>1 || \
