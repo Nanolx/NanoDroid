@@ -38,9 +38,13 @@ ui_print_sh() {
 	done
 }
 
+if ! (is_mounted /system); then
+	mount -oro /system || error " !! failed to mount /system"
+fi
+
 BASEDIR="/tmp/dexpatcher"
 
-SDK_VERSION=$(getprop ro.build.version.sdk)
+SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
 ABI=$(getprop ro.product.cpu.abi)
 
 error () {
@@ -166,16 +170,13 @@ if [ ${SDK_VERSION} -gt 21 ]; then
 	DEX_OPTS="--multi-dex"
 fi
 
-if ! (is_mounted /system); then
-	mount -oro /system
-fi
-
 if ! (is_mounted /data); then
-	mount -orw /data
+	mount -orw /data || error " !! failed to mount /data"
 fi
 
 if [ -f /data/magisk.img ]; then
-	mount_image /data/magisk.img /magisk
+	mount_image /data/magisk.img /magisk || \
+		error " !! failed to mount /magisk"
 fi
 
 cp /system/framework/services.jar \
