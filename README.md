@@ -97,13 +97,9 @@ Each provided application under it's original license. My own work (NanoMod itse
 
 To alter the installation you can create the file
 
-`/data/media/0/.nanomod-setup`
+`/data/.nanomod-setup`
 
-on your phone, which can also be accessed or created as
-
-`/sdcard/.nanomod-setup`
-
-populate it with the following content for the **full package**
+on your phone, populate it with the following content for the **full package**
 
 ```
 nanomod.microg=1
@@ -161,7 +157,7 @@ whether to backup an **already patched** `services.jar` and re-use it.
 **Only use this, when you re-install NanoMod on the same ROM. If you updated or changed the ROM, re-run `framework-patcher.sh`
 instead. See "Installation" below.** 
 
-If no `/data/media/0/.nanomod-setup` is found, the default one will be installed (equals to the example above).
+If no `/data/.nanomod-setup` is found, the default one will be installed (equals to the example above).
 
 ## Applications
 
@@ -196,13 +192,9 @@ The following applications are pseudo-debloated by default
 
 You can add or remove applications from the list by modifying the file
 
-`/data/media/0/.nanomod-overlay`
+`/data/.nanomod-overlay`
 
-on your device, which is also accesible as
-
-`/sdcard/.nanomod-overlay`
-
-See the default settings [![GitHub Link](images/github.png)](.nanomod-overlay). The syntax is pretty simple:
+on your device. See the default settings [![GitHub Link](images/github.png)](.nanomod-overlay). The syntax is pretty simple:
 
 * one item per line
 * name must be an exact match
