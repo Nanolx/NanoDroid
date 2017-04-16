@@ -11,6 +11,7 @@
       * Galaxy S6: ~2 Minutes when patching from fully initialized and used ROM / ~8 Minutes after clean flash
       * Galaxy Tab 4 / Moto X Play: ~3-4 Minutes when  patching from fully initialized and used ROM / ~15 Minutes (!) after clean flash
       * I'm not 100% sure what causes that major difference between dirty and clean flash patching times
+    * Note 3) pro tip: if your ROM supports automatic OTA udpates with the ability to flash extra zip file, place the `Magisk` and `NanoMod` zip files in that directory which holds that extra auto-flashed zip files, so the OTA updater does all the work in one go
   * ensure all binaries installed by NanoMod (full package) are executable
   * minor fix in `nanomod-overlay` script
   * added `fdroid` parameter to `mod.sh`, to create the F-Droid only package from git
