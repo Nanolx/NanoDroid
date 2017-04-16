@@ -1,6 +1,6 @@
 #!/magisk/NanoMod/system/bin/bash
 
-cfg=/data/media/0/.nanomod-overlay
+cfg=/data/.nanomod-overlay
 
 if [[ ! -d /magisk/NanoMod ]]; then
 	echo "dafuq?"
