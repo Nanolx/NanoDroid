@@ -99,7 +99,7 @@ ${2}
 
 	-u | --update )
 
-		_delete_overrides
+		_rm_overrides
 
 		for app in "${APPS[@]}"; do
 			_add_override app "${app}"
