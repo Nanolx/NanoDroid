@@ -4,7 +4,13 @@
 * Internal Changes
   * there's now an F-Droid only variant
   * there's now an on-device framework-patcher
-    * for reference: on Moto X Play / Galaxy Tab 4 the patching process takes about 3 - 4 Minutes
+    * Note 1) after **full wipe** this does not work on all devices directly, test results
+      * Galaxy S6: need to boot at least once into ROM before is able to patch framework from TWRP
+      * Galaxy Tab 4 / Moto X Play: can patch framework from TWRP regardless of full wipe, no need to boot into ROM once
+    * Note 2) after **full wipe** this can take very long. For reference:
+      * Galaxy S6: ~2 Minutes when patching from fully initialized and used ROM / ~8 Minutes after clean flash
+      * Galaxy Tab 4 / Moto X Play: ~3-4 Minutes when  patching from fully initialized and used ROM / ~15 Minutes (!) after clean flash
+      * I'm not 100% sure what causes that major difference between dirty and clean flash patching times
   * ensure all binaries installed by NanoMod (full package) are executable
   * minor fix in `nanomod-overlay` script
   * added `fdroid` parameter to `mod.sh`, to create the F-Droid only package from git
@@ -12,6 +18,12 @@
   * revised `mod.sh` (cleaner code)
   * revised `mod.sh` (should now be fully functional on Mac OSX)
   * added `nanomod.mapsv1` setup variable to `nanomod-setup` configuration file
+  * the location of the `.nanomod-setup` file was changed from `/data/media/0/.nanomod-setup` to `/data/.nanomod-setup`
+    * if the old file is found, the installer will move it to the new location
+    * this is in order to ensure the file is usable when users have adoptable storage in use
+  * the location of the `.nanomod-overlay` file was changed from `/data/media/0/.nanomod-overlay` to `/data/.nanomod-overlay`
+    * if the old file is found, the installer will move it to the new location
+    * this is in order to ensure the file is usable when users have adoptable storage in use
   * also install the `nanomod-overlay` script in the microG only package
     * so that `nanomod-overlay -p` is available
   * revised README in many places
