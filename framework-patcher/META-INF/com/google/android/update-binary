@@ -44,6 +44,11 @@ is_mounted() {
   return $?
 }
 
+error () {
+	echo "${@}"
+	exit 1
+}
+
 if ! (is_mounted /system); then
 	mount -oro /system || error " !! failed to mount /system"
 fi
@@ -58,11 +63,6 @@ DP_LD="/system/lib:$LD_LIBRARY_PATH"
 if [ "$ABI" = "arm64-v8a" ]; then
 	DP_LD="/system/lib64:/system/lib:$LD_LIBRARY_PATH"
 fi
-
-error () {
-	echo "${@}"
-	exit 1
-}
 
 mount_image() {
   if [ ! -d "$2" ]; then
