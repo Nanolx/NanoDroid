@@ -255,7 +255,6 @@ ui_print " > Installing NanoMod"
 
 if [[ ! -f /data/media/0/.nanomod-overlay ]]; then
 	echo "APPS=(
-Adaway
 BasicDreams
 Browser
 CMFileManager
