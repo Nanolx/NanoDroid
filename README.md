@@ -77,8 +77,9 @@ Each provided application under it's original license. My own work (NanoMod itse
 * install **NanoMod**
   * for **microG** to work, your ROM needs to have fake signature spoofing enabled
   * to achieve that either
-    * flash the on-device framework-patcher zip after flashing NanoMod (or a ROM update) this will directly patch the framework for fake signature spoofing support (for reference: on Moto X Play / Galaxy Tab 4 this process takes about 3 - 4 Minutes on an fully initialized ROM, may take **much** longer on a cleanly flashed ROM)
-      * NOTE: on **some devices** you need to boot into the system once for the flasher to work, as they else fail to initialize `dalvikvm` (if the zip fails for you with `!! dalvik patcher failed` message without any further info, your device is one of those)
+    * flash the on-device framework-patcher zip after flashing NanoMod (or a ROM update) this will directly patch the framework for fake signature spoofing support from TWRP
+      * Note: after **full wipe** this does not work on all devices directly, so it's highly recommended to boot the ROM normaly once and go back to TWRP for patching
+      * This is not required when dirty flashing / updating the ROM
     * use the supplied `framework-patcher.sh` from your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](images/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and populating them in the **NanoMod** Magisk Module.
 * reboot into system
   * go into **microG settings** and set up everything like:
