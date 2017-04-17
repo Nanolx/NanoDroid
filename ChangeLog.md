@@ -29,6 +29,8 @@
   * AnySoftKeyboard (1.8.735)
   * NewPipe (0.9.2)
   * Play Store (7.7.17.O)
+  * Amaze (3.1.2~beta10)
+  * Substratum (670)
 
 ## 5.2.20170413
 * Internal Changes
