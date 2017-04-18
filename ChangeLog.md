@@ -33,6 +33,7 @@
   * Substratum (670)
   * Twidere (3.5.18)
   * K9-Mail (5.207)
+  * (Simple) Gallery (2.8.4)
 
 ## 5.2.20170413
 * Internal Changes
