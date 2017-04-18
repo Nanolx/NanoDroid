@@ -32,6 +32,7 @@
   * Amaze (3.1.2~beta10)
   * Substratum (670)
   * Twidere (3.5.18)
+  * K9-Mail (5.207)
 
 ## 5.2.20170413
 * Internal Changes
