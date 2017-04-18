@@ -183,6 +183,7 @@ unzip -o "$ZIP" "common/*" module.prop
 ui_print " "
 ui_print "******************************"
 ui_print "     NanoMod 6.0.20170418     "
+ui_print "      created by @Nanolx      "
 ui_print "         microG only          "
 ui_print "Powered by Magisk (@topjohnwu)"
 ui_print "******************************"
