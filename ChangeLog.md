@@ -1,6 +1,6 @@
 # ChangeLog
 
-## in-dev
+## 6.0.20170418
 * Internal Changes
   * there's now an F-Droid only variant
   * there's now an on-device framework-patcher
