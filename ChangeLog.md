@@ -31,6 +31,7 @@
   * Play Store (7.7.17.O)
   * Amaze (3.1.2~beta10)
   * Substratum (670)
+  * Twidere (3.5.18)
 
 ## 5.2.20170413
 * Internal Changes
