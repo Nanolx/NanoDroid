@@ -102,7 +102,7 @@ Each provided application under it's original license. My own work (NanoMod itse
       [list]
       [*]Note: after [b]full wipe[/b] it is suggested to boot into the ROM once, else the dalvik-cache does not exist and the patching process takes ages
       [/list]
-    [*]use the supplied [b][u]framework-patcher.sh[/b][/u] on your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading [url=https://github.com/Lanchon/haystack]Haystack[/url], pulling files from phone, patching and populating them in the [b]NanoMod[/b] Magisk Module.
+    [*]use the supplied [b][u]framework-patcher.sh[/b][/u] on your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading [url=https://github.com/Lanchon/haystack]Haystack[/url], pulling files from phone, patching and installing the patched [b]services.jar[/b].
     [/list]
   [/list]
 [*]reboot into system
