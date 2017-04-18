@@ -2,7 +2,7 @@
 
 [size=6][b]Current Stable Release[/b][/size]
 
-5.2.20170413
+6.0.20170418
 
 [list]
 [*]Stable Downloads [url="https://www.androidfilehost.com/?a=show&w=files&flid=150729"]Androidfilehost[/url]
@@ -129,7 +129,7 @@ Each provided application under it's original license. My own work (NanoMod itse
 
 To alter the installation you can create the file
 
-[b][u]/data/media/0/.nanomod-setup[/b][/u]
+[b][u]/data/.nanomod-setup[/b][/u]
 
 on your phone, which can also be accessed or created as
 
@@ -193,13 +193,13 @@ whether to backup an [b]already patched[/b] [b][u]services.jar[/b][/u] and re-us
 [b]Only use this, when you re-install NanoMod on the same ROM. If you updated or changed the ROM, re-run [b][u]framework-patcher.sh[/b][/u]
 instead. See "Installation" below.[/b]
 
-If no [b][u]/data/media/0/.nanomod-setup[/b][/u] is found, the default one will be installed (equals to the example above).
+If no [b][u]/data/.nanomod-setup[/b][/u] is found, the default one will be installed (equals to the example above).
 
 [size=6][b]Applications[/b][/size]
 
 [size=5][b]Pseudo-Debloated applications[/b][/size]
 
-[size=3][u] Default Settings[/u][/size]
+[size=3][u]Default Settings[/u][/size]
 
 The following applications are pseudo-debloated by default
 
@@ -230,13 +230,9 @@ The following applications are pseudo-debloated by default
 
 You can add or remove applications from the list by modifying the file
 
-[b][u]/data/media/0/.nanomod-overlay[/b][/u]
+[b][u]/data/.nanomod-overlay[/b][/u]
 
-on your device, which is also accesible as
-
-[b][u]/sdcard/.nanomod-overlay[/b][/u]
-
-See here for the [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-overlay]default settings[/url]. The syntax is pretty simple:
+on your device. See here for the [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-overlay]default settings[/url]. The syntax is pretty simple:
 
 [list]
 [*]one item per line
@@ -249,7 +245,16 @@ After you've made your changes, issue the following command on your phone, eithe
 
 [b][u]nanomod-overlay --update[/b][/u]
 
-This needs to be done in normal environment, not from recovery. If you know how to manually mount [b][u]/magisk[/b][/u] in recovery, you can update the overlay using:
+This needs to be done in normal environment, not from recovery. If you're in [b]TWRP[/b] you'll have to manually mount [b][u]/magisk[/b][/u]. For this you can use the supplied [b][u]mount-magisk.sh[/b][/u] script, connect phone to PC while in [b]TWRP[/b] and run the following commands
+
+[code]
+adb push mount-magisk.sh /tmp/
+adb shell
+chmod 0755 /tmp/mount-magisk.sh
+/tmp/mount-magisk.sh
+[/code]
+
+afterwards you can call [b][u]nanomod-overlay[/b][/u] like
 
 [b][u]/magisk/NanoMod/system/bin/nanomod-overlay --update[/b][/u]
 
@@ -268,7 +273,7 @@ from recovery.
 The following applications are magic-mounted as [b][u]/system[/b][/u] applications
 
 [list]
-[*]AdAway
+[*]Adaway
 [*]Amaze (File Manager)
 [*]Anysoft Keyboard
 [*]Face Slim (Facebook client)

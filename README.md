@@ -2,7 +2,7 @@
 
 ## Current Stable Release
 
-5.2.20170413
+6.0.20170418
 
 * Stable Downloads [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
 * Archived Downloads [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?w=files&flid=156387)
@@ -236,7 +236,7 @@ from **TWRP**.
 
 The following applications are magic-mounted as `/system` applications
 
-* AdAway [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=adaway&fdid=org.adaway)
+* Adaway [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=adaway&fdid=org.adaway)
 * Amaze (File Manager) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=amaze&fdid=com.amaze.filemanager)
 * AnySoftKeyboard [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=anysoftkeyboard&fdid=com.menny.android.anysoftkeyboard)
 * Face Slim (Facebook client) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=face+slim&fdid=org.indywidualni.fblite)
