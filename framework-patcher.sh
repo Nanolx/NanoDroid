@@ -79,35 +79,41 @@ adb shell "mount -oro /system" || error "Failed to mount /system"
 	"${PWD}/mydevice__${PATCH_HOOK}" \
 	|| error "Failed applying sigspoof core patch!"
 
-adb push "${CWD}/mount-magisk.sh" /tmp/ || \
-	error "Failed to push helper script to device"
-adb shell "chmod 0755 /tmp/mount-magisk.sh" || \
-	error "Failed to set permissions for helper script"
-adb shell "/tmp/mount-magisk.sh mount-magisk" || \
-	error "Failed to mount Magisk image"
-
-echo -e "\nWhat module are you using?
+echo -e "\nWhere to install patched services.jar?
 
 1)	NanoMod (full package)
 2)	NanoMod (microG only)
+3)	ROM (directly to /system)
 
-enter either 1 or 2"
+enter either 1, 2 or 3"
 read -r MOD
 
 case ${MOD} in
-	1 )	MODPATH="NanoMod"	;;
-	2 )	MODPATH="NanoModmicroG"	;;
+	1 )	MODPATH="/magisk/NanoMod"	;;
+	2 )	MODPATH="/magisk/NanoModmicroG"	;;
+	3 )	MODPATH=""			;;
 	* )	error "wrong module given" ;;
 esac
 
-adb shell "mkdir -p /magisk/${MODPATH}/system/framework" || \
+if [[ ${MODPATH} == /magisk* ]]; then
+	adb push "${CWD}/mount-magisk.sh" /tmp/ || \
+		error "Failed to push helper script to device"
+	adb shell "chmod 0755 /tmp/mount-magisk.sh" || \
+		error "Failed to set permissions for helper script"
+	adb shell "/tmp/mount-magisk.sh mount-magisk" || \
+		error "Failed to mount Magisk image"
+fi
+
+adb shell "mkdir -p ${MODPATH}/system/framework" || \
 	error "Failed to create framework directory"
 adb push "${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}/services.jar" \
-		"/magisk/${MODPATH}/system/framework" || \
+		"${MODPATH}/system/framework" || \
 		error "Failed to push services.jar to device"
 
-adb shell "/tmp/mount-magisk.sh umount-magisk" || \
-	error "Failed to unmount Magisk"
+if [[ ${MODPATH} == /magisk* ]]; then
+	adb shell "/tmp/mount-magisk.sh umount-magisk" || \
+		error "Failed to unmount Magisk"
+fi
 
 echo -e "\nNow reboot device and enjoy microG!"
 
