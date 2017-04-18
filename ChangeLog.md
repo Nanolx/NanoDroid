@@ -30,7 +30,7 @@
   * NewPipe (0.9.2)
   * Play Store (7.7.17.O)
   * Amaze (3.1.2~beta10)
-  * Substratum (670)
+  * Substratum (671)
   * Twidere (3.5.18)
   * K9-Mail (5.207)
   * (Simple) Gallery (2.8.4)
