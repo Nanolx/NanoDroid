@@ -288,6 +288,7 @@ The following applications are magic-mounted as [b][u]/system[/b][/u] applicatio
 [*]Oandbackup (App backup and restore)
 [*]Odyssey (Audio player)
 [*]OpenCamera
+[*]OpenKeyChain
 [*]OpenLauncher
 [*]OpenVPN
 [*]QK SMS
@@ -300,6 +301,19 @@ The following applications are magic-mounted as [b][u]/system[/b][/u] applicatio
 [/list]
 
 ¹ will run in legacy mode on non-OMS ROMs
+
+[size=4][b]Alter the list of provided Applications[/b][/size]
+
+You can remove applications from being magic-mounted by [b]removing[/b] them from the file
+
+[b][u]/data/.nanomod-apps[/b][/u]
+
+on your device. See the [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-apps]default settings[/url]. The syntax is pretty simple:
+
+* one item per line
+* name must be an exact match
+
+Applications managed by other setup variables (F-Droid, microG, PlayStore) are not effected by this file.
 
 [size=5][b]Issues[/b][/size]
 

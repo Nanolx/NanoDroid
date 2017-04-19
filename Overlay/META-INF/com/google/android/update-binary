@@ -265,7 +265,11 @@ if [[ -f /data/media/0/.nanomod-setup ]]; then
 		/data/.nanomod-setup
 fi
 
-if [[ ! -f /data/.nanomod-overlay ]]; then
+nanomodcfg=/data/.nanomod-overlay
+nanomodsetup=/data/.nanomod-setup
+nanomodapps=/data/.nanomod-apps
+
+if [[ ! -f $nanomodcfg ]]; then
 	echo "APPS=(
 BasicDreams
 Browser
@@ -298,9 +302,9 @@ Snap
 SnapdragonCamera
 Trebuchet
 mGerrit
-)"	> /data/.nanomod-overlay
-	chown 1000:1000 /data/.nanomod-overlay
-	chmod 0644 /data/.nanomod-overlay
+)"	> $nanomodcfg
+	chown 1000:1000 $nanomodcfg
+	chmod 0644 $nanomodcfg
 fi
 
 if [[ ! -f /data/.nanomod-setup ]]; then
@@ -311,14 +315,41 @@ nanomod.apps=1
 nanomod.play=1
 nanomod.overlay=1
 nanomod.zelda=1
-nanomod.mapsv1=0" > /data/.nanomod-setup
-	chown 1000:1000 /data/.nanomod-setup
-	chmod 0644 /data/.nanomod-setup
+nanomod.mapsv1=0" > $nanomodsetup
+	chown 1000:1000 $nanomodsetup
+	chmod 0644 $nanocfg
+
 fi
 
-nanomodcfg=/data/.nanomod-setup
+if [[ ! -f $nanomodapps ]]; then
+	echo "Adaway
+Amaze
+AnysoftKeyboard
+FaceSlim
+HackerKeyboard
+K9Mail
+KeePassDroid
+KernelAdiutor
+Lightning
+NewPipe
+Oandbackup
+Odyssey
+OpenCamera
+OpenKeyChain
+OpenLauncher
+OpenVPN
+QKSMS
+SimpleGallery
+Substratum
+Termux
+Twidere
+VLC
+XDALabs
+YahooWeatherProvider" > $nanomodapps
+	chown 1000:1000 $nanomodapps
+	chmod 0644 $nanocfg2
 
-if grep -q nanomod.reinstall=1 $nanomodcfg; then
+if grep -q nanomod.reinstall=1 $nanomodsetup; then
 	ui_print " << backup services.jar"
 	cp $MODPATH/system/framework/services.jar \
 		/tmp/services.jar
@@ -333,7 +364,7 @@ ui_print " << populating module"
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
 # remove microG if not requested
-if grep -q nanomod.microg=0 $nanomodcfg; then
+if grep -q nanomod.microg=0 $nanomodsetup; then
 	for app in nlpBackendIchnaea nlpBackendNomiantim \
 		DroidGuard GmsCore GsfProxy; do
 		rm -rf $MODPATH/system/app/$app
@@ -344,7 +375,7 @@ else	ui_print " << with microG"
 fi
 
 # remove mapsv1 if not requested
-if grep -q nanomod.mapsv1=1 $nanomodcfg; then
+if grep -q nanomod.mapsv1=1 $nanomodsetup; then
 	ui_print " << with Maps API version 1"
 else	rm $MODPATH/system/etc/permissions/com.google.android.maps.xml
 	rm $MODPATH/system/framework/com.google.android.maps.jar
@@ -352,7 +383,7 @@ else	rm $MODPATH/system/etc/permissions/com.google.android.maps.xml
 fi
 
 # remove F-Droid if not requested
-if grep -q nanomod.fdroid=0 $nanomodcfg; then
+if grep -q nanomod.fdroid=0 $nanomodsetup; then
 	for app in FDroid FDroidPrivileged; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
@@ -364,35 +395,48 @@ fi
 # remove apps if not requested
 # exceptions:
 # * Magisk Manager
-if grep -q nanomod.apps=0 $nanomodcfg; then
-	for app in AdAway Amaze AnysoftKeyboard FaceSlim \
-		HackerKeyboard K9Mail KeePassDroid KernelAdiutor \
-		Lightning NewPipe Oandbackup Odyssey OpenCamera \
-		OpenKeyChain OpenLauncher OpenVPN QKSMS \
-		SimpleGallery Substratum Termux Twidere VLC32 \
-		VLC64 XDALabs YahooWeatherProvider; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+
+# Step 1:
+# remove arm64 VLC on arm and vice-versa
+if [[ ${ARCH} == arm ]]; then
+	rm -rf $MODPATH/system/app/VLC64
+elif [[ ${ARCH} == arm64 ]]; then
+	rm -rf $MODPATH/system/app/VLC32
+fi
+
+# Step 2: only keep desired apps
+if grep -q nanomod.apps=0 $nanomodsetup; then
+	# remove all apps
+	for app in Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
+		K9Mail KeePassDroid KernelAdiutor Lightning NewPipe \
+		Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
+		OpenVPN QKSMS SimpleGallery Substratum Termux Twidere \
+		VLC XDALabs YahooWeatherProvider; do
+			rm -rf $MODPATH/system/app/$app
 	done
 	ui_print " << without applications"
 else
-	# remove arm64 VLC on arm and vice-versa
-	if [[ ${ARCH} == arm ]]; then
-		rm -rf $MODPATH/system/app/VLC64
-	elif [[ ${ARCH} == arm64 ]]; then
-		rm -rf $MODPATH/system/app/VLC32
-	fi
 	ui_print " << with applications"
+	# remove not requested apps
+	for app in Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
+		K9Mail KeePassDroid KernelAdiutor Lightning NewPipe \
+		Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
+		OpenVPN QKSMS SimpleGallery Substratum Termux Twidere \
+		VLC XDALabs YahooWeatherProvider; do
+			if ! grep -q "^${app}" $nanomodapps; then
+				rm -rf $MODPATH/system/app/$app
+			else	ui_print " <<> ${app}"
+	done
 fi
 
 # remove Yalp Store if Play Store requested and vice-versa
-if grep -q nanomod.play=1 $nanomodcfg; then
+if grep -q nanomod.play=1 $nanomodsetup; then
 	for app in FakeStore YalpStore; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
 	done
 	ui_print " << with Play Store"
-elif grep -q nanomod.play=2 $nanomodcfg; then
+elif grep -q nanomod.play=2 $nanomodsetup; then
 	for app in Phonesky; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
@@ -406,20 +450,20 @@ else
 	ui_print " << without App Store"
 fi
 
-if grep -q nanomod.zelda=0 $nanomodcfg; then
+if grep -q nanomod.zelda=0 $nanomodsetup; then
 	rm -rf $MODPATH/system/media
 	ui_print " << without Zelda sounds"
 else	ui_print " << with Zelda sounds"
 fi
 
 # Setup Overrides
-if grep -q nanomod.overlay=1 $nanomodcfg; then
+if grep -q nanomod.overlay=1 $nanomodsetup; then
 	$MODPATH/system/bin/nanomod-overlay --update
 	ui_print " << with /system applications override"
 else	ui_print " << without /system applications override"
 fi
 
-if grep -q nanomod.reinstall=1 $nanomodcfg; then
+if grep -q nanomod.reinstall=1 $nanomodsetup; then
 	ui_print " << restore services.jar"
 	mkdir $MODPATH/system/framework
 	cp /tmp/services.jar \

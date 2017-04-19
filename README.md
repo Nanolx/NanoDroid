@@ -266,6 +266,19 @@ The following applications are magic-mounted as `/system` applications
   * source not (yet) available
 * Yahoo Weather Provider [![GitHub Link](images/github.png)](https://github.com/CyanogenMod/android_packages_apps_YahooWeatherProvider)
 
+#### Alter the list of provided Applications
+
+You can remove applications from being magic-mounted by **removing** them from the file
+
+`/data/.nanomod-apps`
+
+on your device. See the default settings [![GitHub Link](images/github.png)](.nanomod-apps). The syntax is pretty simple:
+
+* one item per line
+* name must be an exact match
+
+Applications managed by other setup variables (F-Droid, microG, PlayStore) are not effected by this file.
+
 ### Issues
 
 List of known issues
