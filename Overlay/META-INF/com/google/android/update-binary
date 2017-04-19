@@ -426,6 +426,7 @@ else
 			if ! grep -q "^${app}" $nanomodapps; then
 				rm -rf $MODPATH/system/app/$app
 			else	ui_print " <<> ${app}"
+			fi
 	done
 fi
 
