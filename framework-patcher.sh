@@ -100,7 +100,7 @@ if [[ ${MODPATH} == /magisk* ]]; then
 		error "Failed to push helper script to device"
 	adb shell "chmod 0755 /tmp/mount-magisk.sh" || \
 		error "Failed to set permissions for helper script"
-	adb shell "/tmp/mount-magisk.sh" || \
+	adb shell "/tmp/mount-magisk.sh mount-magisk" || \
 		error "Failed to mount Magisk image"
 fi
 
@@ -111,7 +111,7 @@ adb push "${PWD}/mydevice__${PATCH_HOOK}__${PATCH_CORE}/services.jar" \
 		error "Failed to push services.jar to device"
 
 if [[ ${MODPATH} == /magisk* ]]; then
-	adb shell "/tmp/mount-magisk.sh" || \
+	adb shell "/tmp/mount-magisk.sh umount-magisk" || \
 		error "Failed to unmount Magisk"
 fi
 
