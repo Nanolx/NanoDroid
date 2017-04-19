@@ -78,7 +78,7 @@ Each provided application under it's original license. My own work (NanoMod itse
   * for **microG** to work, your ROM needs to have fake signature spoofing enabled
   * to achieve that either
     * flash the on-device framework-patcher zip after flashing NanoMod (or a ROM update) this will directly patch the framework for fake signature spoofing support from TWRP
-      * Note: after **full wipe** it is suggested to boot into the ROM once, else the dalvik-cache does not exist and the patching process takes ages
+      * Note: it is suggested to boot into the ROM once, else the dalvik-cache might not exist (or is not up-to-date in case of incremental ROM update) and the patching process takes ages or fails
     * use the supplied `framework-patcher.sh` from your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](images/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the patched **services.jar**.
 * reboot into system
   * go into **microG settings** and set up everything like:

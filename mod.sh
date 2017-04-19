@@ -39,7 +39,7 @@ case ${1} in
 				"${PWD}"/"${module}"/module.prop
 		done
 
-		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
+		sed -e "s/\"      NanoMod.*/\"      NanoMod ${2}.${3}     \"/" -i \
 			"${PWD}"/framework-patcher/META-INF/com/google/android/update-binary
 
 	;;
