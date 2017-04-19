@@ -348,6 +348,7 @@ XDALabs
 YahooWeatherProvider" > $nanomodapps
 	chown 1000:1000 $nanomodapps
 	chmod 0644 $nanocfg2
+fi
 
 if grep -q nanomod.reinstall=1 $nanomodsetup; then
 	ui_print " << backup services.jar"
