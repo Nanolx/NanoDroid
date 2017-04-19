@@ -4,6 +4,7 @@
 * Internal Changes
   * minor fix in `mod.sh`
   * minor improvements to README
+  * minor improvements in `framework-patcher.sh` and `mount-magisk.sh` (on-pc framework-patcher)
   * add support for `nanomod-apps` configuration file to let the user control what apps to provide when `nanomod.apps=1` is set (default)
 
 ## 6.0.20170418
