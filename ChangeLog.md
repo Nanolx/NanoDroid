@@ -1,5 +1,11 @@
 # ChangeLog
 
+## 6.1 in-dev
+* Internal Changes
+  * minor fix in `mod.sh`
+  * minor improvements to README
+  * add support for `nanomod-apps` configuration file to let the user control what apps to provide when `nanomod.apps=1` is set (default)
+
 ## 6.0.20170418
 * Internal Changes
   * there's now an F-Droid only variant
