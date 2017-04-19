@@ -178,7 +178,7 @@ whether to provide [b]microG[/b] Maps API v1.
 
 what app store to use. [b][u]0[/b][/u] will not populate any app store, [b][u]1[/b][/u] will populate [b]Play Store[/b], [b][u]2[/b][/u] will populate [b]Yalp Store[/b].
 
-[b][u]nanomod.play=[0|1][/b][/u]
+[b][u]nanomod.zelda=[0|1][/b][/u]
 
 whether to populate Zelda ringtones and sounds.
 
