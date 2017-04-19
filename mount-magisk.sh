@@ -53,17 +53,19 @@ umount_magisk () {
 	rm /tmp/loopdevice
 }
 
-if [[ ${1} == mount-magisk ]]; then
-	if ! (is_mouted /magisk); then
-		mount_magisk
-	fi
-elif [[ ${1} == umount-magisk ]]; then
-	if (is_mounted /magisk); then
-		umount_magisk
-	fi
-else
+if [[ ! ${1} ]]; then
 	if (is_mounted /magisk); then
 		umount_magisk
 	else	mount_magisk
+	fi
+else
+	if [[ ${1} == mount-magisk ]]; then
+		if ! (is_mounted /magisk); then
+			mount_magisk
+		fi
+	elif [[ ${1} == umount-magisk ]]; then
+		if (is_mounted /magisk); then
+			umount_magisk
+		fi
 	fi
 fi
