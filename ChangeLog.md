@@ -4,8 +4,7 @@
 * Internal Changes
   * there's now an F-Droid only variant
   * there's now an on-device framework-patcher
-    * Note 1) after **full wipe** it is suggested to boot into the ROM once, else the dalvik-cache does not exist and the patching process takes ages
-    * Note 2) pro tip: if your ROM supports automatic OTA udpates with the ability to flash extra zip file, place the `Magisk` and `NanoMod` zip files in that directory which holds that extra auto-flashed zip files, so the OTA updater does all the work in one go
+    * Note: it is suggested to boot into the ROM once, else the dalvik-cache might not exist (or is not up-to-date in case of incremental ROM update) and the patching process takes ages or fails
   * ensure all binaries installed by NanoMod (full package) are executable
   * minor fix in `nanomod-overlay` script
   * added `fdroid` parameter to `mod.sh`, to create the F-Droid only package from git
