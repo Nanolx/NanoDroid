@@ -6,6 +6,12 @@
   * minor improvements to README
   * minor improvements in `framework-patcher.sh` and `mount-magisk.sh` (on-pc framework-patcher)
   * add support for `nanomod-apps` configuration file to let the user control what apps to provide when `nanomod.apps=1` is set (default)
+* Updates
+  * (Simple) Gallery (2.8.6)
+  * OpenLauncher (0.3.1)
+  * Play Store (7.7.31.O)
+  * VLC (2.1.5~beta)
+  * Substratum (672)
 
 ## 6.0.20170418
 * Internal Changes
