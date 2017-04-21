@@ -5,7 +5,11 @@
   * minor fix in `mod.sh`
   * minor improvements to README
   * minor improvements in `mount-magisk.sh`
-  * make on-pc `framework-patcher` auto-detect install path for modified `services.jar` and other minor improvements
+  * make on-pc `framework-patcher` auto-detect install path for modified `services.jar`
+    * like on-device framework-patcher it supports installing `services.jar` to
+      * NanoMod (full)
+      * NanoMod (microG)
+      * ROM (directly to /system)
   * add support for `nanomod-apps` configuration file to let the user control what apps to provide when `nanomod.apps=1` is set (default)
 * Updates
   * (Simple) Gallery (2.8.6)

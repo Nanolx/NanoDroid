@@ -211,7 +211,7 @@ This needs to be done in normal environment. If you're in **TWRP** you'll have t
 adb push mount-magisk.sh /tmp/
 adb shell
 chmod 0755 /tmp/mount-magisk.sh
-/tmp/mount-magisk.sh
+/tmp/mount-magisk.sh mount-magisk
 ```
 
 afterwards you can call `nanomod-overlay` like
@@ -220,9 +220,9 @@ afterwards you can call `nanomod-overlay` like
 
 from **TWRP**, aswell. Issue
 
-`/tmp/mount-magisk.sh`
+`/tmp/mount-magisk.sh umount-magisk`
 
-again to unmount `/magisk`. Reboot for your changes to get applied. For more options, check:
+to unmount `/magisk`. Reboot for your changes to get applied. For more options, check:
 
 `nanomod-overlay --help`
 

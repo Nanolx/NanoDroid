@@ -251,14 +251,18 @@ This needs to be done in normal environment, not from recovery. If you're in [b]
 adb push mount-magisk.sh /tmp/
 adb shell
 chmod 0755 /tmp/mount-magisk.sh
-/tmp/mount-magisk.sh
+/tmp/mount-magisk.sh mount-magisk
 [/code]
 
 afterwards you can call [b][u]nanomod-overlay[/b][/u] like
 
 [b][u]/magisk/NanoMod/system/bin/nanomod-overlay --update[/b][/u]
 
-from recovery, aswell. After reboot your changes get applied. For more options, check:
+from recovery, aswell. Issue
+
+[b][u]/tmp/mount-magisk.sh umount-magisk[/b][/u]
+
+to unmount [b][u]/magisk[/b][/u]. After reboot your changes get applied. For more options, check:
 
 [b][u]nanomod-overlay --help[/b][/u]
 
