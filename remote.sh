@@ -55,34 +55,36 @@ umount_magisk () {
 
 mount /data &>/dev/null
 
+echo ""
+
 if [[ -f /data/magisk.img ]]; then
-	echo "Magisk found, mount to /magisk"
+	echo "magisk found: mount to /magisk"
 	mount_image /data/magisk.img /magisk
 fi
 
 install_path=""
 
 if [[ -d /magisk/NanoMod ]]; then
-	echo "NanoMod found, using as destionation"
+	echo "NanoMod detected"
 	install_path="/magisk/NanoMod/system/framework"
 	mkdir -p "${install_path}"
 elif [[ -d /magisk/NanoModmicroG ]]; then
-	echo "NanoMod microG found, using as destination"
+	echo "NanoMod microG detected"
 	install_path="/magisk/NanoModmicroG/system/framework"
 	mkdir -p "${install_path}"
 else
-	echo "NanoMod not found, using ROM as destination"
+	echo "using ROM as destination"
 	install_path="/system/"
 	mount -orw,remount /system
 fi
 
-echo "Install services.jar to \"${install_path}\""
+echo "install to \"${install_path}\""
 cp /tmp/services.jar "${install_path}/services.jar" || exit 1
 
 if (is_mounted /magisk); then
-	echo "Unmounting /magisk"
+	echo "unmount /magisk"
 	umount_magisk
 fi
 
-echo "Unmounting /system"
+echo "unmount /system"
 umount /system
