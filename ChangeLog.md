@@ -12,6 +12,7 @@
       * ROM (directly to /system)
   * add support for `nanomod-apps` configuration file to let the user control what apps to provide when `nanomod.apps=1` is set (default)
     * refer to the README for more details
+  * fix provided `microG GmsCore` not being installable as user-app
 * Updates
   * (Simple) Gallery (2.8.6)
   * OpenLauncher (0.3.1)
