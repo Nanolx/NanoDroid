@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 6.1 in-dev
+## 6.1 20170421
 * Internal Changes
   * minor fix in `mod.sh`
   * minor improvements to README
