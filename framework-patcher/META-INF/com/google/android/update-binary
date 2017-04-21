@@ -67,7 +67,11 @@ fi
 PATH="$PATH:/system/bin:/system/xbin"
 
 if ! which zip >/dev/null; then
-	erorr " !! zip binary not available"
+	if [ "$ABI" = "arm64-v8a" ]; then
+		ZIP="${BASEDIR}/zip64"
+	else	ZIP="${BASEDIR}/zip32"
+	fi
+else	ZIP="$(which zip)"
 fi
 
 mount_image() {
@@ -114,13 +118,13 @@ _dalvikvm () {
 
 _zipd () {
 	LD_LIBRARY_PATH="${DP_LD}" \
-		zip -d "${1}" 'classes*.dex' 2>1 || \
+		${ZIP} -d "${1}" 'classes*.dex' 2>1 || \
 		error " !! zip failed"
 }
 
 _zipj () {
 	LD_LIBRARY_PATH="${DP_LD}" \
-		zip -j "${2}" "${1}"/classes*.dex 2>1 || \
+		${ZIP} -j "${2}" "${1}"/classes*.dex 2>1 || \
 		error " !! zip failed"
 }
 
@@ -153,7 +157,7 @@ fi
 
 ui_print " "
 ui_print "********************************"
-ui_print "      NanoMod 6.1.20170421     "
+ui_print "      NanoMod 6.2.20171231     "
 ui_print "       created by @Nanolx       "
 ui_print "       Framework Patcher        "
 ui_print "Powered by DexPatcher (@lanchon)"
