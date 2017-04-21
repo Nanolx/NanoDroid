@@ -424,7 +424,7 @@ else
 		Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
 		OpenVPN QKSMS SimpleGallery Substratum Termux Twidere \
 		VLC XDALabs YahooWeatherProvider; do
-			if ! grep -q "^${app}" $nanomodapps; then
+			if ! grep -q "^${app}$" $nanomodapps; then
 				rm -rf $MODPATH/system/app/$app
 			else	ui_print " <<> ${app}"
 			fi
