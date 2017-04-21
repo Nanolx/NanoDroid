@@ -177,6 +177,7 @@ PATCH_CORE="core_services.jar.dex"
 ui_print " > preparing environment"
 
 unzip -o "$3" "dexpatcher/*" -d /tmp
+chmod 0755 "${BASEDIR}/zip*"
 
 ui_print " > patching services.jar"
 ui_print " "
