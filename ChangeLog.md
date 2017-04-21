@@ -12,6 +12,7 @@
   * Play Store (7.7.31.O)
   * VLC (2.1.5~beta)
   * Substratum (672)
+  * XDA Labs (1.1.1.1)
 
 ## 6.0.20170418
 * Internal Changes
