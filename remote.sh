@@ -76,7 +76,8 @@ else
 	mount -orw,remount /system
 fi
 
-cp /tmp/services.jar "${install_path}/services.jar"
+echo "Install services.jar to \"${install_path}\""
+cp /tmp/services.jar "${install_path}/services.jar" || exit 1
 
 if (is_mounted /magisk); then
 	echo "Unmounting /magisk"
