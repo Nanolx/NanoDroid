@@ -4,6 +4,9 @@
 * Internal Changes
   * some ROMs don't have a `zip` binary which is required for the on-device `framework-patcher` to work
     * the on-device `framework-patcher` now has arm32 and arm64 `zip` binary as fallback
+* Updates
+  * GNU Nano (2.8.1)
+  * GNU Bash (4.4)
 
 ## 6.1 20170421
 * Internal Changes

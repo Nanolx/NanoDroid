@@ -46,9 +46,23 @@ XDA Support Thread [![XDA Link](images/xda.png)](https://forum.xda-developers.co
 
 ChangeLog.md [![GitHub Link](images/github.png)](ChangeLog.md)
 
-## License
+## License & Credits
 
-Each provided application under it's original license. My own work (NanoMod itself) is licensed under the GNU General Public License version 3 or newer [![GNU Link](images/gnu.png)](https://www.gnu.org/licenses/gpl-3.0.txt)
+My own work (NanoMod itself) is licensed under the GNU General Public License version 3 or newer [![GNU Link](images/gnu.png)](https://www.gnu.org/licenses/gpl-3.0.txt)
+
+For more details (including authors and license) on every provided application or Software press the icon next to it.
+
+Additional credits go to
+
+* Mar-V-In for microG
+* topjohnwu for Magisk
+* Lanchon for dexpatcher and haystack
+* osm0sis for GNU Nano build
+
+Special Thanks to the beta testers
+
+* xenithorb
+* ShapeShifter499
 
 ## Variants
 
@@ -298,7 +312,7 @@ List of known issues
 
 **Magisk** allows modifying the ROM in system less fashion, it also brings it's own root solution (**MagiskSU**, which apparently is a fork of **PHH SuperUser**) and an companion application.
 
-## SafetyNet
+### SafetyNet
 
 To pass SafetyNet enable **MagiskHide** in **Magisk Manager** and reboot.
 
