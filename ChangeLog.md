@@ -7,6 +7,7 @@
 * Updates
   * GNU Nano (2.8.1)
   * GNU Bash (4.4)
+  * F-Droid (0.103-alpha3)
 
 ## 6.1 20170421
 * Internal Changes
