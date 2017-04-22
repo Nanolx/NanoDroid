@@ -20,22 +20,20 @@
   [*]boot process may take a bit longer as [b]NanoMod[/b] is a pretty big [b]Magisk[/b] Module
   [*]for more information on [b]Magisk[/b] visit [url=https://forum.xda-developers.com/apps/magisk][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/xda.png[/img][/url]
   [/list]
-[*]install [b]microG[/b] with either official [b]Play Store[/b] or unofficial [b]Yalp Store[/b]
+[*]install [b]microG[/b] [url=http://microg.org][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/microg.png[/img][/url] with either official [b]Play Store[/b] or unofficial [b]Yalp Store[/b]
   [list]
-  [*]for more information on microG visit [url=http://microg.org][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/microg.png[/img][/url]
   [*]with [b]Mozilla[/b] location provider backend [url=https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
   [*]with [b]Nominatim[/b] adress provider backend [url=https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
-  [*]with [b]microG GsfProxy[/b] [url=https://github.com/microg/android_packages_apps_GsfProxy][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
-  [*]with [b]microG DroidGuard Helper[/b] [url=https://github.com/microg/android_packages_apps_RemoteDroidGuard][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+  [*]with [b]microG GsfProxy[/b] [url=https://github.com/microg/android_packages_apps_GsfProxy][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
+  [*]with [b]microG DroidGuard Helper[/b] [url=https://github.com/microg/android_packages_apps_RemoteDroidGuard][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
   [*]choose between unofficial [b]Yalp Store[/b] [url=https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url] and official [b]Play Store[/b] [url=https://www.apkmirror.com/apk/google-inc/google-play-store/][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/apkmirror.png[/img][/url]
   [*][b]microG[/b] GmsCore [url=https://github.com/microg/android_packages_apps_GmsCore][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url] and [b]Play Store[/b] modified to allow (in-)app-purchases
   [*]support for Maps API version 1 optionally available (see [b]Alter Installation[/b] below)
   [*]both on-pc and on-device framework-patchers available (see [b]Variants[/b] and [b]Installation[/b] below)
   [/list]
-[*]install [b]F-Droid[/b] and many OpenSource applications
+[*]install [b]F-Droid[/b] [url=http://www.fdroid.org][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url] and many OpenSource applications
   [list]
   [*]including the privileged extension, so you don't need to enable 'Unkown Sources' to use F-Droid
-  [*]for more information on F-Droid visit [url=http://www.fdroid.org][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
   [/list]
 [*]install GNU [b]Bash[/b] Shell [url=https://www.gnu.org/software/bash/][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/gnu.png[/img][/url]
 [*]install GNU [b]Nano[/b] Shell Editor [url=https://www.nano-editor.org/][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/gnu.png[/img][/url]
