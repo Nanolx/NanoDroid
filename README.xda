@@ -5,8 +5,8 @@
 6.1.20170421
 
 [list]
-[*]Stable Downloads [url="https://www.androidfilehost.com/?a=show&w=files&flid=150729"]Androidfilehost[/url]
-[*]Archived Downloads [url="https://www.androidfilehost.com/?w=files&flid=156387"]Androidfilehost[/url]
+[*]Stable Downloads [url="https://www.androidfilehost.com/?a=show&w=files&flid=150729"][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/afh.png[/img][/url]
+[*]Archived Downloads [url="https://www.androidfilehost.com/?w=files&flid=156387"][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/afh.png[/img][/url]
 [/list]
 
 [size=7][b]Description[/b][/size]
@@ -18,27 +18,28 @@
   [*]allows for a user-defined list of system apps to be made unavailable (let's call this pseudo-debloat feature)
   [*]disabling the [b]NanoMod[/b] module in [b]Magisk[/b] will revert everything, as it's not actually doing any changes to [b][u]/system[/b][/u]
   [*]boot process may take a bit longer as [b]NanoMod[/b] is a pretty big [b]Magisk[/b] Module
-  [*]for more information on [b]Magisk[/b] visit [url=https://forum.xda-developers.com/apps/magisk]XDA Magisk Thread[/url]
+  [*]for more information on [b]Magisk[/b] visit [url=https://forum.xda-developers.com/apps/magisk][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/xda.png[/img][/url]
   [/list]
 [*]install [b]microG[/b] with either official [b]Play Store[/b] or unofficial [b]Yalp Store[/b]
   [list]
-  [*]for more information on microG visit [url=http://microg.org]microG Homepage[/url]
-  [*]with [b]Mozilla[/b] location provider backend
-  [*]with [b]Nominatim[/b] adress provider backend
-  [*]with [b]microG GsfProxy[/b]
-  [*]with [b]microG DroidGuard Helper[/b]
-  [*][b]microG[/b] GmsCore and [b]Play Store[/b] modified to allow (in-)app-purchases
+  [*]for more information on microG visit [url=http://microg.org][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/microg.png[/img][/url]
+  [*]with [b]Mozilla[/b] location provider backend [url=https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+  [*]with [b]Nominatim[/b] adress provider backend [url=https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+  [*]with [b]microG GsfProxy[/b] [url=https://github.com/microg/android_packages_apps_GsfProxy][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+  [*]with [b]microG DroidGuard Helper[/b] [url=https://github.com/microg/android_packages_apps_RemoteDroidGuard][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+  [*]choose between unofficial [b]Yalp Store[/b] [url=https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url] and official [b]Play Store[/b] [url=https://www.apkmirror.com/apk/google-inc/google-play-store/][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/apkmirror.png[/img][/url]
+  [*][b]microG[/b] GmsCore [url=https://github.com/microg/android_packages_apps_GmsCore][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url] and [b]Play Store[/b] modified to allow (in-)app-purchases
   [*]support for Maps API version 1 optionally available (see [b]Alter Installation[/b] below)
   [*]both on-pc and on-device framework-patchers available (see [b]Variants[/b] and [b]Installation[/b] below)
   [/list]
 [*]install [b]F-Droid[/b] and many OpenSource applications
   [list]
   [*]including the privileged extension, so you don't need to enable 'Unkown Sources' to use F-Droid
-  [*]for more information on F-Droid visit [url=http://www.fdroid.org]F-Droid Homepage[/url]
+  [*]for more information on F-Droid visit [url=http://www.fdroid.org][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
   [/list]
-[*]install GNU [b]Bash[/b] Shell
-[*]install GNU [b]Nano[/b] Shell Editor
-[*]install [b]The Legend of Zelda[/b] ringtones and sounds
+[*]install GNU [b]Bash[/b] Shell [url=https://www.gnu.org/software/bash/][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/gnu.png[/img][/url]
+[*]install GNU [b]Nano[/b] Shell Editor [url=https://www.nano-editor.org/][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/gnu.png[/img][/url]
+[*]install [b]The Legend of Zelda[/b] ringtones and sounds [url=http://www.zelda.com/][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/zelda.png[/img][/url]
   [list]
   [*]it's dangerous to root alone
   [/list]
@@ -52,7 +53,7 @@ Because I wanted to have a simple way to achieve my desired setup on any device 
 
 [size=6][b]License[/b][/size]
 
-Each provided application under it's original license. My own work (NanoMod itself) is licensed under the [url="https://www.gnu.org/licenses/gpl-3.0.txt"]GNU General Public License version 3 or newer[/url]
+Each provided application under it's original license. My own work (NanoMod itself) is licensed under the GNU General Public License v3 [url="https://www.gnu.org/licenses/gpl-3.0.txt"][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/gnu.png[/img][/url]
 
 For more details (including authors and license) on every provided application or Software press the icon next to it.
 
@@ -86,8 +87,8 @@ Special Thanks to the beta testers
 [size=6][b]Installation[/b][/size]
 
 [list]
-[*]Download release build from [url=https://www.androidfilehost.com/?a=show&w=files&flid=150729]Androidfilehost[/url]
-[*]or create zip file from the [url=https://www.github.com/Nanolx/NanoMod]github[/url] repository
+[*]Download release build [url="https://www.androidfilehost.com/?a=show&w=files&flid=150729"][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/afh.png[/img][/url]
+[*]or create zip file from the github repository [url=https://www.github.com/Nanolx/NanoMod][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
   [list]
   [*]on GNU/Linux, BSD or Mac OSX you can use the provided mod.sh script
     [list]
@@ -116,7 +117,7 @@ Special Thanks to the beta testers
       [list]
       [*]Note: it is suggested to boot into the ROM once, else the dalvik-cache might not exist (or is not up-to-date in case of incremental ROM update) and the patching process takes ages or fails
       [/list]
-    [*]use the supplied [b][u]framework-patcher.sh[/b][/u] on your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading [url=https://github.com/Lanchon/haystack]Haystack[/url], pulling files from phone, patching and installing the patched [b]services.jar[/b].
+    [*]use the supplied [b][u]framework-patcher.sh[/b][/u] on your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [url=https://github.com/Lanchon/haystack][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url], pulling files from phone, patching and installing the patched [b]services.jar[/b].
     [/list]
   [/list]
 [*]reboot into system
@@ -246,7 +247,7 @@ You can add or remove applications from the list by modifying the file
 
 [b][u]/data/.nanomod-overlay[/b][/u]
 
-on your device. See here for the [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-overlay]default settings[/url]. The syntax is pretty simple:
+on your device. See the default settings [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-overlay][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]. The syntax is pretty simple:
 
 [list]
 [*]one item per line
@@ -291,31 +292,38 @@ from recovery.
 The following applications are magic-mounted as [b][u]/system[/b][/u] applications
 
 [list]
-[*]Adaway
-[*]Amaze (File Manager)
-[*]Anysoft Keyboard
-[*]Face Slim (Facebook client)
-[*]F-Droid (FOSS app store, including privileged extension)
-[*]Hacker's Keyboard
-[*]K9-Mail
-[*]Kernel Adiutor
-[*]KeyPassDroid (Password Safe)
-[*](Simple) Gallery
-[*]Lightning (Browser)
-[*]New Pipe (YouTube client)
-[*]Oandbackup (App backup and restore)
-[*]Odyssey (Audio player)
-[*]OpenCamera
-[*]OpenKeyChain
-[*]OpenLauncher
-[*]OpenVPN
-[*]QK SMS
-[*]Substratum (App and Compiler)¹
-[*]Termux
-[*]Twidere (Twitter client)
-[*]VLC (Audio/Video Player)
-[*]XDA Labs
-[*]Yahoo Weather Provider
+[*]Adaway [url=https://f-droid.org/repository/browse/?fdfilter=adaway&fdid=org.adaway][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]Amaze (File Manager) [url=https://f-droid.org/repository/browse/?fdfilter=amaze&fdid=com.amaze.filemanager][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]AnySoftKeyboard [url=https://f-droid.org/repository/browse/?fdfilter=anysoftkeyboard&fdid=com.menny.android.anysoftkeyboard][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]Face Slim (Facebook client) [url=https://f-droid.org/repository/browse/?fdfilter=face+slim&fdid=org.indywidualni.fblite][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]F-Droid (FOSS app store) [url=https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+  [*]F-Droid Privileged Extension [url=https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]Hacker's Keyboard [url=https://f-droid.org/repository/browse/?fdfilter=hacker&fdid=org.pocketworkstation.pckeyboard][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]K-9 Mail [url=https://f-droid.org/repository/browse/?fdfilter=k9&fdid=com.fsck.k9][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]Kernel Adiutor [url=https://github.com/Grarak/KernelAdiutor][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
+[*]KeyPassDroid (Password Safe) [url=https://f-droid.org/repository/browse/?fdfilter=keepass&fdid=com.android.keepass][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*](Simple) Gallery [url=https://f-droid.org/repository/browse/?fdfilter=gallery&fdid=com.simplemobiletools.gallery][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]Lightning (Browser) [url=https://f-droid.org/repository/browse/?fdfilter=lightning&fdid=acr.browser.lightning][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]Magisk Manager [url=https://github.com/topjohnwu/MagiskManager][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
+[*]New Pipe (YouTube client) [url=https://f-droid.org/repository/browse/?fdfilter=newpipe&fdid=org.schabi.newpipe][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]Oandbackup (App backup and restore) [url=https://f-droid.org/repository/browse/?fdfilter=Oandbackup&fdid=dk.jens.backup][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]Odyssey (Audio player) [url=https://f-droid.org/repository/browse/?fdfilter=odyssey&fdid=org.gateshipone.odyssey][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]OpenCamera [url=https://f-droid.org/repository/browse/?fdfilter=open+camera&fdid=net.sourceforge.opencamera][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]OpenKeyChain [url=https://f-droid.org/repository/browse/?fdfilter=Oandbackup&fdid=org.sufficientlysecure.keychain][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]OpenLauncher [url=https://f-droid.org/repository/browse/?fdfilter=openlauncher&fdid=com.benny.openlauncher][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]OpenVPN [url=https://f-droid.org/repository/browse/?fdfilter=openvpn&fdid=de.blinkt.openvpn][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]QKSMS [url=https://f-droid.org/repository/browse/?fdfilter=qk&fdid=com.moez.QKSMS][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]Substratum (App and Compiler) [url=https://github.com/substratum/substratum][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
+  [*]will run in legacy mode on non-OMS ROMs
+[*]Termux [url=https://f-droid.org/repository/browse/?fdfilter=termux&fdid=com.termux][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]Twidere (Twitter client) [url=https://f-droid.org/repository/browse/?fdfilter=twidere&fdid=org.mariotaku.twidere][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*]VLC (Audio/Video Player) [url=https://code.videolan.org/videolan/vlc-android][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/gitlab.png[/img][/url]
+[*]XDA Labs [url=https://forum.xda-developers.com/android/apps-games/labs-t3241866
+][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/xda.png[/img][/url]
+  [list]
+  [*]source not (yet) available
+  [/list]
+[*]Yahoo Weather Provider [url=https://github.com/CyanogenMod/android_packages_apps_YahooWeatherProvider][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
 [/list]
 
 ¹ will run in legacy mode on non-OMS ROMs
@@ -326,7 +334,7 @@ You can remove applications from being magic-mounted by [b]removing[/b] them fro
 
 [b][u]/data/.nanomod-apps[/b][/u]
 
-on your device. See the [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-apps]default settings[/url]. The syntax is pretty simple:
+on your device. See the default settings [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-apps][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]. The syntax is pretty simple:
 
 * one item per line
 * name must be an exact match
@@ -340,7 +348,7 @@ List of known issues
 [list]
 [*]microG DroidGuard Helper or Play Store crashing
   [list]
-  [*]there's currently an issue with [b]Magisk[/b] that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as [b][u]/system[/b][/u] application, see [url=https://github.com/topjohnwu/Magisk/issues/155]Magisk Issue #155[/url]
+  [*]there's currently an issue with [b]Magisk[/b] that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as [b][u]/system[/b][/u] application, see Magisk Issue #155 [url=https://github.com/topjohnwu/Magisk/issues/155][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
   [*]this does not happen on all devices
   [*]if you are affected of this issue, instead install them as an user app, by installing the apk from
     [list]
