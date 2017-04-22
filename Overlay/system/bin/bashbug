@@ -27,13 +27,13 @@
 #	these variables are filled in by the make target in Makefile
 #
 MACHINE="arm"
-OS="linux-gnueabihf"
-CC="arm-linux-gnueabihf-gcc"
-CFLAGS=" -DPROGRAM='bash' -DCONF_HOSTTYPE='arm' -DCONF_OSTYPE='linux-gnueabihf' -DCONF_MACHTYPE='arm-unknown-linux-gnueabihf' -DCONF_VENDOR='unknown' -DLOCALEDIR='/system/usr/share/locale' -DPACKAGE='bash' -DSHELL -DHAVE_CONFIG_H   -I.  -I. -I./include -I./lib   -g -Ofast -static -pipe"
-RELEASE="4.3"
-PATCHLEVEL="46"
+OS="linux-androideabi"
+CC="arm-linux-androideabi-gcc"
+CFLAGS=" -DPROGRAM='bash' -DCONF_HOSTTYPE='arm' -DCONF_OSTYPE='linux-androideabi' -DCONF_MACHTYPE='arm-unknown-linux-androideabi' -DCONF_VENDOR='unknown' -DLOCALEDIR='/usr/local/share/locale' -DPACKAGE='bash' -DSHELL -DHAVE_CONFIG_H   -I.  -I/storage/projects/NanoMod/bash-on-android/bash-4.4 -I/storage/projects/NanoMod/bash-on-android/bash-4.4/include -I/storage/projects/NanoMod/bash-on-android/bash-4.4/lib   -g -O2 -Wno-parentheses -Wno-format-security"
+RELEASE="4.4"
+PATCHLEVEL="0"
 RELSTATUS="release"
-MACHTYPE="arm-unknown-linux-gnueabihf"
+MACHTYPE="arm-unknown-linux-androideabi"
 
 PATH=/bin:/usr/bin:/usr/local/bin:$PATH
 export PATH
@@ -62,7 +62,7 @@ while [ $# -gt 0 ]; do
 	--version)	shift ; do_version=y ;;
 	--)		shift ; break ;;
 	-*)		echo "bashbug: ${1}: invalid option" >&2
-			echo "$USAGE" >& 2
+			echo "$USAGE" >&2
 			exit 2 ;;
 	*)		break ;;
 	esac
@@ -265,7 +265,8 @@ esac
 
 ${RMAIL} $SMARGS < "$TEMPFILE1" || {
 	cat "$TEMPFILE1" >> $HOME/dead.bashbug
-	echo "$0: mail failed: report saved in $HOME/dead.bashbug" >&2
+	echo "$0: mail to ${BUGADDR} failed: report saved in $HOME/dead.bashbug" >&2
+	echo "$0: please send it manually to ${BUGADDR}" >&2
 }
 
 exit 0
