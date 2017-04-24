@@ -8,6 +8,14 @@
   * GNU Nano (2.8.1)
   * GNU Bash (4.4)
   * F-Droid (0.103-alpha3)
+  * F-Droid Privileged Extension (0.2.4)
+  * NewPipe (0.9.3)
+  * Twidere (3.5.25)
+* New
+  * Application
+    * (Simple) Calendar (2.3.3)
+  * Override
+    * Calendar
 
 ## 6.1 20170421
 * Internal Changes
