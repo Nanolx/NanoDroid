@@ -271,6 +271,7 @@ nanomodapps=/data/.nanomod-apps
 
 if [[ ! -f $nanomodcfg ]]; then
 	echo "APPS=(
+Calendar
 BasicDreams
 Browser
 CMFileManager
@@ -339,6 +340,7 @@ OpenKeyChain
 OpenLauncher
 OpenVPN
 QKSMS
+SimpleCalendar
 SimpleGallery
 Substratum
 Termux
