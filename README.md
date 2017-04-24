@@ -181,6 +181,7 @@ If no `/data/.nanomod-setup` is found, the default one will be installed (equals
 The following applications are pseudo-debloated by default
 
 * Basic Dreams
+* Calendar
 * CM File Manager
 * Eleven (Audio Player)
 * E-Mail + Exchange2
@@ -259,6 +260,7 @@ The following applications are magic-mounted as `/system` applications
 * K-9 Mail [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=k9&fdid=com.fsck.k9)
 * Kernel Adiutor [![GitHub Link](images/github.png)](https://github.com/Grarak/KernelAdiutor)
 * KeyPassDroid (Password Safe) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=keepass&fdid=com.android.keepass)
+* (Simple) Calendar [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=calendar&fdid=com.simplemobiletools.calendar)
 * (Simple) Gallery [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=gallery&fdid=com.simplemobiletools.gallery)
 * Lightning (Browser) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=lightning&fdid=acr.browser.lightning)
 * Magisk Manager [![GitHub Link](images/github.png)](https://github.com/topjohnwu/MagiskManager)

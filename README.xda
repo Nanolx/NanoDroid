@@ -218,6 +218,7 @@ The following applications are pseudo-debloated by default
 
 [list]
 [*]Basic Dreams
+[*]Calendar
 [*]CM File Manager
 [*]Eleven (Audio Player)
 [*]E-Mail + Exchange2
@@ -300,6 +301,7 @@ The following applications are magic-mounted as [b][u]/system[/b][/u] applicatio
 [*]K-9 Mail [url=https://f-droid.org/repository/browse/?fdfilter=k9&fdid=com.fsck.k9][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
 [*]Kernel Adiutor [url=https://github.com/Grarak/KernelAdiutor][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
 [*]KeyPassDroid (Password Safe) [url=https://f-droid.org/repository/browse/?fdfilter=keepass&fdid=com.android.keepass][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
+[*](Simple) Calendar [https://f-droid.org/repository/browse/?fdfilter=calendar&fdid=com.simplemobiletools.calendar][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
 [*](Simple) Gallery [url=https://f-droid.org/repository/browse/?fdfilter=gallery&fdid=com.simplemobiletools.gallery][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
 [*]Lightning (Browser) [url=https://f-droid.org/repository/browse/?fdfilter=lightning&fdid=acr.browser.lightning][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]
 [*]Magisk Manager [url=https://github.com/topjohnwu/MagiskManager][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
