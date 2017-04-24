@@ -413,8 +413,8 @@ if grep -q nanomod.apps=0 $nanomodsetup; then
 	for app in Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
 		K9Mail KeePassDroid KernelAdiutor Lightning NewPipe \
 		Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
-		OpenVPN QKSMS SimpleGallery Substratum Termux Twidere \
-		VLC XDALabs YahooWeatherProvider; do
+		OpenVPN QKSMS SimpleCalendar SimpleGallery Substratum \
+		Termux Twidere VLC XDALabs YahooWeatherProvider; do
 			rm -rf $MODPATH/system/app/$app
 	done
 	ui_print " << without applications"
