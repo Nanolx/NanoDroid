@@ -4,6 +4,7 @@
 * Internal Changes
   * some ROMs don't have a `zip` binary which is required for the on-device `framework-patcher` to work
     * the on-device `framework-patcher` now has arm32 and arm64 `zip` binary as fallback
+  * let the installers fails upon x86 (NanoMod only supports arm/arm64)
 * Updates
   * GNU Nano (2.8.1)
   * GNU Bash (4.4)
