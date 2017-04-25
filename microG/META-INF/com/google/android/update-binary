@@ -311,7 +311,8 @@ mGerrit
 fi
 
 if [[ ! -f $nanomodsetup ]]; then
-	echo "nanomod.reinstall=0
+	echo "nanomod.play=1
+nanomod.reinstall=0
 nanomod.overlay=0
 nanomod.mapsv1=0" > $nanomodsetup
 	chown 1000:1000 $nanomodsetup
