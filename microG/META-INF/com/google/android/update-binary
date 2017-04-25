@@ -306,8 +306,6 @@ SnapdragonCamera
 Trebuchet
 mGerrit
 )"	> $nanomodoverlay
-	chown 1000:1000 $nanomodoverlay
-	chmod 0644 $nanomodoverlay
 fi
 
 if [[ ! -f $nanomodsetup ]]; then
@@ -315,8 +313,19 @@ if [[ ! -f $nanomodsetup ]]; then
 nanomod.reinstall=0
 nanomod.overlay=0
 nanomod.mapsv1=0" > $nanomodsetup
-	chown 1000:1000 $nanomodsetup
-	chmod 0644 $nanomodsetup
+else
+	if ! grep -q "^nanomod.reinstall" $nanomodsetup; then
+		echo "nanomod.reinstall=0" >> $nanomodsetup
+	fi
+	if ! grep -q "^nanomod.play" $nanomodsetup; then
+		echo "nanomod.play=1" >> $nanomodsetup
+	fi
+	if ! grep -q "^nanomod.overlay" $nanomodsetup; then
+		echo "nanomod.overlay=1" >> $nanomodsetup
+	fi
+	if ! grep -q "^nanomod.mapsv1" $nanomodsetup; then
+		echo "nanomod.mapsv1=1" >> $nanomodsetup
+	fi
 fi
 
 if grep -q nanomod.reinstall=1 $nanomodsetup; then
