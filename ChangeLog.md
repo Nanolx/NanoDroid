@@ -13,6 +13,7 @@
   * NewPipe (0.9.3)
   * Twidere (3.5.25)
   * Substratum (703)
+  * VLC (2.1.6~beta)
 * New
   * Application
     * (Simple) Calendar (2.3.3)
