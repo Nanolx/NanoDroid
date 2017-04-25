@@ -12,6 +12,7 @@
   * F-Droid Privileged Extension (0.2.4)
   * NewPipe (0.9.3)
   * Twidere (3.5.25)
+  * Substratum (703)
 * New
   * Application
     * (Simple) Calendar (2.3.3)
