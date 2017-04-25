@@ -3,8 +3,18 @@
 ## 6.2 in-dev
 * Internal Changes
   * some ROMs don't have a `zip` binary which is required for the on-device `framework-patcher` to work
-    * the on-device `framework-patcher` now has arm32 and arm64 `zip` binary as fallback
-  * let the installers fails upon x86 (NanoMod only supports arm/arm64)
+    * it now provides arm and arm64 `zip` binaries as fallback
+  * all packages: let the installers fails if device has x86/x86_64 architecture (NanoMod only supports arm/arm64)
+  * full and microG-only packages: if the installers create default configuration files because no user-defined exist, those files get removed after installation
+    * this is to ensure the users who don't care about them always get the default configuration
+    * obvioulsy, if you opt-in to create your own setup, it won't be affected by this
+  * full and microG-only package: if the setup file is incomplete, add the missing properties with default values
+  * microG-only package: set default value of `nanomod.overlay` to `0`
+  * microG-only package: create the application overrides if `nanomod.overlay` is `1`
+* Fixes
+  * fix regression from 6.1 which prevented (in-)app-purchases
+  * fix the microG only package by default installs no app store
+    * now defaults to Play Store
 * Updates
   * GNU Nano (2.8.1)
   * GNU Bash (4.4)
@@ -20,7 +30,7 @@
   * Override
     * Calendar
 
-## 6.1 20170421
+## 6.1.20170421
 * Internal Changes
   * minor fix in `mod.sh`
   * minor improvements to README

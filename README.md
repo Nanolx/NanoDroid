@@ -130,6 +130,7 @@ the **microg only package** only supports the following options
 ```
 nanomod.play=1
 nanomod.reinstall=0
+nanomod.overlay=0
 nanomod.mapsv1=0
 ```
 
