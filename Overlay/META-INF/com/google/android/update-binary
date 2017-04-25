@@ -263,22 +263,17 @@ fi
 
 ui_print " > Installing NanoMod"
 
-# move old files to new locations
-if [[ -f /data/media/0/.nanomod-overlay ]]; then
-	mv /data/media/0/.nanomod-overlay \
-		/data/.nanomod-overlay
-fi
+NO_NANOMODOVERLAY=0
+nanomodoverlay=/data/.nanomod-overlay
 
-if [[ -f /data/media/0/.nanomod-setup ]]; then
-	mv /data/media/0/.nanomod-setup \
-		/data/.nanomod-setup
-fi
-
-nanomodcfg=/data/.nanomod-overlay
+NO_NANOMODSETUP=0
 nanomodsetup=/data/.nanomod-setup
+
+NO_NANOMODAPPS=0
 nanomodapps=/data/.nanomod-apps
 
-if [[ ! -f $nanomodcfg ]]; then
+if [[ ! -f $nanomodoverlay ]]; then
+	NO_NANOMODOVERLAY=1
 	echo "APPS=(
 Calendar
 BasicDreams
@@ -312,12 +307,13 @@ Snap
 SnapdragonCamera
 Trebuchet
 mGerrit
-)"	> $nanomodcfg
-	chown 1000:1000 $nanomodcfg
-	chmod 0644 $nanomodcfg
+)"	> $nanomodoverlay
+	chown 1000:1000 $nanomodoverlay
+	chmod 0644 $nanomodoverlay
 fi
 
 if [[ ! -f /data/.nanomod-setup ]]; then
+	NO_NANOMODSETUP=1
 	echo "nanomod.fdroid=1
 nanomod.reinstall=0
 nanomod.microg=1
@@ -332,6 +328,7 @@ nanomod.mapsv1=0" > $nanomodsetup
 fi
 
 if [[ ! -f $nanomodapps ]]; then
+	NO_NANOMODAPPS=1
 	echo "Adaway
 Amaze
 AnysoftKeyboard
@@ -474,6 +471,9 @@ if grep -q nanomod.overlay=1 $nanomodsetup; then
 	$MODPATH/system/bin/nanomod-overlay --update
 	ui_print " << with /system applications override"
 else	ui_print " << without /system applications override"
+	if [ "$NO_NANOMODOVERLAY" -eq 1 ]; then
+		rm $nanomodoverlay
+	fi
 fi
 
 if grep -q nanomod.reinstall=1 $nanomodsetup; then
@@ -481,6 +481,14 @@ if grep -q nanomod.reinstall=1 $nanomodsetup; then
 	mkdir $MODPATH/system/framework
 	cp /tmp/services.jar \
 		$MODPATH/system/framework/services.jar
+fi
+
+if [ "$NO_NANOMODSETUP" -eq 1 ]; then
+	rm $nanomodsetup
+fi
+
+if [ "$NO_NANOMODAPPS" -eq 1 ]; then
+	rm $nanomodapps
 fi
 
 # Handle replace folders

@@ -264,18 +264,14 @@ fi
 
 ui_print " > Installing NanoMod"
 
-# move old files to new locations
-if [[ -f /data/media/0/.nanomod-overlay ]]; then
-	mv /data/media/0/.nanomod-overlay \
-		/data/.nanomod-overlay
-fi
+NO_NANOMODOVERLAY=0
+nanomodoverlay=/data/.nanomod-overlay
 
-if [[ -f /data/media/0/.nanomod-setup ]]; then
-	mv /data/media/0/.nanomod-setup \
-		/data/.nanomod-setup
-fi
+NO_NANOMODSETUP=0
+nanomodsetup=/data/.nanomod-setup
 
-if [[ ! -f /data/.nanomod-overlay ]]; then
+if [[ ! -f $nanomodoverlay ]]; then
+	NO_NANOMODOVERLAY=1
 	echo "APPS=(
 Calendar
 BasicDreams
@@ -309,22 +305,20 @@ Snap
 SnapdragonCamera
 Trebuchet
 mGerrit
-)"	> /data/.nanomod-overlay
-	chown 1000:1000 /data/.nanomod-overlay
-	chmod 0644 /data/.nanomod-overlay
+)"	> $nanomodoverlay
+	chown 1000:1000 $nanomodoverlay
+	chmod 0644 $nanomodoverlay
 fi
 
-if [[ ! -f /data/.nanomod-setup ]]; then
+if [[ ! -f $nanomodsetup ]]; then
 	echo "nanomod.reinstall=0
-nanomod.overlay=1
-nanomod.mapsv1=0" > /data/.nanomod-setup
-	chown 1000:1000 /data/.nanomod-setup
-	chmod 0644 /data/.nanomod-setup
+nanomod.overlay=0
+nanomod.mapsv1=0" > $nanomodsetup
+	chown 1000:1000 $nanomodsetup
+	chmod 0644 $nanomodsetup
 fi
 
-nanomodcfg=/data/.nanomod-setup
-
-if grep -q nanomod.reinstall=1 $nanomodcfg; then
+if grep -q nanomod.reinstall=1 $nanomodsetup; then
 	ui_print " << backup services.jar"
 	cp $MODPATH/system/framework/services.jar \
 		/tmp/services.jar
@@ -339,7 +333,7 @@ ui_print " << populating module"
 unzip -o "$ZIP" "system/*" -d $MODPATH
 
 # remove mapsv1 if not requested
-if grep -q nanomod.mapsv1=1 $nanomodcfg; then
+if grep -q nanomod.mapsv1=1 $nanomodsetup; then
 	ui_print " << with Maps API version 1"
 else	rm $MODPATH/system/etc/permissions/com.google.android.maps.xml
 	rm $MODPATH/system/framework/com.google.android.maps.jar
@@ -347,13 +341,13 @@ else	rm $MODPATH/system/etc/permissions/com.google.android.maps.xml
 fi
 
 # remove Yalp Store if Play Store requested and vice-versa
-if grep -q nanomod.play=1 $nanomodcfg; then
+if grep -q nanomod.play=1 $nanomodsetup; then
 	for app in FakeStore YalpStore; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
 	done
 	ui_print " << with Play Store"
-elif grep -q nanomod.play=2 $nanomodcfg; then
+elif grep -q nanomod.play=2 $nanomodsetup; then
 	for app in Phonesky; do
 		rm -rf $MODPATH/system/app/$app
 		rm -rf $MODPATH/system/priv-app/$app
@@ -367,11 +361,25 @@ else
 	ui_print " << without App Store"
 fi
 
-if grep -q nanomod.reinstall=1 $nanomodcfg; then
+# Setup Overrides
+if grep -q nanomod.overlay=1 $nanomodsetup; then
+	$MODPATH/system/bin/nanomod-overlay --update
+	ui_print " << with /system applications override"
+else	ui_print " << without /system applications override"
+	if [ "$NO_NANOMODOVERLAY" -eq 1 ]; then
+		rm $nanomodoverlay
+	fi
+fi
+
+if grep -q nanomod.reinstall=1 $nanomodsetup; then
 	ui_print " << restore services.jar"
 	mkdir $MODPATH/system/framework
 	cp /tmp/services.jar \
 		$MODPATH/system/framework/services.jar
+fi
+
+if [ "$NO_NANOMODSETUP" -eq 1 ]; then
+	rm $nanomodsetup
 fi
 
 # Handle replace folders
