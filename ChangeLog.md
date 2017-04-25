@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 6.2 in-dev
+## 7.0.20140725
 * Internal Changes
   * some ROMs don't have a `zip` binary which is required for the on-device `framework-patcher` to work
     * it now provides arm and arm64 `zip` binaries as fallback
