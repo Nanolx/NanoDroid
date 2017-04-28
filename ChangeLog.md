@@ -4,6 +4,7 @@
 * Updates
   * Twidere (3.5.31)
   * (Simple) Calendar (2.3.4)
+  * OpenKeyChain (4.3)
 
 ## 7.0.20140725
 * Internal Changes
