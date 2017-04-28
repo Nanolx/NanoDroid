@@ -3,6 +3,7 @@
 ## 7.1 in-dev
 * Updates
   * Twidere (3.5.31)
+  * (Simple) Calendar (2.3.4)
 
 ## 7.0.20140725
 * Internal Changes
