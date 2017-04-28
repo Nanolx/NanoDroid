@@ -130,7 +130,7 @@ case ${1} in
 	;;
 
 	ver)
-		_ver
+		_ver "${@}"
 	;;
 
 	bump)
