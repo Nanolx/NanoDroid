@@ -169,7 +169,7 @@ fi
 
 ui_print " "
 ui_print "********************************"
-ui_print "      NanoMod 7.0.20170425     "
+ui_print "      NanoMod 7.1.20171231     "
 ui_print "       created by @Nanolx       "
 ui_print "       Framework Patcher        "
 ui_print "Powered by DexPatcher (@lanchon)"
