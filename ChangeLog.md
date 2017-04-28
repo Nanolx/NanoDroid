@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 7.1 in-dev
+* Updates
+  * Twidere (3.5.31)
+
 ## 7.0.20140725
 * Internal Changes
   * some ROMs don't have a `zip` binary which is required for the on-device `framework-patcher` to work
