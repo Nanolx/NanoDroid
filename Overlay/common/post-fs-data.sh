@@ -5,6 +5,10 @@ MODDIR=${0%/*}
 
 # This script will be executed in post-fs-data mode
 # More info in the main Magisk thread
-${MODDIR}/system/etc/init.d/fstrim
-${MODDIR}/system/etc/init.d/logscleaner
-${MODDIR}/system/etc/init.d/sqlite
+
+# NanoMod scripts
+#${MODDIR}/system/etc/init.d/fstrim
+#${MODDIR}/system/etc/init.d/logscleaner
+#${MODDIR}/system/etc/init.d/sqlite
+
+/sytem/etc/init.d/*
