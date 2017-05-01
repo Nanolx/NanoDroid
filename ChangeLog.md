@@ -10,7 +10,7 @@
     * directory containing the zip file
   * full package: init scripts no longer remount rootfs (not required)
   * full package: installer now makes init scripts actually executable
-  * full package: execute all scripts from /system/etc/init.d/
+  * full package: execute all scripts in `/system/etc/init.d/`
 * Updates
   * Twidere (3.5.33)
   * (Simple) Calendar (2.3.4)
