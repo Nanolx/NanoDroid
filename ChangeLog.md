@@ -2,12 +2,15 @@
 
 ## 7.1 in-dev
 * Internal Changes:
-  * the `.nanomod-overlay` , `.nanomod-apps` and `.nanomod-setup` configuration files can now be stored in the following directories
+  * full and microG package: the `.nanomod-overlay` , `.nanomod-apps` and `.nanomod-setup` configuration files can now be stored in the following directories
     * `/data` (default)
     * `/sdcard` (internal storage)
     * `/persist`
     * `/external_sd` (special path in TWRP for external SD-Card if not used as adoptable storage)
     * directory containing the zip file
+  * full package: init scripts no longer remount rootfs (not required)
+  * full package: installer now makes init scripts actually executable
+  * full package: execute all scripts from /system/etc/init.d/
 * Updates
   * Twidere (3.5.33)
   * (Simple) Calendar (2.3.4)
