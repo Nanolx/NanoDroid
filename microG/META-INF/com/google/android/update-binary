@@ -264,13 +264,22 @@ fi
 
 ui_print " > Installing NanoMod"
 
-NO_NANOMODOVERLAY=0
-nanomodoverlay=/data/.nanomod-overlay
+# check for configuration files
+config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
 
-NO_NANOMODSETUP=0
-nanomodsetup=/data/.nanomod-setup
+get_config () {
+	unset config
+	for path in ${config_locations}; do
+		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
+			config="${path}/${1}"
+			return
+		fi
+	done
+}
 
-if [[ ! -f $nanomodoverlay ]]; then
+# create default '.nanomod-overlay' file
+create_nanomodoverlay () {
+	nanomodoverlay=/data/.nanomod-overlay
 	NO_NANOMODOVERLAY=1
 	echo "APPS=(
 Calendar
@@ -306,14 +315,20 @@ SnapdragonCamera
 Trebuchet
 mGerrit
 )"	> $nanomodoverlay
-fi
+}
 
-if [[ ! -f $nanomodsetup ]]; then
-	echo "nanomod.play=1
-nanomod.reinstall=0
-nanomod.overlay=0
+# create default '.nanomod-setup'
+create_nanomodsetup () {
+	nanomodsetup=/data/.nanomod-setup
+	NO_NANOMODSETUP=1
+	echo "nanomod.reinstall=0
+nanomod.play=1
+nanomod.overlay=1
 nanomod.mapsv1=0" > $nanomodsetup
-else
+}
+
+# check whether '.nanomod-setup' has all required entries
+check_nanomodsetup () {
 	if ! grep -q "^nanomod.reinstall" $nanomodsetup; then
 		echo "nanomod.reinstall=0" >> $nanomodsetup
 	fi
@@ -326,12 +341,21 @@ else
 	if ! grep -q "^nanomod.mapsv1" $nanomodsetup; then
 		echo "nanomod.mapsv1=1" >> $nanomodsetup
 	fi
+}
+
+config_exists=$(get_config .nanomod-overlay)
+if [ $config_exists -eq 0 ]; then
+	NO_NANOMODOVERLAY=0
+	nanomodoverlay="${config}"
+else	create_nanomodoverlay
 fi
 
-if grep -q nanomod.reinstall=1 $nanomodsetup; then
-	ui_print " << backup services.jar"
-	cp $MODPATH/system/framework/services.jar \
-		/tmp/services.jar
+config_exists=$(get_config .nanomod-overlay)
+if [ $config_exists -eq 0 ]; then
+	NO_NANOMODSETUP=0
+	nanomodsetup="${config}"
+	check_nanomodsetup
+else	create_nanomodsetup
 fi
 
 # Create mod paths
