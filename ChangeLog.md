@@ -20,6 +20,7 @@
   * NewPipe (0.9.4)
   * Amaze (3.1.2~RC3)
   * microG GmsCore (0.2.4-92)
+  * Magisk Manager (4.3.3)
 
 ## 7.0.20140725
 * Internal Changes
