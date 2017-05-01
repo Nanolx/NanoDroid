@@ -57,8 +57,8 @@ BASEDIR="/tmp/dexpatcher"
 
 SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
 
-ABI=$(grep_prop ro.product.cpu.abi | cut -c-3)
-ABI2=`grep_prop ro.product.cpu.abi2 | cut -c-3`
+ABI=$(getprop ro.product.cpu.abi | cut -c-3)
+ABI2=$(getprop ro.product.cpu.abi2 | cut -c-3)
 
 ABI_LONG=$(getprop ro.product.cpu.abi)
 
