@@ -581,6 +581,7 @@ fi
 ui_print "<< setting permissions"
 set_permissions
 chmod 0755 $MODPATH/system/bin/*
+chmod 0755 $MODPATH/system/etc/init.d/*
 
 ui_print " "
 ui_print " Thanks for using NanoMod "
