@@ -10,6 +10,7 @@
     * directory containing the zip file
   * full package: init scripts no longer remount rootfs (not required)
   * full package: installer now makes init scripts actually executable
+  * framework-patcher package: fix detection of device architecture
 * Updates
   * Twidere (3.5.33)
   * (Simple) Calendar (2.3.4)
