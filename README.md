@@ -178,10 +178,9 @@ whether to populate Zelda ringtones and sounds.
 
 whether to backup an **already patched** `services.jar` and re-use it.
 
-**Only use this, when you re-install NanoMod on the same ROM. If you updated or changed the ROM, re-run `framework-patcher.sh`
-instead. See "Installation" below.** 
+**Only use this, when you re-install NanoMod on the same ROM. If you updated or changed the ROM, re-run `framework-patcher.sh` instead. See "Installation" below.** 
 
-If no `/data/.nanomod-setup` is found, the default one will be installed (equals to the example above).
+If no `.nanomod-setup` is found, the default one will be installed (equals to the example above).
 
 ## Applications
 

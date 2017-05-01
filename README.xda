@@ -214,10 +214,9 @@ whether to populate the overlay to pseudo-debloat [b][u]/system[/b][/u] applicat
 
 whether to backup an [b]already patched[/b] [b][u]services.jar[/b][/u] and re-use it.
 
-[b]Only use this, when you re-install NanoMod on the same ROM. If you updated or changed the ROM, re-run [b][u]framework-patcher.sh[/b][/u]
-instead. See "Installation" below.[/b]
+[b]Only use this, when you re-install NanoMod on the same ROM. If you updated or changed the ROM, re-run [u]framework-patcher.sh[/u] instead. See "Installation" below.[/b]
 
-If no [b][u]/data/.nanomod-setup[/b][/u] is found, the default one will be installed (equals to the example above).
+If no [b][u].nanomod-setup[/b][/u] is found, the default one will be installed (equals to the example above).
 
 [size=6][b]Applications[/b][/size]
 
