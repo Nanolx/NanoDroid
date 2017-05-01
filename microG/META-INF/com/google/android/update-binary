@@ -182,7 +182,7 @@ unzip -o "$ZIP" "common/*" module.prop
 # Please leave this message in your flashable zip for credits :)
 ui_print " "
 ui_print "******************************"
-ui_print "     NanoMod 7.1.20171231     "
+ui_print "     NanoMod 7.1.20170501     "
 ui_print "      created by @Nanolx      "
 ui_print "         microG only          "
 ui_print "Powered by Magisk (@topjohnwu)"

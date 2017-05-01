@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 7.1 in-dev
+## 7.1.20170501
 * Internal Changes:
   * full and microG package: the `.nanomod-overlay` , `.nanomod-apps` and `.nanomod-setup` configuration files can now be stored in the following directories
     * `/data` (default)
