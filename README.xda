@@ -12,7 +12,7 @@
 [size=7][b]Description[/b][/size]
 
 [list]
-[*]install [b]NanoMod[/b] or [b]NanoMod-microG[/b] Magisk-Module
+[*]install [b]NanoMod[/b], [b]NanoMod-microG[/b] or [b]NanoMod-FDroid[/b] Magisk-Module
   [list]
   [*]actually [b]NanoMod[/b] is an [b]Overlay[/b] to [b][u]/system[/b][/u] which holds the apps
   [*]allows for a user-defined list of system apps to be made unavailable (let's call this pseudo-debloat feature)
@@ -142,11 +142,17 @@ Special Thanks to the beta testers
 
 To alter the installation you can create the file
 
-[b][u]/data/.nanomod-setup[/b][/u]
+[b][u].nanomod-setup[/b][/u]
 
-on your phone, which can also be accessed or created as
+on your device, in one of the following directories
 
-[b][u]/data/.nanomod-setup[/b][/u]
+[list]
+[*]/data (default)
+[*]/sdcard (internal storage)
+[*]/persist
+[*]mount point of your external SD-Card (if any)
+[*]directory containing the zip file
+[/list]
 
 populate it with the following content for the [b]full package[/b]
 
@@ -245,9 +251,19 @@ The following applications are pseudo-debloated by default
 
 You can add or remove applications from the list by modifying the file
 
-[b][u]/data/.nanomod-overlay[/b][/u]
+[b][u].nanomod-overlay[/b][/u]
 
-on your device. See the default settings [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-overlay][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]. The syntax is pretty simple:
+on your device, in one of the following directories
+
+[list]
+[*]/data (default)
+[*]/sdcard (internal storage)
+[*]/persist
+[*]mount point of your external SD-Card (if any)
+[*]directory containing the zip file
+[/list]
+
+See the default settings [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-overlay][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]. The syntax is pretty simple:
 
 [list]
 [*]one item per line
@@ -333,9 +349,19 @@ The following applications are magic-mounted as [b][u]/system[/b][/u] applicatio
 
 You can remove applications from being magic-mounted by [b]removing[/b] them from the file
 
-[b][u]/data/.nanomod-apps[/b][/u]
+[b][u].nanomod-apps[/b][/u]
 
-on your device. See the default settings [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-apps][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]. The syntax is pretty simple:
+on your device, in one of the following directories
+
+[list]
+[*]/data (default)
+[*]/sdcard (internal storage)
+[*]/persist
+[*]mount point of your external SD-Card (if any)
+[*]directory containing the zip file
+[/list]
+
+See the default settings [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-apps][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]. The syntax is pretty simple:
 
 * one item per line
 * name must be an exact match

@@ -9,7 +9,7 @@
 
 # Description
 
-* install **NanoMod** or **NanoMod-microG** Magisk-Module
+* install **NanoMod**, **NanoMod-microG** or **NanoMod-FDroid** Magisk-Module
   * actually **NanoMod** is an **Overlay** to `/system` which holds the apps
   * allows for a user-defined list of system apps to be made unavailable (let's call this pseudo-debloat feature)
   * disabling the **NanoMod** module in **Magisk** will revert everything, as it's not actually doing any changes to `/system`
@@ -110,9 +110,17 @@ Special Thanks to the beta testers
 
 To alter the installation you can create the file
 
-`/data/.nanomod-setup`
+`.nanomod-setup`
 
-on your phone, populate it with the following content for the **full package**
+on your device, in one of the following directories
+
+* `/data` (default)
+* `/sdcard` (internal storage)
+* `/persist`
+* mount point of your external SD-Card (if any)
+* directory containing the zip file
+
+populate it with the following content for the **full package**
 
 ```
 nanomod.microg=1
@@ -207,9 +215,17 @@ The following applications are pseudo-debloated by default
 
 You can add or remove applications from the list by modifying the file
 
-`/data/.nanomod-overlay`
+`.nanomod-overlay`
 
-on your device. See the default settings [![GitHub Link](images/github.png)](.nanomod-overlay). The syntax is pretty simple:
+on your device, in one of the following directories
+
+* `/data` (default)
+* `/sdcard` (internal storage)
+* `/persist`
+* mount point of your external SD-Card (if any)
+* directory containing the zip file
+
+See the default settings [![GitHub Link](images/github.png)](.nanomod-overlay). The syntax is pretty simple:
 
 * one item per line
 * name must be an exact match
@@ -286,9 +302,17 @@ The following applications are magic-mounted as `/system` applications
 
 You can remove applications from being magic-mounted by **removing** them from the file
 
-`/data/.nanomod-apps`
+`.nanomod-apps`
 
-on your device. See the default settings [![GitHub Link](images/github.png)](.nanomod-apps). The syntax is pretty simple:
+on your device, in one of the following directories
+
+* `/data` (default)
+* `/sdcard` (internal storage)
+* `/persist`
+* mount point of your external SD-Card (if any)
+* directory containing the zip file
+
+See the default settings [![GitHub Link](images/github.png)](.nanomod-apps). The syntax is pretty simple:
 
 * one item per line
 * name must be an exact match
