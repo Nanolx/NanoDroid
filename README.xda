@@ -41,6 +41,10 @@
   [list]
   [*]it's dangerous to root alone
   [/list]
+[*][b]init.d[/b] support
+  [list]
+  [*]all scripts located in [b][u]/system/etc/init.d/[/b][/u] will be executed upon boot
+  [/list]
 [/list]
 
 [size=7][b]Why was this created?[/b][/size]
