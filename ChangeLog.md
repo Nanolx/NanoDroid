@@ -2,7 +2,7 @@
 
 ## 7.1 in-dev
 * Updates
-  * Twidere (3.5.31)
+  * Twidere (3.5.33)
   * (Simple) Calendar (2.3.4)
   * OpenKeyChain (4.3)
   * Substratum (706)
