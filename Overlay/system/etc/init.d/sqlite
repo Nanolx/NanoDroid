@@ -1,7 +1,5 @@
 #!/system/bin/sh
 
-mount -o rw,remount rootfs /
-
 chown 0:0 /data/sqlite.log
 chmod 755 /data/sqlite.log
 
@@ -34,5 +32,3 @@ echo "SQLite database VACUUM and REINDEX finished at $( date +"%m-%d-%Y %H:%M:%S
 
 chown 0:0 /data/sqlite.log
 chmod 755 /data/sqlite.log
-
-mount -o ro,seclabel,remount rootfs /

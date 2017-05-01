@@ -1,7 +1,5 @@
 #!/system/bin/sh
 
-mount -o rw,remount rootfs /
-
 chown 0:0 /data/clean.log
 chmod 755 /data/clean.log
 
@@ -31,5 +29,3 @@ echo "Automatic Cleaning finished at $( date +"%m-%d-%Y %H:%M:%S" )" | tee -a $L
 
 chown 0:0 /data/clean.log
 chmod 755 /data/clean.log
-
-mount -o ro,seclabel,remount rootfs /
