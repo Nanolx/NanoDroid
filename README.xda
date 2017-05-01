@@ -41,9 +41,11 @@
   [list]
   [*]it's dangerous to root alone
   [/list]
-[*][b]init.d[/b] support
+[*][b]init[/b] scripts
   [list]
-  [*]all scripts located in [b][u]/system/etc/init.d/[/b][/u] will be executed upon boot
+  [*]file system trim
+  [*]log file cleanup
+  [*]sqlite database trim
   [/list]
 [/list]
 
