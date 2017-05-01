@@ -267,10 +267,11 @@ ui_print " > Installing NanoMod"
 config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
 
 get_config () {
-	unset config
+	unset config config_exists
 	for path in ${config_locations}; do
 		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
 			config="${path}/${1}"
+			config_exists=1
 			return
 		fi
 	done
@@ -389,23 +390,23 @@ check_nanomodsetup () {
 	fi
 }
 
-config_exists=$(get_config .nanomod-overlay)
-if [ "$config_exists" -eq 0 ]; then
+get_config .nanomod-overlay
+if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODOVERLAY=0
 	nanomodoverlay="${config}"
 else	create_nanomodoverlay
 fi
 
-config_exists=$(get_config .nanomod-setup)
-if [ "$config_exists" -eq 0 ]; then
+get_config .nanomod-setup
+if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODSETUP=0
 	nanomodsetup="${config}"
 	check_nanomodsetup
 else	create_nanomodsetup
 fi
 
-config_exists=$(get_config .nanomod-apps)
-if [ "$config_exists" -eq 0 ]; then
+get_config .nanomod-apps
+if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODAPPS=0
 	nanomodapps="${config}"
 else	create_nanomodapps
