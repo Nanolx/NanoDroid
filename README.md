@@ -30,7 +30,7 @@
 * install GNU **Nano** Shell Editor [![GNU Link](images/gnu.png)](https://www.nano-editor.org/)
 * install **The Legend of Zelda** rintones and sounds [![Nintendo Link](images/zelda.png)](http://www.zelda.com/)
   * it's dangerous to root alone
-* `init.d` scripts
+* **init** scripts
   * file system trim
   * log file cleanup
   * sqlite database trim
