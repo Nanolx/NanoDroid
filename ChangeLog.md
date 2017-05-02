@@ -11,6 +11,8 @@
   * framework-patcher script: grow and shrink `magisk.img` if required
     * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
   * framework-patcher script: fix installation path for patched `services.jar` when NanoMod is not installed
+* Updates:
+  * GNU Bash (4.4[012])
 
 ## 7.1.20170501
 * Internal Changes
