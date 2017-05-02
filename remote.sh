@@ -9,6 +9,38 @@ is_mounted() {
   return $?
 }
 
+request_size_check() {
+  reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
+  reqSizeM=$((reqSizeM / 1048576 + 1))
+}
+
+image_size_check() {
+  e2fsck -yf $1
+  curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
+  curUsedM=`echo "$curBlocks" | cut -d/ -f1`
+  curSizeM=`echo "$curBlocks" | cut -d/ -f1`
+  curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
+  curUsedM=$((curUsedM * 4 / 1024 + 1))
+  curSizeM=$((curSizeM * 4 / 1024))
+}
+
+grow_magisk_img () {
+	request_size_check /tmp/services.jar
+	image_size_check /data/magisk.img
+	if [ "$reqSizeM" -gt "$curFreeM" ]; then
+		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
+		resize2fs /data/magisk.img ${SIZE}M
+	fi
+}
+
+shrink_magisk_img () {
+	image_size_check /data/magisk.img
+	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
+	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
+		resize2fs $IMG ${NEWDATASIZE}M
+	fi
+}
+
 mount_image() {
   if [ ! -d "$2" ]; then
     mount -o rw,remount rootfs /
@@ -44,7 +76,7 @@ mount_image() {
 
 mount_magisk () {
 	mount /data &>/dev/null
-	
+	mount /data/magisk.img /magisk
 }
 
 umount_magisk () {
@@ -53,13 +85,12 @@ umount_magisk () {
 	rm /tmp/loopdevice
 }
 
-mount /data &>/dev/null
-
 echo ""
 
 if [[ -f /data/magisk.img ]]; then
+	grow_magisk_img
 	echo "magisk found: mount to /magisk"
-	mount_image /data/magisk.img /magisk
+	mount_magisk
 fi
 
 install_path=""
@@ -74,16 +105,17 @@ elif [[ -d /magisk/NanoModmicroG ]]; then
 	mkdir -p "${install_path}"
 else
 	echo "using ROM as destination"
-	install_path="/system/"
+	install_path="/system/framework"
 	mount -orw,remount /system
 fi
 
 echo "install to \"${install_path}\""
-cp /tmp/services.jar "${install_path}/services.jar" || exit 1
+cp /tmp/services.jar "${install_path}/" || exit 1
 
 if (is_mounted /magisk); then
 	echo "unmount /magisk"
 	umount_magisk
+	shrink_magisk_img
 fi
 
 echo "unmount /system"

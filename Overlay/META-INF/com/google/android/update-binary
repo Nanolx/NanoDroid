@@ -50,7 +50,7 @@ mount_image() {
     for LOOP in 0 1 2 3 4 5 6 7; do
       if (! is_mounted $2); then
         LOOPDEVICE=/dev/block/loop$LOOP
-        if [ ! -f "$LOOPDEVICE" ]; then
+        if [ ! -e "$LOOPDEVICE" ]; then
           mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
         fi
         losetup $LOOPDEVICE $1
@@ -267,7 +267,8 @@ ui_print " > Installing NanoMod"
 config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
 
 get_config () {
-	unset config config_exists
+	config=""
+	config_exists=0
 	for path in ${config_locations}; do
 		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
 			config="${path}/${1}"

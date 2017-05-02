@@ -49,6 +49,38 @@ error () {
 	exit 1
 }
 
+request_size_check() {
+  reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
+  reqSizeM=$((reqSizeM / 1048576 + 1))
+}
+
+image_size_check() {
+  e2fsck -yf $1
+  curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
+  curUsedM=`echo "$curBlocks" | cut -d/ -f1`
+  curSizeM=`echo "$curBlocks" | cut -d/ -f1`
+  curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
+  curUsedM=$((curUsedM * 4 / 1024 + 1))
+  curSizeM=$((curSizeM * 4 / 1024))
+}
+
+grow_magisk_img () {
+	request_size_check /tmp/services.jar
+	image_size_check /data/magisk.img
+	if [ "$reqSizeM" -gt "$curFreeM" ]; then
+		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
+		resize2fs /data/magisk.img ${SIZE}M
+	fi
+}
+
+shrink_magisk_img () {
+	image_size_check /data/magisk.img
+	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
+	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
+		resize2fs $IMG ${NEWDATASIZE}M
+	fi
+}
+
 if ! (is_mounted /system); then
 	mount -oro /system || error " !! failed to mount /system"
 fi
@@ -111,7 +143,6 @@ mount_image() {
           fi
         fi
         if (is_mounted $2); then
-          echo "$LOOPDEVICE" > /tmp/loopdevice
           break;
         fi
       fi
@@ -205,11 +236,6 @@ if ! (is_mounted /data); then
 	mount -orw /data || error " !! failed to mount /data"
 fi
 
-if [ -f /data/magisk.img ]; then
-	mount_image /data/magisk.img /magisk || \
-		error " !! failed to mount /magisk"
-fi
-
 cp /system/framework/services.jar \
 	/tmp/services.jar || \
 	error " !! failed to copy services.jar"
@@ -227,35 +253,40 @@ apply_patch /tmp/services.jar-hook-core \
 	"${BASEDIR}/${PATCH_CORE}" || \
 	error "failed to patch services.jar with ${PATCH_CORE}"
 
+if [ -f /data/magisk.img ]; then
+	grow_magisk_img
+	mount_image /data/magisk.img /magisk || \
+		error " !! failed to mount /magisk"
+fi
+
 ui_print " "
 if [ -d /magisk/NanoMod ]; then
 	ui_print " << installing services.jar to: NanoMod (full)"
-	mkdir -p /magisk/NanoMod/system/framework/
-	cp /tmp/services.jar \
-		/magisk/NanoMod/system/framework/services.jar || \
-		error " !! failed to install services.jar to: NanoMod (full)"
+	install_path="/magisk/NanoMod/system/framework/"
 elif [ -d /magisk/NanoModmicroG ]; then
 	ui_print " << installing services.jar to: NanoMod (microG)"
-	mkdir -p /magisk/NanoModmicroG/system/framework/
-	cp /tmp/services.jar \
-		/magisk/NanoModmicroG/system/framework//services.jar || \
-		error " !! failed to install services.jar into NanoMod (microG)"
+	install_path="/magisk/NanoModmicroG/system/framework/"
 else
 	ui_print " << installing services.jar to: ROM"
-	mount -orw,remount /system >/dev/null
-	cp /tmp/services.jar \
-		/system/framework//services.jar || \
-		error " !! failed to install services.jar to: ROM"
+	install_path="/system/framework"
+	mount -orw,remount /system >/dev/null || \
+		error " !! failed to re-mount /system read-write"
 fi
+
+mkdir -p "${install_path}"
+cp /tmp/services.jar "${install_path}/" \
+	|| error " !! failed to install services.jar"
 
 ui_print " >> clean up"
 if (is_mounted /magisk); then
 	umount /magisk
-	losetup -d $(cat /tmp/loopdevice)
-	rm /tmp/loopdevice
+	losetup -d $LOOPDEVICE
+	rmdir /magisk
+	shrink_magisk_img
 fi
 
-mount -oro,remount /system >/dev/null
+umount /data
+umount /system
 
 rm /tmp/services.jar
 

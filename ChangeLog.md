@@ -1,7 +1,19 @@
 # ChangeLog
 
+## 7.2 in-dev
+* Internal Changes
+  * full package: replace `spaces` with `underscores` in Zelda ringtone names
+  * full package: minor fix in installer
+  * framework-patcher package: grow and shrink `magisk.img` if required
+    * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
+  * framework-patcher package: show error message to user if `/system` fails to re-mount read-write
+  * framework-patcher package: unmount `/system` and `/data` after work is done
+  * framework-patcher script: grow and shrink `magisk.img` if required
+    * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
+  * framework-patcher script: fix installation path for patched `services.jar` when NanoMod is not installed
+
 ## 7.1.20170501
-* Internal Changes:
+* Internal Changes
   * full and microG package: the `.nanomod-overlay` , `.nanomod-apps` and `.nanomod-setup` configuration files can now be stored in the following directories
     * `/data` (default)
     * `/sdcard` (internal storage)
