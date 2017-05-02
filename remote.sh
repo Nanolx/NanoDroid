@@ -76,7 +76,7 @@ mount_image() {
 
 mount_magisk () {
 	mount /data &>/dev/null
-	mount /data/magisk.img /magisk
+	mount_image /data/magisk.img /magisk
 }
 
 umount_magisk () {
