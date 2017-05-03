@@ -8,6 +8,9 @@
     * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
   * framework-patcher package: show error message to user if `/system` fails to re-mount read-write
   * framework-patcher package: unmount `/system` and `/data` after work is done
+  * framework-patcher package: less verbose output from dexpatcher and zip
+  * framework-patcher package: note the user to post /tmp/recovery.log if something fails
+  * framework-patcher package: code clean-up
   * framework-patcher script: grow and shrink `magisk.img` if required
     * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
   * framework-patcher script: fix installation path for patched `services.jar` when NanoMod is not installed
