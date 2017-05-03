@@ -74,7 +74,8 @@ Special Thanks to the beta testers
   * don't flash this, if you already have the Full package
 * F-Droid package **only** contains F-Droid and it's Privileged Extension
   * don't flash this, if you already have the Full package
-* patcher package use **in addition** to Full or microG package to patch the framework to support fake signature spoofing (required for microG to work)
+* patcher package
+  * use **in addition** to Full or microG package to patch the framework to support fake signature spoofing (required for microG to work)
 
 ## Installation
 

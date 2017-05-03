@@ -85,7 +85,10 @@ Special Thanks to the beta testers
   [list]
   [*]don't flash this, if you already have the Full package
   [/list]
-[*]patcher package use [b]in addition[/b] to Full or microG package to patch the framework to support fake signature spoofing (required for microG to work)
+[*]patcher package
+  [list]
+  [*]use [b]in addition[/b] to Full or microG package to patch the framework to support fake signature spoofing (required for microG to work)
+  [/list]
 [/list]
 
 [size=6][b]Installation[/b][/size]
