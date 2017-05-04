@@ -10,6 +10,7 @@
   * framework-patcher package: unmount `/system` and `/data` after work is done
   * framework-patcher package: less verbose output from `dexpatcher` and `zip`
   * framework-patcher package: note the user to post `/tmp/recovery.log` if something fails
+  * framework-patcher package: use static `zip` binary, fixes possbile `zip` failure older ROMs
   * framework-patcher package: code clean-up
   * framework-patcher script: grow and shrink `magisk.img` if required
     * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
