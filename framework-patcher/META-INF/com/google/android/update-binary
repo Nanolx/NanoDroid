@@ -3,8 +3,6 @@
 OUTFD=$2
 ZIP=$3
 
-OLD_LD="${LD_LIBRARY_PATH}"
-
 readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
 if [ "$?" -eq "0" ]; then
   OUTFD=0
@@ -106,10 +104,7 @@ fi
 PATH="$PATH:/system/bin:/system/xbin"
 
 if ! which zip >/dev/null; then
-	if [ "$ABI_LONG" = "arm64-v8a" ]; then
-		ZIP="${BASEDIR}/zip64"
-	else	ZIP="${BASEDIR}/zip32"
-	fi
+	ZIP="${BASEDIR}/zip"
 else	ZIP="$(which zip)"
 fi
 
@@ -202,7 +197,7 @@ PATCH_CORE="core_services.jar.dex"
 ui_print " > preparing environment"
 
 unzip -o "$3" "dexpatcher/*" -d /tmp
-chmod 0755 "${BASEDIR}"/zip*
+chmod 0755 "${BASEDIR}"/zip
 
 ui_print " > patching services.jar"
 ui_print " "
