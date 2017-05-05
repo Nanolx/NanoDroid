@@ -17,7 +17,7 @@
   * framework-patcher script: fix installation path for patched `services.jar` when NanoMod is not installed
 * Updates:
   * GNU Bash (4.4[012])
-  * Substratum (711)
+  * Substratum (720)
 
 ## 7.1.20170501
 * Internal Changes
