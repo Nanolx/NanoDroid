@@ -18,7 +18,7 @@
   * framework-patcher script: fix installation path for patched `services.jar` when NanoMod is not installed
 * Updates:
   * GNU Bash (4.4[012])
-  * Substratum (720)
+  * Substratum (721)
   * OpenKeyChain (4.4.1)
   * OpenLauncher (0.3.2.1)
   * Twidere (3.5.36)
