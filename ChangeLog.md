@@ -20,6 +20,7 @@
   * Substratum (720)
   * OpenKeyChain (4.4.1)
   * OpenLauncher (0.3.2.1)
+  * Twidere (3.5.36)
 
 ## 7.1.20170501
 * Internal Changes
