@@ -22,6 +22,7 @@
   * OpenLauncher (0.3.2.1)
   * Twidere (3.5.36)
   * F-Droid (0.103)
+  * Play Store (7.7.40.N)
 
 ## 7.1.20170501
 * Internal Changes
