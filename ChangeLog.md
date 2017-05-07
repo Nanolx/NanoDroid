@@ -18,6 +18,7 @@
 * Updates:
   * GNU Bash (4.4[012])
   * Substratum (720)
+  * OpenKeyChain (4.4.1)
 
 ## 7.1.20170501
 * Internal Changes
