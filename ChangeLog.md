@@ -21,6 +21,7 @@
   * OpenKeyChain (4.4.1)
   * OpenLauncher (0.3.2.1)
   * Twidere (3.5.36)
+  * F-Droid (0.103)
 
 ## 7.1.20170501
 * Internal Changes
