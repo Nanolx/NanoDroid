@@ -85,20 +85,12 @@ SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
 ABI=$(getprop ro.product.cpu.abi | cut -c-3)
 ABI2=$(getprop ro.product.cpu.abi2 | cut -c-3)
 
-ABI_LONG=$(getprop ro.product.cpu.abi)
-
 if [ "$ABI" = "x86" ]; then
 	error " !! x86 is not a supported platform"
 fi
 
 if [ "$ABI2" = "x86" ]; then
 	error " !! x86 is not a supported platform"
-fi
-
-DP_LD="/system/lib:$LD_LIBRARY_PATH"
-
-if [ "$ABI_LONG" = "arm64-v8a" ]; then
-	DP_LD="/system/lib64:/system/lib:$LD_LIBRARY_PATH"
 fi
 
 PATH="$PATH:/system/bin:/system/xbin"
@@ -198,6 +190,14 @@ ui_print " > preparing environment"
 
 unzip -o "$3" "dexpatcher/*" -d /tmp
 chmod 0755 "${BASEDIR}"/zip
+chmod 0755 "${BASEDIR}"/file
+
+DALVIK_ARCH=$(file -L /system/bin/dalvikvm)
+
+if [[ "${DALVIK_ARCH}" == *32-bit*arm* ]]; then
+	DP_LD="/system/lib:$LD_LIBRARY_PATH"
+else	DP_LD="/system/lib64:/system/lib:$LD_LIBRARY_PATH"
+fi
 
 ui_print " > patching services.jar"
 ui_print " "
