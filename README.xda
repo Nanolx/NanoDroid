@@ -138,7 +138,10 @@ Special Thanks to the beta testers
     [/list]
   [*]enable [b]Google device registration[/b]
   [*]enable [b]Google Cloud Messaging[/b] (only if you want to receive push messages from your applications)
-  [*]enable [b]Google SafetyNet[/b] (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...); set to use the official servers
+  [*]enable [b]Google SafetyNet[/b] (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...)
+    [list]
+    [*]set to use the official servers
+    [/list]
   [*]in [b]UnifiedNlp Settings[/b] choose
     [list]
     [*] [b]Mozilla Location Backend[/b] as Geolocation backend

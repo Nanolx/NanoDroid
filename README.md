@@ -106,7 +106,8 @@ Special Thanks to the beta testers
       * especially the 'Battery Optimization' item
     * enable **Google device registration**
     * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
-    * enable **Google SafetyNet** (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...); set to use the official servers
+    * enable **Google SafetyNet** (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...)
+      * set to use the official servers
     * in **UnifiedNlp Settings** choose
       * **Mozilla Location Backend** as Geolocation backend
       * **Nominatim** as Address lockup backend
