@@ -86,17 +86,19 @@ Special Thanks to the beta testers
     * `mod.sh microg` for the microg only package
     * `mod.sh fdroid` for the F-Droid only package
     * `mod.sh patcher` for the on-device framework-patcher package
+    * `mod.sh all` for all four packages at once
 * perform full wipe
   * recommended, but not required
 * install desired ROM
   * make sure it does **not** include GApps
+  * either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself (instructions follow)
 * install desired Kernel (if any)
 * install **Magisk**
 * install **NanoMod**
-  * for **microG** to work, your ROM needs to have fake signature spoofing enabled
+  * for **microG** to work, your ROM needs to have fake signature spoofing enabled (or a **deodexed** ROM to patch yourself)
   * to achieve that either
     * flash the on-device framework-patcher zip after flashing NanoMod (or a ROM update) this will directly patch the framework for fake signature spoofing support from TWRP
-      * Note: it is suggested to boot into the ROM once, else the dalvik-cache might not exist (or is not up-to-date in case of incremental ROM update) and the patching process takes ages or fails
+      * Note: it is required to boot into the ROM once, else the dalvik/ART cache might not exist (or is not up-to-date in case of incremental ROM update) and the patching process takes ages or fails
     * use the supplied `framework-patcher.sh` from your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](images/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the patched **services.jar**.
 * reboot into system
   * go into **microG settings** and set up everything like:

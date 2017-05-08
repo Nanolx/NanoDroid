@@ -103,6 +103,7 @@ Special Thanks to the beta testers
     [*][b][u]mod.sh microg[/b][/u] for the microG package
     [*][b][u]mod.sh fdroid[/b][/u] for the F-Droid package
     [*][b][u]mod.sh patcher[/b][/u] for the on-device framework-patcher package
+    [*][b][u]mod.sh all[/b][/u] for all four packages at once
     [/list]
   [/list]
 [*]perform full wipe
@@ -112,17 +113,18 @@ Special Thanks to the beta testers
 [*]install desired ROM
   [list]
   [*]make sure it does [b]not[/b] include GApps
+  [*]either pre-patched with signature spoofing support or [b]deoxeded[/b] so you can patch yourself (instructions follow)
   [/list]
 [*]install desired Kernel (if any)
 [*]install [b]Magisk[/b]
 [*]install [b]NanoMod[/b]
   [list]
-  [*]for [b]microG[/b] to work, your ROM needs to have fake signature signing enabled
+  [*]for [b]microG[/b] to work, your ROM needs to have fake signature signing enabled (or a [b]deodexed[/b] ROM to patch yourself)
   [*]to achieve that either
     [list]
     [*]flash the on-device framework-patcher zip after flashing NanoMod (or a ROM update) this will directly patch the framework for fake signature spoofing support from TWRP
       [list]
-      [*]Note: it is suggested to boot into the ROM once, else the dalvik-cache might not exist (or is not up-to-date in case of incremental ROM update) and the patching process takes ages or fails
+      [*]Note: it is required to boot into the ROM once, else the dalvik/ART cache might not exist (or is not up-to-date in case of incremental ROM update) and the patching process takes ages or fails
       [/list]
     [*]use the supplied [b][u]framework-patcher.sh[/b][/u] on your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [url=https://github.com/Lanchon/haystack][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url], pulling files from phone, patching and installing the patched [b]services.jar[/b].
     [/list]
