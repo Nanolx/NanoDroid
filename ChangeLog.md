@@ -25,6 +25,7 @@
   * Twidere (3.5.36)
   * F-Droid (0.103)
   * Play Store (7.7.40.N)
+  * Kernel Adiutor (0.9.7.1beta)
 
 ## 7.1.20170501
 * Internal Changes
