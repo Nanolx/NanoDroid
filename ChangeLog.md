@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 7.2 in-dev
+## 7.2.20170508
 * Internal Changes
   * full package: replace `spaces` with `underscores` in Zelda ringtone names
   * full package: minor fix in installer
