@@ -93,6 +93,11 @@ if [ "$ABI2" = "x86" ]; then
 	error " !! x86 is not a supported platform"
 fi
 
+if test -f /system/framework/arm/boot.art -o \
+	-f /system/framework/arm64/boot.art; then
+	error " !! odexed ROMs are not supported"
+fi
+
 PATH="$PATH:/system/bin:/system/xbin"
 
 if ! which zip >/dev/null; then

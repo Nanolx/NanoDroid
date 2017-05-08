@@ -12,6 +12,7 @@
   * framework-patcher package: note the user to post `/tmp/recovery.log` if something fails
   * framework-patcher package: use static `zip` binary, fixes possbile `zip` failure older ROMs
   * framework-patcher package: change the way `LD_LIBRARY_PATH` is determined
+  * framework-patcher package: check if ROM is `odexed` and exit if so
   * framework-patcher package: code clean-up
   * framework-patcher script: grow and shrink `magisk.img` if required
     * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
