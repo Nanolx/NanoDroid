@@ -197,7 +197,7 @@ unzip -o "$3" "dexpatcher/*" -d /tmp
 chmod 0755 "${BASEDIR}"/zip
 chmod 0755 "${BASEDIR}"/file
 
-DALVIK_ARCH=$(file -L /system/bin/dalvikvm)
+DALVIK_ARCH=$("${BASEDIR}"/file -L /system/bin/dalvikvm)
 
 if [[ "${DALVIK_ARCH}" == *32-bit*arm* ]]; then
 	DP_LD="/system/lib:$LD_LIBRARY_PATH"
