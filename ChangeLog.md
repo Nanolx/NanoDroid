@@ -12,6 +12,8 @@
       * KeePassDroid
       * Lightning
       * Twidere
+* Updates
+  * Substratum (724)
 
 ## 7.2.20170508
 * Internal Changes
