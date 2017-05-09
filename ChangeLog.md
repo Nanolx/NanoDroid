@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 7.3 in-dev
+* Internal Changes
+  * MagiskManager: fixed missing private library
+  * OpenLauncher: fixed missing private library
+
 ## 7.2.20170508
 * Internal Changes
   * full package: replace `spaces` with `underscores` in Zelda ringtone names
