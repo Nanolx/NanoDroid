@@ -2,8 +2,16 @@
 
 ## 7.3 in-dev
 * Internal Changes
-  * MagiskManager: fixed missing private library
-  * OpenLauncher: fixed missing private library
+  * provide broken-out libraries for all provided applications (many already had but the following since this version)
+    * for some apps this does not give a user-visible difference, but for others (like Magisk Manager) it fixes a few issues
+      * Magisk Manager
+      * OpenLauncher
+      * Adaway
+      * AnysoftKeyboard
+      * K9Mail
+      * KeePassDroid
+      * Lightning
+      * Twidere
 
 ## 7.2.20170508
 * Internal Changes

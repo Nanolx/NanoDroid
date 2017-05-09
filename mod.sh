@@ -124,6 +124,28 @@ _patcher() {
 	echo "Zipfile ${ZIP} created"
 }
 
+_unpacklibs () {
+
+	for apk in Overlay/system/*app/*/*.apk; do
+		if [ -n "$(zipinfo -1 ${apk} | grep ^lib/)" ]; then
+			echo $apk >> apks;
+		fi;
+	done 
+
+	for apk in $(cat apks); do
+		dir=$(dirname $apk)
+		fil=$(basename $apk)
+		unp -U ${apk}
+		mkdir -p ${dir}/lib/arm{,64}
+		cp -v ${fil}/lib/arm64-v8a/* ${dir}/lib/arm64/
+		cp -v ${fil}/lib/armeabi*/* ${dir}/lib/arm
+		rm -rf ${fil}
+	done
+
+	rm -f apks
+
+}
+
 case ${1} in
 	zip)
 		_zip
@@ -154,6 +176,10 @@ case ${1} in
 		_microg
 		_fdroid
 		_patcher
+	;;
+
+	unpacklibs )
+		_unpacklibs
 	;;
 
 	*)
