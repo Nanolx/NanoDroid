@@ -199,9 +199,9 @@ The following applications are pseudo-debloated by default
 * Basic Dreams
 * Calendar
 * CM File Manager
-* Eleven (Audio Player)
+* Eleven, Phonograph (Audio Player)
 * E-Mail + Exchange2
-* Browser, Gello, Slimperience (Browser)
+* Browser, Gello, Slimperience, Via Browser (Browser)
 * PhotoTable
 * Sound Recorder, Recorder
 * messaging (SMS & MMS)
@@ -215,7 +215,7 @@ The following applications are pseudo-debloated by default
 * Snap, Snapdragon Camera (Camera)
 * Resurrection Remix Statistics
 * Sim Toolkit
-* Pixel Launcher
+* Pixel Launcher, Nexus Launcher
 * Trebuchet
 
 #### Alter the list of pseudo-debloated applications

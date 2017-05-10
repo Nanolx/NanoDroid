@@ -13,6 +13,11 @@
       * KeePassDroid
       * Lightning
       * Twidere
+  * update default `.nanomod-overlay` to pseudo-debloat the following apps
+    * Pixel Launcher
+    * Via Browser
+    * Phonograph (Music Player)
+    * Sound Recorder (additional overlay path)
 * Updates
   * Substratum (724)
   * OpenLauncher (0.4.0)
