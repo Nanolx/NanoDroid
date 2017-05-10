@@ -8,12 +8,14 @@
       * OpenLauncher
       * Adaway
       * AnysoftKeyboard
+      * HackersKeyboard
       * K9Mail
       * KeePassDroid
       * Lightning
       * Twidere
 * Updates
   * Substratum (724)
+  * OpenLauncher (0.4.0)
 
 ## 7.2.20170508
 * Internal Changes
