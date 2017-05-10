@@ -136,9 +136,10 @@ _unpacklibs () {
 		dir=$(dirname $apk)
 		fil=$(basename $apk)
 		unzip -qq ${apk} -d ${fil}
-		[[ -d ${fil}/lib/arm64-v8a ]] && \
+		if [[ -d ${fil}/lib/arm64-v8a ]]; then
 			mkdir -p ${dir}/lib/arm64
 			cp ${fil}/lib/arm64-v8a/* ${dir}/lib/arm64/
+		fi
 		if [[ -d ${fil}/lib/armeabi-v7a ]]; then
 			mkdir -p ${dir}/lib/arm
 			cp ${fil}/lib/armeabi-v7a/* ${dir}/lib/arm/
