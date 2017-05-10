@@ -135,10 +135,17 @@ _unpacklibs () {
 	for apk in $(cat apks); do
 		dir=$(dirname $apk)
 		fil=$(basename $apk)
-		unp -U ${apk}
-		mkdir -p ${dir}/lib/arm{,64}
-		cp -v ${fil}/lib/arm64-v8a/* ${dir}/lib/arm64/
-		cp -v ${fil}/lib/armeabi*/* ${dir}/lib/arm
+		unzip -qq ${apk} -d ${fil}
+		[[ -d ${fil}/lib/arm64-v8a ]] && \
+			mkdir -p ${dir}/lib/arm64
+			cp ${fil}/lib/arm64-v8a/* ${dir}/lib/arm64/
+		if [[ -d ${fil}/lib/armeabi-v7a ]]; then
+			mkdir -p ${dir}/lib/arm
+			cp ${fil}/lib/armeabi-v7a/* ${dir}/lib/arm/
+		elif [[ -d ${fil}/lib/armeabi ]]; then
+			mkdir -p ${dir}/lib/arm
+			cp ${fil}/lib/armeabi/* ${dir}/lib/arm/
+		fi
 		rm -rf ${fil}
 	done
 
