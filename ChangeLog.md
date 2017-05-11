@@ -21,6 +21,8 @@
 * Updates
   * Substratum (724)
   * OpenLauncher (0.4.0)
+  * NewPipe (0.9.5)
+  * Twidere (3,5,40)
 
 ## 7.2.20170508
 * Internal Changes
