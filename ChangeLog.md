@@ -23,6 +23,7 @@
   * OpenLauncher (0.4.0)
   * NewPipe (0.9.5)
   * Twidere (3.5.40)
+  * Kernel Adiutor (0.9.7.2)
 
 ## 7.2.20170508
 * Internal Changes
