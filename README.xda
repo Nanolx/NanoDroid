@@ -402,6 +402,10 @@ List of known issues
     [*][b][u]/system/priv-app/Phonesky/Phonesky.apk[/b][/u] for Play Store
     [/list]
   [/list]
+[*]SafetyNet check fails with [b]can't connect to Google API[/b]
+  [list]
+  [*]see `microG DroidGuard Helper or Play Store crashing` above and install microG DroidGuard Helper as user application
+  [/list]
 [*]Play Store lacks fake sign permission
   [list]
   [*]on ROMs like [b]crDroid[/b] or [b]OmniROM[/b], that have built-in fake signing and don't require running `framework-patcher.sh`, in some cases the Play Store is not granted fake sign permission, to fix this issue one of the following commands as root on your phone

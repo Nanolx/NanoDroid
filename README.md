@@ -338,6 +338,8 @@ List of known issues
   * if you are affected of this issue, instead install them as an user app, by installing the apk from
     * `/system/priv-app/DroidGuard/DroidGuard.apk` for microG DroidGuard Helper
     * `/system/priv-app/Phonesky/Phonesky.apk` for Play Store
+* SafetyNet check fails with `can't connect to Google API`
+  * see `microG DroidGuard Helper or Play Store crashing` above and install microG DroidGuard Helper as user application
 * Play Store lacks fake sign permission
   * on ROMs like **crDroid** or **OmniROM**, that have built-in fake signing and don't require running `framework-patcher.sh`, in some cases the Play Store is not granted fake sign permission, to fix this issue one of the following commands as root on your phone
     * `nanomod-overlay --permission`
