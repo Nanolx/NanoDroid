@@ -196,7 +196,7 @@ nanomod.mapsv1=0
 nanomod.overlay=0
 [/code]
 
-where [b][u]1[/b][/u] means [b][u]on[/b][/u] and [b][u]0[/b][/u] means [b][u]off[/b][/u]. Description:
+where [b][u]1[/b][/u] means [b][u]on[/b][/u] and [b][u]0[/b][/u] means [b][u]off[/b][/u]. See the default settings [url=https://github.com/Nanolx/NanoMod/blob/master/.nanomod-setup][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url].  Description:
 
 [b][u]nanomod.fdroid=[0|1][/b][/u]
 
