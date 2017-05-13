@@ -26,6 +26,7 @@
   * Kernel Adiutor (0.9.7.2)
   * F-Droid Privileged Extension (0.2.5)
   * Yalp Store (0.14)
+    * This release allows installation of applications without having to enable `Unknown Sources`
 
 ## 7.2.20170508
 * Internal Changes
