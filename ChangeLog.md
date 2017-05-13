@@ -27,7 +27,7 @@
   * F-Droid Privileged Extension (0.2.5)
   * Yalp Store (0.14)
     * This release allows installation of applications without having to enable `Unknown Sources`
-      * Go To Yalp Store > Settings > Installation Method > `Using system permissions`
+      * go to Yalp Store > Settings > Installation Method > `Using system permissions`
 
 ## 7.2.20170508
 * Internal Changes

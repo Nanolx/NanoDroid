@@ -27,6 +27,12 @@
   [*]with [b]microG GsfProxy[/b] [url=https://github.com/microg/android_packages_apps_GsfProxy][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
   [*]with [b]microG DroidGuard Helper[/b] [url=https://github.com/microg/android_packages_apps_RemoteDroidGuard][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url]
   [*]choose between unofficial [b]Yalp Store[/b] [url=https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url] and official [b]Play Store[/b] [url=https://www.apkmirror.com/apk/google-inc/google-play-store/][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/apkmirror.png[/img][/url]
+  [list]
+  [*][b]Yalp Store[/b] can use system permissions to install packages, so you don't need to enable 'Unknown Sources'
+    [list]
+    [list][*]got to [b]Yalp Store[/b] > Settings > Installation Method > 'Using system permissions'
+    [/list]
+  [/list]
   [*][b]microG[/b] GmsCore [url=https://github.com/microg/android_packages_apps_GmsCore][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url] and [b]Play Store[/b] modified to allow (in-)app-purchases
   [*]support for Maps API version 1 optionally available (see [b]Alter Installation[/b] below)
   [*]both on-pc and on-device framework-patchers available (see [b]Variants[/b] and [b]Installation[/b] below)
