@@ -25,6 +25,7 @@
   * Twidere (3.5.40)
   * Kernel Adiutor (0.9.7.2)
   * F-Droid Privileged Extension (0.2.5)
+  * Yalp Store (0.14)
 
 ## 7.2.20170508
 * Internal Changes
