@@ -30,6 +30,7 @@
       * go to Yalp Store > Settings > Installation Method > `Using system permissions`
   * (Simple) Calendar (2.3.4)
   * Open Camera (1.38)
+  * OpenVPN (0.6.66)
 
 ## 7.2.20170508
 * Internal Changes
