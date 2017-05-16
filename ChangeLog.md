@@ -29,6 +29,7 @@
     * This release allows installation of applications without having to enable `Unknown Sources`
       * go to Yalp Store > Settings > Installation Method > `Using system permissions`
   * (Simple) Calendar (2.3.4)
+  * Open Camera (1.38)
 
 ## 7.2.20170508
 * Internal Changes
