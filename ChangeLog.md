@@ -21,7 +21,7 @@
 * Updates
   * Substratum (724)
   * OpenLauncher (0.4.0)
-  * NewPipe (0.9.5)
+  * NewPipe (0.9.6)
   * Twidere (3.5.40)
   * Kernel Adiutor (0.9.7.2)
   * F-Droid Privileged Extension (0.2.5)
