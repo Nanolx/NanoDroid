@@ -28,6 +28,7 @@
   * Yalp Store (0.14)
     * This release allows installation of applications without having to enable `Unknown Sources`
       * go to Yalp Store > Settings > Installation Method > `Using system permissions`
+  * (Simple) Calendar (2.3.4)
 
 ## 7.2.20170508
 * Internal Changes
