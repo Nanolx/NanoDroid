@@ -13,7 +13,7 @@ umask 022
 ui_print() {
   if $BOOTMODE; then
     echo "$1"
-  else 
+  else
     echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
     echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
   fi
@@ -435,8 +435,8 @@ unzip -o "$ZIP" "system/*" -d $MODPATH
 if grep -q nanomod.microg=0 $nanomodsetup; then
 	for app in nlpBackendIchnaea nlpBackendNomiantim \
 		DroidGuard GmsCore GsfProxy; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+		rm -rf $MODPATH/system/app/${app}.apk
+		rm -rf $MODPATH/system/priv-app/${app}.apk
 	done
 	ui_print " << without microG"
 else	ui_print " << with microG"
@@ -453,8 +453,8 @@ fi
 # remove F-Droid if not requested
 if grep -q nanomod.fdroid=0 $nanomodsetup; then
 	for app in FDroid FDroidPrivileged; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+		rm -rf $MODPATH/system/app/${app}.apk
+		rm -rf $MODPATH/system/priv-app/${app}.apk
 	done
 	ui_print " << without F-Droid"
 else	ui_print " << with F-Droid"
@@ -480,7 +480,7 @@ if grep -q nanomod.apps=0 $nanomodsetup; then
 		Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
 		OpenVPN QKSMS SimpleCalendar SimpleGallery Substratum \
 		Termux Twidere VLC XDALabs YahooWeatherProvider; do
-			rm -rf $MODPATH/system/app/$app
+			rm -rf $MODPATH/system/app/${app}.apk
 	done
 	ui_print " << without applications"
 else
@@ -492,7 +492,7 @@ else
 		OpenVPN QKSMS SimpleCalendar SimpleGallery Substratum \
 		Termux Twidere VLC XDALabs YahooWeatherProvider; do
 			if ! grep -q "^${app}$" $nanomodapps; then
-				rm -rf $MODPATH/system/app/$app
+				rm -rf $MODPATH/system/app/${app}.apk
 			else	ui_print " <<> ${app}"
 			fi
 	done
@@ -501,20 +501,20 @@ fi
 # remove Yalp Store if Play Store requested and vice-versa
 if grep -q nanomod.play=1 $nanomodsetup; then
 	for app in FakeStore YalpStore; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+		rm -rf $MODPATH/system/app/${app}.apk
+		rm -rf $MODPATH/system/priv-app/${app}.apk
 	done
 	ui_print " << with Play Store"
 elif grep -q nanomod.play=2 $nanomodsetup; then
 	for app in Phonesky; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+		rm -rf $MODPATH/system/app/${app}.apk
+		rm -rf $MODPATH/system/priv-app/${app}.apk
 	done
 	ui_print " << with Yalp Store"
 else
 	for app in FakeStore YalpStore Phonesky; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+		rm -rf $MODPATH/system/app/${app}.apk
+		rm -rf $MODPATH/system/priv-app/${app}.apk
 	done
 	ui_print " << without App Store"
 fi
