@@ -13,7 +13,7 @@ umask 022
 ui_print() {
   if $BOOTMODE; then
     echo "$1"
-  else 
+  else
     echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
     echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
   fi
@@ -340,7 +340,7 @@ nanomod.mapsv1=0" > $nanomodsetup
 create_nanomodapps () {
 	nanomodapps=/data/.nanomod-apps
 	NO_NANOMODAPPS=1
-	echo "Adaway
+	echo "AdAway
 Amaze
 AnysoftKeyboard
 FaceSlim
@@ -414,6 +414,8 @@ get_config .nanomod-apps
 if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODAPPS=0
 	nanomodapps="${config}"
+	# Temporary for migration to capitalzed apk name
+	sed -i 's/adaway/AdAway/i' $nanomodapps
 else	create_nanomodapps
 fi
 
@@ -435,8 +437,8 @@ unzip -o "$ZIP" "system/*" -d $MODPATH
 if grep -q nanomod.microg=0 $nanomodsetup; then
 	for app in nlpBackendIchnaea nlpBackendNomiantim \
 		DroidGuard GmsCore GsfProxy; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+		rm -rf $MODPATH/system/app/${app}.apk
+		rm -rf $MODPATH/system/priv-app/${app}.apk
 	done
 	ui_print " << without microG"
 else	ui_print " << with microG"
@@ -453,8 +455,8 @@ fi
 # remove F-Droid if not requested
 if grep -q nanomod.fdroid=0 $nanomodsetup; then
 	for app in FDroid FDroidPrivileged; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+		rm -rf $MODPATH/system/app/${app}.apk
+		rm -rf $MODPATH/system/priv-app/${app}.apk
 	done
 	ui_print " << without F-Droid"
 else	ui_print " << with F-Droid"
@@ -475,24 +477,24 @@ fi
 # Step 2: only keep desired apps
 if grep -q nanomod.apps=0 $nanomodsetup; then
 	# remove all apps
-	for app in Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
+	for app in AdAway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
 		K9Mail KeePassDroid KernelAdiutor Lightning NewPipe \
 		Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
 		OpenVPN QKSMS SimpleCalendar SimpleGallery Substratum \
 		Termux Twidere VLC XDALabs YahooWeatherProvider; do
-			rm -rf $MODPATH/system/app/$app
+			rm -rf $MODPATH/system/app/${app}.apk
 	done
 	ui_print " << without applications"
 else
 	ui_print " << with applications"
 	# remove not requested apps
-	for app in Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
+	for app in AdAway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
 		K9Mail KeePassDroid KernelAdiutor Lightning NewPipe \
 		Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
 		OpenVPN QKSMS SimpleCalendar SimpleGallery Substratum \
 		Termux Twidere VLC XDALabs YahooWeatherProvider; do
 			if ! grep -q "^${app}$" $nanomodapps; then
-				rm -rf $MODPATH/system/app/$app
+				rm -rf $MODPATH/system/app/${app}.apk
 			else	ui_print " <<> ${app}"
 			fi
 	done
@@ -501,20 +503,20 @@ fi
 # remove Yalp Store if Play Store requested and vice-versa
 if grep -q nanomod.play=1 $nanomodsetup; then
 	for app in FakeStore YalpStore; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+		rm -rf $MODPATH/system/app/${app}.apk
+		rm -rf $MODPATH/system/priv-app/${app}.apk
 	done
 	ui_print " << with Play Store"
 elif grep -q nanomod.play=2 $nanomodsetup; then
 	for app in Phonesky; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+		rm -rf $MODPATH/system/app/${app}.apk
+		rm -rf $MODPATH/system/priv-app/${app}.apk
 	done
 	ui_print " << with Yalp Store"
 else
 	for app in FakeStore YalpStore Phonesky; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
+		rm -rf $MODPATH/system/app/${app}.apk
+		rm -rf $MODPATH/system/priv-app/${app}.apk
 	done
 	ui_print " << without App Store"
 fi
