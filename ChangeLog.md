@@ -32,6 +32,7 @@
   * Open Camera (1.38)
   * OpenVPN (0.6.66)
   * (Simple) Gallery (2.9.1)
+  * Termux (0.49)
 
 ## 7.2.20170508
 * Internal Changes
