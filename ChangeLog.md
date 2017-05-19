@@ -2,17 +2,10 @@
 
 ## 7.3 in-dev
 * Internal Changes
-  * provide broken-out libraries for all provided applications (many already had but the following since this version)
-    * for some apps this does not give a user-visible difference, but for others (like Magisk Manager) it fixes a few issues
-      * Magisk Manager
-      * OpenLauncher
-      * Adaway
-      * AnysoftKeyboard
-      * HackersKeyboard
-      * K9Mail
-      * KeePassDroid
-      * Lightning
-      * Twidere
+  * provide broken-out libraries for all provided applications
+    * fixes issues with them, for example `Magisk Manager` not being able to install zips
+  * zipalign all provided applications
+    * fixes issues with some not being installable as user applications
   * update default `.nanomod-overlay` to pseudo-debloat the following apps
     * Pixel Launcher
     * Via Browser
