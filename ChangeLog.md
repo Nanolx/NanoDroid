@@ -31,6 +31,7 @@
   * (Simple) Calendar (2.3.4)
   * Open Camera (1.38)
   * OpenVPN (0.6.66)
+  * (Simple) Gallery (2.9.1)
 
 ## 7.2.20170508
 * Internal Changes
