@@ -20,6 +20,10 @@
   [*]boot process may take a bit longer as [b]NanoMod[/b] is a pretty big [b]Magisk[/b] Module
   [*]for more information on [b]Magisk[/b] visit [url=https://forum.xda-developers.com/apps/magisk][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/xda.png[/img][/url]
   [/list]
+[*]if you don't have [b]Magisk[/b] installed, [b]NanoMod[/b] will be installed directly into [u]/system[/u]
+  [list]
+  [*][u][b]nanomod-overlay[/b][/u] does not work in [b]system-mode[/b] (the overlay feature relies on [b]Magisk[/b])
+  [/list]
 [*]install [b]microG[/b] [url=http://microg.org][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/microg.png[/img][/url] with either official [b]Play Store[/b] or unofficial [b]Yalp Store[/b]
   [list]
   [*]with [b]Mozilla[/b] location provider backend [url=https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url]

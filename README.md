@@ -15,6 +15,8 @@
   * disabling the **NanoMod** module in **Magisk** will revert everything, as it's not actually doing any changes to `/system`
   * boot process may take a bit longer as **NanoMod** is a pretty big **Magisk** Module
   * for more information on **Magisk** [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk)
+* if you don't have **Magisk** installed, **NanoMod** will be installed directly into `/system`
+  * `nanomod-overlay` does not work in **system-mode** (the overlay feature relies on `Magisk`)
 * install **microG** [![Web Link](images/microg.png)](http://microg.org/)
   * with **Mozilla** location provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
   * with **Nominatim** adress provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
