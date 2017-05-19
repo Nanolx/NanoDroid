@@ -22,7 +22,7 @@
   * Substratum (730)
   * OpenLauncher (0.5.0)
   * NewPipe (0.9.6)
-  * Twidere (3.6.10)
+  * Twidere (3.6.11)
   * Kernel Adiutor (0.9.7.2)
   * F-Droid Privileged Extension (0.2.5)
   * Yalp Store (0.14)
