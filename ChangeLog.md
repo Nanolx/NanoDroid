@@ -20,7 +20,7 @@
     * Sound Recorder (additional overlay path)
 * Updates
   * Substratum (730)
-  * OpenLauncher (0.4.0)
+  * OpenLauncher (0.5.0)
   * NewPipe (0.9.6)
   * Twidere (3.6.10)
   * Kernel Adiutor (0.9.7.2)
