@@ -218,6 +218,8 @@ possible opts:
 	fdroid			| create module zip from repo *fdroid only*
 	patcher			| create framework-patcher zip from repo
 	all			| create all zips from repo
+	unpacklibs		| unpack arm/ arm64 libs from apks
+	zipalign		| zipalign all apks
 	ver	[ver] [date]	| bump version
 	bump			| bump versionCode in Magisk Modules
 "
