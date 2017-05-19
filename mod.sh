@@ -133,6 +133,7 @@ _unpacklibs () {
 	done 
 
 	for apk in $(cat apks); do
+		echo "unpack ${apk}"
 		dir=$(dirname $apk)
 		fil=$(basename $apk)
 		unzip -qq ${apk} -d ${fil}
@@ -153,6 +154,16 @@ _unpacklibs () {
 
 	rm -f apks
 
+}
+
+_zipalign () {
+
+	for apk in Overlay/system/*app/*/*.apk; do
+		echo "zipalign: ${apk}"
+		(zipalign -fpv 4 ${apk} ${apk}.new | \
+			grep "Verification") && \
+			mv ${apk}.new ${apk}
+	done
 }
 
 case ${1} in
@@ -189,6 +200,10 @@ case ${1} in
 
 	unpacklibs )
 		_unpacklibs
+	;;
+
+	zipalign )
+		_zipalign
 	;;
 
 	*)
