@@ -485,7 +485,10 @@ fi
 
 ui_print "<< setting permissions"
 set_permissions
-chmod 0755 $MODPATH/system/bin/nanomod-overlay
+
+for binary in bash bashbug nanomod-overlay; do
+	chmod 0755 $MODPATH/system/bin/${binary}
+done
 
 ui_print " "
 ui_print " Thanks for using NanoMod "
