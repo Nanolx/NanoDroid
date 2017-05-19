@@ -17,8 +17,12 @@ get_config () {
 
 get_config .nanomod-overlay
 
-if [[ ! -d /magisk/NanoMod ]]; then
-	echo "dafuq?"
+if [[ -d /magisk/NanoMod ]]; then
+	MODPATH=/magisk/NanoMod
+elif [[ -d /magisk/NanoModmicroG ]]; then
+	MODPATH=/magisk/NanoModmicroG
+else
+	echo "NanoMod is not installed as a Magisk Module, exiting"
 	exit 1
 fi
 
@@ -39,7 +43,7 @@ _show_name () {
 }
 
 _rm_overrides () {
-	LIST=($(find "/magisk/NanoMod/system" -name "*.replace"))
+	LIST=($(find "${MODPATH}/system" -name "*.replace"))
 
 	if [[ ${LIST[*]} != "" ]]; then
 		for app in "${LIST[@]}"; do
@@ -50,14 +54,14 @@ _rm_overrides () {
 
 _add_override () {
 
-	mkdir -p "/magisk/NanoMod/system/${1}/${2}"
-	touch "/magisk/NanoMod/system/${1}/${2}/.replace"
+	mkdir -p "${MODPATH}/system/${1}/${2}"
+	touch "${MODPATH}/system/${1}/${2}/.replace"
 
 }
 
 _remove_override () {
 
-	rm -rf "/magisk/NanoMod/system/${1}"
+	rm -rf "${MODPATH}/system/${1}"
 
 }
 
@@ -129,7 +133,7 @@ ${2}
 
 		for app in /system/app/*/*.apk; do
 			sysname=$(basename "${app}" .apk)
-			if [[ ! -d /magisk/NanoMod/system/app/${sysname} ]]; then
+			if [[ ! -d ${MODPATH}/system/app/${sysname} ]]; then
 				humname=$(_show_name "${app}")
 				S_APPS="${S_APPS}
 * ${sysname}		(${humname})"
@@ -138,7 +142,7 @@ ${2}
 
 		for app in /system/priv-app/*/*.apk; do
 			sysname=$(basename "${app}" .apk)
-			if [[ ! -d /magisk/NanoMod/system/priv-app/${sysname} ]]; then
+			if [[ ! -d ${MODPATH}/system/priv-app/${sysname} ]]; then
 				humname=$(_show_name "${app}")
 				S_PRIV_APPS="${S_PRIV_APPS}
 * ${sysname}		(${humname})"

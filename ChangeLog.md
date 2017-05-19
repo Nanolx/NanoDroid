@@ -1,11 +1,13 @@
 # ChangeLog
 
-## 7.3 in-dev
+## 8.0 in-dev
 * Internal Changes
   * if `Magisk` is not installed, the installer will install everything into `/system` directly
   * provide broken-out libraries for all provided applications
     * fixes issues with them, for example `Magisk Manager` not being able to install zips
   * fix `nanomod-overlay` script to support all `.nanomod-overlay` configuration file locations
+  * fix `nanomod-overlay` script not properly working with **NanoMod-microG** module
+  * **NanoMod-microG** now also includes `GNU Bash`
   * fix `VLC` directory not matching apk file name
     * fix `VLC` getting installed, even if user requested not to do so
   * update default `.nanomod-overlay` to pseudo-debloat the following apps

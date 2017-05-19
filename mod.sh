@@ -67,11 +67,26 @@ _microg() {
 	cp "${PWD}"/Overlay/system/bin/nanomod-overlay \
 		"${PWD}"/microG/system/bin
 
+	sed -e 's,/magisk/NanoMod/system/bin/bash,/magisk/NanoModmicroG/system/bin/bash,' \
+		-i "${PWD}"/microG/system/bin/nanomod-overlay
+
 	cp -r "${PWD}"/Overlay/system/framework/ \
 		"${PWD}"/microG/system/
 
 	cp -r "${PWD}"/Overlay/system/etc/permissions/ \
 		"${PWD}"/microG/system/etc/
+
+	cp "${PWD}"/Overlay/system/etc/bash* \
+		"${PWD}"/microG/system/etc/
+
+	cp -r "${PWD}"/Overlay/system/etc/terminfo/
+		"${PWD}"/microG/system/etc/
+
+	cp -r "${PWD}"/Overlay/system/share/
+		"${PWD}"/microG/system/
+
+	cp "${PWD}"/Overlay/system/bin/bash* \
+		"${PWD}"/microG/system/bin
 
 	ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
 	rm -f "${ZIP}"
