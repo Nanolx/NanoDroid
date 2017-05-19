@@ -7,6 +7,7 @@
     * fixes issues with them, for example `Magisk Manager` not being able to install zips
   * zipalign all provided applications
     * fixes issues with some not being installable as user applications
+  * fix `nanomod-overlay` script to support all `.nanomod-overlay` configuration file locations
   * update default `.nanomod-overlay` to pseudo-debloat the following apps
     * Pixel Launcher
     * Via Browser
