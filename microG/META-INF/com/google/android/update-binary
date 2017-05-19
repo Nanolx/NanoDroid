@@ -138,57 +138,6 @@ if [ "$?" -eq "0" ]; then
   done
 fi
 
-if $BOOTMODE && ! is_mounted /magisk; then
-  ui_print "! Magisk is not activated!... abort"
-  exit 1
-fi
-
-# Fix SuperSU.....
-$BOOTMODE && $BINDIR/sepolicy-inject --live "allow fsck * * *"
-
-# This path should work in any cases
-TMPDIR=/dev/tmp
-
-MOUNTPATH=/magisk
-IMGNAME=magisk.img
-
-if $BOOTMODE; then
-  MOUNTPATH=/dev/magisk_merge
-  IMGNAME=magisk_merge.img
-fi
-
-mkdir -p $TMPDIR 2>/dev/null
-cd $TMPDIR
-unzip -o "$ZIP" config.sh
-
-if [ ! -f "config.sh" ]; then
-  ui_print "! Failed: Unable to extract zip file!"
-  exit 1
-fi
-
-source config.sh
-
-INSTALLER=$TMPDIR/$MODID
-MODPATH=$MOUNTPATH/$MODID
-
-mkdir -p $INSTALLER
-cd $INSTALLER
-unzip -o "$ZIP" "common/*" module.prop
-
-##########################################################################################
-# Main
-##########################################################################################
-
-# Please leave this message in your flashable zip for credits :)
-ui_print " "
-ui_print "******************************"
-ui_print "     NanoMod 7.3.20171231     "
-ui_print "      created by @Nanolx      "
-ui_print "         microG only          "
-ui_print "Powered by Magisk (@topjohnwu)"
-ui_print "******************************"
-ui_print " "
-
 mount -o ro /system 2>/dev/null
 mount -o ro /vendor 2>/dev/null
 mount /data 2>/dev/null
@@ -220,49 +169,113 @@ fi
 if [ "$ABILONG" = "arm64-v8a" ]; then ARCH=arm64; IS64BIT=true; fi;
 if [ "$ABILONG" = "x86_64" ]; then ARCH=x64; IS64BIT=true; fi;
 
+MODE=MAGISK
+
+if [ ! -f /data/magisk.img ]; then
+  MODE=SYSTEM
+fi
+
+if [ "${MODE}" = "MAGISK" ]; then
+	if $BOOTMODE && ! is_mounted /magisk; then
+	  ui_print "! Magisk is not activated!... abort"
+	  exit 1
+	fi
+
+	# Fix SuperSU.....
+	$BOOTMODE && $BINDIR/sepolicy-inject --live "allow fsck * * *"
+
+	MOUNTPATH=/magisk
+	IMGNAME=magisk.img
+
+	if $BOOTMODE; then
+	  MOUNTPATH=/dev/magisk_merge
+	  IMGNAME=magisk_merge.img
+	fi
+
+	mkdir -p $TMPDIR 2>/dev/null
+	cd $TMPDIR
+	unzip -o "$ZIP" config.sh
+
+	if [ ! -f "config.sh" ]; then
+	  ui_print "! Failed: Unable to extract zip file!"
+	  exit 1
+	fi
+
+	source config.sh
+
+	INSTALLER=$TMPDIR/$MODID
+	MODPATH=$MOUNTPATH/$MODID
+
+	mkdir -p $INSTALLER
+	cd $INSTALLER
+	unzip -o "$ZIP" "common/*" module.prop
+else
+	mount -orw,remount /system 2>/dev/null
+	unset MODPATH
+fi
+
+##########################################################################################
+# Main
+##########################################################################################
+
+# Please leave this message in your flashable zip for credits :)
+ui_print " "
+ui_print "******************************"
+ui_print "     NanoMod 7.3.20171231     "
+ui_print "      created by @Nanolx      "
+ui_print "         microG only          "
+
+if [ "${MODE}" = "MAGISK" ]; then
+  ui_print "Powered by Magisk (@topjohnwu)"
+fi
+
+ui_print "******************************"
+ui_print " "
+
 # You can get the Android API version from $API, the CPU architecture from $ARCH
 # Useful if you are creating Android version / platform dependent mods
 
-if is_mounted /data; then
-  IMG=/data/$IMGNAME
-  if [ ! -f "/data/magisk.img" ]; then
-    ui_print "! Magisk is not installed!"
-    ui_print "! Magisk is required for this mod!"
+if [ "${MODE}" = "MAGISK" ]; then
+  if is_mounted /data; then
+    IMG=/data/$IMGNAME
+  else
+    IMG=/cache/magisk.img
+    ui_print " "
+    ui_print "***********************************"
+    ui_print "*      !! Data unavailable !!     *"
+    ui_print "* Magisk detection is impossible  *"
+    ui_print "* Installation will still proceed *"
+    ui_print "*  But please make sure you have  *"
+    ui_print "*        Magisk installed!!       *"
+    ui_print "***********************************"
+    ui_print " "
+  fi
+
+ request_size_check "$ZIP"
+
+  if [ -f "$IMG" ]; then
+    image_size_check $IMG
+    if [ "$reqSizeM" -gt "$curFreeM" ]; then
+      SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
+      resize2fs $IMG ${SIZE}M
+    fi
+  else
+    SIZE=$((reqSizeM / 32 * 32 + 64));
+    make_ext4fs -l ${SIZE}M -a /magisk -S $INSTALLER/common/file_contexts_image $IMG
+  fi
+
+  mount_image $IMG $MOUNTPATH
+  if ! is_mounted $MOUNTPATH; then
+    ui_print "! $IMG mount failed... abort"
     exit 1
   fi
+fi
+
+if [ "${MODE}" = "MAGISK" ]; then
+  ui_print " > Installing NanoMod (magisk module)"
 else
-  IMG=/cache/magisk.img
-  ui_print " "
-  ui_print "***********************************"
-  ui_print "*      !! Data unavailable !!     *"
-  ui_print "* Magisk detection is impossible  *"
-  ui_print "* Installation will still proceed *"
-  ui_print "*  But please make sure you have  *"
-  ui_print "*        Magisk installed!!       *"
-  ui_print "***********************************"
-  ui_print " "
+  ui_print " > Installing NanoMod (system mode)"
 fi
-
-request_size_check "$ZIP"
-
-if [ -f "$IMG" ]; then
-  image_size_check $IMG
-  if [ "$reqSizeM" -gt "$curFreeM" ]; then
-    SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-    resize2fs $IMG ${SIZE}M
-  fi
-else
-  SIZE=$((reqSizeM / 32 * 32 + 64));
-  make_ext4fs -l ${SIZE}M -a /magisk -S $INSTALLER/common/file_contexts_image $IMG
-fi
-
-mount_image $IMG $MOUNTPATH
-if ! is_mounted $MOUNTPATH; then
-  ui_print "! $IMG mount failed... abort"
-  exit 1
-fi
-
-ui_print " > Installing NanoMod"
 
 # check for configuration files
 config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
@@ -363,13 +376,24 @@ if [ "$config_exists" -eq 1 ]; then
 else	create_nanomodsetup
 fi
 
-# Create mod paths
-rm -rf $MODPATH 2>/dev/null
-mkdir -p $MODPATH
+if [ "${MODE}" = "MAGISK" ]; then
+  if grep -q nanomod.reinstall=1 $nanomodsetup; then
+	ui_print " << backup services.jar"
+	cp $MODPATH/system/framework/services.jar \
+		/tmp/services.jar
+  fi
 
-# Copy files
-ui_print " << populating module"
-unzip -o "$ZIP" "system/*" -d $MODPATH
+  # Create mod paths
+  rm -rf $MODPATH 2>/dev/null
+  mkdir -p $MODPATH
+
+  # Copy files
+  ui_print " << populating module"
+  unzip -o "$ZIP" "system/*" -d $MODPATH
+else
+  ui_print " << populating files"
+  unzip -o "${ZIP}" "system/*" -d /
+fi
 
 # remove mapsv1 if not requested
 if grep -q nanomod.mapsv1=1 $nanomodsetup; then
@@ -400,77 +424,84 @@ else
 	ui_print " << without App Store"
 fi
 
-# Setup Overrides
-if grep -q nanomod.overlay=1 $nanomodsetup; then
+if [ "${MODE}" = "MAGISK" ]; then
+  # Setup Overrides
+  if grep -q nanomod.overlay=1 $nanomodsetup; then
 	$MODPATH/system/bin/nanomod-overlay --update
 	ui_print " << with /system applications override"
-else	ui_print " << without /system applications override"
+  else	ui_print " << without /system applications override"
 	if [ "$NO_NANOMODOVERLAY" -eq 1 ]; then
 		rm $nanomodoverlay
 	fi
-fi
+  fi
 
-if grep -q nanomod.reinstall=1 $nanomodsetup; then
+  if grep -q nanomod.reinstall=1 $nanomodsetup; then
 	ui_print " << restore services.jar"
 	mkdir $MODPATH/system/framework
 	cp /tmp/services.jar \
 		$MODPATH/system/framework/services.jar
+  fi
 fi
 
 if [ "$NO_NANOMODSETUP" -eq 1 ]; then
 	rm $nanomodsetup
 fi
 
-# Handle replace folders
-for TARGET in $REPLACE; do
-  mktouch $MODPATH$TARGET/.replace
-done
+if [ "${MODE}" = "MAGISK" ]; then
+  # Handle replace folders
+  for TARGET in $REPLACE; do
+    mktouch $MODPATH$TARGET/.replace
+  done
 
-# Auto Mount
-if $AUTOMOUNT; then
-  mktouch $MODPATH/auto_mount
-fi
+  # Auto Mount
+  if $AUTOMOUNT; then
+    mktouch $MODPATH/auto_mount
+  fi
 
-# prop files
-if $PROPFILE; then
-  cp -af $INSTALLER/common/system.prop $MODPATH/system.prop
-fi
+  # prop files
+  if $PROPFILE; then
+    cp -af $INSTALLER/common/system.prop $MODPATH/system.prop
+  fi
 
-# Module info
-cp -af $INSTALLER/module.prop $MODPATH/module.prop
-if $BOOTMODE; then
-  # Update info for Magisk Manager
-  mktouch /magisk/$MODID/update
-  cp -af $INSTALLER/module.prop /magisk/$MODID/module.prop
-fi
+  # Module info
+  cp -af $INSTALLER/module.prop $MODPATH/module.prop
 
-# post-fs-data mode scripts
-if $POSTFSDATA; then
-  cp -af $INSTALLER/common/post-fs-data.sh $MODPATH/post-fs-data.sh
-fi
+  if $BOOTMODE; then
+    # Update info for Magisk Manager
+    mktouch /magisk/$MODID/update
+    cp -af $INSTALLER/module.prop /magisk/$MODID/module.prop
+  fi
 
-# service mode scripts
-if $LATESTARTSERVICE; then
-  cp -af $INSTALLER/common/service.sh $MODPATH/service.sh
+  # post-fs-data mode scripts
+  if $POSTFSDATA; then
+    cp -af $INSTALLER/common/post-fs-data.sh $MODPATH/post-fs-data.sh
+  fi
+
+  # service mode scripts
+  if $LATESTARTSERVICE; then
+    cp -af $INSTALLER/common/service.sh $MODPATH/service.sh
+  fi
 fi
 
 ui_print "<< setting permissions"
 set_permissions
-chmod 0755 $MODPATH/system/bin/*
+chmod 0755 $MODPATH/system/bin/nanomod-overlay
 
 ui_print " "
 ui_print " Thanks for using NanoMod "
 ui_print " "
 
-umount $MOUNTPATH
-losetup -d $LOOPDEVICE
-rmdir $MOUNTPATH
+if [ "${MODE}" = "MAGISK" ];then
+  umount $MOUNTPATH
+  losetup -d $LOOPDEVICE
+  rmdir $MOUNTPATH
 
-# Shrink the image if possible
-image_size_check $IMG
-NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
-if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-  resize2fs $IMG ${NEWDATASIZE}M
+  # Shrink the image if possible
+  image_size_check $IMG
+  NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
+  if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
+    resize2fs $IMG ${NEWDATASIZE}M
+  fi
 fi
 
 if ! $BOOTMODE; then

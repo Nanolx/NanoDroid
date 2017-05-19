@@ -2,6 +2,7 @@
 
 ## 7.3 in-dev
 * Internal Changes
+  * if `Magisk` is not installed, the installer will install everything into `/system` directly
   * provide broken-out libraries for all provided applications
     * fixes issues with them, for example `Magisk Manager` not being able to install zips
   * zipalign all provided applications

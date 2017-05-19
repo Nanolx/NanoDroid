@@ -1,15 +1,30 @@
 #!/magisk/NanoMod/system/bin/bash
 
-cfg=/data/.nanomod-overlay
+# check for configuration files
+config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
+
+get_config () {
+	config=""
+	config_exists=0
+	for path in ${config_locations}; do
+		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
+			config="${path}/${1}"
+			config_exists=1
+			return
+		fi
+	done
+}
+
+get_config .nanomod-overlay
 
 if [[ ! -d /magisk/NanoMod ]]; then
 	echo "dafuq?"
 	exit 1
 fi
 
-if [[ -f ${cfg} ]]; then
-	source ${cfg}
-else	echo "${cfg} does not exist!"
+if [[ -f ${config} ]]; then
+	source ${config}
+else	echo "${config} does not exist!"
 	exit 1
 fi
 
@@ -67,7 +82,7 @@ ${2}
 )
 PRIV_APPS=(
 $(printf '%s\n' "${PRIV_APPS[@]}")
-)" > "${cfg}"
+)" > "${config}"
 			_add_override "app/${2}"
 		elif [[ -d /system/priv-app/${2} ]]; then
 			echo "Adding override for priv-app \"${2}\""
@@ -77,15 +92,15 @@ $(printf '%s\n' "${APPS[@]}")
 PRIV_APPS=(
 $(printf '%s\n' "${PRIV_APPS[@]}")
 ${2}
-)" > "${cfg}"
+)" > "${config}"
 			_add_override "priv-app/${2}"
 		else	echo "\"${2}\" not found in /system/app or /system/priv-app"
 		fi
 	;;
 
 	-r | --remove )
-		if grep -q " ${2} " "${cfg}"; then
-			sed -e "/^${2}$/d" -i "${cfg}"
+		if grep -q " ${2} " "${config}"; then
+			sed -e "/^${2}$/d" -i "${config}"
 			if [[ ${APPS[*]} == *${2}* ]]; then
 				echo "Removing override for app: \"${2}\""
 				remove_override "app/${2}"
