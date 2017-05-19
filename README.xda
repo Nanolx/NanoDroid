@@ -87,7 +87,7 @@ Special Thanks to the beta testers
 
 [list]
 [*]Full package contains [b]everything[/b] mentioned above
-[*]microG package [b]only[/b] contains microG, it's companions and [b][u]nanomod-overlay[/b][/u] script
+[*]microG package [b]only[/b] contains microG, it's companions, GNU Bash and [b][u]nanomod-overlay[/b][/u] script
   [list]
   [*]don't flash this, if you already have the Full package
   [/list]

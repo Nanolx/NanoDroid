@@ -74,7 +74,7 @@ Special Thanks to the beta testers
 ## Variants
 
 * Full package contains **everything** mentioned above
-* microG package **only** contains microG, it's companions and `nanomod-overlay` script
+* microG package **only** contains microG, it's companions, GNU Bash and `nanomod-overlay` script
   * don't flash this, if you already have the Full package
 * F-Droid package **only** contains F-Droid and it's Privileged Extension
   * don't flash this, if you already have the Full package
