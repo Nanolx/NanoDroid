@@ -30,6 +30,7 @@
   * OpenVPN (0.6.66)
   * (Simple) Gallery (2.9.1)
   * Termux (0.49)
+  * microG DroidGuard Helper (0.1.0-10)
 
 ## 7.2.20170508
 * Internal Changes
