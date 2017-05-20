@@ -7,6 +7,8 @@
     * fixes issues with them, for example `Magisk Manager` not being able to install zips
   * fix `nanomod-overlay` script to support all `.nanomod-overlay` configuration file locations
   * fix `nanomod-overlay` script not properly working with **NanoMod-microG** module
+  * the on-device and on-pc framework patchers now create the file `/system/.nanomod-patcher` after successful patching
+    * can be used to check whether the patcher was already run or not
   * **NanoMod-microG** now also includes `GNU Bash`
   * fix `VLC` directory not matching apk file name
     * fix `VLC` getting installed, even if user requested not to do so
