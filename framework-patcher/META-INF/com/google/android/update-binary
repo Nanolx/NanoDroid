@@ -75,7 +75,8 @@ shrink_magisk_img () {
 }
 
 if ! (is_mounted /system); then
-	mount -oro /system || error " !! failed to mount /system"
+	mount -orw /system || error " !! failed to mount /system"
+else	mount -orw,remount /system || error " !! failed to remount /system read-write"
 fi
 
 BASEDIR="/tmp/dexpatcher"
@@ -250,13 +251,13 @@ elif [ -d /magisk/NanoModmicroG ]; then
 else
 	ui_print " << installing services.jar to: ROM"
 	install_path="/system/framework"
-	mount -orw,remount /system >/dev/null || \
-		error " !! failed to re-mount /system read-write"
 fi
 
 mkdir -p "${install_path}"
 cp /tmp/services.jar "${install_path}/" \
 	|| error " !! failed to install services.jar"
+
+touch /system/.nanomod-patcher
 
 ui_print " >> clean up"
 if (is_mounted /magisk); then

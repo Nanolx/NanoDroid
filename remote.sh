@@ -106,11 +106,12 @@ elif [[ -d /magisk/NanoModmicroG ]]; then
 else
 	echo "using ROM as destination"
 	install_path="/system/framework"
-	mount -orw,remount /system
 fi
 
 echo "install to \"${install_path}\""
 cp /tmp/services.jar "${install_path}/" || exit 1
+
+touch /system/.nanomod-patcher
 
 if (is_mounted /magisk); then
 	echo "unmount /magisk"

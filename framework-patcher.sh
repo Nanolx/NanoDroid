@@ -67,7 +67,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	alias cp=gcp
 fi
 
-adb shell "mount -oro /system" || error "Failed to mount /system"
+adb shell "umount /system"
+adb shell "mount -orw /system" || error "Failed to mount /system"
 
 "${PWD}/pull-fileset" mydevice || error "Failed to pull files from device!"
 
