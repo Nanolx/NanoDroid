@@ -547,7 +547,7 @@ else
 fi
 
 if grep -q nanomod.zelda=0 $nanomodsetup; then
-	rm -rf $MODPATH/system/media
+	rm -rf $MODPATH/system/media/audio/*/The_Legend_of_Zelda*
 	ui_print " << without Zelda sounds"
 else	ui_print " << with Zelda sounds"
 fi
