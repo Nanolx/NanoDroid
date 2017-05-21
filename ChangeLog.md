@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 8.0 in-dev
+## 8.0.20170521
 * Internal Changes
   * if `Magisk` is not installed, the installer will install everything into `/system` directly
   * provide broken-out libraries for all provided applications

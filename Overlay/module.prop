@@ -1,7 +1,7 @@
 id=nanomod
 name=NanoMod
-version=v8.0.20171231
-versionCode=8
+version=v8.0.20170521
+versionCode=9
 author=Nanolx
 description=NanoMod microG, FOSS apps and system-app deactivation for LineageOS/AOSP based ROMs
 template=3
