@@ -2,7 +2,7 @@
 
 [size=6][b]Current Stable Release[/b][/size]
 
-[size=4][b]7.2.20170508[/b][/size]
+[size=4][b]8.0.20170521[/b][/size]
 
 [list]
 [*]Stable Downloads [url="https://www.androidfilehost.com/?a=show&w=files&flid=150729"][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/afh.png[/img][/url]
@@ -127,6 +127,10 @@ Special Thanks to the beta testers
   [/list]
 [*]install desired Kernel (if any)
 [*]install [b]Magisk[/b]
+  [list]
+  [*]recommended, but not required
+  [*]if [b]Magisk[/b] is installed, NanoMod will be installed as Magisk-Module, else it will install into [b][u]/system[/b][/u] directly
+  [/list]
 [*]install [b]NanoMod[/b]
   [list]
   [*]for [b]microG[/b] to work, your ROM needs to have fake signature signing enabled (or a [b]deodexed[/b] ROM to patch yourself)
@@ -418,7 +422,17 @@ List of known issues
     [*][b][u]pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE[/b][/u]
     [/list]
   [/list]
+[*]Battery Drain
+  [list]
+  [*]microG fails to register applications  to GCM (Google Cloud Messaging) if they were installed [b]before[/b] microG, but the apps keep trying to register and that causes the battery drain, all apps installed [b]after[/b] microG are properly registered, to fix the battery drain either
+    [list]
+    [*]do a clean flash of your ROM (,Magisk) and NanoMod and install your apps after microG setup
+    [*]uninstall and re-install all your applications (backup application data if required)
+    [/list]
+  [/list]
 [/list]
+
+Additional [URL="https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information"]helpful information[/URL] from the microG wiki.
 
 [size=6][b]Magisk & root[/b][/size]
 
