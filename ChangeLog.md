@@ -18,7 +18,7 @@
     * Phonograph (Music Player)
     * Sound Recorder (additional overlay path)
 * Updates
-  * Substratum (730)
+  * Substratum (760)
   * OpenLauncher (0.5.0)
   * NewPipe (0.9.6)
   * Twidere (3.6.11)
