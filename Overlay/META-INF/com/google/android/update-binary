@@ -492,7 +492,7 @@ install_microg () {
 }
 
 install_mapsv1 () {
-	# install mapsv1 if not requested
+	# install mapsv1 if requested
 	if grep -q nanomod.mapsv1=1 $nanomodsetup; then
 		cp -r ${INSTALLER}/system/etc/permissions/ ${MODPATH}/system/etc/
 		cp -r ${INSTALLER}/system/framework/ ${MODPATH}/system/
@@ -502,7 +502,7 @@ install_mapsv1 () {
 }
 
 install_fdroid () {
-	# install F-Droid if not requested
+	# install F-Droid if requested
 	if grep -q nanomod.fdroid=1 $nanomodsetup; then
 		cp -r ${INSTALLER}/system/app/FDroid \
 			${MODPATH}/system/app/
