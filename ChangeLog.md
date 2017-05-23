@@ -1,5 +1,14 @@
 # ChangeLog
 
+## 9.0 in-dev
+* Updates
+  * Simple Calendar (2.4.3)
+  * Simple Gallery (2.10.4)
+  * NewPipe (0.9.7)
+  * Nominatim Nlp Backend (1.2.2)
+  * Termux (0.50)
+  * PlayStore (7.7.57.O)
+
 ## 8.0.20170521
 * Internal Changes
   * if `Magisk` is not installed, the installer will install everything into `/system` directly
