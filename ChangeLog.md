@@ -1,6 +1,9 @@
 # ChangeLog
 
 ## 9.0 in-dev
+* Internal Changes
+  * shiny new installer
+    * currently only for the full package
 * Updates
   * Simple Calendar (2.4.3)
   * Simple Gallery (2.10.4)
