@@ -217,7 +217,7 @@ nanomod.apps=1
 nanomod.play=1
 nanomod.overlay=1
 nanomod.zelda=1
-nanomod.mapsv1=0" > $nanomodsetup
+nanomod.mapsv1=1" > $nanomodsetup
 }
 
 # create default '.nanomod-apps'
@@ -350,6 +350,13 @@ magisk_install_init () {
 	unzip -o "$ZIP" "common/*" module.prop
 }
 
+magisk_install_dirs () {
+	mkdir $MODPATH/system
+	for dir in app etc priv-app; do
+		mkdir $MODPATH/system/$dir
+	done
+}
+
 magisk_install_setup () {
 	if is_mounted /data; then
 		IMG=/data/$IMGNAME
@@ -393,113 +400,6 @@ magisk_install_preinst () {
 	fi
 }
 
-magisk_install_microg () {
-	# remove microG if not requested
-	if grep -q nanomod.microg=0 $nanomodsetup; then
-		for app in nlpBackendIchnaea nlpBackendNomiantim \
-			DroidGuard GmsCore GsfProxy; do
-			rm -rf $MODPATH/system/app/$app
-			rm -rf $MODPATH/system/priv-app/$app
-		done
-		ui_print " << without microG"
-	else	ui_print " << with microG"
-	fi
-}
-
-magisk_install_mapsv1 () {
-	# remove mapsv1 if not requested
-	if grep -q nanomod.mapsv1=1 $nanomodsetup; then
-		ui_print " << with Maps API version 1"
-	else	rm $MODPATH/system/etc/permissions/com.google.android.maps.xml
-		rm $MODPATH/system/framework/com.google.android.maps.jar
-		ui_print " << without Maps API version 1"
-	fi
-}
-
-magisk_install_fdroid () {
-	# remove F-Droid if not requested
-	if grep -q nanomod.fdroid=0 $nanomodsetup; then
-		for app in FDroid FDroidPrivileged; do
-			rm -rf $MODPATH/system/app/$app
-			rm -rf $MODPATH/system/priv-app/$app
-		done
-		ui_print " << without F-Droid"
-	else	ui_print " << with F-Droid"
-	fi
-}
-
-magisk_install_apps () {
-	# remove apps if not requested
-	# exceptions:
-	# * Magisk Manager
-
-	# Step 1:
-	# remove arm64 VLC on arm and vice-versa
-	if [[ ${ARCH} == arm ]]; then
-		rm -rf $MODPATH/system/app/VLC64
-		mv $MODPATH/system/app/VLC32 $MODPATH/system/app/VLC
-	elif [[ ${ARCH} == arm64 ]]; then
-		rm -rf $MODPATH/system/app/VLC32
-		mv $MODPATH/system/app/VLC64 $MODPATH/system/app/VLC
-	fi
-
-	# Step 2: only keep desired apps
-	if grep -q nanomod.apps=0 $nanomodsetup; then
-		# remove all apps
-		for app in Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
-			K9Mail KeePassDroid KernelAdiutor Lightning NewPipe \
-			Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
-			OpenVPN QKSMS SimpleCalendar SimpleGallery Substratum \
-			Termux Twidere VLC XDALabs YahooWeatherProvider; do
-				rm -rf $MODPATH/system/app/$app
-		done
-		ui_print " << without applications"
-	else
-		ui_print " << with applications"
-		# remove not requested apps
-		for app in Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
-			K9Mail KeePassDroid KernelAdiutor Lightning NewPipe \
-			Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
-			OpenVPN QKSMS SimpleCalendar SimpleGallery Substratum \
-			Termux Twidere VLC XDALabs YahooWeatherProvider; do
-				if ! grep -q "^${app}$" $nanomodapps; then
-					rm -rf $MODPATH/system/app/$app
-				else	ui_print " <<> ${app}"
-				fi
-		done
-	fi
-}
-
-magisk_install_store () {
-	# remove Yalp Store if Play Store requested and vice-versa
-	if grep -q nanomod.play=1 $nanomodsetup; then
-		for app in FakeStore YalpStore; do
-			rm -rf $MODPATH/system/app/$app
-			rm -rf $MODPATH/system/priv-app/$app
-		done
-		ui_print " << with Play Store"
-	elif grep -q nanomod.play=2 $nanomodsetup; then
-		for app in Phonesky; do
-			rm -rf $MODPATH/system/app/$app
-			rm -rf $MODPATH/system/priv-app/$app
-		done
-		ui_print " << with Yalp Store"
-	else
-		for app in FakeStore YalpStore Phonesky; do
-			rm -rf $MODPATH/system/app/$app
-			rm -rf $MODPATH/system/priv-app/$app
-		done
-		ui_print " << without App Store"
-	fi
-}
-
-magisk_install_zelda () {
-	if grep -q nanomod.zelda=0 $nanomodsetup; then
-		rm -rf $MODPATH/system/media/
-		ui_print " << without Zelda sounds"
-	else	ui_print " << with Zelda sounds"
-	fi
-}
 
 magisk_install_populate () {
 	# Create mod paths
@@ -566,16 +466,6 @@ magisk_install_finish () {
 	fi
 }
 
-magisk_install_permissions () {
-	for binary in aapt aopt bash bashbug nano nano.bin nanomod-overlay; do
-		chmod 0755 $MODPATH/system/bin/${binary}
-	done
-
-	for init in fstrim logscleaner sqlite; do
-		chmod 0755 $MODPATH/system/etc/init.d/${init}
-	done
-}
-
 magisk_install_cleanup () {
 	umount $MOUNTPATH
 	losetup -d $LOOPDEVICE
@@ -590,52 +480,48 @@ magisk_install_cleanup () {
 }
 
 ##########################################################################################
-# System Mode Installation
+# Generic Installation
 ##########################################################################################
 
-system_install_microg () {
-	# install microG if not requested
+install_microg () {
+	# install microG if requested
 	if grep -q nanomod.microg=1 $nanomodsetup; then
 		for app in nlpBackendIchnaea nlpBackendNomiantim; do
-			cp -r system/app/$app /system/app/
+			cp -r system/app/${app} ${MODPATH}/system/app/
 		done
 		for app in DroidGuard GmsCore GsfProxy; do
-			cp -r system/priv-app/$app /system/priv-app/
+			cp -r system/priv-app/${app} \
+				${MODPATH}/system/priv-app/
 		done
 		ui_print " << with microG"
 	else	ui_print " << without microG"
 	fi
 }
 
-system_install_mapsv1 () {
+install_mapsv1 () {
 	# install mapsv1 if not requested
-	if grep -q nanomod.mapsv1=0 $nanomodsetup; then
-		ui_print " << without Maps API version 1"
-	else	cp system/etc/permissions/com.google.android.maps.xml \
-			/system/etc/permissions/
-		cp system/framework/com.google.android.maps.jar \
-			/system/framework/
+	if grep -q nanomod.mapsv1=1 $nanomodsetup; then
+		cp -r system/etc/permissions/ ${MODPATH}/system/etc/
+		cp -r system/framework/ ${MODPATH}/system/
 		ui_print " << with Maps API version 1"
+	else	ui_print " << without Maps API version 1"
 	fi
 }
 
-system_install_fdroid () {
+install_fdroid () {
 	# install F-Droid if not requested
 	if grep -q nanomod.fdroid=1 $nanomodsetup; then
 		for app in FDroid FDroidPrivileged; do
-			cp -r system/priv-app/$app \
-				/system/priv-app/
+			cp -r system/priv-app/${app} ${MODPATH}/system/priv-app/
 		done
 		ui_print " << with F-Droid"
 	else	ui_print " << without F-Droid"
 	fi
 }
 
-system_install_apps () {
+install_apps () {
 	# install apps if requested
-	if grep -q nanomod.apps=0 $nanomodsetup; then
-		ui_print " << without applications"
-	else
+	if grep -q nanomod.apps=1 $nanomodsetup; then
 		ui_print " << with applications"
 		for app in Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
 			K9Mail KeePassDroid KernelAdiutor Lightning NewPipe \
@@ -643,55 +529,62 @@ system_install_apps () {
 			OpenVPN QKSMS SimpleCalendar SimpleGallery Substratum \
 			Termux Twidere XDALabs YahooWeatherProvider; do
 				if grep -q "^${app}$" $nanomodapps; then
-					cp -r system/app/$app /system/app/
+					cp -r system/app/${app} ${MODPATH}/system/app/
 					ui_print " <<> ${app}"
 				fi
 		done
 
 		if [[ ${ARCH} == arm ]]; then
-			cp -r system/app/VLC32 /system/app/VLC
+			cp -r system/app/VLC32 ${MODPATH}/system/app/VLC
 			ui_print " <<> VLC"
 		elif [[ ${ARCH} == arm64 ]]; then
-			cp -r system/app/VLC64 /system/app/VLC
+			cp -r system/app/VLC64 ${MODPATH}/system/app/VLC
 			ui_print " <<> VLC"
 		fi
+	else	ui_print " << without applications"
 	fi
 }
 
-system_install_store () {
+install_store () {
 	# install Yalp Store or Play Store whichever requested
 	if grep -q nanomod.play=1 $nanomodsetup; then
 		cp -r system/priv-app/Phonesky \
-			/system/priv-app/
+			${MODPATH}/system/priv-app/
 		ui_print " << with Play Store"
 	elif grep -q nanomod.play=2 $nanomodsetup; then
 		cp -r system/priv-app/FakeStore \
-			/system/priv-app/
+			${MODPATH}/system/priv-app/
 		cp -r system/priv-app/YalpStore \
-			/system/priv-app/
-
+			${MODPATH}/system/priv-app/
 		ui_print " << with Yalp Store"
 	else	ui_print " << without App Store"
 	fi
 }
 
-system_install_zelda () {
+install_zelda () {
 	if grep -q nanomod.zelda=1 $nanomodsetup; then
-		cp -r system/media/ /system/
+		cp -r system/media/ ${MODPATH}/system/
 		ui_print " << with Zelda sounds"
 	else	ui_print " << without Zelda sounds"
 	fi
 }
 
-system_install_permissions () {
+install_misc () {
+	ui_print " > GNU Bash, GNU Nano, NanoMod-Overlay"
+	cp -r system/bin ${MODPATH}/system/
+	cp -r system/etc/init.d ${MODPATH}/system/etc/
+	cp -r system/etc/terminfo ${MODPATH}/system/etc/
+	cp system/etc/bash* ${MODPATH}/system/etc/
+	cp -r system/share ${MODPATH}/system/
+}
+
+install_permissions () {
 	for binary in aapt aopt bash bashbug nano nano.bin nanomod-overlay; do
-		chmod 0755 /system/bin/${binary}
+		chmod 0755 ${MODPATH}/system/bin/${binary}
 	done
 
 	for init in fstrim logscleaner sqlite; do
-		if [ -f ${init} ]; then
-			chmod 0755 /system/etc/init.d/${init}
-		fi
+		chmod 0755 ${MODPATH}/system/etc/init.d/${init}
 	done
 }
 
@@ -701,10 +594,15 @@ system_install_permissions () {
 
 detect_outfd
 
-mount -o ro /system 2>/dev/null || exit "! failed to mount /system"
-mount -o ro /vendor 2>/dev/null || exit "! failed to mount /vendor"
-mount /data 2>/dev/null || exit "! failed to mount /data"
-mount /cache 2>/dev/null || exit "! failed to mount /cache"
+umount /system 2>/dev/null
+umount /vendor 2>/dev/null
+umount /data 2>/dev/null
+umount /cache 2>/dev/null
+
+mount -o ro /system 2>/dev/null
+mount -o ro /vendor 2>/dev/null
+mount /data 2>/dev/null
+mount /cache 2>/dev/null
 
 if [ ! -f '/system/build.prop' ]; then
 	error "! /system/build.prop does not exist"
@@ -721,7 +619,8 @@ fi
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_init
 else
-	mount -orw,remount /system 2>/dev/null || exit "! failed to re-mount /system read-write"
+	mount -orw,remount /system 2>/dev/null || \
+		error "! failed to re-mount /system read-write"
 	unset MODPATH
 fi
 
@@ -780,22 +679,16 @@ else	create_nanomodapps
 fi
 
 if [ "${MODE}" = "MAGISK" ]; then
-	magisk_install_preinst
-	magisk_install_populate
-	magisk_install_microg
-	magisk_install_mapsv1
-	magisk_install_fdroid
-	magisk_install_store
-	magisk_install_apps
-	magisk_install_zelda
-else
-	system_install_microg
-	system_install_mapsv1
-	system_install_fdroid
-	system_install_store
-	system_install_apps
-	system_install_zelda
+	magisk_install_dirs
 fi
+
+install_microg
+install_mapsv1
+install_fdroid
+install_store
+install_apps
+install_zelda
+install_misc
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_postinst
@@ -812,11 +705,7 @@ fi
 
 ui_print "<< setting permissions"
 set_permissions
-
-if [ "${MODE}" = "MAGISK" ]; then
-	magisk_install_permissions
-else	system_install_permissions
-fi
+install_permissions
 
 ui_print " "
 ui_print " Thanks for using NanoMod "
@@ -827,7 +716,7 @@ if [ "${MODE}" = "MAGISK" ];then
 fi
 
 if ! $BOOTMODE; then
-	umount /system
+	umount /system 2>/dev/null
 	umount /vendor 2>/dev/null
 fi
 
