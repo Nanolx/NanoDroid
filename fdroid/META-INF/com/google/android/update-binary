@@ -225,7 +225,7 @@ TMPDIR=/dev/tmp
 # Please leave this message in your flashable zip for credits :)
 ui_print " "
 ui_print "******************************"
-ui_print "     NanoMod 8.0.20170521     "
+ui_print "     NanoMod 9.0.20171231     "
 ui_print "      created by @Nanolx      "
 ui_print "         F-Droid only         "
 
