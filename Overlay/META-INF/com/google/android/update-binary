@@ -504,9 +504,10 @@ install_mapsv1 () {
 install_fdroid () {
 	# install F-Droid if not requested
 	if grep -q nanomod.fdroid=1 $nanomodsetup; then
-		for app in FDroid FDroidPrivileged; do
-			cp -r ${INSTALLER}/system/priv-app/${app} ${MODPATH}/system/priv-app/
-		done
+		cp -r ${INSTALLER}/system/app/FDroid \
+			${MODPATH}/system/app/
+		cp -r ${INSTALLER}/system/priv-app/FDroidPrivileged \
+			${MODPATH}/system/priv-app/
 		ui_print " << with F-Droid"
 	else	ui_print " << without F-Droid"
 	fi
