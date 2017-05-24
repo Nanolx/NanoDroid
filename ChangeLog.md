@@ -3,6 +3,10 @@
 ## 9.0 in-dev
 * Internal Changes
   * shiny new installer
+    * cleaner and easier maintainable code
+    * several improvements to `/system` mode installation
+    * for **microG**, **F-Droid** and **full** packages
+  * fix **GNU Bash** installation in microG package
   * install Maps API version 1 by default
 * Updates
   * Simple Calendar (2.4.3)
