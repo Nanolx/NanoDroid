@@ -6,282 +6,153 @@ ps | grep zygote | grep -v grep >/dev/null && BOOTMODE=true || BOOTMODE=false
 # Default permissions
 umask 022
 
-##########################################################################################
-# Functions
-##########################################################################################
-
-ui_print() {
-  if $BOOTMODE; then
-    echo "$1"
-  else 
-    echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
-    echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
-  fi
-}
-
-grep_prop() {
-  REGEX="s/^$1=//p"
-  shift
-  FILES=$@
-  if [ -z "$FILES" ]; then
-    FILES='/system/build.prop'
-  fi
-  cat $FILES 2>/dev/null | sed -n "$REGEX" | head -n 1
-}
-
-is_mounted() {
-  if [ ! -z "$2" ]; then
-    cat /proc/mounts | grep $1 | grep $2, >/dev/null
-  else
-    cat /proc/mounts | grep $1 >/dev/null
-  fi
-  return $?
-}
-
-mount_image() {
-  if [ ! -d "$2" ]; then
-    mount -o rw,remount rootfs /
-    mkdir -p $2 2>/dev/null
-    ($BOOTMODE) && mount -o ro,remount rootfs /
-    [ ! -d "$2" ] && return 1
-  fi
-  if (! is_mounted $2); then
-    LOOPDEVICE=
-    for LOOP in 0 1 2 3 4 5 6 7; do
-      if (! is_mounted $2); then
-        LOOPDEVICE=/dev/block/loop$LOOP
-        if [ ! -f "$LOOPDEVICE" ]; then
-          mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
-        fi
-        losetup $LOOPDEVICE $1
-        if [ "$?" -eq "0" ]; then
-          mount -t ext4 -o loop $LOOPDEVICE $2
-          if (! is_mounted $2); then
-            /system/bin/toolbox mount -t ext4 -o loop $LOOPDEVICE $2
-          fi
-          if (! is_mounted $2); then
-            /system/bin/toybox mount -t ext4 -o loop $LOOPDEVICE $2
-          fi
-        fi
-        if (is_mounted $2); then
-          break;
-        fi
-      fi
-    done
-  fi
-}
-
-set_perm() {
-  chown $2:$3 $1 || exit 1
-  chmod $4 $1 || exit 1
-  if [ ! -z "$5" ]; then
-    chcon $5 $1 2>/dev/null
-  else
-    chcon 'u:object_r:system_file:s0' $1 2>/dev/null
-  fi
-}
-
-set_perm_recursive() {
-  find $1 -type d 2>/dev/null | while read dir; do
-    set_perm $dir $2 $3 $4 $6
-  done
-  find $1 -type f 2>/dev/null | while read file; do
-    set_perm $file $2 $3 $5 $6
-  done
-}
-
-mktouch() {
-  mkdir -p ${1%/*}
-  if [ -z "$2" ]; then
-    touch $1
-  else
-    echo $2 > $1
-  fi
-  chmod 644 $1
-}
-
-request_size_check() {
-  reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
-  reqSizeM=$((reqSizeM / 1048576 + 1))
-}
-
-image_size_check() {
-  e2fsck -yf $1
-  curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
-  curUsedM=`echo "$curBlocks" | cut -d/ -f1`
-  curSizeM=`echo "$curBlocks" | cut -d/ -f1`
-  curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
-  curUsedM=$((curUsedM * 4 / 1024 + 1))
-  curSizeM=$((curSizeM * 4 / 1024))
-}
-
-##########################################################################################
-# Flashable update-binary preparation
-##########################################################################################
-
 OUTFD=$2
 ZIP=$3
 
-readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
-if [ "$?" -eq "0" ]; then
-  OUTFD=0
+##########################################################################################
+# Misc. Functions
+##########################################################################################
 
-  for FD in `ls /proc/$$/fd`; do
-    readlink /proc/$$/fd/$FD 2>/dev/null | grep pipe >/dev/null
-    if [ "$?" -eq "0" ]; then
-      ps | grep " 3 $FD " | grep -v grep >/dev/null
-      if [ "$?" -eq "0" ]; then
-        OUTFD=$FD
-        break
-      fi
-    fi
-  done
-fi
-
-mount -o ro /system 2>/dev/null
-mount -o ro /vendor 2>/dev/null
-mount /data 2>/dev/null
-mount /cache 2>/dev/null
-
-if [ ! -f '/system/build.prop' ]; then
-  ui_print "! Failed: /system could not be mounted!"
-  exit 1
-fi
-
-API=`grep_prop ro.build.version.sdk`
-ABI=`grep_prop ro.product.cpu.abi | cut -c-3`
-ABI2=`grep_prop ro.product.cpu.abi2 | cut -c-3`
-ABILONG=`grep_prop ro.product.cpu.abi`
-
-ARCH=arm
-IS64BIT=false
-
-if [ "$ABI" = "x86" ]; then
-	ui_print " !! x86 is not a supported platform"
-	exit 1
-fi
-
-if [ "$ABI2" = "x86" ]; then
-	ui_print " !! x86 is not a supported platform"
-	exit 1
-fi
-
-if [ "$ABILONG" = "arm64-v8a" ]; then ARCH=arm64; IS64BIT=true; fi;
-if [ "$ABILONG" = "x86_64" ]; then ARCH=x64; IS64BIT=true; fi;
-
-MODE=MAGISK
-
-if [ ! -f /data/magisk.img ]; then
-  MODE=SYSTEM
-fi
-
-if [ "${MODE}" = "MAGISK" ]; then
-	if $BOOTMODE && ! is_mounted /magisk; then
-	  ui_print "! Magisk is not activated!... abort"
-	  exit 1
-	fi
-
-	# Fix SuperSU.....
-	$BOOTMODE && $BINDIR/sepolicy-inject --live "allow fsck * * *"
-
-	MOUNTPATH=/magisk
-	IMGNAME=magisk.img
-
+ui_print() {
 	if $BOOTMODE; then
-	  MOUNTPATH=/dev/magisk_merge
-	  IMGNAME=magisk_merge.img
+		echo "$1"
+	else 
+		echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
+		echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+	fi
+}
+
+grep_prop() {
+	shift
+	FILES=$@
+	if [ -z "$FILES" ]; then
+		FILES='/system/build.prop'
+	fi
+	cat $FILES 2>/dev/null | sed -n "s/^$1=//p" | head -n 1
+}
+
+is_mounted() {
+	if [ ! -z "$2" ]; then
+		cat /proc/mounts | grep $1 | grep $2, >/dev/null
+	else
+		cat /proc/mounts | grep $1 >/dev/null
+	fi
+	return $?
+}
+
+mount_image() {
+	if [ ! -d "$2" ]; then
+		mount -o rw,remount rootfs /
+		mkdir -p $2 2>/dev/null
+		($BOOTMODE) && mount -o ro,remount rootfs /
+		[ ! -d "$2" ] && return 1
 	fi
 
-	mkdir -p $TMPDIR 2>/dev/null
-	cd $TMPDIR
-	unzip -o "$ZIP" config.sh
+	if (! is_mounted $2); then
+		LOOPDEVICE=
+		for LOOP in 0 1 2 3 4 5 6 7; do
+			if (! is_mounted $2); then
+				LOOPDEVICE=/dev/block/loop$LOOP
+				if [ ! -e "$LOOPDEVICE" ]; then
+					mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
+				fi
 
-	if [ ! -f "config.sh" ]; then
-	  ui_print "! Failed: Unable to extract zip file!"
-	  exit 1
+				losetup $LOOPDEVICE $1
+				if [ "$?" -eq "0" ]; then
+					mount -t ext4 -o loop $LOOPDEVICE $2
+					if (! is_mounted $2); then
+						/system/bin/toolbox mount -t ext4 -o loop $LOOPDEVICE $2
+					fi
+					if (! is_mounted $2); then
+						/system/bin/toybox mount -t ext4 -o loop $LOOPDEVICE $2
+					fi
+				fi
+
+				if (is_mounted $2); then
+					break;
+				fi
+			fi
+		done
 	fi
+}
 
-	source config.sh
+set_perm() {
+	chown $2:$3 $1 || exit 1
+	chmod $4 $1 || exit 1
+	if [ ! -z "$5" ]; then
+		chcon $5 $1 2>/dev/null
+	else
+		chcon 'u:object_r:system_file:s0' $1 2>/dev/null
+	fi
+}
 
-	INSTALLER=$TMPDIR/$MODID
-	MODPATH=$MOUNTPATH/$MODID
+set_perm_recursive() {
+	find $1 -type d 2>/dev/null | while read dir; do
+		set_perm $dir $2 $3 $4 $6
+	done
+	find $1 -type f 2>/dev/null | while read file; do
+		set_perm $file $2 $3 $5 $6
+	done
+}
 
-	mkdir -p $INSTALLER
-	cd $INSTALLER
-	unzip -o "$ZIP" "common/*" module.prop
-else
-	mount -orw,remount /system 2>/dev/null
-	unset MODPATH
-fi
+mktouch() {
+	mkdir -p ${1%/*}
+	if [ -z "$2" ]; then
+		touch $1
+	else
+		echo $2 > $1
+	fi
+	chmod 644 $1
+}
+
+request_size_check() {
+	reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
+	reqSizeM=$((reqSizeM / 1048576 + 1))
+}
+
+image_size_check() {
+	e2fsck -yf $1
+	curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
+	curUsedM=`echo "$curBlocks" | cut -d/ -f1`
+	curSizeM=`echo "$curBlocks" | cut -d/ -f1`
+	curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
+	curUsedM=$((curUsedM * 4 / 1024 + 1))
+	curSizeM=$((curSizeM * 4 / 1024))
+}
+
+detect_outfd () {
+	readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
+	if [ "$?" -eq "0" ]; then
+		OUTFD=0
+
+		for FD in `ls /proc/$$/fd`; do
+			readlink /proc/$$/fd/$FD 2>/dev/null | grep pipe >/dev/null
+			if [ "$?" -eq "0" ]; then
+				ps | grep " 3 $FD " | grep -v grep >/dev/null
+				if [ "$?" -eq "0" ]; then
+					OUTFD=$FD
+					break
+				fi
+			fi
+		done
+	fi
+}
+
+error () {
+	ui_print "${@}"
+	exit 1
+}
 
 ##########################################################################################
-# Main
+# NanoMod Configuration File Handling
 ##########################################################################################
-
-# Please leave this message in your flashable zip for credits :)
-ui_print " "
-ui_print "******************************"
-ui_print "     NanoMod 9.0.20171231     "
-ui_print "      created by @Nanolx      "
-ui_print "         microG only          "
-
-if [ "${MODE}" = "MAGISK" ]; then
-  ui_print "Powered by Magisk (@topjohnwu)"
-fi
-
-ui_print "******************************"
-ui_print " "
-
-# You can get the Android API version from $API, the CPU architecture from $ARCH
-# Useful if you are creating Android version / platform dependent mods
-
-if [ "${MODE}" = "MAGISK" ]; then
-  if is_mounted /data; then
-    IMG=/data/$IMGNAME
-  else
-    IMG=/cache/magisk.img
-    ui_print " "
-    ui_print "***********************************"
-    ui_print "*      !! Data unavailable !!     *"
-    ui_print "* Magisk detection is impossible  *"
-    ui_print "* Installation will still proceed *"
-    ui_print "*  But please make sure you have  *"
-    ui_print "*        Magisk installed!!       *"
-    ui_print "***********************************"
-    ui_print " "
-  fi
-
- request_size_check "$ZIP"
-
-  if [ -f "$IMG" ]; then
-    image_size_check $IMG
-    if [ "$reqSizeM" -gt "$curFreeM" ]; then
-      SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-      resize2fs $IMG ${SIZE}M
-    fi
-  else
-    SIZE=$((reqSizeM / 32 * 32 + 64));
-    make_ext4fs -l ${SIZE}M -a /magisk -S $INSTALLER/common/file_contexts_image $IMG
-  fi
-
-  mount_image $IMG $MOUNTPATH
-  if ! is_mounted $MOUNTPATH; then
-    ui_print "! $IMG mount failed... abort"
-    exit 1
-  fi
-fi
-
-if [ "${MODE}" = "MAGISK" ]; then
-  ui_print " > Installing NanoMod (magisk module)"
-else
-  ui_print " > Installing NanoMod (system mode)"
-fi
 
 # check for configuration files
 config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
 
 get_config () {
-	unset config config_exists
+	config=""
+	config_exists=0
 	for path in ${config_locations}; do
 		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
 			config="${path}/${1}"
@@ -342,7 +213,7 @@ create_nanomodsetup () {
 	echo "nanomod.reinstall=0
 nanomod.play=1
 nanomod.overlay=1
-nanomod.mapsv1=0" > $nanomodsetup
+nanomod.mapsv1=1" > $nanomodsetup
 }
 
 # check whether '.nanomod-setup' has all required entries
@@ -361,6 +232,333 @@ check_nanomodsetup () {
 	fi
 }
 
+##########################################################################################
+# Architecture detection
+##########################################################################################
+
+detect_arch () {
+	API=`grep_prop ro.build.version.sdk`
+	ABI=`grep_prop ro.product.cpu.abi | cut -c-3`
+	ABI2=`grep_prop ro.product.cpu.abi2 | cut -c-3`
+	ABILONG=`grep_prop ro.product.cpu.abi`
+
+	ARCH=arm
+	IS64BIT=false
+
+	if [ "$ABI" = "x86" ]; then
+		error " !! x86 is not a supported platform"
+	fi
+
+	if [ "$ABI2" = "x86" ]; then
+		error " !! x86 is not a supported platform"
+	fi
+
+	if [ "$ABILONG" = "arm64-v8a" ]; then
+		ARCH=arm64
+		IS64BIT=true
+	fi
+
+	if [ "$ABILONG" = "x86_64" ]; then
+		ARCH=x64
+		IS64BIT=true
+	fi
+}
+
+##########################################################################################
+# Magisk Mode Installation
+##########################################################################################
+
+magisk_install_init () {
+	if $BOOTMODE && ! is_mounted /magisk; then
+		error "! Magisk is not activated!... abort"
+	fi
+
+	# Fix SuperSU.....
+	$BOOTMODE && $BINDIR/sepolicy-inject --live "allow fsck * * *"
+
+	MOUNTPATH=/magisk
+	IMGNAME=magisk.img
+
+	if $BOOTMODE; then
+		MOUNTPATH=/dev/magisk_merge
+		IMGNAME=magisk_merge.img
+	fi
+
+	MODPATH=$MOUNTPATH/$MODID
+
+	mkdir -p $INSTALLER
+	cd $INSTALLER
+	unzip -o "$ZIP" "common/*" module.prop
+}
+
+magisk_install_dirs () {
+	rm -rf $MODPATH 2>/dev/null
+	mkdir -p $MODPATH
+	mkdir $MODPATH/system
+	for dir in app etc priv-app; do
+		mkdir $MODPATH/system/$dir
+	done
+}
+
+magisk_install_setup () {
+	if is_mounted /data; then
+		IMG=/data/$IMGNAME
+	else
+		IMG=/cache/magisk.img
+		ui_print " "
+		ui_print "***********************************"
+		ui_print "*      !! Data unavailable !!     *"
+		ui_print "* Magisk detection is impossible  *"
+		ui_print "* Installation will still proceed *"
+		ui_print "*  But please make sure you have  *"
+		ui_print "*        Magisk installed!!       *"
+		ui_print "***********************************"
+		ui_print " "
+	fi
+
+	request_size_check "$ZIP"
+
+	if [ -f "$IMG" ]; then
+		image_size_check $IMG
+		if [ "$reqSizeM" -gt "$curFreeM" ]; then
+			SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
+			resize2fs $IMG ${SIZE}M
+		fi
+	else
+		SIZE=$((reqSizeM / 32 * 32 + 64));
+		make_ext4fs -l ${SIZE}M -a /magisk -S $INSTALLER/common/file_contexts_image $IMG
+	fi
+
+	mount_image $IMG $MOUNTPATH
+	if ! is_mounted $MOUNTPATH; then
+		error "! $IMG mount failed... abort"
+	fi
+}
+
+magisk_install_preinst () {
+	if grep -q nanomod.reinstall=1 $nanomodsetup; then
+		ui_print " << backup services.jar"
+		cp $MODPATH/system/framework/services.jar \
+			/tmp/services.jar
+	fi
+}
+
+magisk_install_postinst () {
+	# Setup Overrides
+	if grep -q nanomod.overlay=1 $nanomodsetup; then
+		$MODPATH/system/bin/nanomod-overlay --update
+		ui_print " << with /system applications override"
+	else	ui_print " << without /system applications override"
+		if [ "$NO_NANOMODOVERLAY" -eq 1 ]; then
+			rm $nanomodoverlay
+		fi
+	fi
+
+	if grep -q nanomod.reinstall=1 $nanomodsetup; then
+		ui_print " << restore services.jar"
+		mkdir $MODPATH/system/framework
+		cp /tmp/services.jar \
+			$MODPATH/system/framework/services.jar
+	fi
+}
+
+magisk_install_finish () {
+	# Handle replace folders
+	for TARGET in $REPLACE; do
+		mktouch $MODPATH$TARGET/.replace
+	done
+
+	# Auto Mount
+	if $AUTOMOUNT; then
+		mktouch $MODPATH/auto_mount
+	fi
+
+	# prop files
+	if $PROPFILE; then
+		cp -af $INSTALLER/common/system.prop $MODPATH/system.prop
+	fi
+
+	# Module info
+	cp -af $INSTALLER/module.prop $MODPATH/module.prop
+
+	if $BOOTMODE; then
+		# Update info for Magisk Manager
+		mktouch /magisk/$MODID/update
+		cp -af $INSTALLER/module.prop /magisk/$MODID/module.prop
+	fi
+
+	# post-fs-data mode scripts
+	if $POSTFSDATA; then
+		cp -af $INSTALLER/common/post-fs-data.sh $MODPATH/post-fs-data.sh
+	fi
+
+	# service mode scripts
+	if $LATESTARTSERVICE; then
+		cp -af $INSTALLER/common/service.sh $MODPATH/service.sh
+	fi
+}
+
+magisk_install_cleanup () {
+	umount $MOUNTPATH
+	losetup -d $LOOPDEVICE
+	rmdir $MOUNTPATH
+
+	# Shrink the image if possible
+	image_size_check $IMG
+	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
+	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
+		resize2fs $IMG ${NEWDATASIZE}M
+	fi
+}
+
+##########################################################################################
+# Generic Installation
+##########################################################################################
+
+install_init () {
+	mkdir -p $TMPDIR 2>/dev/null
+	cd $TMPDIR
+	unzip -o "$ZIP" config.sh
+
+	if [ ! -f "config.sh" ]; then
+		error "! Failed: Unable to extract zip file!"
+	fi
+
+	source config.sh
+
+	INSTALLER=$TMPDIR/$MODID
+}
+
+install_microg () {
+	# install microG if requested
+	if grep -q nanomod.microg=1 $nanomodsetup; then
+		for app in nlpBackendIchnaea nlpBackendNomiantim; do
+			cp -r ${INSTALLER}/system/app/${app} ${MODPATH}/system/app/
+		done
+		for app in DroidGuard GmsCore GsfProxy; do
+			cp -r ${INSTALLER}/system/priv-app/${app} \
+				${MODPATH}/system/priv-app/
+		done
+		ui_print " << with microG"
+	else	ui_print " << without microG"
+	fi
+}
+
+install_mapsv1 () {
+	# install mapsv1 if requested
+	if grep -q nanomod.mapsv1=1 $nanomodsetup; then
+		cp -r ${INSTALLER}/system/etc/permissions/ ${MODPATH}/system/etc/
+		cp -r ${INSTALLER}/system/framework/ ${MODPATH}/system/
+		ui_print " << with Maps API version 1"
+	else	ui_print " << without Maps API version 1"
+	fi
+}
+
+install_store () {
+	# install Yalp Store or Play Store whichever requested
+	if grep -q nanomod.play=1 $nanomodsetup; then
+		cp -r ${INSTALLER}/system/priv-app/Phonesky \
+			${MODPATH}/system/priv-app/
+		ui_print " << with Play Store"
+	elif grep -q nanomod.play=2 $nanomodsetup; then
+		cp -r ${INSTALLER}/system/priv-app/FakeStore \
+			${MODPATH}/system/priv-app/
+		cp -r ${INSTALLER}/system/priv-app/YalpStore \
+			${MODPATH}/system/priv-app/
+		ui_print " << with Yalp Store"
+	else	ui_print " << without App Store"
+	fi
+}
+
+install_misc () {
+	ui_print " > GNU Bash, NanoMod-Overlay"
+	cp -r ${INSTALLER}/system/bin ${MODPATH}/system/
+	cp -r ${INSTALLER}/system/etc/terminfo ${MODPATH}/system/etc/
+	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
+	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
+}
+
+install_permissions () {
+	for binary in bash bashbug nanomod-overlay; do
+		chmod 0755 ${MODPATH}/system/bin/${binary}
+	done
+}
+
+##########################################################################################
+# Flashable update-binary preparation
+##########################################################################################
+
+detect_outfd
+
+umount /system 2>/dev/null
+umount /vendor 2>/dev/null
+umount /data 2>/dev/null
+umount /cache 2>/dev/null
+
+mount -o ro /system 2>/dev/null
+mount -o ro /vendor 2>/dev/null
+mount /data 2>/dev/null
+mount /cache 2>/dev/null
+
+if [ ! -f '/system/build.prop' ]; then
+	error "! /system/build.prop does not exist"
+fi
+
+detect_arch
+
+MODE=MAGISK
+
+if [ ! -f /data/magisk.img ]; then
+	MODE=SYSTEM
+fi
+
+install_init
+
+if [ "${MODE}" = "MAGISK" ]; then
+	magisk_install_init
+else
+	mount -orw,remount /system 2>/dev/null || \
+		error "! failed to re-mount /system read-write"
+	unset MODPATH
+fi
+
+# This path should work in any cases
+TMPDIR=/dev/tmp
+
+##########################################################################################
+# Main
+##########################################################################################
+
+# Please leave this message in your flashable zip for credits :)
+ui_print " "
+ui_print "******************************"
+ui_print "     NanoMod 9.0.20171231     "
+ui_print "      created by @Nanolx      "
+ui_print "        microG package        "
+
+if [ "${MODE}" = "MAGISK" ]; then
+	ui_print "Powered by Magisk (@topjohnwu)"
+fi
+
+ui_print "******************************"
+ui_print " "
+
+# You can get the Android API version from $API, the CPU architecture from $ARCH
+# Useful if you are creating Android version / platform dependent mods
+
+if [ "${MODE}" = "MAGISK" ]; then
+	magisk_install_setup
+fi
+
+ui_print " > prepare installation"
+cd ${INSTALLER}
+unzip -o "$ZIP" "system/*"
+
+if [ "${MODE}" = "MAGISK" ]; then
+	ui_print " > Installing NanoMod (magisk module)"
+else	ui_print " > Installing NanoMod (system mode)"
+fi
+
 get_config .nanomod-overlay
 if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODOVERLAY=0
@@ -377,139 +575,38 @@ else	create_nanomodsetup
 fi
 
 if [ "${MODE}" = "MAGISK" ]; then
-  if grep -q nanomod.reinstall=1 $nanomodsetup; then
-	ui_print " << backup services.jar"
-	cp $MODPATH/system/framework/services.jar \
-		/tmp/services.jar
-  fi
-
-  # Create mod paths
-  rm -rf $MODPATH 2>/dev/null
-  mkdir -p $MODPATH
-
-  # Copy files
-  ui_print " << populating module"
-  unzip -o "$ZIP" "system/*" -d $MODPATH
-else
-  ui_print " << populating files"
-  unzip -o "${ZIP}" "system/*" -d /
+	magisk_install_dirs
 fi
 
-# remove mapsv1 if not requested
-if grep -q nanomod.mapsv1=1 $nanomodsetup; then
-	ui_print " << with Maps API version 1"
-else	rm $MODPATH/system/etc/permissions/com.google.android.maps.xml
-	rm $MODPATH/system/framework/com.google.android.maps.jar
-	ui_print " << without Maps API version 1"
-fi
-
-# remove Yalp Store if Play Store requested and vice-versa
-if grep -q nanomod.play=1 $nanomodsetup; then
-	for app in FakeStore YalpStore; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
-	done
-	ui_print " << with Play Store"
-elif grep -q nanomod.play=2 $nanomodsetup; then
-	for app in Phonesky; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
-	done
-	ui_print " << with Yalp Store"
-else
-	for app in FakeStore YalpStore Phonesky; do
-		rm -rf $MODPATH/system/app/$app
-		rm -rf $MODPATH/system/priv-app/$app
-	done
-	ui_print " << without App Store"
-fi
+install_microg
+install_mapsv1
+install_store
+install_misc
 
 if [ "${MODE}" = "MAGISK" ]; then
-  # Setup Overrides
-  if grep -q nanomod.overlay=1 $nanomodsetup; then
-	$MODPATH/system/bin/nanomod-overlay --update
-	ui_print " << with /system applications override"
-  else	ui_print " << without /system applications override"
-	if [ "$NO_NANOMODOVERLAY" -eq 1 ]; then
-		rm $nanomodoverlay
-	fi
-  fi
-
-  if grep -q nanomod.reinstall=1 $nanomodsetup; then
-	ui_print " << restore services.jar"
-	mkdir $MODPATH/system/framework
-	cp /tmp/services.jar \
-		$MODPATH/system/framework/services.jar
-  fi
+	magisk_install_postinst
+	magisk_install_finish
 fi
 
 if [ "$NO_NANOMODSETUP" -eq 1 ]; then
 	rm $nanomodsetup
 fi
 
-if [ "${MODE}" = "MAGISK" ]; then
-  # Handle replace folders
-  for TARGET in $REPLACE; do
-    mktouch $MODPATH$TARGET/.replace
-  done
-
-  # Auto Mount
-  if $AUTOMOUNT; then
-    mktouch $MODPATH/auto_mount
-  fi
-
-  # prop files
-  if $PROPFILE; then
-    cp -af $INSTALLER/common/system.prop $MODPATH/system.prop
-  fi
-
-  # Module info
-  cp -af $INSTALLER/module.prop $MODPATH/module.prop
-
-  if $BOOTMODE; then
-    # Update info for Magisk Manager
-    mktouch /magisk/$MODID/update
-    cp -af $INSTALLER/module.prop /magisk/$MODID/module.prop
-  fi
-
-  # post-fs-data mode scripts
-  if $POSTFSDATA; then
-    cp -af $INSTALLER/common/post-fs-data.sh $MODPATH/post-fs-data.sh
-  fi
-
-  # service mode scripts
-  if $LATESTARTSERVICE; then
-    cp -af $INSTALLER/common/service.sh $MODPATH/service.sh
-  fi
-fi
-
 ui_print "<< setting permissions"
 set_permissions
-
-for binary in bash bashbug nanomod-overlay; do
-	chmod 0755 $MODPATH/system/bin/${binary}
-done
+install_permissions
 
 ui_print " "
 ui_print " Thanks for using NanoMod "
 ui_print " "
 
 if [ "${MODE}" = "MAGISK" ];then
-  umount $MOUNTPATH
-  losetup -d $LOOPDEVICE
-  rmdir $MOUNTPATH
-
-  # Shrink the image if possible
-  image_size_check $IMG
-  NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
-  if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-    resize2fs $IMG ${NEWDATASIZE}M
-  fi
+	magisk_install_cleanup
 fi
 
 if ! $BOOTMODE; then
-  umount /system
-  umount /vendor 2>/dev/null
+	umount /system 2>/dev/null
+	umount /vendor 2>/dev/null
 fi
 
 exit 0
