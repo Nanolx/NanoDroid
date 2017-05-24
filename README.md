@@ -145,7 +145,7 @@ nanomod.play=1
 nanomod.reinstall=0
 nanomod.overlay=1
 nanomod.zelda=1
-nanomod.mapsv1=0
+nanomod.mapsv1=1
 ```
 
 the **microg only package** only supports the following options
@@ -154,7 +154,7 @@ the **microg only package** only supports the following options
 nanomod.play=1
 nanomod.reinstall=0
 nanomod.overlay=0
-nanomod.mapsv1=0
+nanomod.mapsv1=1
 ```
 
 where `1` means `on` and `0` means `off`. See the default settings [![GitHub Link](images/github.png)](.nanomod-setup). Description:
