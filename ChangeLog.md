@@ -3,7 +3,7 @@
 ## 9.0 in-dev
 * Internal Changes
   * shiny new installer
-    * currently only for the full package
+  * install Maps API version 1 by default
 * Updates
   * Simple Calendar (2.4.3)
   * Simple Gallery (2.10.4)
