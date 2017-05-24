@@ -645,6 +645,7 @@ ui_print " "
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_setup
+	magisk_install_preinst
 fi
 
 ui_print " > prepare installation"
