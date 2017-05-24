@@ -100,7 +100,7 @@ Special Thanks to the beta testers
 * install desired Kernel (if any)
 * install **Magisk**
   * recommended, but not required
-  * if ** Magisk** is installed, NanoMod will be installed as Magisk-Module, else it will install into `/system` directly
+  * if **Magisk** is installed, NanoMod will be installed as Magisk-Module, else it will install into `/system` directly
 * install **NanoMod**
   * for **microG** to work, your ROM needs to have fake signature spoofing enabled (or a **deodexed** ROM to patch yourself)
   * to achieve that either
