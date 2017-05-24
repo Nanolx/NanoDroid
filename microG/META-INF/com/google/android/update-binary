@@ -430,18 +430,13 @@ install_init () {
 }
 
 install_microg () {
-	# install microG if requested
-	if grep -q nanomod.microg=1 $nanomodsetup; then
-		for app in nlpBackendIchnaea nlpBackendNomiantim; do
-			cp -r ${INSTALLER}/system/app/${app} ${MODPATH}/system/app/
-		done
-		for app in DroidGuard GmsCore GsfProxy; do
-			cp -r ${INSTALLER}/system/priv-app/${app} \
-				${MODPATH}/system/priv-app/
-		done
-		ui_print " << with microG"
-	else	ui_print " << without microG"
-	fi
+	for app in nlpBackendIchnaea nlpBackendNomiantim; do
+		cp -r ${INSTALLER}/system/app/${app} ${MODPATH}/system/app/
+	done
+	for app in DroidGuard GmsCore GsfProxy; do
+		cp -r ${INSTALLER}/system/priv-app/${app} \
+			${MODPATH}/system/priv-app/
+	done
 }
 
 install_mapsv1 () {
@@ -548,6 +543,7 @@ ui_print " "
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_setup
+	magisk_install_preinst
 fi
 
 ui_print " > prepare installation"
