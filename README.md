@@ -28,6 +28,7 @@
   * **microG** GmsCore [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GmsCore) and **Play Store** modified to allow (in-)app-purchases
   * support for Maps API version 1 optionally available (see **Alter Installation** below)
   * both on-pc and on-device framework-patchers available (see **Variants** and **Installation** below)
+    * support both installation into the **NanoMod Magisk** modules or directly into `/system`
 * install **F-Droid** [![F-Droid Link](images/fdroid.png)](http://www.fdroid.org) and many OpenSource applications
   * including the privileged extension, so you don't need to enable `Unkown Sources` to use F-Droid
 * install GNU **Bash** Shell [![GNU Link](images/gnu.png)](https://www.gnu.org/software/bash/)

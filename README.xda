@@ -40,6 +40,9 @@
   [*][b]microG[/b] GmsCore [url=https://github.com/microg/android_packages_apps_GmsCore][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/github.png[/img][/url] and [b]Play Store[/b] modified to allow (in-)app-purchases
   [*]support for Maps API version 1 optionally available (see [b]Alter Installation[/b] below)
   [*]both on-pc and on-device framework-patchers available (see [b]Variants[/b] and [b]Installation[/b] below)
+    [list]
+    [*]support both installation into the [b]NanoMod Magisk[/b] modules or directly into [u][b]/system[/u][/b]
+    [/list]
   [/list]
 [*]install [b]F-Droid[/b] [url=http://www.fdroid.org][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/fdroid.png[/img][/url] and many OpenSource applications
   [list]
