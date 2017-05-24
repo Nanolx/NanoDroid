@@ -411,7 +411,6 @@ fi
 
 ui_print "<< setting permissions"
 set_permissions
-install_permissions
 
 ui_print " "
 ui_print " Thanks for using NanoMod "
