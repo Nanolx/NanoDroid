@@ -37,8 +37,10 @@ _ver() {
 			"${PWD}"/"${module}"/module.prop
 	done
 
-	sed -e "s/\"      NanoMod.*/\"      NanoMod ${2}.${3}     \"/" -i \
-		"${PWD}"/framework-patcher/META-INF/com/google/android/update-binary
+	for module in uninstaller framework-patcher; do
+		sed -e "s/\"      NanoMod.*/\"      NanoMod ${2}.${3}     \"/" -i \
+			"${PWD}"/"${module}"/META-INF/com/google/android/update-binary
+	done
 }
 
 _bump () {
@@ -139,6 +141,20 @@ _patcher() {
 	echo "Zipfile ${ZIP} created"
 }
 
+_uninstaller() {
+	ZIP="${CWD}/NanoMod-uninstaller-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	cd "${CWD}"/uninstaller
+	zip -r "${ZIP}" *
+	cd "${CWD}"
+
+	zip "${ZIP}" README.md
+	zip "${ZIP}" ChangeLog.md
+
+	echo "Zipfile ${ZIP} created"
+}
+
 _unpacklibs () {
 
 	for apk in Overlay/system/*app/*/*.apk; do
@@ -206,11 +222,16 @@ case ${1} in
 		_patcher
 	;;
 
+	uninstaller )
+		_uninstaller
+	;;
+
 	all )
 		_zip
 		_microg
 		_fdroid
 		_patcher
+		_uninstaller
 	;;
 
 	unpacklibs )
@@ -232,6 +253,7 @@ possible opts:
 	microg			| create module zip from repo *microG only*
 	fdroid			| create module zip from repo *fdroid only*
 	patcher			| create framework-patcher zip from repo
+	uninstaller		| create uninstaller zip from repo
 	all			| create all zips from repo
 	unpacklibs		| unpack arm/ arm64 libs from apks
 	zipalign		| zipalign all apks

@@ -1,0 +1,150 @@
+#!/sbin/sh
+
+OUTFD=$2
+ZIP=$3
+
+readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
+if [ "$?" -eq "0" ]; then
+  OUTFD=0
+
+  for FD in `ls /proc/$$/fd`; do
+    readlink /proc/$$/fd/$FD 2>/dev/null | grep pipe >/dev/null
+    if [ "$?" -eq "0" ]; then
+      ps | grep " 3 $FD " | grep -v grep >/dev/null
+      if [ "$?" -eq "0" ]; then
+        OUTFD=$FD
+        break
+      fi
+    fi
+  done
+fi
+
+ui_print() {
+  echo -n -e "ui_print $@\n" >> /proc/self/fd/$OUTFD
+  echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+}
+
+is_mounted() {
+  if [ ! -z "$2" ]; then
+    cat /proc/mounts | grep $1 | grep $2, >/dev/null
+  else
+    cat /proc/mounts | grep $1 >/dev/null
+  fi
+  return $?
+}
+
+error () {
+	ui_print "${@}"
+	ui_print " "
+	ui_print " ** post your /tmp/recovery.log"
+	ui_print " ** in the XDA support thread"
+	ui_print " "
+	exit 1
+}
+
+request_size_check() {
+  reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
+  reqSizeM=$((reqSizeM / 1048576 + 1))
+}
+
+image_size_check() {
+  e2fsck -yf $1
+  curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
+  curUsedM=`echo "$curBlocks" | cut -d/ -f1`
+  curSizeM=`echo "$curBlocks" | cut -d/ -f1`
+  curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
+  curUsedM=$((curUsedM * 4 / 1024 + 1))
+  curSizeM=$((curSizeM * 4 / 1024))
+}
+
+shrink_magisk_img () {
+	image_size_check /data/magisk.img
+	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
+	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
+		resize2fs $IMG ${NEWDATASIZE}M
+	fi
+}
+
+mount_image() {
+  if [ ! -d "$2" ]; then
+    mount -o rw,remount rootfs /
+    mkdir -p $2 2>/dev/null
+    [ ! -d "$2" ] && return 1
+  fi
+  if (! is_mounted $2); then
+    LOOPDEVICE=
+    for LOOP in 0 1 2 3 4 5 6 7; do
+      if (! is_mounted $2); then
+        LOOPDEVICE=/dev/block/loop$LOOP
+        if [ ! -e "$LOOPDEVICE" ]; then
+          mknod $LOOPDEVICE b 7 $LOOP
+        fi
+        losetup $LOOPDEVICE $1
+        if [ "$?" -eq "0" ]; then
+          mount -t ext4 -o loop $LOOPDEVICE $2
+          if (! is_mounted $2); then
+            /system/bin/toolbox mount -t ext4 -o loop $LOOPDEVICE $2
+          fi
+          if (! is_mounted $2); then
+            /system/bin/toybox mount -t ext4 -o loop $LOOPDEVICE $2
+          fi
+        fi
+        if (is_mounted $2); then
+          break;
+        fi
+      fi
+    done
+  fi
+}
+
+ui_print " "
+ui_print "********************************"
+ui_print "      NanoMod 9.0.20171231      "
+ui_print "       created by @Nanolx       "
+ui_print "           Uninstaller          "
+ui_print "********************************"
+ui_print " "
+
+
+if ! (is_mounted /data); then
+	mount -orw /data || error " !! failed to mount /data"
+fi
+
+if [ -f /data/magisk.img ]; then
+	mount_image /data/magisk.img /magisk || \
+		error " !! failed to mount /magisk"
+else	error " !! magisk is not installed"
+fi
+
+if [ -d /magisk/NanoMod ]; then
+	ui_print " <<  uninstalling: NanoMod (full)"
+	rm -rf /magisk/NanoMod
+fi
+
+if [ -d /magisk/NanoModfdroid ]; then
+	ui_print " <<  uninstalling: NanoMod (F-Droid)"
+	rm -rf /magisk/NanoModfdroid
+fi
+
+if [ -d /magisk/NanoModmicroG ]; then
+	ui_print " <<  uninstalling: NanoMod (microG)"
+	rm -rf /magisk/NanoModmicroG
+fi
+
+ui_print " >> clean up"
+umount /magisk
+losetup -d $LOOPDEVICE
+rmdir /magisk
+shrink_magisk_img || \
+	error " !! failed to shrink magisk.img"
+
+umount /data
+umount /system
+
+ui_print " "
+ui_print " > Done!"
+ui_print " "
+ui_print "Thanks for giving NanoMod a try"
+ui_print " "
+
+exit 0
