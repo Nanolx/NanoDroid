@@ -9,6 +9,9 @@
   * fix **GNU Bash** installation in microG package
   * drop Launchers from list of pseudo-debloated applications in microG package
   * install Maps API version 1 by default
+  * add an **uninstaller** zip which will uninstall any NanoMod Magisk Module
+    * checks for all three (full, F-Droid and microG) packages and removes them if found
+    * does not work for system mode installation (and there won't be an uninstaller for that)
 * Updates
   * Simple Calendar (2.4.3)
   * Simple Gallery (2.10.4)
