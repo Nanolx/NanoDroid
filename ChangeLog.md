@@ -15,6 +15,7 @@
   * Nominatim Nlp Backend (1.2.2)
   * Termux (0.50)
   * PlayStore (7.7.57.O)
+  * VLC (2.1.8~beta)
 
 ## 8.0.20170521
 * Internal Changes
