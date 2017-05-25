@@ -17,6 +17,7 @@
   * Termux (0.50)
   * PlayStore (7.7.57.O)
   * VLC (2.1.8~beta)
+  * Yalp Store (0.15)
 
 ## 8.0.20170521
 * Internal Changes
