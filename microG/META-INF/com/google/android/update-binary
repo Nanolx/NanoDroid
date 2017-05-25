@@ -177,7 +177,6 @@ Email
 Exchange2
 Gallery2
 Gello
-NexusLauncher
 Phonograph
 PhotoTable
 ResurrectionStats
@@ -196,12 +195,10 @@ FMRadio
 Gallery2
 OmniSwitch
 Recorder
-PixelLauncher
 Screencast
 Snap
 SnapdragonCamera
 SoundRecorder
-Trebuchet
 mGerrit
 )"	> $nanomodoverlay
 }
