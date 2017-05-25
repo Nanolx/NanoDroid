@@ -227,6 +227,8 @@ The following applications are pseudo-debloated by default
 
 #### Alter the list of pseudo-debloated applications
 
+**This feature is only available when installing as Magisk Module!**
+
 You can add or remove applications from the list by modifying the file
 
 `.nanomod-overlay`
