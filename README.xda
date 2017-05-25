@@ -22,7 +22,7 @@
   [/list]
 [*]if you don't have [b]Magisk[/b] installed, [b]NanoMod[/b] will be installed directly into [u]/system[/u]
   [list]
-  [*][u][b]nanomod-overlay[/b][/u] does not work in [b]system-mode[/b] (the overlay feature relies on [b]Magisk[/b])
+  [*][u][b]nanomod-overlay[/b][/u] does not work in [b]system-mode[/b] (the pseudo-debloat feature relies on [b]Magisk[/b])
   [/list]
 [*]install [b]microG[/b] [url=http://microg.org][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/microg.png[/img][/url] with either official [b]Play Store[/b] or unofficial [b]Yalp Store[/b]
   [list]
@@ -53,6 +53,10 @@
 [*]install [b]The Legend of Zelda[/b] ringtones and sounds [url=http://www.zelda.com/][img]https://raw.githubusercontent.com/Nanolx/NanoMod/master/images/zelda.png[/img][/url]
   [list]
   [*]it's dangerous to root alone
+  [/list]
+[*][b]Uninstaller[/b] zip for the Magisk Modules
+  [list]
+  [*]when installed in system mode, simply re-flash your ROM to wipe [b]NanoMod[/b]
   [/list]
 [*][b]init[/b] scripts
   [list]

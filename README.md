@@ -16,7 +16,7 @@
   * boot process may take a bit longer as **NanoMod** is a pretty big **Magisk** Module
   * for more information on **Magisk** [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk)
 * if you don't have **Magisk** installed, **NanoMod** will be installed directly into `/system`
-  * `nanomod-overlay` does not work in **system-mode** (the overlay feature relies on `Magisk`)
+  * `nanomod-overlay` does not work in **system-mode** (the pseudo-debloat feature relies on **Magisk**)
 * install **microG** [![Web Link](images/microg.png)](http://microg.org/)
   * with **Mozilla** location provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
   * with **Nominatim** adress provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
@@ -35,6 +35,8 @@
 * install GNU **Nano** Shell Editor [![GNU Link](images/gnu.png)](https://www.nano-editor.org/)
 * install **The Legend of Zelda** rintones and sounds [![Nintendo Link](images/zelda.png)](http://www.zelda.com/)
   * it's dangerous to root alone
+* **Uninstaller** zip for the Magisk Modules
+ * when installed in system mode, simply re-flash your ROM to wipe **NanoMod**
 * **init** scripts
   * file system trim
   * log file cleanup
