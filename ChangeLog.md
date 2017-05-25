@@ -19,6 +19,8 @@
   * VLC (2.1.8~beta)
   * Yalp Store (0.15)
   * Twidere (3.6.15)
+  * OpenLauncher (0.5.1)
+  * Open Camera (1.38.1)
 
 ## 8.0.20170521
 * Internal Changes
