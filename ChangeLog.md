@@ -13,7 +13,7 @@
     * checks for all three (full, F-Droid and microG) packages and removes them if found
     * does not work for system mode installation (and there won't be an uninstaller for that)
 * Updates
-  * Simple Calendar (2.4.3)
+  * Simple Calendar (2.5.0)
   * Simple Gallery (2.10.4)
   * NewPipe (0.9.7)
   * Nominatim Nlp Backend (1.2.2)
