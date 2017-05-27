@@ -95,6 +95,18 @@ set_perm_recursive() {
 	done
 }
 
+set_perm_dir () {
+	set_perm_recursive $1 root root 0644 0644
+}
+
+set_perm_data () {
+	set_perm $1 root root 0644
+}
+
+set_perm_bin () {
+	set_perm $1 root root 0755 
+}
+
 mktouch() {
 	mkdir -p ${1%/*}
 	if [ -z "$2" ]; then
@@ -481,10 +493,12 @@ install_microg () {
 	if grep -q nanomod.microg=1 $nanomodsetup; then
 		for app in nlpBackendIchnaea nlpBackendNomiantim; do
 			cp -r ${INSTALLER}/system/app/${app} ${MODPATH}/system/app/
+			set_perm_dir ${MODPATH}/system/app/${app}
 		done
 		for app in DroidGuard GmsCore GsfProxy; do
 			cp -r ${INSTALLER}/system/priv-app/${app} \
 				${MODPATH}/system/priv-app/
+			set_perm_dir ${MODPATH}/system/priv-app/${app}
 		done
 		ui_print " << with microG"
 	else	ui_print " << without microG"
@@ -495,7 +509,9 @@ install_mapsv1 () {
 	# install mapsv1 if requested
 	if grep -q nanomod.mapsv1=1 $nanomodsetup; then
 		cp -r ${INSTALLER}/system/etc/permissions/ ${MODPATH}/system/etc/
+		set_perm_data ${MODPATH}/system/etc/permissions/com.google.android.maps.xml
 		cp -r ${INSTALLER}/system/framework/ ${MODPATH}/system/
+		set_perm_data ${MODPATH}/system/framework/com.google.android.maps.jar
 		ui_print " << with Maps API version 1"
 	else	ui_print " << without Maps API version 1"
 	fi
@@ -508,6 +524,8 @@ install_fdroid () {
 			${MODPATH}/system/app/
 		cp -r ${INSTALLER}/system/priv-app/FDroidPrivileged \
 			${MODPATH}/system/priv-app/
+		set_perm_dir ${MODPATH}/system/app/FDroid
+		set_perm_dir ${MODPATH}/system/priv-app/FDroidPrivileged
 		ui_print " << with F-Droid"
 	else	ui_print " << without F-Droid"
 	fi
@@ -524,15 +542,18 @@ install_apps () {
 			Termux Twidere XDALabs YahooWeatherProvider; do
 				if grep -q "^${app}$" $nanomodapps; then
 					cp -r ${INSTALLER}/system/app/${app} ${MODPATH}/system/app/
+					set_perm_dir ${MODPATH}/system/app/${app}
 					ui_print " <<> ${app}"
 				fi
 		done
 
 		if [[ ${ARCH} == arm ]]; then
 			cp -r ${INSTALLER}/system/app/VLC32 ${MODPATH}/system/app/VLC
+			set_perm_dir ${MODPATH}/system/app/VLC
 			ui_print " <<> VLC"
 		elif [[ ${ARCH} == arm64 ]]; then
 			cp -r ${INSTALLER}/system/app/VLC64 ${MODPATH}/system/app/VLC
+			set_perm_dir ${MODPATH}/system/app/VLC
 			ui_print " <<> VLC"
 		fi
 	else	ui_print " << without applications"
@@ -544,12 +565,15 @@ install_store () {
 	if grep -q nanomod.play=1 $nanomodsetup; then
 		cp -r ${INSTALLER}/system/priv-app/Phonesky \
 			${MODPATH}/system/priv-app/
+		set_perm_dir ${MODPATH}/system/priv-app/Phonesky
 		ui_print " << with Play Store"
 	elif grep -q nanomod.play=2 $nanomodsetup; then
 		cp -r ${INSTALLER}/system/priv-app/FakeStore \
 			${MODPATH}/system/priv-app/
 		cp -r ${INSTALLER}/system/priv-app/YalpStore \
 			${MODPATH}/system/priv-app/
+		set_perm_dir ${MODPATH}/system/priv-app/YalpStore 
+		set_perm_dir ${MODPATH}/system/priv-app/FakeStore
 		ui_print " << with Yalp Store"
 	else	ui_print " << without App Store"
 	fi
@@ -558,6 +582,7 @@ install_store () {
 install_zelda () {
 	if grep -q nanomod.zelda=1 $nanomodsetup; then
 		cp -r ${INSTALLER}/system/media/ ${MODPATH}/system/
+		set_perm_dir ${MODPATH}/system/media/
 		ui_print " << with Zelda sounds"
 	else	ui_print " << without Zelda sounds"
 	fi
@@ -570,16 +595,23 @@ install_misc () {
 	cp -r ${INSTALLER}/system/etc/terminfo ${MODPATH}/system/etc/
 	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
 	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
-}
 
-install_permissions () {
+	for dir in system/etc/terminfo system/share; do
+		set_perm_dir ${MODPATH}/${dir}
+	done
+
+	for config in bashrc bash_logout; do
+		set_perm_data ${MODPATH}/system/etc/${config}
+	done
+
 	for binary in aapt aopt bash bashbug nano nano.bin nanomod-overlay; do
-		chmod 0755 ${MODPATH}/system/bin/${binary}
+		set_perm_bin ${MODPATH}/system/bin/${binary}
 	done
 
 	for init in fstrim logscleaner sqlite; do
-		chmod 0755 ${MODPATH}/system/etc/init.d/${init}
+		set_perm_bin ${MODPATH}/system/etc/init.d/${init}
 	done
+
 }
 
 ##########################################################################################
@@ -703,10 +735,6 @@ fi
 if [ "$NO_NANOMODAPPS" -eq 1 ]; then
 	rm $nanomodapps
 fi
-
-ui_print "<< setting permissions"
-set_permissions
-install_permissions
 
 ui_print " "
 ui_print " Thanks for using NanoMod "
