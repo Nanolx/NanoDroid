@@ -95,6 +95,18 @@ set_perm_recursive() {
 	done
 }
 
+set_perm_dir () {
+	set_perm_recursive $1 root root 0644 0644
+}
+
+set_perm_data () {
+	set_perm $1 root root 0644
+}
+
+set_perm_bin () {
+	set_perm $1 root root 0755
+}
+
 mktouch() {
 	mkdir -p ${1%/*}
 	if [ -z "$2" ]; then
@@ -440,7 +452,9 @@ install_mapsv1 () {
 	# install mapsv1 if requested
 	if grep -q nanomod.mapsv1=1 $nanomodsetup; then
 		cp -r ${INSTALLER}/system/etc/permissions/ ${MODPATH}/system/etc/
+		set_perm_data ${MODPATH}/system/etc/permissions/com.google.android.maps.xml
 		cp -r ${INSTALLER}/system/framework/ ${MODPATH}/system/
+		set_perm_data ${MODPATH}/system/framework/com.google.android.maps.jar
 		ui_print " << with Maps API version 1"
 	else	ui_print " << without Maps API version 1"
 	fi
@@ -451,12 +465,15 @@ install_store () {
 	if grep -q nanomod.play=1 $nanomodsetup; then
 		cp -r ${INSTALLER}/system/priv-app/Phonesky \
 			${MODPATH}/system/priv-app/
+		set_perm_dir ${MODPATH}/system/priv-app/Phonesky
 		ui_print " << with Play Store"
 	elif grep -q nanomod.play=2 $nanomodsetup; then
 		cp -r ${INSTALLER}/system/priv-app/FakeStore \
 			${MODPATH}/system/priv-app/
 		cp -r ${INSTALLER}/system/priv-app/YalpStore \
 			${MODPATH}/system/priv-app/
+		set_perm_dir ${MODPATH}/system/priv-app/YalpStore
+		set_perm_dir ${MODPATH}/system/priv-app/FakeStore
 		ui_print " << with Yalp Store"
 	else	ui_print " << without App Store"
 	fi
@@ -468,12 +485,19 @@ install_misc () {
 	cp -r ${INSTALLER}/system/etc/terminfo ${MODPATH}/system/etc/
 	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
 	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
-}
 
-install_permissions () {
-	for binary in bash bashbug nanomod-overlay; do
-		chmod 0755 ${MODPATH}/system/bin/${binary}
+	for dir in system/etc/terminfo system/share; do
+		set_perm_dir ${MODPATH}/${dir}
 	done
+
+	for config in bashrc bash_logout; do
+		set_perm_data ${MODPATH}/system/etc/${config}
+	done
+
+	for binary in bash bashbug nanomod-overlay; do
+		set_perm_bin ${MODPATH}/system/bin/${binary}
+	done
+
 }
 
 ##########################################################################################
@@ -584,10 +608,6 @@ fi
 if [ "$NO_NANOMODSETUP" -eq 1 ]; then
 	rm $nanomodsetup
 fi
-
-ui_print "<< setting permissions"
-set_permissions
-install_permissions
 
 ui_print " "
 ui_print " Thanks for using NanoMod "
