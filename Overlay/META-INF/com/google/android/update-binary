@@ -104,7 +104,7 @@ set_perm_data () {
 }
 
 set_perm_bin () {
-	set_perm $1 root root 0755 
+	set_perm $1 root root 0755
 }
 
 mktouch() {
@@ -572,7 +572,7 @@ install_store () {
 			${MODPATH}/system/priv-app/
 		cp -r ${INSTALLER}/system/priv-app/YalpStore \
 			${MODPATH}/system/priv-app/
-		set_perm_dir ${MODPATH}/system/priv-app/YalpStore 
+		set_perm_dir ${MODPATH}/system/priv-app/YalpStore
 		set_perm_dir ${MODPATH}/system/priv-app/FakeStore
 		ui_print " << with Yalp Store"
 	else	ui_print " << without App Store"
