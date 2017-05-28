@@ -121,7 +121,7 @@ for path in ${config_locations}; do
 	for file in ${config_files}; do
 		if test -r "${path}/${file}" -a -f "${path}/${file}"; then
 			rm -fv "${path}/${file}"
-			ui_print " <<> ${path}/${file}"
+			ui_print " <<> removing ${path}/${file}"
 		fi
 	done
 done
@@ -148,6 +148,17 @@ if [ -d /magisk/NanoModmicroG ]; then
 	ui_print " <<  uninstalling: NanoMod (microG)"
 	rm -rf /magisk/NanoModmicroG
 fi
+
+if [ -f /system/.nanomod-patcher ]; then
+	if ! (is_mounted /system); then
+		mount -orw /system || error " !! failed to mount /system"
+	else	mount -orw,remount /system || error " !! failed to re-mount /system read-write"
+	fi
+
+	rm -fv /system/.nanomod-patcher
+	ui_print " <<> removing /system/.nanomod-patcher"
+fi
+
 
 ui_print " >> clean up"
 umount /magisk
