@@ -96,7 +96,7 @@ set_perm_recursive() {
 }
 
 set_perm_dir () {
-	set_perm_recursive $1 root root 0644 0644
+	set_perm_recursive $1 root root 0755 0644
 }
 
 set_perm_data () {
