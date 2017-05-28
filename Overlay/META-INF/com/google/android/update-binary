@@ -614,7 +614,8 @@ install_misc () {
 		set_perm_bin ${MODPATH}/system/etc/init.d/${init}
 	done
 
-	sed -e "s/@ZIPDIR@/$(dirname ${ZIP})/" -i \
+	ZIPDIR=$(dirname "${ZIP}")
+	sed -e "s|@ZIPDIR@|${ZIPDIR}|" -i \
 		${MODPATH}/system/bin/nanomod-overlay
 
 }
