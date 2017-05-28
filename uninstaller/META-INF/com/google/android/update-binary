@@ -149,12 +149,12 @@ if [ -d /magisk/NanoModmicroG ]; then
 	rm -rf /magisk/NanoModmicroG
 fi
 
-if [ -f /system/.nanomod-patcher ]; then
-	if ! (is_mounted /system); then
-		mount -orw /system || error " !! failed to mount /system"
-	else	mount -orw,remount /system || error " !! failed to re-mount /system read-write"
-	fi
+if ! (is_mounted /system); then
+	mount -orw /system || error " !! failed to mount /system"
+else	mount -orw,remount /system || error " !! failed to re-mount /system read-write"
+fi
 
+if [ -f /system/.nanomod-patcher ]; then
 	rm -fv /system/.nanomod-patcher
 	ui_print " <<> removing /system/.nanomod-patcher"
 fi
