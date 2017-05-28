@@ -83,6 +83,12 @@ Special Thanks to the beta testers
   * don't flash this, if you already have the Full package
 * patcher package
   * use **in addition** to Full or microG package to patch the framework to support fake signature spoofing (required for microG to work)
+* uninstaller package
+  * uninstalls NanoMod when installed as Magisk Module
+    * checks for all three Full, microG and F-Droid package and removes any found
+  * when NanoMOd is installed in System Mode the uninstaller will only remove the configuration files
+    * re-flash the ROM to get rid of NanoMod when installed in System Mode
+  * using the uninstaller is also recommended when switching between Full and microG package as the default values for the configuration files differ
 
 ## Installation
 
