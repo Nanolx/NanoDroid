@@ -112,6 +112,7 @@ ui_print " "
 
 if ! (is_mounted /data); then
 	mount -orw /data || error " !! failed to mount /data"
+else	mount -orw,remount /data || error " !! failed to re-mount /data read-write"
 fi
 
 ui_print " << Removing configuration files (if any)"
