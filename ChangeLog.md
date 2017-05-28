@@ -19,7 +19,7 @@
   * NewPipe (0.9.7)
   * Nominatim Nlp Backend (1.2.2)
   * Termux (0.50)
-  * PlayStore (7.7.57.O)
+  * PlayStore (7.8.74.P)
   * VLC (2.1.8~beta)
   * Yalp Store (0.15)
   * Twidere (3.6.15)
