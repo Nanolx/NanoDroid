@@ -9,6 +9,9 @@
   * fix **GNU Bash** installation in microG package
   * drop Launchers from list of pseudo-debloated applications in microG package
   * disable pseudo-debloat feature in the microG package by default
+  * NanoMod installers for full and microG package support configuration files located in the same directory as the zip, make the `nanomod-overlay` script remember that path
+    * also fixes bug that `nanomod-overlay` does not work outside of the installer
+  * better error message in `nanomod-overlay` script if configuration file does not exist
   * install Maps API version 1 by default
   * add an **uninstaller** zip which will uninstall any NanoMod Magisk Module
     * checks for all three (full, F-Droid and microG) packages and removes them if found
