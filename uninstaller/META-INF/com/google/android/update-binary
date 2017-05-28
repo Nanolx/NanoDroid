@@ -128,7 +128,9 @@ done
 if [ -f /data/magisk.img ]; then
 	mount_image /data/magisk.img /magisk || \
 		error " !! failed to mount /magisk"
-else	error " !! magisk is not installed, exiting"
+else
+	ui_print " ++ Magisk is not installed, exiting"
+	exit 0
 fi
 
 if [ -d /magisk/NanoMod ]; then
