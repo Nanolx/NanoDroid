@@ -15,7 +15,7 @@
     * does not work for system mode installation (and there won't be an uninstaller for that)
 * Updates
   * Simple Calendar (2.5.0)
-  * Simple Gallery (2.10.4)
+  * Simple Gallery (2.10.6)
   * NewPipe (0.9.7)
   * Nominatim Nlp Backend (1.2.2)
   * Termux (0.50)
