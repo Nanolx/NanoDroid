@@ -28,7 +28,7 @@ fi
 
 if [[ -f ${config} ]]; then
 	source ${config}
-else	echo "${config} does not exist!"
+else	echo "no '.nanomod-overlay' configuration file found!"
 	exit 1
 fi
 
