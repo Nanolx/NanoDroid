@@ -1,7 +1,7 @@
 id=nanomodmicrog
 name=NanoMod (microG)
-version=v9.0.20171231
-versionCode=9
+version=v9.0.20170528
+versionCode=10
 author=Nanolx
 description=NanoMod (microG only) for LineageOS/AOSP based ROMs
 template=3

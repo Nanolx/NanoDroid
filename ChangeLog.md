@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 9.0 in-dev
+## 9.0.20170528
 * Internal Changes
   * shiny new installer
     * cleaner and easier maintainable code

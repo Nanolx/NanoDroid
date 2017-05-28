@@ -2,7 +2,7 @@
 
 ## Current Stable Release
 
-8.0.20170521
+9.0.20170528
 
 * Stable Downloads [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
 * Archived Downloads [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?w=files&flid=156387)
