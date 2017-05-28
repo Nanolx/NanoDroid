@@ -97,6 +97,10 @@ mount_image() {
   fi
 }
 
+# check for configuration files
+config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
+config_files=".nanomod-setup .nanomod-apps .nanomod-overlay"
+
 ui_print " "
 ui_print "********************************"
 ui_print "      NanoMod 9.0.20171231      "
@@ -110,10 +114,21 @@ if ! (is_mounted /data); then
 	mount -orw /data || error " !! failed to mount /data"
 fi
 
+ui_print " << Removing configuration files (if any)"
+
+for path in ${config_locations}; do
+	for file in ${config_files}; do
+		if test -r "${path}/${file}" -a -f "${path}/${file}"; then
+			rm -fv "${path}/${file}"
+			ui_print " <<> ${path}/${file}"
+		fi
+	done
+done
+
 if [ -f /data/magisk.img ]; then
 	mount_image /data/magisk.img /magisk || \
 		error " !! failed to mount /magisk"
-else	error " !! magisk is not installed"
+else	error " !! magisk is not installed, exiting"
 fi
 
 if [ -d /magisk/NanoMod ]; then
