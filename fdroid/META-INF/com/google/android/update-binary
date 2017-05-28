@@ -224,7 +224,7 @@ magisk_install_dirs () {
 }
 
 magisk_install_setup () {
-	ui_print "> setup Magisk environment"
+	ui_print " > setup Magisk environment"
 
 	if is_mounted /data; then
 		IMG=/data/$IMGNAME

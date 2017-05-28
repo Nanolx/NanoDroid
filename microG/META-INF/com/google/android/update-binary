@@ -310,7 +310,7 @@ magisk_install_dirs () {
 }
 
 magisk_install_setup () {
-	ui_print "> setup Magisk environment"
+	ui_print " > setup Magisk environment"
 
 	if is_mounted /data; then
 		IMG=/data/$IMGNAME
@@ -482,7 +482,7 @@ install_store () {
 }
 
 install_misc () {
-	ui_print " > GNU Bash, NanoMod-Overlay"
+	ui_print " < GNU Bash, NanoMod-Overlay"
 	cp -r ${INSTALLER}/system/bin ${MODPATH}/system/
 	cp -r ${INSTALLER}/system/etc/terminfo ${MODPATH}/system/etc/
 	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/

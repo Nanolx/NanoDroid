@@ -360,7 +360,7 @@ magisk_install_dirs () {
 }
 
 magisk_install_setup () {
-	ui_print "> setup Magisk environment"
+	ui_print " > setup Magisk environment"
 
 	if is_mounted /data; then
 		IMG=/data/$IMGNAME
@@ -591,7 +591,7 @@ install_zelda () {
 }
 
 install_misc () {
-	ui_print " > GNU Bash, GNU Nano, NanoMod-Overlay"
+	ui_print " < GNU Bash, GNU Nano, NanoMod-Overlay"
 	cp -r ${INSTALLER}/system/bin ${MODPATH}/system/
 	cp -r ${INSTALLER}/system/etc/init.d ${MODPATH}/system/etc/
 	cp -r ${INSTALLER}/system/etc/terminfo ${MODPATH}/system/etc/
