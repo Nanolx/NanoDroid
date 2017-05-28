@@ -221,7 +221,7 @@ create_nanomodsetup () {
 	NO_NANOMODSETUP=1
 	echo "nanomod.reinstall=0
 nanomod.play=1
-nanomod.overlay=1
+nanomod.overlay=0
 nanomod.mapsv1=1" > $nanomodsetup
 }
 
@@ -234,7 +234,7 @@ check_nanomodsetup () {
 		echo "nanomod.play=1" >> $nanomodsetup
 	fi
 	if ! grep -q "^nanomod.overlay" $nanomodsetup; then
-		echo "nanomod.overlay=1" >> $nanomodsetup
+		echo "nanomod.overlay=0" >> $nanomodsetup
 	fi
 	if ! grep -q "^nanomod.mapsv1" $nanomodsetup; then
 		echo "nanomod.mapsv1=1" >> $nanomodsetup

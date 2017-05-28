@@ -5,9 +5,10 @@
   * shiny new installer
     * cleaner and easier maintainable code
     * several improvements to `/system` mode installation
-    * for **microG**, **F-Droid** and **full** packages
+    * for microG, F-Droid and full packages
   * fix **GNU Bash** installation in microG package
   * drop Launchers from list of pseudo-debloated applications in microG package
+  * disable pseudo-debloat feature in the microG package by default
   * install Maps API version 1 by default
   * add an **uninstaller** zip which will uninstall any NanoMod Magisk Module
     * checks for all three (full, F-Droid and microG) packages and removes them if found
