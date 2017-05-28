@@ -1,7 +1,7 @@
 #!/magisk/NanoMod/system/bin/bash
 
 # check for configuration files
-config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
+config_locations="/sdcard /external_sd /persist /data @ZIPDIR@"
 
 get_config () {
 	config=""
