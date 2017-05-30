@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 9.1 in-dev
+* Updates
+  * F-Droid (0.103.1)
+  * VLC (2.1.9~beta)
+
 ## 9.0.20170528
 * Internal Changes
   * shiny new installer
