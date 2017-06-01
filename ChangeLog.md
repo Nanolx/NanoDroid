@@ -19,6 +19,7 @@
   * VLC (2.1.9~beta)
   * Simple Gallery (2.10.7)
   * Play Store (7.9.30.Q)
+  * XDA Labs (1.1.2.1b)
 
 ## 9.0.20170528
 * Internal Changes
