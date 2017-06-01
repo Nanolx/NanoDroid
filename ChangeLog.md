@@ -2,10 +2,14 @@
 
 ## 9.1 in-dev
 * Internal Changes
+ * move init script execution from `post-fs-data` to `late-start`
+ * fixup init scripts possibly not finding `Busybox` when installed as Magisk Module
+ * save init scripts logs in `/magisk/NanoMod/.logs/${script}.log`
+   * on boot existing logs will get `.old` appended, you alway have the current boot's logs and the previous'
  * add `external_sd` init script which will symlink your external SD Card's mount directory to `/external_sd`
    * this path is known from TWRP and make it easier to `adb push` files to the SD Card
  * make `nanomod-overlay` script use `grep` and `sed` instead of `awk`
-   * makes `nanomod-overlay` script work in case `BusyBox` is not installed
+   * makes `nanomod-overlay` script work in case `Busybox` is not installed
 * Updates
   * F-Droid (0.103.1)
   * VLC (2.1.9~beta)

@@ -610,7 +610,7 @@ install_misc () {
 		set_perm_bin ${MODPATH}/system/bin/${binary}
 	done
 
-	for init in fstrim logscleaner sqlite; do
+	for init in fstrim logscleaner sqlite external_sd; do
 		set_perm_bin ${MODPATH}/system/etc/init.d/${init}
 	done
 
