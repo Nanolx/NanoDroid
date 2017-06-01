@@ -18,7 +18,7 @@ done
 
 # This script will be executed in late_start service mode
 # More info in the main Magisk thread
-${MODDIR}/system/etc/init.d/fstrim >${LOGDIR}/fstrim.log
-${MODDIR}/system/etc/init.d/external_sd >${LOGDIR}/external_sd.log
-${MODDIR}/system/etc/init.d/logscleaner >${LOGDIR}/logscleaner.log
-${MODDIR}/system/etc/init.d/sqlite >${LOGDIR}/sqlite.log
+${MODDIR}/system/etc/init.d/fstrim | tee -a ${LOGDIR}/fstrim.log
+${MODDIR}/system/etc/init.d/logscleaner | tee -a ${LOGDIR}/logscleaner.log
+${MODDIR}/system/etc/init.d/sqlite | tee -a ${LOGDIR}/sqlite.log
+${MODDIR}/system/etc/init.d/external_sd | tee -a ${LOGDIR}/external_sd.log
