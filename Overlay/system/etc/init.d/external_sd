@@ -3,10 +3,10 @@
 media_rw=$(mount | grep "on /mnt/media_rw" | sed -e 's,.*/mnt,/mnt,g;s, type.*,,g')
 storage=$(mount | grep "^${media_rw} on /storage" | sed -e 's,.*/storage,/storage,g;s, type.*,,g')
 
+rm -f /external_sd
+
 if [[ -d ${storage} ]]; then
 	mount -orw,remount /
-	rm -f /external_sd
 	ln -sf ${storage} /external_sd
 	mount -oro,remount /
-else	rm -f /external_sd
 fi
