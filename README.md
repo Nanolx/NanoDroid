@@ -155,6 +155,7 @@ nanomod.reinstall=0
 nanomod.overlay=1
 nanomod.zelda=1
 nanomod.mapsv1=1
+nanomod.init=1
 ```
 
 the **microg only package** only supports the following options
@@ -195,6 +196,10 @@ whether to populate the overlay to pseudo-debloat `/system` applications.
 `nanomod.zelda=[0|1]`
 
 whether to populate Zelda ringtones and sounds.
+
+`nanomod.init=[0|1]`
+
+whether to install init scripts.
 
 `nanomod.reinstall=[0|1]`
 

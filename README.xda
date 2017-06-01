@@ -213,6 +213,7 @@ nanomod.reinstall=0
 nanomod.overlay=1
 nanomod.zelda=1
 nanomod.mapsv1=1
+nanomod.init=1
 [/code]
 
 the [b]microg only package[/b] only supports the following options
@@ -249,6 +250,10 @@ what app store to use. [b][u]0[/b][/u] will not populate any app store, [b][u]1[
 [b][u]nanomod.zelda=[0|1][/b][/u]
 
 whether to populate Zelda ringtones and sounds.
+
+[b][u]nanomod.init=[0|1][/b][/u]
+
+whether to install init scripts.
 
 [b][u]nanomod.overlay=[0|1][/b][/u]
 
