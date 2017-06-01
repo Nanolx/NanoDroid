@@ -32,14 +32,10 @@ else	echo "no '.nanomod-overlay' configuration file found!"
 	exit 1
 fi
 
-if ! which awk >/dev/null; then
-	awk="/data/magisk/busybox awk"
-else	awk="$(which awk)"
-fi
-
 _show_name () {
 	aapt dump badging "${1}" 2>/dev/null | \
-		${awk} -F \' '/application: label/{print $2}'
+		grep "application: label" | \
+		sed -e "s/.*label='//g;s/' icon.*//g"
 }
 
 _rm_overrides () {

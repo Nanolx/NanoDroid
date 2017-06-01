@@ -4,6 +4,8 @@
 * Internal Changes
  * add `external_sd` init script which will symlink your external SD Card's mount directory to `/external_sd`
    * this path is known from TWRP and make it easier to `adb push` files to the SD Card
+ * make `nanomod-overlay` script use `grep` and `sed` instead of `awk`
+   * makes `nanomod-overlay` script work in case `BusyBox` is not installed
 * Updates
   * F-Droid (0.103.1)
   * VLC (2.1.9~beta)
