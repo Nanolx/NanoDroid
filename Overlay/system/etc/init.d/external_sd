@@ -1,0 +1,10 @@
+#!/system/bin/sh
+
+external_sd=$(mount | grep "on /mnt/media_rw" | sed -e 's,.*/mnt,/mnt,g;s, type.*,,g')
+
+if [[ -d ${external_sd} ]]; then
+	mount -orw,remount /
+	ln -sf ${external_sd} /external_sd
+	mount -oro,remount /
+else	rm -f /external_sd
+fi
