@@ -5,6 +5,7 @@
   * F-Droid (0.103.1)
   * VLC (2.1.9~beta)
   * Simple Gallery (2.10.7)
+  * Play Store (7.9.30.Q)
 
 ## 9.0.20170528
 * Internal Changes
