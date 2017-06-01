@@ -41,6 +41,7 @@
   * file system trim
   * log file cleanup
   * sqlite database trim
+  * /external_sd symlink creator
 
 # Why was this created?
 

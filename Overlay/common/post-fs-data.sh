@@ -8,3 +8,4 @@ MODDIR=${0%/*}
 ${MODDIR}/system/etc/init.d/fstrim
 ${MODDIR}/system/etc/init.d/logscleaner
 ${MODDIR}/system/etc/init.d/sqlite
+${MODDIR}/system/etc/init.d/external_sd
