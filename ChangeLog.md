@@ -21,6 +21,7 @@
   * Play Store (7.9.30.Q)
   * XDA Labs (1.1.2.1b)
   * Twidere (3.6.16)
+  * Open Camera (1.38.2)
 
 ## 9.0.20170528
 * Internal Changes
