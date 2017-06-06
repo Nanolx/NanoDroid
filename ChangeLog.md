@@ -19,7 +19,7 @@
   * VLC (2.1.9~beta)
   * Simple Gallery (2.10.8)
   * Play Store (7.9.30.Q)
-  * XDA Labs (1.1.2.1b)
+  * XDA Labs (1.1.2.2b)
   * Twidere (3.6.16)
   * Open Camera (1.38.2)
 
