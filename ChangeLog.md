@@ -15,7 +15,7 @@
    * makes `nanomod-overlay` script work in case `Busybox` is not installed
  * add `nanomod.init` setup variable to make it possible to not install the init scripts
 * Updates
-  * F-Droid (0.103.1)
+  * F-Droid (0.103.2)
   * VLC (2.1.9~beta)
   * Simple Gallery (2.10.8)
   * Play Store (7.9.30.Q)
