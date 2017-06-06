@@ -5,6 +5,7 @@ echo "external_sd init script"
 media_rw=$(mount | grep "on /mnt/media_rw" | sed -e 's,.*/mnt,/mnt,g;s, type.*,,g')
 
 if [[ -d ${media_rw} ]]; then
+	echo ">> SD Card found"
 	storage=$(mount | grep "^${media_rw} on /storage" | sed -e 's,.*/storage,/storage,g;s, type.*,,g')
 
 	echo ">> media_rw: \"${media_rw}\""
@@ -25,4 +26,6 @@ if [[ -d ${media_rw} ]]; then
 		ln -sf ${storage} /external_sd
 		mount -oro,remount /
 	fi
+else
+	echo ">> no SD Card found"
 fi
