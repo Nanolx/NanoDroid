@@ -3,19 +3,26 @@
 echo "external_sd init script"
 
 media_rw=$(mount | grep "on /mnt/media_rw" | sed -e 's,.*/mnt,/mnt,g;s, type.*,,g')
-storage=$(mount | grep "^${media_rw} on /storage" | sed -e 's,.*/storage,/storage,g;s, type.*,,g')
 
-echo ">> media_rw: \"${media_rw}\""
-echo ">> storage:  \"${storage}\""
+if [[ -d ${media_rw} ]]; then
+	storage=$(mount | grep "^${media_rw} on /storage" | sed -e 's,.*/storage,/storage,g;s, type.*,,g')
 
-if [[ -e /external_sd ]]; then
-	mount -orw,remount /
-	rm -f /external_sd
-	mount -oro,remount /
-fi
+	echo ">> media_rw: \"${media_rw}\""
+	echo ">> storage:  \"${storage}\""
 
-if [[ -d ${storage} ]]; then
-	mount -orw,remount /
-	ln -sf ${storage} /external_sd
-	mount -oro,remount /
+	if [[ -e /external_sd ]]; then
+		link=$(ls -l /external_sd | sed -e 's/.*-> //g')
+		if [[ "${link}" != "${storage}" ]]; then
+			echo ">> removing old link: \"${link}\""
+			mount -orw,remount /
+			rm -f /external_sd
+			mount -oro,remount /
+		fi
+	fi
+
+	if [[ -d ${storage} ]]; then
+		mount -orw,remount /
+		ln -sf ${storage} /external_sd
+		mount -oro,remount /
+	fi
 fi
