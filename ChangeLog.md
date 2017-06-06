@@ -16,7 +16,7 @@
  * add `nanomod.init` setup variable to make it possible to not install the init scripts
 * Updates
   * F-Droid (0.103.2)
-  * VLC (2.1.9~beta)
+  * VLC (2.1.10~beta)
   * Simple Gallery (2.10.8)
   * Play Store (7.9.30.Q)
   * XDA Labs (1.1.2.2b)
