@@ -17,7 +17,7 @@
 * Updates
   * F-Droid (0.103.1)
   * VLC (2.1.9~beta)
-  * Simple Gallery (2.10.7)
+  * Simple Gallery (2.10.8)
   * Play Store (7.9.30.Q)
   * XDA Labs (1.1.2.1b)
   * Twidere (3.6.16)
