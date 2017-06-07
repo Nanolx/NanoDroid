@@ -16,6 +16,7 @@
  * make `nanomod-overlay` script use `grep` and `sed` instead of `awk`
    * makes `nanomod-overlay` script work in case `Busybox` is not installed
  * add `nanomod.init` setup variable to make it possible to not install the init scripts
+ * fixed that `nanomod-overlay` had `--permission` parameter documented, but was expecting `--permissions`
 * Updates
   * F-Droid (0.103.2)
   * VLC (2.1.10~beta)

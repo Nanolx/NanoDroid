@@ -160,7 +160,7 @@ $(printf '* %s\n' "${S_PRIV_APPS[@]}")
 		_delete_overrides
 	;;
 
-	-p | --permissions )
+	-p | --permission )
 		pm grant com.google.android.gms android.permission.FAKE_PACKAGE_SIGNATURE
 		pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE
 	;;
