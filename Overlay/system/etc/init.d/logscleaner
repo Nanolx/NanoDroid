@@ -1,7 +1,7 @@
 #!/system/bin/sh
 
-echo "Starting Automatic Cleaning $( date +"%m-%d-%Y %H:%M:%S" )"
-busybox find /data/data -type d -iname "*cache*" -exec busybox rm -f {}/* ';' -exec echo "Cleared {}" ';'
+echo "logscleaner init script"
+echo "Starting Automatic Cleaning $(date +"%m-%d-%Y %H:%M:%S")"
 rm -f /data/data/*/*/*/*.tmp
 rm -f /data/data/*/*/*/*/*.tmp
 rm -f /data/local/*.apk
@@ -17,4 +17,4 @@ rm -f /data/system/usagestats/0/daily/*
 rm -f /data/system/usagestats/0/monthly/*
 rm -f /data/system/usagestats/0/weekly/*
 rm -f /data/system/usagestats/0/yearly/*
-echo "Automatic Cleaning finished at $( date +"%m-%d-%Y %H:%M:%S" )"
+echo "Automatic Cleaning finished at $(date +"%m-%d-%Y %H:%M:%S")"
