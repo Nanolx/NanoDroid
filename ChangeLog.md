@@ -17,6 +17,8 @@
    * makes `nanomod-overlay` script work in case `Busybox` is not installed
  * add `nanomod.init` setup variable to make it possible to not install the init scripts
  * fixed that `nanomod-overlay` had `--permission` parameter documented, but was expecting `--permissions`
+ * the full and microG package installers now set the path for `GNU Bash` in `nanomod-overlay` script
+   * fixes the issue that `nanomd-overlay` script does not work when installed in system mode
 * Updates
   * F-Droid (0.103.2)
   * VLC (2.1.10~beta)
