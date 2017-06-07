@@ -11,6 +11,8 @@
    * known path from TWRP, makes it easier to `adb push` files to the SD Card
    * SD Card needs to be inserted upon boot, else `/external_sd` won't be created
    * it might take 30 - 90 seconds after boot up until `/external_sd` becomes available
+ * make `logscleaner` init script less aggressive
+ * let `sqlite` init script first check whether `sqlite3` is available
  * make `nanomod-overlay` script use `grep` and `sed` instead of `awk`
    * makes `nanomod-overlay` script work in case `Busybox` is not installed
  * add `nanomod.init` setup variable to make it possible to not install the init scripts
