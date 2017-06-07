@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 9.1 in-dev
+## 9.1
 * Internal Changes
  * move init script execution from `post-fs-data` to `late-start`
  * run init scripts in parallel instead one by one
