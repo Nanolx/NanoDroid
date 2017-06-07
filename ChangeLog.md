@@ -1,5 +1,11 @@
 # ChangeLog
 
+## 9.2 in-dev
+* Internal Changes
+  * make `nanomod-overlay`'s `-p`, `--permission` parameter work when
+    * installed in system mode
+    * no `.nanomod-overlay` configuration file was found
+
 ## 9.1.20170607
 * Internal Changes
  * move init script execution from `post-fs-data` to `late-start`
