@@ -3,6 +3,7 @@
 ## 9.1 in-dev
 * Internal Changes
  * move init script execution from `post-fs-data` to `late-start`
+ * run init scripts in parallel instead one by one
  * fixup init scripts possibly not finding `Busybox` when installed as Magisk Module
  * as a side-effect Magisk Log is now properly recorded and no longer imcomplete
  * save init scripts logs in `/magisk/NanoMod/.logs/${script}.log.${curdate}`
