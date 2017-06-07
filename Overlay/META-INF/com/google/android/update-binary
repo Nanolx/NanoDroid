@@ -621,8 +621,15 @@ install_misc () {
 	fi
 
 	ZIPDIR=$(dirname "${ZIP}")
-	sed -e "s|@ZIPDIR@|${ZIPDIR}|" -i \
+	if [[ "${ZIPDIR}" == "/external_sd" ]]; then
+		# /external_sd is already know by `nanomod-overlay`
+		# no need to add it a second time
+		sed -e 's/|@ZIPDIR@||' -i \
 		${MODPATH}/system/bin/nanomod-overlay
+	else
+		sed -e "s|@ZIPDIR@|${ZIPDIR}|" -i \
+			${MODPATH}/system/bin/nanomod-overlay
+	fi
 
 }
 
