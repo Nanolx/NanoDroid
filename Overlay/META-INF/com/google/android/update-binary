@@ -631,6 +631,9 @@ install_misc () {
 			${MODPATH}/system/bin/nanomod-overlay
 	fi
 
+	sed -e "s|@MODPATH@|${MODPATH}|" -i \
+		${MODPATH}/system/bin/nanomod-overlay
+
 }
 
 ##########################################################################################

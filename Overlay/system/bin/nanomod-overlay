@@ -1,4 +1,4 @@
-#!/magisk/NanoMod/system/bin/bash
+#!@MODPATH@/system/bin/bash
 
 # check for configuration files
 config_locations="/sdcard /external_sd /persist /data @ZIPDIR@"
