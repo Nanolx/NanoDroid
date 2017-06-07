@@ -5,9 +5,9 @@ echo "external_sd init script"
 # retry 6 times, wait 5 seconds between each try
 count=0
 
-while [ ! -z $(grep "/mnt/media_rw.*/storage" /proc/mounts) ]; do
+while [[ -z $(grep "/mnt/media_rw.*/storage" /proc/mounts) ]]; do
 	count=$((count+1))
-	if [ ${count} -lt 7 ]; then
+	if [ "${count}" -lt 7 ]; then
 		sleep 5
 	else
 		echo ">> no SD Card found"
