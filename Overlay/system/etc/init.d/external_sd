@@ -22,9 +22,14 @@ if [[ -d ${media_rw} ]]; then
 	fi
 
 	if [[ -d ${storage} ]]; then
-		mount -orw,remount /
-		ln -sf ${storage} /external_sd
-		mount -oro,remount /
+		if [[ -e /external_sd ]]; then
+			echo ">> /external_sd link up to date"
+		else
+			echo ">> /external_sd link created"
+			mount -orw,remount /
+			ln -sf ${storage} /external_sd
+			mount -oro,remount /
+		fi
 	fi
 else
 	echo ">> no SD Card found"
