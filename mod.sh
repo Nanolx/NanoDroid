@@ -69,9 +69,6 @@ _microg() {
 	cp "${PWD}"/Overlay/system/bin/nanomod-overlay \
 		"${PWD}"/microG/system/bin
 
-	sed -e 's,/magisk/NanoMod/system/bin/bash,/magisk/NanoModmicroG/system/bin/bash,' \
-		-i "${PWD}"/microG/system/bin/nanomod-overlay
-
 	cp -r "${PWD}"/Overlay/system/framework/ \
 		"${PWD}"/microG/system/
 
