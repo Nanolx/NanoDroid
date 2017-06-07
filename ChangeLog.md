@@ -5,8 +5,8 @@
  * move init script execution from `post-fs-data` to `late-start`
  * fixup init scripts possibly not finding `Busybox` when installed as Magisk Module
  * as a side-effect Magisk Log is now properly recorded and no longer imcomplete
- * save init scripts logs in `/magisk/NanoMod/.logs/${script}.log`
-   * on boot existing logs will get `.old` appended, you alway have the current boot's logs and the previous'
+ * save init scripts logs in `/magisk/NanoMod/.logs/${script}.log.${curdate}`
+   * `curdate` is the time `services.sh` is run by Magisk in `YYYYMMDD-HH.MM.SS` format
  * add `external_sd` init script which will symlink your external SD Card's mount directory to `/external_sd`
    * known path from TWRP, makes it easier to `adb push` files to the SD Card
    * SD Card needs to be inserted upon boot, else `/external_sd` won't be created
