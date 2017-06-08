@@ -666,18 +666,18 @@ fi
 
 install_init
 
-INIT_BASE="${MODPATH}"
-
-if [ "${MODE}" = "SYSTEM" ]; then
-	INIT_BASE="/system/etc"
-fi
-
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_init
 else
 	mount -orw,remount /system 2>/dev/null || \
 		error "! failed to re-mount /system read-write"
 	unset MODPATH
+fi
+
+INIT_BASE="${MODPATH}"
+
+if [ "${MODE}" = "SYSTEM" ]; then
+	INIT_BASE="/system/etc"
 fi
 
 # This path should work in any cases
