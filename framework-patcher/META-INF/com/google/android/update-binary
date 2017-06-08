@@ -62,7 +62,8 @@ grow_magisk_img () {
 	image_size_check /data/magisk.img
 	if [ "$reqSizeM" -gt "$curFreeM" ]; then
 		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-		resize2fs /data/magisk.img ${SIZE}M
+		resize2fs -f /data/magisk.img ${SIZE}M
+		e2fsck -yf /data/magisk.img
 	fi
 }
 
@@ -70,7 +71,8 @@ shrink_magisk_img () {
 	image_size_check /data/magisk.img
 	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
 	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-		resize2fs $IMG ${NEWDATASIZE}M
+		resize2fs -f /data/magisk.img ${NEWDATASIZE}M
+		e2fsck -yf /data/magisk.img
 	fi
 }
 
