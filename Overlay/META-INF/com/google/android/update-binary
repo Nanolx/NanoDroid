@@ -387,7 +387,8 @@ magisk_install_setup () {
 		image_size_check $IMG
 		if [ "$reqSizeM" -gt "$curFreeM" ]; then
 			SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-			resize2fs $IMG ${SIZE}M
+			resize2fs -f $IMG ${SIZE}M
+			e2fsck -yf $IMG
 		fi
 	else
 		SIZE=$((reqSizeM / 32 * 32 + 64));
@@ -472,7 +473,8 @@ magisk_install_cleanup () {
 	image_size_check $IMG
 	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
 	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-		resize2fs $IMG ${NEWDATASIZE}M
+		resize2fs -f $IMG ${NEWDATASIZE}M
+		e2fsck -yf $IMG
 	fi
 }
 
@@ -624,7 +626,7 @@ install_misc () {
 	if [[ "${ZIPDIR}" == "/external_sd" ]]; then
 		# /external_sd is already know by `nanomod-overlay`
 		# no need to add it a second time
-		sed -e 's/|@ZIPDIR@||' -i \
+		sed -e 's|@ZIPDIR@||' -i \
 		${MODPATH}/system/bin/nanomod-overlay
 	else
 		sed -e "s|@ZIPDIR@|${ZIPDIR}|" -i \
