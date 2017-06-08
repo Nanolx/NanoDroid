@@ -1,5 +1,8 @@
 #!@MODPATH@/system/bin/bash
 
+NO_MAGISK=0
+NO_CONFIG=0
+
 # check for configuration files
 config_locations="/sdcard /external_sd /persist /data @ZIPDIR@"
 
@@ -21,16 +24,24 @@ if [[ -d /magisk/NanoMod ]]; then
 	MODPATH=/magisk/NanoMod
 elif [[ -d /magisk/NanoModmicroG ]]; then
 	MODPATH=/magisk/NanoModmicroG
-else
-	echo "NanoMod is not installed as a Magisk Module, exiting"
-	exit 1
+else	NO_MAGISK=1
 fi
 
 if [[ -f ${config} ]]; then
 	source ${config}
-else	echo "no '.nanomod-overlay' configuration file found!"
-	exit 1
+else	NO_CONFIG=1
 fi
+
+_check () {
+	if [[ "${NO_MAGISK}" == 1 ]]; then
+		echo "NanoMod not installed as Magisk Module"
+		return 1
+	elif [[ "${NO_CONFIG}" == 1 ]]; then
+		echo "no .nanomod-overlay configuration file found"
+		return 1
+	else	return 0
+	fi
+}
 
 _show_name () {
 	aapt dump badging "${1}" 2>/dev/null | \
@@ -60,6 +71,8 @@ _remove_override () {
 	rm -rf "${MODPATH}/system/${1}"
 
 }
+
+if _check; then
 
 case ${1} in
 	-l | --list )
@@ -180,5 +193,27 @@ Options:
 				optimization permission to microG GmsCore
 -h | --help			this message"
 	;;
-
 esac
+
+else
+
+case ${1} in
+	-p | --permission )
+		pm grant com.google.android.gms android.permission.FAKE_PACKAGE_SIGNATURE
+		pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE
+	;;
+
+	* )
+		echo "nanomod-overlay helper script
+
+*** SYSTEM MODE! LIMITED FUNCTIONALITY! ***
+
+Options:
+-p | --permission		grant fakesign permission to microG GmsCore
+				and Play Store, aswell as ignore battery
+				optimization permission to microG GmsCore
+-h | --help			this message"
+	;;
+esac
+
+fi
