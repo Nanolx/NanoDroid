@@ -1,7 +1,4 @@
-#!/magisk/NanoMod/system/bin/bash
-
-NO_MAGISK=0
-NO_CONFIG=0
+#!@MODPATH@/system/bin/bash
 
 # check for configuration files
 config_locations="/sdcard /external_sd /persist /data @ZIPDIR@"
@@ -24,24 +21,16 @@ if [[ -d /magisk/NanoMod ]]; then
 	MODPATH=/magisk/NanoMod
 elif [[ -d /magisk/NanoModmicroG ]]; then
 	MODPATH=/magisk/NanoModmicroG
-else	NO_MAGISK=1
+else
+	echo "NanoMod is not installed as a Magisk Module, exiting"
+	exit 1
 fi
 
 if [[ -f ${config} ]]; then
 	source ${config}
-else	NO_CONFIG=1
+else	echo "no '.nanomod-overlay' configuration file found!"
+	exit 1
 fi
-
-_check () {
-	if [[ "${NO_MAGISK}" == 1 ]]; then
-		echo "NanoMod not installed as Magisk Module"
-		return 1
-	elif [[ "${NO_CONFIG}" == 1 ]]; then
-		echo "no .nanomod-overlay configuration file found"
-		return 1
-	else	return 0
-	fi
-}
 
 _show_name () {
 	aapt dump badging "${1}" 2>/dev/null | \
@@ -74,8 +63,7 @@ _remove_override () {
 
 case ${1} in
 	-l | --list )
-		if _check; then
-			echo "Overrides exist for following applications in /system/app:
+		echo "Overrides exist for following applications in /system/app:
 
 $(printf '  * %s\n' "${APPS[@]}")
 
@@ -83,87 +71,81 @@ Overrides exist for following applications in /system/priv-app:
 
 $(printf '  * %s\n' "${PRIV_APPS[@]}")
 "
-		fi
 	;;
 
 	-a | --add )
-		if _check; then
-			if [[ -d /system/app/${2} ]]; then
-				echo "Adding override for app: \"${2}\""
-				echo "APPS=(
+		if [[ -d /system/app/${2} ]]; then
+			echo "Adding override for app: \"${2}\""
+			echo "APPS=(
 $(printf '%s\n' "${APPS[@]}")
 ${2}
 )
 PRIV_APPS=(
 $(printf '%s\n' "${PRIV_APPS[@]}")
 )" > "${config}"
-				_add_override "app/${2}"
-			elif [[ -d /system/priv-app/${2} ]]; then
-				echo "Adding override for priv-app \"${2}\""
-				echo "APPS=(
+			_add_override "app/${2}"
+		elif [[ -d /system/priv-app/${2} ]]; then
+			echo "Adding override for priv-app \"${2}\""
+			echo "APPS=(
 $(printf '%s\n' "${APPS[@]}")
 )
 PRIV_APPS=(
 $(printf '%s\n' "${PRIV_APPS[@]}")
 ${2}
 )" > "${config}"
-				_add_override "priv-app/${2}"
-			else	echo "\"${2}\" not found in /system/app or /system/priv-app"
-			fi
+			_add_override "priv-app/${2}"
+		else	echo "\"${2}\" not found in /system/app or /system/priv-app"
 		fi
 	;;
 
 	-r | --remove )
-		if _check; then
-			if grep -q " ${2} " "${config}"; then
-				sed -e "/^${2}$/d" -i "${config}"
-				if [[ ${APPS[*]} == *${2}* ]]; then
-					echo "Removing override for app: \"${2}\""
-					remove_override "app/${2}"
-				elif [[ ${PRIV_APPS[*]} == *${2}* ]]; then
-					echo "Removing override for priv-app: \"${2}\""
-					remove_override "priv-app/${2}"
-				fi
-			else	echo "No override for \"${2}\" found"
+		if grep -q " ${2} " "${config}"; then
+			sed -e "/^${2}$/d" -i "${config}"
+			if [[ ${APPS[*]} == *${2}* ]]; then
+				echo "Removing override for app: \"${2}\""
+				remove_override "app/${2}"
+			elif [[ ${PRIV_APPS[*]} == *${2}* ]]; then
+				echo "Removing override for priv-app: \"${2}\""
+				remove_override "priv-app/${2}"
 			fi
+		else	echo "No override for \"${2}\" found"
 		fi
 	;;
 
 	-u | --update )
-		if _check; then
-			_rm_overrides
 
-			for app in "${APPS[@]}"; do
-				_add_override app "${app}"
-			done
+		_rm_overrides
 
-			for app in "${PRIV_APPS[@]}"; do
-				_add_override priv-app "${app}"
-			done
-		fi
+		for app in "${APPS[@]}"; do
+			_add_override app "${app}"
+		done
+
+		for app in "${PRIV_APPS[@]}"; do
+			_add_override priv-app "${app}"
+		done
 	;;
 
 	-s | --show )
-		if _check; then
-			for app in /system/app/*/*.apk; do
-				sysname=$(basename "${app}" .apk)
-				if [[ ! -d ${MODPATH}/system/app/${sysname} ]]; then
-					humname=$(_show_name "${app}")
-					S_APPS="${S_APPS}
-* ${sysname}		(${humname})"
-				fi
-			done
 
-			for app in /system/priv-app/*/*.apk; do
-				sysname=$(basename "${app}" .apk)
-				if [[ ! -d ${MODPATH}/system/priv-app/${sysname} ]]; then
-					humname=$(_show_name "${app}")
-					S_PRIV_APPS="${S_PRIV_APPS}
+		for app in /system/app/*/*.apk; do
+			sysname=$(basename "${app}" .apk)
+			if [[ ! -d ${MODPATH}/system/app/${sysname} ]]; then
+				humname=$(_show_name "${app}")
+				S_APPS="${S_APPS}
 * ${sysname}		(${humname})"
-				fi
-			done
+			fi
+		done
 
-			echo "Non-Overriden applications in /system/app:
+		for app in /system/priv-app/*/*.apk; do
+			sysname=$(basename "${app}" .apk)
+			if [[ ! -d ${MODPATH}/system/priv-app/${sysname} ]]; then
+				humname=$(_show_name "${app}")
+				S_PRIV_APPS="${S_PRIV_APPS}
+* ${sysname}		(${humname})"
+			fi
+		done
+
+		echo "Non-Overriden applications in /system/app:
 
 $(printf '* %s\n' "${S_APPS[@]}")
 
@@ -171,14 +153,11 @@ Non-Overriden applications in /system/priv-app:
 
 $(printf '* %s\n' "${S_PRIV_APPS[@]}")
 "
-		fi
 
 	;;
 
 	-d | --delete )
-		if _check; then
-			_delete_overrides
-		fi
+		_delete_overrides
 	;;
 
 	-p | --permission )
