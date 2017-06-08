@@ -103,7 +103,7 @@ config_files=".nanomod-setup .nanomod-apps .nanomod-overlay"
 
 ui_print " "
 ui_print "********************************"
-ui_print "      NanoMod 9.1.20170607     "
+ui_print "      NanoMod 9.2.20171231     "
 ui_print "       created by @Nanolx       "
 ui_print "           Uninstaller          "
 ui_print "********************************"
