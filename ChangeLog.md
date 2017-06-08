@@ -7,6 +7,9 @@
     * prevents double execution of init scripts if the ROM already has init.d support
     * when in system mode init scripts will be installed to `/system/etc/init.d` as before
   * ensure `external_sd` init script is always given executable bit
+  * All installers: force `magisk.img` resize operations, perform `fsck` afterwards
+  * Full and microG installers: fix a `sed` substitution
+  * On-device framework-patcher: fix `magisk.img` resize operations
   * make `nanomod-overlay`'s `-p`, `--permission` parameter work when
     * installed in system mode
     * no `.nanomod-overlay` configuration file was found
