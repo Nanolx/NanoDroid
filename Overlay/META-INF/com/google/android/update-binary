@@ -614,9 +614,9 @@ install_misc () {
 	done
 
 	if grep -q nanomod.init=1 $nanomodsetup; then
-		cp -r ${INSTALLER}/system/etc/init.d ${MODPATH}/system/etc/
-		for init in fstrim logscleaner sqlite; do
-			set_perm_bin ${MODPATH}/system/etc/init.d/${init}
+		cp -r ${INSTALLER}/init.d ${INIT_BASE}
+		for init in fstrim logscleaner sqlite external_sd; do
+			set_perm_bin ${INIT_BASE}/${init}
 		done
 	fi
 
@@ -662,6 +662,12 @@ MODE=MAGISK
 
 if [ ! -f /data/magisk.img ]; then
 	MODE=SYSTEM
+fi
+
+INIT_BASE="${MODPATH}"
+
+if [ "${MODE}" = "SYSTEM" ]; then
+	INIT_BASE="/system/etc"
 fi
 
 install_init
