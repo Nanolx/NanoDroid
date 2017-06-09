@@ -191,6 +191,24 @@ detect_arch () {
 # Magisk Mode Installation
 ##########################################################################################
 
+grow_magisk_img () {
+	image_size_check $IMG
+	if [ "$reqSizeM" -gt "$curFreeM" ]; then
+		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
+		resize2fs -f $IMG ${SIZE}M
+		e2fsck -yf $IMG
+	fi
+}
+
+shrink_magisk_img () {
+	image_size_check $IMG
+	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
+	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
+		resize2fs -f $IMG ${NEWDATASIZE}M
+		e2fsck -yf $IMG
+	fi
+}
+
 magisk_install_init () {
 	if $BOOTMODE && ! is_mounted /magisk; then
 		error "! Magisk is not activated!... abort"
@@ -244,12 +262,7 @@ magisk_install_setup () {
 	request_size_check "$ZIP"
 
 	if [ -f "$IMG" ]; then
-		image_size_check $IMG
-		if [ "$reqSizeM" -gt "$curFreeM" ]; then
-			SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-			resize2fs -f $IMG ${SIZE}M
-			e2fsck -yf $IMG
-		fi
+		grow_magisk_img
 	else
 		SIZE=$((reqSizeM / 32 * 32 + 64));
 		make_ext4fs -l ${SIZE}M -a /magisk -S $INSTALLER/common/file_contexts_image $IMG
@@ -303,12 +316,7 @@ magisk_install_cleanup () {
 	rmdir $MOUNTPATH
 
 	# Shrink the image if possible
-	image_size_check $IMG
-	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
-	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-		resize2fs -f $IMG ${NEWDATASIZE}M
-		e2fsck -yf $IMG
-	fi
+	shrink_magisk_img
 }
 
 ##########################################################################################
