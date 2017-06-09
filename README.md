@@ -63,10 +63,12 @@ NanoMod includes
   * F-Droid and it's privileged extension
 * **NanoMod-patcher**: includes
   * on-device framework-patcher
+  * creates the file `/system/.nanomod-patcher` after successful patching
 * **NanoMod-uninstaller**: includes
   * uninstaller for all NanoMod Magisk Modules
 * **framework-patcher.sh** (github repository)
   * on-pc framework-patcher
+  * creates the file `/system/.nanomod-patcher` after successful patching
 
 ## Details
 
