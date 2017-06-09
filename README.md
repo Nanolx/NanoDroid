@@ -4,58 +4,188 @@
 
 9.1.20170607
 
+## Downloads
+
 * Stable Downloads [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
 * Archived Downloads [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?w=files&flid=156387)
+* Snapshot
+  * on GNU/Linux, MacOS or BSD you can use the provided `mod.sh` script like
+    * `mod.sh zip` for the full package
+    * `mod.sh microg` for the microg only package
+    * `mod.sh fdroid` for the F-Droid only package
+    * `mod.sh patcher` for the on-device framework-patcher package
+    * `mod.sh uninstaller` for the uninstaller package
+    * `mod.sh all` for all packages at once
 
-# Description
-
-* install **NanoMod**, **NanoMod-microG** or **NanoMod-FDroid** Magisk-Module
-  * actually **NanoMod** is an **Overlay** to `/system` which holds the apps
-  * allows for a user-defined list of system apps to be made unavailable (let's call this pseudo-debloat feature)
-  * disabling the **NanoMod** module in **Magisk** will revert everything, as it's not actually doing any changes to `/system`
-  * boot process may take a bit longer as **NanoMod** is a pretty big **Magisk** Module
-  * for more information on **Magisk** [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk)
-* if you don't have **Magisk** installed, **NanoMod** will be installed directly into `/system`
-  * `nanomod-overlay` does not work in **system-mode** (the pseudo-debloat feature relies on **Magisk**)
-* install **microG** [![Web Link](images/microg.png)](http://microg.org/)
-  * with **Mozilla** location provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
-  * with **Nominatim** adress provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
-  * with **microG** GsfProxy [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GsfProxy)
-  * with **microG** DroidGuard Helper [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
-  * choose between official **Play Store** [![APK Mirror Link](images/apkmirror.png)](https://www.apkmirror.com/apk/google-inc/google-play-store/) or unofficial **Yalp Store** [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
-    * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
-      * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
-  * **microG** GmsCore [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GmsCore) and **Play Store** modified to allow (in-)app-purchases
-  * support for Maps API version 1 optionally available (see **Alter Installation** below)
-  * both on-pc and on-device framework-patchers available (see **Variants** and **Installation** below)
-    * support both installation into the **NanoMod Magisk** modules or directly into `/system`
-* install **F-Droid** [![F-Droid Link](images/fdroid.png)](http://www.fdroid.org) and many OpenSource applications
-  * including the privileged extension, so you don't need to enable `Unkown Sources` to use F-Droid
-* install GNU **Bash** Shell [![GNU Link](images/gnu.png)](https://www.gnu.org/software/bash/)
-* install GNU **Nano** Shell Editor [![GNU Link](images/gnu.png)](https://www.nano-editor.org/)
-* install **The Legend of Zelda** rintones and sounds [![Nintendo Link](images/zelda.png)](http://www.zelda.com/)
-  * it's dangerous to root alone
-* **Uninstaller** zip for the Magisk Modules
- * when installed in system mode, simply re-flash your ROM to wipe **NanoMod**
-* **init** scripts
-  * file system trim
-  * log file cleanup
-  * sqlite database trim
-  * /external_sd symlink creator
-
-# Why was this created?
-
-Because I wanted to have a simple way to achieve my desired setup on any device or any ROM. That's it, basically. And since it already exists, I thought I'd push it to XDA aswell. Actually this is the generic version of my NanoROM for Galaxy S6, where I basically made the same changes to the ROM (except NanoMod is for LOS/AOSP based ROMs, not TouchWiz).
-
-# Support
+## Support
 
 XDA Support Thread [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928)
-
-# Details
 
 ## ChangeLog
 
 ChangeLog.md [![GitHub Link](images/github.png)](ChangeLog.md)
+
+## Summary
+
+**NanoMod** can be installed as a Magisk [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk) Module or directly to /system, though a bit functionality is only available with Magisk.
+
+NanoMod includes
+
+* microG [![Web Link](images/microg.png)](http://microg.org/) and it's companions
+  * on-device framework-patcher for microG support (signature spoofing)
+  * on-pc framework-patcher for microG support (signature spoofing)
+  * both patchers create the `/system/.nanomod-patcher` file after patching
+* F-Droid and it's privileged extension
+* modified Play Store to allow (in-)app-purchases with Magisk
+  * alternatively Yalp Store can be installed instead
+* custom init scripts
+* pseudo-debloat feature (Magisk-only)
+  * disables applications systemless-ly
+* several Open Source applications
+  * include replacements for the pseudo-debloated applications
+* additional components
+  * GNU Bash shell
+  * GNU Nano terminal editor
+* The Legend of Zelda ringtones and sounds
+
+## Packages
+
+* **NanoMod**: includes
+  * everything mentioned in the Summary
+* **NanoMod-microG**: includes
+  * microG and it's companions
+  * GNU Bash
+  * pseudo-debloat feature
+  * app store
+* **NanoMod-fdroid**: includes
+  * F-Droid and it's privileged extension
+* **NanoMod-patcher**: includes
+  * on-device framework-patcher
+* **NanoMod-uninstaller**: includes
+  * uninstaller for all NanoMod Magisk Modules
+* **framework-patcher.sh** (github repository)
+  * on-pc framework-patcher
+
+## Details
+
+### NanoMod
+
+This lists features unique to NanoMod.
+
+#### nanomod-overlay
+
+The `nanomod-overlay` script handles the following features
+
+* pseudo-debloat (Magisk-only)
+  * show the list of pseudo-debloated apps
+  * add or remove apps from the list of pseudo-debloated apps
+* grant signature spoofing permission to microG and Play Store if required
+  * both in Magisk and System Mode
+* issue `nanomod-overlay --help` for the full list of options
+
+Full details on the pseudo-debloat feature [![GitHub Link](images/github.png)](doc/PseudoDebloat.md)
+
+#### init scripts
+
+The following init scripts are bundled with NanoMod
+
+* external_sd
+  * symlink SD Card mount point to `/external_sd`
+* fstrim
+ * trim file systems (may increase speed)
+* logscleaner
+  * clean up log files
+* sqlite
+  * clean up sqlite databases
+
+When in Magisk Mode the init scripts create their log files in
+
+  `/magisk/NanoMod/.logs/${script}.log.${date}`
+
+When installed to /system your ROM needs to support running scripts in
+
+  `/system/etc/init.d`
+
+or you can use **Kernel Adiutor's** init.d emulation.
+
+### microG
+
+microG is an Open Source replacement for Google Services, full details can be found at the microG homepage [![Web Link](images/microg.png)](http://microg.org/)
+
+NanoMod includes microG as follows
+
+* microG GmsCore [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GmsCore) and Play Store [![APK Mirror Link](images/apkmirror.png)](https://www.apkmirror.com/apk/google-inc/google-play-store/)  modified to allow (in-)app purchases
+* with **Mozilla** location provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
+* with **Nominatim** adress provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
+* with **microG** GsfProxy [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GsfProxy)
+* with **microG** DroidGuard Helper [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
+* choose between official **Play Store** or unofficial **Yalp Store** [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
+  * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
+    * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
+* support for Maps API version 1
+
+### F-Droid and Applications
+
+F-Droid [![F-Droid Link](images/fdroid.png)](http://www.fdroid.org) is an app store for Open Source applications.
+
+NanoMod includes both F-Droid and it's Privileged Extension, so you don't need to enable `Unknown Sources`.
+
+Additionally NanoMod includes a variety of applications, check full details [![GitHub Link](images/github.png)](doc/Applications.md)
+
+### The Legend of Zelda ringtones and sounds
+
+NanoMod includes **The Legend of Zelda** rintones and sounds [![Nintendo Link](images/zelda.png)](http://www.zelda.com/), because it's dangerous to root alone
+
+Full details [![GitHub Link](images/github.png)](doc/ZeldaSounds.md)
+
+## Installation
+
+### Alter Installation
+
+NanoMod supports configuration files to alter the installation settings.
+
+Full details on altering installation [![GitHub Link](images/github.png)](doc/AlterInstallation.md)
+
+### Installation Process
+
+#### NanoMod
+
+* Download release build or create zip file from the github repository
+* perform full wipe (/system, /data, /cache, Dalvik/ART cache)
+  * recommended, but not required
+* install desired ROM
+  * make sure it does **not** include GApps if you want to use microG
+  * either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself (instructions follow)
+* install desired Kernel (if any)
+* install **Magisk**
+  * recommended, but not required
+  * if **Magisk** is installed, NanoMod will be installed as Magisk-Module, else it will install into `/system` directly
+* install **NanoMod**
+* reboot into ROM
+
+#### microG
+
+For **microG** to work, your ROM needs to have signature spoofing enabled (or a **deodexed** ROM to patch yourself).
+
+If your ROM does not have signature spoofing support, you can manually patch it using either
+  * the on-device framework-patcher zip
+    * flash after booting into the ROM once
+  * the `framework-patcher.sh` script (found in the github repository)
+    * usefrom your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](images/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the patched **services.jar**
+
+Once your ROM supports signature spoofing, you need to setup microG like this
+  * go into **microG settings** and set up everything like:
+    * check results in **Self-Check**, grant missing permissions (by tapping on them)
+      * especially the 'Battery Optimization' item
+    * enable **Google device registration**
+    * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
+    * enable **Google SafetyNet** (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...)
+      * set to use the official servers
+    * in **UnifiedNlp Settings** choose
+      * **Mozilla Location Backend** as Geolocation backend
+      * **Nominatim** as Address lockup backend
+    * after everything is done, reboot
+    * go to **Play Store**, setup account and install your apps
 
 ## License & Credits
 
@@ -74,280 +204,6 @@ Special Thanks to the beta testers
 
 * xenithorb
 * ShapeShifter499
-
-## Variants
-
-* Full package contains **everything** mentioned above
-* microG package **only** contains microG, it's companions, GNU Bash and `nanomod-overlay` script
-  * don't flash this, if you already have the Full package
-* F-Droid package **only** contains F-Droid and it's Privileged Extension
-  * don't flash this, if you already have the Full package
-* patcher package
-  * use **in addition** to Full or microG package to patch the framework to support fake signature spoofing (required for microG to work)
-* uninstaller package
-  * uninstalls NanoMod when installed as Magisk Module
-    * checks for all three Full, microG and F-Droid package and removes any found
-  * when NanoMOd is installed in System Mode the uninstaller will only remove the configuration files
-    * re-flash the ROM to get rid of NanoMod when installed in System Mode
-  * using the uninstaller is also recommended when switching between Full and microG package as the default values for the configuration files differ
-
-## Installation
-
-* Download release build [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
-* or create zip file from this repository
-  * on GNU/Linux or BSD you can use the provided mod.sh script, either
-    * `mod.sh zip` for the full package
-    * `mod.sh microg` for the microg only package
-    * `mod.sh fdroid` for the F-Droid only package
-    * `mod.sh patcher` for the on-device framework-patcher package
-    * `mod.sh all` for all four packages at once
-* perform full wipe
-  * recommended, but not required
-* install desired ROM
-  * make sure it does **not** include GApps
-  * either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself (instructions follow)
-* install desired Kernel (if any)
-* install **Magisk**
-  * recommended, but not required
-  * if **Magisk** is installed, NanoMod will be installed as Magisk-Module, else it will install into `/system` directly
-* install **NanoMod**
-  * for **microG** to work, your ROM needs to have fake signature spoofing enabled (or a **deodexed** ROM to patch yourself)
-  * to achieve that either
-    * flash the on-device framework-patcher zip after flashing NanoMod (or a ROM update) this will directly patch the framework for fake signature spoofing support from TWRP
-      * Note: it is required to boot into the ROM once, else the dalvik/ART cache might not exist (or is not up-to-date in case of incremental ROM update) and the patching process takes ages or fails
-    * use the supplied `framework-patcher.sh` from your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](images/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the patched **services.jar**.
-* reboot into system
-  * go into **microG settings** and set up everything like:
-    * check results in **Self-Check**, grant missing permissions (by tapping on them)
-      * especially the 'Battery Optimization' item
-    * enable **Google device registration**
-    * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
-    * enable **Google SafetyNet** (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...)
-      * set to use the official servers
-    * in **UnifiedNlp Settings** choose
-      * **Mozilla Location Backend** as Geolocation backend
-      * **Nominatim** as Address lockup backend
-    * after everything is done, reboot
-    * go to **Play Store**, setup account and install your apps
-
-## Alter Installation
-
-To alter the installation you can create the file
-
-`.nanomod-setup`
-
-on your device, in one of the following directories
-
-* `/data` (default)
-* `/sdcard` (internal storage)
-* `/persist`
-* mount point of your external SD-Card (if any)
-* directory containing the zip file
-
-populate it with the following content for the **full package**
-
-```
-nanomod.microg=1
-nanomod.fdroid=1
-nanomod.apps=1
-nanomod.play=1
-nanomod.reinstall=0
-nanomod.overlay=1
-nanomod.zelda=1
-nanomod.mapsv1=1
-nanomod.init=1
-```
-
-the **microg only package** only supports the following options
-
-```
-nanomod.play=1
-nanomod.reinstall=0
-nanomod.overlay=0
-nanomod.mapsv1=1
-```
-
-where `1` means `on` and `0` means `off`. See the default settings [![GitHub Link](images/github.png)](.nanomod-setup). Description:
-
-`nanomod.fdroid=[0|1]`
-
-whether to populate **F-Droid**.
-
-`nanomod.apps=[0|1]`
-
-whether to populate FOSS apps (see below).
-
-`nanomod.microg=[0|1]`
-
-whether to populate **microG**.
-
-`nanomod.mapsv1=[0|1]`
-
-whether to provide **microG** Maps API v1.
-
-`nanomod.play=[0|1|2]`
-
-what app store to use. `0` will not populate any app store, `1` will populate **Play Store**, `2` will populate **Yalp Store**.
-
-`nanomod.overlay=[0|1]`
-
-whether to populate the overlay to pseudo-debloat `/system` applications.
-
-`nanomod.zelda=[0|1]`
-
-whether to populate Zelda ringtones and sounds.
-
-`nanomod.init=[0|1]`
-
-whether to install init scripts.
-
-`nanomod.reinstall=[0|1]`
-
-whether to backup an **already patched** `services.jar` and re-use it.
-
-**Only use this, when you re-install NanoMod on the same ROM. If you updated or changed the ROM, re-run `framework-patcher.sh` instead. See "Installation" below.** 
-
-If no `.nanomod-setup` is found, the default one will be installed (equals to the example above).
-
-## Applications
-
-### Pseudo-Debloated applications
-
-#### Default Settings
-
-The following applications are pseudo-debloated by default
-
-* Basic Dreams
-* Calendar
-* CM File Manager
-* Eleven, Phonograph (Audio Player)
-* E-Mail + Exchange2
-* Browser, Gello, Slimperience, Via Browser (Browser)
-* PhotoTable
-* Sound Recorder, Recorder
-* messaging (SMS & MMS)
-* Wallpaper, WallpaperPickerGoogle (Google Wallpaper application)
-* Wallpaper Backup
-* mGerrit
-* FM Radio
-* Gallery2
-* OmniSwitch
-* Screencast
-* Snap, Snapdragon Camera (Camera)
-* Resurrection Remix Statistics
-* Sim Toolkit
-* Pixel Launcher, Nexus Launcher
-* Trebuchet
-
-#### Alter the list of pseudo-debloated applications
-
-**This feature is only available when installing as Magisk Module!**
-
-You can add or remove applications from the list by modifying the file
-
-`.nanomod-overlay`
-
-on your device, in one of the following directories
-
-* `/data` (default)
-* `/sdcard` (internal storage)
-* `/persist`
-* mount point of your external SD-Card (if any)
-* directory containing the zip file
-
-See the default settings [![GitHub Link](images/github.png)](.nanomod-overlay). The syntax is pretty simple:
-
-* one item per line
-* name must be an exact match
-* applications in `/system/app` inside `APPS=( ... )`
-* applications in `/system/priv-app` inside `PRIV_APPS=( ... )`
-
-After you've made your changes, issue the following command on your phone, either using `adb shell` or **Termux** as root:
-
-`nanomod-overlay --update`
-
-This needs to be done in normal environment. If you're in **TWRP** you'll have to manually mount `/magisk`. For this you can use the supplied `mount-magisk.sh` script, connect phone to PC while in **TWRP** and run the following commands
-
-```
-adb push mount-magisk.sh /tmp/
-adb shell
-chmod 0755 /tmp/mount-magisk.sh
-/tmp/mount-magisk.sh mount-magisk
-```
-
-afterwards you can call `nanomod-overlay` like
-
-`/magisk/NanoMod/system/bin/nanomod-overlay --update`
-
-from **TWRP**, aswell. Issue
-
-`/tmp/mount-magisk.sh umount-magisk`
-
-to unmount `/magisk`. Reboot for your changes to get applied. For more options, check:
-
-`nanomod-overlay --help`
-
-respectively
-
-`/magisk/NanoMod/system/bin/nanomod-overlay --help`
-
-from **TWRP**.
-
-### Applications provided by NanoMod
-
-The following applications are magic-mounted as `/system` applications
-
-* Adaway [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=adaway&fdid=org.adaway)
-* Amaze (File Manager) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=amaze&fdid=com.amaze.filemanager)
-* AnySoftKeyboard [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=anysoftkeyboard&fdid=com.menny.android.anysoftkeyboard)
-* Face Slim (Facebook client) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=face+slim&fdid=org.indywidualni.fblite)
-* F-Droid (FOSS app store) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid)
-  * F-Droid Privileged Extension [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged)
-* Hacker's Keyboard [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=hacker&fdid=org.pocketworkstation.pckeyboard)
-* K-9 Mail [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=k9&fdid=com.fsck.k9)
-* Kernel Adiutor [![GitHub Link](images/github.png)](https://github.com/Grarak/KernelAdiutor)
-* KeyPassDroid (Password Safe) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=keepass&fdid=com.android.keepass)
-* (Simple) Calendar [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=calendar&fdid=com.simplemobiletools.calendar)
-* (Simple) Gallery [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=gallery&fdid=com.simplemobiletools.gallery)
-* Lightning (Browser) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=lightning&fdid=acr.browser.lightning)
-* Magisk Manager [![GitHub Link](images/github.png)](https://github.com/topjohnwu/MagiskManager)
-* New Pipe (YouTube client) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=newpipe&fdid=org.schabi.newpipe)
-* Oandbackup (App backup and restore) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=Oandbackup&fdid=dk.jens.backup)
-* Odyssey (Audio player) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=odyssey&fdid=org.gateshipone.odyssey)
-* OpenCamera [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=open+camera&fdid=net.sourceforge.opencamera)
-* OpenKeyChain [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=Oandbackup&fdid=org.sufficientlysecure.keychain)
-* OpenLauncher [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=openlauncher&fdid=com.benny.openlauncher)
-* OpenVPN [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=openvpn&fdid=de.blinkt.openvpn)
-* QKSMS [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=qk&fdid=com.moez.QKSMS)
-* Substratum (App and Compiler) [![GitHub Link](images/github.png)](https://github.com/substratum/substratum)
-  * will run in legacy mode on non-OMS ROMs
-* Termux [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=termux&fdid=com.termux)
-* Twidere (Twitter client) [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=twidere&fdid=org.mariotaku.twidere)
-* VLC (Audio/Video Player) [![GitLab Link](images/gitlab.png)](https://code.videolan.org/videolan/vlc-android)
-* XDA Labs [![XDA Link](images/xda.png)](https://forum.xda-developers.com/android/apps-games/labs-t3241866)
-  * source not (yet) available
-* Yahoo Weather Provider [![GitHub Link](images/github.png)](https://github.com/CyanogenMod/android_packages_apps_YahooWeatherProvider)
-
-#### Alter the list of provided Applications
-
-You can remove applications from being magic-mounted by **removing** them from the file
-
-`.nanomod-apps`
-
-on your device, in one of the following directories
-
-* `/data` (default)
-* `/sdcard` (internal storage)
-* `/persist`
-* mount point of your external SD-Card (if any)
-* directory containing the zip file
-
-See the default settings [![GitHub Link](images/github.png)](.nanomod-apps). The syntax is pretty simple:
-
-* one item per line
-* name must be an exact match
-
-Applications managed by other setup variables (F-Droid, microG, PlayStore) are not effected by this file.
 
 ### Issues
 
@@ -371,59 +227,6 @@ List of known issues
     * uninstall and re-install all your applications (backup application data if required)
 
 Additional [helpful information](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information) from the microG wiki.
-
-## Magisk & root
-
-**Magisk** allows modifying the ROM in system less fashion, it also brings it's own root solution (**MagiskSU**, which apparently is a fork of **PHH SuperUser**) and an companion application.
-
-### SafetyNet
-
-To pass SafetyNet enable **MagiskHide** in **Magisk Manager** and reboot.
-
-### Hiding Root from Apps
-
-After enabling **MagiskHide** and reboot go to **Magisk Manager** again, you'll now notice a new **MagiskHide** settings tab. In this tab you can select any application root should be hidden for. No reboot is required for this to take effect.
-
-*Note: don't select too many apps (10+), else **MagiskHide** may be too slow to actually hide root before the application checks for it.*
-
-## Zelda ringtones & sounds
-
-The following **The Legend of Zelda** sounds will be populated
-
-### Notification sounds
-
-* Flute
-* Gold Bug Catch
-* Hey Listen
-* Intro
-* Midna Alert
-* Secret
-* Start
-* Vessel
-
-### Ringtones
-
-* Bolero of Fire
-* Gerudo Valley
-* House Remix (original title theme)
-* Lost Woods Dubstep
-* Lost Woods
-* Market Theme
-* Minuet of Forest
-* Nocturne of Shadows
-* Prelude of Light
-* Requiem of Spirits
-* Sarias Song
-* Serenade of Water
-* Shadow World
-* Song of Storms
-* Song of Time
-
-### User Interface Sounds
-
-* Lock
-* LowBattery
-* Unlock
 
 ## FAQ
 
