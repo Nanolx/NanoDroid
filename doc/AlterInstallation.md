@@ -26,7 +26,7 @@ nanomod.mapsv1=1
 nanomod.init=1
 ```
 
-the **microg only package** only supports the following options
+the **microG package** only supports the following options
 
 ```
 nanomod.play=1
