@@ -42,7 +42,7 @@ on your device, in one of the following directories
 * mount point of your external SD-Card (if any)
 * directory containing the zip file
 
-See the default settings [![GitHub Link](images/github.png)](.nanomod-overlay). The syntax is pretty simple:
+See the default settings [![GitHub Link](github.png)](.nanomod-overlay). The syntax is pretty simple:
 
 * one item per line
 * name must be an exact match

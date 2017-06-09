@@ -6,8 +6,8 @@
 
 ## Downloads
 
-* Stable Downloads [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
-* Archived Downloads [![Androidfilehost Link](images/afh.png)](https://www.androidfilehost.com/?w=files&flid=156387)
+* Stable Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
+* Archived Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/?w=files&flid=156387)
 * Snapshot
   * on GNU/Linux, MacOS or BSD you can use the provided `mod.sh` script like
     * `mod.sh zip` for the full package
@@ -19,17 +19,17 @@
 
 ## Support
 
-XDA Support Thread [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928)
+XDA Support Thread [![XDA Link](doc/xda.png)](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928)
 
 ## ChangeLog
 
-ChangeLog.md [![GitHub Link](images/github.png)](ChangeLog.md)
+ChangeLog.md [![GitHub Link](doc/github.png)](ChangeLog.md)
 
 ## Summary
 
 **NanoMod** can be installed as a Magisk Module or directly to /system, though a bit functionality is only available with Magisk.
 
-More information about Magisk [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk)
+More information about Magisk [![XDA Link](doc/xda.png)](https://forum.xda-developers.com/apps/magisk)
 
 NanoMod includes
 
@@ -85,7 +85,7 @@ The `nanomod-overlay` script handles the following features
   * both in Magisk and System Mode
 * issue `nanomod-overlay --help` for the full list of options
 
-Full details on the pseudo-debloat feature [![GitHub Link](images/github.png)](doc/PseudoDebloat.md)
+Full details on the pseudo-debloat feature [![GitHub Link](doc/github.png)](doc/PseudoDebloat.md)
 
 #### init scripts
 
@@ -112,33 +112,33 @@ or you can use **Kernel Adiutor's** init.d emulation.
 
 ### microG
 
-microG is an Open Source replacement for Google Services, full details can be found at the microG homepage [![Web Link](images/microg.png)](http://microg.org/)
+microG is an Open Source replacement for Google Services, full details can be found at the microG homepage [![Web Link](doc/microg.png)](http://microg.org/)
 
 NanoMod includes microG as follows
 
-* microG GmsCore [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GmsCore) and Play Store [![APK Mirror Link](images/apkmirror.png)](https://www.apkmirror.com/apk/google-inc/google-play-store/)  modified to allow (in-)app purchases
-* with **Mozilla** location provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
-* with **Nominatim** adress provider backend [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
-* with **microG** GsfProxy [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_GsfProxy)
-* with **microG** DroidGuard Helper [![GitHub Link](images/github.png)](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
-* choose between official **Play Store** or unofficial **Yalp Store** [![F-Droid Link](images/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
+* microG GmsCore [![GitHub Link](doc/github.png)](https://github.com/microg/android_packages_apps_GmsCore) and Play Store [![APK Mirror Link](doc/apkmirror.png)](https://www.apkmirror.com/apk/google-inc/google-play-store/)  modified to allow (in-)app purchases
+* with **Mozilla** location provider backend [![F-Droid Link](doc/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
+* with **Nominatim** adress provider backend [![F-Droid Link](doc/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
+* with **microG** GsfProxy [![GitHub Link](doc/github.png)](https://github.com/microg/android_packages_apps_GsfProxy)
+* with **microG** DroidGuard Helper [![GitHub Link](doc/github.png)](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
+* choose between official **Play Store** or unofficial **Yalp Store** [![F-Droid Link](doc/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
     * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
 * support for Maps API version 1
 
 ### F-Droid and Applications
 
-F-Droid [![F-Droid Link](images/fdroid.png)](http://www.fdroid.org) is an app store for Open Source applications.
+F-Droid [![F-Droid Link](doc/fdroid.png)](http://www.fdroid.org) is an app store for Open Source applications.
 
 NanoMod includes both F-Droid and it's Privileged Extension, so you don't need to enable `Unknown Sources`.
 
-Additionally NanoMod includes a variety of applications, check full details [![GitHub Link](images/github.png)](doc/Applications.md)
+Additionally NanoMod includes a variety of applications, check full details [![GitHub Link](doc/github.png)](doc/Applications.md)
 
 ### The Legend of Zelda ringtones and sounds
 
-NanoMod includes **The Legend of Zelda** rintones and sounds [![Nintendo Link](images/zelda.png)](http://www.zelda.com/), because it's dangerous to root alone
+NanoMod includes **The Legend of Zelda** rintones and sounds [![Nintendo Link](doc/zelda.png)](http://www.zelda.com/), because it's dangerous to root alone
 
-Full details [![GitHub Link](images/github.png)](doc/ZeldaSounds.md)
+Full details [![GitHub Link](doc/github.png)](doc/ZeldaSounds.md)
 
 ## Installation
 
@@ -146,7 +146,7 @@ Full details [![GitHub Link](images/github.png)](doc/ZeldaSounds.md)
 
 NanoMod supports configuration files to alter the installation settings.
 
-Full details on altering installation [![GitHub Link](images/github.png)](doc/AlterInstallation.md)
+Full details on altering installation [![GitHub Link](doc/github.png)](doc/AlterInstallation.md)
 
 ### Installation Process
 
@@ -173,7 +173,7 @@ If your ROM does not have signature spoofing support, you can manually patch it 
   * the on-device framework-patcher zip
     * flash after booting into the ROM once
   * the `framework-patcher.sh` script (found in the github repository)
-    * usefrom your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](images/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the patched **services.jar**
+    * usefrom your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](doc/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the patched **services.jar**
 
 Once your ROM supports signature spoofing, you need to setup microG like this
   * go into **microG settings** and set up everything like:
@@ -191,7 +191,7 @@ Once your ROM supports signature spoofing, you need to setup microG like this
 
 ## License & Credits
 
-My own work (NanoMod itself) is licensed under the GNU General Public License version 3 or newer [![GNU Link](images/gnu.png)](https://www.gnu.org/licenses/gpl-3.0.txt)
+My own work (NanoMod itself) is licensed under the GNU General Public License version 3 or newer [![GNU Link](doc/gnu.png)](https://www.gnu.org/licenses/gpl-3.0.txt)
 
 For more details (including authors and license) on every provided application or Software press the icon next to it.
 
@@ -212,7 +212,7 @@ Special Thanks to the beta testers
 List of known issues
 
 * microG DroidGuard Helper or Play Store crashing
-  * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as `/system` application, see Magisk Issue 155 [![GitHub Link](images/github.png)](https://github.com/topjohnwu/Magisk/issues/155)
+  * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as `/system` application, see Magisk Issue 155 [![GitHub Link](doc/github.png)](https://github.com/topjohnwu/Magisk/issues/155)
   * this does not happen on all devices
   * if you are affected of this issue, instead install them as an user app, by installing the apk from
     * `/system/priv-app/DroidGuard/DroidGuard.apk` for microG DroidGuard Helper

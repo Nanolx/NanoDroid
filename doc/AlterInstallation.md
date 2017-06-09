@@ -35,7 +35,7 @@ nanomod.overlay=0
 nanomod.mapsv1=1
 ```
 
-where `1` means `on` and `0` means `off`. See the default settings [![GitHub Link](images/github.png)](.nanomod-setup). Description:
+where `1` means `on` and `0` means `off`. See the default settings [![GitHub Link](github.png)](.nanomod-setup). Description:
 
 `nanomod.fdroid=[0|1]`
 
