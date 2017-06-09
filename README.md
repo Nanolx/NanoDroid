@@ -207,7 +207,7 @@ Special Thanks to the beta testers
 * xenithorb
 * ShapeShifter499
 
-### Issues
+## Issues
 
 List of known issues
 
