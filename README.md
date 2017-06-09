@@ -27,11 +27,13 @@ ChangeLog.md [![GitHub Link](images/github.png)](ChangeLog.md)
 
 ## Summary
 
-**NanoMod** can be installed as a Magisk [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk) Module or directly to /system, though a bit functionality is only available with Magisk.
+**NanoMod** can be installed as a Magisk Module or directly to /system, though a bit functionality is only available with Magisk.
+
+More information about Magisk [![XDA Link](images/xda.png)](https://forum.xda-developers.com/apps/magisk)
 
 NanoMod includes
 
-* microG [![Web Link](images/microg.png)](http://microg.org/) and it's companions
+* microG and it's companions
   * on-device framework-patcher for microG support (signature spoofing)
   * on-pc framework-patcher for microG support (signature spoofing)
   * both patchers create the `/system/.nanomod-patcher` file after patching
@@ -92,7 +94,7 @@ The following init scripts are bundled with NanoMod
 * external_sd
   * symlink SD Card mount point to `/external_sd`
 * fstrim
- * trim file systems (may increase speed)
+  * trim file systems (may increase speed)
 * logscleaner
   * clean up log files
 * sqlite
