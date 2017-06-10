@@ -1,5 +1,7 @@
 # Pseudo-Debloated applications
 
+Magisk allows for apps to be magically removed upon runtime, they don't get actually removed from `/system` but they are pseudo-removed during runtime. The pseudo-debloat feature is not available when NanoMod is installed in System Mode
+
 ## Default Settings
 
 The following applications are pseudo-debloated by default
@@ -49,33 +51,12 @@ See the default settings [![GitHub Link](github.png)](.nanomod-overlay). The syn
 * applications in `/system/app` inside `APPS=( ... )`
 * applications in `/system/priv-app` inside `PRIV_APPS=( ... )`
 
-After you've made your changes, issue the following command on your phone, either using `adb shell` or **Termux** as root:
+After you've made your changes, issue the following command on your device, either using `adb shell` or **Termux** as root:
 
 `nanomod-overlay --update`
 
-This needs to be done in normal environment. If you're in **TWRP** you'll have to manually mount `/magisk`. For this you can use the supplied `mount-magisk.sh` script, connect phone to PC while in **TWRP** and run the following commands
+This needs to be done in normal environment. If you're in **TWRP** you'll have to manually mount `/magisk`.
 
-```
-adb push mount-magisk.sh /tmp/
-adb shell
-chmod 0755 /tmp/mount-magisk.sh
-/tmp/mount-magisk.sh mount-magisk
-```
-
-afterwards you can call `nanomod-overlay` like
-
-`/magisk/NanoMod/system/bin/nanomod-overlay --update`
-
-from **TWRP**, aswell. Issue
-
-`/tmp/mount-magisk.sh umount-magisk`
-
-to unmount `/magisk`. Reboot for your changes to get applied. For more options, check:
+For more options, check
 
 `nanomod-overlay --help`
-
-respectively
-
-`/magisk/NanoMod/system/bin/nanomod-overlay --help`
-
-from **TWRP**.
