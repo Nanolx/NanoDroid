@@ -41,6 +41,10 @@ case ${1} in
 		clear_overrides
 	;;
 
+	-g | --genconfig )
+		nanomod-overlay.genoverrides
+	;;
+
 	-p | --permission )
 		pm grant com.google.android.gms android.permission.FAKE_PACKAGE_SIGNATURE
 		pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE
@@ -56,6 +60,7 @@ Options:
 -l | --list			show all overriden /system applications
 -u | --update			update all overrides
 -c | --clear			remove all overrides
+-g | --genconfig		(re-)create configuration from existing overrides
 -p | --permission		grant signature spoofing permission to
 				microG GmsCore and Play Store
 -h | --help			this message"
