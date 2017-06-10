@@ -9,7 +9,7 @@
 * Stable Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
 * Archived Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/?w=files&flid=156387)
 * Snapshot
-  * on GNU/Linux, MacOS or BSD you can use the provided `mod.sh` script like
+  * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `mod.sh` script like
     * `mod.sh zip` for the full package
     * `mod.sh microg` for the microg only package
     * `mod.sh fdroid` for the F-Droid only package
@@ -43,6 +43,7 @@ NanoMod includes
 * custom init scripts
 * pseudo-debloat feature (Magisk-only)
   * disables applications systemless-ly
+  * pre-configured default settings
 * several Open Source applications
   * include replacements for the pseudo-debloated applications
 * additional components
@@ -66,7 +67,7 @@ NanoMod includes
   * creates the file `/system/.nanomod-patcher` after successful patching
 * **NanoMod-uninstaller**: includes
   * uninstaller for all NanoMod Magisk Modules
-* **framework-patcher.sh** (github repository)
+* **framework-patcher.sh** (clone this repository)
   * on-pc framework-patcher
   * creates the file `/system/.nanomod-patcher` after successful patching
 
@@ -95,6 +96,7 @@ The following init scripts are bundled with NanoMod
 
 * external_sd
   * symlink SD Card mount point to `/external_sd`
+  * SD Card needs to be inserted upon boot
 * fstrim
   * trim file systems (may increase speed)
 * logscleaner
@@ -123,10 +125,11 @@ NanoMod includes microG as follows
 * with **Nominatim** adress provider backend [![F-Droid Link](doc/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
 * with **microG** GsfProxy [![GitHub Link](doc/github.png)](https://github.com/microg/android_packages_apps_GsfProxy)
 * with **microG** DroidGuard Helper [![GitHub Link](doc/github.png)](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
+  * required for SafetyNet support
+* support for Maps API version 1
 * choose between official **Play Store** or unofficial **Yalp Store** [![F-Droid Link](doc/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
     * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
-* support for Maps API version 1
 
 ### F-Droid and Applications
 
@@ -138,7 +141,7 @@ Additionally NanoMod includes a variety of applications, check full details [![G
 
 ### The Legend of Zelda ringtones and sounds
 
-NanoMod includes **The Legend of Zelda** rintones and sounds [![Nintendo Link](doc/zelda.png)](http://www.zelda.com/), because it's dangerous to root alone
+NanoMod includes **The Legend of Zelda** [![Nintendo Link](doc/zelda.png)](http://www.zelda.com/) ringtones and sounds, because it's dangerous to root alone.
 
 Full details [![GitHub Link](doc/github.png)](doc/ZeldaSounds.md)
 
@@ -146,7 +149,7 @@ Full details [![GitHub Link](doc/github.png)](doc/ZeldaSounds.md)
 
 ### Alter Installation
 
-NanoMod supports configuration files to alter the installation settings.
+NanoMod supports altering the installation settings to a certain degree.
 
 Full details on altering installation [![GitHub Link](doc/github.png)](doc/AlterInstallation.md)
 
@@ -154,7 +157,7 @@ Full details on altering installation [![GitHub Link](doc/github.png)](doc/Alter
 
 #### NanoMod
 
-* Download release build or create zip file from the github repository
+* Download pre-built or create a zip file from this repository
 * perform full wipe (/system, /data, /cache, Dalvik/ART cache)
   * recommended, but not required
 * install desired ROM
@@ -175,7 +178,14 @@ If your ROM does not have signature spoofing support, you can manually patch it 
   * the on-device framework-patcher zip
     * flash after booting into the ROM once
   * the `framework-patcher.sh` script (found in the github repository)
-    * usefrom your PC / laptop. This shell script for GNU Bash (and compatible shells) works on Unixoid operating systems like GNU/Linux, BSD or Mac OSX. It automizes the process of downloading Haystack [![GitHub Link](doc/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the patched **services.jar**
+    * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [![GitHub Link](doc/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified **services.jar** on the device.
+
+Both patchers support installing the patched services.jar into the following locations
+  * NanoMod Magisk Module
+  * NanoMod-microG Magisk Module
+  * directly into `/system`
+
+So you can use them regardless whether you're using NanoMod or not.
 
 Once your ROM supports signature spoofing, you need to setup microG like this
   * go into **microG settings** and set up everything like:
@@ -183,8 +193,8 @@ Once your ROM supports signature spoofing, you need to setup microG like this
       * especially the 'Battery Optimization' item
     * enable **Google device registration**
     * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
-    * enable **Google SafetyNet** (only if you you want to be able to use applications that require SafetyNet, for example AndroidPay, Pokémon GO, ...)
-      * set to use the official servers
+    * enable **Google SafetyNet** (required for applications that utilize SafetyNet, for example Pokémon GO, ...)
+      * menu > set to use the official servers
     * in **UnifiedNlp Settings** choose
       * **Mozilla Location Backend** as Geolocation backend
       * **Nominatim** as Address lockup backend
@@ -221,8 +231,8 @@ List of known issues
     * `/system/priv-app/Phonesky/Phonesky.apk` for Play Store
 * SafetyNet check fails with `can't connect to Google API`
   * see `microG DroidGuard Helper or Play Store crashing` above and install microG DroidGuard Helper as user application
-* Play Store lacks fake sign permission
-  * on ROMs like **crDroid** or **OmniROM**, that have built-in fake signing and don't require running `framework-patcher.sh`, in some cases the Play Store is not granted fake sign permission, to fix this issue one of the following commands as root on your phone
+* Play Store lacks signature spoofing permission
+  * on ROMs like **crDroid** or **OmniROM**, that have built-in signature spoofing, in some cases the Play Store is not granted that permission automatically, to fix this, issue one of the following commands as **root** on your device
     * `nanomod-overlay --permission`
     * `pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE`
 * Battery Drain
