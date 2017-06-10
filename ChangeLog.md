@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 9.2 in-dev
+## 9.2.20170610
 * Internal Changes
   * no longer require `Busybox` for `sqlite` init script
   * install init scripts in `MODDIR/init.d` when in Magisk Mode
