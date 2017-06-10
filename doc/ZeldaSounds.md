@@ -1,6 +1,6 @@
-# Zelda ringtones & sounds
+# Zelda ringtones and sounds
 
-The following **The Legend of Zelda** sounds are included in NanoMod
+The following **The Legend of Zelda** ringtones and sounds are included in NanoMod
 
 ## Notification sounds
 
