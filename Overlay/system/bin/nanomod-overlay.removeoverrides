@@ -1,6 +1,9 @@
 #!@MODPATH@/system/bin/bash
 
-[[ ! -f "${config}" ]] && nanomod-overlay.genconfig
+if [[ ! -f "${config}" ]]; then
+	nanomod-overlay.genconfig
+else	source "${config}"
+fi
 
 if grep -q " ${1} " "${config}"; then
 	sed -e "/^${1}$/d" -i "${config}"

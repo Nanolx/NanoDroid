@@ -3,6 +3,7 @@
 export NO_MAGISK=0
 export NO_CONFIG=0
 export MODPATH=@MODPATH@
+export PATH="${PATH}:${MODPATH}/system/bin"
 
 # check for configuration files
 config_locations="/sdcard /external_sd /persist /data @ZIPDIR@"
@@ -12,7 +13,7 @@ get_config .nanomod-overlay
 
 [[ "${MODPATH}" != "/magisk/"* ]] && NO_MAGISK=1
 
-[[ -f ${config} ]] && source "${config}"
+[[ -f ${config} ]] && export config
 
 if [[ ${NO_MAGISK} -eq 0 ]]; then
 

@@ -10,6 +10,7 @@ if [[ ! -f "${config}" ]]; then
 	for app in "${LIST_PRIV_APPS[@]}"; do
 		PRIV_APPS=(${PRIV_APPS[@]} "$(dirname "${app}")")
 	done
+else	source "${config}"
 fi
 
 echo "Overrides exist for following applications in /system/app:

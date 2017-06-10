@@ -1,5 +1,7 @@
 #!@MODPATH@/system/bin/bash
 
+source "${MODPATH}/system/bin/nanomod-overlay.functions"
+source "${config}"
 clear_overrides
 
 for app in "${APPS[@]}"; do
