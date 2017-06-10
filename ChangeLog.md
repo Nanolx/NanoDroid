@@ -13,6 +13,12 @@
   * make `nanomod-overlay`'s `-p`, `--permission` parameter work when
     * installed in system mode
     * no `.nanomod-overlay` configuration file was found
+  * add `-g`, respectively `--genconfig` parameter to `nanomod-overlay` script
+    * creates `.nanomod-overlay` configuration file in `/data`
+    * `genconfig` will be automatically run when `nanomod-overlay` is run and NanoMod is installed in Magisk Mode, but no `.nanomod-overlay` configuration file exists
+  * rewrite most parts of the `nanomod-overlay` script
+  * modularize the `nanomod-overlay` script
+  * rewrite most parts of the documentation
 
 ## 9.1.20170607
 * Internal Changes
