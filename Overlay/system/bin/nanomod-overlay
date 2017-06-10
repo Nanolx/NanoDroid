@@ -7,8 +7,8 @@ export MODPATH=@MODPATH@
 # check for configuration files
 config_locations="/sdcard /external_sd /persist /data @ZIPDIR@"
 
-get_config .nanomod-overlay
 source "${MODPATH}/system/bin/nanomod-overlay.functions"
+get_config .nanomod-overlay
 
 [[ "${MODPATH}" != "/magisk/"* ]] && NO_MAGISK=1
 
