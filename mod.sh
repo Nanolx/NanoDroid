@@ -66,7 +66,7 @@ _microg() {
 			"${PWD}"/microG/system/priv-app/
 	done
 
-	cp "${PWD}"/Overlay/system/bin/nanomod-overlay \
+	cp "${PWD}"/Overlay/system/bin/nanomod-overlay* \
 		"${PWD}"/microG/system/bin
 
 	cp -r "${PWD}"/Overlay/system/framework/ \
