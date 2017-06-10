@@ -1,0 +1,15 @@
+#!@MODPATH@/system/bin/bash
+
+[[ ! -f "${config}" ]] && nanomod-overlay.genconfig
+
+if grep -q " ${1} " "${config}"; then
+	sed -e "/^${1}$/d" -i "${config}"
+	if [[ ${APPS[*]} == *${1}* ]]; then
+		echo "Removing override for app: \"${1}\""
+		rm -rf  "${MODPATH}/system/app/${1}"
+	elif [[ ${PRIV_APPS[*]} == *${1}* ]]; then
+		echo "Removing override for priv-app: \"${1}\""
+		rm -rf  "${MODPATH}/system/priv-app/${1}"
+	fi
+else	echo "No override for \"${1}\" found"
+fi

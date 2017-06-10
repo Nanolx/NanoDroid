@@ -1,176 +1,44 @@
 #!@MODPATH@/system/bin/bash
 
-NO_MAGISK=0
-NO_CONFIG=0
+export NO_MAGISK=0
+export NO_CONFIG=0
+export MODPATH=@MODPATH@
 
 # check for configuration files
 config_locations="/sdcard /external_sd /persist /data @ZIPDIR@"
 
-get_config () {
-	config=""
-	config_exists=0
-	for path in ${config_locations}; do
-		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
-			config="${path}/${1}"
-			config_exists=1
-			return
-		fi
-	done
-}
-
 get_config .nanomod-overlay
+source "${MODPATH}/system/bin/nanomod-overlay.functions"
 
-if [[ -d /magisk/NanoMod ]]; then
-	MODPATH=/magisk/NanoMod
-elif [[ -d /magisk/NanoModmicroG ]]; then
-	MODPATH=/magisk/NanoModmicroG
-else	NO_MAGISK=1
-fi
+[[ "${MODPATH}" != "/magisk/"* ]] && NO_MAGISK=1
 
-if [[ -f ${config} ]]; then
-	source ${config}
-else	NO_CONFIG=1
-fi
+[[ -f ${config} ]] && source "${config}"
 
-_check () {
-	if [[ "${NO_MAGISK}" == 1 ]]; then
-		echo "NanoMod not installed as Magisk Module"
-		return 1
-	elif [[ "${NO_CONFIG}" == 1 ]]; then
-		echo "no .nanomod-overlay configuration file found"
-		return 1
-	else	return 0
-	fi
-}
-
-_show_name () {
-	aapt dump badging "${1}" 2>/dev/null | \
-		grep "application: label" | \
-		sed -e "s/.*label='//g;s/' icon.*//g"
-}
-
-_rm_overrides () {
-	LIST=($(find "${MODPATH}/system" -name "*.replace"))
-
-	if [[ ${LIST[*]} != "" ]]; then
-		for app in "${LIST[@]}"; do
-			rm -rf "$(dirname "${app}")"
-		done
-	fi
-}
-
-_add_override () {
-
-	mkdir -p "${MODPATH}/system/${1}/${2}"
-	touch "${MODPATH}/system/${1}/${2}/.replace"
-
-}
-
-_remove_override () {
-
-	rm -rf "${MODPATH}/system/${1}"
-
-}
-
-if _check; then
+if [[ ${NO_MAGISK} -eq 0 ]]; then
 
 case ${1} in
 	-l | --list )
-		echo "Overrides exist for following applications in /system/app:
-
-$(printf '  * %s\n' "${APPS[@]}")
-
-Overrides exist for following applications in /system/priv-app:
-
-$(printf '  * %s\n' "${PRIV_APPS[@]}")
-"
+		nanomod-overlay.listoverrides
 	;;
 
 	-a | --add )
-		if [[ -d /system/app/${2} ]]; then
-			echo "Adding override for app: \"${2}\""
-			echo "APPS=(
-$(printf '%s\n' "${APPS[@]}")
-${2}
-)
-PRIV_APPS=(
-$(printf '%s\n' "${PRIV_APPS[@]}")
-)" > "${config}"
-			_add_override "app/${2}"
-		elif [[ -d /system/priv-app/${2} ]]; then
-			echo "Adding override for priv-app \"${2}\""
-			echo "APPS=(
-$(printf '%s\n' "${APPS[@]}")
-)
-PRIV_APPS=(
-$(printf '%s\n' "${PRIV_APPS[@]}")
-${2}
-)" > "${config}"
-			_add_override "priv-app/${2}"
-		else	echo "\"${2}\" not found in /system/app or /system/priv-app"
-		fi
+		nanomod-overlay.addoverrides "${2}"
 	;;
 
 	-r | --remove )
-		if grep -q " ${2} " "${config}"; then
-			sed -e "/^${2}$/d" -i "${config}"
-			if [[ ${APPS[*]} == *${2}* ]]; then
-				echo "Removing override for app: \"${2}\""
-				remove_override "app/${2}"
-			elif [[ ${PRIV_APPS[*]} == *${2}* ]]; then
-				echo "Removing override for priv-app: \"${2}\""
-				remove_override "priv-app/${2}"
-			fi
-		else	echo "No override for \"${2}\" found"
-		fi
+		nanomod-overlay.removeoverrides "${2}"
 	;;
 
 	-u | --update )
-
-		_rm_overrides
-
-		for app in "${APPS[@]}"; do
-			_add_override app "${app}"
-		done
-
-		for app in "${PRIV_APPS[@]}"; do
-			_add_override priv-app "${app}"
-		done
+		nanomod-overlay.updateoverrides
 	;;
 
 	-s | --show )
-
-		for app in /system/app/*/*.apk; do
-			sysname=$(basename "${app}" .apk)
-			if [[ ! -d ${MODPATH}/system/app/${sysname} ]]; then
-				humname=$(_show_name "${app}")
-				S_APPS="${S_APPS}
-* ${sysname}		(${humname})"
-			fi
-		done
-
-		for app in /system/priv-app/*/*.apk; do
-			sysname=$(basename "${app}" .apk)
-			if [[ ! -d ${MODPATH}/system/priv-app/${sysname} ]]; then
-				humname=$(_show_name "${app}")
-				S_PRIV_APPS="${S_PRIV_APPS}
-* ${sysname}		(${humname})"
-			fi
-		done
-
-		echo "Non-Overriden applications in /system/app:
-
-$(printf '* %s\n' "${S_APPS[@]}")
-
-Non-Overriden applications in /system/priv-app:
-
-$(printf '* %s\n' "${S_PRIV_APPS[@]}")
-"
-
+		nanomod-overlay.shownonoverrides
 	;;
 
-	-d | --delete )
-		_delete_overrides
+	-c | --clear )
+		clear_overrides
 	;;
 
 	-p | --permission )
@@ -187,10 +55,9 @@ Options:
 -s | --show			show non-overriden /system applications
 -l | --list			show all overriden /system applications
 -u | --update			update all overrides
--d | --delete			delete all overrides
--p | --permission		grant fakesign permission to microG GmsCore
-				and Play Store, aswell as ignore battery
-				optimization permission to microG GmsCore
+-c | --clear			remove all overrides
+-p | --permission		grant signature spoofing permission to
+				microG GmsCore and Play Store
 -h | --help			this message"
 	;;
 esac
@@ -209,9 +76,8 @@ case ${1} in
 *** SYSTEM MODE! LIMITED FUNCTIONALITY! ***
 
 Options:
--p | --permission		grant fakesign permission to microG GmsCore
-				and Play Store, aswell as ignore battery
-				optimization permission to microG GmsCore
+-p | --permission		grant signature spoofing permission to
+				microG GmsCore and Play Store
 -h | --help			this message"
 	;;
 esac

@@ -506,7 +506,11 @@ install_misc () {
 		set_perm_data ${MODPATH}/system/etc/${config}
 	done
 
-	for binary in bash bashbug nanomod-overlay; do
+	for binary in bash bashbug nanomod-overlay \
+		nanomod-overlay.functions nanomod-overlay.addoverrides \
+		nanomod-overlay.genconfig nanomod-overlay.listoverrides \
+		nanomod-overlay.removeoverrides nanomod-overlay.shownonoverrides \
+		nanomod-overlay.updateoverrides; do
 		set_perm_bin ${MODPATH}/system/bin/${binary}
 	done
 
@@ -522,7 +526,7 @@ install_misc () {
 	fi
 
 	sed -e "s|@MODPATH@|${MODPATH}|" -i \
-		${MODPATH}/system/bin/nanomod-overlay
+		${MODPATH}/system/bin/nanomod-overlay*
 
 }
 

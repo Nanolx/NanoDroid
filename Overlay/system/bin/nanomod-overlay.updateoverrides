@@ -1,0 +1,11 @@
+#!@MODPATH@/system/bin/bash
+
+clear_overrides
+
+for app in "${APPS[@]}"; do
+	add_override "app/${app}"
+done
+
+for app in "${PRIV_APPS[@]}"; do
+	add_override "priv-app/${app}"
+done

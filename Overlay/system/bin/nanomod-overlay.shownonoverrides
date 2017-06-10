@@ -1,0 +1,28 @@
+#!@MODPATH@/system/bin/bash
+
+for app in /system/app/*/*.apk; do
+	sysname=$(basename "${app}" .apk)
+	if [[ ! f ${MODPATH}/system/app/${sysname}/.replace ]]; then
+		humname=$(_show_name "${app}")
+		S_APPS="${S_APPS}
+* ${sysname}		(${humname})"
+	fi
+done
+
+for app in /system/priv-app/*/*.apk; do
+	sysname=$(basename "${app}" .apk)
+	if [[ ! -f ${MODPATH}/system/priv-app/${sysname}/.replace ]]; then
+		humname=$(_show_name "${app}")
+		S_PRIV_APPS="${S_PRIV_APPS}
+* ${sysname}		(${humname})"
+	fi
+done
+
+echo "Non-Overriden applications in /system/app:
+
+$(printf '* %s\n' "${S_APPS[@]}")
+
+Non-Overriden applications in /system/priv-app:
+
+$(printf '* %s\n' "${S_PRIV_APPS[@]}")
+"

@@ -1,0 +1,36 @@
+#!@MODPATH@/system/bin/bash
+
+get_config () {
+	config=""
+	config_exists=0
+	for path in ${config_locations}; do
+		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
+			config="${path}/${1}"
+			config_exists=1
+			return
+		fi
+	done
+}
+
+show_app_name () {
+	aapt dump badging "${1}" 2>/dev/null | \
+		grep "application: label" | \
+		sed -e "s/.*label='//g;s/' icon.*//g"
+}
+
+add_override () {
+	mkdir -p "${MODPATH}/system/${1}"
+	touch "${MODPATH}/system/${1}/.replace"
+}
+
+clear_overrides () {
+	RM_APPS=($(find "${MODPATH}/system/app" -name "*.replace"))
+	for app in "${RM_APPS[@]}"; do
+		rm -rf "$(dirname "${app}")"
+	done
+
+	RM_PRIV_APPS=($(find "${MODPATH}/system/priv-app" -name "*.replace"))
+	for app in "${RM_PRIV_APPS[@]}"; do
+		rm -rf "$(dirname "${app}")"
+	done
+}

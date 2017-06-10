@@ -1,0 +1,30 @@
+#!@MODPATH@/system/bin/bash
+
+if [[ ! -f "${config}" ]]; then
+	config="/data/.nanomod-overlay"
+	APPS=($(find "${MODPATH}/system/app" -name "*.replace"))
+	PRIV_APPS=($(find "${MODPATH}/system/priv-app" -name "*.replace"))
+fi
+
+APPS=("${APPS[@]}" "${ADD_APPS[@]}")
+PRIV_APPS="${PRIV_APPS[@]}" "${ADD_PRIV_APPS[@]}")
+
+echo "APPS=(" > "${config}"
+
+if [[ ${APPS[*]} != "" ]]; then
+	for app in "${APPS[@]}"; do
+		echo "$(dirname "${app}")" >> "${config}"
+	done
+fi
+
+echo ")
+
+PRIV_APPS=(" >> "${config}"
+
+if [[ ${PRIV_APPS[*]} != "" ]]; then
+	for app in "${PRIV_APPS[@]}"; do
+		echo "$(dirname "${app}")" >> "${config}"
+	done
+fi
+
+echo ")" >> "${config}"
