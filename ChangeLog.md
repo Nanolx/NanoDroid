@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 9.3 in-dev
+* Updates
+  * Substratum (782)
+
 ## 9.2.20170610
 * Internal Changes
   * no longer require `Busybox` for `sqlite` init script
