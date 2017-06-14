@@ -502,6 +502,7 @@ install_init () {
 	source config.sh
 
 	INSTALLER=$TMPDIR/$MODID
+	mkdir -p ${INSTALLER}
 }
 
 install_microg () {
@@ -678,6 +679,9 @@ if [ ! -f /data/magisk.img ]; then
 	MODE=SYSTEM
 fi
 
+# This path should work in any cases
+TMPDIR=/dev/tmp
+
 install_init
 
 if [ "${MODE}" = "MAGISK" ]; then
@@ -693,9 +697,6 @@ INIT_BASE="${MODPATH}"
 if [ "${MODE}" = "SYSTEM" ]; then
 	INIT_BASE="/system/etc"
 fi
-
-# This path should work in any cases
-TMPDIR=/dev/tmp
 
 ##########################################################################################
 # Main
@@ -723,7 +724,7 @@ if [ "${MODE}" = "MAGISK" ]; then
 fi
 
 ui_print " > prepare installation"
-cd ${INSTALLER}
+cd ${INSTALLER} || exit 1
 unzip -o "$ZIP" "system/*"
 unzip -o "$ZIP" "init.d/*"
 

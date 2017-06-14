@@ -335,6 +335,7 @@ install_init () {
 	source config.sh
 
 	INSTALLER=$TMPDIR/$MODID
+	mkdir -p ${INSTALLER}
 }
 
 install_fdroid () {
@@ -374,6 +375,9 @@ if [ ! -f /data/magisk.img ]; then
 	MODE=SYSTEM
 fi
 
+# This path should work in any cases
+TMPDIR=/dev/tmp
+
 install_init
 
 if [ "${MODE}" = "MAGISK" ]; then
@@ -383,9 +387,6 @@ else
 		error "! failed to re-mount /system read-write"
 	unset MODPATH
 fi
-
-# This path should work in any cases
-TMPDIR=/dev/tmp
 
 ##########################################################################################
 # Main

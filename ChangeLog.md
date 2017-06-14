@@ -2,6 +2,7 @@
 
 ## 9.3 in-dev
 * Internal Changes
+  * Full, F-Droid, microG packages: fix installation in system mode
   * remove bundled Magisk Manager (now bundled with Magisk itself)
 * Updates
   * microG Gms Core (0.2.4-103)
