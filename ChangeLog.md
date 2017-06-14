@@ -14,6 +14,7 @@
   * Twidere (3.6.19)
   * VLC (2.1.11~beta)
   * Play Store (7.9.52.Q)
+  * Lightning (4.5.0~snapshot)
 
 ## 9.2.20170610
 * Internal Changes
