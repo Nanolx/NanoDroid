@@ -3,6 +3,7 @@
 ## 9.3 in-dev
 * Updates
   * Substratum (782)
+  * Yalp Store (0.16)
 
 ## 9.2.20170610
 * Internal Changes
