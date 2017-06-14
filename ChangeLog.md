@@ -4,7 +4,8 @@
 * Updates
   * Substratum (782)
   * Yalp Store (0.16)
-  * Simple Calendar (2.10.10)
+  * Simple Calendar (2.5.2)
+  * Simple Gallery (2.10.10)
 
 ## 9.2.20170610
 * Internal Changes
