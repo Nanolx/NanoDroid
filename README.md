@@ -38,7 +38,7 @@ NanoMod includes
   * on-pc framework-patcher for microG support (signature spoofing)
   * both patchers create the `/system/.nanomod-patcher` file after patching
 * F-Droid and it's privileged extension
-* modified Play Store to allow (in-)app-purchases with Magisk
+* modified Play Store to allow (in-)app-purchases with microG
   * this required two steps
     * microG Gms Core and Play Store need to be signed with the same key
     * Play Store needs to be modified see the [patch](doc/Phonesky.diff)
