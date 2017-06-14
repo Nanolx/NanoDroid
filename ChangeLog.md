@@ -2,6 +2,7 @@
 
 ## 9.3 in-dev
 * Updates
+  * microG Gms Core (0.2.4-103)
   * Substratum (782)
   * Yalp Store (0.16)
   * Simple Calendar (2.5.2)
