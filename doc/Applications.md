@@ -20,7 +20,6 @@ Full list of provided applications
 * (Simple) Calendar [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=calendar&fdid=com.simplemobiletools.calendar)
 * (Simple) Gallery [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=gallery&fdid=com.simplemobiletools.gallery)
 * Lightning (Browser) [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=lightning&fdid=acr.browser.lightning)
-* Magisk Manager [![GitHub Link](github.png)](https://github.com/topjohnwu/MagiskManager)
 * New Pipe (YouTube client) [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=newpipe&fdid=org.schabi.newpipe)
 * Oandbackup (App backup and restore) [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=Oandbackup&fdid=dk.jens.backup)
 * Odyssey (Audio player) [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=odyssey&fdid=org.gateshipone.odyssey)

@@ -39,6 +39,9 @@ NanoMod includes
   * both patchers create the `/system/.nanomod-patcher` file after patching
 * F-Droid and it's privileged extension
 * modified Play Store to allow (in-)app-purchases with Magisk
+  * this required two steps
+    * microG Gms Core and Play Store need to be signed with the same key
+    * Play Store needs to be modified see the [patch](doc/Phonesky.diff)
   * alternatively Yalp Store can be installed instead
 * custom init scripts
 * pseudo-debloat feature (Magisk-only)

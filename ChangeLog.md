@@ -1,6 +1,8 @@
 # ChangeLog
 
 ## 9.3 in-dev
+* Internal Changes
+  * remove bundled Magisk Manager (now bundled with Magisk itself)
 * Updates
   * microG Gms Core (0.2.4-103)
   * Substratum (782)
@@ -10,6 +12,7 @@
   * Termux (0.51)
   * Twidere (3.6.18)
   * VLC (2.1.11~beta)
+  * Play Store (7.9.52.Q)
 
 ## 9.2.20170610
 * Internal Changes
