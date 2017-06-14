@@ -4,6 +4,7 @@
 * Internal Changes
   * Full, F-Droid, microG packages: fix installation in system mode
   * remove bundled Magisk Manager (now bundled with Magisk itself)
+  * re-signed microG GmsCore and Phonesky with own key instead of debug key
 * Updates
   * microG Gms Core (0.2.4-103)
   * Substratum (782)
@@ -15,6 +16,7 @@
   * VLC (2.1.11~beta)
   * Play Store (7.9.52.Q)
   * Lightning (4.5.0~snapshot)
+    * self-built; signed with own key
 
 ## 9.2.20170610
 * Internal Changes
