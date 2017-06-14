@@ -7,6 +7,7 @@
   * Simple Calendar (2.5.2)
   * Simple Gallery (2.10.10)
   * Termux (0.51)
+  * Twidere (3.6.18)
 
 ## 9.2.20170610
 * Internal Changes
