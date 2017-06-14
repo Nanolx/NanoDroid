@@ -8,6 +8,7 @@
   * Simple Gallery (2.10.10)
   * Termux (0.51)
   * Twidere (3.6.18)
+  * VLC (2.1.11~beta)
 
 ## 9.2.20170610
 * Internal Changes
