@@ -15,7 +15,7 @@
   * GNU Nano (2.8.2)
   * microG Gms Core (0.2.4-103)
   * Substratum (782)
-  * Yalp Store (0.16)
+  * Yalp Store (0.17)
   * Simple Calendar (2.5.2)
   * Simple Gallery (2.10.10)
   * Termux (0.51)
