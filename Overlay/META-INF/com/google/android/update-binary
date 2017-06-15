@@ -317,6 +317,13 @@ detect_arch () {
 		ARCH=x64
 		IS64BIT=true
 	fi
+
+	case ${ARCH} in
+		arm )		DEL_ARCH="arm64 x86 x86_64"	;;
+		arm64 )		DEL_ARCH="arm x86 x86_64"	;;
+		x86 )		DEL_ARCH="arm arm64 x86_64"	;;
+		x86_64 )	DEL_ARCH="arm arm64 x86"	;;
+	esac
 }
 
 ##########################################################################################
@@ -507,6 +514,7 @@ install_microg () {
 		for app in DroidGuard GmsCore GsfProxy; do
 			cp -r ${INSTALLER}/system/priv-app/${app} \
 				${MODPATH}/system/priv-app/
+			remove_libs priv-app/${app}
 			set_perm_dir ${MODPATH}/system/priv-app/${app}
 		done
 		ui_print " << with microG"
@@ -540,16 +548,9 @@ install_fdroid () {
 	fi
 }
 
-case ${ARCH} in
-	arm )		DEL_ARCH="arm64 x86 x86_64"	;;
-	arm64 )		DEL_ARCH="arm x86 x86_64"	;;
-	x86 )		DEL_ARCH="arm arm64 x86_64"	;;
-	x86_64 )	DEL_ARCH="arm arm64 x86"	;;
-esac
-
 remove_libs () {
 	for arch in ${DEL_ARCH}; do
-		rm -rf ${MODPATH}/system/app/${1}/lib/${arch}
+		rm -rf ${MODPATH}/system/${1}/lib/${arch}
 	done
 }
 
@@ -564,7 +565,7 @@ install_apps () {
 			Termux Twidere XDALabs YahooWeatherProvider; do
 				if grep -q "^${app}$" $nanomodapps; then
 					cp -r ${INSTALLER}/system/app/${app} ${MODPATH}/system/app/
-					remove_libs ${app}
+					remove_libs app/${app}
 					set_perm_dir ${MODPATH}/system/app/${app}
 					ui_print " <<> ${app}"
 				fi
