@@ -490,9 +490,7 @@ install_misc () {
 	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
 	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
 
-	for dir in system/etc/terminfo system/share; do
-		set_perm_dir ${MODPATH}/${dir}
-	done
+	set_perm_dir ${MODPATH}/system/share
 
 	for config in bashrc bash_logout; do
 		set_perm_data ${MODPATH}/system/etc/${config}
