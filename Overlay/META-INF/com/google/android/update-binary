@@ -556,20 +556,14 @@ install_apps () {
 				fi
 		done
 
-		if [[ ${ARCH} == arm ]]; then
-			cp -r ${INSTALLER}/system/app/VLC32 ${MODPATH}/system/app/VLC
-			set_perm_dir ${MODPATH}/system/app/VLC
-			ui_print " <<> VLC"
-		elif [[ ${ARCH} == arm64 ]]; then
-			cp -r ${INSTALLER}/system/app/VLC64 ${MODPATH}/system/app/VLC
-			set_perm_dir ${MODPATH}/system/app/VLC
-			ui_print " <<> VLC"
-		elif [[ ${ARCH} == x86 ]]; then
-			cp -r ${INSTALLER}/system/app/VLCX32 ${MODPATH}/system/app/VLC
-			set_perm_dir ${MODPATH}/system/app/VLC
-			ui_print " <<> VLC"
-		elif [[ ${ARCH} == x64 ]]; then
-			cp -r ${INSTALLER}/system/app/VLCX64 ${MODPATH}/system/app/VLC
+		if grep -q "^VLC$" $nanomodapps; then
+			case ${ARCH} in
+				arm )		VLC_ARCH=32	;;
+				arm64 )		VLC_ARCH=64	;;
+				x86 )		VLC_ARCH=X32	;;
+				x86_64 )	VLC_ARCH=X64	;;
+			fi
+			cp -r ${INSTALLER}/system/app/VLC${VLC_ARCH}  ${MODPATH}/system/app/VLC
 			set_perm_dir ${MODPATH}/system/app/VLC
 			ui_print " <<> VLC"
 		fi
