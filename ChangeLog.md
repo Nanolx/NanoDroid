@@ -7,6 +7,7 @@
   * re-signed microG GmsCore and Phonesky with my own key instead of debug key
   * work-in-progress: x86/x86_64 support
 * Updates
+  * GNU Nano (2.8.2)
   * microG Gms Core (0.2.4-103)
   * Substratum (782)
   * Yalp Store (0.16)
