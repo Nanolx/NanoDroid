@@ -18,7 +18,7 @@
   * Yalp Store (0.17)
   * Simple Calendar (2.5.2)
   * Simple Gallery (2.10.10)
-  * Termux (0.51)
+  * Termux (0.52)
   * Twidere (3.6.19)
   * VLC (2.1.11~beta)
   * Play Store (7.9.52.Q)
