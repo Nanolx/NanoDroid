@@ -327,10 +327,14 @@ detect_arch () {
 	fi
 
 	case ${ARCH} in
-		arm )		DEL_ARCH="arm64 x86 x86_64"	;;
-		arm64 )		DEL_ARCH="arm x86 x86_64"	;;
-		x86 )		DEL_ARCH="arm arm64 x86_64"	;;
-		x86_64 )	DEL_ARCH="arm arm64 x86"	;;
+		arm )		DEL_ARCH="arm64 x86 x86_64"
+				BIN_ARCH="arm"			;;
+		arm64 )		DEL_ARCH="arm x86 x86_64"
+				BIN_ARCH="arm"			;;
+		x86 )		DEL_ARCH="arm arm64 x86_64"
+				BIN_ARCH="x86"			;;
+		x86_64 )	DEL_ARCH="arm arm64 x86"
+				BIN_ARCH="x86"			;;
 	esac
 }
 
@@ -624,7 +628,6 @@ install_zelda () {
 
 install_misc () {
 	ui_print " < GNU Bash, GNU Nano, NanoMod-Overlay"
-	cp -r ${INSTALLER}/system/bin ${MODPATH}/system/
 	cp -r ${INSTALLER}/system/etc/terminfo ${MODPATH}/system/etc/
 	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
 	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
@@ -637,11 +640,18 @@ install_misc () {
 		set_perm_data ${MODPATH}/system/etc/${config}
 	done
 
-	for binary in aapt aopt bash bashbug nano nano.bin nanomod-overlay \
-		nanomod-overlay.functions nanomod-overlay.addoverrides \
-		nanomod-overlay.genconfig nanomod-overlay.listoverrides \
-		nanomod-overlay.removeoverrides nanomod-overlay.shownonoverrides \
-		nanomod-overlay.updateoverrides; do
+	for binary in nano nano.bin nanomod-overlay nanomod-overlay.functions \
+		nanomod-overlay.addoverrides nanomod-overlay.genconfig \
+		nanomod-overlay.listoverrides nanomod-overlay.removeoverrides \
+		nanomod-overlay.shownonoverrides nanomod-overlay.updateoverrides; do
+		cp ${INSTALLER}/system/bin/${binary} ${MODPATH}/system/bin/
+		set_perm_bin ${MODPATH}/system/bin/${binary}
+	done
+
+	# architecture dependend stuff
+	for binary in aapt bash bashbug; do
+		cp ${INSTALLER}/system/bin/${binary}.${BIN_ARCH} \
+			${MODPATH}/system/bin/${binary}
 		set_perm_bin ${MODPATH}/system/bin/${binary}
 	done
 

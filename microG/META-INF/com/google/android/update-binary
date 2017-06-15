@@ -271,6 +271,14 @@ detect_arch () {
 		ARCH=x64
 		IS64BIT=true
 	fi
+
+	case ${ARCH} in
+		arm )		BIN_ARCH="arm"	;;
+		arm64 )		BIN_ARCH="arm"	;;
+		x86 )		BIN_ARCH="x86"	;;
+		x86_64 )	BIN_ARCH="x86"	;;
+	esac
+
 }
 
 ##########################################################################################
@@ -494,7 +502,6 @@ install_store () {
 
 install_misc () {
 	ui_print " < GNU Bash, NanoMod-Overlay"
-	cp -r ${INSTALLER}/system/bin ${MODPATH}/system/
 	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
 	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
 
@@ -504,13 +511,21 @@ install_misc () {
 		set_perm_data ${MODPATH}/system/etc/${config}
 	done
 
-	for binary in bash bashbug nanomod-overlay \
-		nanomod-overlay.functions nanomod-overlay.addoverrides \
-		nanomod-overlay.genconfig nanomod-overlay.listoverrides \
-		nanomod-overlay.removeoverrides nanomod-overlay.shownonoverrides \
-		nanomod-overlay.updateoverrides; do
+	for binary in nanomod-overlay nanomod-overlay.functions \
+		nanomod-overlay.addoverrides nanomod-overlay.genconfig \
+		nanomod-overlay.listoverrides nanomod-overlay.removeoverrides \
+		nanomod-overlay.shownonoverrides nanomod-overlay.updateoverrides; do
+		cp ${INSTALLER}/system/bin/${binary} ${MODPATH}/system/bin/
 		set_perm_bin ${MODPATH}/system/bin/${binary}
 	done
+
+	# architecture dependend stuff
+	for binary in aapt bash bashbug; do
+		cp ${INSTALLER}/system/bin/${binary}.${BIN_ARCH} \
+			${MODPATH}/system/bin/${binary}
+		set_perm_bin ${MODPATH}/system/bin/${binary}
+	done
+
 
 	ZIPDIR=$(dirname "${ZIP}")
 	if [[ "${ZIPDIR}" == "/external_sd" ]]; then
