@@ -78,9 +78,6 @@ _microg() {
 	cp "${PWD}"/Overlay/system/etc/bash* \
 		"${PWD}"/microG/system/etc/
 
-	cp -r "${PWD}"/Overlay/system/etc/terminfo/ \
-		"${PWD}"/microG/system/etc/
-
 	cp -r "${PWD}"/Overlay/system/share/ \
 		"${PWD}"/microG/system/
 

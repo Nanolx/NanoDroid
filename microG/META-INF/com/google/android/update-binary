@@ -487,7 +487,6 @@ install_store () {
 install_misc () {
 	ui_print " < GNU Bash, NanoMod-Overlay"
 	cp -r ${INSTALLER}/system/bin ${MODPATH}/system/
-	cp -r ${INSTALLER}/system/etc/terminfo ${MODPATH}/system/etc/
 	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
 	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
 
