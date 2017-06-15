@@ -545,7 +545,7 @@ case ${ARCH} in
 	arm64 )		DEL_ARCH="arm x86 x86_64"	;;
 	x86 )		DEL_ARCH="arm arm64 x86_64"	;;
 	x86_64 )	DEL_ARCH="arm arm64 x86"	;;
-fi
+esac
 
 remove_libs () {
 	for arch in ${DEL_ARCH}; do
@@ -576,7 +576,7 @@ install_apps () {
 				arm64 )		VLC_ARCH=64	;;
 				x86 )		VLC_ARCH=X32	;;
 				x86_64 )	VLC_ARCH=X64	;;
-			fi
+			esac
 			cp -r ${INSTALLER}/system/app/VLC${VLC_ARCH}  ${MODPATH}/system/app/VLC
 			set_perm_dir ${MODPATH}/system/app/VLC
 			ui_print " <<> VLC"
