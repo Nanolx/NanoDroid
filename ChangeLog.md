@@ -9,6 +9,7 @@
     * also greatly simplify VLC installation code in installer
   * Full package: remove app libraries not required for device architecture
     * example: on ARM the libraries for ARM64, x86 and x86_64 are removed
+  * microG package: don't install terminfo files as GNU Nano is not included
   * work-in-progress: x86/x86_64 support
 * Updates
   * GNU Nano (2.8.2)
