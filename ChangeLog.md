@@ -5,6 +5,7 @@
   * Full, F-Droid, microG packages: fix installation in system mode
   * remove bundled Magisk Manager (now bundled with Magisk itself)
   * re-signed microG GmsCore and Phonesky with own key instead of debug key
+  * work-in-progress: x86/x86_64 support
 * Updates
   * microG Gms Core (0.2.4-103)
   * Substratum (782)

@@ -251,9 +251,6 @@ Additional [helpful information](https://github.com/microg/android_packages_apps
 Q: will there be a GApps version, instead of microG?
 A: no. but you can choose not to populate microG.
 
-Q: will there be support for x86?
-A: x86 support is not planned currently.
-
 Q: what devices was this tested on?
 A: Moto X Play (lux), Samsung Galaxy Tab 4 (matissewifi), Samsung Galaxy S6 (zeroflte)
 

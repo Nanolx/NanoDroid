@@ -177,6 +177,14 @@ _unpacklibs () {
 			mkdir -p ${dir}/lib/arm
 			cp ${fil}/lib/armeabi/* ${dir}/lib/arm/
 		fi
+		if [[ -d ${fil}/lib/x86 ]]; then
+			mkdir -p ${dir}/lib/x86
+			cp ${fil}/lib/x86/* ${dir}/lib/x86/
+		fi
+		if [[ -d ${fil}/lib/x86_64 ]]; then
+			mkdir -p ${dir}/lib/x86_64
+			cp ${fil}/lib/x86_64/* ${dir}/lib/x86_64/
+		fi
 		rm -rf ${fil}
 	done
 
