@@ -628,6 +628,7 @@ install_zelda () {
 
 install_misc () {
 	ui_print " < GNU Bash, GNU Nano, NanoMod-Overlay"
+	mkdir -p ${MODPATH}/system/bin
 	cp -r ${INSTALLER}/system/etc/terminfo ${MODPATH}/system/etc/
 	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
 	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
