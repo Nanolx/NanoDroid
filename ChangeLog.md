@@ -7,6 +7,8 @@
   * re-signed microG GmsCore and Phonesky with my own key instead of debug key
   * fix that VLC was always installed, even if user requested not to
     * also greatly simplify VLC installation code in installer
+  * Full package: remove app libraries not required for device architecture
+    * example: on ARM the libraries for ARM64, x86 and x86_64 are removed
   * work-in-progress: x86/x86_64 support
 * Updates
   * GNU Nano (2.8.2)

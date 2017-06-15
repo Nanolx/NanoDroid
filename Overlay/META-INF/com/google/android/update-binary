@@ -540,6 +540,19 @@ install_fdroid () {
 	fi
 }
 
+case ${ARCH} in
+	arm )		DEL_ARCH="arm64 x86 x86_64"	;;
+	arm64 )		DEL_ARCH="arm x86 x86_64"	;;
+	x86 )		DEL_ARCH="arm arm64 x86_64"	;;
+	x86_64 )	DEL_ARCH="arm arm64 x86"	;;
+fi
+
+remove_libs () {
+	for arch in ${DEL_ARCH}; do
+		rm -rf ${MODPATH}/system/app/${1}/lib/${arch}
+	done
+}
+
 install_apps () {
 	# install apps if requested
 	if grep -q nanomod.apps=1 $nanomodsetup; then
@@ -551,6 +564,7 @@ install_apps () {
 			Termux Twidere XDALabs YahooWeatherProvider; do
 				if grep -q "^${app}$" $nanomodapps; then
 					cp -r ${INSTALLER}/system/app/${app} ${MODPATH}/system/app/
+					remove_libs ${app}
 					set_perm_dir ${MODPATH}/system/app/${app}
 					ui_print " <<> ${app}"
 				fi
