@@ -502,6 +502,7 @@ install_store () {
 
 install_misc () {
 	ui_print " < GNU Bash, NanoMod-Overlay"
+	mkdir -p ${MODPATH}/system/bin
 	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
 	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
 
