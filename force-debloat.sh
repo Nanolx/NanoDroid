@@ -62,26 +62,22 @@ debloat_system () {
 	umount /system
 }
 
-if [[ ! -d /twres ]]; then
-	echo "Not running from TWRP, exiting"
+error () {
+	echo "${@}"
 	exit 1
-fi
+}
 
-if ! (is_mounted /system); then
-	mount /data
-fi
 
-if [[ -f /data/magisk.img ]]; then
-	echo "Magisk is installed, exiting"
-	exit 1
-fi
+[[ ! -d /twres ]] && error "Not running from TWRP, exiting"
+is_mounted /data || mount /data
+[[ -f /data/magisk.img ]] && error "Magisk is installed, exiting"
 
 echo "NanoMod force-debloat script
 
-This script will actually remove the following apps:
+This script will actually remove apps from
 
-${APPS}
-${PRIV_APPS}
+	/system/app
+	/system/priv-app
 
 Are you sure you want to proceed?
 
@@ -95,10 +91,11 @@ case ${USER_INPUT} in
 		debloat_system
 	;;
 
+	"" )
+		error "No user input, exiting"
+	;;
+
 	* )
-		echo "Exiting"
-		exit 1
+		error "Unknown user input, exiting"
 	;;
 esac
-
-
