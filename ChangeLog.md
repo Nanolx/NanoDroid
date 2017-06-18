@@ -17,6 +17,7 @@
     * the list of applications resides in the script itself
     * the default settings equal to the pseudo-debloat settings of `nanomod-overlay` script
     * needs to be run from TWRP, requires explicit user acceptance
+  * add `Jelly` to the list of pseudo-debloated apps by default
   * work-in-progress: x86/x86_64 support
 * Updates
   * GNU Nano (2.8.2)

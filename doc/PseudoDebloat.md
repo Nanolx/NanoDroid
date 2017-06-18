@@ -11,7 +11,7 @@ The following applications are pseudo-debloated by default
 * CM File Manager
 * Eleven, Phonograph (Audio Player)
 * E-Mail + Exchange2
-* Browser, Gello, Slimperience, Via Browser (Browser)
+* Browser, Gello, Slimperience, Via Browser, Jelly (Browser)
 * PhotoTable
 * Sound Recorder, Recorder
 * messaging (SMS & MMS)

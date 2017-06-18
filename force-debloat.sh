@@ -10,6 +10,7 @@ Email
 Exchange2
 Gallery2
 Gello
+Jelly
 NexusLauncher
 Phonograph
 PhotoTable
