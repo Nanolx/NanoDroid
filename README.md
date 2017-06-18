@@ -73,6 +73,10 @@ NanoMod includes
 * **framework-patcher.sh** (clone this repository)
   * on-pc framework-patcher
   * creates the file `/system/.nanomod-patcher` after successful patching
+* **force-debloat.sh** (clone this repository)
+  * system debloater
+  * the list of applications resides in the script itself
+  * needs to be run from TWRP, requires explicit user acceptance
 
 ## Details
 
