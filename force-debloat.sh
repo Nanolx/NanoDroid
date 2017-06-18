@@ -67,6 +67,15 @@ if [[ ! -d /twres ]]; then
 	exit 1
 fi
 
+if ! (is_mounted /system); then
+	mount /data
+fi
+
+if [[ -f /data/magisk.img ]]; then
+	echo "Magisk is installed, exiting"
+	exit 1
+fi
+
 echo "NanoMod force-debloat script
 
 This script will actually remove the following apps:
