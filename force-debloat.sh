@@ -61,6 +61,11 @@ debloat_system () {
 	umount /system
 }
 
+if [[ ! -d /twres ]]; then
+	echo "Not running from TWRP, exiting"
+	exit 1
+fi
+
 echo "NanoMod force-debloat script
 
 This script will actually remove the following apps:
@@ -82,6 +87,7 @@ case ${USER_INPUT} in
 
 	* )
 		echo "Exiting"
+		exit 1
 	;;
 esac
 
