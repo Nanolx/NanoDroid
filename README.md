@@ -77,6 +77,9 @@ NanoMod includes
   * system debloater
   * the list of applications resides in the script itself
   * needs to be run from TWRP, requires explicit user acceptance
+* **mount-magisk.sh** (clone this repository)
+  * script to mount or unmount Magisk in TWRP
+  * script toggles mount-state (read: will mount Magisk if unmounted and unmount Magisk if mounted)
 
 ## Details
 
