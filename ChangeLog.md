@@ -11,6 +11,12 @@
     * example: on ARM the libraries for ARM64, x86 and x86_64 are removed
   * microG package: don't install terminfo files as GNU Nano is not included
   * microG package: bundle `aapt` (required for `nanomod-overlay`)
+  * on-pc framework-patcher: only do actual work if in TWRP
+  * added force-debloat script (for system mode!)
+    * script that can be run from recovery to debloat the system
+    * the list of applications resides in the script itself
+    * the default settings equal to the pseudo-debloat settings of `nanomod-overlay` script
+    * needs to be run from TWRP, requires explicit user acceptance
   * work-in-progress: x86/x86_64 support
 * Updates
   * GNU Nano (2.8.2)
