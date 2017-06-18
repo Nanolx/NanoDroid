@@ -44,17 +44,45 @@ is_mounted() {
 	return $?
 }
 
-if (is_mounted /system); then
-	mount -orw,remount /system
-else	mount -orw /system
-fi
+debloat_system () {
+	if (is_mounted /system); then
+		mount -orw,remount /system
+	else	mount -orw /system
+	fi
 
-for app in ${APPS}; do
-	rm -rf /system/app/${app}
-done
+	for app in ${APPS}; do
+		rm -rf /system/app/${app}
+	done
 
-for app in ${PRIV_APPS}; do
-	rm -rf /system/priv-app/${app}
-done
+	for app in ${PRIV_APPS}; do
+		rm -rf /system/priv-app/${app}
+	done
 
-umount /system
+	umount /system
+}
+
+echo "NanoMod force-debloat script
+
+This script will actually remove the following apps:
+
+${APPS}
+${PRIV_APPS}
+
+Are you sure you want to proceed?
+
+Enter [y] / [j]
+"
+
+read -r USER_INPUT
+
+case ${USER_INPUT} in
+	y | Y | j | J )
+		debloat_system
+	;;
+
+	* )
+		echo "Exiting"
+	;;
+esac
+
+
