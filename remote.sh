@@ -78,6 +78,11 @@ umount_magisk () {
 
 echo ""
 
+if [[ ! -d /twres ]]; then
+	echo "Not running in TWRP, exiting"
+	exit 1
+fi
+
 if [[ -f /data/magisk.img ]]; then
 	grow_magisk_img
 	echo "magisk found: mount to /magisk"
