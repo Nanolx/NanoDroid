@@ -47,8 +47,7 @@ case ${1} in
 	;;
 
 	-p | --permission )
-		pm grant com.google.android.gms android.permission.FAKE_PACKAGE_SIGNATURE
-		pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE
+		nanomod-overlay.permission
 	;;
 
 	* )
@@ -72,8 +71,7 @@ else
 
 case ${1} in
 	-p | --permission )
-		pm grant com.google.android.gms android.permission.FAKE_PACKAGE_SIGNATURE
-		pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE
+		nanomod-overlay.permission
 	;;
 
 	* )
