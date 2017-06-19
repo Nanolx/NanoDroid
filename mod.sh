@@ -56,12 +56,14 @@ _microg() {
 	mkdir -p "${PWD}"/microG/system/{priv-,}app
 	mkdir -p "${PWD}"/microG/system/{bin,etc}
 
-	for app in nlpBackendIchnaea nlpBackendNomiantim; do
+	for app in GoogleCalendarSync GoogleContactSync \
+		nlpBackendIchnaea nlpBackendNomiantim; do
 		cp -r "${PWD}"/Overlay/system/app/"${app}" \
 			"${PWD}"/microG/system/app/
 	done
 
-	for app in DroidGuard FakeStore GmsCore GsfProxy Phonesky YalpStore; do
+	for app in GoogleBackupTransport DroidGuard FakeStore \
+		GmsCore GsfProxy Phonesky YalpStore; do
 		cp -r "${PWD}"/Overlay/system/priv-app/"${app}" \
 			"${PWD}"/microG/system/priv-app/
 	done
