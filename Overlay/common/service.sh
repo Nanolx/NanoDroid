@@ -13,7 +13,7 @@ CURDATE=$(date +%Y%m%d-%I.%M.%S)
 
 # This script will be executed in late_start service mode
 # More info in the main Magisk thread
-"${MODDIR}/init.d/fstrim" | tee -a "${LOGDIR}/fstrim.log.${CURDATE}" &
-"${MODDIR}/init.d/logscleaner" | tee -a "${LOGDIR}/logscleaner.log.${CURDATE}" &
-"${MODDIR}/init.d/sqlite" | tee -a "${LOGDIR}/sqlite.log.${CURDATE}" &
-"${MODDIR}/init.d/external_sd" | tee -a "${LOGDIR}/external_sd.log.${CURDATE}" &
+for init in fstrim logscleaner sqlite external_sd permissions; do
+	"${MODDIR}/init.d/${init}" | \
+		tee -a "${LOGDIR}/${init}.log.${CURDATE}" &
+done
