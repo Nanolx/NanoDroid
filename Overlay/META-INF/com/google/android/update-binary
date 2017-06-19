@@ -218,7 +218,8 @@ nanomod.play=1
 nanomod.overlay=1
 nanomod.zelda=1
 nanomod.mapsv1=1
-nanomod.init=1" > $nanomodsetup
+nanomod.init=1
+nanomod.gsync=0" > $nanomodsetup
 }
 
 # create default '.nanomod-apps'
@@ -280,6 +281,9 @@ check_nanomodsetup () {
 	fi
 	if ! grep -q "^nanomod.init" $nanomodsetup; then
 		echo "nanomod.init=1" >> $nanomodsetup
+	fi
+	if ! grep -q "^nanomod.gsync" $nanomodsetup; then
+		echo "nanomod.gsync=0" >> $nanomodsetup
 	fi
 }
 

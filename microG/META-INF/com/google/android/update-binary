@@ -210,7 +210,8 @@ create_nanomodsetup () {
 	echo "nanomod.reinstall=0
 nanomod.play=1
 nanomod.overlay=0
-nanomod.mapsv1=1" > $nanomodsetup
+nanomod.mapsv1=1
+nanomod.gsync=0" > $nanomodsetup
 }
 
 # check whether '.nanomod-setup' has all required entries
@@ -226,6 +227,9 @@ check_nanomodsetup () {
 	fi
 	if ! grep -q "^nanomod.mapsv1" $nanomodsetup; then
 		echo "nanomod.mapsv1=1" >> $nanomodsetup
+	fi
+	if ! grep -q "^nanomod.gsync" $nanomodsetup; then
+		echo "nanomod.gsync=0" >> $nanomodsetup
 	fi
 }
 
