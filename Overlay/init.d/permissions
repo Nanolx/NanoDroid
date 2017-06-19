@@ -1,0 +1,5 @@
+#!/system/bin/sh
+
+echo "permissions init script"
+
+nanomod-overlay --permission
