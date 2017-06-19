@@ -235,12 +235,14 @@ K9Mail
 KeePassDroid
 KernelAdiutor
 Lightning
+MPV
 NewPipe
 Oandbackup
 Odyssey
 OpenCamera
 OpenKeyChain
 OpenLauncher
+OpenWeatherMapProvider
 OpenVPN
 QKSMS
 SimpleCalendar
@@ -248,7 +250,6 @@ SimpleGallery
 Substratum
 Termux
 Twidere
-VLC
 XDALabs
 YahooWeatherProvider" > $nanomodapps
 }
@@ -577,10 +578,11 @@ install_apps () {
 	if grep -q nanomod.apps=1 $nanomodsetup; then
 		ui_print " << with applications"
 		for app in Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
-			K9Mail KeePassDroid KernelAdiutor Lightning NewPipe \
+			K9Mail KeePassDroid KernelAdiutor Lightning MPV NewPipe \
 			Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
-			OpenVPN QKSMS SimpleCalendar SimpleGallery Substratum \
-			Termux Twidere XDALabs YahooWeatherProvider; do
+			OpenWeatherMapProvider OpenVPN QKSMS SimpleCalendar \
+			SimpleGallery Substratum Termux Twidere XDALabs \
+			YahooWeatherProvider; do
 				if grep -q "^${app}$" $nanomodapps; then
 					cp -r ${INSTALLER}/system/app/${app} ${MODPATH}/system/app/
 					remove_libs app/${app}
@@ -588,18 +590,6 @@ install_apps () {
 					ui_print " <<> ${app}"
 				fi
 		done
-
-		if grep -q "^VLC$" $nanomodapps; then
-			case ${ARCH} in
-				arm )		VLC_ARCH=32	;;
-				arm64 )		VLC_ARCH=64	;;
-				x86 )		VLC_ARCH=X32	;;
-				x86_64 )	VLC_ARCH=X64	;;
-			esac
-			cp -r ${INSTALLER}/system/app/VLC${VLC_ARCH}  ${MODPATH}/system/app/VLC
-			set_perm_dir ${MODPATH}/system/app/VLC
-			ui_print " <<> VLC"
-		fi
 	else	ui_print " << without applications"
 	fi
 }
