@@ -61,6 +61,10 @@ whether to populate **microG**
 
 whether to provide **microG** Maps API v1
 
+`nanomod.gsync=[0|1]`
+
+whether to provide Google Sync Adapters
+
 `nanomod.play=[0|1|2]`
 
 what app store to use, `0` will not populate any app store, `1` will populate **Play Store**, `2` will populate **Yalp Store**
