@@ -18,6 +18,18 @@
     * the default settings equal to the pseudo-debloat settings of `nanomod-overlay` script
     * needs to be run from TWRP, requires explicit user acceptance
   * add `Jelly` to the list of pseudo-debloated apps by default
+  * `nanomod-overlay -p` now checks for proper permissions of system apps
+    * FAKE_PACKAGE_SIGNATURE for microG Gms Core and Play Store
+    * READ_CALENDAR and WRITE_CALENDAR For Google Calendar Sync
+    * READ_CONTACT, WRITE_CONTACTS and GET_ACCOUNTS for Google Contacts Sync
+  * add `permissions` init script that runs `nanomod-overlay -p`
+    * Full package only
+    * for microG package manully run `nanomod-overlay -p` as before
+  * add optional Google Calendar Sync and Google Contacts Sync
+    * not installed by default
+    * bundled with Full and microG package
+  * add `nanomod.gsync=[0|1]` setup variable
+    * defines whether to install Google Sync Adapters
   * work-in-progress: x86/x86_64 support
 * Updates
   * GNU Nano (2.8.2)
