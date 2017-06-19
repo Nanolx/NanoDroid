@@ -649,7 +649,8 @@ install_misc () {
 	for binary in nano nano.bin nanomod-overlay nanomod-overlay.functions \
 		nanomod-overlay.addoverrides nanomod-overlay.genconfig \
 		nanomod-overlay.listoverrides nanomod-overlay.removeoverrides \
-		nanomod-overlay.shownonoverrides nanomod-overlay.updateoverrides; do
+		nanomod-overlay.shownonoverrides nanomod-overlay.updateoverrides \
+		nanomod-overlay.permission; do
 		cp ${INSTALLER}/system/bin/${binary} ${MODPATH}/system/bin/
 		set_perm_bin ${MODPATH}/system/bin/${binary}
 	done
