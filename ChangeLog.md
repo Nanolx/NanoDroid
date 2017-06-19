@@ -51,7 +51,6 @@
   * Kernel Adiutor (0.9.70.3)
   * Yahoo Weather Provider (1.0)
   * Lightning (4.5.0~snapshot)
-    * self-built; signed with my own key
 
 ## 9.2.20170610
 * Internal Changes
