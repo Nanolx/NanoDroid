@@ -1,22 +1,17 @@
 # ChangeLog
 
 ## 9.3 in-dev
-* Internal Changes
-  * Full, F-Droid, microG packages: fix installation in system mode
-  * remove bundled Magisk Manager (now bundled with Magisk itself)
-  * re-signed microG GmsCore and Phonesky with my own key instead of debug key
-  * fix that VLC was always installed, even if user requested not to
-    * also greatly simplify VLC installation code in installer
+* Bug Fixes
+  * Full, F-Droid, microG packages: fix installation in System Mode
+  * microG package: bundle `aapt` (required for `nanomod-overlay`)
+* Installer Changes
   * Full package: remove app libraries not required for device architecture
     * example: on ARM the libraries for ARM64, x86 and x86_64 are removed
-  * microG package: don't install terminfo files as GNU Nano is not included
-  * microG package: bundle `aapt` (required for `nanomod-overlay`)
-  * on-pc framework-patcher: only do actual work if in TWRP
-  * added force-debloat script (for system mode!)
-    * script that can be run from recovery to debloat the system
-    * the list of applications resides in the script itself
-    * the default settings equal to the pseudo-debloat settings of `nanomod-overlay` script
-    * needs to be run from TWRP, requires explicit user acceptance
+  * add `nanomod.gsync=[0|1]` setup variable
+    * defines whether to install Google Sync Adapters
+* General Changes
+  * x86/x86_64 support (work-in-progress)
+    * currently working in System Mode, but not as Magisk Module
   * add `Jelly` to the list of pseudo-debloated apps by default
   * `nanomod-overlay -p` now checks for proper permissions of system apps
     * FAKE_PACKAGE_SIGNATURE for microG Gms Core and Play Store
@@ -25,13 +20,24 @@
   * add `permissions` init script that runs `nanomod-overlay -p`
     * Full package only
     * for microG package manully run `nanomod-overlay -p` as before
+  * added force-debloat script (for system mode!)
+    * script that can be run from recovery to debloat the system
+    * the list of applications resides in the script itself
+    * the default settings equal to the pseudo-debloat settings of `nanomod-overlay` script
+    * needs to be run from TWRP, requires explicit user acceptance
+  * re-signed microG GmsCore and Phonesky with my own key instead of debug key
+  * microG package: don't install terminfo files as GNU Nano is not included
+  * on-pc framework-patcher: only do actual work if in TWRP
+* Removed Applications
+  * Magisk Manager (now bundled with Magisk itself
+* Replaced Applications
+  * VLC replaced with MPV
+* Added Applications
+  * OpenWeatherMap Provider (1.0)
   * add optional Google Calendar Sync and Google Contacts Sync
     * not installed by default
     * bundled with Full and microG package
-  * add `nanomod.gsync=[0|1]` setup variable
-    * defines whether to install Google Sync Adapters
-  * work-in-progress: x86/x86_64 support
-* Updates
+* Updated Applications
   * GNU Nano (2.8.2)
   * microG Gms Core (0.2.4-103)
   * Substratum (782)
@@ -40,10 +46,10 @@
   * Simple Gallery (2.10.10)
   * Termux (0.52)
   * Twidere (3.6.19)
-  * VLC (2.1.11~beta)
   * Play Store (7.9.52.Q)
   * New Pipe (0.9.8)
   * Kernel Adiutor (0.9.70.3)
+  * Yahoo Weather Provider (1.0)
   * Lightning (4.5.0~snapshot)
     * self-built; signed with my own key
 
