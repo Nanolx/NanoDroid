@@ -13,7 +13,6 @@ mount_image() {
 	if [ ! -d "$2" ]; then
 		mount -o rw,remount rootfs /
 		mkdir -p "$2" 2>/dev/null
-		$BOOTMODE && mount -o ro,remount rootfs /
 		[ ! -d "$2" ] && return 1
 	fi
 
@@ -44,19 +43,7 @@ umount_magisk () {
 	rm /tmp/loopdevice
 }
 
-if [[ ! ${1} ]]; then
-	if (is_mounted /magisk); then
-		umount_magisk
-	else	mount_magisk
-	fi
-else
-	if [[ ${1} == mount-magisk ]]; then
-		if ! (is_mounted /magisk); then
-			mount_magisk
-		fi
-	elif [[ ${1} == umount-magisk ]]; then
-		if (is_mounted /magisk); then
-			umount_magisk
-		fi
-	fi
+if (is_mounted /magisk); then
+	umount_magisk
+else	mount_magisk
 fi
