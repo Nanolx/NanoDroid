@@ -647,6 +647,7 @@ fi
 
 install_microg
 install_mapsv1
+install_gsync
 install_store
 install_misc
 

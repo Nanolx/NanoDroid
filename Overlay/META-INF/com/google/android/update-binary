@@ -795,6 +795,7 @@ fi
 
 install_microg
 install_mapsv1
+install_gsync
 install_fdroid
 install_store
 install_apps
