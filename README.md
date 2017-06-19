@@ -137,6 +137,8 @@ NanoMod includes microG as follows
 * with **microG** DroidGuard Helper [![GitHub Link](doc/github.png)](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
   * required for SafetyNet support
 * support for Maps API version 1
+* support for Google Calendar and Contacts Sync
+  * disabled by default
 * choose between official **Play Store** or unofficial **Yalp Store** [![F-Droid Link](doc/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
     * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`

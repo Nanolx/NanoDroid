@@ -375,7 +375,7 @@ magisk_install_dirs () {
 	rm -rf $MODPATH 2>/dev/null
 	mkdir -p $MODPATH
 	mkdir $MODPATH/system
-	for dir in app etc priv-app; do
+	for dir in app etc priv-app bin; do
 		mkdir $MODPATH/system/$dir
 	done
 }
@@ -534,6 +534,20 @@ install_mapsv1 () {
 	fi
 }
 
+install_gsync () {
+	# install GSync if requested
+	if grep -q nanomod.gsync=1 $nanomodsetup; then
+		cp -r ${INSTALLER}/system/app/GoogleCalendarSync ${MODPATH}/system/app/
+		set_perm_dir ${MODPATH}/system/app/GoogleCalendarSync/
+		cp -r ${INSTALLER}/system/app/GoogleContactSync ${MODPATH}/system/app/
+		set_perm_dir ${MODPATH}/system/app/GoogleContactSync/
+		cp -r ${INSTALLER}/system/priv-app/GoogleBackupTransport ${MODPATH}/system/app/
+		set_perm_dir ${MODPATH}/system/app/GoogleBackupTransport/
+		ui_print " << with Google Sync"
+	else	ui_print " << without Google Sync"
+	fi
+}
+
 install_fdroid () {
 	# install F-Droid if requested
 	if grep -q nanomod.fdroid=1 $nanomodsetup; then
@@ -616,7 +630,6 @@ install_zelda () {
 
 install_misc () {
 	ui_print " < GNU Bash, GNU Nano, NanoMod-Overlay"
-	mkdir -p ${MODPATH}/system/bin
 	cp -r ${INSTALLER}/system/etc/terminfo ${MODPATH}/system/etc/
 	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
 	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
