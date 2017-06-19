@@ -654,7 +654,7 @@ install_misc () {
 
 	if grep -q nanomod.init=1 $nanomodsetup; then
 		cp -r ${INSTALLER}/init.d ${INIT_BASE}
-		for init in fstrim logscleaner sqlite external_sd; do
+		for init in fstrim logscleaner sqlite external_sd permissions; do
 			set_perm_bin ${INIT_BASE}/init.d/${init}
 		done
 	fi
