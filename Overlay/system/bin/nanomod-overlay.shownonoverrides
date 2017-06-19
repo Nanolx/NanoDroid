@@ -2,7 +2,7 @@
 
 for app in /system/app/*/*.apk; do
 	sysname=$(basename "${app}" .apk)
-	if [[ ! f ${MODPATH}/system/app/${sysname}/.replace ]]; then
+	if [[ ! -f ${MODPATH}/system/app/${sysname}/.replace ]]; then
 		humname=$(_show_name "${app}")
 		S_APPS="${S_APPS}
 * ${sysname}		(${humname})"
