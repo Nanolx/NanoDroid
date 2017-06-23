@@ -45,7 +45,7 @@
   * Simple Calendar (2.5.3)
   * Simple Gallery (2.10.10)
   * Termux (0.52)
-  * Twidere (3.6.19)
+  * Twidere (3.6.21)
   * Play Store (7.9.80.Q)
   * New Pipe (0.9.8)
   * Kernel Adiutor (0.9.70.3)
