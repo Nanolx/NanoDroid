@@ -51,6 +51,7 @@
   * Kernel Adiutor (0.9.70.3)
   * Yahoo Weather Provider (1.0)
   * Lightning (4.5.0~snapshot)
+  * F-Droid (0.104)
 
 ## 9.2.20170610
 * Internal Changes
