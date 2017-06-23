@@ -154,7 +154,7 @@ fi
 
 ui_print " "
 ui_print "********************************"
-ui_print "      NanoMod 9.3.20171231     "
+ui_print "      NanoMod 9.3.20170623     "
 ui_print "       created by @Nanolx       "
 ui_print "       Framework Patcher        "
 ui_print "Powered by DexPatcher (@lanchon)"
