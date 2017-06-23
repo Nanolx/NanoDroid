@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 9.3 in-dev
+## 9.3.20170623
 * Bug Fixes
   * Full, F-Droid, microG packages: fix installation in System Mode
   * microG package: bundle `aapt` (required for `nanomod-overlay`)
