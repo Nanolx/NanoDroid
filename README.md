@@ -243,10 +243,14 @@ List of known issues
     * `/system/priv-app/Phonesky/Phonesky.apk` for Play Store
 * SafetyNet check fails with `can't connect to Google API`
   * see `microG DroidGuard Helper or Play Store crashing` above and install microG DroidGuard Helper as user application
-* Play Store lacks signature spoofing permission
-  * on ROMs like **crDroid** or **OmniROM**, that have built-in signature spoofing, in some cases the Play Store is not granted that permission automatically, to fix this, issue one of the following commands as **root** on your device
+* SafetyNet check fails with `Google Play Services not available`
+  * you did not setup microG (or did not reboot afterwards)
+* Play Store lacks fake signature spoofing permission
+  * on ROMs like **crDroid** or **OmniROM**, that have built-in signature spoofing, in some cases the Play Store is not granted that permission automatically, to fix this, issue the following command as **root** on your device
     * `nanomod-overlay --permission`
-    * `pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE`
+* Google Sync adapters lacking permissions
+   * issue the following command as **root** on your device
+     * `nanomod-overlay --permission`
 * Battery Drain
   * microG fails to register applications  to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
     * do a clean flash of your ROM (,Magisk) and NanoMod and install your apps after microG setup
