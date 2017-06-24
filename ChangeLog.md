@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 9.4 in-dev
+* Updates
+  * Simple Gallery (2.11.1)
+  * XDA Labs (1.1.2.3)
+
 ## 9.3.20170623
 * Bug Fixes
   * Full, F-Droid, microG packages: fix installation in System Mode
