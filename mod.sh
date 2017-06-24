@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=9.3.20170623
+VERSION=9.4.20171231
 CWD="${PWD}"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
