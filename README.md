@@ -249,8 +249,8 @@ List of known issues
   * on ROMs like **crDroid** or **OmniROM**, that have built-in signature spoofing, in some cases the Play Store is not granted that permission automatically, to fix this, issue the following command as **root** on your device
     * `nanomod-overlay --permission`
 * Google Sync adapters lacking permissions
-   * issue the following command as **root** on your device
-     * `nanomod-overlay --permission`
+  * issue the following command as **root** on your device
+    * `nanomod-overlay --permission`
 * Battery Drain
   * microG fails to register applications  to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
     * do a clean flash of your ROM (,Magisk) and NanoMod and install your apps after microG setup
