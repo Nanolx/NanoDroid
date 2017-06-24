@@ -1,6 +1,8 @@
 # ChangeLog
 
 ## 9.4 in-dev
+* Bug Fixes
+  * fixup `nanomod-overlay.genconfig` syntax error
 * Updates
   * Simple Gallery (2.11.1)
   * XDA Labs (1.1.2.3)

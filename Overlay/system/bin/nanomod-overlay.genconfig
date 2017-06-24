@@ -7,7 +7,7 @@ if [[ ! -f "${config}" ]]; then
 fi
 
 APPS=("${APPS[@]}" "${ADD_APPS[@]}")
-PRIV_APPS="${PRIV_APPS[@]}" "${ADD_PRIV_APPS[@]}")
+PRIV_APPS=("${PRIV_APPS[@]}" "${ADD_PRIV_APPS[@]}")
 
 echo "APPS=(" > "${config}"
 
