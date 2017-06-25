@@ -227,12 +227,23 @@ if [[ ! -f /system/bin/dalvikvm ]]; then
 else	DALVIK_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
 fi
 
-if [[ "${DALVIK_ARCH}" == *32-bit* ]]; then
-	DP_LD="/system/lib:$LD_LIBRARY_PATH"
-elif [[ "${DALVIK_ARCH}" == *64-bit* ]]; then
-	DP_LD="/system/lib64:/system/lib:$LD_LIBRARY_PATH"
-else	error " !! could not detect dalvikvm architecture"
-fi
+#ui_print " "
+#ui_print ">> DEBUG INFO"
+#ui_print "   ARCH: ${ARCH}"
+#ui_print "   DALVIK_ARCH: ${DALVIK_ARCH}"
+#ui_print " "
+
+case ${DALVIK_ARCH} in
+	*32-bit* )
+		DP_LD="/system/lib:$LD_LIBRARY_PATH"
+	;;
+	*64-bit* )
+		DP_LD="/system/lib64:/system/lib:$LD_LIBRARY_PATH"
+	;;
+	* )
+		error " !! could not detect dalvikvm architecture"
+	;;
+esac
 
 ui_print " > patching services.jar"
 ui_print " "
