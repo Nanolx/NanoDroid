@@ -76,6 +76,15 @@ shrink_magisk_img () {
 	fi
 }
 
+grep_prop() {
+	shift
+	FILES=$@
+	if [ -z "$FILES" ]; then
+		FILES='/system/build.prop'
+	fi
+	cat $FILES 2>/dev/null | sed -n "s/^$1=//p" | head -n 1
+}
+
 if ! (is_mounted /system); then
 	mount -orw /system || error " !! failed to mount /system"
 else	mount -orw,remount /system || error " !! failed to remount /system read-write"
@@ -213,7 +222,10 @@ case ${ARCH} in
 	;;
 esac
 
-DALVIK_ARCH=$("${FILE}" -L /system/bin/dalvikvm)
+if [[ ! -f /system/bin/dalvikvm ]]; then
+	error "!! /system/bin/dalvikvm does not exist"
+else	DALVIK_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
+fi
 
 if [[ "${DALVIK_ARCH}" == *32-bit* ]]; then
 	DP_LD="/system/lib:$LD_LIBRARY_PATH"
