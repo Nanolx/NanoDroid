@@ -3,8 +3,12 @@
 ## 9.4 in-dev
 * Bug Fixes
   * fixup `nanomod-overlay.genconfig` syntax error
-  * fixup missing function in on-device framework-patcher
-  * fixup architecture detection in on-device framework-patcher
+  * on-device framework-patcher
+    * modularize code
+    * better error messages when dalvikvm fails
+    * stop process if `/system/.nanomod-patcher` file exists
+    * fixup missing function in on-device framework-patcher
+    * fixup architecture detection in on-device framework-patcher
   * zipalign microG Gms Core
 * Updates
   * Simple Gallery (2.11.1)
