@@ -257,6 +257,7 @@ fi
 
 if ! (is_mounted /data); then
 	mount -orw /data || error " !! failed to mount /data"
+else	mount -orw,remount /data || error " !! failed to remount /data read-write"
 fi
 
 cp /system/framework/services.jar \
