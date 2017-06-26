@@ -33,7 +33,6 @@ Screencast
 Snap
 SnapdragonCamera
 SoundRecorder
-Trebuchet
 mGerrit"
 
 is_mounted() {
