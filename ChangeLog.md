@@ -9,6 +9,8 @@
     * stop process if `/system/.nanomod-patcher` file exists
     * fixup missing function in on-device framework-patcher
     * fixup architecture detection in on-device framework-patcher
+    * when installing patched `services.jar` to ROM back it up to `/sdcard/`
+    * print somewhat more useful information
   * zipalign microG Gms Core
 * Updates
   * Simple Gallery (2.11.1)

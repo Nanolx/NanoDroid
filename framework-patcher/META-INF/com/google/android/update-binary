@@ -285,6 +285,10 @@ install_services () {
 		ui_print " << installing services.jar to: NanoMod (microG)"
 		install_path="/magisk/NanoModmicroG/system/framework/"
 	else
+		ui_print " << backing up services.jar to: /sdcard"
+		cp /tmp/services.jar /sdcard ||
+			error " !! failed to backup services.jar"
+
 		ui_print " << installing services.jar to: ROM"
 		install_path="/system/framework"
 	fi
