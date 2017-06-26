@@ -5,6 +5,7 @@
   * fixup `nanomod-overlay.genconfig` syntax error
   * fixup missing function in on-device framework-patcher
   * fixup architecture detection in on-device framework-patcher
+  * zipalign microG Gms Core
 * Updates
   * Simple Gallery (2.11.1)
   * XDA Labs (1.1.2.3)
