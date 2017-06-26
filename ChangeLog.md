@@ -7,6 +7,7 @@
     * stop process if `/system/.nanomod-patcher` file exists
     * fixup missing function in on-device framework-patcher
     * fixup architecture detection in on-device framework-patcher
+  * force-debloat.sh remove `Trebuchet` from list of apps
   * zipalign microG Gms Core
 * General Changes
   * on-device framework-patcher
