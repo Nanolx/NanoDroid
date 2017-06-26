@@ -100,6 +100,9 @@ elif [[ -d /magisk/NanoModmicroG ]]; then
 	install_path="/magisk/NanoModmicroG/system/framework"
 	mkdir -p "${install_path}"
 else
+	echo "backing up services.jar to /sdcard"
+	cp /tmp/services.jar /sdcard
+
 	echo "using ROM as destination"
 	install_path="/system/framework"
 fi

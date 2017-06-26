@@ -11,6 +11,8 @@
     * fixup architecture detection in on-device framework-patcher
     * when installing patched `services.jar` to ROM back it up to `/sdcard/`
     * print somewhat more useful information
+  * on-pc framework-patcher
+    * when installing patched `services.jar` to ROM back it up to `/sdcard/`
   * zipalign microG Gms Core
 * Updates
   * Simple Gallery (2.11.1)
