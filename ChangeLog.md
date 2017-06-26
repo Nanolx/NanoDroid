@@ -4,16 +4,18 @@
 * Bug Fixes
   * fixup `nanomod-overlay.genconfig` syntax error
   * on-device framework-patcher
-    * modularize code
-    * better error messages when dalvikvm fails
     * stop process if `/system/.nanomod-patcher` file exists
     * fixup missing function in on-device framework-patcher
     * fixup architecture detection in on-device framework-patcher
+  * zipalign microG Gms Core
+* General Changes
+  * on-device framework-patcher
+    * modularize code
+    * better error messages when dalvikvm fails
     * when installing patched `services.jar` to ROM back it up to `/sdcard/`
     * print somewhat more useful information
   * on-pc framework-patcher
     * when installing patched `services.jar` to ROM back it up to `/sdcard/`
-  * zipalign microG Gms Core
 * Updates
   * Simple Gallery (2.11.1)
   * XDA Labs (1.1.2.3)
