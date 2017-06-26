@@ -253,10 +253,16 @@ List of known issues
     * `nanomod-overlay --permission`
 * Battery Drain
   * microG fails to register applications  to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
-    * do a clean flash of your ROM (,Magisk) and NanoMod and install your apps after microG setup
+    * do a clean flash of your ROM (, Magisk) and NanoMod and install your apps after microG setup
     * uninstall and re-install all your applications (backup application data if required)
 
 Additional [helpful information](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information) from the microG wiki.
+
+## TODO
+
+* full x86/x86_64 support
+* better error handling in on-pc framework-patcher
+* easier setup process
 
 ## FAQ
 
