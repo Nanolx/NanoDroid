@@ -9,6 +9,7 @@
   * Simple Gallery (2.11.1)
   * XDA Labs (1.1.2.3)
   * MPV (2017-06-24)
+  * Substratum (803)
 
 ## 9.3.20170623
 * Bug Fixes
