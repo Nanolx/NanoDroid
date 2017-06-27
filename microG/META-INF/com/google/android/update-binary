@@ -551,6 +551,23 @@ install_misc () {
 }
 
 ##########################################################################################
+# System Mode: Record installed files
+##########################################################################################
+
+nanomod_list_add () {
+	if [ "${MODE}" = "${SYSTEM}" ]; then
+		find -type f "${1}" >> /system/.nanomod-list
+	fi
+}
+
+nanomod_list_finalize () {
+	if [ "${MODE}" = "SYTEM" ]; then
+		sort /system/.nanomod-list | uniq > /system/.nanomod-list.tmp
+		mv /system/.nanomod-list.tmp /system/.nanomod-list
+	fi
+}
+
+##########################################################################################
 # Flashable update-binary preparation
 ##########################################################################################
 
