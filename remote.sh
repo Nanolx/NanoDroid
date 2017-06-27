@@ -89,6 +89,12 @@ if [[ -f /data/magisk.img ]]; then
 	mount_magisk
 fi
 
+if [[ -f /system/.nanomod-patcher ]]; then
+	echo " ++ /system/.nanomod-patcher exists"
+	echo " ++ assuming ROM is already patched"
+	exit 0
+fi
+
 install_path=""
 
 if [[ -d /magisk/NanoMod ]]; then
