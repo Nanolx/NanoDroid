@@ -26,7 +26,9 @@ The following applications are pseudo-debloated by default
 * Resurrection Remix Statistics
 * Sim Toolkit
 * Pixel Launcher, Nexus Launcher
-* Trebuchet (only for the full package)
+* Trebuchet
+
+**Pixel Launcher, Nexus Launcher and Trebuchet are - by default - only debloated by the full package**
 
 ## Alter the list of pseudo-debloated applications
 
