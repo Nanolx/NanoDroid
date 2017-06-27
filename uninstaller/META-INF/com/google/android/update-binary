@@ -100,10 +100,14 @@ ui_print "           Uninstaller          "
 ui_print "********************************"
 ui_print " "
 
-
 if ! (is_mounted /data); then
 	mount -orw /data || error " !! failed to mount /data"
 else	mount -orw,remount /data || error " !! failed to re-mount /data read-write"
+fi
+
+if ! (is_mounted /persist); then
+	mount -orw /persist || error " !! failed to mount /persist"
+else	mount -orw,remount /persist || error " !! failed to re-mount /persist read-write"
 fi
 
 ui_print " << Removing configuration files (if any)"
@@ -117,16 +121,26 @@ for path in ${config_locations}; do
 	done
 done
 
+if ! (is_mounted /system); then
+	mount -orw /system || error " !! failed to mount /system"
+else	mount -orw,remount /system || error " !! failed to re-mount /system read-write"
+fi
+
+if [ -f /system/.nanomod-patcher ]; then
+	rm -f /system/.nanomod-patcher
+	ui_print " << removing /system/.nanomod-patcher"
+fi
+
 if [ -f /data/magisk.img ]; then
 	mount_image /data/magisk.img /magisk || \
 		error " !! failed to mount /magisk"
 else
-	ui_print " ++ Magisk is not installed, exiting"
+	ui_print " ++ Magisk is not installed"
 	exit 0
 fi
 
 if [ -d /magisk/NanoMod ]; then
-	ui_print " <<  uninstalling: NanoMod (full)"
+	ui_print " <<  uninstalling: NanoMod (Full)"
 	rm -rf /magisk/NanoMod
 fi
 
@@ -140,25 +154,18 @@ if [ -d /magisk/NanoModmicroG ]; then
 	rm -rf /magisk/NanoModmicroG
 fi
 
-if ! (is_mounted /system); then
-	mount -orw /system || error " !! failed to mount /system"
-else	mount -orw,remount /system || error " !! failed to re-mount /system read-write"
-fi
-
-if [ -f /system/.nanomod-patcher ]; then
-	rm -fv /system/.nanomod-patcher
-	ui_print " <<> removing /system/.nanomod-patcher"
-fi
-
-
 ui_print " >> clean up"
-umount /magisk
-losetup -d $LOOPDEVICE
-rmdir /magisk
-shrink_magisk_img || \
-	error " !! failed to shrink magisk.img"
+
+if (is_mounted /magisk); then
+	umount /magisk
+	losetup -d $LOOPDEVICE
+	rmdir /magisk
+	shrink_magisk_img || \
+		error " !! failed to shrink magisk.img"
+fi
 
 umount /data
+umount /persist
 umount /system
 
 ui_print " "
