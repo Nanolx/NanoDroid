@@ -372,17 +372,14 @@ nanomod_subsitute () {
 		if [[ "${ZIPDIR}" == "/external_sd" ]]; then
 			# /external_sd is already know by `nanomod-overlay`
 			# no need to add it a second time
-			sed -e 's|@ZIPDIR@||' -i \
-			${MODPATH}/system/bin/nanomod-overlay
+			sed -e 's|@ZIPDIR@||' -i ${1}
 		else
-			sed -e "s|@ZIPDIR@|${ZIPDIR}|" -i \
-				${MODPATH}/system/bin/nanomod-overlay
+			sed -e "s|@ZIPDIR@|${ZIPDIR}|" -i ${1}
 		fi
 	fi
 
 	if grep -q @MODPATH@ ${1}; then
-		sed -e "s|@MODPATH@|${MODPATH}|" -i \
-			${MODPATH}/system/bin/nanomod-overlay*
+		sed -e "s|@MODPATH@|${MODPATH}|" -i ${1}
 	fi
 }
 
