@@ -146,6 +146,7 @@ if [ -f /system/.nanomod-list ]; then
 
 	xargs rm -f < /system/.nanomod-list
 	ui_print " << uninstalling: /system/.nanomod-list"
+	rm -f /system/.nanomod-list
 fi
 
 if [ -f /data/magisk.img ]; then
