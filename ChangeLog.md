@@ -7,16 +7,21 @@
     * stop process if `/system/.nanomod-patcher` file exists
     * fixup missing function in on-device framework-patcher
     * fixup architecture detection in on-device framework-patcher
+  * on-pc framework-patcher
+    * stop process if `/system/.nanomod-patcher` file exists
   * force-debloat.sh remove `Trebuchet` from list of apps
   * zipalign microG Gms Core
 * General Changes
   * on-device framework-patcher
-    * modularize code
+    * code improvements
     * better error messages when dalvikvm fails
-    * when installing patched `services.jar` to ROM back it up to `/sdcard/`
+    * when installing patched `services.jar` to ROM back it up to `/sdcard`
     * print somewhat more useful information
   * on-pc framework-patcher
-    * when installing patched `services.jar` to ROM back it up to `/sdcard/`
+    * when installing patched `services.jar` to ROM back it up to `/sdcard`
+  * uninstaller
+    * code improvements
+    * remove `/system/.nanomod-patcher` regardless wether Magisk is installed
 * Updates
   * Simple Gallery (2.11.1)
   * XDA Labs (1.1.2.3)
