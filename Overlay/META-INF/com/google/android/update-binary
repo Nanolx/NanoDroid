@@ -676,28 +676,72 @@ install_misc () {
 }
 
 ##########################################################################################
-# System Mode: Record installed files
+# Advanced Installation Functions
 ##########################################################################################
 
 nanomod_install () {
-	source=$1
-	dest=$2
+	source=${INSTALLER}${1}
+	destination=${MODPATH}${2}
+	perm=$3
 
-	if [[ -d ${1} ]; then
-		cp -r ${1} ${MODPATH}/${2}
-	else	cp ${1} ${MODPATH}/${2}
+	if [[ -d ${source} ]]; then
+		echo "    dir: ${source} > ${destination}"
+		cp -r ${source} ${destination} || \
+			error " !! failed to install ${source} to ${destination}"
+		perm_x=dir
+	elif [[ -f ${source} ]]; then
+		echo "    file: ${source} > ${destination}" || \
+			error " !! failed to install ${source} to ${destination}"
+		cp ${source} ${destination}
+		if [[ -f ${destination} ]]; then
+			nanomod_substitute ${destination}
+		else	nanomod_substitute ${destination}$(basename ${source})
+		fi
+		perm_x=file
+	else	error " !! file ${source} not found"
 	fi
 
+	case perm in
+		bin )	set_perm_bin ${destination} ;;
+		* )	case perm_x in
+				dir )	set_perm_dir ${destination} ;;
+				file )	set_perm_file ${destination} ;;
+			esac
+		;;
+	esac
+
 	if [ "${MODE}" = "SYSTEM" ]; then
-		find -type f "${MODPATH}/${2}" \
-			>> /system/.nanomod-list
+		find "${source}" -type f >> /system/.nanomod-list
+	fi
+}
+
+nanomod_substitute () {
+	if grep -q @ZIPDIR@ ${1}; then
+		if [[ "${ZIPDIR}" == "/external_sd" ]]; then
+			# /external_sd is already know by `nanomod-overlay`
+			# no need to add it a second time
+			sed -e 's|@ZIPDIR@||' -i ${1}
+			echo "    substitute: remove @ZIPDIR@ ${1}"
+		else
+			sed -e "s|@ZIPDIR@|${ZIPDIR}|g" -i ${1}
+			echo "    substitute: adjust @ZIPDIR@ in ${1}"
+		fi
+	fi
+
+	if grep -q @MODPATH@ ${1}; then
+		sed -e "s|@MODPATH@|${MODPATH}|g" -i ${1}
+		echo "    substitute: adjust @MODPATH@ in ${1}"
 	fi
 }
 
 nanomod_finalize () {
-	if [ "${MODE}" = "SYTEM" ]; then
-		sort /system/.nanomod-list | uniq > /system/.nanomod-list.tmp
-		mv /system/.nanomod-list.tmp /system/.nanomod-list
+	if [ "${MODE}" = "SYSTEM" ]; then
+		sed -e "s,^${INSTALLER},,g" -i /system/.nanomod-list \
+			|| error " !! failed to create uninstaller information"
+		sort /system/.nanomod-list | uniq > /system/.nanomod-list.tmp \
+			|| error " !! failed to create uninstaller information"
+		mv /system/.nanomod-list.tmp /system/.nanomod-list \
+			|| error " !! failed to create uninstaller information"
 	fi
 }
 
@@ -832,6 +876,8 @@ fi
 if [ "$NO_NANOMODAPPS" -eq 1 ]; then
 	rm $nanomodapps
 fi
+
+nanomod_finalize
 
 ui_print " "
 ui_print " Thanks for using NanoMod "
