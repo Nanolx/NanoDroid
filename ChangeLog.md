@@ -1,10 +1,6 @@
 # ChangeLog
 
-* WORK-IN-PROGRESS:
-  * x86/x86_64 support
-  * uninstaller support for System Mode installation
-
-## 9.4 in-dev
+## 10.0 in-dev
 * Bug Fixes
   * Full, microG package
     * fixup `nanomod-overlay.genconfig` syntax error
