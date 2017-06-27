@@ -19,17 +19,22 @@ check_package () {
 }
 
 check_permission () {
-	[[ $(dumpsys package ${1} | grep -Eo "^[ ]+${2}") ]] && return 0 || return 1
+	[[ $(dumpsys package ${1} | grep -Eo "^[ ]+${2}: granted=true") ]] && return 0 || return 1
 }
 
 grant_permission () {
-	pm grant ${1} ${2} 2>/dev/null
+	pm grant ${1} ${2}
 }
 
 permissions () {
-	check_package ${1} && \
-		(check_permission ${1} ${2} || \
-			grant_permission ${1} ${2})
+	if check_package ${1}; then
+		echo "package ${package} found"
+		if ! check_permission ${1} ${2}; then
+			echo "granting permission ${permission}"
+			grant_permission ${1} ${2}
+		else	echo "already has permission ${permission}"
+		fi
+	fi
 }
 
 # microG and Play Store

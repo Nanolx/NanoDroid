@@ -4,6 +4,7 @@
 * Bug Fixes
   * Full, microG package
     * fixup `nanomod-overlay.genconfig` syntax error
+    * fixup `nanomod-overlay.permission` not properly working
     * install GoogleBackupTransport into `/system/priv-app`, not `/system/app`
   * on-device framework-patcher
     * stop process if `/system/.nanomod-patcher` file exists
