@@ -11,7 +11,6 @@ Exchange2
 Gallery2
 Gello
 Jelly
-NexusLauncher
 Phonograph
 PhotoTable
 ResurrectionStats
@@ -28,7 +27,6 @@ PRIV_APPS="FMRadio
 Gallery2
 OmniSwitch
 Recorder
-PixelLauncher
 Screencast
 Snap
 SnapdragonCamera
