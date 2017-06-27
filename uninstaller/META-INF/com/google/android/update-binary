@@ -106,8 +106,8 @@ else	mount -orw,remount /data || error " !! failed to re-mount /data read-write"
 fi
 
 if ! (is_mounted /persist); then
-	mount -orw /persist || error " !! failed to mount /persist"
-else	mount -orw,remount /persist || error " !! failed to re-mount /persist read-write"
+	mount -orw /persist 2>/dev/null
+else	mount -orw,remount /persist 2>/dev/null
 fi
 
 ui_print " << Removing configuration files (if any)"
@@ -135,16 +135,18 @@ if [ -f /system/.nanomod-list ]; then
 	ui_print " << uninstalling: NanoMod (System)"
 
 	# services.jar needs special treament
-	if greq -q /system/framework/services.jar /system/.nanomod-list; then
+	if grep -q /system/framework/services.jar /system/.nanomod-list; then
 		if [ -f /data/services.jar ]; then
 			ui_print " << restoring: unpatched services.jar"
-			mv /data/services.jar /system/framework/services.jar
+			mv /data/services.jar /system/framework/services.jar \
+				|| error " !! failed to restore services.jar"
 		else	ui_print " << can't restore unpatched services.jar"
 		fi
 		sed '/\/system\/framework\/services.jar/d' -i /system/.nanomod-list
 	fi
 
-	xargs rm -f < /system/.nanomod-list
+	xargs rm -f < /system/.nanomod-list \
+		|| " !! failed to remove files"
 	ui_print " << uninstalling: /system/.nanomod-list"
 	rm -f /system/.nanomod-list
 fi
