@@ -625,7 +625,7 @@ install_misc () {
 	if grep -q nanomod.init=1 $nanomodsetup; then
 		mkdir --p ${INIT_BASE}
 		for init in fstrim logscleaner sqlite external_sd permissions; do
-			nanomod_install /system/etc/init.d/${init} ${INIT_BASE}
+			nanomod_install /system/etc/init.d/${init} ${INIT_BASE}/
 		done
 	fi
 }
