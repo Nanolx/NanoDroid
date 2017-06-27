@@ -128,30 +128,33 @@ fi
 
 if [ -f /system/.nanomod-patcher ]; then
 	rm -f /system/.nanomod-patcher
-	ui_print " << removing /system/.nanomod-patcher"
+	ui_print " << uninstalling: /system/.nanomod-patcher"
+fi
+
+if [ -f /system/.nanomod-list ]; then
+	ui_print " << uninstalling: NanoMod (System)"
+	xargs rm -f < /system/.nanomod-list
+	ui_print " << uninstalling: /system/.nanomod-list"
 fi
 
 if [ -f /data/magisk.img ]; then
 	mount_image /data/magisk.img /magisk || \
 		error " !! failed to mount /magisk"
-else
-	ui_print " ++ Magisk is not installed"
-	exit 0
-fi
 
-if [ -d /magisk/NanoMod ]; then
-	ui_print " <<  uninstalling: NanoMod (Full)"
-	rm -rf /magisk/NanoMod
-fi
+	if [ -d /magisk/NanoMod ]; then
+		ui_print " <<  uninstalling: NanoMod (Magisk/Full)"
+		rm -rf /magisk/NanoMod
+	fi
 
-if [ -d /magisk/NanoModfdroid ]; then
-	ui_print " <<  uninstalling: NanoMod (F-Droid)"
-	rm -rf /magisk/NanoModfdroid
-fi
+	if [ -d /magisk/NanoModfdroid ]; then
+		ui_print " <<  uninstalling: NanoMod (Magisk/F-Droid)"
+		rm -rf /magisk/NanoModfdroid
+	fi
 
-if [ -d /magisk/NanoModmicroG ]; then
-	ui_print " <<  uninstalling: NanoMod (microG)"
-	rm -rf /magisk/NanoModmicroG
+	if [ -d /magisk/NanoModmicroG ]; then
+		ui_print " <<  uninstalling: NanoMod (Magisk/microG)"
+		rm -rf /magisk/NanoModmicroG
+	fi
 fi
 
 ui_print " >> clean up"
