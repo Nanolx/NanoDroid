@@ -358,10 +358,13 @@ nanomod_install () {
 	fi
 
 	case perm in
-		bin )	set_perm_bin ${destination} ;;
+		bin )	echo "    permissions: binary"
+			set_perm_bin ${destination} ;;
 		* )	case perm_x in
-				dir )	set_perm_dir ${destination} ;;
-				file )	set_perm_file ${destination} ;;
+				dir )	echo "    permissions: directory"
+					set_perm_dir ${destination} ;;
+				file )	echo "    permissions: data"
+					set_perm_file ${destination} ;;
 			esac
 		;;
 	esac
