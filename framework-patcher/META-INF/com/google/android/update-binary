@@ -291,6 +291,9 @@ install_services () {
 
 		ui_print " << installing services.jar to: ROM"
 		install_path="/system/framework"
+
+		echo /system/framework/services.jar >> \
+			/system/.nanomod-list
 	fi
 
 	mkdir -p "${install_path}"

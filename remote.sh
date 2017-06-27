@@ -111,6 +111,9 @@ else
 
 	echo "using ROM as destination"
 	install_path="/system/framework"
+
+	echo /system/framework/services.jar >> \
+		/system/.nanomod-list
 fi
 
 echo "install to \"${install_path}\""
