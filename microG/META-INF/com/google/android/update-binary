@@ -639,7 +639,7 @@ fi
 # Please leave this message in your flashable zip for credits :)
 ui_print " "
 ui_print "******************************"
-ui_print "     NanoMod 9.4.20171231     "
+ui_print "     NanoMod 10.0.20171231    "
 ui_print "      created by @Nanolx      "
 ui_print "        microG package        "
 

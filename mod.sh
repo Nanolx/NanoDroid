@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=9.4.20171231
+VERSION=10.0.20171231
 CWD="${PWD}"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -31,7 +31,7 @@ _ver() {
 	sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i "${PWD}"/mod.sh
 
 	for module in Overlay microG fdroid; do
-		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}     \"/" -i \
+		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}    \"/" -i \
 			"${PWD}"/"${module}"/META-INF/com/google/android/update-binary
 		sed -e "s/version=.*/version=v${2}.${3}/" -i \
 			"${PWD}"/"${module}"/module.prop
