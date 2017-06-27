@@ -9,7 +9,10 @@
     * fixup architecture detection in on-device framework-patcher
   * on-pc framework-patcher
     * stop process if `/system/.nanomod-patcher` file exists
-  * force-debloat.sh remove `Trebuchet` from list of apps
+  * force-debloat.sh remove Launchers from list of apps to remove
+    * PixelLauncher
+    * NexusLauncher
+    * Trebuchet
   * zipalign microG Gms Core
 * General Changes
   * on-device framework-patcher
