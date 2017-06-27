@@ -133,6 +133,17 @@ fi
 
 if [ -f /system/.nanomod-list ]; then
 	ui_print " << uninstalling: NanoMod (System)"
+
+	# services.jar needs special treament
+	if greq -q /system/framework/services.jar /system/.nanomod-list; then
+		if [ -f /data/services.jar ]; then
+			ui_print " << restoring: unpatched services.jar"
+			mv /data/services.jar /system/framework/services.jar
+		else	ui_print " << can't restore unpatched services.jar"
+		fi
+		sed '/\/system\/framework\/services.jar/d' -i /system/.nanomod-list
+	fi
+
 	xargs rm -f < /system/.nanomod-list
 	ui_print " << uninstalling: /system/.nanomod-list"
 fi
