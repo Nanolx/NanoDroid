@@ -263,6 +263,9 @@ Additional [helpful information](https://github.com/microg/android_packages_apps
 * full x86/x86_64 support
 * better error handling in on-pc framework-patcher
 * easier setup process
+* `/persist` needs to be mounted by all installers
+* uninstaller should support system mode, too
+  * needs improved installers, first
 
 ## FAQ
 
