@@ -562,13 +562,16 @@ nanomod_substitute () {
 			# /external_sd is already know by `nanomod-overlay`
 			# no need to add it a second time
 			sed -e 's|@ZIPDIR@||' -i ${1}
+			echo "    substitute: remove @ZIPDIR@ ${1}"
 		else
 			sed -e "s|@ZIPDIR@|${ZIPDIR}|g" -i ${1}
+			echo "    substitute: adjust @ZIPDIR@ in ${1}"
 		fi
 	fi
 
 	if grep -q @MODPATH@ ${1}; then
 		sed -e "s|@MODPATH@|${MODPATH}|g" -i ${1}
+		echo "    substitute: adjust @MODPATH@ in ${1}"
 	fi
 }
 
@@ -582,7 +585,6 @@ nanomod_finalize () {
 			|| error " !! failed to create uninstaller information"
 	fi
 }
-
 
 ##########################################################################################
 # Flashable update-binary preparation
