@@ -513,14 +513,10 @@ install_microg () {
 	# install microG if requested
 	if grep -q nanomod.microg=1 $nanomodsetup; then
 		for app in nlpBackendIchnaea nlpBackendNomiantim; do
-			cp -r ${INSTALLER}/system/app/${app} ${MODPATH}/system/app/
-			set_perm_dir ${MODPATH}/system/app/${app}
+			nanomod_install /system/app/${app} /system/app/
 		done
 		for app in DroidGuard GmsCore GsfProxy; do
-			cp -r ${INSTALLER}/system/priv-app/${app} \
-				${MODPATH}/system/priv-app/
-			remove_libs priv-app/${app}
-			set_perm_dir ${MODPATH}/system/priv-app/${app}
+			nanomod_install /system/priv-app/${app} /system/priv-app/
 		done
 		ui_print " << with microG"
 	else	ui_print " << without microG"
@@ -530,10 +526,8 @@ install_microg () {
 install_mapsv1 () {
 	# install mapsv1 if requested
 	if grep -q nanomod.mapsv1=1 $nanomodsetup; then
-		cp -r ${INSTALLER}/system/etc/permissions/ ${MODPATH}/system/etc/
-		set_perm_data ${MODPATH}/system/etc/permissions/com.google.android.maps.xml
-		cp -r ${INSTALLER}/system/framework/ ${MODPATH}/system/
-		set_perm_data ${MODPATH}/system/framework/com.google.android.maps.jar
+		nanomod_install /system/etc/permissions/ /system/etc/
+		nanomod_install /system/framework/ /system/
 		ui_print " << with Maps API version 1"
 	else	ui_print " << without Maps API version 1"
 	fi
@@ -542,12 +536,9 @@ install_mapsv1 () {
 install_gsync () {
 	# install GSync if requested
 	if grep -q nanomod.gsync=1 $nanomodsetup; then
-		cp -r ${INSTALLER}/system/app/GoogleCalendarSync ${MODPATH}/system/app/
-		set_perm_dir ${MODPATH}/system/app/GoogleCalendarSync/
-		cp -r ${INSTALLER}/system/app/GoogleContactSync ${MODPATH}/system/app/
-		set_perm_dir ${MODPATH}/system/app/GoogleContactSync/
-		cp -r ${INSTALLER}/system/priv-app/GoogleBackupTransport ${MODPATH}/system/app/
-		set_perm_dir ${MODPATH}/system/app/GoogleBackupTransport/
+		nanomod_install /system/app/GoogleCalendarSync /system/app/
+		nanomod_install /system/app/GoogleContactSync /system/app/
+		nanomod_install /system/priv-app/GoogleBackupTransport /system/priv-app/
 		ui_print " << with Google Sync"
 	else	ui_print " << without Google Sync"
 	fi
@@ -556,12 +547,8 @@ install_gsync () {
 install_fdroid () {
 	# install F-Droid if requested
 	if grep -q nanomod.fdroid=1 $nanomodsetup; then
-		cp -r ${INSTALLER}/system/app/FDroid \
-			${MODPATH}/system/app/
-		cp -r ${INSTALLER}/system/priv-app/FDroidPrivileged \
-			${MODPATH}/system/priv-app/
-		set_perm_dir ${MODPATH}/system/app/FDroid
-		set_perm_dir ${MODPATH}/system/priv-app/FDroidPrivileged
+		nanomod_install /system/app/FDroid /system/app/
+		nanomod_install /system/priv-app/FDroidPrivileged /system/priv-app/
 		ui_print " << with F-Droid"
 	else	ui_print " << without F-Droid"
 	fi
@@ -584,9 +571,8 @@ install_apps () {
 			SimpleGallery Substratum Termux Twidere XDALabs \
 			YahooWeatherProvider; do
 				if grep -q "^${app}$" $nanomodapps; then
-					cp -r ${INSTALLER}/system/app/${app} ${MODPATH}/system/app/
+					nanomod_install /system/app/${app} /system/app/
 					remove_libs app/${app}
-					set_perm_dir ${MODPATH}/system/app/${app}
 					ui_print " <<> ${app}"
 				fi
 		done
@@ -597,26 +583,20 @@ install_apps () {
 install_store () {
 	# install Yalp Store or Play Store whichever requested
 	if grep -q nanomod.play=1 $nanomodsetup; then
-		cp -r ${INSTALLER}/system/priv-app/Phonesky \
-			${MODPATH}/system/priv-app/
-		set_perm_dir ${MODPATH}/system/priv-app/Phonesky
+		nanomod_install /system/priv-app/Phonesky /system/priv-app/
 		ui_print " << with Play Store"
 	elif grep -q nanomod.play=2 $nanomodsetup; then
-		cp -r ${INSTALLER}/system/priv-app/FakeStore \
-			${MODPATH}/system/priv-app/
-		cp -r ${INSTALLER}/system/priv-app/YalpStore \
-			${MODPATH}/system/priv-app/
-		set_perm_dir ${MODPATH}/system/priv-app/YalpStore
-		set_perm_dir ${MODPATH}/system/priv-app/FakeStore
+		nanomod_install /system/priv-app/FakeStore /system/priv-app/
+		nanomod_install /system/priv-app/YalpStore /system/priv-app/
 		ui_print " << with Yalp Store"
 	else	ui_print " << without App Store"
 	fi
 }
 
 install_zelda () {
+	# install Zelda Ringtones when requested
 	if grep -q nanomod.zelda=1 $nanomodsetup; then
-		cp -r ${INSTALLER}/system/media/ ${MODPATH}/system/
-		set_perm_dir ${MODPATH}/system/media/
+		nanomod_install /system/media/ /system/
 		ui_print " << with Zelda sounds"
 	else	ui_print " << without Zelda sounds"
 	fi
@@ -624,55 +604,30 @@ install_zelda () {
 
 install_misc () {
 	ui_print " < GNU Bash, GNU Nano, NanoMod-Overlay"
-	cp -r ${INSTALLER}/system/etc/terminfo ${MODPATH}/system/etc/
-	cp ${INSTALLER}/system/etc/bash* ${MODPATH}/system/etc/
-	cp -r ${INSTALLER}/system/share ${MODPATH}/system/
-
-	for dir in system/etc/terminfo system/share; do
-		set_perm_dir ${MODPATH}/${dir}
-	done
-
-	for config in bashrc bash_logout; do
-		set_perm_data ${MODPATH}/system/etc/${config}
-	done
+	nanomod_install /system/etc/terminfo /system/etc/
+	nanomod_install /system/etc/bash_logout /system/etc/
+	nanomod_install /system/etc/bashrc /system/etc/
+	nanomod_install /system/share /system/
 
 	for binary in nano nano.bin nanomod-overlay nanomod-overlay.functions \
 		nanomod-overlay.addoverrides nanomod-overlay.genconfig \
 		nanomod-overlay.listoverrides nanomod-overlay.removeoverrides \
 		nanomod-overlay.shownonoverrides nanomod-overlay.updateoverrides \
 		nanomod-overlay.permission; do
-		cp ${INSTALLER}/system/bin/${binary} ${MODPATH}/system/bin/
-		set_perm_bin ${MODPATH}/system/bin/${binary}
+		nanomod_install /system/bin/${binary} /system/bin/ bin
 	done
 
 	# architecture dependend stuff
 	for binary in aapt bash bashbug; do
-		cp ${INSTALLER}/system/bin/${binary}.${BIN_ARCH} \
-			${MODPATH}/system/bin/${binary}
-		set_perm_bin ${MODPATH}/system/bin/${binary}
+		nanomod_install /system/bin/${binary}.${BIN_ARCH} /system/bin/${binary} bin
 	done
 
 	if grep -q nanomod.init=1 $nanomodsetup; then
-		cp -r ${INSTALLER}/init.d ${INIT_BASE}
+		mkdir --p ${INIT_BASE}
 		for init in fstrim logscleaner sqlite external_sd permissions; do
-			set_perm_bin ${INIT_BASE}/init.d/${init}
+			nanomod_install /system/etc/init.d/${init} ${INIT_BASE}
 		done
 	fi
-
-	ZIPDIR=$(dirname "${ZIP}")
-	if [[ "${ZIPDIR}" == "/external_sd" ]]; then
-		# /external_sd is already know by `nanomod-overlay`
-		# no need to add it a second time
-		sed -e 's|@ZIPDIR@||' -i \
-		${MODPATH}/system/bin/nanomod-overlay
-	else
-		sed -e "s|@ZIPDIR@|${ZIPDIR}|" -i \
-			${MODPATH}/system/bin/nanomod-overlay
-	fi
-
-	sed -e "s|@MODPATH@|${MODPATH}|" -i \
-		${MODPATH}/system/bin/nanomod-overlay*
-
 }
 
 ##########################################################################################
@@ -702,10 +657,13 @@ nanomod_install () {
 	fi
 
 	case perm in
-		bin )	set_perm_bin ${destination} ;;
+		bin )	echo "    permissions: binary"
+			set_perm_bin ${destination} ;;
 		* )	case perm_x in
-				dir )	set_perm_dir ${destination} ;;
-				file )	set_perm_file ${destination} ;;
+				dir )	echo "    permissions: directory"
+					set_perm_dir ${destination} ;;
+				file )	echo "    permissions: data"
+					set_perm_file ${destination} ;;
 			esac
 		;;
 	esac
@@ -788,10 +746,10 @@ else
 	unset MODPATH
 fi
 
-INIT_BASE="${MODPATH}"
+INIT_BASE="${MODPATH}/init.d"
 
 if [ "${MODE}" = "SYSTEM" ]; then
-	INIT_BASE="/system/etc"
+	INIT_BASE="/system/etc/init.d"
 fi
 
 ##########################################################################################

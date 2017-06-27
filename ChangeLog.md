@@ -6,7 +6,9 @@
 
 ## 9.4 in-dev
 * Bug Fixes
-  * fixup `nanomod-overlay.genconfig` syntax error
+  * Full, microG package
+    * fixup `nanomod-overlay.genconfig` syntax error
+    * install GoogleBackupTransport into `/system/priv-app`, not `/system/app`
   * on-device framework-patcher
     * stop process if `/system/.nanomod-patcher` file exists
     * fixup missing function in on-device framework-patcher
@@ -19,6 +21,8 @@
     * Trebuchet
   * zipalign microG Gms Core
 * General Changes
+  * Full, microG, F-Droid package
+    * migrate to shiny new installation mechanism
   * on-device framework-patcher
     * code improvements
     * better error messages when dalvikvm fails
