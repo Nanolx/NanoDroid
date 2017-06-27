@@ -69,7 +69,8 @@ NanoMod includes
   * on-device framework-patcher
   * creates the file `/system/.nanomod-patcher` after successful patching
 * **NanoMod-uninstaller**: includes
-  * uninstaller for all NanoMod Magisk Modules
+  * uninstalls any NanoMod Magisk Module
+  * uninstalls NanoMod installed in System Mode aswell
 * **framework-patcher.sh** (clone this repository)
   * on-pc framework-patcher
   * creates the file `/system/.nanomod-patcher` after successful patching
