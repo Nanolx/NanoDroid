@@ -349,7 +349,10 @@ nanomod_install () {
 		echo "    file: ${source} > ${destination}" || \
 			error " !! failed to install ${source} to ${destination}"
 		cp ${source} ${destination}
-		nanomod_subsitute ${destination}
+		if [[ -f ${destination} ]]; then
+			nanomod_substitute ${destination}
+		else	nanomod_substitute ${destination}$(basename ${source})
+		fi
 		perm_x=file
 	else	error " !! file ${source} not found"
 	fi
@@ -368,19 +371,19 @@ nanomod_install () {
 	fi
 }
 
-nanomod_subsitute () {
+nanomod_substitute () {
 	if grep -q @ZIPDIR@ ${1}; then
 		if [[ "${ZIPDIR}" == "/external_sd" ]]; then
 			# /external_sd is already know by `nanomod-overlay`
 			# no need to add it a second time
 			sed -e 's|@ZIPDIR@||' -i ${1}
 		else
-			sed -e "s|@ZIPDIR@|${ZIPDIR}|" -i ${1}
+			sed -e "s|@ZIPDIR@|${ZIPDIR}|g" -i ${1}
 		fi
 	fi
 
 	if grep -q @MODPATH@ ${1}; then
-		sed -e "s|@MODPATH@|${MODPATH}|" -i ${1}
+		sed -e "s|@MODPATH@|${MODPATH}|g" -i ${1}
 	fi
 }
 
