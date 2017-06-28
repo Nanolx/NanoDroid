@@ -37,6 +37,7 @@
   * XDA Labs (1.1.2.3)
   * MPV (2017-06-25)
   * Substratum (803)
+  * Termux (0.53)
 
 ## 9.3.20170623
 * Bug Fixes
