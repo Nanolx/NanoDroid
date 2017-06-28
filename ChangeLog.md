@@ -32,6 +32,7 @@
     * remove `/system/.nanomod-patcher` regardless wether Magisk is installed
     * support uninstalling NanoMod when installed in system mode
 * Updates
+  * Simple Calendar (2.5.6)
   * Simple Gallery (2.11.1)
   * XDA Labs (1.1.2.3)
   * MPV (2017-06-25)
