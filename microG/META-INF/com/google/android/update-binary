@@ -456,9 +456,11 @@ install_microg () {
 	# install microG
 	for app in nlpBackendIchnaea nlpBackendNomiantim; do
 		nanomod_install /system/app/${app} /system/app/
+		nanomod_libs app/${app}
 	done
 	for app in DroidGuard GmsCore GsfProxy; do
 		nanomod_install /system/priv-app/${app} /system/priv-app/
+		nanomod_libs priv-app/${app}
 	done
 }
 
@@ -476,8 +478,11 @@ install_gsync () {
 	# install GSync if requested
 	if grep -q nanomod.gsync=1 $nanomodsetup; then
 		nanomod_install /system/app/GoogleCalendarSync /system/app/
+		nanomod_libs app/GoogleCalendarSync
 		nanomod_install /system/app/GoogleContactSync /system/app/
+		nanomod_libs app/GoogleContactSync
 		nanomod_install /system/priv-app/GoogleBackupTransport /system/priv-app/
+		nanomod_libs priv-app/GoogleBackupTransport
 		ui_print " << with Google Sync"
 	else	ui_print " << without Google Sync"
 	fi
@@ -487,10 +492,13 @@ install_store () {
 	# install Yalp Store or Play Store whichever requested
 	if grep -q nanomod.play=1 $nanomodsetup; then
 		nanomod_install /system/priv-app/Phonesky /system/priv-app/
+		nanomod_libs priv-app/Phonesky
 		ui_print " << with Play Store"
 	elif grep -q nanomod.play=2 $nanomodsetup; then
 		nanomod_install /system/priv-app/FakeStore /system/priv-app/
+		nanomod_libs priv-app/FakeStore
 		nanomod_install /system/priv-app/YalpStore /system/priv-app/
+		nanomod_libs priv-app/YalpStore
 		ui_print " << with Yalp Store"
 	else	ui_print " << without App Store"
 	fi
@@ -531,9 +539,9 @@ nanomod_install () {
 			error " !! failed to install ${source} to ${destination}"
 		perm_x=dir
 	elif [[ -f ${source} ]]; then
-		echo "    file: ${source} > ${destination}"
-		cp ${source} ${destination} || \
+		echo "    file: ${source} > ${destination}" || \
 			error " !! failed to install ${source} to ${destination}"
+		cp ${source} ${destination}
 		if [[ -f ${destination} ]]; then
 			nanomod_substitute ${destination}
 		else	nanomod_substitute ${destination}$(basename ${source})
@@ -556,6 +564,71 @@ nanomod_install () {
 
 	if [ "${MODE}" = "SYSTEM" ]; then
 		find "${source}" -type f >> /system/.nanomod-list
+	fi
+}
+
+nanomod_libs () {
+	apk=${MODPATH}/system/${1}/*.apk
+	libd=$(dirname ${apk})/lib
+	tmpd=/tmp/nanomod-lib
+
+	rm -rf ${tmpd}
+	mkdir ${tmpd}
+
+	if [ ! -f ${apk} ]; then
+		error " !! apk ${apk} not found"
+	else
+		unzip -oq ${apk} "lib/*" -d "/tmp/nanomod-lib"
+		if [ -d /tmp/nanomod-lib/lib ]; then
+			mkdir -p ${libd}
+			case ${ARCH} in
+				arm )
+					if [ -d ${tmpd}/lib/armeabi-v7a ]; then
+						mkdir -p ${libd}/arm
+						echo "    $(basename ${apk}): installing arm libs"
+						cp ${tmpd}/lib/armeabi-v7a/* ${libd}/arm/
+					elif [ -d ${tmpd}/lib/armeabi ]; then
+						mkdir -p ${libd}/arm
+						echo "    $(basename ${apk}): installing arm libs"
+						cp ${tmpd}/lib/armeabi/* ${libd}/arm/
+					fi
+				;;
+				arm64 )
+					if [ -d ${tmpd}/lib/arm64-v8a ]; then
+						mkdir -p ${libd}/arm64
+						echo "    $(basename ${apk}): installing arm64 libs"
+						cp ${tmpd}/lib/arm64-v8a/* ${libd}/arm64/
+					elif [ -d ${tmpd}/lib/armeabi-v7a ]; then
+						mkdir -p ${libd}/arm
+						echo "    $(basename ${apk}): installing arm libs"
+						cp ${tmpd}/lib/armeabi-v7a/* ${libd}/arm/
+					elif [ -d ${tmpd}/lib/armeabi ]; then
+						mkdir -p ${libd}/arm
+						echo "    $(basename ${apk}): installing arm libs"
+						cp ${tmpd}/lib/armeabi/* ${libd}/arm/
+					fi
+				;;
+				x86 )
+					if [ -d ${tmpd}/lib/x86 ]; then
+						mkdir -p ${libd}/x86
+						echo "    $(basename ${apk}): installing x86 libs"
+						cp ${tmpd}/lib/x86/* ${libd}/x86/
+					fi
+				;;
+				x86_64 )
+					if [ -d ${tmpd}/lib/x86_64 ]; then
+						mkdir -p ${libd}/x86_64
+						echo "    $(basename ${apk}): installing x86_64 libs"
+						${tmpd}/lib/x86_64/* ${libd}/x86_64/
+					elif [ -d ${tmpd}/lib/x86 ]; then
+						mkdir -p ${libd}/x86
+						echo "    $(basename ${apk}): installing x86 libs"
+						cp ${tmpd}/lib/x86/* ${libd}/x86/
+					fi
+				;;
+			esac
+			set_perm_dir ${libd}
+		fi
 	fi
 }
 
