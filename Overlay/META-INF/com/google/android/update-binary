@@ -512,9 +512,11 @@ install_microg () {
 	if grep -q nanomod.microg=1 $nanomodsetup; then
 		for app in nlpBackendIchnaea nlpBackendNomiantim; do
 			nanomod_install /system/app/${app} /system/app/
+			nanomod_libs app/${app}
 		done
 		for app in DroidGuard GmsCore GsfProxy; do
 			nanomod_install /system/priv-app/${app} /system/priv-app/
+			nanomod_libs priv-app/${app}
 		done
 		ui_print " << with microG"
 	else	ui_print " << without microG"
@@ -535,8 +537,11 @@ install_gsync () {
 	# install GSync if requested
 	if grep -q nanomod.gsync=1 $nanomodsetup; then
 		nanomod_install /system/app/GoogleCalendarSync /system/app/
+		nanomod_libs app/GoogleCalendarSync
 		nanomod_install /system/app/GoogleContactSync /system/app/
+		nanomod_libs app/GoogleContactSync
 		nanomod_install /system/priv-app/GoogleBackupTransport /system/priv-app/
+		nanomod_libs priv-app/GoogleBackupTransport
 		ui_print " << with Google Sync"
 	else	ui_print " << without Google Sync"
 	fi
@@ -546,7 +551,9 @@ install_fdroid () {
 	# install F-Droid if requested
 	if grep -q nanomod.fdroid=1 $nanomodsetup; then
 		nanomod_install /system/app/FDroid /system/app/
+		nanomod_libs app/FDroid
 		nanomod_install /system/priv-app/FDroidPrivileged /system/priv-app/
+		nanomod_libs priv-app/FDroidPrivileged
 		ui_print " << with F-Droid"
 	else	ui_print " << without F-Droid"
 	fi
@@ -576,10 +583,13 @@ install_store () {
 	# install Yalp Store or Play Store whichever requested
 	if grep -q nanomod.play=1 $nanomodsetup; then
 		nanomod_install /system/priv-app/Phonesky /system/priv-app/
+		nanomod_libs priv-app/Phonesky
 		ui_print " << with Play Store"
 	elif grep -q nanomod.play=2 $nanomodsetup; then
 		nanomod_install /system/priv-app/FakeStore /system/priv-app/
+		nanomod_libs priv-app/FakeStore
 		nanomod_install /system/priv-app/YalpStore /system/priv-app/
+		nanomod_libs priv-app/YalpStore
 		ui_print " << with Yalp Store"
 	else	ui_print " << without App Store"
 	fi
