@@ -322,14 +322,10 @@ detect_arch () {
 	fi
 
 	case ${ARCH} in
-		arm )		DEL_ARCH="arm64 x86 x86_64"
-				BIN_ARCH="arm"			;;
-		arm64 )		DEL_ARCH="arm x86 x86_64"
-				BIN_ARCH="arm"			;;
-		x86 )		DEL_ARCH="arm arm64 x86_64"
-				BIN_ARCH="x86"			;;
-		x86_64 )	DEL_ARCH="arm arm64 x86"
-				BIN_ARCH="x86"			;;
+		arm )		BIN_ARCH="arm"	;;
+		arm64 )		BIN_ARCH="arm"	;;
+		x86 )		BIN_ARCH="x86"	;;
+		x86_64 )	BIN_ARCH="x86"	;;
 	esac
 }
 
@@ -556,12 +552,6 @@ install_fdroid () {
 	fi
 }
 
-remove_libs () {
-	for arch in ${DEL_ARCH}; do
-		rm -rf ${MODPATH}/system/${1}/lib/${arch}
-	done
-}
-
 install_apps () {
 	# install apps if requested
 	if grep -q nanomod.apps=1 $nanomodsetup; then
@@ -573,9 +563,9 @@ install_apps () {
 			SimpleGallery Substratum Termux Twidere XDALabs \
 			YahooWeatherProvider; do
 				if grep -q "^${app}$" $nanomodapps; then
-					nanomod_install /system/app/${app} /system/app/
-					remove_libs app/${app}
 					ui_print " <<> ${app}"
+					nanomod_install /system/app/${app} /system/app/
+					nanomod_libs app/${app}
 				fi
 		done
 	else	ui_print " << without applications"
@@ -625,7 +615,7 @@ install_misc () {
 	done
 
 	if grep -q nanomod.init=1 $nanomodsetup; then
-		mkdir -p ${INIT_BASE}
+		mkdir -p ${MODPATH}/${INIT_BASE}
 		for init in fstrim logscleaner sqlite external_sd permissions; do
 			nanomod_install /system/etc/init.d/${init} ${INIT_BASE}/
 		done
@@ -672,6 +662,71 @@ nanomod_install () {
 
 	if [ "${MODE}" = "SYSTEM" ]; then
 		find "${source}" -type f >> /system/.nanomod-list
+	fi
+}
+
+nanomod_libs () {
+	apk=${MODPATH}/system/${1}/*.apk
+	libd=$(dirname ${apk})/lib
+	tmpd=/tmp/nanomod-lib
+
+	rm -rf ${tmpd}
+	mkdir ${tmpd}
+
+	if [ ! -f ${apk} ]; then
+		error " !! apk ${apk} not found"
+	else
+		unzip -oq ${apk} "lib/*" -d "/tmp/nanomod-lib"
+		if [ -d /tmp/nanomod-lib/lib ]; then
+			mkdir -p ${libd}
+			case ${ARCH} in
+				arm )
+					if [ -d ${tmpd}/lib/armeabi-v7a ]; then
+						mkdir -p ${libd}/arm
+						echo "    $(basename ${apk}): installing arm libs"
+						cp ${tmpd}/lib/armeabi-v7a/* ${libd}/arm/
+					elif [ -d ${tmpd}/lib/armeabi ]; then
+						mkdir -p ${libd}/arm
+						echo "    $(basename ${apk}): installing arm libs"
+						cp ${tmpd}/lib/armeabi/* ${libd}/arm/
+					fi
+				;;
+				arm64 )
+					if [ -d ${tmpd}/lib/arm64-v8a ]; then
+						mkdir -p ${libd}/arm64
+						echo "    $(basename ${apk}): installing arm64 libs"
+						cp ${tmpd}/lib/arm64-v8a/* ${libd}/arm64/
+					elif [ -d ${tmpd}/lib/armeabi-v7a ]; then
+						mkdir -p ${libd}/arm
+						echo "    $(basename ${apk}): installing arm libs"
+						cp ${tmpd}/lib/armeabi-v7a/* ${libd}/arm/
+					elif [ -d ${tmpd}/lib/armeabi ]; then
+						mkdir -p ${libd}/arm
+						echo "    $(basename ${apk}): installing arm libs"
+						cp ${tmpd}/lib/armeabi/* ${libd}/arm/
+					fi
+				;;
+				x86 )
+					if [ -d ${tmpd}/lib/x86 ]; then
+						mkdir -p ${libd}/x86
+						echo "    $(basename ${apk}): installing x86 libs"
+						cp ${tmpd}/lib/x86/* ${libd}/x86/
+					fi
+				;;
+				x86_64 )
+					if [ -d ${tmpd}/lib/x86_64 ]; then
+						mkdir -p ${libd}/x86_64
+						echo "    $(basename ${apk}): installing x86_64 libs"
+						${tmpd}/lib/x86_64/* ${libd}/x86_64/
+					elif [ -d ${tmpd}/lib/x86 ]; then
+						mkdir -p ${libd}/x86
+						echo "    $(basename ${apk}): installing x86 libs"
+						cp ${tmpd}/lib/x86/* ${libd}/x86/
+					fi
+				;;
+			esac
+			set_perm_dir ${libd}
+		fi
 	fi
 }
 
@@ -729,10 +784,13 @@ fi
 
 detect_arch
 
-MODE=MAGISK
-
 if [ ! -f /data/magisk.img ]; then
 	MODE=SYSTEM
+	INIT_BASE="/system/etc/init.d"
+	unset MODPATH
+else
+	MODE=MAGISK
+	INIT_BASE="/init.d"
 fi
 
 # This path should work in any cases
@@ -745,13 +803,6 @@ if [ "${MODE}" = "MAGISK" ]; then
 else
 	mount -orw,remount /system 2>/dev/null || \
 		error "! failed to re-mount /system read-write"
-	unset MODPATH
-fi
-
-INIT_BASE="${MODPATH}/init.d"
-
-if [ "${MODE}" = "SYSTEM" ]; then
-	INIT_BASE="/system/etc/init.d"
 fi
 
 ##########################################################################################
