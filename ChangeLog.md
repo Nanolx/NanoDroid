@@ -39,6 +39,7 @@
   * Substratum (803)
   * Termux (0.53)
   * Anysoft Keyboard (1.8.844)
+  * OpenLauncher (0.5.2)
 
 ## 9.3.20170623
 * Bug Fixes
