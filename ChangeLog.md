@@ -38,6 +38,7 @@
   * MPV (2017-06-25)
   * Substratum (803)
   * Termux (0.53)
+  * Anysoft Keyboard (1.8.844)
 
 ## 9.3.20170623
 * Bug Fixes
