@@ -334,6 +334,49 @@ install_fdroid () {
 }
 
 ##########################################################################################
+# NanoMod Configuration File Handling
+##########################################################################################
+
+# check for configuration files
+config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
+
+get_config () {
+	config=""
+	config_exists=0
+	for path in ${config_locations}; do
+		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
+			config="${path}/${1}"
+			config_exists=1
+			return
+		fi
+	done
+}
+
+# create default '.nanomod-setup'
+create_nanomodsetup () {
+	nanomodsetup=/data/.nanomod-setup
+	NO_NANOMODSETUP=1
+	echo "nanomod.forcesystem=0" > $nanomodsetup
+}
+
+check_prop () {
+	if ! grep -q "^${1}" ${nanomodsetup}; then
+		return 1
+	else
+		return 0
+	fi
+}
+
+set_prop () {
+	echo "${1}=${2}" >> ${nanomodsetup}
+}
+
+# check whether '.nanomod-setup' has all required entries
+check_nanomodsetup () {
+	check_prop nanomod.forcesystem || set_prop nanomod.forcesystem 0
+}
+
+##########################################################################################
 # Advanced Installation Functions
 ##########################################################################################
 
@@ -493,14 +536,27 @@ fi
 
 detect_arch
 
-MODE=MAGISK
-
-if [ ! -f /data/magisk.img ]; then
-	MODE=SYSTEM
+get_config .nanomod-setup
+if [ "$config_exists" -eq 1 ]; then
+	NO_NANOMODSETUP=0
+	nanomodsetup="${config}"
+	check_nanomodsetup
+else	create_nanomodsetup
 fi
 
 # This path should work in any cases
 TMPDIR=/dev/tmp
+
+if grep -q "^nanomod.forcesystem=1" ${nanomodsetup}; then
+	MODE=SYSTEM
+	MODE_TEXT=" > Mode   | System          | forced"
+elif [ ! -f /data/magisk.img  ]; then
+	MODE=SYSTEM
+	MODE_TEXT=" > Mode   | System          | detected"
+else
+	MODE=MAGISK
+	MODE_TEXT=" > Mode   | Magisk          | detected"
+fi
 
 install_init
 
@@ -528,6 +584,11 @@ if [ "${MODE}" = "MAGISK" ]; then
 fi
 
 ui_print "******************************"
+ui_print " "
+
+ui_print " > Config | nanomod-setup   | $(dirname ${nanomodsetup})"
+ui_print "${MODE_TEXT}"
+
 ui_print " "
 
 # You can get the Android API version from $API, the CPU architecture from $ARCH

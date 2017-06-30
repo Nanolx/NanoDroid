@@ -212,26 +212,30 @@ create_nanomodsetup () {
 nanomod.play=1
 nanomod.overlay=0
 nanomod.mapsv1=1
-nanomod.gsync=0" > $nanomodsetup
+nanomod.gsync=0
+nanomod.forcesystem=0" > $nanomodsetup
+}
+
+check_prop () {
+	if ! grep -q "^${1}" ${nanomodsetup}; then
+		return 1
+	else
+		return 0
+	fi
+}
+
+set_prop () {
+	echo "${1}=${2}" >> ${nanomodsetup}
 }
 
 # check whether '.nanomod-setup' has all required entries
 check_nanomodsetup () {
-	if ! grep -q "^nanomod.reinstall" $nanomodsetup; then
-		echo "nanomod.reinstall=0" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.play" $nanomodsetup; then
-		echo "nanomod.play=1" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.overlay" $nanomodsetup; then
-		echo "nanomod.overlay=0" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.mapsv1" $nanomodsetup; then
-		echo "nanomod.mapsv1=1" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.gsync" $nanomodsetup; then
-		echo "nanomod.gsync=0" >> $nanomodsetup
-	fi
+	check_prop nanomod.reinstall || set_prop nanomod.reinstall 0
+	check_prop nanomod.play || set_prop nanomod.play 1
+	check_prop nanomod.overlay || set_prop nanomod.overlay 1
+	check_prop nanomod.mapsv1 || set_prop nanomod.mapsv1 1
+	check_prop nanomod.gsync || set_prop nanomod.gsync 0
+	check_prop nanomod.forcesystem || set_prop nanomod.forcesystem 0
 }
 
 ##########################################################################################
@@ -686,14 +690,34 @@ fi
 
 detect_arch
 
-MODE=MAGISK
+get_config .nanomod-overlay
+if [ "$config_exists" -eq 1 ]; then
+	NO_NANOMODOVERLAY=0
+	nanomodoverlay="${config}"
+else	create_nanomodoverlay
+fi
 
-if [ ! -f /data/magisk.img ]; then
-	MODE=SYSTEM
+get_config .nanomod-setup
+if [ "$config_exists" -eq 1 ]; then
+	NO_NANOMODSETUP=0
+	nanomodsetup="${config}"
+	check_nanomodsetup
+else	create_nanomodsetup
 fi
 
 # This path should work in any cases
 TMPDIR=/dev/tmp
+
+if grep -q "^nanomod.forcesystem=1" ${nanomodsetup}; then
+	MODE=SYSTEM
+	MODE_TEXT=" > Mode   | System          | forced"
+elif [ ! -f /data/magisk.img  ]; then
+	MODE=SYSTEM
+	MODE_TEXT=" > Mode   | System          | detected"
+else
+	MODE=MAGISK
+	MODE_TEXT=" > Mode   | Magisk          | detected"
+fi
 
 install_init
 
@@ -723,6 +747,12 @@ fi
 ui_print "******************************"
 ui_print " "
 
+ui_print " > Config | nanomod-setup   | $(dirname ${nanomodsetup})"
+ui_print " > Config | nanomod-overlay | $(dirname ${nanomodoverlay})"
+ui_print "${MODE_TEXT}"
+
+ui_print " "
+
 # You can get the Android API version from $API, the CPU architecture from $ARCH
 # Useful if you are creating Android version / platform dependent mods
 
@@ -738,21 +768,6 @@ unzip -o "$ZIP" "system/*"
 if [ "${MODE}" = "MAGISK" ]; then
 	ui_print " > Installing NanoMod (magisk module)"
 else	ui_print " > Installing NanoMod (system mode)"
-fi
-
-get_config .nanomod-overlay
-if [ "$config_exists" -eq 1 ]; then
-	NO_NANOMODOVERLAY=0
-	nanomodoverlay="${config}"
-else	create_nanomodoverlay
-fi
-
-get_config .nanomod-setup
-if [ "$config_exists" -eq 1 ]; then
-	NO_NANOMODSETUP=0
-	nanomodsetup="${config}"
-	check_nanomodsetup
-else	create_nanomodsetup
 fi
 
 if [ "${MODE}" = "MAGISK" ]; then
