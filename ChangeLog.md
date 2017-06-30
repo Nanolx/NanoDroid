@@ -20,6 +20,8 @@
 * General Changes
   * Full, microG, F-Droid package
     * migrate to shiny new installation mechanism
+    * improved printed information
+    * add support to enforce installation in System Mode using `nanomod.forcesystem` setup variable
   * on-device framework-patcher
     * code improvements
     * better error messages when dalvikvm fails
