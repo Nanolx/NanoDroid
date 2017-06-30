@@ -27,9 +27,10 @@ nanomod.zelda=1
 nanomod.mapsv1=1
 nanomod.init=1
 nanomod.gsync=0
+nanomod.forcesystem=0
 ```
 
-the **microG** package* supports the following options
+the **microG** package supports the following options
 
 ```
 nanomod.play=1
@@ -37,6 +38,13 @@ nanomod.reinstall=0
 nanomod.overlay=0
 nanomod.mapsv1=1
 nanomod.gsync=0
+nanomod.forcesystem=0
+```
+
+the **F-Droid** package supports the following options
+
+```
+nanomod.forcesystem=0
 ```
 
 where `1` means `on` and `0` means `off`. See the default settings [![GitHub Link](github.png)](.nanomod-setup).

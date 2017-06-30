@@ -256,38 +256,31 @@ XDALabs
 YahooWeatherProvider" > $nanomodapps
 }
 
+check_prop () {
+	if ! grep -q "^${1}" ${nanomodsetup}; then
+		return 1
+	else
+		return 0
+	fi
+}
+
+set_prop () {
+	echo "${1}" "${2}" >> ${nanomodsetup}
+}
+
 # check whether '.nanomod-setup' has all required entries
 check_nanomodsetup () {
-	if ! grep -q "^nanomod.fdroid" $nanomodsetup; then
-		echo "nanomod.fdroid=1" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.reinstall" $nanomodsetup; then
-		echo "nanomod.reinstall=0" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.microg" $nanomodsetup; then
-		echo "nanomod.microg=1" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.apps" $nanomodsetup; then
-		echo "nanomod.apps=1" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.play" $nanomodsetup; then
-		echo "nanomod.play=1" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.overlay" $nanomodsetup; then
-		echo "nanomod.overlay=1" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.zelda" $nanomodsetup; then
-		echo "nanomod.zelda=1" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.mapsv1" $nanomodsetup; then
-		echo "nanomod.mapsv1=1" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.init" $nanomodsetup; then
-		echo "nanomod.init=1" >> $nanomodsetup
-	fi
-	if ! grep -q "^nanomod.gsync" $nanomodsetup; then
-		echo "nanomod.gsync=0" >> $nanomodsetup
-	fi
+	check_prop nanomod.fdroid || set_prop nanomod.fdroid 1
+	check_prop nanomod.reinstall || set_prop nanomod.reinstall 0
+	check_prop nanomod.microg || set_prop nanomod.microg 1
+	check_prop nanomod.apps || set_prop nanomod.apps 1
+	check_prop nanomod.play || set_prop nanomod.play 1
+	check_prop nanomod.overlay || set_prop nanomod.overlay 1
+	check_prop nanomod.zelda || set_prop nanomod.zelda 1
+	check_prop nanomod.mapsv1 || set_prop nanomod.mapsv1 1
+	check_prop nanomod.init || set_prop nanomod.init 1
+	check_prop nanomod.gsync || set_prop nanomod.gsync 0
+	check_prop nanomod.forcesystem || set_prop nanomod.forcesystem 0
 }
 
 ##########################################################################################
@@ -353,7 +346,7 @@ shrink_magisk_img () {
 
 magisk_install_init () {
 	if $BOOTMODE && ! is_mounted /magisk; then
-		error "! Magisk is not activated!... abort"
+		error " !! Magisk is not activated!... abort"
 	fi
 
 	# Fix SuperSU.....
@@ -412,7 +405,7 @@ magisk_install_setup () {
 
 	mount_image $IMG $MOUNTPATH
 	if ! is_mounted $MOUNTPATH; then
-		error "! $IMG mount failed... abort"
+		error " !! $IMG mount failed... abort"
 	fi
 }
 
@@ -498,7 +491,7 @@ install_init () {
 	unzip -o "$ZIP" config.sh
 
 	if [ ! -f "config.sh" ]; then
-		error "! Failed: Unable to extract zip file!"
+		error " !! Failed: Unable to extract zip file!"
 	fi
 
 	source config.sh
@@ -559,21 +552,29 @@ install_fdroid () {
 	fi
 }
 
+APPS="Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
+	K9Mail KeePassDroid KernelAdiutor Lightning MPV NewPipe \
+	Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
+	OpenWeatherMapProvider OpenVPN QKSMS SimpleCalendar \
+	SimpleGallery Substratum Termux Twidere XDALabs \
+	YahooWeatherProvider"
+
 install_apps () {
 	# install apps if requested
 	if grep -q nanomod.apps=1 $nanomodsetup; then
 		ui_print " << with applications"
-		for app in Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
-			K9Mail KeePassDroid KernelAdiutor Lightning MPV NewPipe \
-			Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
-			OpenWeatherMapProvider OpenVPN QKSMS SimpleCalendar \
-			SimpleGallery Substratum Termux Twidere XDALabs \
-			YahooWeatherProvider; do
-				if grep -q "^${app}$" $nanomodapps; then
-					ui_print " <<> ${app}"
-					nanomod_install /system/app/${app} /system/app/
-					nanomod_libs app/${app}
-				fi
+		APP_STRING=" <<>"
+		for app in ${APPS}; do
+			if grep -q "^${app}$" $nanomodapps; then
+				APP_STRING="${APP_STRING} ${app}, "
+			fi
+		done
+		ui_print "${APP_STRING}"
+		for app in ${APPS}; do
+			if grep -q "^${app}$" $nanomodapps; then
+				nanomod_install /system/app/${app} /system/app/
+				nanomod_libs app/${app}
+			fi
 		done
 	else	ui_print " << without applications"
 	fi
@@ -605,7 +606,7 @@ install_zelda () {
 }
 
 install_misc () {
-	ui_print " < GNU Bash, GNU Nano, NanoMod-Overlay"
+	ui_print " << GNU Bash, GNU Nano, NanoMod-Overlay"
 	nanomod_install /system/etc/terminfo /system/etc/
 	nanomod_install /system/etc/bash_logout /system/etc/
 	nanomod_install /system/etc/bashrc /system/etc/
@@ -789,30 +790,58 @@ mount /data 2>/dev/null
 mount /cache 2>/dev/null
 
 if [ ! -f '/system/build.prop' ]; then
-	error "! /system/build.prop does not exist"
+	error " !! /system/build.prop does not exist"
 fi
 
 detect_arch
 
-if [ ! -f /data/magisk.img ]; then
-	MODE=SYSTEM
-	INIT_BASE="/system/etc/init.d"
-	unset MODPATH
-else
-	MODE=MAGISK
-	INIT_BASE="/init.d"
-fi
-
 # This path should work in any cases
 TMPDIR=/dev/tmp
+
+get_config .nanomod-setup
+if [ "$config_exists" -eq 1 ]; then
+	NO_NANOMODSETUP=0
+	nanomodsetup="${config}"
+	check_nanomodsetup
+else	create_nanomodsetup
+fi
+
+get_config .nanomod-overlay
+if [ "$config_exists" -eq 1 ]; then
+	NO_NANOMODOVERLAY=0
+	nanomodoverlay="${config}"
+else	create_nanomodoverlay
+fi
+
+get_config .nanomod-apps
+if [ "$config_exists" -eq 1 ]; then
+	NO_NANOMODAPPS=0
+	nanomodapps="${config}"
+else	create_nanomodapps
+fi
+
+
+if grep -q "^nanomod.forcesystem=1" ${nanomodsetup}; then
+	MODE=SYSTEM
+	MODE_TEXT=" > Mode   | System          | forced"
+elif [ ! -f /data/magisk.img  ]; then
+	MODE=SYSTEM
+	MODE_TEXT=" > Mode   | System          | detected"
+else
+	MODE=MAGISK
+	MODE_TEXT=" > Mode   | Magisk          | detected"
+fi
 
 install_init
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_init
+	INIT_BASE="/init.d"
 else
 	mount -orw,remount /system 2>/dev/null || \
-		error "! failed to re-mount /system read-write"
+		error " !! failed to re-mount /system read-write"
+	INIT_BASE="/system/etc/init.d"
+	unset MODPATH
 fi
 
 ##########################################################################################
@@ -832,6 +861,13 @@ fi
 ui_print "******************************"
 ui_print " "
 
+ui_print " > Config | nanomod-setup   | $(dirname ${nanomodsetup})"
+ui_print " > Config | nanomod-overlay | $(dirname ${nanomodoverlay})"
+ui_print " > Config | nanomod-apps    | $(dirname ${nanomodapps})"
+ui_print "${MODE_TEXT}"
+
+ui_print " "
+
 # You can get the Android API version from $API, the CPU architecture from $ARCH
 # Useful if you are creating Android version / platform dependent mods
 
@@ -844,33 +880,6 @@ ui_print " > prepare installation"
 cd ${INSTALLER} || exit 1
 unzip -o "$ZIP" "system/*"
 unzip -o "$ZIP" "init.d/*"
-
-if [ "${MODE}" = "MAGISK" ]; then
-	ui_print " > Installing NanoMod (magisk module)"
-else	ui_print " > Installing NanoMod (system mode)"
-fi
-
-get_config .nanomod-overlay
-if [ "$config_exists" -eq 1 ]; then
-	NO_NANOMODOVERLAY=0
-	nanomodoverlay="${config}"
-else	create_nanomodoverlay
-fi
-
-get_config .nanomod-setup
-if [ "$config_exists" -eq 1 ]; then
-	NO_NANOMODSETUP=0
-	nanomodsetup="${config}"
-	check_nanomodsetup
-else	create_nanomodsetup
-fi
-
-get_config .nanomod-apps
-if [ "$config_exists" -eq 1 ]; then
-	NO_NANOMODAPPS=0
-	nanomodapps="${config}"
-else	create_nanomodapps
-fi
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_dirs
