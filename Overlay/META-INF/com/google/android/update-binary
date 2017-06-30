@@ -265,7 +265,7 @@ check_prop () {
 }
 
 set_prop () {
-	echo "${1}" "${2}" >> ${nanomodsetup}
+	echo "${1}=${2}" >> ${nanomodsetup}
 }
 
 # check whether '.nanomod-setup' has all required entries
@@ -819,7 +819,6 @@ if [ "$config_exists" -eq 1 ]; then
 	nanomodapps="${config}"
 else	create_nanomodapps
 fi
-
 
 if grep -q "^nanomod.forcesystem=1" ${nanomodsetup}; then
 	MODE=SYSTEM
