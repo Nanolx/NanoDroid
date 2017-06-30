@@ -221,7 +221,8 @@ nanomod.overlay=1
 nanomod.zelda=1
 nanomod.mapsv1=1
 nanomod.init=1
-nanomod.gsync=0" > $nanomodsetup
+nanomod.gsync=0
+nanomod.forcesystem=0" > $nanomodsetup
 }
 
 # create default '.nanomod-apps'
