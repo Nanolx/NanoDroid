@@ -1,6 +1,9 @@
 # ChangeLog
 
 ## 10.1 in-dev
+* General Changes
+  * Full, microG, F-Droid package
+    * if using fallback configuration during installation print the information accordingly
 * Updates
   * Play Store (8.0.22.R)
 

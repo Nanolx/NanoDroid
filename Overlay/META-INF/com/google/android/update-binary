@@ -861,9 +861,21 @@ fi
 ui_print "******************************"
 ui_print " "
 
-ui_print " > Config | nanomod-setup   | $(dirname ${nanomodsetup})"
-ui_print " > Config | nanomod-overlay | $(dirname ${nanomodoverlay})"
-ui_print " > Config | nanomod-apps    | $(dirname ${nanomodapps})"
+if [ "$NO_NANOMODSETUP" -eq 1 ]; then
+	ui_print " > Config | nanomod-setup   | fallback"
+else	ui_print " > Config | nanomod-setup   | $(dirname ${nanomodsetup})"
+fi
+
+if [ "$NO_NANOMODOVERLAY" -eq 1 ]; then
+	ui_print " > Config | nanomod-overlay | fallback"
+else	ui_print " > Config | nanomod-overlay | $(dirname ${nanomodoverlay})"
+fi
+
+if [ "$NO_NANOMODAPPS" -eq 1 ]; then
+	ui_print " > Config | nanomod-apps    | fallback"
+else	ui_print " > Config | nanomod-apps    | $(dirname ${nanomodapps})"
+fi
+
 ui_print "${MODE_TEXT}"
 
 ui_print " "
