@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 10.1 in-dev
+* Updates
+  * Play Store (8.0.22.R)
+
 ## 10.0.20170701
 * Bug Fixes
   * Full, microG package
