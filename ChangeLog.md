@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 10.0 in-dev
+## 10.0.20170701
 * Bug Fixes
   * Full, microG package
     * fixup `nanomod-overlay.genconfig` syntax error
