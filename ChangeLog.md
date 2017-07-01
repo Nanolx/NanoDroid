@@ -4,6 +4,9 @@
 * General Changes
   * Full, microG, F-Droid package
     * if using fallback configuration during installation print the information accordingly
+  * Full, microG package
+    * if using fall back `nanomod-overlay` configuration remove it after installation
+      * the `nanomod-overlay` script will create it during runtime, if required
 * Updates
   * Play Store (8.0.22.R)
 

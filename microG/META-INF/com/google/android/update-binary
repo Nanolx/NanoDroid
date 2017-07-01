@@ -797,6 +797,10 @@ if [ "$NO_NANOMODSETUP" -eq 1 ]; then
 	rm $nanomodsetup
 fi
 
+if [ "$NO_NANOMODOVERLAY" -eq 1 ]; then
+	rm $nanomodoverlay
+fi
+
 nanomod_finalize
 
 ui_print " "
