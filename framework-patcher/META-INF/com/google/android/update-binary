@@ -315,7 +315,7 @@ magisk_cleanup () {
 
 ui_print " "
 ui_print "********************************"
-ui_print "      NanoMod 10.0.20171231     "
+ui_print "      NanoMod 10.0.20170701     "
 ui_print "       created by @Nanolx       "
 ui_print "       Framework Patcher        "
 ui_print "Powered by DexPatcher (@lanchon)"

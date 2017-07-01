@@ -1,7 +1,7 @@
 id=nanomodfdroid
 name=NanoMod (F-Droid)
-version=v10.0.20171231
-versionCode=12
+version=v10.0.20170701
+versionCode=13
 author=Nanolx
 description=NanoMod (F-Droid) for LineageOS/AOSP based ROMs
 template=3
