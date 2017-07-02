@@ -9,6 +9,7 @@
       * the `nanomod-overlay` script will create it during runtime, if required
 * Updates
   * Play Store (8.0.22.R)
+  * Simple Gallery (2.11.5)
 
 ## 10.0.20170701
 * Bug Fixes
