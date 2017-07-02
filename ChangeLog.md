@@ -8,7 +8,7 @@
     * if using fall back `nanomod-overlay` configuration remove it after installation
       * the `nanomod-overlay` script will create it during runtime, if required
 * Updates
-  * Play Store (8.0.22.R)
+  * Play Store (8.0.23.R)
   * Simple Gallery (2.11.5)
 
 ## 10.0.20170701
