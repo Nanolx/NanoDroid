@@ -10,6 +10,7 @@
 * Updates
   * Play Store (8.0.23.R)
   * Simple Gallery (2.12.0)
+  * Open Camera (1.38.2)
 
 ## 10.0.20170701
 * Bug Fixes
