@@ -12,6 +12,7 @@
   * Simple Gallery (2.12.0)
   * Open Camera (1.38.2)
   * New Pipe (0.9.9)
+  * GNU Nano (2.8.5)
 
 ## 10.0.20170701
 * Bug Fixes
