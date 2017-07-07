@@ -162,60 +162,6 @@ get_config () {
 	done
 }
 
-# create default '.nanomod-overlay' file
-create_nanomodoverlay () {
-	nanomodoverlay=/data/.nanomod-overlay
-	NO_NANOMODOVERLAY=1
-	echo "APPS=(
-Calendar
-BasicDreams
-Browser
-CMFileManager
-Camera2
-Eleven
-Email
-Exchange2
-Gallery2
-Gello
-Jelly
-Phonograph
-PhotoTable
-ResurrectionStats
-Slimperience
-SoundRecorder
-Stk
-ViaBrowser
-Wallpaper
-WallpaperBackup
-WallpaperPickerGoogle
-messaging
-)
-
-PRIV_APPS=(
-FMRadio
-Gallery2
-OmniSwitch
-Recorder
-Screencast
-Snap
-SnapdragonCamera
-SoundRecorder
-mGerrit
-)"	> $nanomodoverlay
-}
-
-# create default '.nanomod-setup'
-create_nanomodsetup () {
-	nanomodsetup=/data/.nanomod-setup
-	NO_NANOMODSETUP=1
-	echo "nanomod.reinstall=0
-nanomod.play=1
-nanomod.overlay=0
-nanomod.mapsv1=1
-nanomod.gsync=0
-nanomod.forcesystem=0" > $nanomodsetup
-}
-
 check_prop () {
 	if ! grep -q "^${1}" ${nanomodsetup}; then
 		return 1

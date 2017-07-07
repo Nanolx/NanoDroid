@@ -352,13 +352,6 @@ get_config () {
 	done
 }
 
-# create default '.nanomod-setup'
-create_nanomodsetup () {
-	nanomodsetup=/data/.nanomod-setup
-	NO_NANOMODSETUP=1
-	echo "nanomod.forcesystem=0" > $nanomodsetup
-}
-
 check_prop () {
 	if ! grep -q "^${1}" ${nanomodsetup}; then
 		return 1
