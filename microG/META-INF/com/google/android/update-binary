@@ -725,8 +725,6 @@ else
 	MODE_TEXT=" > Mode   | Magisk          | detected"
 fi
 
-install_init
-
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_init
 else
