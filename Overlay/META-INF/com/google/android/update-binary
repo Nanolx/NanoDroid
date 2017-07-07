@@ -163,100 +163,6 @@ get_config () {
 	done
 }
 
-# create default '.nanomod-overlay' file
-create_nanomodoverlay () {
-	nanomodoverlay=/data/.nanomod-overlay
-	NO_NANOMODOVERLAY=1
-	echo "APPS=(
-Calendar
-BasicDreams
-Browser
-CMFileManager
-Camera2
-Eleven
-Email
-Exchange2
-Gallery2
-Gello
-Jelly
-NexusLauncher
-Phonograph
-PhotoTable
-ResurrectionStats
-Slimperience
-SoundRecorder
-Stk
-ViaBrowser
-Wallpaper
-WallpaperBackup
-WallpaperPickerGoogle
-messaging
-)
-
-PRIV_APPS=(
-FMRadio
-Gallery2
-OmniSwitch
-Recorder
-PixelLauncher
-Screencast
-Snap
-SnapdragonCamera
-SoundRecorder
-Trebuchet
-mGerrit
-)"	> $nanomodoverlay
-}
-
-# create default '.nanomod-setup'
-create_nanomodsetup () {
-	nanomodsetup=/data/.nanomod-setup
-	NO_NANOMODSETUP=1
-	echo "nanomod.fdroid=1
-nanomod.reinstall=0
-nanomod.microg=1
-nanomod.apps=1
-nanomod.play=1
-nanomod.overlay=1
-nanomod.zelda=1
-nanomod.mapsv1=1
-nanomod.init=1
-nanomod.gsync=0
-nanomod.forcesystem=0" > $nanomodsetup
-}
-
-# create default '.nanomod-apps'
-create_nanomodapps () {
-	nanomodapps=/data/.nanomod-apps
-	NO_NANOMODAPPS=1
-	echo "Adaway
-Amaze
-AnysoftKeyboard
-FaceSlim
-HackerKeyboard
-K9Mail
-KeePassDroid
-KernelAdiutor
-Lightning
-MPV
-NewPipe
-Oandbackup
-Odyssey
-OpenCamera
-OpenKeyChain
-OpenLauncher
-OpenWeatherMapProvider
-OpenVPN
-QKSMS
-SimpleCalendar
-SimpleGallery
-Substratum
-Termux
-Twidere
-XDALabs
-YahooWeatherProvider" > $nanomodapps
-}
-
 check_prop () {
 	if ! grep -q "^${1}" ${nanomodsetup}; then
 		return 1
@@ -411,7 +317,7 @@ magisk_install_setup () {
 }
 
 magisk_install_preinst () {
-	if grep -q nanomod.reinstall=1 $nanomodsetup; then
+	if [ "${nanomod_reinstall}" -eq 1 ]; then
 		ui_print " << backup services.jar"
 		cp $MODPATH/system/framework/services.jar \
 			/tmp/services.jar
@@ -420,7 +326,7 @@ magisk_install_preinst () {
 
 magisk_install_postinst () {
 	# Setup Overrides
-	if grep -q nanomod.overlay=1 $nanomodsetup; then
+	if [ "${nanomod_overlay}" -eq 1 ]; then
 		$MODPATH/system/bin/nanomod-overlay --update
 		ui_print " << with /system applications override"
 	else	ui_print " << without /system applications override"
@@ -429,7 +335,7 @@ magisk_install_postinst () {
 		fi
 	fi
 
-	if grep -q nanomod.reinstall=1 $nanomodsetup; then
+	if [ "${nanomod_reinstall}" -eq 1 ]; then
 		ui_print " << restore services.jar"
 		mkdir $MODPATH/system/framework
 		cp /tmp/services.jar \
@@ -503,7 +409,7 @@ install_init () {
 
 install_microg () {
 	# install microG if requested
-	if grep -q nanomod.microg=1 $nanomodsetup; then
+	if [ "${nanomod_microg}" -eq 1 ]; then
 		for app in nlpBackendIchnaea nlpBackendNomiantim; do
 			nanomod_install /system/app/${app} /system/app/
 			nanomod_libs app/${app}
@@ -519,7 +425,7 @@ install_microg () {
 
 install_mapsv1 () {
 	# install mapsv1 if requested
-	if grep -q nanomod.mapsv1=1 $nanomodsetup; then
+	if [ "${nanomod_mapsv1}" -eq 1 ]; then
 		nanomod_install /system/etc/permissions/ /system/etc/
 		nanomod_install /system/framework/ /system/
 		ui_print " << with Maps API version 1"
@@ -529,7 +435,7 @@ install_mapsv1 () {
 
 install_gsync () {
 	# install GSync if requested
-	if grep -q nanomod.gsync=1 $nanomodsetup; then
+	if [ "${nanomod_gsync}" -eq 1 ]; then
 		nanomod_install /system/app/GoogleCalendarSync /system/app/
 		nanomod_libs app/GoogleCalendarSync
 		nanomod_install /system/app/GoogleContactSync /system/app/
@@ -543,7 +449,7 @@ install_gsync () {
 
 install_fdroid () {
 	# install F-Droid if requested
-	if grep -q nanomod.fdroid=1 $nanomodsetup; then
+	if [ "${nanomod_fdroid}" -eq 1 ]; then
 		nanomod_install /system/app/FDroid /system/app/
 		nanomod_libs app/FDroid
 		nanomod_install /system/priv-app/FDroidPrivileged /system/priv-app/
@@ -553,29 +459,18 @@ install_fdroid () {
 	fi
 }
 
-APPS="Adaway Amaze AnysoftKeyboard FaceSlim HackerKeyboard \
-	K9Mail KeePassDroid KernelAdiutor Lightning MPV NewPipe \
-	Oandbackup Odyssey OpenCamera OpenKeyChain OpenLauncher \
-	OpenWeatherMapProvider OpenVPN QKSMS SimpleCalendar \
-	SimpleGallery Substratum Termux Twidere XDALabs \
-	YahooWeatherProvider"
-
 install_apps () {
 	# install apps if requested
-	if grep -q nanomod.apps=1 $nanomodsetup; then
+	if [ "${nanomod_apps}" -eq 1 ]; then
 		ui_print " << with applications"
 		APP_STRING=" <<>"
-		for app in ${APPS}; do
-			if grep -q "^${app}$" $nanomodapps; then
-				APP_STRING="${APP_STRING} ${app}, "
-			fi
+		for app in ${INSTALL_APPS}; do
+			APP_STRING="${APP_STRING} ${app}, "
 		done
 		ui_print "${APP_STRING}"
-		for app in ${APPS}; do
-			if grep -q "^${app}$" $nanomodapps; then
-				nanomod_install /system/app/${app} /system/app/
-				nanomod_libs app/${app}
-			fi
+		for app in ${INSTALL_APPS}; do
+			nanomod_install /system/app/${app} /system/app/
+			nanomod_libs app/${app}
 		done
 	else	ui_print " << without applications"
 	fi
@@ -583,11 +478,11 @@ install_apps () {
 
 install_store () {
 	# install Yalp Store or Play Store whichever requested
-	if grep -q nanomod.play=1 $nanomodsetup; then
+	if [ "${nanomod_play}" -eq 1 ]; then
 		nanomod_install /system/priv-app/Phonesky /system/priv-app/
 		nanomod_libs priv-app/Phonesky
 		ui_print " << with Play Store"
-	elif grep -q nanomod.play=2 $nanomodsetup; then
+	elif [ "${nanomod_play}" -eq 2 ]; then
 		nanomod_install /system/priv-app/FakeStore /system/priv-app/
 		nanomod_libs priv-app/FakeStore
 		nanomod_install /system/priv-app/YalpStore /system/priv-app/
@@ -599,7 +494,7 @@ install_store () {
 
 install_zelda () {
 	# install Zelda Ringtones when requested
-	if grep -q nanomod.zelda=1 $nanomodsetup; then
+	if [ "${nanomod_zelda}" -eq 1 ]; then
 		nanomod_install /system/media/ /system/
 		ui_print " << with Zelda sounds"
 	else	ui_print " << without Zelda sounds"
@@ -626,11 +521,13 @@ install_misc () {
 		nanomod_install /system/bin/${binary}.${BIN_ARCH} /system/bin/${binary} bin
 	done
 
-	if grep -q nanomod.init=1 $nanomodsetup; then
+	if [ "${nanomod_init}" -eq 1 ]; then
+		ui_print " << with init scripts"
 		mkdir -p ${MODPATH}/${INIT_BASE}
 		for init in fstrim logscleaner sqlite external_sd permissions; do
 			nanomod_install /system/etc/init.d/${init} ${INIT_BASE}/
 		done
+	else	ui_print " << without init scripts"
 	fi
 }
 
@@ -799,29 +696,38 @@ detect_arch
 # This path should work in any cases
 TMPDIR=/dev/tmp
 
+install_init
+
 get_config .nanomod-setup
 if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODSETUP=0
 	nanomodsetup="${config}"
 	check_nanomodsetup
-else	create_nanomodsetup
+else	NO_NANOMODSETUP=1
+	nanomodsetup="${INSTALLER}/.nanomod-setup"
 fi
+
+source "${nanomodsetup}"
 
 get_config .nanomod-overlay
 if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODOVERLAY=0
 	nanomodoverlay="${config}"
-else	create_nanomodoverlay
+else	NO_NANOMODOVERLAY=1
+	nanomodoverlay="${INSTALLER}/.nanomod-overlay"
 fi
 
 get_config .nanomod-apps
 if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODAPPS=0
 	nanomodapps="${config}"
-else	create_nanomodapps
+else	NO_NANOMODAPPS=1
+	nanomodapps="${INSTALLER}/.nanomod-apps"
 fi
 
-if grep -q "^nanomod.forcesystem=1" ${nanomodsetup}; then
+source "${nanomodapps}"
+
+if [ "${nanomod_forcesystem}" -eq 1 ]; then
 	MODE=SYSTEM
 	MODE_TEXT=" > Mode   | System          | forced"
 elif [ ! -f /data/magisk.img  ]; then
@@ -831,8 +737,6 @@ else
 	MODE=MAGISK
 	MODE_TEXT=" > Mode   | Magisk          | detected"
 fi
-
-install_init
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_init
@@ -892,6 +796,7 @@ ui_print " > prepare installation"
 cd ${INSTALLER} || exit 1
 unzip -o "$ZIP" "system/*"
 unzip -o "$ZIP" "init.d/*"
+unzip -o "$ZIP" ".nanomod*"
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_dirs
@@ -909,18 +814,6 @@ install_misc
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_postinst
 	magisk_install_finish
-fi
-
-if [ "$NO_NANOMODSETUP" -eq 1 ]; then
-	rm $nanomodsetup
-fi
-
-if [ "$NO_NANOMODAPPS" -eq 1 ]; then
-	rm $nanomodapps
-fi
-
-if [ "$NO_NANOMODOVERLAY" -eq 1 ]; then
-	rm $nanomodoverlay
 fi
 
 nanomod_finalize
