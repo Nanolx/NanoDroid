@@ -536,18 +536,23 @@ fi
 
 detect_arch
 
+# This path should work in any cases
+TMPDIR=/dev/tmp
+
+install_init
+
 get_config .nanomod-setup
 if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODSETUP=0
 	nanomodsetup="${config}"
 	check_nanomodsetup
-else	create_nanomodsetup
+else	NO_NANOMODSETUP=1
+	nanomodsetup="${INSTALLER}/.nanomod-setup"
 fi
 
-# This path should work in any cases
-TMPDIR=/dev/tmp
+source "${nanomodsetup}"
 
-if grep -q "^nanomod.forcesystem=1" ${nanomodsetup}; then
+if [ "${nanomod_forcesystem}" -eq 1 ]; then
 	MODE=SYSTEM
 	MODE_TEXT=" > Mode   | System          | forced"
 elif [ ! -f /data/magisk.img  ]; then
@@ -557,8 +562,6 @@ else
 	MODE=MAGISK
 	MODE_TEXT=" > Mode   | Magisk          | detected"
 fi
-
-install_init
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_init
@@ -619,10 +622,6 @@ install_fdroid
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_finish
-fi
-
-if [ "$NO_NANOMODSETUP" -eq 1 ]; then
-	rm $nanomodsetup
 fi
 
 nanomod_finalize
