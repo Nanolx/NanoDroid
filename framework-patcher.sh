@@ -1,8 +1,6 @@
 #!/bin/bash
 
-#GITHUB_URL="https://github.com/Lanchon/haystack.git"
-# temporary fork for OS X support test
-GITHUB_URL="https://github.com/Nanolx/haystack.git"
+GITHUB_URL="https://github.com/Lanchon/haystack.git"
 PATCH_CORE="sigspoof-core"
 CWD="${PWD}"
 
