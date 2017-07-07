@@ -24,6 +24,12 @@ _zip () {
 	zip "${ZIP}" README.md
 	zip "${ZIP}" ChangeLog.md
 
+	cd "${CWD}/doc"
+	zip "${ZIP}" .nanomod-overlay
+	zip "${ZIP}" .nanomod-apps
+	zip "${ZIP}" .nanomod-setup
+	cd "${CWD}"
+
 	echo "Zipfile ${ZIP} created"
 }
 
@@ -99,6 +105,11 @@ _microg() {
 	zip "${ZIP}" README.md
 	zip "${ZIP}" ChangeLog.md
 
+	cd "${CWD}/doc"
+	zip "${ZIP}" .nanomod-overlay
+	zip "${ZIP}" .nanomod-setup
+	cd "${CWD}"
+
 	rm -rf "${PWD}"/microG/system
 	echo "Zipfile ${ZIP} created"
 }
@@ -121,6 +132,10 @@ _fdroid() {
 
 	zip "${ZIP}" README.md
 	zip "${ZIP}" ChangeLog.md
+
+	cd "${CWD}/doc"
+	zip "${ZIP}" .nanomod-setup
+	cd "${CWD}"
 
 	rm -rf "${PWD}"/fdroid/system
 	echo "Zipfile ${ZIP} created"
