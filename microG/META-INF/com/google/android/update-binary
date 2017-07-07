@@ -168,12 +168,12 @@ set_prop () {
 
 # check whether '.nanomod-setup' has all required entries
 check_nanomodsetup () {
-	[ -z ${ nanomod_reinstall} ] && set_prop nanomod_reinstall 0
-	[ -z ${ nanomod_play} ] && set_prop nanomod_play 1
-	[ -z ${ nanomod_overlay} ] && set_prop nanomod_overlay 1
-	[ -z ${ nanomod_mapsv1} ] && set_prop nanomod_mapsv1 1
-	[ -z ${ nanomod_gsync} ] && set_prop nanomod_gsync 0
-	[ -z ${ nanomod_forcesystem} ] && set_prop nanomod_forcesystem 0
+	[ -z ${nanomod_reinstall} ] && set_prop nanomod_reinstall 0
+	[ -z ${nanomod_play} ] && set_prop nanomod_play 1
+	[ -z ${nanomod_overlay} ] && set_prop nanomod_overlay 1
+	[ -z ${nanomod_mapsv1} ] && set_prop nanomod_mapsv1 1
+	[ -z ${nanomod_gsync} ] && set_prop nanomod_gsync 0
+	[ -z ${nanomod_forcesystem} ] && set_prop nanomod_forcesystem 0
 
 	source ${nanomodsetup}
 }

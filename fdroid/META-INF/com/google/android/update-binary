@@ -358,7 +358,7 @@ set_prop () {
 
 # check whether '.nanomod-setup' has all required entries
 check_nanomodsetup () {
-	[ -z ${ nanomod_forcesystem} ] && set_prop nanomod_forcesystem 0
+	[ -z ${nanomod_forcesystem} ] && set_prop nanomod_forcesystem 0
 
 	source ${nanomodsetup}
 }
