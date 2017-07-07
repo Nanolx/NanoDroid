@@ -247,8 +247,9 @@ List of known issues
 * SafetyNet check fails with `Google Play Services not available`
   * you did not setup microG (or did not reboot afterwards)
 * Play Store lacks fake signature spoofing permission
-  * on ROMs like **crDroid** or **OmniROM**, that have built-in signature spoofing, in some cases the Play Store is not granted that permission automatically, to fix this, issue the following command as **root** on your device
-    * `nanomod-overlay --permission`
+  * on ROMs like **crDroid** or **OmniROM**, that have built-in signature spoofing, in some cases the Play Store is not granted that permission automatically, to fix this either
+    * issue the command `nanomod-overlay --permission` as root
+    * got to Settings > Apps > Gear Icon > App Permissions > `Signature Spoofing` > Enable for Play Store
 * Google Sync adapters lacking permissions
   * issue the following command as **root** on your device
     * `nanomod-overlay --permission`
