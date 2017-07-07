@@ -10,6 +10,7 @@
   * Full, microG package
     * if using fall back `nanomod-overlay` configuration remove it after installation
       * the `nanomod-overlay` script will create it during runtime, if required
+    * remove all launchers from list of pseudo-debloated apps by default
 * Updates
   * Play Store (8.0.23.R)
   * Simple Gallery (2.12.1)

@@ -25,10 +25,6 @@ The following applications are pseudo-debloated by default
 * Snap, Snapdragon Camera (Camera)
 * Resurrection Remix Statistics
 * Sim Toolkit
-* Pixel Launcher, Nexus Launcher
-* Trebuchet
-
-**Pixel Launcher, Nexus Launcher and Trebuchet are - by default - only debloated by the full package**
 
 ## Alter the list of pseudo-debloated applications
 
