@@ -366,7 +366,7 @@ magisk_install_setup () {
 }
 
 magisk_install_preinst () {
-	if grep -q nanomod.reinstall=1 $nanomodsetup; then
+	if [ "${nanomod_reinstall}" -eq 1 ]; then
 		ui_print " << backup services.jar"
 		cp $MODPATH/system/framework/services.jar \
 			/tmp/services.jar
@@ -375,7 +375,7 @@ magisk_install_preinst () {
 
 magisk_install_postinst () {
 	# Setup Overrides
-	if grep -q nanomod.overlay=1 $nanomodsetup; then
+	if [ "${nanomod_overlay}" -eq 1 ]; then
 		$MODPATH/system/bin/nanomod-overlay --update
 		ui_print " << with /system applications override"
 	else	ui_print " << without /system applications override"
@@ -384,7 +384,7 @@ magisk_install_postinst () {
 		fi
 	fi
 
-	if grep -q nanomod.reinstall=1 $nanomodsetup; then
+	if [ "${nanomod_reinstall}" -eq 1 ]; then
 		ui_print " << restore services.jar"
 		mkdir $MODPATH/system/framework
 		cp /tmp/services.jar \
@@ -470,7 +470,7 @@ install_microg () {
 
 install_mapsv1 () {
 	# install mapsv1 if requested
-	if grep -q nanomod.mapsv1=1 $nanomodsetup; then
+	if [ "${nanomod_mapsv1}" -eq 1 ]; then
 		nanomod_install /system/etc/permissions/ /system/etc/
 		nanomod_install /system/framework/ /system/
 		ui_print " << with Maps API version 1"
@@ -480,7 +480,7 @@ install_mapsv1 () {
 
 install_gsync () {
 	# install GSync if requested
-	if grep -q nanomod.gsync=1 $nanomodsetup; then
+	if [ "${nanomod_gsync}" -eq 1 ]; then
 		nanomod_install /system/app/GoogleCalendarSync /system/app/
 		nanomod_libs app/GoogleCalendarSync
 		nanomod_install /system/app/GoogleContactSync /system/app/
@@ -494,11 +494,11 @@ install_gsync () {
 
 install_store () {
 	# install Yalp Store or Play Store whichever requested
-	if grep -q nanomod.play=1 $nanomodsetup; then
+	if [ "${nanomod_play}" -eq 1 ]; then
 		nanomod_install /system/priv-app/Phonesky /system/priv-app/
 		nanomod_libs priv-app/Phonesky
 		ui_print " << with Play Store"
-	elif grep -q nanomod.play=2 $nanomodsetup; then
+	elif [ "${nanomod_play}" -eq 2 ]; then
 		nanomod_install /system/priv-app/FakeStore /system/priv-app/
 		nanomod_libs priv-app/FakeStore
 		nanomod_install /system/priv-app/YalpStore /system/priv-app/
@@ -690,25 +690,31 @@ fi
 
 detect_arch
 
-get_config .nanomod-overlay
-if [ "$config_exists" -eq 1 ]; then
-	NO_NANOMODOVERLAY=0
-	nanomodoverlay="${config}"
-else	create_nanomodoverlay
-fi
+# This path should work in any cases
+TMPDIR=/dev/tmp
+
+install_init
 
 get_config .nanomod-setup
 if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODSETUP=0
 	nanomodsetup="${config}"
 	check_nanomodsetup
-else	create_nanomodsetup
+else	NO_NANOMODSETUP=1
+	nanomodsetup="${INSTALLER}/.nanomod-setup"
 fi
 
-# This path should work in any cases
-TMPDIR=/dev/tmp
+source "${nanomodsetup}"
 
-if grep -q "^nanomod.forcesystem=1" ${nanomodsetup}; then
+get_config .nanomod-overlay
+if [ "$config_exists" -eq 1 ]; then
+	NO_NANOMODOVERLAY=0
+	nanomodoverlay="${config}"
+else	NO_NANOMODOVERLAY=1
+	nanomodoverlay="${INSTALLER}/.nanomod-overlay"
+fi
+
+if [ "${nanomod_forcesystem}" -eq 1 ]; then
 	MODE=SYSTEM
 	MODE_TEXT=" > Mode   | System          | forced"
 elif [ ! -f /data/magisk.img  ]; then
@@ -791,14 +797,6 @@ install_misc
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_postinst
 	magisk_install_finish
-fi
-
-if [ "$NO_NANOMODSETUP" -eq 1 ]; then
-	rm $nanomodsetup
-fi
-
-if [ "$NO_NANOMODOVERLAY" -eq 1 ]; then
-	rm $nanomodoverlay
 fi
 
 nanomod_finalize
