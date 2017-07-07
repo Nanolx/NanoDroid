@@ -1,4 +1,4 @@
-Adaway
+INSTALL_APPS="Adaway
 Amaze
 AnysoftKeyboard
 FaceSlim
@@ -23,4 +23,4 @@ Substratum
 Termux
 Twidere
 XDALabs
-YahooWeatherProvider
+YahooWeatherProvider"

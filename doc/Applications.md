@@ -39,7 +39,7 @@ Full list of provided applications
 
 ## Alter provided Applications
 
-You can prevent applications from being magic-mounted or installed by **removing** them from the file
+You can control what applications to install using the file
 
 `.nanomod-apps`
 
@@ -51,9 +51,9 @@ on your device, in one of the following directories
 * mount point of your external SD-Card (if any)
 * directory containing the zip file
 
-See the default settings [![GitHub Link](github.png)](.nanomod-apps), which are used when no `.nanomod-apps` configuration file was found. The syntax is pretty simple:
+All applications listed in that file will be installed. See the default settings [![GitHub Link](github.png)](.nanomod-apps), which are used when no `.nanomod-apps` configuration file was found. The syntax is pretty simple:
 
-* one item per line
+* everything inside `INSTALL_APPS="..."` variable
 * name must be an exact match
 
 applications managed by other setup variables (F-Droid, microG, PlayStore) are not effected by this file.

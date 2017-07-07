@@ -17,34 +17,34 @@ on your device, in one of the following directories
 populate it with the following content for the **full** package
 
 ```
-nanomod.microg=1
-nanomod.fdroid=1
-nanomod.apps=1
-nanomod.play=1
-nanomod.reinstall=0
-nanomod.overlay=1
-nanomod.zelda=1
-nanomod.mapsv1=1
-nanomod.init=1
-nanomod.gsync=0
-nanomod.forcesystem=0
+nanomod_microg=1
+nanomod_fdroid=1
+nanomod_apps=1
+nanomod_play=1
+nanomod_reinstall=0
+nanomod_overlay=1
+nanomod_zelda=1
+nanomod_mapsv1=1
+nanomod_init=1
+nanomod_gsync=0
+nanomod_forcesystem=0
 ```
 
 the **microG** package supports the following options
 
 ```
-nanomod.play=1
-nanomod.reinstall=0
-nanomod.overlay=0
-nanomod.mapsv1=1
-nanomod.gsync=0
-nanomod.forcesystem=0
+nanomod_play=1
+nanomod_reinstall=0
+nanomod_overlay=0
+nanomod_mapsv1=1
+nanomod_gsync=0
+nanomod_forcesystem=0
 ```
 
 the **F-Droid** package supports the following options
 
 ```
-nanomod.forcesystem=0
+nanomod_forcesystem=0
 ```
 
 where `1` means `on` and `0` means `off`. See the default settings [![GitHub Link](github.png)](.nanomod-setup).
@@ -53,43 +53,43 @@ If no `.nanomod-setup` is found, the default settings will be used (equal to the
 
 ## Detailed Description
 
-`nanomod.fdroid=[0|1]`
+`nanomod_fdroid=[0|1]`
 
 whether to populate **F-Droid**
 
-`nanomod.apps=[0|1]`
+`nanomod_apps=[0|1]`
 
 whether to populate included applications [![GitHub Link](doc/github.png)](doc/Applications.md)
 
-`nanomod.microg=[0|1]`
+`nanomod_microg=[0|1]`
 
 whether to populate **microG**
 
-`nanomod.mapsv1=[0|1]`
+`nanomod_mapsv1=[0|1]`
 
 whether to provide **microG** Maps API v1
 
-`nanomod.gsync=[0|1]`
+`nanomod_gsync=[0|1]`
 
 whether to provide Google Sync Adapters
 
-`nanomod.play=[0|1|2]`
+`nanomod_play=[0|1|2]`
 
 what app store to use, `0` will not populate any app store, `1` will populate **Play Store**, `2` will populate **Yalp Store**
 
-`nanomod.overlay=[0|1]`
+`nanomod_overlay=[0|1]`
 
 whether to populate the overlay to pseudo-debloat `/system` applications (Magisk-only)
 
-`nanomod.zelda=[0|1]`
+`nanomod_zelda=[0|1]`
 
 whether to populate The Legend of Zelda ringtones and sounds
 
-`nanomod.init=[0|1]`
+`nanomod_init=[0|1]`
 
 whether to install init scripts
 
-`nanomod.reinstall=[0|1]`
+`nanomod_reinstall=[0|1]`
 
 whether to backup an **already patched** `services.jar` and re-use it.
 
