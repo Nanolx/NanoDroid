@@ -1,9 +1,12 @@
 # ChangeLog
 
-## 10.1 in-dev
+## 11.0 in-dev
 * General Changes
   * Full, microG, F-Droid package
     * if using fallback configuration during installation print the information accordingly
+    * change syntax for `.nanomod-apps` file
+    * change syntax for `.nanomod-setup` file
+    * simplify handling fallback configuration
   * Full, microG package
     * if using fall back `nanomod-overlay` configuration remove it after installation
       * the `nanomod-overlay` script will create it during runtime, if required
