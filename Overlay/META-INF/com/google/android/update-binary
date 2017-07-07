@@ -163,31 +163,25 @@ get_config () {
 	done
 }
 
-check_prop () {
-	if ! grep -q "^${1}" ${nanomodsetup}; then
-		return 1
-	else
-		return 0
-	fi
-}
-
 set_prop () {
 	echo "${1}=${2}" >> ${nanomodsetup}
 }
 
 # check whether '.nanomod-setup' has all required entries
 check_nanomodsetup () {
-	check_prop nanomod.fdroid || set_prop nanomod.fdroid 1
-	check_prop nanomod.reinstall || set_prop nanomod.reinstall 0
-	check_prop nanomod.microg || set_prop nanomod.microg 1
-	check_prop nanomod.apps || set_prop nanomod.apps 1
-	check_prop nanomod.play || set_prop nanomod.play 1
-	check_prop nanomod.overlay || set_prop nanomod.overlay 1
-	check_prop nanomod.zelda || set_prop nanomod.zelda 1
-	check_prop nanomod.mapsv1 || set_prop nanomod.mapsv1 1
-	check_prop nanomod.init || set_prop nanomod.init 1
-	check_prop nanomod.gsync || set_prop nanomod.gsync 0
-	check_prop nanomod.forcesystem || set_prop nanomod.forcesystem 0
+	[ -z ${nanomod_fdroid} ] && set_prop nanomod_fdroid 1
+	[ -z ${ nanomod_reinstall} ] && set_prop nanomod_reinstall 0
+	[ -z ${ nanomod_microg} ] && set_prop nanomod_microg 1
+	[ -z ${ nanomod_apps} ] && set_prop nanomod_apps 1
+	[ -z ${ nanomod_play} ] && set_prop nanomod_play 1
+	[ -z ${ nanomod_overlay} ] && set_prop nanomod_overlay 1
+	[ -z ${ nanomod_zelda} ] && set_prop nanomod_zelda 1
+	[ -z ${ nanomod_mapsv1} ] && set_prop nanomod_mapsv1 1
+	[ -z ${ nanomod_init} ] && set_prop nanomod_init 1
+	[ -z ${ nanomod_gsync} ] && set_prop nanomod_gsync 0
+	[ -z ${ nanomod_forcesystem} ] && set_prop nanomod_forcesystem 0
+
+	source ${nanomodsetup}
 }
 
 ##########################################################################################

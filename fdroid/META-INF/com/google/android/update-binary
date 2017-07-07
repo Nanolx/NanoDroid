@@ -352,21 +352,15 @@ get_config () {
 	done
 }
 
-check_prop () {
-	if ! grep -q "^${1}" ${nanomodsetup}; then
-		return 1
-	else
-		return 0
-	fi
-}
-
 set_prop () {
 	echo "${1}=${2}" >> ${nanomodsetup}
 }
 
 # check whether '.nanomod-setup' has all required entries
 check_nanomodsetup () {
-	check_prop nanomod.forcesystem || set_prop nanomod.forcesystem 0
+	[ -z ${ nanomod_forcesystem} ] && set_prop nanomod_forcesystem 0
+
+	source ${nanomodsetup}
 }
 
 ##########################################################################################
