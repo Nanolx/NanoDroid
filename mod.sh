@@ -107,7 +107,9 @@ _microg() {
 
 	cd "${CWD}/doc"
 	zip "${ZIP}" .nanomod-overlay
+	sed -e 's/nanomod_overlay=1/nanomod_overlay=0/' -i .nanomod-setup
 	zip "${ZIP}" .nanomod-setup
+	sed -e 's/nanomod_overlay=0/nanomod_overlay=1/' -i .nanomod-setup
 	cd "${CWD}"
 
 	rm -rf "${PWD}"/microG/system
