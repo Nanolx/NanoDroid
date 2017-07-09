@@ -12,7 +12,7 @@
       * the `nanomod-overlay` script will create it during runtime, if required
     * remove all launchers from list of pseudo-debloated apps by default
 * Updates
-  * Play Store (8.0.23.R)
+  * Play Store (8.0.26.R)
   * Simple Gallery (2.12.1)
   * Open Camera (1.38.2)
   * New Pipe (0.9.9)
