@@ -416,6 +416,8 @@ install_init () {
 
 	INSTALLER=$TMPDIR/$MODID
 	mkdir -p ${INSTALLER}
+	cd ${INSTALLER}
+	unzip -o "$ZIP" ".nanomod*"
 }
 
 install_microg () {
@@ -808,7 +810,6 @@ ui_print " > prepare installation"
 cd ${INSTALLER} || exit 1
 unzip -o "$ZIP" "system/*"
 unzip -o "$ZIP" "init.d/*"
-unzip -o "$ZIP" ".nanomod*"
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_dirs

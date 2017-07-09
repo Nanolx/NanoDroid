@@ -400,6 +400,8 @@ install_init () {
 
 	INSTALLER=$TMPDIR/$MODID
 	mkdir -p ${INSTALLER}
+	cd ${INSTALLER}
+	unzip -o "$ZIP" ".nanomod*"
 }
 
 install_microg () {
