@@ -5,7 +5,9 @@
   * Full, microG, F-Droid package
     * if using fallback configuration during installation print the information accordingly
     * change syntax for `.nanomod-apps` file
+      * existing configuration files will be migrated to new format
     * change syntax for `.nanomod-setup` file
+      * existing configuration files will be migrated to new format
     * simplify handling fallback configuration
   * Full, microG package
     * if using fall back `nanomod-overlay` configuration remove it after installation
