@@ -13,7 +13,11 @@ get_config .nanomod-overlay
 
 [[ "${MODPATH}" != "/magisk/"* ]] && NO_MAGISK=1
 
-[[ -f ${config} ]] && export config
+if [[ -f ${config} ]]; then
+	export config
+else	nanomod-overlay.genconfig
+	export config="/data/.nanomod-overlay"
+fi
 
 if [[ ${NO_MAGISK} -eq 0 ]]; then
 
@@ -43,7 +47,7 @@ case ${1} in
 	;;
 
 	-g | --genconfig )
-		nanomod-overlay.genoverrides
+		nanomod-overlay.genconfig
 	;;
 
 	-p | --permission )
