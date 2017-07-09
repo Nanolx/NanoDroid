@@ -18,6 +18,7 @@
   * New Pipe (0.9.9)
   * GNU Nano (2.8.5)
   * OpenLauncher (0.5.3)
+  * Kernel Adiutor (0.9.71.1)
 
 ## 10.0.20170701
 * Bug Fixes
