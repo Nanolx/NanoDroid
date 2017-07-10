@@ -95,6 +95,8 @@ _microg() {
 	cp "${PWD}"/Overlay/system/bin/aapt* \
 		"${PWD}"/microG/system/bin
 
+	cp -r "${PWD}"/Overlay/swipe/ "${PWD}"/microG
+
 	ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
 	rm -f "${ZIP}"
 
