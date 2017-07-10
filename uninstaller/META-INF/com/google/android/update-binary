@@ -136,9 +136,9 @@ if [ -f /system/.nanomod-list ]; then
 
 	# services.jar needs special treament
 	if grep -q /system/framework/services.jar /system/.nanomod-list; then
-		if [ -f /data/services.jar ]; then
+		if [ -f /sdcard/services.jar ]; then
 			ui_print " << restoring: unpatched services.jar"
-			mv /data/services.jar /system/framework/services.jar \
+			mv /sdcard/services.jar /system/framework/services.jar \
 				|| error " !! failed to restore services.jar"
 		else	ui_print " << can't restore unpatched services.jar"
 		fi
