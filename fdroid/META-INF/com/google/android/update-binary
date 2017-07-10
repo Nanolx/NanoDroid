@@ -324,7 +324,9 @@ install_init () {
 
 	INSTALLER=$TMPDIR/$MODID
 	mkdir -p ${INSTALLER}
-	cd ${INSTALLER}
+	cd ${INSTALLER} || error " !! failed to prepare environment!"
+
+	unzip -o "$ZIP" "system/*"
 	unzip -o "$ZIP" ".nanomod*"
 }
 
@@ -598,18 +600,6 @@ ui_print " "
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_setup
-fi
-
-ui_print " > prepare installation"
-cd ${INSTALLER}
-unzip -o "$ZIP" "system/*"
-
-if [ "${MODE}" = "MAGISK" ]; then
-	ui_print " > Installing NanoMod (magisk module)"
-else	ui_print " > Installing NanoMod (system mode)"
-fi
-
-if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_dirs
 fi
 
