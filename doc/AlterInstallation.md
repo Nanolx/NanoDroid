@@ -28,6 +28,7 @@ nanomod_mapsv1=1
 nanomod_init=1
 nanomod_gsync=0
 nanomod_forcesystem=0
+nanomod_swipe=0
 ```
 
 the **microG** package supports the following options
@@ -39,6 +40,7 @@ nanomod_overlay=0
 nanomod_mapsv1=1
 nanomod_gsync=0
 nanomod_forcesystem=0
+nanomod_swipe=0
 ```
 
 the **F-Droid** package supports the following options
@@ -73,9 +75,16 @@ whether to provide **microG** Maps API v1
 
 whether to provide Google Sync Adapters
 
+`nanomod_swipe=[0|1]`
+
+whether to provide Google Swipe Libraries
+
 `nanomod_play=[0|1|2]`
 
-what app store to use, `0` will not populate any app store, `1` will populate **Play Store**, `2` will populate **Yalp Store**
+what app store to use:
+* `0` will not provide any app store
+* `1` will provide **Play Store**
+* `2` will provide **Yalp Store** and **Fake Store**
 
 `nanomod_overlay=[0|1]`
 
