@@ -149,7 +149,7 @@ error () {
 ##########################################################################################
 
 # check for configuration files
-config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
+config_locations="/sdcard /external_sd /persist $(dirname ${ZIP})) /data"
 
 get_config () {
 	config=""

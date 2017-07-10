@@ -6,7 +6,7 @@ export MODPATH=@MODPATH@
 export PATH="${PATH}:${MODPATH}/system/bin"
 
 # check for configuration files
-config_locations="/sdcard /external_sd /persist /data @ZIPDIR@"
+config_locations="/sdcard /external_sd /persist @ZIPDIR@ /data"
 
 source "${MODPATH}/system/bin/nanomod-overlay.functions"
 get_config .nanomod-overlay
