@@ -339,6 +339,7 @@ install_init () {
 }
 
 install_fdroid () {
+	ui_print " << installing F-Droid"
 	nanomod_install /system/app/FDroid /system/app/
 	nanomod_libs app/FDroid
 	nanomod_install /system/priv-app/FDroidPrivileged /system/priv-app/

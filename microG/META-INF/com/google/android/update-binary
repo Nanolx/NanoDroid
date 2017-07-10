@@ -421,6 +421,7 @@ install_init () {
 
 install_microg () {
 	# install microG
+	ui_print " << installing microG"
 	for app in nlpBackendIchnaea nlpBackendNomiantim; do
 		nanomod_install /system/app/${app} /system/app/
 		nanomod_libs app/${app}
