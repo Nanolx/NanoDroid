@@ -9,3 +9,4 @@ nanomod_mapsv1=1
 nanomod_init=1
 nanomod_gsync=0
 nanomod_forcesystem=0
+nanomod_swipe=0
