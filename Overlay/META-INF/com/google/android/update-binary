@@ -553,23 +553,18 @@ install_misc () {
 	if [ "${nanomod_swipe}" -eq 1 ]; then
 		ui_print " << with swipe libraries"
 		case ${ARCH} in
-			arm )
-				mkdir -p ${MODPATH}/system/lib
-				nanomod_install /swipe/arm/* /system/lib/
+			arm | x86 )
+				SWIPE_LIBDIR=lib
 			;;
-			arm64 )
-				mkdir -p ${MODPATH}/system/lib64
-				nanomod_install /swipe/arm64/* /system/lib64/
-			;;
-			x86 )
-				mkdir -p ${MODPATH}/system/lib
-				nanomod_install /swipe/x86/* /system/lib/
-			;;
-			x86_64 )
-				mkdir -p ${MODPATH}/system/lib64
-				nanomod_install /swipe/x86_64/* /system/lib64/
+			arm64 | x86_64 )
+				SWIPE_LIBDIR=lib64
 			;;
 		esac
+		mkdir -p ${MODPATH}/system/${SWIPE_LIBDIR}
+		for lib in latinimegoogle keyboarddecoder; do
+			nanomod_install /swipe/${ARCH}/libjni_${lib}.so \
+				${MODPATH}/system/${SWIPE_LIBDIR}/
+		done
 	else	ui_print " << without swipe libraries"
 	fi
 }
