@@ -400,6 +400,14 @@ install_init () {
 
 	source config.sh
 
+	ui_print " "
+	ui_print "******************************"
+	ui_print "     NanoMod 11.0.20171231    "
+	ui_print "      created by @Nanolx      "
+	ui_print "        microG package        "
+	ui_print "******************************"
+	ui_print " "
+
 	INSTALLER=$TMPDIR/$MODID
 	mkdir -p ${INSTALLER}
 	cd ${INSTALLER} || error " !! failed to prepare environment!"
@@ -710,20 +718,6 @@ fi
 # Main
 ##########################################################################################
 
-# Please leave this message in your flashable zip for credits :)
-ui_print " "
-ui_print "******************************"
-ui_print "     NanoMod 11.0.20171231    "
-ui_print "      created by @Nanolx      "
-ui_print "        microG package        "
-
-if [ "${MODE}" = "MAGISK" ]; then
-	ui_print "Powered by Magisk (@topjohnwu)"
-fi
-
-ui_print "******************************"
-ui_print " "
-
 if [ "$NO_NANOMODSETUP" -eq 1 ]; then
 	ui_print " > Config | nanomod-setup   | fallback"
 else	ui_print " > Config | nanomod-setup   | $(dirname ${nanomodsetup})"
@@ -735,6 +729,10 @@ else	ui_print " > Config | nanomod-overlay | $(dirname ${nanomodoverlay})"
 fi
 
 ui_print "${MODE_TEXT}"
+
+if [ "${MODE}" = "MAGISK" ]; then
+	ui_print " > Powered by Magisk (@topjohnwu)"
+fi
 
 ui_print " "
 
