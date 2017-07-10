@@ -16,8 +16,10 @@
     * several fixes to `nanomod-overlay` script
     * add optional `Swipe` libraries, controlled by `nanomod_swipe=[0|1]`
     * make `/data` the very last directory to look for configuration files
-  * Uninstaller:
+  * uninstaller:
     * fixed restoring unpatched `services.jar`
+  * on-device framework-patcher:
+    * fixed that it accidently backed up the patched `services.jar` instead of vanilla
 * Updates
   * Play Store (8.0.26.R)
   * Simple Gallery (2.12.1)

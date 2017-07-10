@@ -182,20 +182,6 @@ detect_dalvik () {
 	esac
 }
 
-detect_magisk () {
-	if ! (is_mounted /data); then
-		mount -orw /data || error " !! failed to mount /data"
-	else	mount -orw,remount /data || error " !! failed to remount /data read-write"
-	fi
-
-	if [ -f /data/magisk.img ]; then
-		grow_magisk_img || \
-			error " !! failed to grow magisk.img"
-		mount_image /data/magisk.img /magisk || \
-			error " !! failed to mount /magisk"
-	fi
-}
-
 mount_image() {
 	if [ ! -d "$2" ]; then
 		mount -o rw,remount rootfs /
@@ -286,7 +272,7 @@ install_services () {
 		install_path="/magisk/NanoModmicroG/system/framework/"
 	else
 		ui_print " << backing up services.jar to: /sdcard"
-		cp /tmp/services.jar /sdcard ||
+		cp /system/framework/services.jar /sdcard ||
 			error " !! failed to backup services.jar"
 
 		ui_print " << installing services.jar to: ROM"
@@ -322,8 +308,6 @@ ui_print "Powered by DexPatcher (@lanchon)"
 ui_print "********************************"
 ui_print " "
 
-mount /cache
-
 if ! (is_mounted /system); then
 	mount -orw /system || error " !! failed to mount /system"
 else	mount -orw,remount /system || error " !! failed to remount /system read-write"
@@ -344,7 +328,18 @@ setup_patcher
 detect_arch
 detect_dalvik
 
-detect_magisk
+if ! (is_mounted /data); then
+	mount -orw /data || error " !! failed to mount /data"
+else	mount -orw,remount /data || error " !! failed to remount /data read-write"
+fi
+
+if [ -f /data/magisk.img ]; then
+	grow_magisk_img || \
+		error " !! failed to grow magisk.img"
+	mount_image /data/magisk.img /magisk || \
+		error " !! failed to mount /magisk"
+fi
+
 patch_services
 install_services
 
