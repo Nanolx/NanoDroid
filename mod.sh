@@ -115,6 +115,7 @@ _microg() {
 	cd "${CWD}"
 
 	rm -rf "${PWD}"/microG/system
+	rm -rf "${PWD}"/microG/swipe
 	echo "Zipfile ${ZIP} created"
 }
 
