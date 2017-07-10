@@ -180,6 +180,7 @@ check_nanomodsetup () {
 	[ -z ${nanomod_mapsv1} ] && set_prop nanomod_mapsv1 1
 	[ -z ${nanomod_gsync} ] && set_prop nanomod_gsync 0
 	[ -z ${nanomod_forcesystem} ] && set_prop nanomod_forcesystem 0
+	[ -z ${nanomod_swipe} ] && set_prop nanomod_swipe 0
 
 	source ${nanomodsetup}
 }
@@ -401,7 +402,12 @@ install_init () {
 
 	INSTALLER=$TMPDIR/$MODID
 	mkdir -p ${INSTALLER}
-	cd ${INSTALLER}
+	cd ${INSTALLER} || error " !! failed to prepare environment!"
+
+	ui_print " > prepare installation"
+	unzip -o "$ZIP" "system/*"
+	unzip -o "$ZIP" "init.d/*"
+	unzip -o "$ZIP" "swipe/*"
 	unzip -o "$ZIP" ".nanomod*"
 }
 
@@ -475,6 +481,29 @@ install_misc () {
 	for binary in aapt bash bashbug; do
 		nanomod_install /system/bin/${binary}.${BIN_ARCH} /system/bin/${binary} bin
 	done
+
+	if [ "${nanomod_swipe}" -eq 1 ]; then
+		ui_print " << with swipe libraries"
+		case ${ARCH} in
+			arm )
+				mkdir -p ${MODPATH}/system/lib
+				nanomod_install /swipe/arm/* /system/lib/
+			;;
+			arm64 )
+				mkdir -p ${MODPATH}/system/lib64
+				nanomod_install /swipe/arm64/* /system/lib64/
+			;;
+			x86 )
+				mkdir -p ${MODPATH}/system/lib
+				nanomod_install /swipe/x86/* /system/lib/
+			;;
+			x86_64 )
+				mkdir -p ${MODPATH}/system/lib64
+				nanomod_install /swipe/x86_64/* /system/lib64/
+			;;
+		esac
+	else	ui_print " << without swipe libraries"
+	fi
 }
 
 ##########################################################################################
@@ -720,18 +749,6 @@ ui_print " "
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_setup
 	magisk_install_preinst
-fi
-
-ui_print " > prepare installation"
-cd ${INSTALLER}
-unzip -o "$ZIP" "system/*"
-
-if [ "${MODE}" = "MAGISK" ]; then
-	ui_print " > Installing NanoMod (magisk module)"
-else	ui_print " > Installing NanoMod (system mode)"
-fi
-
-if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_dirs
 fi
 

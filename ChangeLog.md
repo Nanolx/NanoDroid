@@ -14,6 +14,7 @@
       * the `nanomod-overlay` script will create it during runtime, if required
     * remove all launchers from list of pseudo-debloated apps by default
     * several fixes to `nanomod-overlay` script
+    * add optional `Swipe` libraries, controlled by `nanomod_swipe=[0|1]`
 * Updates
   * Play Store (8.0.26.R)
   * Simple Gallery (2.12.1)
