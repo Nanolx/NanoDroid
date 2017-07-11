@@ -371,11 +371,13 @@ set_prop () {
 
 # check whether '.nanomod-setup' has all required entries
 check_nanomodsetup () {
-	if grep -q nanomod. "${nanomodsetup}"; then
+	if grep -q "nanomod\." "${nanomodsetup}"; then
 		ui_print " ++ migrating ${nanomodsetup} to new format"
-		sed -e 's/nanomod./nanomod_/g' -i "${nanmodsetup}"
+		sed -e 's/nanomod\./nanomod_/g' -i "${nanomodsetup}"
 		source "${nanomodsetup}"
 	fi
+
+	source ${nanomodsetup}
 
 	[ -z ${nanomod_forcesystem} ] && set_prop nanomod_forcesystem 0
 
@@ -551,7 +553,6 @@ get_config .nanomod-setup
 if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODSETUP=0
 	nanomodsetup="${config}"
-	source "${nanomodsetup}"
 	check_nanomodsetup
 else	NO_NANOMODSETUP=1
 	nanomodsetup="${INSTALLER}/.nanomod-setup"
