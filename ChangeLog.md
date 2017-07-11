@@ -16,6 +16,7 @@
     * several fixes to `nanomod-overlay` script
     * add optional `Swipe` libraries, controlled by `nanomod_swipe=[0|1]`
     * make `/data` the very last directory to look for configuration files
+    * when patched `services.jar` exists before installing/updating, remove `/system/.nanomod-patcher`
   * uninstaller:
     * fixed restoring unpatched `services.jar`
   * on-device framework-patcher:
