@@ -273,6 +273,10 @@ magisk_install_init () {
 }
 
 magisk_install_dirs () {
+	if [ -f $MODPATH/system/framework/services.jar ]; then
+		rm /system/.nanomod-patcher
+	fi
+
 	rm -rf $MODPATH 2>/dev/null
 	mkdir -p $MODPATH
 	mkdir $MODPATH/system
