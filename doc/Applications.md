@@ -12,8 +12,6 @@ Full list of provided applications
 * AnySoftKeyboard [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=anysoftkeyboard&fdid=com.menny.android.anysoftkeyboard)
 * (Simple) Calendar [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=calendar&fdid=com.simplemobiletools.calendar)
 * Face Slim (Facebook client) [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=face+slim&fdid=org.indywidualni.fblite)
-* F-Droid (FOSS app store) [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid)
-  * F-Droid Privileged Extension [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged)
 * (Simple) Gallery [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=gallery&fdid=com.simplemobiletools.gallery)
 * Hacker's Keyboard [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=hacker&fdid=org.pocketworkstation.pckeyboard)
 * K-9 Mail [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=k9&fdid=com.fsck.k9)
@@ -45,11 +43,11 @@ You can control what applications to install using the file
 
 on your device, in one of the following directories
 
-* `/data` (default)
 * `/sdcard` (internal storage)
 * `/persist`
-* mount point of your external SD-Card (if any)
+* `/external_sd` (TWRP path to SD Card (if any))
 * directory containing the zip file
+* `/data` (fallabck)
 
 All applications listed in that file will be installed. See the default settings [![GitHub Link](github.png)](.nanomod-apps), which are used when no `.nanomod-apps` configuration file was found. The syntax is pretty simple:
 

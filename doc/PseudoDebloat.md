@@ -36,11 +36,11 @@ You can add or remove applications from the list by modifying the file
 
 on your device, in one of the following directories
 
-* `/data` (default)
 * `/sdcard` (internal storage)
 * `/persist`
-* mount point of your external SD-Card (if any)
+* `/external_sd` (TWRP path to SD Card (if any))
 * directory containing the zip file
+* `/data` (fallabck)
 
 See the default settings [![GitHub Link](github.png)](.nanomod-overlay). The syntax is pretty simple:
 
@@ -53,7 +53,7 @@ After you've made your changes, issue the following command on your device, eith
 
 `nanomod-overlay --update`
 
-This needs to be done in normal environment. If you're in **TWRP** you'll have to manually mount `/magisk`.
+This needs to be done in normal environment. If you're in **TWRP** you'll have to manually mount `/magisk` (you may use the `mount-magisk` script from the git repo for this purpose).
 
 For more options, check
 

@@ -140,6 +140,8 @@ NanoMod includes microG as follows
 * support for Maps API version 1
 * support for Google Calendar and Contacts Sync
   * disabled by default
+* optional Swipe libraries
+  * disabled by default
 * choose between official **Play Store** or unofficial **Yalp Store** [![F-Droid Link](doc/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
     * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
@@ -148,7 +150,7 @@ NanoMod includes microG as follows
 
 F-Droid [![F-Droid Link](doc/fdroid.png)](http://www.fdroid.org) is an app store for Open Source applications.
 
-NanoMod includes both F-Droid and it's Privileged Extension, so you don't need to enable `Unknown Sources`.
+NanoMod includes both F-Droid and it's Privileged Extension [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged), so you don't need to enable `Unknown Sources`.
 
 Additionally NanoMod includes a variety of applications, check full details [![GitHub Link](doc/github.png)](doc/Applications.md)
 
@@ -249,10 +251,11 @@ List of known issues
 * Play Store lacks fake signature spoofing permission
   * on ROMs like **crDroid** or **OmniROM**, that have built-in signature spoofing, in some cases the Play Store is not granted that permission automatically, to fix this either
     * issue the command `nanomod-overlay --permission` as root
-    * got to Settings > Apps > Gear Icon > App Permissions > `Signature Spoofing` > Enable for Play Store
+    * go to Settings > Apps > Gear Icon > App Permissions > `Signature Spoofing` > Enable for Play Store
 * Google Sync adapters lacking permissions
-  * issue the following command as **root** on your device
-    * `nanomod-overlay --permission`
+  * to fix this either
+    * issue the command `nanomod-overlay --permission` as root
+    * go to Settings > Apps > Google Contacts/Calendar Sync > Permissions > grant permissions
 * Battery Drain
   * microG fails to register applications  to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
     * do a clean flash of your ROM (, Magisk) and NanoMod and install your apps after microG setup

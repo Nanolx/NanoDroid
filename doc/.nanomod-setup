@@ -1,6 +1,5 @@
-nanomod_fdroid=1
-nanomod_reinstall=0
 nanomod_microg=1
+nanomod_fdroid=1
 nanomod_apps=1
 nanomod_play=1
 nanomod_overlay=1
@@ -8,5 +7,6 @@ nanomod_zelda=1
 nanomod_mapsv1=1
 nanomod_init=1
 nanomod_gsync=0
-nanomod_forcesystem=0
 nanomod_swipe=0
+nanomod_forcesystem=0
+nanomod_reinstall=0
