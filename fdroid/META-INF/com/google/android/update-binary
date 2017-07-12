@@ -505,10 +505,6 @@ ui_print " "
 
 if [ "${MODE}" = "MAGISK" ];then
 	magisk_install_cleanup
-fi
-
-if [ "${MODE}" = "MAGISK" ];then
-	magisk_install_cleanup
 elif ! ${BOOTMODE}; then
 	umount /system 2>/dev/null
 fi
