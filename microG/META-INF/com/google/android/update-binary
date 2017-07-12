@@ -201,6 +201,8 @@ magisk_install_setup () {
 	ui_print " "
 	ui_print " > setup Magisk environment"
 
+	MAGISKBIN=/data/magisk
+
 	[ -d $MAGISKBIN -a -f $MAGISKBIN/magisk -a -f $MAGISKBIN/util_functions.sh ] || \
 		error " !! Magisk version 13.1 or newer is required"
 
@@ -208,7 +210,6 @@ magisk_install_setup () {
 	[ ! -z $SCRIPT_VERSION -a $SCRIPT_VERSION -ge 1310 ] || \
 		error " !! Magisk version 13.1 or newer is required"
 
-	MAGISKBIN=/data/magisk
 	MOUNTPATH=/magisk
 	IMG=/data/magisk.img
 
@@ -617,11 +618,6 @@ else	ui_print " > Config | nanomod-overlay | $(dirname ${nanomodoverlay})"
 fi
 
 ui_print "${MODE_TEXT}"
-
-if [ "${MODE}" = "MAGISK" ]; then
-	ui_print " > Powered by Magisk (@topjohnwu)"
-fi
-
 ui_print " "
 
 # You can get the Android API version from $API, the CPU architecture from $ARCH
