@@ -218,29 +218,6 @@ shrink_magisk_img () {
 	fi
 }
 
-magisk_install_init () {
-	if $BOOTMODE && ! is_mounted /magisk; then
-		error " !! Magisk is not activated!... abort"
-	fi
-
-	# Fix SuperSU.....
-	$BOOTMODE && $BINDIR/sepolicy-inject --live "allow fsck * * *"
-
-	MOUNTPATH=/magisk
-	IMGNAME=magisk.img
-
-	if $BOOTMODE; then
-		MOUNTPATH=/dev/magisk_merge
-		IMGNAME=magisk_merge.img
-	fi
-
-	MODPATH=$MOUNTPATH/$MODID
-
-	mkdir -p $INSTALLER
-	cd $INSTALLER
-	unzip -o "$ZIP" "common/*" module.prop
-}
-
 magisk_install_dirs () {
 	rm -rf $MODPATH 2>/dev/null
 	mkdir -p $MODPATH
@@ -292,6 +269,8 @@ magisk_install_setup () {
 	if ! is_mounted $MOUNTPATH; then
 		error " !! $IMG mount failed... abort"
 	fi
+
+	MODPATH=$MOUNTPATH/$MODID
 }
 
 magisk_install_preinst () {
@@ -356,7 +335,6 @@ magisk_install_cleanup () {
 
 install_init () {
 	mkdir -p $TMPDIR 2>/dev/null
-	cd $TMPDIR
 
 	ui_print " "
 	ui_print "******************************"
@@ -366,8 +344,7 @@ install_init () {
 	ui_print " "
 
 	INSTALLER=$TMPDIR/$MODID
-	mkdir -p ${INSTALLER}
-	cd ${INSTALLER} || error " !! failed to prepare environment!"
+	mkdir -p ${INSTALLER} || error " !! failed to prepare environment!"
 
 	ui_print " > prepare installation"
 	unzip -o "$ZIP" -d "${INSTALLER}"
@@ -720,16 +697,6 @@ else
 	MODE_TEXT=" > Mode   | Magisk          | detected"
 fi
 
-if [ "${MODE}" = "MAGISK" ]; then
-	magisk_install_init
-	INIT_BASE="/init.d"
-else
-	mount -orw,remount /system 2>/dev/null || \
-		error " !! failed to re-mount /system read-write"
-	INIT_BASE="/system/etc/init.d"
-	unset MODPATH
-fi
-
 ##########################################################################################
 # Main
 ##########################################################################################
@@ -764,6 +731,15 @@ if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_setup
 	magisk_install_preinst
 	magisk_install_dirs
+fi
+
+if [ "${MODE}" = "MAGISK" ]; then
+	INIT_BASE="/init.d"
+else
+	mount -orw,remount /system 2>/dev/null || \
+		error " !! failed to re-mount /system read-write"
+	INIT_BASE="/system/etc/init.d"
+	unset MODPATH
 fi
 
 install_microg

@@ -43,29 +43,6 @@ is_mounted() {
 	return $?
 }
 
-mount_image() {
-	if [ ! -d "$2" ]; then
-		mount -o rw,remount rootfs /
-		mkdir -p "$2" 2>/dev/null
-		$BOOTMODE && mount -o ro,remount rootfs /
-		[ ! -d "$2" ] && return 1
-	fi
-
-	if ! is_mounted "$2"; then
-		LOOPDEVICE=
-		for LOOP in 0 1 2 3 4 5 6 7; do
-			if ! is_mounted "$2"; then
-				LOOPDEVICE=/dev/block/loop$LOOP
-				[ -e $LOOPDEVICE ] || mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
-				losetup $LOOPDEVICE "$1" && mount -t ext4 -o loop $LOOPDEVICE "$2"
-				if is_mounted "$2"; then
-					break;
-				fi
-			fi
-		done
-	fi
-}
-
 set_perm() {
 	chown $2:$3 $1 || exit 1
 	chmod $4 $1 || exit 1
@@ -95,31 +72,6 @@ set_perm_data () {
 
 set_perm_bin () {
 	set_perm $1 root root 0755
-}
-
-mktouch() {
-	mkdir -p ${1%/*}
-	if [ -z "$2" ]; then
-		touch $1
-	else
-		echo $2 > $1
-	fi
-	chmod 644 $1
-}
-
-request_size_check() {
-	reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
-	reqSizeM=$((reqSizeM / 1048576 + 1))
-}
-
-image_size_check() {
-	e2fsck -yf $1
-	curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
-	curUsedM=`echo "$curBlocks" | cut -d/ -f1`
-	curSizeM=`echo "$curBlocks" | cut -d/ -f1`
-	curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
-	curUsedM=$((curUsedM * 4 / 1024 + 1))
-	curSizeM=$((curSizeM * 4 / 1024))
 }
 
 detect_outfd () {
@@ -233,47 +185,6 @@ detect_arch () {
 # Magisk Mode Installation
 ##########################################################################################
 
-grow_magisk_img () {
-	image_size_check $IMG
-	if [ "$reqSizeM" -gt "$curFreeM" ]; then
-		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-		resize2fs -f $IMG ${SIZE}M
-		e2fsck -yf $IMG
-	fi
-}
-
-shrink_magisk_img () {
-	image_size_check $IMG
-	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
-	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-		resize2fs -f $IMG ${NEWDATASIZE}M
-		e2fsck -yf $IMG
-	fi
-}
-
-magisk_install_init () {
-	if $BOOTMODE && ! is_mounted /magisk; then
-		error "! Magisk is not activated!... abort"
-	fi
-
-	# Fix SuperSU.....
-	$BOOTMODE && $BINDIR/sepolicy-inject --live "allow fsck * * *"
-
-	MOUNTPATH=/magisk
-	IMGNAME=magisk.img
-
-	if $BOOTMODE; then
-		MOUNTPATH=/dev/magisk_merge
-		IMGNAME=magisk_merge.img
-	fi
-
-	MODPATH=$MOUNTPATH/$MODID
-
-	mkdir -p $INSTALLER
-	cd $INSTALLER
-	unzip -o "$ZIP" "common/*" module.prop
-}
-
 magisk_install_dirs () {
 	rm -rf $MODPATH 2>/dev/null
 	mkdir -p $MODPATH
@@ -284,36 +195,49 @@ magisk_install_dirs () {
 }
 
 magisk_install_setup () {
+	ui_print "******************************"
+	ui_print "Powered by Magisk (@topjohnwu)"
+	ui_print "******************************"
+	ui_print " "
 	ui_print " > setup Magisk environment"
 
-	if is_mounted /data; then
-		IMG=/data/$IMGNAME
-	else
-		IMG=/cache/magisk.img
-		ui_print " "
-		ui_print "***********************************"
-		ui_print "*      !! Data unavailable !!     *"
-		ui_print "* Magisk detection is impossible  *"
-		ui_print "* Installation will still proceed *"
-		ui_print "*  But please make sure you have  *"
-		ui_print "*        Magisk installed!!       *"
-		ui_print "***********************************"
-		ui_print " "
+	[ -d $MAGISKBIN -a -f $MAGISKBIN/magisk -a -f $MAGISKBIN/util_functions.sh ] || \
+		error " !! Magisk version 13.1 or newer is required"
+
+	. $MAGISKBIN/util_functions.sh
+	[ ! -z $SCRIPT_VERSION -a $SCRIPT_VERSION -ge 1310 ] || \
+		error " !! Magisk version 13.1 or newer is required"
+
+	MAGISKBIN=/data/magisk
+	MOUNTPATH=/magisk
+	IMG=/data/magisk.img
+
+	if $BOOTMODE; then
+		MOUNTPATH=/dev/magisk_merge
+		IMG=/data/magisk_merge.img
 	fi
 
-	request_size_check "$ZIP"
+	request_size_check "${INSTALLER}"
+
+	$BOOTMODE || recovery_actions
 
 	if [ -f "$IMG" ]; then
-		grow_magisk_img
+		image_size_check $IMG
+		if [ "$reqSizeM" -gt "$curFreeM" ]; then
+			newSizeM=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
+			$MAGISKBIN/magisk --resizeimg $IMG $newSizeM
+		fi
 	else
-		SIZE=$((reqSizeM / 32 * 32 + 64));
-		make_ext4fs -l ${SIZE}M -a /magisk -S $INSTALLER/common/file_contexts_image $IMG
+		newSizeM=$((reqSizeM / 32 * 32 + 64));
+		$MAGISKBIN/magisk --createimg $IMG $newSizeM
 	fi
 
-	mount_image $IMG $MOUNTPATH
+	MAGISKLOOP=`$MAGISKBIN/magisk --mountimg $IMG $MOUNTPATH`
 	if ! is_mounted $MOUNTPATH; then
-		error "! $IMG mount failed... abort"
+		error " !! $IMG mount failed... abort"
 	fi
+
+	MODPATH=$MOUNTPATH/$MODID
 }
 
 magisk_install_preinst () {
@@ -360,12 +284,15 @@ magisk_install_finish () {
 }
 
 magisk_install_cleanup () {
-	umount $MOUNTPATH
-	losetup -d $LOOPDEVICE
-	rmdir $MOUNTPATH
+	$MAGISKBIN/magisk --umountimg $MOUNTPATH $MAGISKLOOP
 
-	# Shrink the image if possible
-	shrink_magisk_img
+	image_size_check $IMG
+	newSizeM=$((curUsedM / 32 * 32 + 64))
+	if [ $curSizeM -gt $newSizeM ]; then
+		$MAGISKBIN/magisk --resizeimg $IMG $newSizeM
+	fi
+
+	$BOOTMODE || recovery_cleanup
 }
 
 ##########################################################################################
@@ -374,7 +301,6 @@ magisk_install_cleanup () {
 
 install_init () {
 	mkdir -p $TMPDIR 2>/dev/null
-	cd $TMPDIR
 
 	ui_print " "
 	ui_print "******************************"
@@ -385,14 +311,10 @@ install_init () {
 	ui_print " "
 
 	INSTALLER=$TMPDIR/$MODID
-	mkdir -p ${INSTALLER}
-	cd ${INSTALLER} || error " !! failed to prepare environment!"
+	mkdir -p ${INSTALLER} || error " !! failed to prepare environment!"
 
 	ui_print " > prepare installation"
-	unzip -o "$ZIP" "system/*"
-	unzip -o "$ZIP" "init.d/*"
-	unzip -o "$ZIP" "swipe/*"
-	unzip -o "$ZIP" ".nanomod*"
+	unzip -o "$ZIP" -d "${INSTALLER}"
 }
 
 install_microg () {
@@ -680,14 +602,6 @@ else
 	MODE_TEXT=" > Mode   | Magisk          | detected"
 fi
 
-if [ "${MODE}" = "MAGISK" ]; then
-	magisk_install_init
-else
-	mount -orw,remount /system 2>/dev/null || \
-		error "! failed to re-mount /system read-write"
-	unset MODPATH
-fi
-
 ##########################################################################################
 # Main
 ##########################################################################################
@@ -719,6 +633,12 @@ if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_dirs
 fi
 
+if [ "${MODE}" = "SYSTEM" ]; then
+	mount -orw,remount /system 2>/dev/null || \
+		error "! failed to re-mount /system read-write"
+	unset MODPATH
+fi
+
 install_microg
 install_mapsv1
 install_gsync
@@ -738,9 +658,7 @@ ui_print " "
 
 if [ "${MODE}" = "MAGISK" ];then
 	magisk_install_cleanup
-fi
-
-if ! $BOOTMODE; then
+elif ! ${BOOTMODE}; then
 	umount /system 2>/dev/null
 fi
 
