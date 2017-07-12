@@ -114,6 +114,8 @@ The following init scripts are bundled with NanoMod
   * clean up log files
 * sqlite
   * clean up sqlite databases
+* permission
+  * set proper permission for microG & Co. on pre-patched ROMs
 
 When in Magisk Mode the init scripts create their log files in
 
