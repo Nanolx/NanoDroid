@@ -2,13 +2,14 @@
 
 # Detect whether in boot mode
 ps | grep zygote | grep -v grep >/dev/null && BOOTMODE=true || BOOTMODE=false
+$BOOTMODE || ps -A 2>/dev/null | grep zygote | grep -v grep >/dev/null && BOOTMODE=true
 
-# Default permissions
 umask 022
-
 OUTFD=$2
 ZIP=$3
+
 ZIPDIR=$(dirname "${ZIP}")
+MODID=NanoModfdroid
 
 ##########################################################################################
 # Misc. Functions
@@ -24,12 +25,13 @@ ui_print() {
 }
 
 grep_prop() {
+	REGEX="s/^$1=//p"
 	shift
 	FILES=$@
 	if [ -z "$FILES" ]; then
 		FILES='/system/build.prop'
 	fi
-	cat $FILES 2>/dev/null | sed -n "s/^$1=//p" | head -n 1
+	cat $FILES 2>/dev/null | sed -n "$REGEX" | head -n 1
 }
 
 is_mounted() {
@@ -263,38 +265,14 @@ magisk_install_setup () {
 }
 
 magisk_install_finish () {
-	# Handle replace folders
-	for TARGET in $REPLACE; do
-		mktouch $MODPATH$TARGET/.replace
-	done
-
-	# Auto Mount
-	if $AUTOMOUNT; then
-		mktouch $MODPATH/auto_mount
-	fi
-
-	# prop files
-	if $PROPFILE; then
-		cp -af $INSTALLER/common/system.prop $MODPATH/system.prop
-	fi
-
-	# Module info
+	# Magisk Module files
+	mktouch $MODPATH/auto_mount
 	cp -af $INSTALLER/module.prop $MODPATH/module.prop
 
 	if $BOOTMODE; then
 		# Update info for Magisk Manager
 		mktouch /magisk/$MODID/update
 		cp -af $INSTALLER/module.prop /magisk/$MODID/module.prop
-	fi
-
-	# post-fs-data mode scripts
-	if $POSTFSDATA; then
-		cp -af $INSTALLER/common/post-fs-data.sh $MODPATH/post-fs-data.sh
-	fi
-
-	# service mode scripts
-	if $LATESTARTSERVICE; then
-		cp -af $INSTALLER/common/service.sh $MODPATH/service.sh
 	fi
 }
 
@@ -314,13 +292,6 @@ magisk_install_cleanup () {
 install_init () {
 	mkdir -p $TMPDIR 2>/dev/null
 	cd $TMPDIR
-	unzip -o "$ZIP" config.sh
-
-	if [ ! -f "config.sh" ]; then
-		error "! Failed: Unable to extract zip file!"
-	fi
-
-	source config.sh
 
 	ui_print " "
 	ui_print "******************************"
