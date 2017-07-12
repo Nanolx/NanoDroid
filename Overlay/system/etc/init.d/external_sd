@@ -5,7 +5,7 @@ echo "external_sd init script"
 # retry 6 times, wait 5 seconds between each try
 count=0
 
-while [[ -z $(grep "/mnt/media_rw.*/storage" /proc/mounts) ]]; do
+while [[ -z $(grep "^/dev/block.*/mnt/media_rw" /proc/mounts) ]]; do
 	count=$((count+1))
 	if [ "${count}" -lt 7 ]; then
 		sleep 5
@@ -15,7 +15,10 @@ while [[ -z $(grep "/mnt/media_rw.*/storage" /proc/mounts) ]]; do
 	fi
 done
 
-storage=$(grep "/mnt/media_rw.*/storage" /proc/mounts | sed -e 's,.*/storage,/storage,g;s, .*,,g')
+media_rw=$(grep "^/dev/block.*/mnt/media_rw" /proc/mounts \
+	| cut -d " " -f 2 \
+	| cut -d "/" -f 4)
+storage="/storage/${media_rw}"
 
 if [[ -d ${storage} ]]; then
 	echo ">> SD Card found"
