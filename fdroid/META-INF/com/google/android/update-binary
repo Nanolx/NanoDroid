@@ -529,12 +529,10 @@ nanomod_finalize () {
 detect_outfd
 
 umount /system 2>/dev/null
-umount /vendor 2>/dev/null
 umount /data 2>/dev/null
 umount /cache 2>/dev/null
 
 mount -o ro /system 2>/dev/null
-mount -o ro /vendor 2>/dev/null
 mount /data 2>/dev/null
 mount /cache 2>/dev/null
 
@@ -621,7 +619,6 @@ fi
 
 if ! $BOOTMODE; then
 	umount /system 2>/dev/null
-	umount /vendor 2>/dev/null
 fi
 
 exit 0
