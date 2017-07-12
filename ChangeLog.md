@@ -9,6 +9,7 @@
     * change syntax for `.nanomod-setup` file
       * existing configuration files will be migrated to new format
     * simplify handling fallback configuration
+    * update module template to something v4-ish, modified to match NanoMod requirements/features
   * Full, microG package
     * if using fall back `nanomod-overlay` configuration remove it after installation
       * the `nanomod-overlay` script will create it during runtime, if required
