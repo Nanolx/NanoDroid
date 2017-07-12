@@ -181,6 +181,20 @@ detect_arch () {
 
 }
 
+setup_recovery () {
+  mount -o bind /dev/urandom /dev/random
+  OLD_LD_PATH=$LD_LIBRARY_PATH
+  $IS64BIT && export LD_LIBRARY_PATH=/system/lib64:/system/vendor/lib64 || \
+	export LD_LIBRARY_PATH=/system/lib:/system/vendor/lib
+}
+
+cleanup_recovery () {
+  export LD_LIBRARY_PATH=$OLD_LD_PATH
+  umount -l /system
+  umount -l /vendor 2>/dev/null
+  umount -l /dev/random
+}
+
 ##########################################################################################
 # Magisk Mode Installation
 ##########################################################################################
@@ -220,7 +234,7 @@ magisk_install_setup () {
 
 	request_size_check "${INSTALLER}"
 
-	$BOOTMODE || recovery_actions
+	$BOOTMODE || setup_recovery
 
 	if [ -f "$IMG" ]; then
 		image_size_check $IMG
@@ -293,7 +307,7 @@ magisk_install_cleanup () {
 		$MAGISKBIN/magisk --resizeimg $IMG $newSizeM
 	fi
 
-	$BOOTMODE || recovery_cleanup
+	$BOOTMODE || cleanup_recovery
 }
 
 ##########################################################################################
@@ -652,7 +666,7 @@ ui_print " "
 ui_print " Thanks for using NanoMod "
 ui_print " "
 
-if [ "${MODE}" = "MAGISK" ];then
+if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_cleanup
 elif ! ${BOOTMODE}; then
 	umount /system 2>/dev/null
