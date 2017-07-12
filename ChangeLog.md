@@ -1,6 +1,13 @@
 # ChangeLog
 
 ## 11.0 in-dev
+* Bug Fixes
+  * uninstaller:
+    * fixed restoring unpatched `services.jar`
+  * on-device framework-patcher:
+    * fixed that it accidently backed up the patched `services.jar` instead of vanilla
+  * external_sd init script:
+    * higher compatibility, should now work for most (if not all) devices
 * General Changes
   * Full, microG, F-Droid package
     * if using fallback configuration during installation print the information accordingly
@@ -18,10 +25,6 @@
     * add optional `Swipe` libraries, controlled by `nanomod_swipe=[0|1]`
     * make `/data` the very last directory to look for configuration files
     * when patched `services.jar` exists before installing/updating, remove `/system/.nanomod-patcher`
-  * uninstaller:
-    * fixed restoring unpatched `services.jar`
-  * on-device framework-patcher:
-    * fixed that it accidently backed up the patched `services.jar` instead of vanilla
 * Updates
   * Play Store (8.0.26.R)
   * Simple Gallery (2.12.1)
