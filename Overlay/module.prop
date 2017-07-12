@@ -4,4 +4,4 @@ version=v11.0.20171231
 versionCode=15
 author=Nanolx
 description=NanoMod microG, FOSS apps and system-app deactivation for LineageOS/AOSP based ROMs
-template=3
+template=4
