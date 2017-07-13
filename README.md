@@ -6,8 +6,10 @@
 
 ## Downloads
 
-* Stable Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/?a=show&w=files&flid=150729)
-* Archived Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/?w=files&flid=156387)
+* Stable Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/f/NanoMod_Stable)
+  * Archived Stable Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/f/NanoMod_StableArchive)
+* Stable Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/f/NanoMod_Beta)
+  * Archived Beta Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/f/NanoMod_BetaArchive)
 * Snapshot
   * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `mod.sh` script like
     * `mod.sh zip` for the full package
