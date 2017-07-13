@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 11.0 in-dev
+## 11.0.20170713
 * Bug Fixes
   * uninstaller:
     * fixed restoring unpatched `services.jar`
