@@ -35,6 +35,7 @@
   * OpenLauncher (0.5.3)
   * Kernel Adiutor (0.9.71.1)
   * F-Droid (1.0-alpha0)
+  * Amaze (3.1.2-beta12)
 
 ## 10.0.20170701
 * Bug Fixes
