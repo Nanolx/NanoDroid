@@ -129,20 +129,6 @@ detect_arch () {
 	fi
 }
 
-setup_recovery () {
-  mount -o bind /dev/urandom /dev/random
-  OLD_LD_PATH=$LD_LIBRARY_PATH
-  $IS64BIT && export LD_LIBRARY_PATH=/system/lib64:/system/vendor/lib64 || \
-	export LD_LIBRARY_PATH=/system/lib:/system/vendor/lib
-}
-
-cleanup_recovery () {
-  export LD_LIBRARY_PATH=$OLD_LD_PATH
-  umount -l /system
-  umount -l /vendor 2>/dev/null
-  umount -l /dev/random
-}
-
 ##########################################################################################
 # Magisk Mode Installation
 ##########################################################################################
@@ -182,7 +168,7 @@ magisk_install_setup () {
 
 	request_size_check "${INSTALLER}"
 
-	$BOOTMODE || setup_recovery
+	$BOOTMODE || recovery_actions
 
 	if [ -f "$IMG" ]; then
 		image_size_check $IMG
@@ -224,7 +210,7 @@ magisk_install_cleanup () {
 		$MAGISKBIN/magisk --resizeimg $IMG $newSizeM
 	fi
 
-	$BOOTMODE || cleanup_recovery
+	$BOOTMODE || recovery_cleanup
 }
 
 ##########################################################################################
@@ -247,6 +233,10 @@ install_init () {
 
 	ui_print " > prepare installation"
 	unzip -o "$ZIP" -d "${INSTALLER}"
+
+	# When installing in Magisk mode we are forced to use our own unzip
+	# for nanomod_libs() to work, use it in System mode aswell.
+	chmod +x "${INSTALLER}/system/bin/unzip*"
 }
 
 install_fdroid () {
@@ -349,7 +339,9 @@ nanomod_libs () {
 	if [ ! -f ${apk} ]; then
 		error " !! apk ${apk} not found"
 	else
-		unzip -oq ${apk} "lib/*" -d "/tmp/nanomod-lib"
+		"${INSTALLER}/system/bin/unzip.${BIN_ARCH}" \
+			-oq ${apk} "lib/*" -d "/tmp/nanomod-lib" \
+			2>/dev/null
 		if [ -d /tmp/nanomod-lib/lib ]; then
 			mkdir -p ${libd}
 			case ${ARCH} in

@@ -535,7 +535,8 @@ nanomod_libs () {
 		error " !! apk ${apk} not found"
 	else
 		"${INSTALLER}/system/bin/unzip.${BIN_ARCH}" \
-			-oq ${apk} "lib/*" -d "/tmp/nanomod-lib"
+			-oq ${apk} "lib/*" -d "/tmp/nanomod-lib" \
+			2>/dev/null
 		if [ -d /tmp/nanomod-lib/lib ]; then
 			mkdir -p ${libd}
 			case ${ARCH} in
