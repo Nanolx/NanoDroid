@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 11.1 in-dev
+## 11.1.201707714
 * Bug Fixes
   * Full, microG, F-Droid packages:
     * provide standalone `unzip` binary (resolves installation issues with 11.0)
