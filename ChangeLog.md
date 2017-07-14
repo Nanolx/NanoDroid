@@ -1,5 +1,19 @@
 # ChangeLog
 
+## 11.1 in-dev
+* Bug Fixes
+  * Full, microG, F-Droid packages:
+    * provide standalone `unzip` binary (resolves installation issues with 11.0)
+  * Full, microG packages:
+    * fix `nanomod-overlay -s` not working
+* General Changes
+  * Full, microG, F-Droid packages:
+    * Magisk Mode installer is now closer to magisk-module-template v4 ()
+  * Full, microG packages:
+    * provide `column` binary
+    * let `nanomod-overlay -s` use `column` to prettify the output
+    * let the user know `nanomod-overlay -s` actually does something as it can be slow on old devices
+
 ## 11.0.20170713
 * Bug Fixes
   * uninstaller:
