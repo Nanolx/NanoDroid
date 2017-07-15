@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 11.2 in-dev
+* Updates
+  * Substratum (811)
+
 ## 11.1.201707714
 * Bug Fixes
   * Full, microG, F-Droid packages:
