@@ -8,6 +8,7 @@
     * fixed that `column` was not bundled
   * Full, microG packages:
     * fixed that GNU Bash did not read `/etc/bashrc`
+    * fixed that the fallback `/data/.nanomod-overlay` did not get removed
 * General Changes
   * Full package:
     * provide more tools from  `bsdmainutils`
