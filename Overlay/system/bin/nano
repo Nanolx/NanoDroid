@@ -3,11 +3,12 @@
 # osm0sis @ xda-developers
 
 if [ "$1" == "--term" ]; then
-  term=$2;
-  shift 2;
+	term=$2;
+	shift 2;
 else
-  term=xterm;
-fi;
+	term=xterm
+fi
 
-clear;
-TERMINFO=/system/etc/terminfo TERM=$term /system/bin/nano.bin $*;
+clear		# empty the buffer
+resize		# correct the terminal size
+TERMINFO=/system/etc/terminfo TERM=$term /system/bin/nano.bin $*
