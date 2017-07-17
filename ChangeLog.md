@@ -3,6 +3,7 @@
 ## 11.2 in-dev
 * Updates
   * Substratum (811)
+  * Amaze (3.1.2-rc4)
 
 ## 11.1.201707714
 * Bug Fixes
