@@ -1,6 +1,10 @@
 # ChangeLog
 
 ## 11.2 in-dev
+* General Changes
+  * Full package:
+    * provide more bsdmainutils
+      * col, colcrt, colrm, hexdump, look
 * Downgrades
   * Google Backup Trasport (7.1.1 > 6.0.1)
 * Updates

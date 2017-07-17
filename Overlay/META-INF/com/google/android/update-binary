@@ -448,7 +448,7 @@ install_misc () {
 	done
 
 	# architecture dependend stuff
-	for binary in aapt bash bashbug column unzip; do
+	for binary in aapt bash bashbug col colcrt colrm column hexdump look unzip; do
 		nanomod_install /system/bin/${binary}.${BIN_ARCH} /system/bin/${binary} bin
 	done
 
