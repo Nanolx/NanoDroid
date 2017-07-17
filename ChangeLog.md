@@ -1,6 +1,9 @@
 # ChangeLog
 
 ## 11.2 in-dev
+* Bug Fixes
+  * microG package:
+    * fixed that `column` was not bundled
 * General Changes
   * Full package:
     * provide more tools from  `bsdmainutils`
