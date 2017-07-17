@@ -2,8 +2,12 @@
 
 ## 11.2 in-dev
 * Bug Fixes
+  * Full package:
+    * fixed that GNU Nano didn't work properly when ther terminal only had a few lines
   * microG package:
     * fixed that `column` was not bundled
+  * Full, microG packages:
+    * fixed that GNU Bash did not read `/etc/bashrc`
 * General Changes
   * Full package:
     * provide more tools from  `bsdmainutils`
@@ -11,6 +15,7 @@
     * provide more tools from `util-linux`
       * findfs, findmnt, lsblk, lscpu, lsipc, lslocks, lsns, setterm, whereis
     * provide `less` pager with `lessecho` and `lesskey` utils
+    * make `less` the default `PAGER` for GNU Bash
     * make default `TERM` for GNU Nano `xterm`
 * Downgrades
   * Google Backup Transport (7.1.1 > 6.0.1)
