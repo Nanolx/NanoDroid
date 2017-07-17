@@ -129,6 +129,35 @@ When installed to /system your ROM needs to support running scripts in
 
 or you can use **Kernel Adiutor's** init.d emulation.
 
+#### Shell Utilities
+
+Several utilities from `bsdmainutils` and `util-linux` are included:
+
+* col
+* colcrt
+* colrm
+* column
+* findfs
+* findmnt
+* hexdump
+* look
+* lsblk
+* lscpu
+* lsipc
+* lslocks
+* lsns
+* ncal
+* setterm
+* whereis
+
+Other shell utilities
+
+* aapt
+* less
+* lessecho
+* lesskey
+* unzip
+
 ### microG
 
 microG is an Open Source replacement for Google Services, full details can be found at the microG homepage [![Web Link](doc/microg.png)](http://microg.org/)

@@ -439,7 +439,7 @@ install_misc () {
 	nanomod_install /system/etc/bashrc /system/etc/
 	nanomod_install /system/share /system/
 
-	for binary in nano nano.bin nanomod-overlay nanomod-overlay.functions \
+	for binary in less nano nano.bin nanomod-overlay nanomod-overlay.functions \
 		nanomod-overlay.addoverrides nanomod-overlay.genconfig \
 		nanomod-overlay.listoverrides nanomod-overlay.removeoverrides \
 		nanomod-overlay.shownonoverrides nanomod-overlay.updateoverrides \
@@ -448,7 +448,9 @@ install_misc () {
 	done
 
 	# architecture dependend stuff
-	for binary in aapt bash bashbug col colcrt colrm column hexdump look unzip; do
+	for binary in aapt bash bashbug col colcrt colrm column findfs findmnt \
+		hexdump less.bin lessecho lesskey look lsblk lscpu lsipc lslocks \
+		lsns ncal setterm unzip whereis; do
 		nanomod_install /system/bin/${binary}.${BIN_ARCH} /system/bin/${binary} bin
 	done
 

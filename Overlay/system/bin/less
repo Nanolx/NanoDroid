@@ -1,0 +1,12 @@
+#!/system/bin/sh
+# less: wrapper to set up and run nano from terminal
+
+if [ "$1" == "--term" ]; then
+  term=$2;
+  shift 2;
+else
+  term=xterm;
+fi;
+
+clear;
+TERMINFO=/system/etc/terminfo TERM=$term /system/bin/less.bin $*;

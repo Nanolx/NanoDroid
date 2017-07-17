@@ -3,10 +3,14 @@
 ## 11.2 in-dev
 * General Changes
   * Full package:
-    * provide more bsdmainutils
-      * col, colcrt, colrm, hexdump, look
+    * provide more tools from  `bsdmainutils`
+      * col, colcrt, colrm, hexdump, look, ncal
+    * provide more tools from `util-linux`
+      * findfs, findmnt, lsblk, lscpu, lsipc, lslocks, lsns, setterm, whereis
+    * provide `less` pager with `lessecho` and `lesskey` utils
+    * make default `TERM` for GNU Nano `xterm`
 * Downgrades
-  * Google Backup Trasport (7.1.1 > 6.0.1)
+  * Google Backup Transport (7.1.1 > 6.0.1)
 * Updates
   * Substratum (811)
   * Amaze (3.1.2-rc4)
