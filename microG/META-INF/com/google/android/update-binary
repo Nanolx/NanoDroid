@@ -382,7 +382,7 @@ install_misc () {
 	nanomod_install /system/etc/bashrc /system/etc/
 	nanomod_install /system/share /system/
 
-	for binary in nanomod-overlay nanomod-overlay.functions \
+	for binary in bash nanomod-overlay nanomod-overlay.functions \
 		nanomod-overlay.addoverrides nanomod-overlay.genconfig \
 		nanomod-overlay.listoverrides nanomod-overlay.removeoverrides \
 		nanomod-overlay.shownonoverrides nanomod-overlay.updateoverrides \
@@ -391,7 +391,7 @@ install_misc () {
 	done
 
 	# architecture dependend stuff
-	for binary in aapt bash bashbug column; do
+	for binary in aapt bash.bin bashbug column; do
 		nanomod_install /system/bin/${binary}.${BIN_ARCH} /system/bin/${binary} bin
 	done
 

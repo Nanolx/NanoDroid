@@ -1,0 +1,7 @@
+#!/system/bin/sh
+# nano: wrapper to set up and run nano from terminal
+# osm0sis @ xda-developers
+
+clear		# empty the buffer
+resize		# correct the terminal size
+/system/bin/bash.bin --rcfile /etc/bashrc $*
