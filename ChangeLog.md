@@ -1,6 +1,8 @@
 # ChangeLog
 
 ## 11.2 in-dev
+* Downgrades
+  * Google Backup Trasport (7.1.1 > 6.0.1)
 * Updates
   * Substratum (811)
   * Amaze (3.1.2-rc4)
