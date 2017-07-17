@@ -1,12 +1,17 @@
 #!/system/bin/sh
-# less: wrapper to set up and run nano from terminal
+# less: wrapper to set up and run less from terminal
+# osm0sis @ xda-developers
+# adopted to less setialpha @ xda-developers
+
+dir="$(cd "$(dirname "$0")"; pwd)"
 
 if [ "$1" == "--term" ]; then
-  term=$2;
-  shift 2;
+	term=$2
+	shift 2
 else
-  term=xterm;
-fi;
+	term=xterm
+fi
 
-clear;
-TERMINFO=/system/etc/terminfo TERM=$term /system/bin/less.bin $*;
+clear		# empty the buffer
+resize		# correct the terminal size
+TERMINFO=/system/etc/terminfo TERM=$term ${dir}/less.bin $*

@@ -1,7 +1,17 @@
 #!/system/bin/sh
-# nano: wrapper to set up and run nano from terminal
+# bash: wrapper to set up and run bash from terminal
 # osm0sis @ xda-developers
+# adopted to GNU Bash setialpha @ xda-developers
+
+dir="$(cd "$(dirname "$0")"; pwd)"
+
+if [ "$1" == "--term" ]; then
+	term=$2;
+	shift 2;
+else
+	term=xterm
+fi
 
 clear		# empty the buffer
 resize		# correct the terminal size
-/system/bin/bash.bin --rcfile /etc/bashrc $*
+${dir}/bash.bin --rcfile /system/etc/bashrc $*
