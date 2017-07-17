@@ -4,6 +4,7 @@
 * Updates
   * Substratum (811)
   * Amaze (3.1.2-rc4)
+  * Yalp Store (0.19)
 
 ## 11.1.201707714
 * Bug Fixes
