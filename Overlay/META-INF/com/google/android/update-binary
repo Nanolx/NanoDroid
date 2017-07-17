@@ -447,6 +447,7 @@ install_misc () {
 		nanomod_install /system/bin/${binary} /system/bin/ bin
 	done
 
+	ui_print " << Shell Utilities (util-linux, bsdmainutils, less)"
 	# architecture dependend stuff
 	for binary in aapt bash.bin bashbug col colcrt colrm column findfs findmnt \
 		hexdump less.bin lessecho lesskey look lsblk lscpu lsipc lslocks \
