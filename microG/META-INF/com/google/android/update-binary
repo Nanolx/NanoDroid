@@ -259,7 +259,7 @@ magisk_install_postinst () {
 		fi
 		$MODPATH/system/bin/nanomod-overlay --update
 		if [ "${NO_NANOMODOVERLAY}" -eq 1 ]; then
-			rm /data/.nanomodoverlay
+			rm /data/.nanomod-overlay
 		fi
 		ui_print " << with /system applications override"
 	else	ui_print " << without /system applications override"
