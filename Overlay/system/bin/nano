@@ -2,15 +2,12 @@
 # nano: wrapper to set up and run nano from terminal
 # osm0sis @ xda-developers
 
-dir="$(cd "$(dirname "$0")"; pwd)";
-
 if [ "$1" == "--term" ]; then
   term=$2;
   shift 2;
 else
-  term=screen;
+  term=xterm;
 fi;
 
 clear;
-TERMINFO=$dir/../etc/terminfo TERM=$term $dir/nano.bin $*;
-
+TERMINFO=/system/etc/terminfo TERM=$term /system/bin/nano.bin $*;
