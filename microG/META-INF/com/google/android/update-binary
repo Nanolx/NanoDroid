@@ -130,7 +130,6 @@ check_nanomodsetup () {
 
 	source ${nanomodsetup}
 
-	[ -z ${nanomod_reinstall} ] && set_prop nanomod_reinstall 0
 	[ -z ${nanomod_play} ] && set_prop nanomod_play 1
 	[ -z ${nanomod_overlay} ] && set_prop nanomod_overlay 1
 	[ -z ${nanomod_mapsv1} ] && set_prop nanomod_mapsv1 1
@@ -242,12 +241,17 @@ magisk_install_setup () {
 }
 
 magisk_install_preinst () {
-	if [ "${nanomod_reinstall}" -eq 1 ]; then
-		ui_print " << backup services.jar"
-		cp $MODPATH/system/framework/services.jar \
-			/tmp/services.jar
-	elif [ -f $MODPATH/system/framework/services.jar ]; then
-		rm /system/.nanomod-patcher
+	if [ -f $MODPATH/system/framework/services.jar ]; then
+		if [ -f /system/.nanomod-patcher ]; then
+			ui_print " << backing up patched services.jar"
+			cp $MODPATH/system/framework/services.jar \
+				/tmp/services.jar
+		else	ui_print " "
+			ui_print " ++ /system/.nanomod-patcher is missing, assuming"
+			ui_print " ++ ROM was updated, please re-run NanoMod-Patcher"
+			ui_print " "
+			rm -f $MODPATH/system/framework/services.jar
+		fi
 	fi
 }
 
@@ -265,8 +269,8 @@ magisk_install_postinst () {
 	else	ui_print " << without /system applications override"
 	fi
 
-	if [ "${nanomod_reinstall}" -eq 1 ]; then
-		ui_print " << restore services.jar"
+	if [ -f /tmp/services.jar ]; then
+		ui_print " << restoring patched services.jar"
 		mkdir $MODPATH/system/framework
 		cp /tmp/services.jar \
 			$MODPATH/system/framework/services.jar

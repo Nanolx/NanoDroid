@@ -28,7 +28,6 @@ nanomod_init=1
 nanomod_gsync=0
 nanomod_swipe=0
 nanomod_forcesystem=0
-nanomod_reinstall=0
 ```
 
 the **microG** package supports the following options
@@ -40,7 +39,6 @@ nanomod_mapsv1=1
 nanomod_gsync=0
 nanomod_swipe=0
 nanomod_forcesystem=0
-nanomod_reinstall=0
 ```
 
 the **F-Droid** package supports the following options
@@ -99,9 +97,3 @@ whether to provide Swipe libraries
 `nanomod_forcesystem=[0|1]`
 
 whether to force system mode installation, regardless whether Magisk is installed
-
-`nanomod_reinstall=[0|1]`
-
-whether to backup an **already patched** `services.jar` and re-use it
-
-**Only use this, when you re-install NanoMod on the same ROM. If you updated or changed the ROM, re-run `framework-patcher.sh` instead or re-flash the NanoMod-patcher.**

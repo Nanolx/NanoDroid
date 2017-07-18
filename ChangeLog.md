@@ -10,6 +10,9 @@
     * fixed that GNU Bash did not read `/etc/bashrc`
     * fixed that the fallback `/data/.nanomod-overlay` did not get removed
     * further fixes to `nanomod-overlay -g`
+    * remove `nanomod_reinstall` parameter for `.nanomod-setup` configuration file (Magisk-only)
+      * `services.jar` will now be auto backed up and restored during NanoMod Magisk Module update when `/system/.nanomod-patcher` exists
+      * `services.jar` will be removed from NanoMod Magisk Module (which indicates ROM update), print a message to the user accordingly
 * General Changes
   * Full package:
     * provide more tools from  `bsdmainutils`
