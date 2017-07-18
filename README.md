@@ -11,13 +11,13 @@
 * Stable Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/f/NanoMod_Beta)
   * Archived Beta Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/f/NanoMod_BetaArchive)
 * Snapshot
-  * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `mod.sh` script like
-    * `mod.sh zip` for the full package
-    * `mod.sh microg` for the microg only package
-    * `mod.sh fdroid` for the F-Droid only package
-    * `mod.sh patcher` for the on-device framework-patcher package
-    * `mod.sh uninstaller` for the uninstaller package
-    * `mod.sh all` for all packages at once
+  * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
+    * `build-package zip` for the full package
+    * `build-package microg` for the microg only package
+    * `build-package fdroid` for the F-Droid only package
+    * `build-package patcher` for the on-device framework-patcher package
+    * `build-package uninstaller` for the uninstaller package
+    * `build-package all` for all packages at once
 
 ## Support
 

@@ -22,6 +22,9 @@
     * provide `less` pager with `lessecho` and `lesskey` utils
     * make `less` the default `PAGER` for GNU Bash
     * make default `TERM` for GNU Nano `xterm`
+  * renamed `mod.sh` to `build-package`
+    * revised code, removed cruft
+    * add multi-param support, for example `build-package fdroid microg` will create those two package in one go
 * Downgrades
   * Google Backup Transport (7.1.1 > 6.0.1)
 * Updates

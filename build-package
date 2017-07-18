@@ -1,0 +1,199 @@
+#!/bin/bash
+
+VERSION=11.2.20171231
+CWD=$(readlink -m "${BASH_SOURCE[0]}")
+CWD=$(dirname "${CWD}")
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	if ! [ -x "$(command -v brew)" ]; then
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	fi
+	if ! [ -x "$(command -v gsed)" ]; then
+		brew install gnu-sed
+	fi
+	alias sed=gsed
+fi
+
+zip_add () {
+	case ${1} in
+		*/ )	zip -r "${ZIP}" ${1} || exit 1	;;
+		"" )	zip -r "${ZIP}" * || exit 1	;;
+		*  )	zip "${ZIP}" ${1} || exit 1	;;
+	esac
+}
+
+_zip () {
+	ZIP="${CWD}/NanoMod-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	cd "${CWD}/Overlay"
+	zip_add
+	cd "${CWD}"
+
+	for file in README.md ChangeLog.md; do
+		zip_add "${file}"
+	done
+
+	cd "${CWD}/doc"
+	for file in .nanomod-overlay .nanomod-apps .nanomod-setup; do
+		zip_add "${file}"
+	done
+	cd "${CWD}"
+
+	echo "Zipfile ${ZIP} created"
+}
+
+_microg() {
+	ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	cd "${CWD}/Overlay"
+
+	for app in GoogleCalendarSync GoogleContactSync \
+		nlpBackendIchnaea nlpBackendNomiantim; do
+		zip_add "system/app/${app}/"
+	done
+
+	for app in GoogleBackupTransport DroidGuard FakeStore \
+		GmsCore GsfProxy Phonesky YalpStore; do
+		zip_add "system/priv-app/${app}/"
+	done
+
+	zip_add "system/bin/nanomod-overlay*"
+	zip_add "system/bin/bash*"
+	zip_add "system/bin/aapt*"
+	zip_add "system/bin/column*"
+	zip_add "system/framework/"
+	zip_add "system/etc/permissions/"
+	zip_add "system/etc/bash*"
+	zip_add "system/share/"
+	zip_add "swipe/"
+
+	cd "${CWD}"
+
+	zip _add README.md
+	zip _add ChangeLog.md
+
+	cd "${CWD}/doc"
+	zip_add .nanomod-overlay
+	sed -e 's/nanomod_overlay=1/nanomod_overlay=0/' -i .nanomod-setup
+	zip_add .nanomod-setup
+	sed -e 's/nanomod_overlay=0/nanomod_overlay=1/' -i .nanomod-setup
+	cd "${CWD}"
+
+	echo "Zipfile ${ZIP} created"
+}
+
+_fdroid() {
+	ZIP="${CWD}/NanoMod-fdroid-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	cd "${CWD}/Overlay"
+	zip_add "system/app/FDroid/"
+	zip_add "system/priv-app/FDroidPrivileged/"
+	cd "${CWD}"
+
+	zip_add README.md
+	zip_add ChangeLog.md
+
+	cd "${CWD}/doc"
+	zip_add .nanomod-setup
+	cd "${CWD}"
+
+	echo "Zipfile ${ZIP} created"
+}
+
+_patcher() {
+	ZIP="${CWD}/NanoMod-patcher-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	cd "${CWD}/framework-patcher"
+	zip_add
+	cd "${CWD}"
+
+	zip_add README.md
+	zip_add ChangeLog.md
+
+	echo "Zipfile ${ZIP} created"
+}
+
+_uninstaller() {
+	ZIP="${CWD}/NanoMod-uninstaller-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	cd "${CWD}/uninstaller"
+	zip_add
+	cd "${CWD}"
+
+	zip_add README.md
+	zip_add ChangeLog.md
+
+	echo "Zipfile ${ZIP} created"
+}
+
+_ver() {
+	sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i "${CWD}/build-package"
+
+	for module in Overlay microG fdroid; do
+		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}    \"/" -i \
+			"${CWD}/${module}/META-INF/com/google/android/update-binary"
+		sed -e "s/version=.*/version=v${2}.${3}/" -i \
+			"${CWD}/${module}/module.prop"
+	done
+
+	for module in uninstaller framework-patcher; do
+		sed -e "s/\"      NanoMod.*/\"      NanoMod ${2}.${3}     \"/" -i \
+			"${CWD}/${module}/META-INF/com/google/android/update-binary"
+	done
+}
+
+_bump () {
+	for module in Overlay microG fdroid; do
+		eval $(grep versionCode "${PWD}"/"${module}"/module.prop)
+		versionCode=$((versionCode+1))
+		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
+			-i "${CWD}/${module}/module.prop"
+	done
+}
+
+_help () {
+	echo -e "
+** NanoMod ${VERSION} helper script **
+
+usage:	build-package [opt] [arg]
+
+possible opts:
+	zip			| create module zip from repo *full package*
+	microg			| create module zip from repo *microG only*
+	fdroid			| create module zip from repo *fdroid only*
+	patcher			| create framework-patcher zip from repo
+	uninstaller		| create uninstaller zip from repo
+	all			| create all zips from repo
+	ver	[ver] [date]	| bump version
+	bump			| bump versionCode in Magisk Modules
+"
+
+	exit 0
+}
+
+[[ -z ${1} ]] && _help
+
+for opt in ${@}; do
+	case ${1} in
+		zip)		_zip		;;
+		ver)		_ver "${@}"	;;
+		bump)		_bump		;;
+		microg )	_microg		;;
+		fdroid )	_fdroid		;;
+		patcher )	_patcher	;;
+		uninstaller )	_uninstaller	;;
+		all )
+			_zip
+			_microg
+			_fdroid
+			_patcher
+			_uninstaller
+		;;
+		*)		_help		;;
+	esac
+done
