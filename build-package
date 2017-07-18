@@ -22,7 +22,7 @@ zip_add () {
 	esac
 }
 
-_zip () {
+create_full_package () {
 	ZIP="${CWD}/NanoMod-${VERSION}".zip
 	rm -f "${ZIP}"
 
@@ -43,7 +43,7 @@ _zip () {
 	echo "Zipfile ${ZIP} created"
 }
 
-_microg() {
+create_microg_package() {
 	ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
 	rm -f "${ZIP}"
 
@@ -84,7 +84,7 @@ _microg() {
 	echo "Zipfile ${ZIP} created"
 }
 
-_fdroid() {
+create_fdroid_package() {
 	ZIP="${CWD}/NanoMod-fdroid-${VERSION}".zip
 	rm -f "${ZIP}"
 
@@ -103,7 +103,7 @@ _fdroid() {
 	echo "Zipfile ${ZIP} created"
 }
 
-_patcher() {
+create_patcher_package() {
 	ZIP="${CWD}/NanoMod-patcher-${VERSION}".zip
 	rm -f "${ZIP}"
 
@@ -117,7 +117,7 @@ _patcher() {
 	echo "Zipfile ${ZIP} created"
 }
 
-_uninstaller() {
+create_uninstaller_package() {
 	ZIP="${CWD}/NanoMod-uninstaller-${VERSION}".zip
 	rm -f "${ZIP}"
 
@@ -131,7 +131,7 @@ _uninstaller() {
 	echo "Zipfile ${ZIP} created"
 }
 
-_ver() {
+increase_version_number() {
 	sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i "${CWD}/build-package"
 
 	for module in Overlay microG fdroid; do
@@ -147,7 +147,7 @@ _ver() {
 	done
 }
 
-_bump () {
+increase_module_version () {
 	for module in Overlay microG fdroid; do
 		eval $(grep versionCode "${PWD}"/"${module}"/module.prop)
 		versionCode=$((versionCode+1))
@@ -156,7 +156,7 @@ _bump () {
 	done
 }
 
-_help () {
+show_help () {
 	echo -e "
 ** NanoMod ${VERSION} helper script **
 
@@ -176,24 +176,24 @@ possible opts:
 	exit 0
 }
 
-[[ -z ${1} ]] && _help
+[[ -z ${1} ]] && show_help
 
 for opt in ${@}; do
 	case ${1} in
-		zip)		_zip		;;
-		ver)		_ver "${@}"	;;
-		bump)		_bump		;;
-		microg )	_microg		;;
-		fdroid )	_fdroid		;;
-		patcher )	_patcher	;;
-		uninstaller )	_uninstaller	;;
+		zip | full)	create_full_package		;;
+		ver)		increase_version_number "${@}"	;;
+		bump)		increase_module_version		;;
+		microg )	create_microg_package		;;
+		fdroid )	create_fdroid_package		;;
+		patcher )	create_patcher_package		;;
+		uninstaller )	create_uninstaller_package	;;
 		all )
-			_zip
-			_microg
-			_fdroid
-			_patcher
-			_uninstaller
+			create_full_package
+			create_microg_package
+			create_fdroid_package
+			create_patcher_package
+			create_uninstaller_package
 		;;
-		*)		_help		;;
+		*)		show_help			;;
 	esac
 done
