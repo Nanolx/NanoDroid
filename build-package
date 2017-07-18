@@ -71,6 +71,10 @@ create_microg_package() {
 
 	cd "${CWD}"
 
+	cd "${CWD}/microg"
+	zip_add
+	cd "${CWD}"
+
 	zip _add README.md
 	zip _add ChangeLog.md
 
@@ -91,6 +95,10 @@ create_fdroid_package() {
 	cd "${CWD}/Overlay"
 	zip_add "system/app/FDroid/"
 	zip_add "system/priv-app/FDroidPrivileged/"
+	cd "${CWD}"
+
+	cd "${CWD}/fdroid"
+	zip_add
 	cd "${CWD}"
 
 	zip_add README.md
