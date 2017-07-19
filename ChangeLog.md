@@ -14,6 +14,11 @@
       * `services.jar` will now be auto backed up and restored during NanoMod Magisk Module update when `/system/.nanomod-patcher` exists
       * `services.jar` will be removed from NanoMod Magisk Module (which indicates ROM update), print a message to the user accordingly
 * General Changes
+  * Configuration Files:
+    * `.nanomod-apps` layout simplified, now only one app per line, nothing else
+      * existing configuration files will be migrated to new format
+    * `.nanomod-overlay` layout simplified, now only one app per line, nothing else
+      * existing configuration files will be migrated to new format
   * Full package:
     * provide more tools from  `bsdmainutils`
       * col, colcrt, colrm, hexdump, look, ncal
@@ -22,6 +27,8 @@
     * provide `less` pager with `lessecho` and `lesskey` utils
     * make `less` the default `PAGER` for GNU Bash
     * make default `TERM` for GNU Nano `xterm`
+  * Setup Wizard (in-progress):
+    * AROMA based Setup Wizard to create all three configuration files in `/data`
   * renamed `mod.sh` to `build-package`
     * revised code, removed cruft
     * add multi-param support, for example `build-package fdroid microg` will create those two package in one go
@@ -34,6 +41,7 @@
   * Simple Gallery (2.12.2)
   * OpenVPN (0.6.73)
   * NewPipe (0.9.10)
+  * Lightning (4.5.1+snapshot20170718)
 
 ## 11.1.201707714
 * Bug Fixes
