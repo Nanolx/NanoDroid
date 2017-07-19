@@ -17,6 +17,7 @@
     * `build-package fdroid` for the F-Droid only package
     * `build-package patcher` for the on-device framework-patcher package
     * `build-package uninstaller` for the uninstaller package
+    * `build-package setupwizard` for the Setup Wizard package
     * `build-package all` for all packages at once
 
 ## Support
