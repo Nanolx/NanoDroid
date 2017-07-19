@@ -9,6 +9,13 @@ is_mounted() {
 	return $?
 }
 
+setup_add () {
+	if grep -q "item.1.${1}=1" "${setup_prop}"; then
+		echo "${2}=1" >> "${nanomod_setup}"
+	else	echo "${2}=0" >> "${nanomod_setup}"
+	fi
+}
+
 if (is_mounted /data); then
 	mount -orw,remount /data >/dev/null
 else	mount -orw /data >/dev/null
@@ -17,7 +24,7 @@ fi
 configpath="/data"
 nanomod_apps="${configpath}/.nanomod-apps"
 nanomod_overlay="${configpath}/.nanomod-overlay"
-nanomod_setup="${configpath}/.nanomod-overlay"
+nanomod_setup="${configpath}/.nanomod-setup"
 
 aromapath="/tmp/aroma-data"
 setup_prop="${aromapath}/setup.prop"
@@ -28,5 +35,24 @@ debloat_prop="${aromapath}/debloat.prop"
 for setupfile in ${nanomod_apps} ${nanomod_overlay} ${nanomod_setup}; do
 	rm -f "${setupfile}"
 done
+
+setup_add 1 nanomod_microg
+setup_add 2 nanomod_fdroid
+setup_add 3 nanomod_apps
+setup_add 4 nanomod_overlay
+setup_add 5 nanomod_zelda
+setup_add 6 nanomod_mapsv1
+setup_add 7 nanomod_init
+setup_add 8 nanomod_gsync
+setup_add 9 nanomod_swipe
+setup_add 10 nanomod_forcesystem
+
+if grep -q "selected.1=1" "${store_prop}"; then
+	echo "nanomod_play=0" >> "${nanomod_setup}"
+elif grep -q "selected.1=2" "${store_prop}"; then
+	echo "nanomod_play=1" >> "${nanomod_setup}"
+elif grep -q "selected.1=3" "${store_prop}"; then
+	echo "nanomod_play=2" >> "${nanomod_setup}"
+fi
 
 exit 0
