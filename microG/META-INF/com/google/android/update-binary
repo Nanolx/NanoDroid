@@ -140,6 +140,16 @@ check_nanomodsetup () {
 	source ${nanomodsetup}
 }
 
+# check whether '.nanomod-overlay' has new format
+# and update if required
+check_nanomodoverlay () {
+	if grep -q "APPS=(" "${nanomodoverlay}"; then
+		ui_print " ++ migrating ${nanomodoverlay} to new format"
+		sed -e 's/^.*_APPS=//;s/(//g;s/)//g' -i "${nanomodoverlay}"
+		sed '/^\s*$/d' -i "${nanomodoverlay}"
+	fi
+}
+
 ##########################################################################################
 # Architecture detection
 ##########################################################################################
@@ -600,6 +610,7 @@ get_config .nanomod-overlay
 if [ "$config_exists" -eq 1 ]; then
 	NO_NANOMODOVERLAY=0
 	nanomodoverlay="${config}"
+	check_nanomodoverlay
 else	NO_NANOMODOVERLAY=1
 	nanomodoverlay="${INSTALLER}/.nanomod-overlay"
 fi
