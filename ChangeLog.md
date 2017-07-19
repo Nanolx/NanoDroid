@@ -33,6 +33,7 @@
   * Yalp Store (0.19)
   * Simple Gallery (2.12.2)
   * OpenVPN (0.6.73)
+  * NewPipe (0.9.10)
 
 ## 11.1.201707714
 * Bug Fixes
