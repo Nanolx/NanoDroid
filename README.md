@@ -71,6 +71,8 @@ NanoMod includes
 * **NanoMod-patcher**: includes
   * on-device framework-patcher
   * creates the file `/system/.nanomod-patcher` after successful patching
+* **NanoMod-setupwizard**: includes
+  * AROMA based Setup Wizard to create the configuration files
 * **NanoMod-uninstaller**: includes
   * uninstalls any NanoMod Magisk Module
   * uninstalls NanoMod installed in System Mode aswell
