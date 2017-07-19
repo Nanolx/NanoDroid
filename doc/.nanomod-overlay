@@ -1,4 +1,3 @@
-APPS=(
 BasicDreams
 Browser
 Calendar
@@ -21,9 +20,6 @@ Wallpaper
 WallpaperBackup
 WallpaperPickerGoogle
 messaging
-)
-
-PRIV_APPS=(
 FMRadio
 Gallery2
 OmniSwitch
@@ -33,4 +29,3 @@ Snap
 SnapdragonCamera
 SoundRecorder
 mGerrit
-)
