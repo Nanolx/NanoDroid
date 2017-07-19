@@ -22,6 +22,12 @@ apps_add () {
 	fi
 }
 
+overlay_add () {
+	if grep -q "item.1.${1}=1" "${debloat_prop}"; then
+		echo "${2}" >> "${nanomod_overlay}"
+	fi
+}
+
 if (is_mounted /data); then
 	mount -orw,remount /data >/dev/null
 else	mount -orw /data >/dev/null
@@ -87,5 +93,35 @@ apps_add 23 Termux
 apps_add 24 Twidere
 apps_add 25 XDALabs
 apps_add 26 YahooWeatherProvider
+
+overlay_add 1 BasicDreams
+overlay_add 2 Browser
+overlay_add 3 Calendar
+overlay_add 4 Camera2
+overlay_add 5 CMFileManager
+overlay_add 6 Eleven
+overlay_add 7 Email
+overlay_add 8 Exchange2
+overlay_add 9 FMRadio
+overlay_add 10 Gallery2
+overlay_add 11 Gello
+overlay_add 12 Jelly
+overlay_add 13 messaging
+overlay_add 14 mGerrit
+overlay_add 15 OmniSwitch
+overlay_add 16 Phonograph
+overlay_add 17 PhotoTable
+overlay_add 18 Recorder
+overlay_add 19 ResurrectionStats
+overlay_add 20 Screencast
+overlay_add 21 Slimperience
+overlay_add 22 Snap
+overlay_add 23 SnapdragonCamera
+overlay_add 24 SoundRecorder
+overlay_add 25 Stk
+overlay_add 26 ViaBrowser
+overlay_add 27 Wallpaper
+overlay_add 28 WallpaperBackup
+overlay_add 29 WallpaperPickerGoogle
 
 exit 0
