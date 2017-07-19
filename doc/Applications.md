@@ -51,7 +51,7 @@ on your device, in one of the following directories
 
 All applications listed in that file will be installed. See the default settings [![GitHub Link](github.png)](.nanomod-apps), which are used when no `.nanomod-apps` configuration file was found. The syntax is pretty simple:
 
-* everything inside `INSTALL_APPS="..."` variable
+* one app per line
 * name must be an exact match
 
 applications managed by other setup variables (F-Droid, microG, PlayStore) are not effected by this file.
