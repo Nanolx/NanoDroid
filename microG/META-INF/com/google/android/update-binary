@@ -145,7 +145,7 @@ check_nanomodsetup () {
 check_nanomodoverlay () {
 	if grep -q "APPS=(" "${nanomodoverlay}"; then
 		ui_print " ++ migrating ${nanomodoverlay} to new format"
-		sed -e 's/^.*_APPS=//;s/(//g;s/)//g' -i "${nanomodoverlay}"
+		sed -e 's/^.*APPS=//;s/(//g;s/)//g' -i "${nanomodoverlay}"
 		sed '/^\s*$/d' -i "${nanomodoverlay}"
 	fi
 }
