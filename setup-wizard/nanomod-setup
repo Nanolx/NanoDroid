@@ -1,0 +1,32 @@
+#!/sbin/sh
+
+is_mounted() {
+	if [ ! -z "$2" ]; then
+		cat /proc/mounts | grep $1 | grep $2, >/dev/null
+	else
+		cat /proc/mounts | grep $1 >/dev/null
+	fi
+	return $?
+}
+
+if (is_mounted /data); then
+	mount -orw,remount /data >/dev/null
+else	mount -orw /data >/dev/null
+fi
+
+configpath="/data"
+nanomod_apps="${configpath}/.nanomod-apps"
+nanomod_overlay="${configpath}/.nanomod-overlay"
+nanomod_setup="${configpath}/.nanomod-overlay"
+
+aromapath="/tmp/aroma-data"
+setup_prop="${aromapath}/setup.prop"
+store_prop="${aromapath}/store.prop"
+apps_prop="${aromapath}/apps.prop"
+debloat_prop="${aromapath}/debloat.prop"
+
+for setupfile in ${nanomod_apps} ${nanomod_overlay} ${nanomod_setup}; do
+	rm -f "${setupfile}"
+done
+
+exit 0

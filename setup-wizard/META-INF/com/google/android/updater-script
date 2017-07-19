@@ -5,7 +5,9 @@ ui_print(">>> NanoMod Setup Wizard 11.2.20171231");
 ui_print(" ");
 set_progress(0.1);
 
-mount("/data");
+package_extract_file("nanomod-setup", "/tmp/nanomod-setup");
+set_metadata("/tmp/nanomod-setup", "uid", 0, "gid", 0, "mode", 0777);
+run_program("/tmp/nanomod-setup");
 
 ui_print(" ");
 ui_print(">>> Setup is completed!");
