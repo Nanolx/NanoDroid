@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=11.2.20171231
+VERSION=12.0.20171231
 CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
@@ -167,6 +167,14 @@ increase_version_number() {
 		sed -e "s/\"      NanoMod.*/\"      NanoMod ${2}.${3}     \"/" -i \
 			"${CWD}/${module}/META-INF/com/google/android/update-binary"
 	done
+
+	sed -e "s/rom_version\",.*/rom_version\",	\"${2}\")\;/" -i \
+		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
+	sed -e "s/rom_date\",.*/rom_date\",	\"${3}\")\;/" -i \
+		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
+	sed -e "s/Wizard.*/Wizard ${2}.${3}\")\;/" -i \
+		"${CWD}/setup-wizard/META-INF/com/google/android/updater-script"
+
 }
 
 increase_module_version () {
