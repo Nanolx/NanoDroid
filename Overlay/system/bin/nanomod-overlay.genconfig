@@ -5,20 +5,11 @@ if [[ ! -f "${config}" ]]; then
 	APPS=($(find "${MODPATH}/system/app" -name "*.replace"))
 	PRIV_APPS=($(find "${MODPATH}/system/priv-app" -name "*.replace"))
 
-	APPS=("${APPS[@]}" "${ADD_APPS[@]}")
-	PRIV_APPS=("${PRIV_APPS[@]}" "${ADD_PRIV_APPS[@]}")
-
-	echo "APPS=(" > "${config}"
-
 	if [[ ${APPS[*]} != "" ]]; then
 		for app in "${APPS[@]}"; do
 			echo "$(dirname "${app}")" >> "${config}"
 		done
 	fi
-
-	echo ")
-
-PRIV_APPS=(" >> "${config}"
 
 	if [[ ${PRIV_APPS[*]} != "" ]]; then
 		for app in "${PRIV_APPS[@]}"; do
@@ -26,8 +17,5 @@ PRIV_APPS=(" >> "${config}"
 		done
 	fi
 
-	echo ")" >> "${config}"
-
 	sed -e "s,.*/system,/system,g" -i "${config}"
-
 fi

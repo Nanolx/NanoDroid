@@ -1,16 +1,14 @@
 #!@MODPATH@/system/bin/bash
 
 source "${MODPATH}/system/bin/nanomod-overlay.functions"
-source "${config}"
 
 if [[ -d /system/app/${1} ]]; then
 	echo "Adding override for app: \"${1}\""
-	ADD_APPS=("${ADD_APPS[@]}" "${1}")
-	nanomod-overlay.genconfig
+	echo "${1}" >> "${config}"
 	add_override "app/${1}"
 elif [[ -d /system/priv-app/${1} ]]; then
 	echo "Adding override for priv-app \"${1}\""
-	ADD_PRIV_APPS=("${ADD_PRIV_APPS[@]}" "${1}")
+	echo "${1}" >> "${config}"
 	add_override "priv-app/${1}"
-else	echo "\"${1}\" not found in /system/app or /system/priv-app"
+else	echo "app \"${1}\" is not installed"
 fi
