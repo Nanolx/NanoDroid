@@ -2,55 +2,10 @@
 
 By using this package, you take full responsibility of it's use, I (setialpha/Nanolx) am not responsible of any damage this package may cause to your device.
 
-
 <@center><b><#selectbg_g>Read before installation</#>
 <@left>
-Welcome to the NanoROM Installer Package.
+Welcome to the NanoMod Setup Wizard.
 
-With this Aroma installer you can install NanoROM and choose AddOns.
+With this Aroma installer you will create NanoMod configuratio nfiles.
 
 Check "I Agree with this" and press Next.
-
-
-<@center><#selectbg_g>ChangeLog:</#></b>
-<@left>
-7.0.2 20170302
-
-updated applications:
-- Twidere (3.4.29)
-- Face Slim (3.1.0)
-- Lightning (4.4.2)
-- Open Camera (1.37)
-- NewPipe (0.8.10)
-- F-Droid (0.102.1)
-- K9-Mail (5.205)
-- VLC (2.1.1~beta)
-- Nominatim Nlp Backend (1.2.1)
-  - only installed with microG
-
-updated system components:
-- PlayStore (7.6.07.N)
-- microG GmsCore (0.24-79)
-- non-debug build for microG GsfProxy
-- Magisk (12~beta.20170301)
-- MagiskManager (5~beta.20170228)
-
-added system components:
-- YalpStore (0.9)
-- FakeStore (0.0.2)
-
-installer changes:
-- allow installation of microG with:
-  a] PlayStore [default]
-  b] YalpStore + FakeStore [optional]
-    - for most google free experience,
-      no purchases can be made or other
-      PlayStore only things. FakeStore
-      mocks the existence of PlayStore
-      and allows the use of SafetyNet
-      (MagiskHide let's it pass), while
-      YalpStore let's you download or
-      update your PlayStore apps
-
-other changes:
-- minor bugfixes
