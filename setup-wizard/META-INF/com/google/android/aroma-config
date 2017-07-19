@@ -1,0 +1,213 @@
+ini_set("rom_name",	"NanoMod Setup Wizard");
+ini_set("rom_version",	"11.2");
+ini_set("rom_author",	"setialpha");
+ini_set("rom_device",	"Generic (LOS/AOSP)");
+ini_set("rom_date",	"20171231");
+
+anisplash(
+    0, "splash/nanolx.png", 1500
+);
+
+fontresload( "0", "ttf/DroidSans.ttf;", "12" );
+theme("touchwiz");
+
+viewbox(
+	"Welcome",
+	"Relevant information of the Package:\n\n"+
+	"	Rom\t		<b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
+	"	Version\t		<b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
+	"	Date\t		<b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n\n"+
+	"<b><#f00>"+ini_get("rom_device")+"</#></b>\n\n\n",
+	"@welcome"
+);
+
+agreebox(
+  #-- Title
+    "READ THIS",
+  
+  #-- Subtitle / Description
+    "Please read before going further",
+  
+  #-- Icon
+    "@license",
+  
+  #-- Text Content ( Read from <AROMA Resource Dir>/license.txt )
+    resread("license.txt"),
+  
+  #-- Checkbox Text
+    "I Agree with this",
+  
+  #-- Unchecked Alert Message
+    "Please check the Agree box first"
+);
+
+checkbox(
+	"Generic Setup",
+	"Generic Setup",
+	"icons/update",
+	"setup.prop",
+
+	"Adjust the basic settings", "", 2, #-- Group 1
+	"microG",	"Install microG OSS GApps re-implementation",		1,
+	"F-Droid",	"Install F-Droid FOSS App Store",			1,
+	"Apps",		"Install Apps (customized later)",			1,
+	"Overlay",	"[Magisk] Pseudo-Debloat Apps (customized later)",	1,
+	"Zelda Tunes",	"Install The Legend of Zelda rintones and sounds",	1,
+	"Maps API v1",	"Install Google Maps API version 1",			1,
+	"Init Scripts",	"Install init scripts",					1,
+	"Google Sync",	"Install Google Contacts & Calendar Sync",		0,
+	"Swipe",	"Install Swipe libraries",				0,
+	"Force System",	"Force System Mode Installation",			0
+);
+
+selectbox(
+	"Google App Store",
+	"Google App Store",
+	"icons/update",
+	"store.prop",
+
+	"Select the Google App Store you want", "", 2, #-- Group 1. key = "selected.1"
+	"None",		"Install no Google App Store",			0,	#-- selected.1 = 1
+	"Play Store",	"Install official Play Store",			1,	#-- selected.1 = 2
+	"Yalp Store",	"Install unofficial Yalp Store (+ Fake Store)",	0	#-- selected.1 = 3
+);
+
+checkbox(
+	"App Setup",
+	"App Setup",
+	"icons/update",
+	"apps.prop",
+
+	"Select which Apps to install (if enabled)", "", 2, #-- Group 1
+	"AdAway",			"Powerful ad blocker (requires root)",	1,
+	"Amaze",			"Amazing File Manager",			1,
+	"AnysoftKeyboard",		"Powerful Keyboard",			1,
+	"FaceSlim",			"Facebook client",			1,
+	"HackerKeyboard",		"Full-flechted PC-like Keyboard",	1,
+	"K9Mail",			"Powerful Mail client",			1,
+	"KeePassDroid",			"Password Safe",			1,
+	"KernelAdiutor",		"Customize Kernel Settings",		1,
+	"Lightning",			"Blazing fast Web Browser",		1,
+	"MPV",				"Video Player",				1,
+	"NewPipe",			"YouTube frontend and downloader",	1,
+	"Oandbackup",			"Backup and Restore Apps",		1,
+	"Odyssey",			"Feature-Rich Music Player",		1,
+	"OpenCamera",			"Feature-Rich Camera",			1,
+	"OpenKeyChain",			"Encrypt or Sign E-Mails",		1,
+	"OpenLauncher",			"Customizable Launcher",		1,
+	"OpenWeatherMapProvider",	"Use OpenWeatherMap for Wheather Data",	1,
+	"OpenVPN",			"Connect to VPNs",			1,
+	"QKSMS",			"Great SMS / MMS messenger",		1,
+	"SimpleCalendar",		"Easy to use Calendar",			1,
+	"SimpleGallery",		"Easy to use Gallery",			1,
+	"Substratum",			"Substratum theme engine App",		1,
+	"Termux",			"Powerful Terminal Emulator",		1,
+	"Twidere",			"Customizable Twitter Client",		1,
+	"XDA Labs",			"XDA at the palm of your hands",	1,
+	"YahooWeatherProvider",		"Use Yahoo! for Wheather Data",		1
+);
+
+checkbox(
+	"App Setup",
+	"App Setup",
+	"icons/update",
+	"apps.prop",
+
+	"Select which Apps to install (if enabled)", "", 2, #-- Group 1
+	"AdAway",			"Powerful ad blocker (requires root)",	1,
+	"Amaze",			"Amazing File Manager",			1,
+	"AnysoftKeyboard",		"Powerful Keyboard",			1,
+	"FaceSlim",			"Facebook client",			1,
+	"HackerKeyboard",		"Full-flechted PC-like Keyboard",	1,
+	"K9Mail",			"Powerful Mail client",			1,
+	"KeePassDroid",			"Password Safe",			1,
+	"KernelAdiutor",		"Customize Kernel Settings",		1,
+	"Lightning",			"Blazing fast Web Browser",		1,
+	"MPV",				"Video Player",				1,
+	"NewPipe",			"YouTube frontend and downloader",	1,
+	"Oandbackup",			"Backup and Restore Apps",		1,
+	"Odyssey",			"Feature-Rich Music Player",		1,
+	"OpenCamera",			"Feature-Rich Camera",			1,
+	"OpenKeyChain",			"Encrypt or Sign E-Mails",		1,
+	"OpenLauncher",			"Customizable Launcher",		1,
+	"OpenWeatherMapProvider",	"Use OpenWeatherMap for Wheather Data",	1,
+	"OpenVPN",			"Connect to VPNs",			1,
+	"QKSMS",			"Great SMS / MMS messenger",		1,
+	"SimpleCalendar",		"Easy to use Calendar",			1,
+	"SimpleGallery",		"Easy to use Gallery",			1,
+	"Substratum",			"Substratum theme engine App",		1,
+	"Termux",			"Powerful Terminal Emulator",		1,
+	"Twidere",			"Customizable Twitter Client",		1,
+	"XDA Labs",			"XDA at the palm of your hands",	1,
+	"YahooWeatherProvider",		"Use Yahoo! for Wheather Data",		1
+);
+
+checkbox(
+	"Pseudo-Debloat Setup",
+	"Pseudo-Debloat Setup",
+	"icons/update",
+	"debloat.prop",
+
+	"Select which Apps to Pseudo-Debloat [Magisk] (if enabled)", "", 2, #-- Group 1
+	"BasicDreams",			"",	1,
+	"Browser",			"",	1,
+	"Calendar",			"",	1,
+	"CMFileManager",		"",	1,
+	"Camera2",			"",	1,
+	"Eleven",			"",	1,
+	"Email",			"",	1,
+	"Exchange2",			"",	1,
+	"Gallery2",			"",	1,
+	"Gello",			"",	1,
+	"Jelly",			"",	1,
+	"Phonograph",			"",	1,
+	"PhotoTable",			"",	1,
+	"ResurrectionStats",		"",	1,
+	"Slimperience",			"",	1,
+	"SoundRecorder",		"",	1,
+	"Stk",				"",	1,
+	"ViaBrowser",			"",	1,
+	"Wallpaper",			"",	1,
+	"WallpaperBackup",		"",	1,
+	"WallpaperPickerGoogle",	"",	1,
+	"messaging",			"",	1,
+	"FMRadio",			"",	1,
+	"Gallery2",			"",	1,
+	"OmniSwitch",			"",	1,
+	"Recorder",			"",	1,
+	"Screencast",			"",	1,
+	"Snap",				"",	1,
+	"SnapdragonCamera",		"",	1,
+	"SoundRecorder",		"",	1,
+	"mGerrit",			"",	1
+);
+
+viewbox(
+    "Ready",
+    "The wizard is ready to begin the process.\n\n"+
+	"Press <b>Next</b> to begin the process.\n\n"+
+	"If you want to review or change any of your selection, press <b>Back</b>.",
+    "@install"
+);
+
+setvar("retstatus",
+  install(
+	#-- Title
+      "Please Wait...",
+	
+	#-- Installation Process message
+	  "<b>"+ini_get("rom_name")+"</b>\n\n"+
+      "Please wait while processing your selection.",
+	
+	#-- Installation Icon
+      "@install",
+	
+	#-- Installation Finish Message
+      "The process has successfully ended.
+	   Press Next to continue."
+  )
+);
+
+ini_set("text_next", "Finish");
+
+#---- FINISH

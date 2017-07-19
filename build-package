@@ -139,6 +139,20 @@ create_uninstaller_package() {
 	echo "Zipfile ${ZIP} created"
 }
 
+create_setupwizard_package() {
+	ZIP="${CWD}/NanoMod-setupwizard-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	cd "${CWD}/setup-wizard"
+	zip_add
+	cd "${CWD}"
+
+	zip_add README.md
+	zip_add ChangeLog.md
+
+	echo "Zipfile ${ZIP} created"
+}
+
 increase_version_number() {
 	sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i "${CWD}/build-package"
 
@@ -176,6 +190,7 @@ possible opts:
 	fdroid			| create module zip from repo *fdroid only*
 	patcher			| create framework-patcher zip from repo
 	uninstaller		| create uninstaller zip from repo
+	setupwizard		| create setup-wizard zip from repo
 	all			| create all zips from repo
 	ver	[ver] [date]	| bump version
 	bump			| bump versionCode in Magisk Modules
@@ -195,12 +210,14 @@ for opt in ${@}; do
 		fdroid )	create_fdroid_package		;;
 		patcher )	create_patcher_package		;;
 		uninstaller )	create_uninstaller_package	;;
+		setupwizard )	create_setupwizard_package	;;
 		all )
 			create_full_package
 			create_microg_package
 			create_fdroid_package
 			create_patcher_package
 			create_uninstaller_package
+			create_setupwizard_package
 		;;
 		*)		show_help			;;
 	esac

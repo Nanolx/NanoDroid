@@ -1,0 +1,15 @@
+show_progress(1.000000, 0);
+set_progress(0.0);
+ui_print(" ");
+ui_print(">>> NanoMod Setup Wizard 11.2.20171231");
+ui_print(" ");
+set_progress(0.1);
+
+mount("/data");
+
+ui_print(" ");
+ui_print(">>> Setup is completed!");
+ui_print(">>> Thanks for using NanoMod");
+ui_print(" ");
+
+set_progress(1.0);
