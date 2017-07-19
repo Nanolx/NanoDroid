@@ -32,6 +32,7 @@
   * Amaze (3.1.2-rc4)
   * Yalp Store (0.19)
   * Simple Gallery (2.12.2)
+  * OpenVPN (0.6.73)
 
 ## 11.1.201707714
 * Bug Fixes
