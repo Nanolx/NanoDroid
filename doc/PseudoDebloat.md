@@ -44,10 +44,8 @@ on your device, in one of the following directories
 
 See the default settings [![GitHub Link](github.png)](.nanomod-overlay). The syntax is pretty simple:
 
-* one item per line
+* one app per line
 * name must be an exact match
-* applications in `/system/app` inside `APPS=( ... )`
-* applications in `/system/priv-app` inside `PRIV_APPS=( ... )`
 
 After you've made your changes, issue the following command on your device, either using `adb shell` or **Termux** as root:
 
