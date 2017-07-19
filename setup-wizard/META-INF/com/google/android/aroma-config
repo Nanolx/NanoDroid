@@ -103,7 +103,7 @@ checkbox(
 	"Substratum",			"Substratum theme engine App",		1,
 	"Termux",			"Powerful Terminal Emulator",		1,
 	"Twidere",			"Customizable Twitter Client",		1,
-	"XDA Labs",			"XDA at the palm of your hands",	1,
+	"XDALabs",			"XDA at the palm of your hands",	1,
 	"YahooWeatherProvider",		"Use Yahoo! for Wheather Data",		1
 );
 
