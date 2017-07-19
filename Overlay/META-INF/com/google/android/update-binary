@@ -149,10 +149,9 @@ check_nanomodsetup () {
 # check whether '.nanomod-apps' has new format
 # and update if required
 check_nanomodapps () {
-	if ! grep -q INSTALL_APPS "${nanomodapps}"; then
+	if grep -q INSTALL_APPS "${nanomodapps}"; then
 		ui_print " ++ migrating ${nanomodapps} to new format"
-		sed '1s/^/INSTALL_APPS=\"/' -i "${nanomodapps}"
-		sed -e '${s/$/\"/}' -i "${nanomodapps}"
+		sed -e 's/^INSTALL_APPS=//;s/\"//g' -i "${nanomodapps}"
 	fi
 }
 
@@ -400,6 +399,7 @@ install_apps () {
 	if [ "${nanomod_apps}" -eq 1 ]; then
 		ui_print " << with applications"
 		APP_STRING=" <<>"
+		INSTALL_APPS=$(cat "${nanomodapps}")
 		for app in ${INSTALL_APPS}; do
 			APP_STRING="${APP_STRING} ${app}, "
 		done
