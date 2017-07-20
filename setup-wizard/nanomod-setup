@@ -28,11 +28,6 @@ overlay_add () {
 	fi
 }
 
-if (is_mounted /data); then
-	mount -orw,remount /data >/dev/null
-else	mount -orw /data >/dev/null
-fi
-
 aromapath="/tmp/aroma-data"
 setup_prop="${aromapath}/setup.prop"
 store_prop="${aromapath}/store.prop"
@@ -46,6 +41,10 @@ elif grep -q "selected.1=2" "${location_prop}"; then
 	configpath="/external_sd"
 elif grep -q "selected.1=3" "${location_prop}"; then
 	configpath="/data"
+	if (is_mounted /data); then
+		mount -orw,remount /data >/dev/null
+	else	mount -orw /data >/dev/null
+	fi
 fi
 
 nanomod_apps="${configpath}/.nanomod-apps"
