@@ -71,12 +71,12 @@ create_microg_package() {
 
 	cd "${CWD}"
 
-	cd "${CWD}/microg"
+	cd "${CWD}/microG"
 	zip_add
 	cd "${CWD}"
 
-	zip _add README.md
-	zip _add ChangeLog.md
+	zip_add README.md
+	zip_add ChangeLog.md
 
 	cd "${CWD}/doc"
 	zip_add .nanomod-overlay
