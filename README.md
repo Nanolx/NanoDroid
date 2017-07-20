@@ -6,10 +6,10 @@
 
 ## Downloads
 
-* Stable Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/f/NanoMod_Stable)
-  * Archived Stable Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/f/NanoMod_StableArchive)
-* Stable Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/f/NanoMod_Beta)
-  * Archived Beta Downloads [![Androidfilehost Link](doc/afh.png)](https://www.androidfilehost.com/f/NanoMod_BetaArchive)
+* Stable Downloads [Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Stable)
+  * Archived Stable Downloads [Androidfilehost](https://www.androidfilehost.com/f/NanoMod_StableArchive)
+* Stable Downloads [Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Beta)
+  * Archived Beta Downloads [Androidfilehost](https://www.androidfilehost.com/f/NanoMod_BetaArchive)
 * Snapshot
   * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
     * `build-package full` for the full package
@@ -22,17 +22,17 @@
 
 ## Support
 
-XDA Support Thread [![XDA Link](doc/xda.png)](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928)
+XDA [Support Thread](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928)
 
 ## ChangeLog
 
-ChangeLog.md [![GitHub Link](doc/github.png)](ChangeLog.md)
+ChangeLog.md [> GitHub](ChangeLog.md)
 
 ## Summary
 
 **NanoMod** can be installed as a Magisk Module or directly to /system, though a bit functionality is only available with Magisk.
 
-More information about Magisk [![XDA Link](doc/xda.png)](https://forum.xda-developers.com/apps/magisk)
+More information about Magisk [> XDA](https://forum.xda-developers.com/apps/magisk)
 
 NanoMod includes
 
@@ -44,7 +44,7 @@ NanoMod includes
 * modified Play Store to allow (in-)app-purchases with microG
   * this required two steps
     * microG Gms Core and Play Store need to be signed with the same key
-    * Play Store needs to be modified see the [patch](doc/Phonesky.diff)
+    * Play Store needs to be modified see the [> patch](doc/Phonesky.diff)
   * alternatively Yalp Store can be installed instead
 * custom init scripts
 * pseudo-debloat feature (Magisk-only)
@@ -73,6 +73,10 @@ NanoMod includes
   * creates the file `/system/.nanomod-patcher` after successful patching
 * **NanoMod-setupwizard**: includes
   * AROMA based Setup Wizard to create the configuration files
+  * user can choose where to store the configuration files
+    * `/sdcard`
+    * `/external_sd`
+    * `/data` (fallback)
 * **NanoMod-uninstaller**: includes
   * uninstalls any NanoMod Magisk Module
   * uninstalls NanoMod installed in System Mode aswell
@@ -104,7 +108,7 @@ The `nanomod-overlay` script handles the following features
   * both in Magisk and System Mode
 * issue `nanomod-overlay --help` for the full list of options
 
-Full details on the pseudo-debloat feature [![GitHub Link](doc/github.png)](doc/PseudoDebloat.md)
+Full details on the pseudo-debloat feature [> Details](doc/PseudoDebloat.md)
 
 #### init scripts
 
@@ -163,38 +167,38 @@ Other shell utilities
 
 ### microG
 
-microG is an Open Source replacement for Google Services, full details can be found at the microG homepage [![Web Link](doc/microg.png)](http://microg.org/)
+microG is an Open Source replacement for Google Services, full details can be found at the microG homepage [> Website](http://microg.org/)
 
 NanoMod includes microG as follows
 
-* microG GmsCore [![GitHub Link](doc/github.png)](https://github.com/microg/android_packages_apps_GmsCore) and Play Store [![APK Mirror Link](doc/apkmirror.png)](https://www.apkmirror.com/apk/google-inc/google-play-store/)  modified to allow (in-)app purchases
-* with **Mozilla** location provider backend [![F-Droid Link](doc/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
-* with **Nominatim** adress provider backend [![F-Droid Link](doc/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
-* with **microG** GsfProxy [![GitHub Link](doc/github.png)](https://github.com/microg/android_packages_apps_GsfProxy)
-* with **microG** DroidGuard Helper [![GitHub Link](doc/github.png)](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
+* microG GmsCore [> GitHub](https://github.com/microg/android_packages_apps_GmsCore) and Play Store [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/)  modified to allow (in-)app purchases
+* with **Mozilla** location provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
+* with **Nominatim** adress provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
+* with **microG** GsfProxy [> GitHub](https://github.com/microg/android_packages_apps_GsfProxy)
+* with **microG** DroidGuard Helper [> GitHub](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
   * required for SafetyNet support
 * support for Maps API version 1
 * support for Google Calendar and Contacts Sync
   * disabled by default
 * optional Swipe libraries
   * disabled by default
-* choose between official **Play Store** or unofficial **Yalp Store** [![F-Droid Link](doc/fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
+* choose between official **Play Store** or unofficial **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
     * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
 
 ### F-Droid and Applications
 
-F-Droid [![F-Droid Link](doc/fdroid.png)](http://www.fdroid.org) is an app store for Open Source applications.
+F-Droid [> Website](http://www.fdroid.org) is an app store for Open Source applications.
 
-NanoMod includes both F-Droid and it's Privileged Extension [![F-Droid Link](fdroid.png)](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged), so you don't need to enable `Unknown Sources`.
+NanoMod includes both F-Droid and it's Privileged Extension [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged), so you don't need to enable `Unknown Sources`.
 
-Additionally NanoMod includes a variety of applications, check full details [![GitHub Link](doc/github.png)](doc/Applications.md)
+Additionally NanoMod includes a variety of applications, check full details [> GitHub](doc/Applications.md)
 
 ### The Legend of Zelda ringtones and sounds
 
-NanoMod includes **The Legend of Zelda** [![Nintendo Link](doc/zelda.png)](http://www.zelda.com/) ringtones and sounds, because it's dangerous to root alone.
+NanoMod includes **The Legend of Zelda** [> Nintendo](http://www.zelda.com/) ringtones and sounds, because it's dangerous to root alone.
 
-Full details [![GitHub Link](doc/github.png)](doc/ZeldaSounds.md)
+Full [> Details](doc/ZeldaSounds.md)
 
 ## Installation
 
@@ -202,7 +206,7 @@ Full details [![GitHub Link](doc/github.png)](doc/ZeldaSounds.md)
 
 NanoMod supports altering the installation settings to a certain degree.
 
-Full details on altering installation [![GitHub Link](doc/github.png)](doc/AlterInstallation.md)
+Full details on altering installation [> Details](doc/AlterInstallation.md)
 
 ### Installation Process
 
@@ -229,7 +233,7 @@ If your ROM does not have signature spoofing support, you can manually patch it 
   * the on-device framework-patcher zip
     * flash after booting into the ROM once
   * the `framework-patcher.sh` script (found in the github repository)
-    * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [![GitHub Link](doc/github.png)](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified **services.jar** on the device.
+    * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified **services.jar** on the device.
 
 Both patchers support installing the patched services.jar into the following locations
   * NanoMod Magisk Module
@@ -254,7 +258,7 @@ Once your ROM supports signature spoofing, you need to setup microG like this
 
 ## License & Credits
 
-My own work (NanoMod itself) is licensed under the GNU General Public License version 3 or newer [![GNU Link](doc/gnu.png)](https://www.gnu.org/licenses/gpl-3.0.txt)
+My own work (NanoMod itself) is licensed under the GNU General Public License version 3 or newer [> GNU](https://www.gnu.org/licenses/gpl-3.0.txt)
 
 For more details (including authors and license) on every provided application or Software press the icon next to it.
 
@@ -275,7 +279,7 @@ Special Thanks to the beta testers
 List of known issues
 
 * microG DroidGuard Helper or Play Store crashing
-  * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as `/system` application, see Magisk Issue 155 [![GitHub Link](doc/github.png)](https://github.com/topjohnwu/Magisk/issues/155)
+  * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as `/system` application, see Magisk Issue 155 [> GitHub](https://github.com/topjohnwu/Magisk/issues/155)
   * this does not happen on all devices
   * if you are affected of this issue, instead install them as an user app, by installing the apk from
     * `/system/priv-app/DroidGuard/DroidGuard.apk` for microG DroidGuard Helper
@@ -301,9 +305,7 @@ Additional [helpful information](https://github.com/microg/android_packages_apps
 
 ## TODO
 
-* full x86/x86_64 support
-* better error handling in on-pc framework-patcher
-* easier setup process
+* better error handling in **on-pc** framework-patcher
 
 ## FAQ
 

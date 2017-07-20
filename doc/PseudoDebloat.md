@@ -30,7 +30,7 @@ The following applications are pseudo-debloated by default
 
 **This feature is only available when installing as Magisk Module!**
 
-You can add or remove applications from the list by modifying the file
+You can pseudo-debloat applications by adding them to configuration file
 
 `.nanomod-overlay`
 
@@ -42,7 +42,11 @@ on your device, in one of the following directories
 * directory containing the zip file
 * `/data` (fallabck)
 
-See the default settings [![GitHub Link](github.png)](.nanomod-overlay). The syntax is pretty simple:
+See the [default settings](.nanomod-overlay).
+
+Alternatively you can also use the NanoMod-setupwizard package instead of manual creation of the configuration file.
+
+The syntax is pretty simple:
 
 * one app per line
 * name must be an exact match

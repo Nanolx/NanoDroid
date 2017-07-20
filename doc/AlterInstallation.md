@@ -12,9 +12,9 @@ on your device, in one of the following directories
 * `/persist`
 * `/external_sd` (TWRP path to SD Card (if any))
 * directory containing the zip file
-* `/data` (fallabck)
+* `/data` (fallback)
 
-populate it with the following content for the **full** package
+create it manually with the following content for the **full** package
 
 ```
 nanomod_microg=1
@@ -47,7 +47,9 @@ the **F-Droid** package supports the following options
 nanomod_forcesystem=0
 ```
 
-where `1` means `on` and `0` means `off`. If no `.nanomod-setup` is found, the default settings [![GitHub Link](github.png)](.nanomod-setup) will be used (equals to the example above), if your `.nanomod-setup` file exists, but is missing entries, those entries will be added, using the default values.
+where `1` means `on` and `0` means `off`. If no `.nanomod-setup` is found, the [default settings](.nanomod-setup) will be used (equals to the example above), if your `.nanomod-setup` file exists, but is missing entries, those entries will be added, using the default values.
+
+Alternatively you can also use the NanoMod-setupwizard package instead of manual creation of the configuration file.
 
 ## Detailed Description
 
@@ -61,7 +63,7 @@ whether to provide **F-Droid**
 
 `nanomod_apps=[0|1]`
 
-whether to provide included applications [![GitHub Link](doc/github.png)](doc/Applications.md)
+whether to provide included applications [> Details](doc/Applications.md)
 
 `nanomod_play=[0|1|2]`
 
