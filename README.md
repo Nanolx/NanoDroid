@@ -8,7 +8,7 @@
 
 * Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Stable)
   * Archived Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_StableArchive)
-* Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Beta)
+* Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Beta)
   * Archived Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_BetaArchive)
 * Snapshot
   * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
