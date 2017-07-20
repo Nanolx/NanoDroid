@@ -6,10 +6,10 @@
 
 ## Downloads
 
-* Stable Downloads [Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Stable)
-  * Archived Stable Downloads [Androidfilehost](https://www.androidfilehost.com/f/NanoMod_StableArchive)
-* Stable Downloads [Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Beta)
-  * Archived Beta Downloads [Androidfilehost](https://www.androidfilehost.com/f/NanoMod_BetaArchive)
+* Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Stable)
+  * Archived Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_StableArchive)
+* Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Beta)
+  * Archived Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_BetaArchive)
 * Snapshot
   * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
     * `build-package full` for the full package
@@ -22,11 +22,11 @@
 
 ## Support
 
-XDA [Support Thread](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928)
+[> XDA](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928) Support Thread
 
 ## ChangeLog
 
-ChangeLog.md [> GitHub](ChangeLog.md)
+Full, user-readible [> ChangeLog](ChangeLog.md)
 
 ## Summary
 
@@ -301,7 +301,7 @@ List of known issues
     * do a clean flash of your ROM (, Magisk) and NanoMod and install your apps after microG setup
     * uninstall and re-install all your applications (backup application data if required)
 
-Additional [helpful information](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information) from the microG wiki.
+Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
 
 ## TODO
 
