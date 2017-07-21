@@ -281,7 +281,7 @@ magisk_install_postinst () {
 
 	if [ -f /tmp/services.jar ]; then
 		ui_print " << restoring patched services.jar"
-		mkdir $MODPATH/system/framework
+		mkdir -p $MODPATH/system/framework
 		cp /tmp/services.jar \
 			$MODPATH/system/framework/services.jar
 		rm /tmp/services.jar
