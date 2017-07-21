@@ -12,7 +12,7 @@
     * further fixes to `nanomod-overlay -g`
     * remove `nanomod_reinstall` parameter for `.nanomod-setup` configuration file (Magisk-only)
       * `services.jar` will now be auto backed up and restored during NanoMod Magisk Module update when `/system/.nanomod-patcher` exists
-      * `services.jar` will be removed from NanoMod Magisk Module (which indicates ROM update), print a message to the user accordingly
+      * `services.jar` will be removed from NanoMod Magisk Module when `/system/.nanomod-patcher` is missing (which indicates ROM update), print a message to the user accordingly
 * General Changes
   * Configuration Files:
     * `.nanomod-apps` layout simplified, now only one app per line, nothing else
@@ -27,8 +27,11 @@
     * provide `less` pager with `lessecho` and `lesskey` utils
     * make `less` the default `PAGER` for GNU Bash
     * make default `TERM` for GNU Nano `xterm`
-  * Setup Wizard (in-progress):
-    * AROMA based Setup Wizard to create all three configuration files in `/data`
+  * Setup Wizard:
+    * AROMA based Setup Wizard to create the configuration files in either
+      * `/sdcard`
+      * `/external_sd`
+      * `/data` (fallback)
   * renamed `mod.sh` to `build-package`
     * revised code, removed cruft
     * add multi-param support, for example `build-package fdroid microg` will create those two package in one go
