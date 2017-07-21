@@ -14,17 +14,35 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	alias sed=gsed
 fi
 
+progress () {
+	sleep 0.5
+	while [ -d "/proc/${1}" ];do
+		echo -ne '/\x08' ; sleep 0.05
+		echo -ne '-\x08' ; sleep 0.05
+		echo -ne '\\\x08' ; sleep 0.05
+		echo -ne '|\x08' ; sleep 0.05
+	done
+}
+
 zip_add () {
 	case ${1} in
-		*/ )	zip -r "${ZIP}" ${1} || exit 1	;;
-		"" )	zip -r "${ZIP}" * || exit 1	;;
-		*  )	zip "${ZIP}" ${1} || exit 1	;;
+		*/ )	zip -r "${ZIP}" ${1} &>/dev/null || exit 1 ;;
+		"" )	zip -r "${ZIP}" * &>/dev/null    || exit 1 ;;
+		*  )	zip "${ZIP}" ${1} &>/dev/null    || exit 1 ;;
 	esac
 }
 
 create_full_package () {
 	ZIP="${CWD}/NanoMod-${VERSION}".zip
 	rm -f "${ZIP}"
+
+	echo "
+Creating Package
+
+	Type		Full
+	Name		$(basename ${ZIP})
+	Directory	$(dirname ${ZIP})
+"
 
 	cd "${CWD}/Overlay"
 	zip_add
@@ -40,12 +58,20 @@ create_full_package () {
 	done
 	cd "${CWD}"
 
-	echo "Zipfile ${ZIP} created"
+	echo "Done"
 }
 
 create_microg_package() {
 	ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
 	rm -f "${ZIP}"
+
+	echo "
+Creating Package
+
+	Type		microG
+	File		$(basename ${ZIP})
+	Directory	$(dirname ${ZIP})
+"
 
 	cd "${CWD}/Overlay"
 
@@ -85,12 +111,20 @@ create_microg_package() {
 	sed -e 's/nanomod_overlay=0/nanomod_overlay=1/' -i .nanomod-setup
 	cd "${CWD}"
 
-	echo "Zipfile ${ZIP} created"
+	echo "Done"
 }
 
 create_fdroid_package() {
 	ZIP="${CWD}/NanoMod-fdroid-${VERSION}".zip
 	rm -f "${ZIP}"
+
+	echo "
+Creating Package
+
+	Type		F-Droid
+	Name		$(basename ${ZIP})
+	Directory	$(dirname ${ZIP})
+"
 
 	cd "${CWD}/Overlay"
 	zip_add "system/app/FDroid/"
@@ -108,12 +142,20 @@ create_fdroid_package() {
 	zip_add .nanomod-setup
 	cd "${CWD}"
 
-	echo "Zipfile ${ZIP} created"
+	echo "Done"
 }
 
 create_patcher_package() {
 	ZIP="${CWD}/NanoMod-patcher-${VERSION}".zip
 	rm -f "${ZIP}"
+
+	echo "
+Creating Package
+
+	Type		Framework Patcher
+	Name		$(basename ${ZIP})
+	Directory	$(dirname ${ZIP})
+"
 
 	cd "${CWD}/framework-patcher"
 	zip_add
@@ -122,12 +164,20 @@ create_patcher_package() {
 	zip_add README.md
 	zip_add ChangeLog.md
 
-	echo "Zipfile ${ZIP} created"
+	echo "Done"
 }
 
 create_uninstaller_package() {
 	ZIP="${CWD}/NanoMod-uninstaller-${VERSION}".zip
 	rm -f "${ZIP}"
+
+	echo "
+Creating Package
+
+	Type		Uninstaller
+	Name		$(basename ${ZIP})
+	Directory	$(dirname ${ZIP})
+"
 
 	cd "${CWD}/uninstaller"
 	zip_add
@@ -136,12 +186,20 @@ create_uninstaller_package() {
 	zip_add README.md
 	zip_add ChangeLog.md
 
-	echo "Zipfile ${ZIP} created"
+	echo "Done"
 }
 
 create_setupwizard_package() {
 	ZIP="${CWD}/NanoMod-setupwizard-${VERSION}".zip
 	rm -f "${ZIP}"
+
+	echo "
+Creating Package
+
+	Type		Setup Wizard
+	Name		$(basename ${ZIP})
+	Directory	$(dirname ${ZIP})
+"
 
 	cd "${CWD}/setup-wizard"
 	zip_add
@@ -150,7 +208,7 @@ create_setupwizard_package() {
 	zip_add README.md
 	zip_add ChangeLog.md
 
-	echo "Zipfile ${ZIP} created"
+	echo "Done"
 }
 
 increase_version_number() {
@@ -211,21 +269,33 @@ possible opts:
 
 for opt in ${@}; do
 	case ${1} in
-		zip | full)	create_full_package		;;
+		zip | full)	create_full_package &
+				progress $! ;;
 		ver)		increase_version_number "${@}"	;;
 		bump)		increase_module_version		;;
-		microg )	create_microg_package		;;
-		fdroid )	create_fdroid_package		;;
-		patcher )	create_patcher_package		;;
-		uninstaller )	create_uninstaller_package	;;
-		setupwizard )	create_setupwizard_package	;;
+		microg )	create_microg_package &
+				progress $! ;;
+		fdroid )	create_fdroid_package &
+				progress $! ;;
+		patcher )	create_patcher_package &
+				progress $! ;;
+		uninstaller )	create_uninstaller_package &
+				progress $! ;;
+		setupwizard )	create_setupwizard_package &
+				progress $! ;;
 		all )
-			create_full_package
-			create_microg_package
-			create_fdroid_package
-			create_patcher_package
-			create_uninstaller_package
-			create_setupwizard_package
+			create_full_package &
+			progress $!
+			create_microg_package &
+			progress $!
+			create_fdroid_package &
+			progress $!
+			create_patcher_package &
+			progress $!
+			create_uninstaller_package &
+			progress $!
+			create_setupwizard_package &
+			progress $!
 		;;
 		*)		show_help			;;
 	esac
