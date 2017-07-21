@@ -5,6 +5,7 @@ ui_print("> NanoMod Setup Wizard 12.0.20171231");
 ui_print(" ");
 set_progress(0.1);
 
+ui_print("> Creating Configuration Files");
 package_extract_file("nanomod-setup", "/tmp/nanomod-setup");
 set_metadata("/tmp/nanomod-setup", "uid", 0, "gid", 0, "mode", 0777);
 run_program("/tmp/nanomod-setup");
