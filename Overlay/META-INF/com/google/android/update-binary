@@ -241,7 +241,7 @@ magisk_install_setup () {
 		IMG=/data/magisk_merge.img
 	fi
 
-	request_size_check "${INSTALLER}"
+	reqSizeM=@MAGISKREQSIZE@
 
 	$BOOTMODE || recovery_actions
 
@@ -252,7 +252,7 @@ magisk_install_setup () {
 			$MAGISKBIN/magisk --resizeimg $IMG $newSizeM
 		fi
 	else
-		newSizeM=$((reqSizeM / 32 * 32 + 64));
+		newSizeM=$((reqSizeM / 32 * 32 + 64))
 		$MAGISKBIN/magisk --createimg $IMG $newSizeM
 	fi
 
