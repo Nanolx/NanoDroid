@@ -44,6 +44,10 @@ umount_magisk () {
 }
 
 if (is_mounted /magisk); then
-	umount_magisk
+	if [ -f /tmp/loopdevice ]; then
+		umount_magisk
+	else	echo "Magisk is mounted, but not using mount-magisk"
+		echo "not unmounting Magisk"
+	fi
 else	mount_magisk
 fi
