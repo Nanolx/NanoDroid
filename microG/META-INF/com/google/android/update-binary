@@ -227,7 +227,7 @@ magisk_install_setup () {
 		IMG=/data/magisk_merge.img
 	fi
 
-	request_size_check "${IMG}"
+	request_size_check "${INSTALLER}"
 
 	$BOOTMODE || recovery_actions
 
