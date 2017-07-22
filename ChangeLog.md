@@ -44,7 +44,7 @@
   * Simple Gallery (2.12.2)
   * OpenVPN (0.6.73)
   * NewPipe (0.9.10)
-  * Lightning (4.5.1+snapshot20170718)
+  * Lightning (4.5.1+snapshot20170720)
   * F-Droid (0.100-alpha1)
 
 ## 11.1.201707714
