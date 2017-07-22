@@ -45,6 +45,7 @@
   * OpenVPN (0.6.73)
   * NewPipe (0.9.10)
   * Lightning (4.5.1+snapshot20170718)
+  * F-Droid (0.100-alpha1)
 
 ## 11.1.201707714
 * Bug Fixes
