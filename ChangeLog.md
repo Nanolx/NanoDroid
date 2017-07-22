@@ -57,6 +57,7 @@
   * NewPipe (0.9.10)
   * Lightning (4.5.1+snapshot20170720)
   * F-Droid (0.100-alpha1)
+  * Play Store (8.0.73.R)
 
 ## 11.1.201707714
 * Bug Fixes

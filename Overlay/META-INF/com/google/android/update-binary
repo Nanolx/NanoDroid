@@ -242,14 +242,17 @@ magisk_install_setup () {
 	fi
 
 	reqSizeM=@MAGISKREQSIZE@
+	ui_print "reqSizeM=${reqSizeM}"
 
 	$BOOTMODE || recovery_actions
 
 	if [ -f "$IMG" ]; then
 		image_size_check $IMG
+		ui_print "curFreeM=${curFreeM}"
 		if [ "$reqSizeM" -gt "$curFreeM" ]; then
+			ui_print "resizing magisk.img"
 			newSizeM=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-			$MAGISKBIN/magisk --resizeimg $IMG $newSizeM
+			$MAGISKBIN/magisk --resizeimg $IMG $newSizeM || error "!! failed to resize magisk.img"
 		fi
 	else
 		newSizeM=$((reqSizeM / 32 * 32 + 64))
