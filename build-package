@@ -157,7 +157,7 @@ Creating Package
 	Directory	$(dirname ${ZIP})
 "
 
-	cd "${CWD}/framework-patcher"
+	cd "${CWD}/patcher"
 	zip_add
 	cd "${CWD}"
 
@@ -221,7 +221,7 @@ increase_version_number() {
 			"${CWD}/${module}/module.prop"
 	done
 
-	for module in uninstaller framework-patcher; do
+	for module in uninstaller patcher; do
 		sed -e "s/\"      NanoMod.*/\"      NanoMod ${2}.${3}     \"/" -i \
 			"${CWD}/${module}/META-INF/com/google/android/update-binary"
 	done
@@ -254,7 +254,7 @@ possible opts:
 	zip			| create module zip from repo *full package*
 	microg			| create module zip from repo *microG only*
 	fdroid			| create module zip from repo *fdroid only*
-	patcher			| create framework-patcher zip from repo
+	patcher			| create framework patcher zip from repo
 	uninstaller		| create uninstaller zip from repo
 	setupwizard		| create setup-wizard zip from repo
 	all			| create all zips from repo
