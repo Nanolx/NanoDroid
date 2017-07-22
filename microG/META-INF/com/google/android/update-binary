@@ -262,6 +262,18 @@ magisk_install_preinst () {
 			ui_print " "
 			rm -f $MODPATH/system/framework/services.jar
 		fi
+		elif [ -f /system/.nanomod-patcher ]; then
+		ui_print " "
+		ui_print " ++ /system/.nanomod-patcher exists, but"
+		ui_print " ++ ${MODPATH}/system/framework/services.jar"
+		ui_print " ++ doesn't, assuming Magisk was uninstalled"
+		ui_print " ++ re-run NanoMod-Patcher if required"
+		ui_print " "
+		if (is_mounted /system); then
+			mount -orw,remount /system
+		else	mount -orw /system
+		fi
+		rm -f /system/.nanomod-patcher
 	fi
 }
 
