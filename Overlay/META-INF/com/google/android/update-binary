@@ -241,16 +241,13 @@ magisk_install_setup () {
 		IMG=/data/magisk_merge.img
 	fi
 
-	reqSizeM=@MAGISKREQSIZE@
-	ui_print "reqSizeM=${reqSizeM}"
+	request_size_check "${IMG}"
 
 	$BOOTMODE || recovery_actions
 
 	if [ -f "$IMG" ]; then
-		image_size_check $IMG
-		ui_print "curFreeM=${curFreeM}"
+		image_size_check "${IMG}"
 		if [ "$reqSizeM" -gt "$curFreeM" ]; then
-			ui_print "resizing magisk.img"
 			newSizeM=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
 			$MAGISKBIN/magisk --resizeimg $IMG $newSizeM || error "!! failed to resize magisk.img"
 		fi
@@ -361,11 +358,12 @@ install_init () {
 	mkdir -p ${INSTALLER} || error " !! failed to prepare environment!"
 
 	ui_print " > prepare installation"
-	unzip -o "$ZIP" -d "${INSTALLER}"
+	cd "${INSTALLER}" || error " !! failed to prepare environment!"
+	unzip -o "$ZIP" || error " !! failed to prepare environment!"
 
 	# When installing in Magisk mode we are forced to use our own unzip
 	# for nanomod_libs() to work, use it in System mode aswell.
-	chmod +x "${INSTALLER}/system/bin/unzip*"
+	chmod +x "${INSTALLER}"/system/bin/unzip*
 }
 
 install_microg () {

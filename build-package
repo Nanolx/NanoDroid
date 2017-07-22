@@ -63,8 +63,8 @@ Creating Package
 	Directory	$(dirname ${ZIP})
 "
 
-	calculate_magiskreqsize "${CWD}/Overlay"
-	set_magiskreqsize "${CWD}/Overlay"
+#	calculate_magiskreqsize "${CWD}/Overlay"
+#	set_magiskreqsize "${CWD}/Overlay"
 
 	cd "${CWD}/Overlay"
 	zip_add
@@ -80,7 +80,7 @@ Creating Package
 	done
 	cd "${CWD}"
 
-	reset_magiskreqsize "${CWD}/Overlay"
+#	reset_magiskreqsize "${CWD}/Overlay"
 
 	echo "Done"
 }
@@ -102,25 +102,25 @@ Creating Package
 	for app in GoogleCalendarSync GoogleContactSync \
 		nlpBackendIchnaea nlpBackendNomiantim; do
 		zip_add "system/app/${app}/"
-		calculate_magiskreqsize "system/app/${app}/"
+		#calculate_magiskreqsize "system/app/${app}/"
 	done
 
 	for app in GoogleBackupTransport DroidGuard FakeStore \
 		GmsCore GsfProxy Phonesky YalpStore; do
 		zip_add "system/priv-app/${app}/"
-		calculate_magiskreqsize "system/priv-app/${app}/"
+		#calculate_magiskreqsize "system/priv-app/${app}/"
 	done
 
 	for input in "system/bin/nanomod-overlay*" "system/bin/bash*" "system/bin/aapt*" \
 		"system/bin/column*" "system/framework/" "system/etc/permissions/" \
 		"system/etc/bash*" "system/share/" "swipe/"; do
 		zip_add "${input}"
-		calculate_magiskreqsize "${input}"
+		#calculate_magiskreqsize "${input}"
 	done
 
 	cd "${CWD}"
 
-	set_magiskreqsize "${CWD}/microG"
+	#set_magiskreqsize "${CWD}/microG"
 
 	cd "${CWD}/microG"
 	zip_add
@@ -136,7 +136,7 @@ Creating Package
 	sed -e 's/nanomod_overlay=0/nanomod_overlay=1/' -i .nanomod-setup
 	cd "${CWD}"
 
-	reset_magiskreqsize "${CWD}/microG"
+	#reset_magiskreqsize "${CWD}/microG"
 
 	echo "Done"
 }
@@ -155,12 +155,12 @@ Creating Package
 
 	cd "${CWD}/Overlay"
 	zip_add "system/app/FDroid/"
-	calculate_magiskreqsize "system/app/FDroid/"
+#	calculate_magiskreqsize "system/app/FDroid/"
 	zip_add "system/priv-app/FDroidPrivileged/"
-	calculate_magiskreqsize "system/priv-app/FDroidPrivileged/"
+#	calculate_magiskreqsize "system/priv-app/FDroidPrivileged/"
 	cd "${CWD}"
 
-	set_magiskreqsize "${CWD}/fdroid"
+#	set_magiskreqsize "${CWD}/fdroid"
 
 	cd "${CWD}/fdroid"
 	zip_add
@@ -173,7 +173,7 @@ Creating Package
 	zip_add .nanomod-setup
 	cd "${CWD}"
 
-	reset_magiskreqsize "${CWD}/fdroid"
+#	reset_magiskreqsize "${CWD}/fdroid"
 
 	echo "Done"
 }
