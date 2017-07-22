@@ -13,6 +13,8 @@
     * remove `nanomod_reinstall` parameter for `.nanomod-setup` configuration file (Magisk-only)
       * `services.jar` will now be auto backed up and restored during NanoMod Magisk Module update when `/system/.nanomod-patcher` exists
       * `services.jar` will be removed from NanoMod Magisk Module when `/system/.nanomod-patcher` is missing (which indicates ROM update), print a message to the user accordingly
+  * Full, microG, F-Droid packages:
+    * manually calculate Magisk's `reqSizeM` upon package creation (auto-evaluation seems not to work in all cases)
 * General Changes
   * Improved Documentation
   * Configuration Files:
