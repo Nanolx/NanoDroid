@@ -3,35 +3,32 @@
 APPS="BasicDreams
 Browser
 Calendar
-CMFileManager
 Camera2
+CMFileManager
 Eleven
 Email
 Exchange2
+FMRadio
 Gallery2
 Gello
 Jelly
+messaging
+mGerrit
+OmniSwitch
 Phonograph
 PhotoTable
+Recorder
 ResurrectionStats
+Screencast
 Slimperience
+Snap
+SnapdragonCamera
 SoundRecorder
 Stk
 ViaBrowser
 Wallpaper
 WallpaperBackup
-WallpaperPickerGoogle
-messaging"
-
-PRIV_APPS="FMRadio
-Gallery2
-OmniSwitch
-Recorder
-Screencast
-Snap
-SnapdragonCamera
-SoundRecorder
-mGerrit"
+WallpaperPickerGoogle"
 
 is_mounted() {
 	if [ ! -z "$2" ]; then
@@ -44,16 +41,19 @@ is_mounted() {
 
 debloat_system () {
 	if (is_mounted /system); then
-		mount -orw,remount /system
-	else	mount -orw /system
+		mount -orw,remount /system || error "!! failed to remount system read-write"
+	else	mount -orw /system || error "!! failed to mount system read-write"
 	fi
 
 	for app in ${APPS}; do
-		rm -rf /system/app/${app}
-	done
-
-	for app in ${PRIV_APPS}; do
-		rm -rf /system/priv-app/${app}
+		if [[ -d /system/app/${app} ]; then
+			rm -rf /system/app/${app}
+			echo "${app} removed from /system/app"
+		elif [[ -d /system/priv-app/${app} ]; then
+			rm -rf /system/priv-app/${app}
+			echo "${app} removed from /system/priv-app"
+		else	echo "${app} is not installed"
+		fi
 	done
 
 	umount /system
