@@ -288,6 +288,7 @@ magisk_install_preinst () {
 		else	mount -orw /system
 		fi
 		rm -f /system/.nanomod-patcher
+		mount -oro,remount /system
 	fi
 }
 
