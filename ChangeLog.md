@@ -14,6 +14,7 @@
       * `services.jar` will now be auto backed up and restored during NanoMod Magisk Module update when `/system/.nanomod-patcher` exists
       * `services.jar` will be removed from NanoMod Magisk Module when `/system/.nanomod-patcher` is missing (which indicates ROM update), print a message to the user accordingly
 * General Changes
+  * Improved Documentation
   * Configuration Files:
     * `.nanomod-apps` layout simplified, now only one app per line, nothing else
       * existing configuration files will be migrated to new format
@@ -35,6 +36,13 @@
   * renamed `mod.sh` to `build-package`
     * revised code, removed cruft
     * add multi-param support, for example `build-package fdroid microg` will create those two package in one go
+  * renamed `force-debloat.sh` to `force-debloat`
+    * improved code
+  * renamed `magisk-mount.sh` to `magisk-mount`
+    * improved code
+  * renamed `framework-patcher.sh` to `framework-patcher`
+    * renamed helper script `remote.sh` to `framework-patcher-remote`
+    * improved code
 * Downgrades
   * Google Backup Transport (7.1.1 > 6.0.1)
 * Updates
