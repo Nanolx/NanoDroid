@@ -24,6 +24,25 @@ progress () {
 	done
 }
 
+magiskreqsize=0
+calculate_magiskreqsize () {
+	for arg in ${@}; do
+		if [ -e "${arg}" ]; then
+			tmpsize=$(du -s --block-size=1M "${arg}" | gawk '{print $1}')
+			magiskreqsize=$((magiskreqsize+tmpsize))
+		fi
+	done
+}
+
+set_magiskreqsize () {
+	sed -e "s/@MAGISKREQSIZE@/${magiskreqsize}/" -i "${1}/META-INF/com/google/android/update-binary"
+}
+
+reset_magiskreqsize () {
+	sed -e "s/reqSizeM=.*/reqSizeM=@MAGISKREQSIZE@/" -i "${1}/META-INF/com/google/android/update-binary"
+	magiskreqsize=0
+}
+
 zip_add () {
 	case ${1} in
 		*/ )	zip -r "${ZIP}" ${1} &>/dev/null || exit 1 ;;
@@ -44,6 +63,9 @@ Creating Package
 	Directory	$(dirname ${ZIP})
 "
 
+	calculate_magiskreqsize "${CWD}/Overlay"
+	set_magiskreqsize "${CWD}/Overlay"
+
 	cd "${CWD}/Overlay"
 	zip_add
 	cd "${CWD}"
@@ -57,6 +79,8 @@ Creating Package
 		zip_add "${file}"
 	done
 	cd "${CWD}"
+
+	reset_magiskreqsize "${CWD}/Overlay"
 
 	echo "Done"
 }
@@ -78,24 +102,25 @@ Creating Package
 	for app in GoogleCalendarSync GoogleContactSync \
 		nlpBackendIchnaea nlpBackendNomiantim; do
 		zip_add "system/app/${app}/"
+		calculate_magiskreqsize "system/app/${app}/"
 	done
 
 	for app in GoogleBackupTransport DroidGuard FakeStore \
 		GmsCore GsfProxy Phonesky YalpStore; do
 		zip_add "system/priv-app/${app}/"
+		calculate_magiskreqsize "system/priv-app/${app}/"
 	done
 
-	zip_add "system/bin/nanomod-overlay*"
-	zip_add "system/bin/bash*"
-	zip_add "system/bin/aapt*"
-	zip_add "system/bin/column*"
-	zip_add "system/framework/"
-	zip_add "system/etc/permissions/"
-	zip_add "system/etc/bash*"
-	zip_add "system/share/"
-	zip_add "swipe/"
+	for input in "system/bin/nanomod-overlay*" "system/bin/bash*" "system/bin/aapt*" \
+		"system/bin/column*" "system/framework/" "system/etc/permissions/" \
+		"system/etc/bash*" "system/share/" "swipe/"; do
+		zip_add "${input}"
+		calculate_magiskreqsize "${input}"
+	done
 
 	cd "${CWD}"
+
+	set_magiskreqsize "${CWD}/microG"
 
 	cd "${CWD}/microG"
 	zip_add
@@ -110,6 +135,8 @@ Creating Package
 	zip_add .nanomod-setup
 	sed -e 's/nanomod_overlay=0/nanomod_overlay=1/' -i .nanomod-setup
 	cd "${CWD}"
+
+	reset_magiskreqsize "${CWD}/microG"
 
 	echo "Done"
 }
@@ -128,8 +155,12 @@ Creating Package
 
 	cd "${CWD}/Overlay"
 	zip_add "system/app/FDroid/"
+	calculate_magiskreqsize "system/app/FDroid/"
 	zip_add "system/priv-app/FDroidPrivileged/"
+	calculate_magiskreqsize "system/priv-app/FDroidPrivileged/"
 	cd "${CWD}"
+
+	set_magiskreqsize "${CWD}/fdroid"
 
 	cd "${CWD}/fdroid"
 	zip_add
@@ -141,6 +172,8 @@ Creating Package
 	cd "${CWD}/doc"
 	zip_add .nanomod-setup
 	cd "${CWD}"
+
+	reset_magiskreqsize "${CWD}/fdroid"
 
 	echo "Done"
 }
@@ -268,7 +301,7 @@ possible opts:
 [[ -z ${1} ]] && show_help
 
 for opt in ${@}; do
-	case ${1} in
+	case ${opt} in
 		zip | full)	create_full_package &
 				progress $! ;;
 		ver)		increase_version_number "${@}"	;;
