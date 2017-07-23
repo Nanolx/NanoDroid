@@ -3,20 +3,20 @@
 ## 12.0 in-dev
 * Bug Fixes
   * Full package:
-    * fixed that GNU Nano didn't work properly when ther terminal only had a few lines
+     * fixed that GNU Nano didn't work properly when ther terminal only had a few lines
   * microG package:
-    * fixed that `column` was not bundled
+     * fixed that `column` was not bundled
   * Full, microG packages:
-    * fixed that Swipe libraries where not properly installed in Magisk Mode
-    * fixed that GNU Bash did not read `/etc/bashrc`
-    * fixed that the fallback `/data/.nanomod-overlay` did not get removed
-    * further fixes to `nanomod-overlay -g`
-    * remove `nanomod_reinstall` parameter for `.nanomod-setup` configuration file (Magisk-only)
-      * `services.jar` will now be auto backed up and restored during NanoMod Magisk Module update when `/system/.nanomod-patcher` exists, print a message to the user accordingly
-      * `services.jar` will be removed from NanoMod Magisk Module when `/system/.nanomod-patcher` is missing (which indicates ROM update), print a message to the user accordingly
-      * if `services.jar` is missing but `/system/.nanomod-patcher` exists, assume Magisk was (temporarily) uninstalled, print a message to the user accordingly
+     * fixed that Swipe libraries where not properly installed in Magisk Mode
+     * fixed that GNU Bash did not read `/etc/bashrc`
+     * fixed that the fallback `/data/.nanomod-overlay` did not get removed
+     * further fixes to `nanomod-overlay -g`
+     * remove `nanomod_reinstall` parameter for `.nanomod-setup` configuration file (Magisk-only)
+        * `services.jar` will now be auto backed up and restored during NanoMod Magisk Module update when `/system/.nanomod-patcher` exists, print a message to the user accordingly
+        * `services.jar` will be removed from NanoMod Magisk Module when `/system/.nanomod-patcher` is missing (which indicates ROM update), print a message to the user accordingly
+        * if `services.jar` is missing but `/system/.nanomod-patcher` exists, assume Magisk was (temporarily) uninstalled, print a message to the user accordingly
   * Full, microG, F-Droid packages:
-    * workaround a rare issue where Magisk's own resize functions fail by manually using resize2fs
+     * workaround a rare issue where Magisk's own resize functions fail by manually using resize2fs
 * General Changes
   * Improved Documentation
   * Configuration Files:
