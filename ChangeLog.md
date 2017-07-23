@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 12.0 in-dev
+## 12.0.20170723
 * Bug Fixes
   * Full package:
      * fixed that GNU Nano didn't work properly when ther terminal only had a few lines
