@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=12.0.99999999
+VERSION=12.0.20170723
 CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
@@ -229,6 +229,8 @@ increase_version_number() {
 	sed -e "s/Wizard.*/Wizard ${2}.${3}\")\;/" -i \
 		"${CWD}/setup-wizard/META-INF/com/google/android/updater-script"
 
+	exit 0
+
 }
 
 increase_module_version () {
@@ -238,6 +240,8 @@ increase_module_version () {
 		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
 			-i "${CWD}/${module}/module.prop"
 	done
+
+	exit 0
 }
 
 show_help () {
