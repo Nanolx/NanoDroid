@@ -191,6 +191,20 @@ detect_arch () {
 }
 
 ##########################################################################################
+# Magisk Mode Installation (fallback functions)
+##########################################################################################
+
+grow_magisk_img () {
+	resize2fs -f ${IMG} ${newSizeM}M
+	e2fsck -yf ${IMG}
+}
+
+shrink_magisk_img () {
+	resize2fs -f ${IMG} ${newSizeM}M
+	e2fsck -yf ${IMG}
+}
+
+##########################################################################################
 # Magisk Mode Installation
 ##########################################################################################
 
@@ -235,7 +249,7 @@ magisk_install_setup () {
 		image_size_check "${IMG}"
 		if [ "$reqSizeM" -gt "$curFreeM" ]; then
 			newSizeM=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-			$MAGISKBIN/magisk --resizeimg $IMG $newSizeM || error "!! failed to resize magisk.img"
+			$MAGISKBIN/magisk --resizeimg $IMG $newSizeM || grow_magisk_img
 		fi
 	else
 		newSizeM=$((reqSizeM / 32 * 32 + 64))
@@ -319,7 +333,7 @@ magisk_install_cleanup () {
 	image_size_check $IMG
 	newSizeM=$((curUsedM / 32 * 32 + 64))
 	if [ $curSizeM -gt $newSizeM ]; then
-		$MAGISKBIN/magisk --resizeimg $IMG $newSizeM
+		$MAGISKBIN/magisk --resizeimg $IMG $newSizeM || shrink_magisk_img
 	fi
 
 	$BOOTMODE || recovery_cleanup
