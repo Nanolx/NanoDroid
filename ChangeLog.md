@@ -16,7 +16,7 @@
         * `services.jar` will be removed from NanoMod Magisk Module when `/system/.nanomod-patcher` is missing (which indicates ROM update), print a message to the user accordingly
         * if `services.jar` is missing but `/system/.nanomod-patcher` exists, assume Magisk was (temporarily) uninstalled, print a message to the user accordingly
   * Full, microG, F-Droid packages:
-     * workaround a rare issue where Magisk's own resize functions fail by manually using resize2fs
+     * workaround a rare issue where Magisk's own resize functions fail by manually using `resize2fs` in that case
 * General Changes
   * Improved Documentation
   * Configuration Files:
