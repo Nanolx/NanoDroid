@@ -134,11 +134,13 @@ detect_arch () {
 ##########################################################################################
 
 grow_magisk_img () {
+	e2fsck -yf ${IMG}
 	resize2fs -f ${IMG} ${newSizeM}M
 	e2fsck -yf ${IMG}
 }
 
 shrink_magisk_img () {
+	e2fsck -yf ${IMG}
 	resize2fs -f ${IMG} ${newSizeM}M
 	e2fsck -yf ${IMG}
 }
