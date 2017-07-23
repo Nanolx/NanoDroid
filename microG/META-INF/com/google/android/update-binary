@@ -451,7 +451,7 @@ install_misc () {
 		mkdir -p ${MODPATH}/system/${SWIPE_LIBDIR}
 		for lib in latinimegoogle keyboarddecoder; do
 			nanomod_install /swipe/${ARCH}/libjni_${lib}.so \
-				${MODPATH}/system/${SWIPE_LIBDIR}/
+				/system/${SWIPE_LIBDIR}/
 		done
 	else	ui_print " << without swipe libraries"
 	fi
