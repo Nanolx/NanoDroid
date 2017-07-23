@@ -7,6 +7,7 @@
   * microG package:
     * fixed that `column` was not bundled
   * Full, microG packages:
+    * fixed that Swipe libraries where not properly installed in Magisk Mode
     * fixed that GNU Bash did not read `/etc/bashrc`
     * fixed that the fallback `/data/.nanomod-overlay` did not get removed
     * further fixes to `nanomod-overlay -g`
@@ -15,7 +16,7 @@
       * `services.jar` will be removed from NanoMod Magisk Module when `/system/.nanomod-patcher` is missing (which indicates ROM update), print a message to the user accordingly
       * if `services.jar` is missing but `/system/.nanomod-patcher` exists, assume Magisk was (temporarily) uninstalled, print a message to the user accordingly
   * Full, microG, F-Droid packages:
-    * manually calculate Magisk's `reqSizeM` upon package creation (auto-evaluation seems not to work in all cases)
+    * workaround a rare issue where Magisk's own resize functions fail by manually using resize2fs
 * General Changes
   * Improved Documentation
   * Configuration Files:
