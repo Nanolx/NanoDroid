@@ -20,33 +20,33 @@
 * General Changes
   * Improved Documentation
   * Configuration Files:
-    * `.nanomod-apps` layout simplified, now only one app per line, nothing else
-      * existing configuration files will be migrated to new format
-    * `.nanomod-overlay` layout simplified, now only one app per line, nothing else
-      * existing configuration files will be migrated to new format
+     * `.nanomod-apps` layout simplified, now only one app per line, nothing else
+         * existing configuration files will be migrated to new format
+     * `.nanomod-overlay` layout simplified, now only one app per line, nothing else
+         * existing configuration files will be migrated to new format
   * Full package:
-    * provide more tools from  `bsdmainutils`
-      * col, colcrt, colrm, hexdump, look, ncal
-    * provide more tools from `util-linux`
-      * findfs, findmnt, lsblk, lscpu, lsipc, lslocks, lsns, setterm, whereis
-    * provide `less` pager with `lessecho` and `lesskey` utils
-    * make `less` the default `PAGER` for GNU Bash
-    * make default `TERM` for GNU Nano `xterm`
+     * provide more tools from  `bsdmainutils`
+         * col, colcrt, colrm, hexdump, look, ncal
+     * provide more tools from `util-linux`
+         * findfs, findmnt, lsblk, lscpu, lsipc, lslocks, lsns, setterm, whereis
+     * provide `less` pager with `lessecho` and `lesskey` utils
+     * make `less` the default `PAGER` for GNU Bash
+     * make default `TERM` for GNU Nano `xterm`
   * Setup Wizard:
-    * AROMA based Setup Wizard to create the configuration files in either
-      * `/sdcard`
-      * `/external_sd`
-      * `/data` (fallback)
+     * AROMA based Setup Wizard to create the configuration files in either
+         * `/sdcard`
+         * `/external_sd`
+         * `/data` (fallback)
   * renamed `mod.sh` to `build-package`
-    * revised code, removed cruft
-    * add multi-param support, for example `build-package fdroid microg` will create those two package in one go
+     * revised code, removed cruft
+     * add multi-param support, for example `build-package fdroid microg` will create those two package in one go
   * renamed `force-debloat.sh` to `force-debloat`
-    * improved code
+     * improved code
   * renamed `magisk-mount.sh` to `magisk-mount`
-    * improved code
+     * improved code
   * renamed `framework-patcher.sh` to `framework-patcher`
-    * renamed helper script `remote.sh` to `framework-patcher-remote`
-    * improved code
+     * renamed helper script `remote.sh` to `framework-patcher-remote`
+     * improved code
 * Downgrades
   * Google Backup Transport (7.1.1 > 6.0.1)
 * Updates
@@ -63,42 +63,42 @@
 ## 11.1.201707714
 * Bug Fixes
   * Full, microG, F-Droid packages:
-    * provide standalone `unzip` binary (resolves installation issues with 11.0)
+     * provide standalone `unzip` binary (resolves installation issues with 11.0)
   * Full, microG packages:
-    * fix `nanomod-overlay -s` not working
+     * fix `nanomod-overlay -s` not working
 * General Changes
   * Full, microG, F-Droid packages:
-    * Magisk Mode installer is now closer to magisk-module-template v4 ()
+     * Magisk Mode installer is now closer to magisk-module-template v4 ()
   * Full, microG packages:
-    * provide `column` binary
-    * let `nanomod-overlay -s` use `column` to prettify the output
-    * let the user know `nanomod-overlay -s` actually does something as it can be slow on old devices
+     * provide `column` binary
+     * let `nanomod-overlay -s` use `column` to prettify the output
+     * let the user know `nanomod-overlay -s` actually does something as it can be slow on old devices
 
 ## 11.0.20170713
 * Bug Fixes
   * uninstaller:
-    * fixed restoring unpatched `services.jar`
+     * fixed restoring unpatched `services.jar`
   * on-device framework-patcher:
-    * fixed that it accidently backed up the patched `services.jar` instead of vanilla
+     * fixed that it accidently backed up the patched `services.jar` instead of vanilla
   * external_sd init script:
-    * higher compatibility, should now work for most (if not all) devices
+     * higher compatibility, should now work for most (if not all) devices
 * General Changes
   * Full, microG, F-Droid package
-    * if using fallback configuration during installation print the information accordingly
-    * change syntax for `.nanomod-apps` file
-      * existing configuration files will be migrated to new format
-    * change syntax for `.nanomod-setup` file
-      * existing configuration files will be migrated to new format
-    * simplify handling fallback configuration
-    * update module template to something v4-ish, modified to match NanoMod requirements/features
+     * if using fallback configuration during installation print the information accordingly
+     * change syntax for `.nanomod-apps` file
+         * existing configuration files will be migrated to new format
+     * change syntax for `.nanomod-setup` file
+         * existing configuration files will be migrated to new format
+     * simplify handling fallback configuration
+     * update module template to something v4-ish, modified to match NanoMod requirements/features
   * Full, microG package
-    * if using fall back `nanomod-overlay` configuration remove it after installation
-      * the `nanomod-overlay` script will create it during runtime, if required
-    * remove all launchers from list of pseudo-debloated apps by default
-    * several fixes to `nanomod-overlay` script
-    * add optional `Swipe` libraries, controlled by `nanomod_swipe=[0|1]`
-    * make `/data` the very last directory to look for configuration files
-    * when patched `services.jar` exists before installing/updating, remove `/system/.nanomod-patcher`
+     * if using fall back `nanomod-overlay` configuration remove it after installation
+         * the `nanomod-overlay` script will create it during runtime, if required
+     * remove all launchers from list of pseudo-debloated apps by default
+     * several fixes to `nanomod-overlay` script
+     * add optional `Swipe` libraries, controlled by `nanomod_swipe=[0|1]`
+     * make `/data` the very last directory to look for configuration files
+     * when patched `services.jar` exists before installing/updating, remove `/system/.nanomod-patcher`
 * Updates
   * Play Store (8.0.26.R)
   * Simple Gallery (2.12.1)
@@ -114,36 +114,36 @@
 ## 10.0.20170701
 * Bug Fixes
   * Full, microG package
-    * fixup `nanomod-overlay.genconfig` syntax error
-    * fixup `nanomod-overlay.permission` not properly working
-    * install GoogleBackupTransport into `/system/priv-app`, not `/system/app`
+     * fixup `nanomod-overlay.genconfig` syntax error
+     * fixup `nanomod-overlay.permission` not properly working
+     * install GoogleBackupTransport into `/system/priv-app`, not `/system/app`
   * on-device framework-patcher
-    * stop process if `/system/.nanomod-patcher` file exists
-    * fixup missing function in on-device framework-patcher
-    * fixup architecture detection in on-device framework-patcher
+     * stop process if `/system/.nanomod-patcher` file exists
+     * fixup missing function in on-device framework-patcher
+     * fixup architecture detection in on-device framework-patcher
   * on-pc framework-patcher
-    * stop process if `/system/.nanomod-patcher` file exists
+     * stop process if `/system/.nanomod-patcher` file exists
   * force-debloat.sh remove Launchers from list of apps to remove
-    * PixelLauncher
-    * NexusLauncher
-    * Trebuchet
+     * PixelLauncher
+     * NexusLauncher
+     * Trebuchet
   * zipalign microG Gms Core
 * General Changes
   * Full, microG, F-Droid package
-    * migrate to shiny new installation mechanism
-    * improved printed information
-    * add support to enforce installation in System Mode using `nanomod.forcesystem` setup variable
+     * migrate to shiny new installation mechanism
+     * improved printed information
+     * add support to enforce installation in System Mode using `nanomod.forcesystem` setup variable
   * on-device framework-patcher
-    * code improvements
-    * better error messages when dalvikvm fails
-    * when installing patched `services.jar` to ROM back it up to `/sdcard`
-    * print somewhat more useful information
+     * code improvements
+     * better error messages when dalvikvm fails
+     * when installing patched `services.jar` to ROM back it up to `/sdcard`
+     * print somewhat more useful information
   * on-pc framework-patcher
-    * when installing patched `services.jar` to ROM back it up to `/sdcard`
+     * when installing patched `services.jar` to ROM back it up to `/sdcard`
   * uninstaller
-    * code improvements
-    * remove `/system/.nanomod-patcher` regardless wether Magisk is installed
-    * support uninstalling NanoMod when installed in system mode
+     * code improvements
+     * remove `/system/.nanomod-patcher` regardless wether Magisk is installed
+     * support uninstalling NanoMod when installed in system mode
 * Updates
   * Simple Calendar (2.5.6)
   * Simple Gallery (2.11.4)
@@ -162,25 +162,25 @@
   * microG package: bundle `aapt` (required for `nanomod-overlay`)
 * Installer Changes
   * Full package: remove app libraries not required for device architecture
-    * example: on ARM the libraries for ARM64, x86 and x86_64 are removed
+     * example: on ARM the libraries for ARM64, x86 and x86_64 are removed
   * add `nanomod.gsync=[0|1]` setup variable
-    * defines whether to install Google Sync Adapters
+     * defines whether to install Google Sync Adapters
 * General Changes
   * x86/x86_64 support (work-in-progress)
-    * currently working in System Mode, but not as Magisk Module
+     * currently working in System Mode, but not as Magisk Module
   * add `Jelly` to the list of pseudo-debloated apps by default
   * `nanomod-overlay -p` now checks for proper permissions of system apps
-    * FAKE_PACKAGE_SIGNATURE for microG Gms Core and Play Store
-    * READ_CALENDAR and WRITE_CALENDAR For Google Calendar Sync
-    * READ_CONTACT, WRITE_CONTACTS and GET_ACCOUNTS for Google Contacts Sync
+     * FAKE_PACKAGE_SIGNATURE for microG Gms Core and Play Store
+     * READ_CALENDAR and WRITE_CALENDAR For Google Calendar Sync
+     * READ_CONTACT, WRITE_CONTACTS and GET_ACCOUNTS for Google Contacts Sync
   * add `permissions` init script that runs `nanomod-overlay -p`
-    * Full package only
-    * for microG package manully run `nanomod-overlay -p` as before
+     * Full package only
+     * for microG package manully run `nanomod-overlay -p` as before
   * added force-debloat script (for system mode!)
-    * script that can be run from recovery to debloat the system
-    * the list of applications resides in the script itself
-    * the default settings equal to the pseudo-debloat settings of `nanomod-overlay` script
-    * needs to be run from TWRP, requires explicit user acceptance
+     * script that can be run from recovery to debloat the system
+     * the list of applications resides in the script itself
+     * the default settings equal to the pseudo-debloat settings of `nanomod-overlay` script
+     * needs to be run from TWRP, requires explicit user acceptance
   * re-signed microG GmsCore and Phonesky with my own key instead of debug key
   * microG package: don't install terminfo files as GNU Nano is not included
   * on-pc framework-patcher: only do actual work if in TWRP
@@ -191,8 +191,8 @@
 * Added Applications
   * OpenWeatherMap Provider (1.0)
   * add optional Google Calendar Sync and Google Contacts Sync
-    * not installed by default
-    * bundled with Full and microG package
+     * not installed by default
+     * bundled with Full and microG package
 * Updated Applications
   * GNU Nano (2.8.2)
   * microG Gms Core (0.2.4-103)
@@ -213,18 +213,18 @@
 * Internal Changes
   * no longer require `Busybox` for `sqlite` init script
   * install init scripts in `MODDIR/init.d` when in Magisk Mode
-    * prevents double execution of init scripts if the ROM already has init.d support
-    * when in system mode init scripts will be installed to `/system/etc/init.d` as before
+     * prevents double execution of init scripts if the ROM already has init.d support
+     * when in system mode init scripts will be installed to `/system/etc/init.d` as before
   * ensure `external_sd` init script is always given executable bit
   * All installers: force `magisk.img` resize operations, perform `fsck` afterwards
   * Full and microG installers: fix a `sed` substitution
   * On-device framework-patcher: fix `magisk.img` resize operations
   * make `nanomod-overlay`'s `-p`, `--permission` parameter work when
-    * installed in system mode
-    * no `.nanomod-overlay` configuration file was found
+     * installed in system mode
+     * no `.nanomod-overlay` configuration file was found
   * add `-g`, respectively `--genconfig` parameter to `nanomod-overlay` script
-    * creates `.nanomod-overlay` configuration file in `/data`
-    * `genconfig` will be automatically run when `nanomod-overlay` is run and NanoMod is installed in Magisk Mode, but no `.nanomod-overlay` configuration file exists
+     * creates `.nanomod-overlay` configuration file in `/data`
+     * `genconfig` will be automatically run when `nanomod-overlay` is run and NanoMod is installed in Magisk Mode, but no `.nanomod-overlay` configuration file exists
   * rewrite most parts of the `nanomod-overlay` script
   * modularize the `nanomod-overlay` script
   * rewrite most parts of the documentation
@@ -261,19 +261,19 @@
 ## 9.0.20170528
 * Internal Changes
   * shiny new installer
-    * cleaner and easier maintainable code
-    * several improvements to `/system` mode installation
-    * for microG, F-Droid and full packages
+     * cleaner and easier maintainable code
+     * several improvements to `/system` mode installation
+     * for microG, F-Droid and full packages
   * fix **GNU Bash** installation in microG package
   * drop Launchers from list of pseudo-debloated applications in microG package
   * disable pseudo-debloat feature in the microG package by default
   * NanoMod installers for full and microG package support configuration files located in the same directory as the zip, make the `nanomod-overlay` script remember that path
-    * also fixes bug that `nanomod-overlay` does not work outside of the installer
+     * also fixes bug that `nanomod-overlay` does not work outside of the installer
   * better error message in `nanomod-overlay` script if configuration file does not exist
   * install Maps API version 1 by default
   * add an **uninstaller** zip which will uninstall any NanoMod Magisk Module
-    * checks for all three (full, F-Droid and microG) packages and removes them if found
-    * does not work for system mode installation (and there won't be an uninstaller for that)
+     * checks for all three (full, F-Droid and microG) packages and removes them if found
+     * does not work for system mode installation (and there won't be an uninstaller for that)
 * Updates
   * Simple Calendar (2.5.1)
   * Simple Gallery (2.10.6)
@@ -291,19 +291,19 @@
 * Internal Changes
   * if `Magisk` is not installed, the installer will install everything into `/system` directly
   * provide broken-out libraries for all provided applications
-    * fixes issues with them, for example `Magisk Manager` not being able to install zips
+     * fixes issues with them, for example `Magisk Manager` not being able to install zips
   * fix `nanomod-overlay` script to support all `.nanomod-overlay` configuration file locations
   * fix `nanomod-overlay` script not properly working with **NanoMod-microG** module
   * the on-device and on-pc framework patchers now create the file `/system/.nanomod-patcher` after successful patching
-    * can be used to check whether the patcher was already run or not
+     * can be used to check whether the patcher was already run or not
   * **NanoMod-microG** now also includes `GNU Bash`
   * fix `VLC` directory not matching apk file name
-    * fix `VLC` getting installed, even if user requested not to do so
+     * fix `VLC` getting installed, even if user requested not to do so
   * update default `.nanomod-overlay` to pseudo-debloat the following apps
-    * Pixel Launcher
-    * Via Browser
-    * Phonograph (Music Player)
-    * Sound Recorder (additional overlay path)
+     * Pixel Launcher
+     * Via Browser
+     * Phonograph (Music Player)
+     * Sound Recorder (additional overlay path)
 * Updates
   * Substratum (760)
   * OpenLauncher (0.5.0)
@@ -312,8 +312,8 @@
   * Kernel Adiutor (0.9.7.2)
   * F-Droid Privileged Extension (0.2.5)
   * Yalp Store (0.14)
-    * This release allows installation of applications without having to enable `Unknown Sources`
-      * go to Yalp Store > Settings > Installation Method > `Using system permissions`
+     * This release allows installation of applications without having to enable `Unknown Sources`
+         * go to Yalp Store > Settings > Installation Method > `Using system permissions`
   * (Simple) Calendar (2.3.4)
   * Open Camera (1.38)
   * OpenVPN (0.6.66)
@@ -328,7 +328,7 @@
   * full package: replace `spaces` with `underscores` in Zelda ringtone names
   * full package: minor fix in installer
   * framework-patcher package: grow and shrink `magisk.img` if required
-    * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
+     * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
   * framework-patcher package: show error message to user if `/system` fails to re-mount read-write
   * framework-patcher package: unmount `/system` and `/data` after work is done
   * framework-patcher package: less verbose output from `dexpatcher` and `zip`
@@ -338,7 +338,7 @@
   * framework-patcher package: check if ROM is `odexed` and exit if so
   * framework-patcher package: code clean-up
   * framework-patcher script: grow and shrink `magisk.img` if required
-    * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
+     * fixes issue where patched `services.jar` could not be installed, because not enough space was left in `magisk.img`
   * framework-patcher script: fix installation path for patched `services.jar` when NanoMod is not installed
 * Updates:
   * GNU Bash (4.4[012])
@@ -353,11 +353,11 @@
 ## 7.1.20170501
 * Internal Changes
   * full and microG package: the `.nanomod-overlay` , `.nanomod-apps` and `.nanomod-setup` configuration files can now be stored in the following directories
-    * `/data` (default)
-    * `/sdcard` (internal storage)
-    * `/persist`
-    * `/external_sd` (special path in TWRP for external SD-Card if not used as adoptable storage)
-    * directory containing the zip file
+     * `/data` (default)
+     * `/sdcard` (internal storage)
+     * `/persist`
+     * `/external_sd` (special path in TWRP for external SD-Card if not used as adoptable storage)
+     * directory containing the zip file
   * full package: init scripts no longer remount rootfs (not required)
   * full package: installer now makes init scripts actually executable
   * framework-patcher package: fix detection of device architecture
@@ -375,18 +375,18 @@
 ## 7.0.20140725
 * Internal Changes
   * some ROMs don't have a `zip` binary which is required for the on-device `framework-patcher` to work
-    * it now provides arm and arm64 `zip` binaries as fallback
+     * it now provides arm and arm64 `zip` binaries as fallback
   * all packages: let the installers fails if device has x86/x86_64 architecture (NanoMod only supports arm/arm64)
   * full and microG-only packages: if the installers create default configuration files because no user-defined exist, those files get removed after installation
-    * this is to ensure the users who don't care about them always get the default configuration
-    * obvioulsy, if you opt-in to create your own setup, it won't be affected by this
+     * this is to ensure the users who don't care about them always get the default configuration
+     * obvioulsy, if you opt-in to create your own setup, it won't be affected by this
   * full and microG-only package: if the setup file is incomplete, add the missing properties with default values
   * microG-only package: set default value of `nanomod.overlay` to `0`
   * microG-only package: create the application overrides if `nanomod.overlay` is `1`
 * Fixes
   * fix regression from 6.1 which prevented (in-)app-purchases
   * fix the microG only package by default installs no app store
-    * now defaults to Play Store
+     * now defaults to Play Store
 * Updates
   * GNU Nano (2.8.1)
   * GNU Bash (4.4)
@@ -398,9 +398,9 @@
   * VLC (2.1.6~beta)
 * New
   * Application
-    * (Simple) Calendar (2.3.3)
+     * (Simple) Calendar (2.3.3)
   * Override
-    * Calendar
+     * Calendar
 
 ## 6.1.20170421
 * Internal Changes
@@ -408,12 +408,12 @@
   * minor improvements to README
   * minor improvements in `mount-magisk.sh`
   * make on-pc `framework-patcher` auto-detect install path for modified `services.jar`
-    * like on-device framework-patcher it supports installing `services.jar` to
-      * NanoMod (full)
-      * NanoMod (microG)
-      * ROM (directly to /system)
+     * like on-device framework-patcher it supports installing `services.jar` to
+         * NanoMod (full)
+         * NanoMod (microG)
+         * ROM (directly to /system)
   * add support for `nanomod-apps` configuration file to let the user control what apps to provide when `nanomod.apps=1` is set (default)
-    * refer to the README for more details
+     * refer to the README for more details
   * fix provided `microG GmsCore` not being installable as user-app
 * Updates
   * (Simple) Gallery (2.8.6)
@@ -427,7 +427,7 @@
 * Internal Changes
   * there's now an F-Droid only variant
   * there's now an on-device framework-patcher
-    * Note: it is suggested to boot into the ROM once, else the dalvik-cache might not exist (or is not up-to-date in case of incremental ROM update) and the patching process takes ages or fails
+     * Note: it is suggested to boot into the ROM once, else the dalvik-cache might not exist (or is not up-to-date in case of incremental ROM update) and the patching process takes ages or fails
   * ensure all binaries installed by NanoMod (full package) are executable
   * minor fix in `nanomod-overlay` script
   * added `fdroid` parameter to `mod.sh`, to create the F-Droid only package from git
@@ -436,13 +436,13 @@
   * revised `mod.sh` (should now be fully functional on Mac OSX)
   * added `nanomod.mapsv1` setup variable to `nanomod-setup` configuration file
   * the location of the `.nanomod-setup` file was changed from `/data/media/0/.nanomod-setup` to `/data/.nanomod-setup`
-    * if the old file is found, the installer will move it to the new location
-    * this is in order to ensure the file is usable when users have adoptable storage in use
+     * if the old file is found, the installer will move it to the new location
+     * this is in order to ensure the file is usable when users have adoptable storage in use
   * the location of the `.nanomod-overlay` file was changed from `/data/media/0/.nanomod-overlay` to `/data/.nanomod-overlay`
-    * if the old file is found, the installer will move it to the new location
-    * this is in order to ensure the file is usable when users have adoptable storage in use
+     * if the old file is found, the installer will move it to the new location
+     * this is in order to ensure the file is usable when users have adoptable storage in use
   * also install the `nanomod-overlay` script in the microG only package
-    * so that `nanomod-overlay -p` is available
+     * so that `nanomod-overlay -p` is available
   * revised README in many places
   * README now features many graphical links for most things featured in full package, pointing to F-Droid pages, github repos, or the-like, to make it much easier to get additional information
 * Updates
@@ -478,10 +478,10 @@
   * `framework-patcher.sh` updated to support both modules
 * Removed files / features
   * Effect_Tick Zelda sound
-    * I admit, that one was too annoying
+     * I admit, that one was too annoying
   * Magisk installation
   * unsu Script
-    * Read: NanoMod is now only the Module, no longer includes Magisk itself
+     * Read: NanoMod is now only the Module, no longer includes Magisk itself
 * nanomod-overlay Script Changes
   * parameter `-l`, respectively `--list` now has properly formatted output
   * parameter `-r`, respectively `--remove` now only removed exact matches from config file
@@ -495,19 +495,19 @@
   * Substratum (631)
 * Added applications
   * F-Droid Privileged Extension (0.2.2)
-    * allows installation of apps using F-Droid without enabling 'Unknown Sources' in the security settings of your device
+     * allows installation of apps using F-Droid without enabling 'Unknown Sources' in the security settings of your device
 
 ## 5.0.20170405
 * Internal Changes
   * NanoMod is now (mostly) an Magisk Module
-    * referrenced to as "Overlay"
+     * referrenced to as "Overlay"
   * Nano-Init merged into NanoMod Overlay
   * AROMA installer removed
-    * the list of applications to override is now in the file `.nanomod-overlay` in the internal data storage. See the README for more information.
-    * you can alter the setup process to some degree by editing the file `.nanomod-setup` in the internal data storage. See the file README for more information.
+     * the list of applications to override is now in the file `.nanomod-overlay` in the internal data storage. See the README for more information.
+     * you can alter the setup process to some degree by editing the file `.nanomod-setup` in the internal data storage. See the file README for more information.
   * Updated `framework-patcher.sh` to install files modified by haystack directly into the NanoMod Overlay
-    * `framework-patcher.sh` needs to be re-run everytime you install NanoMod
-    * it's suggested to re-run `framework-patcher.sh` on every ROM update, too, so that you get to patch your ROMs current framework files
+     * `framework-patcher.sh` needs to be re-run everytime you install NanoMod
+     * it's suggested to re-run `framework-patcher.sh` on every ROM update, too, so that you get to patch your ROMs current framework files
   * microG GmsCore and Play Store are modified to allow in-app purchases
 * Updates
   * Kernel Adiutor (0.9.6.11)
@@ -522,7 +522,7 @@
   * F-Droid (0.103-alpha1)
 * Replaced Applications
   * LeafPic => (Simple) Gallery [2.8.0]
-    * (Simple) Gallery allows changing the wallpaper (unlike LeafPic)
+     * (Simple) Gallery allows changing the wallpaper (unlike LeafPic)
 * Removed Magisk Modules
   * Nano-Miitomo (ro.debuggable is now disabled by Magisk by default)
   * Nano-Init (merged in the Overlay)
@@ -545,7 +545,7 @@
   * Kernel Adiutor (0.9.6.7)
   * NewPipe (0.8.12)
   * Nano-init (4)
-    * let's several more Samsung devices pass SafetyNet (though, not all)
+     * let's several more Samsung devices pass SafetyNet (though, not all)
   * Twidere (3.4.39)
 * Added applications
   * OpenKeyChain (4.2.4)
@@ -577,8 +577,8 @@
   * Remove Nano-Selinux-Senforce Magisk Module
   * some ROMs have AdAway pre-installed, remove that version if NanoMod provided version is choosen to be installed
   * include customized version of osm0sis' unSU script to fully remove any existing root
-    * re-flashes boot image backup in case system less SuperUser was installed
-    * only unSU if Magisk is to be installed
+     * re-flashes boot image backup in case system less SuperUser was installed
+     * only unSU if Magisk is to be installed
   * drop option to remove Nexus Launcher
 
 ## 3.1.20170207

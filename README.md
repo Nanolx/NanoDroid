@@ -12,13 +12,13 @@
   * Archived Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_BetaArchive)
 * Snapshot
   * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
-    * `build-package full` for the full package
-    * `build-package microg` for the microg only package
-    * `build-package fdroid` for the F-Droid only package
-    * `build-package patcher` for the on-device framework-patcher package
-    * `build-package uninstaller` for the uninstaller package
-    * `build-package setupwizard` for the Setup Wizard package
-    * `build-package all` for all packages at once
+     * `build-package full` for the full package
+     * `build-package microg` for the microg only package
+     * `build-package fdroid` for the F-Droid only package
+     * `build-package patcher` for the on-device framework-patcher package
+     * `build-package uninstaller` for the uninstaller package
+     * `build-package setupwizard` for the Setup Wizard package
+     * `build-package all` for all packages at once
 
 ## Support
 
@@ -43,8 +43,8 @@ NanoMod includes
 * F-Droid and it's privileged extension
 * modified Play Store to allow (in-)app-purchases with microG
   * this required two steps
-    * microG Gms Core and Play Store need to be signed with the same key
-    * Play Store needs to be modified see the [> patch](doc/Phonesky.diff)
+     * microG Gms Core and Play Store need to be signed with the same key
+     * Play Store needs to be modified see the [> patch](doc/Phonesky.diff)
   * alternatively Yalp Store can be installed instead
 * custom init scripts
 * pseudo-debloat feature (Magisk-only)
@@ -74,9 +74,9 @@ NanoMod includes
 * **NanoMod-setupwizard**: includes
   * AROMA based Setup Wizard to create the configuration files
   * user can choose where to store the configuration files
-    * `/sdcard`
-    * `/external_sd`
-    * `/data` (fallback)
+     * `/sdcard`
+     * `/external_sd`
+     * `/data` (fallback)
 * **NanoMod-uninstaller**: includes
   * uninstalls any NanoMod Magisk Module
   * uninstalls NanoMod installed in System Mode aswell
@@ -184,7 +184,7 @@ NanoMod includes microG as follows
   * disabled by default
 * choose between official **Play Store** or unofficial **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
-    * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
+     * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
 
 ### F-Droid and Applications
 
@@ -206,7 +206,7 @@ Full [> Details](doc/ZeldaSounds.md)
 
 NanoMod supports altering the installation settings to a certain degree.
 
-Full details on altering installation [> Details](doc/AlterInstallation.md)
+Full [> Details](doc/AlterInstallation.md) on altering installation manually, or use the Setup Wizard.
 
 ### Installation Process
 
@@ -231,9 +231,9 @@ For **microG** to work, your ROM needs to have signature spoofing enabled (or a 
 
 If your ROM does not have signature spoofing support, you can manually patch it using either
   * the on-device framework-patcher zip
-    * flash after booting into the ROM once
+     * flash after booting into the ROM once
   * the `framework-patcher` script (found in the github repository)
-    * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified **services.jar** on the device.
+     * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified **services.jar** on the device.
 
 Both patchers support installing the patched services.jar into the following locations
   * NanoMod Magisk Module
@@ -244,17 +244,17 @@ So you can use them regardless whether you're using NanoMod or not.
 
 Once your ROM supports signature spoofing, you need to setup microG like this
   * go into **microG settings** and set up everything like:
-    * check results in **Self-Check**, grant missing permissions (by tapping on them)
-      * especially the 'Battery Optimization' item
-    * enable **Google device registration**
-    * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
-    * enable **Google SafetyNet** (required for applications that utilize SafetyNet, for example Pokémon GO, ...)
-      * menu > set to use the official servers
-    * in **UnifiedNlp Settings** choose
-      * **Mozilla Location Backend** as Geolocation backend
-      * **Nominatim** as Address lockup backend
-    * after everything is done, reboot
-    * go to **Play Store**, setup account and install your apps
+     * check results in **Self-Check**, grant missing permissions (by tapping on them)
+         * especially the 'Battery Optimization' item
+     * enable **Google device registration**
+     * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
+     * enable **Google SafetyNet** (required for applications that utilize SafetyNet, for example Pokémon GO, ...)
+         * menu > set to use the official servers
+     * in **UnifiedNlp Settings** choose
+         * **Mozilla Location Backend** as Geolocation backend
+         * **Nominatim** as Address lockup backend
+     * after everything is done, reboot
+     * go to **Play Store**, setup account and install your apps
 
 ## License & Credits
 
@@ -282,24 +282,24 @@ List of known issues
   * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as `/system` application, see Magisk Issue 155 [> GitHub](https://github.com/topjohnwu/Magisk/issues/155)
   * this does not happen on all devices
   * if you are affected of this issue, instead install them as an user app, by installing the apk from
-    * `/system/priv-app/DroidGuard/DroidGuard.apk` for microG DroidGuard Helper
-    * `/system/priv-app/Phonesky/Phonesky.apk` for Play Store
+     * `/system/priv-app/DroidGuard/DroidGuard.apk` for microG DroidGuard Helper
+     * `/system/priv-app/Phonesky/Phonesky.apk` for Play Store
 * SafetyNet check fails with `can't connect to Google API`
   * see `microG DroidGuard Helper or Play Store crashing` above and install microG DroidGuard Helper as user application
 * SafetyNet check fails with `Google Play Services not available`
   * you did not setup microG (or did not reboot afterwards)
 * Play Store lacks fake signature spoofing permission
   * on ROMs like **crDroid** or **OmniROM**, that have built-in signature spoofing, in some cases the Play Store is not granted that permission automatically, to fix this either
-    * issue the command `nanomod-overlay --permission` as root
-    * go to Settings > Apps > Gear Icon > App Permissions > `Signature Spoofing` > Enable for Play Store
+     * issue the command `nanomod-overlay --permission` as root
+     * go to Settings > Apps > Gear Icon > App Permissions > `Signature Spoofing` > Enable for Play Store
 * Google Sync adapters lacking permissions
   * to fix this either
-    * issue the command `nanomod-overlay --permission` as root
-    * go to Settings > Apps > Google Contacts/Calendar Sync > Permissions > grant permissions
+     * issue the command `nanomod-overlay --permission` as root
+     * go to Settings > Apps > Google Contacts/Calendar Sync > Permissions > grant permissions
 * Battery Drain
   * microG fails to register applications  to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
-    * do a clean flash of your ROM (, Magisk) and NanoMod and install your apps after microG setup
-    * uninstall and re-install all your applications (backup application data if required)
+     * do a clean flash of your ROM (, Magisk) and NanoMod and install your apps after microG setup
+     * uninstall and re-install all your applications (backup application data if required)
 
 Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
 
