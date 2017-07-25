@@ -365,7 +365,7 @@ install_init () {
 
 	ui_print " "
 	ui_print "******************************"
-	ui_print "     NanoMod 12.0.20170723    "
+	ui_print "     NanoMod 12.1.99999999    "
 	ui_print "      created by @Nanolx      "
 	ui_print "******************************"
 	ui_print " "
