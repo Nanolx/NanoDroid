@@ -44,7 +44,7 @@ Creating Package
 	Directory	$(dirname ${ZIP})
 "
 
-	cd "${CWD}/Overlay"
+	cd "${CWD}/Full"
 	zip_add
 	cd "${CWD}"
 
@@ -73,7 +73,7 @@ Creating Package
 	Directory	$(dirname ${ZIP})
 "
 
-	cd "${CWD}/Overlay"
+	cd "${CWD}/Full"
 
 	for app in GoogleCalendarSync GoogleContactSync \
 		nlpBackendIchnaea nlpBackendNomiantim; do
@@ -122,12 +122,12 @@ Creating Package
 	Directory	$(dirname ${ZIP})
 "
 
-	cd "${CWD}/Overlay"
+	cd "${CWD}/Full"
 	zip_add "system/app/FDroid/"
 	zip_add "system/priv-app/FDroidPrivileged/"
 	cd "${CWD}"
 
-	cd "${CWD}/fdroid"
+	cd "${CWD}/F-Droid"
 	zip_add
 	cd "${CWD}"
 
@@ -210,7 +210,7 @@ Creating Package
 increase_version_number() {
 	sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i "${CWD}/build-package"
 
-	for module in Overlay microG fdroid; do
+	for module in Full microG F-Droid; do
 		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}    \"/" -i \
 			"${CWD}/${module}/META-INF/com/google/android/update-binary"
 		sed -e "s/version=.*/version=v${2}.${3}/" -i \
@@ -234,7 +234,7 @@ increase_version_number() {
 }
 
 increase_module_version () {
-	for module in Overlay microG fdroid; do
+	for module in Full microG F-Droid; do
 		eval $(grep versionCode "${PWD}"/"${module}"/module.prop)
 		versionCode=$((versionCode+1))
 		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
