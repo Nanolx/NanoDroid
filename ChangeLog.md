@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 12.1 in-dev
+* Updates
+  * Anysoft Keyboard (1.8.1241)
+
 ## 12.0.20170723
 * Bug Fixes
   * Full package:
