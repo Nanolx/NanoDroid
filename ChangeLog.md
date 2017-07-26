@@ -3,6 +3,7 @@
 ## 12.1 in-dev
 * Updates
   * Anysoft Keyboard (1.8.1241)
+  * Substratum (813)
 
 ## 12.0.20170723
 * Bug Fixes
