@@ -3,7 +3,7 @@
 ## 12.1 in-dev
 * Updates
   * Anysoft Keyboard (1.8.1241)
-  * Substratum (813)
+  * Substratum (815)
   * Yalp Store (0.20)
   * Odyssey (1.1.6)
   * OpenKeychain (4.5)
