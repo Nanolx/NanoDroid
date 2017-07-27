@@ -4,6 +4,7 @@
 * Updates
   * Anysoft Keyboard (1.8.1241)
   * Substratum (813)
+  * Yalp Store (0.20)
 
 ## 12.0.20170723
 * Bug Fixes
