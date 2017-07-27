@@ -427,11 +427,7 @@ install_misc () {
 	nanomod_install /system/etc/bashrc /system/etc/
 	nanomod_install /system/share /system/
 
-	for binary in bash nanomod-overlay nanomod-overlay.functions \
-		nanomod-overlay.addoverrides nanomod-overlay.genconfig \
-		nanomod-overlay.listoverrides nanomod-overlay.removeoverrides \
-		nanomod-overlay.shownonoverrides nanomod-overlay.updateoverrides \
-		nanomod-overlay.permission; do
+	for binary in bash nanomod-overlay; do
 		nanomod_install /system/bin/${binary} /system/bin/ bin
 	done
 
