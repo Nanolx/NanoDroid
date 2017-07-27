@@ -5,6 +5,175 @@ export NO_CONFIG=0
 export MODPATH=@MODPATH@
 export PATH="${PATH}:${MODPATH}/system/bin"
 
+# Permissions
+perm_fake="android.permission.FAKE_PACKAGE_SIGNATURE"
+perm_calr="android.permission.READ_CALENDAR"
+perm_calw="android.permission.WRITE_CALENDAR"
+perm_conr="android.permission.READ_CONTACTS"
+perm_conw="android.permission.WRITE_CONTACTS"
+perm_gacc="android.permission.GET_ACCOUNTS"
+
+# Packages
+microG="com.google.android.gms"
+PlayStore="com.android.vending"
+GCalSync="com.google.android.syncadapters.calendar"
+GConSync="com.google.android.syncadapters.contacts"
+
+get_config () {
+	config=""
+	config_exists=0
+	for path in ${config_locations}; do
+		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
+			config="${path}/${1}"
+			config_exists=1
+			return
+		fi
+	done
+}
+
+show_app_name () {
+	aapt dump badging "${1}" 2>/dev/null | \
+		grep "application: label" | \
+		sed -e "s/.*label='//g;s/' icon.*//g"
+}
+
+add_override () {
+	mkdir -p "${MODPATH}/system/${1}"
+	touch "${MODPATH}/system/${1}/.replace"
+}
+
+rm_override () {
+	rm -rf  "${MODPATH}/system/app/${1}"
+	sed -e "/^${1}$/d" -i "${config}"
+}
+
+update_overrides () {
+	source "${MODPATH}/system/bin/nanomod-overlay.functions"
+	OVERLAY_APPS=$(cat "${config}")
+	clear_overrides
+
+	for app in ${OVERLAY_APPS}; do
+		if [ -d /system/app/${app} ]; then
+			add_override "app/${app}"
+		elif [ -d /system/priv-app/${app} ]; then
+			add_override "priv-app/${app}"
+		else	echo "app \"${app}\" is not installed"
+		fi
+	done
+}
+
+list_overrides () {
+	LIST_APPS=($(find "${MODPATH}/system/app" -name "*.replace"))
+	for app in "${LIST_APPS[@]}"; do
+		APPS=(${APPS[@]} "$(dirname "${app}")")
+	done
+
+	LIST_PRIV_APPS=($(find "${MODPATH}/system/priv-app" -name "*.replace"))
+	for app in "${LIST_PRIV_APPS[@]}"; do
+		PRIV_APPS=(${PRIV_APPS[@]} "$(dirname "${app}")")
+	done
+
+	echo "Overrides exist for following applications in /system/app:
+
+$(printf '  * %s\n' "${APPS[@]}")
+
+Overrides exist for following applications in /system/priv-app:
+
+$(printf '  * %s\n' "${PRIV_APPS[@]}")
+"
+}
+
+show_nooverrides () {
+	echo " >> processing /system/app"
+
+	for app in /system/app/*/*.apk; do
+		sysname=$(basename "${app}" .apk)
+		if [[ ! -f ${MODPATH}/system/app/${sysname}/.replace ]]; then
+			humname=$(show_app_name "${app}")
+			S_APPS="${S_APPS}
+	* ${sysname}		|(${humname})"
+		fi
+	done
+
+	echo " >> processing /system/priv-app"
+
+	for app in /system/priv-app/*/*.apk; do
+		sysname=$(basename "${app}" .apk)
+		if [[ ! -f ${MODPATH}/system/priv-app/${sysname}/.replace ]]; then
+			humname=$(show_app_name "${app}")
+			S_PRIV_APPS="${S_PRIV_APPS}
+	* ${sysname}		|(${humname})"
+		fi
+	done
+
+	echo "Non-Overriden applications in /system/app:
+
+$(printf '* %s\n' "${S_APPS[@]}" | column -t -s \|)
+
+Non-Overriden applications in /system/priv-app:
+
+$(printf '* %s\n' "${S_PRIV_APPS[@]}" | column -t -s \|)
+"
+}
+
+clear_overrides () {
+	RM_APPS=($(find "${MODPATH}/system/app" -name "*.replace"))
+	for app in "${RM_APPS[@]}"; do
+		rm -rf "$(dirname "${app}")"
+	done
+
+	RM_PRIV_APPS=($(find "${MODPATH}/system/priv-app" -name "*.replace"))
+	for app in "${RM_PRIV_APPS[@]}"; do
+		rm -rf "$(dirname "${app}")"
+	done
+}
+
+genconfig () {
+	if [[ ! -f "${config}" ]]; then
+		config="/data/.nanomod-overlay"
+	fi
+
+	APPS=($(find "${MODPATH}/system/app" -name "*.replace"))
+	PRIV_APPS=($(find "${MODPATH}/system/priv-app" -name "*.replace"))
+
+	if [[ ${APPS[*]} != "" ]]; then
+		for app in "${APPS[@]}"; do
+			echo "$(dirname "${app}")" >> "${config}"
+		done
+	fi
+
+	if [[ ${PRIV_APPS[*]} != "" ]]; then
+		for app in "${PRIV_APPS[@]}"; do
+			echo "$(dirname "${app}")" >> "${config}"
+		done
+	fi
+
+	sed -e "s,.*/system,/system,g" -i "${config}"
+}
+
+check_package () {
+	[[ $(grep "^${1} " /data/system/packages.list) ]] && return 0 || return 1
+}
+
+check_permission () {
+	[[ $(dumpsys package ${1} | grep -Eo "^[ ]+${2}: granted=true") ]] && return 0 || return 1
+}
+
+grant_permission () {
+	pm grant ${1} ${2}
+}
+
+permissions () {
+	if check_package ${1}; then
+		echo "package ${package} found"
+		if ! check_permission ${1} ${2}; then
+			echo "granting permission ${permission}"
+			grant_permission ${1} ${2}
+		else	echo "already has permission ${permission}"
+		fi
+	fi
+}
+
 # check for configuration files
 config_locations="/sdcard /external_sd /persist @ZIPDIR@ /data"
 
@@ -23,23 +192,39 @@ if [[ ${NO_MAGISK} -eq 0 ]]; then
 
 case ${1} in
 	-l | --list )
-		nanomod-overlay.listoverrides
+		list_overrides
 	;;
 
 	-a | --add )
-		nanomod-overlay.addoverrides "${2}"
+		if [[ -d /system/app/${2} ]]; then
+			echo "Adding override for app: \"${2}\""
+			add_override "app/${2}"
+			echo "${2}" >> "${config}"
+		elif [[ -d /system/priv-app/${2} ]]; then
+			echo "Adding override for priv-app \"${2}\""
+			echo "${2}" >> "${config}"
+			echo "${2}" >> "${config}"
+		else	echo "app \"${2}\" is not installed"
+		fi
 	;;
 
 	-r | --remove )
-		nanomod-overlay.removeoverrides "${2}"
+		if [[ -d ${MODPATH}/system/app/${2}/.replace ]]; then
+			echo "Removing override for app: \"${2}\""
+			rm_override "app/${2}"
+		elif [[ -d ${MODPATH}/system/priv-app/${2}/.replace ]]; then
+			echo "Removing override for priv-app: \"${2}\""
+			rm_override "priv-app/${2}"
+		else	echo "No override for \"${2}\" found"
+		fi
 	;;
 
 	-u | --update )
-		nanomod-overlay.updateoverrides
+		update_overrides
 	;;
 
 	-s | --show )
-		nanomod-overlay.shownonoverrides
+		show_nooverrides
 	;;
 
 	-c | --clear )
@@ -47,11 +232,22 @@ case ${1} in
 	;;
 
 	-g | --genconfig )
-		nanomod-overlay.genconfig
+		genconfig
 	;;
 
 	-p | --permission )
-		nanomod-overlay.permission
+		# microG and Play Store
+		permissions ${microG} ${perm_fake}
+		permissions ${PlayStore} ${perm_fake}
+
+		# Google Calendar Sync
+		permissions ${GCalSync} ${perm_calr}
+		permissions ${GCalSync} ${perm_calw}
+
+		# Google Contacts Sync
+		permissions ${GConSync} ${perm_conr}
+		permissions ${GConSync} ${perm_conw}
+		permissions ${GConSync} ${perm_gacc}
 	;;
 
 	* )

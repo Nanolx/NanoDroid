@@ -1,7 +1,10 @@
 # ChangeLog
 
 ## 12.1 in-dev
-* Updates
+* General Changes:
+  * Full, microG packages:
+    * merge all nanomod-overlay sub-scripts into the main script
+* Updates:
   * Anysoft Keyboard (1.8.1241)
   * Substratum (815)
   * Yalp Store (0.20)
