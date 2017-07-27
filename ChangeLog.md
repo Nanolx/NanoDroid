@@ -6,6 +6,7 @@
   * Substratum (813)
   * Yalp Store (0.20)
   * Odyssey (1.1.6)
+  * OpenKeychain (4.5)
 
 ## 12.0.20170723
 * Bug Fixes
