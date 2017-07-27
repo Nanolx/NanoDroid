@@ -227,6 +227,8 @@ Full [> Details](doc/AlterInstallation.md) on altering installation manually, or
 
 #### microG
 
+##### Signature Spoofing Support
+
 For **microG** to work, your ROM needs to have signature spoofing enabled (or a **deodexed** ROM to patch yourself).
 
 If your ROM does not have signature spoofing support, you can manually patch it using either
@@ -241,6 +243,8 @@ Both patchers support installing the patched services.jar into the following loc
   * directly into `/system`
 
 So you can use them regardless whether you're using NanoMod or not.
+
+##### microG Setup
 
 Once your ROM supports signature spoofing, you need to setup microG like this
   * go into **microG settings** and set up everything like:
