@@ -85,7 +85,7 @@ Creating Package
 		zip_add "system/priv-app/${app}/"
 	done
 
-	for input in "system/bin/nanomod-overlay*" "system/bin/bash*" "system/bin/aapt*" \
+	for input in "system/bin/nanomod-overlay" "system/bin/bash*" "system/bin/aapt*" \
 		"system/bin/column*" "system/framework/" "system/etc/permissions/" \
 		"system/etc/bash*" "system/share/" "swipe/"; do
 		zip_add "${input}"
