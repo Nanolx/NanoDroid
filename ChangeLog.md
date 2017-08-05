@@ -19,6 +19,7 @@
   * Odyssey (1.1.6)
   * OpenKeychain (4.5)
   * Play Store (8.1.25.S)
+  * GNU Nano (2.8.6)
 
 ## 12.0.20170723
 * Bug Fixes
