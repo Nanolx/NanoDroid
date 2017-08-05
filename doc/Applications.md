@@ -28,6 +28,7 @@ Full list of provided applications
 * OpenWeatherMap Weather Provider [> GitHub](https://github.com/LineageOS/android_packages_apps_OpenWeatherMapProvider)
 * OpenVPN [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=openvpn&fdid=de.blinkt.openvpn)
 * Orbot [> Guardian Project](https://guardianproject.info/apps/orbot/)
+* orfox [> Guardian Project](https://guardianproject.info/apps/orfox/)
 * QKSMS [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=qk&fdid=com.moez.QKSMS)
 * Substratum (App) [> GitHub](https://github.com/substratum/substratum)
 * Termux [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=termux&fdid=com.termux)

@@ -6,6 +6,7 @@
     * merge all nanomod-overlay sub-scripts into the main script
 * New:
   * Orbot (15.4.1-RC1)
+  * Orfox (1.4-RC2)
 * Updates:
   * Anysoft Keyboard (1.8.1333)
   * Substratum (815)
