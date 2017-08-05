@@ -354,7 +354,7 @@ nanomod_libs () {
 	else
 		"${INSTALLER}/system/bin/unzip.${BIN_ARCH}" \
 			-oq ${apk} "lib/*" -d "/tmp/nanomod-lib" \
-			2>/dev/null
+			2>/dev/null || error " !! installing libs failed"
 		if [ -d /tmp/nanomod-lib/lib ]; then
 			mkdir -p ${libd}
 			case ${ARCH} in
