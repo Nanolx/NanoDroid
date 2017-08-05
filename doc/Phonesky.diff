@@ -1,13 +1,13 @@
-diff -Nupr PS_8073R.orig/AndroidManifest.xml PS_8073R/AndroidManifest.xml
---- PS_8073R.orig/AndroidManifest.xml	2017-07-22 19:39:08.217925013 +0200
-+++ PS_8073R/AndroidManifest.xml	2017-07-22 19:44:05.961862187 +0200
+diff -Nupr PS_8125S.orig/AndroidManifest.xml PS_8125S/AndroidManifest.xml
+--- PS_8125S.orig/AndroidManifest.xml	2017-08-05 20:51:40.471990792 +0200
++++ PS_8125S/AndroidManifest.xml	2017-08-05 20:51:36.228144924 +0200
 @@ -1,4 +1,5 @@
  <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" package="com.android.vending" platformBuildVersionCode="26" platformBuildVersionName="8.0.0">
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
      <uses-permission android:name="com.android.vending.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.android.vending.billing.IN_APP_NOTIFY.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-@@ -98,13 +99,14 @@
+@@ -98,6 +99,7 @@
      <permission android:name="com.google.android.vending.verifier.ACCESS_VERIFIER" android:protectionLevel="signature"/>
      <permission android:name="com.google.android.finsky.permission.INSTANT_APP_STATE" android:protectionLevel="signature"/>
      <application android:backupAgent="com.android.vending.VendingBackupAgent" android:debuggable="@bool/is_debuggable" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher_play_store" android:killAfterRestore="false" android:label="@string/app_long_name" android:name="com.google.android.finsky.application.FinskyAppImpl" android:requiredForAllUsers="true" android:restoreAnyVersion="true" android:restoreNeedsApplication="true" android:restrictedAccountType="com.google" android:roundIcon="@mipmap/ic_round_launcher_play_store" android:supportsRtl="@bool/is_rtl_enabled">
@@ -15,14 +15,6 @@ diff -Nupr PS_8073R.orig/AndroidManifest.xml PS_8073R/AndroidManifest.xml
          <activity android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.wallet.instrumentmanager.redirect.ImStartAndroidAppRedirectActivity" android:theme="@style/Theme.UiComponents.Translucent.NoActionBar"/>
          <activity android:exported="true" android:name="com.google.android.wallet.instrumentmanager.redirect.ImFinishAndroidAppRedirectActivity">
              <intent-filter>
-                 <action android:name="android.intent.action.VIEW"/>
-                 <category android:name="android.intent.category.DEFAULT"/>
-                 <category android:name="android.intent.category.BROWSABLE"/>
--                <data android:host="@string/wallet_uic_android_app_redirect_callback_uri_host" android:scheme="@string/wallet_uic_android_app_redirect_callback_uri_scheme"/>
-+                <data android:host="@string/wallet_uic_android_app_redirect_callback_uri_host" android:scheme="google-orchestration"/>
-             </intent-filter>
-         </activity>
-         <activity android:configChanges="orientation|screenSize" android:name="com.google.android.wallet.instrumentmanager.ui.redirect.ImPopupRedirectActivity" android:theme="@style/Theme.UiComponents.PopupRedirect"/>
 @@ -137,7 +139,7 @@
              <meta-data android:name="com.android.launcher.toolbar_icon" android:resource="@drawable/ic_menu_shop_holo_dark"/>
              <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
@@ -32,7 +24,7 @@ diff -Nupr PS_8073R.orig/AndroidManifest.xml PS_8073R/AndroidManifest.xml
              <meta-data android:name="instantapps.clients.allowed" android:value="true"/>
              <intent-filter>
                  <action android:name="android.intent.action.SEARCH"/>
-@@ -340,7 +342,7 @@
+@@ -339,7 +341,7 @@
                  <action android:name="android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE"/>
              </intent-filter>
          </receiver>
@@ -41,7 +33,7 @@ diff -Nupr PS_8073R.orig/AndroidManifest.xml PS_8073R/AndroidManifest.xml
              <meta-data android:name="instantapps.clients.allowed" android:value="true"/>
              <intent-filter>
                  <action android:name="android.intent.action.VIEW"/>
-@@ -457,7 +459,7 @@
+@@ -459,7 +461,7 @@
                  <action android:name="com.android.vending.billing.MarketBillingService.BIND"/>
              </intent-filter>
          </service>
@@ -50,9 +42,16 @@ diff -Nupr PS_8073R.orig/AndroidManifest.xml PS_8073R/AndroidManifest.xml
              <meta-data android:name="instantapps.clients.allowed" android:value="true"/>
              <intent-filter>
                  <action android:name="com.android.vending.billing.InAppBillingService.BIND"/>
-diff -Nupr PS_8073R.orig/res/layout-v26/abc_screen_toolbar.xml PS_8073R/res/layout-v26/abc_screen_toolbar.xml
---- PS_8073R.orig/res/layout-v26/abc_screen_toolbar.xml	2017-07-22 19:39:07.224954383 +0200
-+++ PS_8073R/res/layout-v26/abc_screen_toolbar.xml	2017-07-22 19:46:43.935420311 +0200
+@@ -738,4 +740,4 @@
+         <screen android:screenDensity="xxhdpi" android:screenSize="large"/>
+         <screen android:screenDensity="xxhdpi" android:screenSize="xlarge"/>
+     </compatible-screens>
+-</manifest>
+\ Kein Zeilenumbruch am Dateiende.
++</manifest>
+diff -Nupr PS_8125S.orig/res/layout-v26/abc_screen_toolbar.xml PS_8125S/res/layout-v26/abc_screen_toolbar.xml
+--- PS_8125S.orig/res/layout-v26/abc_screen_toolbar.xml	2017-08-05 20:51:39.931010372 +0200
++++ PS_8125S/res/layout-v26/abc_screen_toolbar.xml	2017-08-05 20:51:35.737162829 +0200
 @@ -2,8 +2,8 @@
  <android.support.v7.widget.ActionBarOverlayLayout android:id="@id/decor_content_parent" android:fitsSystemWindows="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -65,28 +64,28 @@ diff -Nupr PS_8073R.orig/res/layout-v26/abc_screen_toolbar.xml PS_8073R/res/layo
 -</android.support.v7.widget.ActionBarOverlayLayout>
 \ Kein Zeilenumbruch am Dateiende.
 +</android.support.v7.widget.ActionBarOverlayLayout>
-diff -Nupr PS_8073R.orig/res/values/public.xml PS_8073R/res/values/public.xml
---- PS_8073R.orig/res/values/public.xml	2017-07-22 19:39:07.236954028 +0200
-+++ PS_8073R/res/values/public.xml	2017-07-22 19:41:48.748183856 +0200
-@@ -7401,6 +7401,7 @@
-     <public type="string" name="year" id="0x7f130691" />
-     <public type="string" name="yes" id="0x7f130692" />
-     <public type="string" name="yes_im_in" id="0x7f130693" />
-+    <public type="string" name="fake_signature" id="0x7f130964" />
+diff -Nupr PS_8125S.orig/res/values/public.xml PS_8125S/res/values/public.xml
+--- PS_8125S.orig/res/values/public.xml	2017-08-05 20:51:40.014007365 +0200
++++ PS_8125S/res/values/public.xml	2017-08-05 20:51:35.807160274 +0200
+@@ -7507,6 +7507,7 @@
+     <public type="string" name="year" id="0x7f1306bc" />
+     <public type="string" name="yes" id="0x7f1306bd" />
+     <public type="string" name="yes_im_in" id="0x7f1306be" />
++    <public type="string" name="fake_signature" id="0x7f1306bf" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -8169,4 +8170,4 @@
+@@ -8242,4 +8243,4 @@
      <public type="menu" name="family_remote_escalation" id="0x7f150004" />
      <public type="menu" name="instant_apps_settings_menu" id="0x7f150005" />
      <public type="menu" name="loading_overflow_menu" id="0x7f150006" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_8073R.orig/res/values/strings.xml PS_8073R/res/values/strings.xml
---- PS_8073R.orig/res/values/strings.xml	2017-07-22 19:39:07.235954058 +0200
-+++ PS_8073R/res/values/strings.xml	2017-07-22 19:44:20.292359772 +0200
-@@ -1629,4 +1629,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_8125S.orig/res/values/strings.xml PS_8125S/res/values/strings.xml
+--- PS_8125S.orig/res/values/strings.xml	2017-08-05 20:51:39.965009140 +0200
++++ PS_8125S/res/values/strings.xml	2017-08-05 20:51:35.812160091 +0200
+@@ -1657,4 +1657,5 @@ First turn on NFC in your settings, then
      <string name="year">Year</string>
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
