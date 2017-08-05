@@ -362,10 +362,6 @@ install_init () {
 	ui_print " > prepare installation"
 	cd "${INSTALLER}" || error " !! failed to prepare environment!"
 	unzip -o "$ZIP" || error " !! failed to prepare environment!"
-
-	# When installing in Magisk mode we are forced to use our own unzip
-	# for nanomod_libs() to work, use it in System mode aswell.
-	chmod +x "${INSTALLER}"/system/bin/unzip*
 }
 
 install_microg () {
@@ -683,6 +679,10 @@ if [ "${MODE}" = "SYSTEM" ]; then
 		error "! failed to re-mount /system read-write"
 	unset MODPATH
 fi
+
+# When installing in Magisk mode we are forced to use our own unzip
+# for nanomod_libs() to work, use it in System mode aswell.
+chmod +x "${INSTALLER}/system/bin/unzip.${BIN_ARCH}"
 
 install_microg
 install_mapsv1
