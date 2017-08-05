@@ -1,13 +1,16 @@
 # ChangeLog
 
 ## 12.1 in-dev
-* General Changes:
+* Bug Fixes
+  * Full, microG, F-Droid packages:
+    * make `nanomod_libs` installer routine (hopefuly) more robust
+* General Changes
   * Full, microG packages:
     * merge all nanomod-overlay sub-scripts into the main script
-* New:
+* New
   * Orbot (15.4.1-RC1)
   * Orfox (1.4-RC2)
-* Updates:
+* Updates
   * Anysoft Keyboard (1.8.1333)
   * Substratum (815)
   * Yalp Store (0.21)
