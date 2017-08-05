@@ -10,6 +10,10 @@ package_extract_file("nanomod-setup", "/tmp/nanomod-setup");
 set_metadata("/tmp/nanomod-setup", "uid", 0, "gid", 0, "mode", 0777);
 run_program("/tmp/nanomod-setup");
 
+ui_print(" ");
+ui_print(">> Now flash the NanoMod package of your choice!");
+ui_print(" ");
+
 ui_print("> Thanks for using NanoMod");
 ui_print(" ");
 
