@@ -5,7 +5,7 @@
   * Full, microG packages:
     * merge all nanomod-overlay sub-scripts into the main script
 * Updates:
-  * Anysoft Keyboard (1.8.1241)
+  * Anysoft Keyboard (1.8.1333)
   * Substratum (815)
   * Yalp Store (0.21)
   * Odyssey (1.1.6)
