@@ -48,7 +48,6 @@ rm_override () {
 }
 
 update_overrides () {
-	source "${MODPATH}/system/bin/nanomod-overlay.functions"
 	OVERLAY_APPS=$(cat "${config}")
 	clear_overrides
 
@@ -177,7 +176,6 @@ permissions () {
 # check for configuration files
 config_locations="/sdcard /external_sd /persist @ZIPDIR@ /data"
 
-source "${MODPATH}/system/bin/nanomod-overlay.functions"
 get_config .nanomod-overlay
 
 [[ "${MODPATH}" != "/magisk/"* ]] && NO_MAGISK=1
