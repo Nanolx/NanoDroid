@@ -7,7 +7,7 @@
 * Updates:
   * Anysoft Keyboard (1.8.1241)
   * Substratum (815)
-  * Yalp Store (0.20)
+  * Yalp Store (0.21)
   * Odyssey (1.1.6)
   * OpenKeychain (4.5)
 
