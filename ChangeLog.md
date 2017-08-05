@@ -7,6 +7,8 @@
 * General Changes
   * Full, microG packages:
     * merge all nanomod-overlay sub-scripts into the main script
+  * SetupWizard:
+    * print Yet Another Message™ that the SetupWizard is *only* the SetupWizard (and that they need to flash another package afterwards, also: did I say people should read the docs?)
 * New
   * Orbot (15.4.1-RC1)
   * Orfox (1.4-RC2)
