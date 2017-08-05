@@ -27,6 +27,7 @@ Full list of provided applications
 * OpenLauncher [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=openlauncher&fdid=com.benny.openlauncher)
 * OpenWeatherMap Weather Provider [> GitHub](https://github.com/LineageOS/android_packages_apps_OpenWeatherMapProvider)
 * OpenVPN [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=openvpn&fdid=de.blinkt.openvpn)
+* Orbot [> Guardian Project](https://guardianproject.info/apps/orbot/)
 * QKSMS [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=qk&fdid=com.moez.QKSMS)
 * Substratum (App) [> GitHub](https://github.com/substratum/substratum)
 * Termux [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=termux&fdid=com.termux)

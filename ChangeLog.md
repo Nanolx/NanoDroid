@@ -4,6 +4,8 @@
 * General Changes:
   * Full, microG packages:
     * merge all nanomod-overlay sub-scripts into the main script
+* New:
+  * Orbot (15.4.1-RC1)
 * Updates:
   * Anysoft Keyboard (1.8.1333)
   * Substratum (815)

@@ -92,14 +92,15 @@ apps_add 15 OpenKeyChain
 apps_add 16 OpenLauncher
 apps_add 17 OpenWeatherMapProvider
 apps_add 18 OpenVPN
-apps_add 19 QKSMS
-apps_add 20 SimpleCalendar
-apps_add 21 SimpleGallery
-apps_add 22 Substratum
-apps_add 23 Termux
-apps_add 24 Twidere
-apps_add 25 XDALabs
-apps_add 26 YahooWeatherProvider
+apps_add 19 Orbot
+apps_add 20 QKSMS
+apps_add 21 SimpleCalendar
+apps_add 22 SimpleGallery
+apps_add 23 Substratum
+apps_add 24 Termux
+apps_add 25 Twidere
+apps_add 26 XDALabs
+apps_add 27 YahooWeatherProvider
 
 overlay_add 1 BasicDreams
 overlay_add 2 Browser
