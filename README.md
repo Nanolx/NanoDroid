@@ -212,7 +212,8 @@ Full [> Details](doc/AlterInstallation.md) on altering installation manually, or
 
 #### NanoMod
 
-* Download pre-built or create a zip file from this repository
+* Use SetupWizard to create configuration files, or create manually (see above)
+* Download pre-built zip or create one from this repository
 * perform full wipe (/system, /data, /cache, Dalvik/ART cache)
   * recommended, but not required
 * install desired ROM
