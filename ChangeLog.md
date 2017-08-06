@@ -4,6 +4,7 @@
 * Bug Fixes
   * Full, microG, F-Droid packages:
     * make `nanomod_libs` installer routine actually fail, when an error occurs
+    * when an error occurs in Magisk Mode installation run `recovery_cleanup` when `error` is called
   * microG, F-Droid packages:
     * fix that `unzip` was not bundled
 * General Changes

@@ -94,6 +94,9 @@ detect_outfd () {
 
 error () {
 	ui_print "${@}"
+	if [ "${MODE}" = "MAGISK" ]; then
+		$BOOTMODE || recovery_cleanup
+	fi
 	exit 1
 }
 
