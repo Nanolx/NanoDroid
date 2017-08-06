@@ -17,6 +17,9 @@
     * merge all nanomod-overlay sub-scripts into the main script
   * SetupWizard:
     * print Yet Another Message™ that the SetupWizard is *only* the SetupWizard
+  * on-pc framework-patcher:
+    * update hook patch name to reflect Haystack update
+    * if Haystack repo is already downloaded, update it, instead of re-cloning it
 * New
   * Orbot (15.4.1-RC1)
   * Orfox (1.4-RC2)

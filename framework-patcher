@@ -52,10 +52,11 @@ if [[ ${API} -lt 24 ]]; then
 else	PATCH_HOOK="sigspoof-hook-7.0-7.1"
 fi
 
-if [[ -d ${CWD}/haystack ]]; then
+if [[ -d ${CWD}/haystack -a -d ${CWD}/haystack/.git ]]; then
 	cd "${CWD}/haystack"
 	git pull
 else
+	rm -rf "${CWD}/haystack"
 	git clone "${GITHUB_URL}" || error "Failed to down haystack!"
 	cd "${CWD}/haystack"
 fi
