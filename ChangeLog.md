@@ -3,12 +3,14 @@
 ## 12.1 in-dev
 * Bug Fixes
   * Full, microG, F-Droid packages:
-    * make `nanomod_libs` installer routine (hopefuly) more robust
+    * make `nanomod_libs` installer routine actually fail, when an error occurs
+  * microG, F-Droid packages:
+    * fix that `unzip` was not bundled
 * General Changes
   * Full, microG packages:
     * merge all nanomod-overlay sub-scripts into the main script
   * SetupWizard:
-    * print Yet Another Message™ that the SetupWizard is *only* the SetupWizard (and that they need to flash another package afterwards, also: did I say people should read the docs?)
+    * print Yet Another Message™ that the SetupWizard is *only* the SetupWizard
 * New
   * Orbot (15.4.1-RC1)
   * Orfox (1.4-RC2)
