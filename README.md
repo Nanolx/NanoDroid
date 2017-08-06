@@ -59,6 +59,8 @@ NanoMod includes
 
 ## Packages
 
+### Modules
+
 * **NanoMod**: includes
   * everything mentioned in the Summary
 * **NanoMod-microG**: includes
@@ -68,6 +70,9 @@ NanoMod includes
   * app store
 * **NanoMod-fdroid**: includes
   * F-Droid and it's privileged extension
+
+### Extras
+
 * **NanoMod-patcher**: includes
   * on-device framework-patcher
   * creates the file `/system/.nanomod-patcher` after successful patching
@@ -80,6 +85,9 @@ NanoMod includes
 * **NanoMod-uninstaller**: includes
   * uninstalls any NanoMod Magisk Module
   * uninstalls NanoMod installed in System Mode aswell
+
+### Scripts
+
 * **framework-patcher** (clone this repository)
   * on-pc framework-patcher
   * creates the file `/system/.nanomod-patcher` after successful patching
