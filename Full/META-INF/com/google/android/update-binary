@@ -95,7 +95,8 @@ detect_outfd () {
 error () {
 	ui_print "${@}"
 	if [ "${MODE}" = "MAGISK" ]; then
-		$BOOTMODE || recovery_cleanup
+		rm -rf "${MODPATH}"
+		magisk_install_cleanup
 	fi
 	exit 1
 }
