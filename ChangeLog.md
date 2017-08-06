@@ -4,7 +4,12 @@
 * Bug Fixes
   * Full, microG, F-Droid packages:
     * make `nanomod_libs` installer routine actually fail, when an error occurs
-    * when an error occurs in Magisk Mode installation run `recovery_cleanup` when `error` is called
+      * filter out error code 11 (apk does not have libs to install)
+    * when an error occurs in Magisk Mode installation perform cleanup when `error` is called
+      * run Magisk's `recovery_cleanup` to ensure TWRP is in usable state (without reboot)
+      * remove partially installed Magisk Module
+      * unmount Magisk image
+      * shrin Magisk image's size
   * microG, F-Droid packages:
     * fix that `unzip` was not bundled
 * General Changes
