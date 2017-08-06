@@ -21,7 +21,7 @@
     * update hook patch name to reflect Haystack update
     * if Haystack repo is already downloaded, update it, instead of re-cloning it
 * New
-  * Orbot (15.4.1-RC1)
+  * Orbot (15.4.2-RC1)
   * Orfox (1.4-RC2)
 * Updates
   * Anysoft Keyboard (1.8.1333)
