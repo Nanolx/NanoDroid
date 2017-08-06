@@ -234,7 +234,7 @@ For **microG** to work, your ROM needs to have signature spoofing enabled (or a 
 
 If your ROM does not have signature spoofing support, you can manually patch it using either
   * the on-device framework-patcher zip
-     * flash after booting into the ROM once
+     * flash from TWRP after booting into the ROM once
   * the `framework-patcher` script (found in the github repository)
      * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified **services.jar** on the device.
 
