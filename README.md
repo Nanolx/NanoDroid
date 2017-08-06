@@ -61,17 +61,21 @@ NanoMod includes
 
 ### Modules
 
+Module packages, flashing through TWRP recommended, though flashing through Magisk Manager likely works aswell.
+
 * **NanoMod**: includes
   * everything mentioned in the Summary
 * **NanoMod-microG**: includes
   * microG and it's companions
   * GNU Bash
   * pseudo-debloat feature
-  * app store
+  * app store(s)
 * **NanoMod-fdroid**: includes
   * F-Droid and it's privileged extension
 
 ### Extras
+
+Extra packages, always flash through TWRP.
 
 * **NanoMod-patcher**: includes
   * on-device framework-patcher
@@ -87,6 +91,8 @@ NanoMod includes
   * uninstalls NanoMod installed in System Mode aswell
 
 ### Scripts
+
+Misc. Script for use from PC/Notebook, while device is in TWRP.
 
 * **framework-patcher** (clone this repository)
   * on-pc framework-patcher
