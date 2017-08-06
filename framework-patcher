@@ -52,10 +52,13 @@ if [[ ${API} -lt 24 ]]; then
 else	PATCH_HOOK="sigspoof-hook-7.0-7.1"
 fi
 
-[[ -d ${CWD}/haystack ]] && rm -rf "${CWD}/haystack"
-git clone "${GITHUB_URL}" || error "Failed to down haystack!"
-
-cd "${CWD}/haystack"
+if [[ -d ${CWD}/haystack ]]; then
+	cd "${CWD}/haystack"
+	git pull
+else
+	git clone "${GITHUB_URL}" || error "Failed to down haystack!"
+	cd "${CWD}/haystack"
+fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	if ! [ -x "$(command -v brew)" ]; then
@@ -96,4 +99,3 @@ adb shell "/tmp/framework-patcher-remote" || \
 echo -e "\nNow reboot device and enjoy microG!"
 
 cd "${CWD}"
-rm -rf "${CWD}/haystack"
