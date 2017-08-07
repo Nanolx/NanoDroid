@@ -31,6 +31,7 @@
   * OpenKeychain (4.5)
   * Play Store (8.1.25.S)
   * GNU Nano (2.8.6)
+  * Lightning (4.5.1+snapshot20170806)
 
 ## 12.0.20170723
 * Bug Fixes
