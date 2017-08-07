@@ -242,7 +242,7 @@ install_init () {
 
 	ui_print " "
 	ui_print "******************************"
-	ui_print "     NanoMod 12.1.99999999    "
+	ui_print "     NanoMod 12.1.20170807    "
 	ui_print "      created by @Nanolx      "
 	ui_print "       F-Droid package        "
 	ui_print "******************************"

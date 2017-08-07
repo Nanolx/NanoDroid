@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 12.1 in-dev
+## 12.1.20180807
 * Bug Fixes
   * Full, microG, F-Droid packages:
     * make `nanomod_libs` installer routine actually fail, when an error occurs
