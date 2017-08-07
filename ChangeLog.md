@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 12.2 in-dev
+* Updates
+  * Orfox (1.4-RC3)
+
 ## 12.1.20180807
 * Bug Fixes
   * Full, microG, F-Droid packages:
