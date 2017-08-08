@@ -3,6 +3,7 @@
 ## 12.2 in-dev
 * Updates
   * Orfox (1.4-RC3)
+  * Simple Gallery (2.12.5)
 
 ## 12.1.20180807
 * Bug Fixes
