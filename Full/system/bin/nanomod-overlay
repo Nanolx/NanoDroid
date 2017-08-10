@@ -38,8 +38,13 @@ show_app_name () {
 }
 
 add_override () {
-	mkdir -p "${MODPATH}/system/${1}"
-	touch "${MODPATH}/system/${1}/.replace"
+	if [[ -d ${2} ]]; then
+		mkdir -p "${2}/system/${1}"
+		touch "${2}/system/${1}/.replace"
+	else
+		mkdir -p "${MODPATH}/system/${1}"
+		touch "${MODPATH}/system/${1}/.replace"
+	fi
 }
 
 rm_override () {
@@ -53,9 +58,9 @@ update_overrides () {
 
 	for app in ${OVERLAY_APPS}; do
 		if [ -d /system/app/${app} ]; then
-			add_override "app/${app}"
+			add_override "app/${app}" ${2}
 		elif [ -d /system/priv-app/${app} ]; then
-			add_override "priv-app/${app}"
+			add_override "priv-app/${app}" ${2}
 		else	echo "app \"${app}\" is not installed"
 		fi
 	done
@@ -218,7 +223,7 @@ case ${1} in
 	;;
 
 	-u | --update )
-		update_overrides
+		update_overrides ${2}
 	;;
 
 	-s | --show )
