@@ -179,6 +179,10 @@ Other shell utilities
 * lesskey
 * unzip
 
+#### GNU Bash and GNU Nano
+
+NanoMod includes GNU Bash [> Website](https://www.gnu.org/software/bash/bash.html) shell and the GNU Nano [> Website](https://www.nano-editor.org/) terminal editor.
+
 ### microG
 
 microG is an Open Source replacement for Google Services, full details can be found at the microG homepage [> Website](http://microg.org/)
