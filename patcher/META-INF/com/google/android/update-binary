@@ -317,10 +317,15 @@ else	mount -orw,remount /system || error " !! failed to remount /system read-wri
 fi
 
 if [ -f /system/.nanomod-patcher ]; then
-	ui_print " ++ /system/.nanomod-patcher exists"
-	ui_print " ++ assuming ROM is already patched"
-	ui_print " "
-	exit 0
+	if [ -f /data/.nanomod-patcher-remove ]; then
+		rm -f /data/.nanomod-patcher-remove
+		rm -f /system/.nanomod-patcher
+	else
+		ui_print " ++ /system/.nanomod-patcher exists"
+		ui_print " ++ assuming ROM is already patched"
+		ui_print " "
+		exit 0
+	fi
 fi
 
 detect_sdk

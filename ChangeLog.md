@@ -8,6 +8,8 @@
      * fix back-up and restore of `services.jar` when installing from Magisk Manager
      * fix `nanomod_substitute` not creating expected result when installing from Magisk Manager
      * fix pseudo-debloat feature not enabled when installing from Magisk Manager
+  * Full, microG packages, Framework-Patcher packages:
+     * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
 * Updates
   * Orfox (1.4-RC3)
   * Simple Gallery (2.13.0)

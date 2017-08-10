@@ -304,12 +304,15 @@ magisk_install_preinst () {
 		ui_print " ++ doesn't, assuming Magisk was uninstalled"
 		ui_print " ++ re-run NanoMod-Patcher if required"
 		ui_print " "
-		if (is_mounted /system); then
-			mount -orw,remount /system
-		else	mount -orw /system
+		if ! ${BOOTMODE}; then
+			if (is_mounted /system); then
+				mount -orw,remount /system
+			else	mount -orw /system
+			fi
+			rm -f /system/.nanomod-patcher
+			mount -oro,remount /system
+		else	touch /data/.nanomod-patcher-remove
 		fi
-		rm -f /system/.nanomod-patcher
-		mount -oro,remount /system
 	fi
 }
 
