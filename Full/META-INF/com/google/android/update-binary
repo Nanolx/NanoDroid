@@ -601,10 +601,10 @@ nanomod_libs () {
 			2>/dev/null
 		unzip_return=$?
 		if [ ${unzip_return} -eq 0 ]; then
-			echo "    $(basename ${apk}) does have libs"
+			echo "      $(basename ${apk}) does have libs"
 		elif [ ${unzip_return} -eq 11 ]; then
-			echo "    $(basename ${apk}) does not have any libs"
-		else	error " !! installing libs for $(basename ${apk}) failed"
+			echo "      $(basename ${apk}) does not have any libs"
+		else	error "  !! installing libs for $(basename ${apk}) failed"
 		fi
 		if [ -d ${tmpd}/lib ]; then
 			mkdir -p ${libd}
@@ -612,44 +612,44 @@ nanomod_libs () {
 				arm )
 					if [ -d ${tmpd}/lib/armeabi-v7a ]; then
 						mkdir -p ${libd}/arm
-						echo "    $(basename ${apk}): installing arm libs"
+						echo "      $(basename ${apk}): installing arm libs"
 						cp ${tmpd}/lib/armeabi-v7a/* ${libd}/arm/
 					elif [ -d ${tmpd}/lib/armeabi ]; then
 						mkdir -p ${libd}/arm
-						echo "    $(basename ${apk}): installing arm libs"
+						echo "      $(basename ${apk}): installing arm libs"
 						cp ${tmpd}/lib/armeabi/* ${libd}/arm/
 					fi
 				;;
 				arm64 )
 					if [ -d ${tmpd}/lib/arm64-v8a ]; then
 						mkdir -p ${libd}/arm64
-						echo "    $(basename ${apk}): installing arm64 libs"
+						echo "      $(basename ${apk}): installing arm64 libs"
 						cp ${tmpd}/lib/arm64-v8a/* ${libd}/arm64/
 					elif [ -d ${tmpd}/lib/armeabi-v7a ]; then
 						mkdir -p ${libd}/arm
-						echo "    $(basename ${apk}): installing arm libs"
+						echo "      $(basename ${apk}): installing arm libs"
 						cp ${tmpd}/lib/armeabi-v7a/* ${libd}/arm/
 					elif [ -d ${tmpd}/lib/armeabi ]; then
 						mkdir -p ${libd}/arm
-						echo "    $(basename ${apk}): installing arm libs"
+						echo "      $(basename ${apk}): installing arm libs"
 						cp ${tmpd}/lib/armeabi/* ${libd}/arm/
 					fi
 				;;
 				x86 )
 					if [ -d ${tmpd}/lib/x86 ]; then
 						mkdir -p ${libd}/x86
-						echo "    $(basename ${apk}): installing x86 libs"
+						echo "      $(basename ${apk}): installing x86 libs"
 						cp ${tmpd}/lib/x86/* ${libd}/x86/
 					fi
 				;;
 				x86_64 )
 					if [ -d ${tmpd}/lib/x86_64 ]; then
 						mkdir -p ${libd}/x86_64
-						echo "    $(basename ${apk}): installing x86_64 libs"
+						echo "      $(basename ${apk}): installing x86_64 libs"
 						${tmpd}/lib/x86_64/* ${libd}/x86_64/
 					elif [ -d ${tmpd}/lib/x86 ]; then
 						mkdir -p ${libd}/x86
-						echo "    $(basename ${apk}): installing x86 libs"
+						echo "      $(basename ${apk}): installing x86 libs"
 						cp ${tmpd}/lib/x86/* ${libd}/x86/
 					fi
 				;;

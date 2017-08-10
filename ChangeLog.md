@@ -16,6 +16,7 @@
 * General Changes:
   * Full, microG, F-Droid packages:
      * ignore `nanomod_forcesystem` when installing through Magisk Manager
+     * deeper indent `nanomod_libs` output, makes recovery.log easier to read
   * Full, microG packages:
      * update swipe libraries for x86_64
      * provide separate Google Sync Adapters for LL, MM and N, install correct version
