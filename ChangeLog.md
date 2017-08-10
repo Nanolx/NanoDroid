@@ -1,6 +1,10 @@
 # ChangeLog
 
 ## 12.2 in-dev
+* General Changes
+  * Full, microG, F-Droid, Framework-Patcher packages:
+    * use `/dev/tmp` instead of `/tmp` for all actions done in temporary directories
+       * read: this highly increases compatibility for flashing using Magisk Manager 
 * Updates
   * Orfox (1.4-RC3)
   * Simple Gallery (2.12.5)
