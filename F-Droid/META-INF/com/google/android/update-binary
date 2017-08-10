@@ -348,7 +348,7 @@ nanomod_install () {
 nanomod_libs () {
 	apk=${MODPATH}/system/${1}/*.apk
 	libd=$(dirname ${apk})/lib
-	tmpd=/tmp/nanomod-lib
+	tmpd=${TMPDIR}/nanomod-lib
 
 	rm -rf ${tmpd}
 	mkdir ${tmpd}
@@ -357,7 +357,7 @@ nanomod_libs () {
 		error " !! apk ${apk} not found"
 	else
 		"${INSTALLER}/system/bin/unzip.${BIN_ARCH}" \
-			-oq ${apk} "lib/*" -d "/tmp/nanomod-lib" \
+			-oq ${apk} "lib/*" -d "${tmpd}" \
 			2>/dev/null
 		unzip_return=$?
 		if [ ${unzip_return} -eq 0 ]; then
@@ -366,7 +366,7 @@ nanomod_libs () {
 			echo "    $(basename ${apk}) does not have any libs"
 		else	error " !! installing libs for $(basename ${apk}) failed"
 		fi
-		if [ -d /tmp/nanomod-lib/lib ]; then
+		if [ -d ${tmpd}/lib ]; then
 			mkdir -p ${libd}
 			case ${ARCH} in
 				arm )
