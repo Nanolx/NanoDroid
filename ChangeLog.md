@@ -12,7 +12,6 @@
      * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
   * Framework-Patcher package:
      * properly install `services.jar` into merge-pending NanoMod Magisk Modules
-     * when patching for system mode, try to restore unpatched `services.jar` first, only stop, if that fails
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` property
      * don't mount `/system` twice
 * Updates
