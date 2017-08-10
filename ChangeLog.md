@@ -14,7 +14,7 @@
   * Twidere (3.6.24)
   * Yalp Store (0.22)
 
-## 12.1.20180807
+## 12.1.20170807
 * Bug Fixes
   * Full, microG, F-Droid packages:
      * make `nanomod_libs` installer routine actually fail, when an error occurs
