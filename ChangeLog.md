@@ -7,7 +7,7 @@
        * read: this highly increases compatibility for flashing using Magisk Manager 
 * Updates
   * Orfox (1.4-RC3)
-  * Simple Gallery (2.12.5)
+  * Simple Gallery (2.13.0)
   * Twidere (3.6.24)
   * Yalp Store (0.22)
 
