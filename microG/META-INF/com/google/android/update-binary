@@ -240,7 +240,7 @@ magisk_install_setup () {
 		error " !! Magisk version 13.1 or newer is required"
 
 	MOUNTPATH=/magisk
-	JARPATH=${MOUNTPATH}/${MODID}
+	REALPATH=${MOUNTPATH}/${MODID}
 	IMG=/data/magisk.img
 
 	if $BOOTMODE; then
@@ -272,21 +272,21 @@ magisk_install_setup () {
 }
 
 magisk_install_preinst () {
-	if [ -f ${JARPATH}/system/framework/services.jar ]; then
+	if [ -f ${REALPATH}/system/framework/services.jar ]; then
 		if [ -f /system/.nanomod-patcher ]; then
 			ui_print " << backing up patched services.jar"
-			cp ${JARPATH}/system/framework/services.jar \
+			cp ${REALPATH}/system/framework/services.jar \
 				${TMPDIR}/services.jar
 		else	ui_print " "
 			ui_print " ++ /system/.nanomod-patcher is missing, assuming"
 			ui_print " ++ ROM was updated, please re-run NanoMod-Patcher"
 			ui_print " "
-			rm -f ${JARPATH}/system/framework/services.jar
+			rm -f ${REALPATH}/system/framework/services.jar
 		fi
 	elif [ -f /system/.nanomod-patcher ]; then
 		ui_print " "
 		ui_print " ++ /system/.nanomod-patcher exists, but"
-		ui_print " ++ ${JARPATH}/system/framework/services.jar"
+		ui_print " ++ ${REALPATH}/system/framework/services.jar"
 		ui_print " ++ doesn't, assuming Magisk was uninstalled"
 		ui_print " ++ re-run NanoMod-Patcher if required"
 		ui_print " "
