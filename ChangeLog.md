@@ -10,12 +10,17 @@
      * fix pseudo-debloat feature not enabled when installing from Magisk Manager
   * Full, microG packages, Framework-Patcher packages:
      * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
+  * Framework-Patcher package:
+     * properly install `services.jar` into merge-pending NanoMod Magisk Modules
+     * don't mount `/system` twice, don't try to unmount it, when installing through Magisk Manager
+* General Changes:
   * Full, microG, F-Droid packages:
      * ignore `nanomod_forcesystem` when installing through Magisk Manager
   * Framework-Patcher package:
-     * properly install `services.jar` into merge-pending NanoMod Magisk Modules
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` property
-     * don't mount `/system` twice
+  * Documentation:
+     * add various additional links
+     * other minor improvements
 * Updates
   * Orfox (1.4-RC3)
   * Simple Gallery (2.13.0)
