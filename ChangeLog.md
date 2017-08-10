@@ -3,9 +3,11 @@
 ## 12.2 in-dev
 * General Changes
   * Full, microG, F-Droid, Framework-Patcher packages:
-    * use `/dev/tmp` instead of `/tmp` for all actions done in temporary directories
-        * this increases compatibility for flashing using Magisk Manager, but
-        * backing-up and restoring patched `services.jar` and `nanomod-overlay --update` don't (yet) work when flashing from Magisk Manager
+     * use `/dev/tmp` instead of `/tmp` for all actions done in temporary directories;
+     * this increases compatibility for flashing using Magisk Manager, but
+        * backing-up and restoring patched `services.jar`
+        * pseudo-debloating (`nanomod-overlay --update`)
+     * don't (yet) work when flashing from Magisk Manager
 * Updates
   * Orfox (1.4-RC3)
   * Simple Gallery (2.13.0)
@@ -15,23 +17,23 @@
 ## 12.1.20180807
 * Bug Fixes
   * Full, microG, F-Droid packages:
-    * make `nanomod_libs` installer routine actually fail, when an error occurs
-      * filter out error code 11 (apk does not have libs to install)
-    * when an error occurs in Magisk Mode installation perform cleanup when `error` is called
-      * run Magisk's `recovery_cleanup` to ensure TWRP is in usable state (without reboot)
-      * remove partially installed Magisk Module
-      * unmount Magisk image
-      * shrin Magisk image's size
+     * make `nanomod_libs` installer routine actually fail, when an error occurs
+        * filter out error code 11 (apk does not have libs to install)
+     * when an error occurs in Magisk Mode installation perform cleanup when `error` is called
+        * run Magisk's `recovery_cleanup` to ensure TWRP is in usable state (without reboot)
+        * remove partially installed Magisk Module
+        * unmount Magisk image
+        * shrink Magisk image's size
   * microG, F-Droid packages:
-    * fix that `unzip` was not bundled
+     * fix that `unzip` was not bundled
 * General Changes
   * Full, microG packages:
-    * merge all nanomod-overlay sub-scripts into the main script
+     * merge all nanomod-overlay sub-scripts into the main script
   * SetupWizard:
-    * print Yet Another Message™ that the SetupWizard is *only* the SetupWizard
+     * print Yet Another Message™ that the SetupWizard is *only* the SetupWizard
   * on-pc framework-patcher:
-    * update hook patch name to reflect Haystack update
-    * if Haystack repo is already downloaded, update it, instead of re-cloning it
+     * update hook patch name to reflect Haystack update
+     * if Haystack repo is already downloaded, update it, instead of re-cloning it
 * New
   * Orbot (15.4.2-RC1)
   * Orfox (1.4-RC2)
