@@ -248,9 +248,25 @@ increase_module_version () {
 update_swipe () {
 	BASE_URL="https://dl.shadow53.com/no-gapps/"
 	for arch in arm arm64 x86 x86_64; do
-		wget -q "${BASE_URL}/swipelib-${arch}.zip" -O tmp.zip || exit 1
-		unzip -ojq tmp.zip "files/*.so" -d "${CWD}/Full/swipe/${arch}/" || exit 1
-		rm tmp.zip
+		wget -q "${BASE_URL}/swipelib-${arch}.zip" -O "${CWD}/tmp.zip" || exit 1
+		unzip -ojq "${CWD}/tmp.zip" "files/*.so" -d "${CWD}/Full/swipe/${arch}/" || exit 1
+		rm "${CWD}/tmp.zip"
+	done
+}
+
+update_gsync () {
+	BASE_URL="https://dl.shadow53.com/no-gapps/"
+	for sdk in l m n; do
+		wget -q "${BASE_URL}/contacts-calendar-sync-${sdk}.zip" -O "${CWD}/tmp.zip" || exit 1
+		unzip -ojq "${CWD}/tmp.zip" "files/*" -d "${CWD}/tmp/" || exit 1
+		mv "${CWD}/tmp/com.google.android.backuptransport.apk" \
+			"${CWD}/Full/gsync/${sdk^^}/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk"
+		mv "${CWD}/tmp/com.google.android.syncadapters.calendar.apk" \
+			"${CWD}/Full/gsync/${sdk^^}/app/GoogleCalendarSync/GoogleCalendarSync.apk"
+		mv "${CWD}/tmp/com.google.android.syncadapters.contacts.apk" \
+			"${CWD}/Full/gsync/${sdk^^}/app/GoogleContactsSync/GoogleContactsSync.apk"
+		rm "${CWD}/tmp.zip"
+		rm -rf "${CWD}/tmp"
 	done
 }
 
@@ -295,6 +311,8 @@ for opt in ${@}; do
 		setupwizard )	create_setupwizard_package &
 				progress $! ;;
 		swipe )		update_swipe &
+				progress $! ;;
+		gsync )		update_gsync &
 				progress $! ;;
 		all )
 			create_full_package &
