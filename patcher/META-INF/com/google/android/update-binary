@@ -276,10 +276,10 @@ install_services () {
 			error " !! failed to backup services.jar"
 
 		ui_print " << installing services.jar to: ROM"
-		install_path="/system/framework"
+		install_path="${SYSPATH}/framework"
 
 		echo /system/framework/services.jar >> \
-			/system/.nanomod-list
+			${SYSPATH}/.nanomod-list
 	else
 		if [ -d /dev/magisk_merge/NanoMod ]; then
 			ui_print " << installing services.jar to: NanoMod (full) [merge]"
@@ -299,10 +299,10 @@ install_services () {
 				error " !! failed to backup services.jar"
 
 			ui_print " << installing services.jar to: ROM"
-			install_path="/system/framework"
+			install_path="${SYSPATH}/framework"
 
 			echo /system/framework/services.jar >> \
-				/system/.nanomod-list
+				${SYSPATH}/.nanomod-list
 		fi
 	fi
 
@@ -310,7 +310,7 @@ install_services () {
 	cp ${TMPDIR}/services.jar "${install_path}/" \
 		|| error " !! failed to install services.jar"
 
-	touch /system/.nanomod-patcher
+	touch ${SYSPATH}/.nanomod-patcher
 }
 
 magisk_cleanup () {
@@ -352,6 +352,10 @@ if ! ${BOOTMODE}; then
 		mount -orw /system
 	else	mount -orw,remount /system
 	fi
+	SYSPATH=/system
+else
+	mount -orw,remount /dev/magisk/mirror/system
+	SYSPATH=/dev/magisk/mirror/system
 fi
 
 get_config .nanomod-setup
@@ -363,22 +367,11 @@ if [ "$config_exists" -eq 1 ]; then
 	fi
 fi
 
-if [ -f /system/.nanomod-patcher -a -f /system/.nanomod-list ]; then
-	if grep -q /system/framework/services.jar /system/.nanomod-list; then
-		if [ -f /sdcard/services.jar ]; then
-			ui_print " << restoring: unpatched services.jar"
-			mv /sdcard/services.jar /system/framework/services.jar \
-				|| error " !! failed to restore services.jar"
-			sed '/\/system\/framework\/services.jar/d' -i /system/.nanomod-list
-		else	ui_print " << can't restore unpatched services.jar"
-			exit 0
-		fi
-	else
-		ui_print " ++ /system/.nanomod-patcher exists"
-		ui_print " ++ assuming ROM is already patched"
-		ui_print " "
-		exit 0
-	fi
+if [ -f /system/.nanomod-patcher ]; then
+	ui_print " ++ /system/.nanomod-patcher exists"
+	ui_print " ++ assuming ROM is already patched"
+	ui_print " "
+	exit 0
 fi
 
 detect_sdk
@@ -415,7 +408,10 @@ install_services
 ui_print " "
 ui_print " >> clean up"
 magisk_cleanup
-umount /system
+
+if ! ${BOOTMODE}; then
+	umount /system
+fi
 
 ui_print " "
 ui_print " > Done!"

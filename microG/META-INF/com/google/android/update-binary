@@ -297,6 +297,10 @@ magisk_install_preinst () {
 			fi
 			rm -f /system/.nanomod-patcher
 			mount -oro,remount /system
+		else
+			mount -orw,remount /dev/magisk/mirror/system
+			rm -f /dev/magisk/mirror/system/.nanomod-patcher
+			mount -oro,remount /dev/magisk/mirror/system
 		fi
 	fi
 }

@@ -9,12 +9,9 @@
      * fix `nanomod_substitute` not creating expected result when installing from Magisk Manager
      * fix pseudo-debloat feature not enabled when installing from Magisk Manager
   * Full, microG packages, Framework-Patcher packages:
-     * (partially) fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
-         * can't remove `/system/.nanomod-patcher` if patched `services.jar` does not exist when installing from Magisk Manager
+     * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
   * Framework-Patcher package:
      * properly install `services.jar` into merge-pending NanoMod Magisk Modules
-     * don't make the patcher stop if `/system/.nanomod-patcher` exists for Magisk Modules
-         * this resolves the issue mentioned above, that the file is not removed when installing through Magisk Manager when it should be
      * when patching for system mode, try to restore unpatched `services.jar` first, only stop, if that fails
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` property
      * don't mount `/system` twice
