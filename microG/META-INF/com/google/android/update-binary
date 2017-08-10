@@ -164,6 +164,8 @@ detect_arch () {
 	ABI2=`grep_prop ro.product.cpu.abi2 | cut -c-3`
 	ABILONG=`grep_prop ro.product.cpu.abi`
 
+	SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
+
 	ARCH=arm
 	IS64BIT=false
 
@@ -190,6 +192,12 @@ detect_arch () {
 		arm64 )		BIN_ARCH="arm"	;;
 		x86 )		BIN_ARCH="x86"	;;
 		x86_64 )	BIN_ARCH="x86"	;;
+	esac
+
+	case ${SDK_VERSION} in
+		21 | 22 )	GSYNC_VER=L	;;
+		23 )		GSYNC_VER=M	;;
+		24 | 25 )	GSYNC_VER=N	;;
 	esac
 
 }
@@ -402,12 +410,13 @@ install_mapsv1 () {
 install_gsync () {
 	# install GSync if requested
 	if [ "${nanomod_gsync}" -eq 1 ]; then
-		nanomod_install /system/app/GoogleCalendarSync /system/app/
+		nanomod_install /gsync/${GSYNC_VER}/app/GoogleCalendarSync /system/app/
 		nanomod_libs app/GoogleCalendarSync
-		nanomod_install /system/app/GoogleContactSync /system/app/
+		nanomod_install /gsync/${GSYNC_VER}/app/GoogleContactSync /system/app/
 		nanomod_libs app/GoogleContactSync
-		nanomod_install /system/priv-app/GoogleBackupTransport /system/priv-app/
+		nanomod_install /gsync/${GSYNC_VER}/priv-app/GoogleBackupTransport /system/priv-app/
 		nanomod_libs priv-app/GoogleBackupTransport
+		nanomod_install /gsync/etc/permissions/ /system/etc/
 		ui_print " << with Google Sync"
 	else	ui_print " << without Google Sync"
 	fi
