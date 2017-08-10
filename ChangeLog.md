@@ -10,6 +10,8 @@
      * fix pseudo-debloat feature not enabled when installing from Magisk Manager
   * Full, microG packages, Framework-Patcher packages:
      * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
+  * Full, microG, F-Droid packages:
+     * ignore `nanomod_forcesystem` when installing through Magisk Manager
   * Framework-Patcher package:
      * properly install `services.jar` into merge-pending NanoMod Magisk Modules
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` property
