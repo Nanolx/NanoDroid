@@ -12,7 +12,7 @@
      * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
   * Framework-Patcher package:
      * properly install `services.jar` into merge-pending NanoMod Magisk Modules
-     * don't mount `/system` twice, don't try to unmount it, when installing through Magisk Manager
+     * don't mount `/system` twice and don't try to unmount it, when installing through Magisk Manager
 * General Changes:
   * Full, microG, F-Droid packages:
      * ignore `nanomod_forcesystem` when installing through Magisk Manager
@@ -21,7 +21,7 @@
      * update swipe libraries for x86_64
      * provide separate Google Sync Adapters for LL, MM and N, install correct version
      * first print messages then do installation of the given component, not the over way round
-        * makes it easier to understand the recovery.log
+         * makes it easier to understand the recovery.log
   * Framework-Patcher package:
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` property
   * Documentation:
