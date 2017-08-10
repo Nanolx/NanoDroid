@@ -311,7 +311,6 @@ magisk_install_preinst () {
 			fi
 			rm -f /system/.nanomod-patcher
 			mount -oro,remount /system
-		else	touch /data/.nanomod-patcher-remove
 		fi
 	fi
 }

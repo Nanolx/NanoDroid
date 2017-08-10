@@ -3,6 +3,10 @@
 OUTFD=$2
 ZIP=$3
 
+# Detect whether in boot mode
+ps | grep zygote | grep -v grep >/dev/null && BOOTMODE=true || BOOTMODE=false
+$BOOTMODE || ps -A 2>/dev/null | grep zygote | grep -v grep >/dev/null && BOOTMODE=true
+
 # This path should work in any cases
 TMPDIR=/dev/tmp
 
@@ -26,8 +30,12 @@ if [ "$?" -eq "0" ]; then
 fi
 
 ui_print() {
-	echo -n -e "ui_print $@\n" >> /proc/self/fd/$OUTFD
-	echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+	if $BOOTMODE; then
+		echo "$1"
+	else 
+		echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
+		echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+	fi
 }
 
 is_mounted() {
@@ -65,20 +73,20 @@ image_size_check() {
 
 grow_magisk_img () {
 	request_size_check ${TMPDIR}/services.jar
-	image_size_check /data/magisk.img
+	image_size_check ${IMG}
 	if [ "$reqSizeM" -gt "$curFreeM" ]; then
 		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-		resize2fs -f /data/magisk.img ${SIZE}M
-		e2fsck -yf /data/magisk.img
+		resize2fs -f ${IMG} ${SIZE}M
+		e2fsck -yf ${IMG}
 	fi
 }
 
 shrink_magisk_img () {
-	image_size_check /data/magisk.img
+	image_size_check ${IMG}
 	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
 	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-		resize2fs -f /data/magisk.img ${NEWDATASIZE}M
-		e2fsck -yf /data/magisk.img
+		resize2fs -f ${IMG} ${NEWDATASIZE}M
+		e2fsck -yf ${IMG}
 	fi
 }
 
@@ -130,11 +138,6 @@ detect_arch () {
 }
 
 detect_sdk () {
-	if ! (is_mounted /system); then
-		mount -orw /system || error " !! failed to mount /system"
-	else	mount -orw,remount /system || error " !! failed to remount /system read-write"
-	fi
-
 	SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
 
 	if [ "${SDK_VERSION}" -gt 25 ]; then
@@ -267,13 +270,7 @@ patch_services () {
 
 install_services () {
 	ui_print " "
-	if [ -d /magisk/NanoMod ]; then
-		ui_print " << installing services.jar to: NanoMod (full)"
-		install_path="/magisk/NanoMod/system/framework/"
-	elif [ -d /magisk/NanoModmicroG ]; then
-		ui_print " << installing services.jar to: NanoMod (microG)"
-		install_path="/magisk/NanoModmicroG/system/framework/"
-	else
+	if [ "${MODE}" = "SYSTEM" ]; then
 		ui_print " << backing up services.jar to: /sdcard"
 		cp /system/framework/services.jar /sdcard ||
 			error " !! failed to backup services.jar"
@@ -283,6 +280,30 @@ install_services () {
 
 		echo /system/framework/services.jar >> \
 			/system/.nanomod-list
+	else
+		if [ -d /dev/magisk_merge/NanoMod ]; then
+			ui_print " << installing services.jar to: NanoMod (full) [merge]"
+			install_path="/magisk/NanoMod/system/framework/"
+		elif [ -d /dev/magisk_merge//NanoModmicroG ]; then
+			ui_print " << installing services.jar to: NanoMod (microG) [merge]"
+			install_path="/magisk/NanoModmicroG/system/framework/"
+		elif [ -d /magisk/NanoMod ]; then
+			ui_print " << installing services.jar to: NanoMod (full)"
+			install_path="/magisk/NanoMod/system/framework/"
+		elif [ -d /magisk/NanoModmicroG ]; then
+			ui_print " << installing services.jar to: NanoMod (microG)"
+			install_path="/magisk/NanoModmicroG/system/framework/"
+		else
+			ui_print " << backing up services.jar to: /sdcard"
+			cp /system/framework/services.jar /sdcard ||
+				error " !! failed to backup services.jar"
+
+			ui_print " << installing services.jar to: ROM"
+			install_path="/system/framework"
+
+			echo /system/framework/services.jar >> \
+				/system/.nanomod-list
+		fi
 	fi
 
 	mkdir -p "${install_path}"
@@ -293,13 +314,28 @@ install_services () {
 }
 
 magisk_cleanup () {
-	if (is_mounted /magisk); then
-		umount /magisk
+	if (is_mounted ${MOUNTPATH}); then
+		umount ${MOUNTPATH}
 		losetup -d $LOOPDEVICE
-		rmdir /magisk
+		rmdir ${MOUNTPATH}
 		shrink_magisk_img || \
-			error " !! failed to shrink magisk.img"
+			error " !! failed to shrink ${IMG}"
 	fi
+}
+
+# check for configuration files
+config_locations="/sdcard /external_sd /persist $(dirname ${ZIP})) /data"
+
+get_config () {
+	config=""
+	config_exists=0
+	for path in ${config_locations}; do
+		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
+			config="${path}/${1}"
+			config_exists=1
+			return
+		fi
+	done
 }
 
 ui_print " "
@@ -311,15 +347,32 @@ ui_print "Powered by DexPatcher (@lanchon)"
 ui_print "********************************"
 ui_print " "
 
-if ! (is_mounted /system); then
-	mount -orw /system || error " !! failed to mount /system"
-else	mount -orw,remount /system || error " !! failed to remount /system read-write"
+if ! ${BOOTMODE}; then
+	if ! (is_mounted /system); then
+		mount -orw /system
+	else	mount -orw,remount /system
+	fi
 fi
 
-if [ -f /system/.nanomod-patcher ]; then
-	if [ -f /data/.nanomod-patcher-remove ]; then
-		rm -f /data/.nanomod-patcher-remove
-		rm -f /system/.nanomod-patcher
+get_config .nanomod-setup
+if [ "$config_exists" -eq 1 ]; then
+	source ${config}
+	if [ "${nanomod_forcesystem}" -eq 1 ]; then
+		MODE=SYSTEM
+		ui_print " ++ forced system mode installation"
+	fi
+fi
+
+if [ -f /system/.nanomod-patcher -a -f /system/.nanomod-list ]; then
+	if grep -q /system/framework/services.jar /system/.nanomod-list; then
+		if [ -f /sdcard/services.jar ]; then
+			ui_print " << restoring: unpatched services.jar"
+			mv /sdcard/services.jar /system/framework/services.jar \
+				|| error " !! failed to restore services.jar"
+			sed '/\/system\/framework\/services.jar/d' -i /system/.nanomod-list
+		else	ui_print " << can't restore unpatched services.jar"
+			exit 0
+		fi
 	else
 		ui_print " ++ /system/.nanomod-patcher exists"
 		ui_print " ++ assuming ROM is already patched"
@@ -341,11 +394,19 @@ if ! (is_mounted /data); then
 else	mount -orw,remount /data || error " !! failed to remount /data read-write"
 fi
 
-if [ -f /data/magisk.img ]; then
+if $BOOTMODE; then
+	MOUNTPATH=/dev/magisk_merge
+	IMG=/data/magisk_merge.img
+else
+	MOUNTPATH=/magisk
+	IMG=/data/magisk.img
+fi
+
+if [ -f ${IMG} ]; then
 	grow_magisk_img || \
-		error " !! failed to grow magisk.img"
-	mount_image /data/magisk.img /magisk || \
-		error " !! failed to mount /magisk"
+		error " !! failed to grow ${IMG}"
+	mount_image ${IMG} ${MOUNTPATH} || \
+		error " !! failed to mount ${MOUNTPATH}"
 fi
 
 patch_services
