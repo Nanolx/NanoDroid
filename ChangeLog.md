@@ -5,7 +5,6 @@
   * Full, microG, F-Droid, Framework-Patcher packages:
      * use `/dev/tmp` instead of `/tmp` for all actions done in temporary directories;
      * this increases compatibility for flashing using Magisk Manager, but
-         * backing-up and restoring patched `services.jar`
          * pseudo-debloating (`nanomod-overlay --update`)
      * don't (yet) work when flashing from Magisk Manager
 * Updates
