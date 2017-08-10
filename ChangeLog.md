@@ -4,7 +4,8 @@
 * General Changes
   * Full, microG, F-Droid, Framework-Patcher packages:
     * use `/dev/tmp` instead of `/tmp` for all actions done in temporary directories
-       * read: this highly increases compatibility for flashing using Magisk Manager 
+        * this increases compatibility for flashing using Magisk Manager, but
+        * backing-up and restoring patched `services.jar` and `nanomod-overlay --update` don't (yet) work when flashing from Magisk Manager
 * Updates
   * Orfox (1.4-RC3)
   * Simple Gallery (2.13.0)
