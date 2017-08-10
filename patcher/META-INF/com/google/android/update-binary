@@ -353,18 +353,18 @@ if ! ${BOOTMODE}; then
 	else	mount -orw,remount /system
 	fi
 	SYSPATH=/system
+
+	get_config .nanomod-setup
+	if [ "$config_exists" -eq 1 ]; then
+		source ${config}
+		if [ "${nanomod_forcesystem}" -eq 1 ]; then
+			MODE=SYSTEM
+			ui_print " ++ forced system mode installation"
+		fi
+	fi
 else
 	mount -orw,remount /dev/magisk/mirror/system
 	SYSPATH=/dev/magisk/mirror/system
-fi
-
-get_config .nanomod-setup
-if [ "$config_exists" -eq 1 ]; then
-	source ${config}
-	if [ "${nanomod_forcesystem}" -eq 1 ]; then
-		MODE=SYSTEM
-		ui_print " ++ forced system mode installation"
-	fi
 fi
 
 if [ -f /system/.nanomod-patcher ]; then
