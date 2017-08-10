@@ -3,7 +3,10 @@
 OUTFD=$2
 ZIP=$3
 
-BASEDIR="/tmp/dexpatcher"
+# This path should work in any cases
+TMPDIR=/dev/tmp
+
+BASEDIR="${TMPDIR}/dexpatcher"
 PATH="$PATH:/system/bin:/system/xbin"
 PATCH_CORE="core_services.jar.dex"
 
@@ -61,7 +64,7 @@ image_size_check() {
 }
 
 grow_magisk_img () {
-	request_size_check /tmp/services.jar
+	request_size_check ${TMPDIR}/services.jar
 	image_size_check /data/magisk.img
 	if [ "$reqSizeM" -gt "$curFreeM" ]; then
 		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
@@ -115,11 +118,11 @@ detect_arch () {
 	case ${ARCH} in
 		arm | arm64 )
 				FILE=${BASEDIR}/file.arm
-				ZIP=${BASEDIR}/zip.arm
+				ZIPB=${BASEDIR}/zip.arm
 		;;
 		x86 | x86_64 )
 				FILE=${BASEDIR}/file.x86
-				ZIP=${BASEDIR}/zip.x86
+				ZIPB=${BASEDIR}/zip.x86
 		;;
 	esac
 
@@ -218,11 +221,11 @@ apply_patch () {
 				error "${4}"
 
 	LD_LIBRARY_PATH="${DP_LD}" \
-		${ZIP} -d "${2}" 'classes*.dex' || \
+		${ZIPB} -d "${2}" 'classes*.dex' || \
 			error " !! zip failed"
 
 	LD_LIBRARY_PATH="${DP_LD}" \
-		${ZIP} -j "${2}" "${1}"/classes*.dex || \
+		${ZIPB} -j "${2}" "${1}"/classes*.dex || \
 			error " !! zip failed"
 
 	rm -rf "${1}"
@@ -231,7 +234,7 @@ apply_patch () {
 setup_patcher () {
 	ui_print " > preparing environment"
 
-	unzip -o "${ZIP}" "dexpatcher/*" -d /tmp
+	unzip -o "${ZIP}" "dexpatcher/*" -d ${TMPDIR}
 	for bin in zip.arm zip.x86 file.arm file.x86; do 
 		chmod 0755 "${BASEDIR}/${bin}"
 	done
@@ -246,18 +249,18 @@ patch_services () {
 	ui_print " "
 
 	cp /system/framework/services.jar \
-		/tmp/services.jar || \
+		${TMPDIR}/services.jar || \
 		error " !! failed to copy services.jar"
 
 	ui_print " >> [1/2] applying hook patch"
-	apply_patch /tmp/services.jar-hook \
-		/tmp/services.jar \
+	apply_patch ${TMPDIR}/services.jar-hook \
+		${TMPDIR}/services.jar \
 		"${BASEDIR}/${PATCH_HOOK}" \
 		" !! failed to apply ${PATCH_HOOK}"
 
 	ui_print " >> [2/2] applying core patch"
-	apply_patch /tmp/services.jar-hook-core \
-		/tmp/services.jar \
+	apply_patch ${TMPDIR}/services.jar-hook-core \
+		${TMPDIR}/services.jar \
 		"${BASEDIR}/${PATCH_CORE}" \
 		" !! failed to apply ${PATCH_CORE}"
 }
@@ -283,7 +286,7 @@ install_services () {
 	fi
 
 	mkdir -p "${install_path}"
-	cp /tmp/services.jar "${install_path}/" \
+	cp ${TMPDIR}/services.jar "${install_path}/" \
 		|| error " !! failed to install services.jar"
 
 	touch /system/.nanomod-patcher
