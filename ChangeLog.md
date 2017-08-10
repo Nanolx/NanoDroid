@@ -16,12 +16,17 @@
 * General Changes:
   * Full, microG, F-Droid packages:
      * ignore `nanomod_forcesystem` when installing through Magisk Manager
+  * Full, microG packages:
+     * update swipe libraries for x86_64
+     * provide separate Google Sync Adapters for LL, MM and N, install correct version
   * Framework-Patcher package:
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` property
   * Documentation:
      * add various additional links
      * other minor improvements
-  * update swipe libraries for x86_64
+  * build-package:
+     * `swipe` parameter updates swipe libraries using shadow53's website
+     * `gsync` parameter updates gsync apks using shadow53's website
 * Updates
   * Orfox (1.4-RC3)
   * Simple Gallery (2.13.0)
