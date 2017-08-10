@@ -203,6 +203,7 @@ NanoMod includes microG as follows
 * choose between official **Play Store** or unofficial **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
      * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
+  * Play Store is modified to allow (in-)app-purchases with microG
 
 ### F-Droid and Applications
 
@@ -230,7 +231,7 @@ Full [> Details](doc/AlterInstallation.md) on altering installation manually, or
 
 #### NanoMod
 
-* Use SetupWizard to create configuration files, or create manually (see above)
+* Use Setup Wizard to create configuration files, or create manually (see above)
 * Download pre-built zip or create one from this repository
 * perform full wipe (/system, /data, /cache, Dalvik/ART cache)
   * recommended, but not required
