@@ -252,8 +252,7 @@ install_init () {
 	mkdir -p ${INSTALLER} || error " !! failed to prepare environment!"
 
 	ui_print " > prepare installation"
-	cd "${INSTALLER}" || error " !! failed to prepare environment!"
-	unzip -o "$ZIP" || error " !! failed to prepare environment!"
+	unzip -o "$ZIP" -d "${INSTALLER}" || error " !! failed to prepare environment!"
 }
 
 install_fdroid () {
