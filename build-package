@@ -245,6 +245,15 @@ increase_module_version () {
 	exit 0
 }
 
+update_swipe () {
+	BASE_URL="https://dl.shadow53.com/no-gapps/"
+	for arch in arm arm64 x86 x86_64; do
+		wget -q "${BASE_URL}/swipelib-${arch}.zip" -O tmp.zip || exit 1
+		unzip -ojq tmp.zip "files/*.so" -d "${CWD}/Full/swipe/${arch}/" || exit 1
+		rm tmp.zip
+	done
+}
+
 show_help () {
 	echo -e "
 ** NanoMod ${VERSION} helper script **
@@ -258,6 +267,7 @@ possible opts:
 	patcher			| create framework patcher zip from repo
 	uninstaller		| create uninstaller zip from repo
 	setupwizard		| create setup-wizard zip from repo
+	swipe			| update swipe libraries
 	all			| create all zips from repo
 	ver	[ver] [date]	| bump version
 	bump			| bump versionCode in Magisk Modules
@@ -283,6 +293,8 @@ for opt in ${@}; do
 		uninstaller )	create_uninstaller_package &
 				progress $! ;;
 		setupwizard )	create_setupwizard_package &
+				progress $! ;;
+		swipe )		update_swipe &
 				progress $! ;;
 		all )
 			create_full_package &

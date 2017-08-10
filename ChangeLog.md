@@ -21,6 +21,7 @@
   * Documentation:
      * add various additional links
      * other minor improvements
+  * update swipe libraries for x86_64
 * Updates
   * Orfox (1.4-RC3)
   * Simple Gallery (2.13.0)
