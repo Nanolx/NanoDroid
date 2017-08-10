@@ -41,7 +41,7 @@ nanomod_swipe=0
 nanomod_forcesystem=0
 ```
 
-the **F-Droid** package supports the following options
+the **F-Droid** and **Patcher** packages support the following options
 
 ```
 nanomod_forcesystem=0
