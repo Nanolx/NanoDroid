@@ -5,6 +5,14 @@ export NO_CONFIG=0
 export MODPATH=@MODPATH@
 export PATH="${PATH}:${MODPATH}/system/bin"
 
+if [[ -d /dev/magisk_merge/$(basename ${MODPATH}) ]]; then
+	OVERLAY_PATH=/dev/magisk_merge/$(basename ${MODPATH})
+	echo "  creating overrides in: ${2}"
+else
+	OVERLAY_PATH=${MODPATH}
+	echo "  creating overrides in: ${MODPATH}"
+fi
+
 # Permissions
 perm_fake="android.permission.FAKE_PACKAGE_SIGNATURE"
 perm_calr="android.permission.READ_CALENDAR"
@@ -38,13 +46,9 @@ show_app_name () {
 }
 
 add_override () {
-	if [[ -d ${2} ]]; then
-		mkdir -p "${2}/system/${1}"
-		touch "${2}/system/${1}/.replace"
-	else
-		mkdir -p "${MODPATH}/system/${1}"
-		touch "${MODPATH}/system/${1}/.replace"
-	fi
+	echo "  creating overlay for $(basename ${1})"
+	mkdir -p "${OVERLAY_PATH}/system/${1}"
+	touch "${OVERLAY_PATH}/system/${1}/.replace"
 }
 
 rm_override () {
@@ -58,10 +62,10 @@ update_overrides () {
 
 	for app in ${OVERLAY_APPS}; do
 		if [ -d /system/app/${app} ]; then
-			add_override "app/${app}" ${2}
+			add_override "app/${app}" ${OVERLAY_PATH}
 		elif [ -d /system/priv-app/${app} ]; then
-			add_override "priv-app/${app}" ${2}
-		else	echo "app \"${app}\" is not installed"
+			add_override "priv-app/${app}" ${OVERLAY_PATH}
+		else	echo "  app \"${app}\" is not installed"
 		fi
 	done
 }
@@ -223,7 +227,7 @@ case ${1} in
 	;;
 
 	-u | --update )
-		update_overrides ${2}
+		update_overrides
 	;;
 
 	-s | --show )
@@ -231,7 +235,7 @@ case ${1} in
 	;;
 
 	-c | --clear )
-		clear_overrides
+		clear_overrides ${2}
 	;;
 
 	-g | --genconfig )
