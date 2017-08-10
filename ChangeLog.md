@@ -1,12 +1,13 @@
 # ChangeLog
 
 ## 12.2 in-dev
-* General Changes
+* Bug fixes
   * Full, microG, F-Droid, Framework-Patcher packages:
-     * use `/dev/tmp` instead of `/tmp` for all actions done in temporary directories;
-     * this increases compatibility for flashing using Magisk Manager, but
-         * pseudo-debloating (`nanomod-overlay --update`)
-     * don't (yet) work when flashing from Magisk Manager
+     * use `/dev/tmp` instead of `/tmp`, fixes several bugs when installing from Magisk Manager
+  * Full, microG packages:
+     * fix back-up and restore of `services.jar` when installing from Magisk Manager
+     * fix `nanomod_substitute` not creating expected result when installing from Magisk Manager
+     * fix pseudo-debloat feature not enabled when installing from Magisk Manager
 * Updates
   * Orfox (1.4-RC3)
   * Simple Gallery (2.13.0)
