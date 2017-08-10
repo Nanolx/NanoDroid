@@ -657,7 +657,7 @@ nanomod_substitute () {
 	fi
 
 	if grep -q @MODPATH@ ${1}; then
-		sed -e "s|@MODPATH@|${MODPATH}|g" -i ${1}
+		sed -e "s|@MODPATH@|${REALPATH}|g" -i ${1}
 		echo "    substitute: adjust @MODPATH@ in ${1}"
 	fi
 }
