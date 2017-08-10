@@ -402,6 +402,7 @@ install_init () {
 install_microg () {
 	# install microG if requested
 	if [ "${nanomod_microg}" -eq 1 ]; then
+		ui_print " << with microG"
 		for app in nlpBackendIchnaea nlpBackendNomiantim; do
 			nanomod_install /system/app/${app} /system/app/
 			nanomod_libs app/${app}
@@ -410,7 +411,6 @@ install_microg () {
 			nanomod_install /system/priv-app/${app} /system/priv-app/
 			nanomod_libs priv-app/${app}
 		done
-		ui_print " << with microG"
 	else	ui_print " << without microG"
 	fi
 }
@@ -418,9 +418,9 @@ install_microg () {
 install_mapsv1 () {
 	# install mapsv1 if requested
 	if [ "${nanomod_mapsv1}" -eq 1 ]; then
+		ui_print " << with Maps API version 1"
 		nanomod_install /system/etc/permissions/ /system/etc/
 		nanomod_install /system/framework/ /system/
-		ui_print " << with Maps API version 1"
 	else	ui_print " << without Maps API version 1"
 	fi
 }
@@ -428,6 +428,7 @@ install_mapsv1 () {
 install_gsync () {
 	# install GSync if requested
 	if [ "${nanomod_gsync}" -eq 1 ]; then
+		ui_print " << with Google Sync (${GSYNC_VER})"
 		nanomod_install /gsync/${GSYNC_VER}/app/GoogleCalendarSync /system/app/
 		nanomod_libs app/GoogleCalendarSync
 		nanomod_install /gsync/${GSYNC_VER}/app/GoogleContactsSync /system/app/
@@ -435,7 +436,6 @@ install_gsync () {
 		nanomod_install /gsync/${GSYNC_VER}/priv-app/GoogleBackupTransport /system/priv-app/
 		nanomod_libs priv-app/GoogleBackupTransport
 		nanomod_install /gsync/etc/permissions/ /system/etc/
-		ui_print " << with Google Sync (${GSYNC_VER})"
 	else	ui_print " << without Google Sync"
 	fi
 }
@@ -443,11 +443,11 @@ install_gsync () {
 install_fdroid () {
 	# install F-Droid if requested
 	if [ "${nanomod_fdroid}" -eq 1 ]; then
+		ui_print " << with F-Droid"
 		nanomod_install /system/app/FDroid /system/app/
 		nanomod_libs app/FDroid
 		nanomod_install /system/priv-app/FDroidPrivileged /system/priv-app/
 		nanomod_libs priv-app/FDroidPrivileged
-		ui_print " << with F-Droid"
 	else	ui_print " << without F-Droid"
 	fi
 }
@@ -473,15 +473,15 @@ install_apps () {
 install_store () {
 	# install Yalp Store or Play Store whichever requested
 	if [ "${nanomod_play}" -eq 1 ]; then
+		ui_print " << with Play Store"
 		nanomod_install /system/priv-app/Phonesky /system/priv-app/
 		nanomod_libs priv-app/Phonesky
-		ui_print " << with Play Store"
 	elif [ "${nanomod_play}" -eq 2 ]; then
+		ui_print " << with Yalp Store (and Fake Store)"
 		nanomod_install /system/priv-app/FakeStore /system/priv-app/
 		nanomod_libs priv-app/FakeStore
 		nanomod_install /system/priv-app/YalpStore /system/priv-app/
 		nanomod_libs priv-app/YalpStore
-		ui_print " << with Yalp Store"
 	else	ui_print " << without App Store"
 	fi
 }
@@ -489,8 +489,8 @@ install_store () {
 install_zelda () {
 	# install Zelda Ringtones when requested
 	if [ "${nanomod_zelda}" -eq 1 ]; then
-		nanomod_install /system/media/ /system/
 		ui_print " << with Zelda sounds"
+		nanomod_install /system/media/ /system/
 	else	ui_print " << without Zelda sounds"
 	fi
 }
@@ -501,8 +501,6 @@ install_misc () {
 	nanomod_install /system/etc/bash_logout /system/etc/
 	nanomod_install /system/etc/bashrc /system/etc/
 	nanomod_install /system/share /system/
-
-
 
 	for binary in bash less nano nano.bin nanomod-overlay; do
 		nanomod_install /system/bin/${binary} /system/bin/ bin

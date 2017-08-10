@@ -400,9 +400,9 @@ install_microg () {
 install_mapsv1 () {
 	# install mapsv1 if requested
 	if [ "${nanomod_mapsv1}" -eq 1 ]; then
+		ui_print " << with Maps API version 1"
 		nanomod_install /system/etc/permissions/ /system/etc/
 		nanomod_install /system/framework/ /system/
-		ui_print " << with Maps API version 1"
 	else	ui_print " << without Maps API version 1"
 	fi
 }
@@ -410,6 +410,7 @@ install_mapsv1 () {
 install_gsync () {
 	# install GSync if requested
 	if [ "${nanomod_gsync}" -eq 1 ]; then
+		ui_print " << with Google Sync (${GSYNC_VER})"
 		nanomod_install /gsync/${GSYNC_VER}/app/GoogleCalendarSync /system/app/
 		nanomod_libs app/GoogleCalendarSync
 		nanomod_install /gsync/${GSYNC_VER}/app/GoogleContactsSync /system/app/
@@ -417,7 +418,6 @@ install_gsync () {
 		nanomod_install /gsync/${GSYNC_VER}/priv-app/GoogleBackupTransport /system/priv-app/
 		nanomod_libs priv-app/GoogleBackupTransport
 		nanomod_install /gsync/etc/permissions/ /system/etc/
-		ui_print " << with Google Sync (${GSYNC_VER})"
 	else	ui_print " << without Google Sync"
 	fi
 }
@@ -425,15 +425,15 @@ install_gsync () {
 install_store () {
 	# install Yalp Store or Play Store whichever requested
 	if [ "${nanomod_play}" -eq 1 ]; then
+		ui_print " << with Play Store"
 		nanomod_install /system/priv-app/Phonesky /system/priv-app/
 		nanomod_libs priv-app/Phonesky
-		ui_print " << with Play Store"
 	elif [ "${nanomod_play}" -eq 2 ]; then
+		ui_print " << with Yalp Store (and Fake Store)"
 		nanomod_install /system/priv-app/FakeStore /system/priv-app/
 		nanomod_libs priv-app/FakeStore
 		nanomod_install /system/priv-app/YalpStore /system/priv-app/
 		nanomod_libs priv-app/YalpStore
-		ui_print " << with Yalp Store"
 	else	ui_print " << without App Store"
 	fi
 }

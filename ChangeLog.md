@@ -19,6 +19,8 @@
   * Full, microG packages:
      * update swipe libraries for x86_64
      * provide separate Google Sync Adapters for LL, MM and N, install correct version
+     * first print messages then do installation of the given component, not the over way round
+        * makes it easier to understand the recovery.log
   * Framework-Patcher package:
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` property
   * Documentation:
