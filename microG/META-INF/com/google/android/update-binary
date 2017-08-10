@@ -417,7 +417,7 @@ install_gsync () {
 		nanomod_install /gsync/${GSYNC_VER}/priv-app/GoogleBackupTransport /system/priv-app/
 		nanomod_libs priv-app/GoogleBackupTransport
 		nanomod_install /gsync/etc/permissions/ /system/etc/
-		ui_print " << with Google Sync"
+		ui_print " << with Google Sync (${GSYNC_VER})"
 	else	ui_print " << without Google Sync"
 	fi
 }
