@@ -152,7 +152,7 @@ or you can use **Kernel Adiutor's** init.d emulation.
 
 #### Shell Utilities
 
-Several utilities from `bsdmainutils` and `util-linux` are included:
+Several utilities from `bsdmainutils` [> Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils) and `util-linux` [> GitHub](https://github.com/karelzak/util-linux) are included:
 
 * col
 * colcrt
@@ -173,11 +173,11 @@ Several utilities from `bsdmainutils` and `util-linux` are included:
 
 Other shell utilities
 
-* aapt
-* less
-* lessecho
-* lesskey
-* unzip
+* aapt [> eLinux Wiki](http://elinux.org/Android_aapt)
+* less [> Website](http://www.greenwoodsoftware.com/less/)
+  * lessecho
+  * lesskey
+* unzip [> Website](http://www.info-zip.org/UnZip.html)
 
 #### GNU Bash and GNU Nano
 
@@ -284,7 +284,7 @@ Once your ROM supports signature spoofing, you need to setup microG like this
 
 My own work (NanoMod itself) is licensed under the GNU General Public License version 3 or newer [> GNU](https://www.gnu.org/licenses/gpl-3.0.txt)
 
-For more details (including authors and license) on every provided application or Software press the icon next to it.
+For more details (including authors and license) on every provided application or Software press the link next to it.
 
 Additional credits go to
 
