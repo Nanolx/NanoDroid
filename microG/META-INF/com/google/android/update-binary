@@ -302,6 +302,7 @@ magisk_install_preinst () {
 magisk_install_postinst () {
 	# Setup Overrides
 	if [ "${nanomod_overlay}" -eq 1 ]; then
+		ui_print " << with /system applications override"
 		if [ "${NO_NANOMODOVERLAY}" -eq 1 ]; then
 			cp "${nanomodoverlay}" /data/.nanomod-overlay
 		fi
@@ -311,7 +312,6 @@ magisk_install_postinst () {
 		if [ "${NO_NANOMODOVERLAY}" -eq 1 ]; then
 			rm /data/.nanomod-overlay
 		fi
-		ui_print " << with /system applications override"
 	else	ui_print " << without /system applications override"
 	fi
 
