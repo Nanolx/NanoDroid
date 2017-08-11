@@ -191,7 +191,7 @@ get_config .nanomod-overlay
 
 if [[ -f ${config} ]]; then
 	export config
-else	nanomod-overlay.genconfig
+else	genconfig
 	export config="/data/.nanomod-overlay"
 fi
 
