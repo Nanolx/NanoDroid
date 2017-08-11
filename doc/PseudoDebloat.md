@@ -63,11 +63,11 @@ The `nanomod-overlay` script has more options than just `--update`.
 
 `-a`, `--add` [app]
 
-add Overlay for [app] (if it exists) and add it to the config file
+add Overlay for **app** (if it exists) and add it to the config file
 
 `-r`, `--remove` [app]
 
-remove Overlay for [app] (if it exists) and remove it from the config file
+remove Overlay for **app** (if it exists) and remove it from the config file
 
 `-s`, `--show`
 
