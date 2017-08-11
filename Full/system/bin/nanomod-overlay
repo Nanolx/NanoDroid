@@ -241,7 +241,7 @@ case ${1} in
 	;;
 
 	-c | --clear )
-		clear_overrides ${2}
+		clear_overrides
 	;;
 
 	-g | --genconfig )

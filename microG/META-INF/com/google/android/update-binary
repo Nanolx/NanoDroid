@@ -321,8 +321,7 @@ magisk_install_postinst () {
 			cp "${nanomodoverlay}" /data/.nanomod-overlay
 		fi
 		${MODPATH}/system/bin/bash \
-			${MODPATH}/system/bin/nanomod-overlay \
-			--update ${MODPATH}
+			${MODPATH}/system/bin/nanomod-overlay --create
 		if [ "${NO_NANOMODOVERLAY}" -eq 1 ]; then
 			rm /data/.nanomod-overlay
 		fi
