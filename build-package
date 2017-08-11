@@ -75,18 +75,17 @@ Creating Package
 
 	cd "${CWD}/Full"
 
-	for app in GoogleCalendarSync GoogleContactSync \
-		nlpBackendIchnaea nlpBackendNomiantim; do
+	for app in nlpBackendIchnaea nlpBackendNomiantim; do
 		zip_add "system/app/${app}/"
 	done
 
-	for app in GoogleBackupTransport DroidGuard FakeStore \
-		GmsCore GsfProxy Phonesky YalpStore; do
+	for app in DroidGuard FakeStore GmsCore \
+		GsfProxy Phonesky YalpStore; do
 		zip_add "system/priv-app/${app}/"
 	done
 
 	for input in "system/bin/nanomod-overlay" "system/bin/bash*" "system/bin/aapt*" \
-		"system/bin/column*" "system/bin/unzip*" "system/framework/" \
+		"system/bin/column*" "system/bin/unzip*" "system/framework/" "gsync/" \
 		"system/etc/permissions/" "system/etc/bash*" "system/share/" "swipe/"; do
 		zip_add "${input}"
 	done
