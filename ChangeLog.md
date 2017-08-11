@@ -24,6 +24,7 @@
      * provide separate Google Sync Adapters for LL, MM and N, install correct version
      * first print messages then do installation of the given component, not the over way round
          * makes it easier to understand the recovery.log
+     * `nanomod-overlay` has new `-x`, `--create` parameter, to create overlays without removing them before
   * Framework-Patcher package:
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` property
   * Documentation:
