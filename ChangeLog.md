@@ -8,6 +8,7 @@
      * fix back-up and restore of `services.jar` when installing from Magisk Manager
      * fix `nanomod_substitute` not creating expected result when installing from Magisk Manager
      * fix pseudo-debloat feature not enabled when installing from Magisk Manager
+     * many fixes in `nanomod-overlay` Script
   * Full, microG packages, Framework-Patcher packages:
      * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
   * Framework-Patcher package:

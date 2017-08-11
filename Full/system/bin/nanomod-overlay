@@ -7,10 +7,7 @@ export PATH="${PATH}:${MODPATH}/system/bin"
 
 if [[ -d /dev/magisk_merge/$(basename ${MODPATH}) ]]; then
 	OVERLAY_PATH=/dev/magisk_merge/$(basename ${MODPATH})
-	echo "  creating overrides in: ${2}"
-else
-	OVERLAY_PATH=${MODPATH}
-	echo "  creating overrides in: ${MODPATH}"
+else	OVERLAY_PATH=${MODPATH}
 fi
 
 # Permissions
@@ -46,19 +43,27 @@ show_app_name () {
 }
 
 add_override () {
-	echo "  creating overlay for $(basename ${1})"
+	echo "  creating overlay: $(basename ${1})"
 	mkdir -p "${OVERLAY_PATH}/system/${1}"
 	touch "${OVERLAY_PATH}/system/${1}/.replace"
 }
 
 rm_override () {
-	rm -rf  "${MODPATH}/system/app/${1}"
-	sed -e "/^${1}$/d" -i "${config}"
+	xapp=$(basename ${1})
+	echo "  removing overlay: ${xapp}"
+	rm -rf  "${OVERLAY_PATH}/system/${1}"
+	sed -e "/^${xapp}$/d" -i "${config}"
 }
 
 update_overrides () {
-	OVERLAY_APPS=$(cat "${config}")
 	clear_overrides
+	gen_overrides
+}
+
+gen_overrides () {
+	OVERLAY_APPS=$(cat "${config}")
+
+	echo "  creating Overlays in ${OVERLAY_PATH}"
 
 	for app in ${OVERLAY_APPS}; do
 		if [ -d /system/app/${app} ]; then
@@ -71,21 +76,21 @@ update_overrides () {
 }
 
 list_overrides () {
-	LIST_APPS=($(find "${MODPATH}/system/app" -name "*.replace"))
+	LIST_APPS=($(find "${OVERLAY_PATH}/system/app" -name "*.replace"))
 	for app in "${LIST_APPS[@]}"; do
-		APPS=(${APPS[@]} "$(dirname "${app}")")
+		APPS=(${APPS[@]} "$(basename $(dirname "${app}"))")
 	done
 
-	LIST_PRIV_APPS=($(find "${MODPATH}/system/priv-app" -name "*.replace"))
+	LIST_PRIV_APPS=($(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"))
 	for app in "${LIST_PRIV_APPS[@]}"; do
-		PRIV_APPS=(${PRIV_APPS[@]} "$(dirname "${app}")")
+		PRIV_APPS=(${PRIV_APPS[@]} "$(basename $(dirname "${app}"))")
 	done
 
-	echo "Overrides exist for following applications in /system/app:
+	echo "Overlays exist for following applications in /system/app:
 
 $(printf '  * %s\n' "${APPS[@]}")
 
-Overrides exist for following applications in /system/priv-app:
+Overlays exist for following applications in /system/priv-app:
 
 $(printf '  * %s\n' "${PRIV_APPS[@]}")
 "
@@ -96,7 +101,7 @@ show_nooverrides () {
 
 	for app in /system/app/*/*.apk; do
 		sysname=$(basename "${app}" .apk)
-		if [[ ! -f ${MODPATH}/system/app/${sysname}/.replace ]]; then
+		if [[ ! -f ${OVERLAY_PATH}/system/app/${sysname}/.replace ]]; then
 			humname=$(show_app_name "${app}")
 			S_APPS="${S_APPS}
 	* ${sysname}		|(${humname})"
@@ -107,56 +112,59 @@ show_nooverrides () {
 
 	for app in /system/priv-app/*/*.apk; do
 		sysname=$(basename "${app}" .apk)
-		if [[ ! -f ${MODPATH}/system/priv-app/${sysname}/.replace ]]; then
+		if [[ ! -f ${OVERLAY_PATH}/system/priv-app/${sysname}/.replace ]]; then
 			humname=$(show_app_name "${app}")
 			S_PRIV_APPS="${S_PRIV_APPS}
 	* ${sysname}		|(${humname})"
 		fi
 	done
 
-	echo "Non-Overriden applications in /system/app:
+	echo "Non-Overlayed applications in /system/app:
 
 $(printf '* %s\n' "${S_APPS[@]}" | column -t -s \|)
 
-Non-Overriden applications in /system/priv-app:
+Non-Overlayed applications in /system/priv-app:
 
 $(printf '* %s\n' "${S_PRIV_APPS[@]}" | column -t -s \|)
 "
 }
 
 clear_overrides () {
-	RM_APPS=($(find "${MODPATH}/system/app" -name "*.replace"))
+	echo "  removing Overlays from ${OVERLAY_PATH}"
+	RM_APPS=($(find "${OVERLAY_PATH}/system/app" -name "*.replace"))
 	for app in "${RM_APPS[@]}"; do
+		echo "  removing override: $(basename $(dirname ${app}))"
 		rm -rf "$(dirname "${app}")"
 	done
 
-	RM_PRIV_APPS=($(find "${MODPATH}/system/priv-app" -name "*.replace"))
+	RM_PRIV_APPS=($(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"))
 	for app in "${RM_PRIV_APPS[@]}"; do
+		echo "  removing override: $(basename $(dirname ${app}))"
 		rm -rf "$(dirname "${app}")"
 	done
 }
 
 genconfig () {
-	if [[ ! -f "${config}" ]]; then
-		config="/data/.nanomod-overlay"
-	fi
+	[[ ! -f "${config}" ]] && config="/data/.nanomod-overlay"
 
-	APPS=($(find "${MODPATH}/system/app" -name "*.replace"))
-	PRIV_APPS=($(find "${MODPATH}/system/priv-app" -name "*.replace"))
+	APPS=($(find "${OVERLAY_PATH}/system/app" -name "*.replace"))
+	PRIV_APPS=($(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"))
 
 	if [[ ${APPS[*]} != "" ]]; then
 		for app in "${APPS[@]}"; do
-			echo "$(dirname "${app}")" >> "${config}"
+			xapp=$(basename $(dirname ${app}))
+			echo "  adding ${xapp} to configuration"
+			echo "${xapp}" >> "${config}"
 		done
 	fi
 
 	if [[ ${PRIV_APPS[*]} != "" ]]; then
 		for app in "${PRIV_APPS[@]}"; do
-			echo "$(dirname "${app}")" >> "${config}"
+			xapp=$(basename $(dirname ${app}))
+			echo "  adding ${xapp} to configuration"
+			echo "${xapp}" >> "${config}"
 		done
 	fi
-
-	sed -e "s,.*/system,/system,g" -i "${config}"
 }
 
 check_package () {
@@ -168,34 +176,36 @@ check_permission () {
 }
 
 grant_permission () {
-	pm grant ${1} ${2}
+	pm grant ${1} ${2} 2>/dev/null
 }
 
 permissions () {
 	if check_package ${1}; then
-		echo "package ${package} found"
+		echo "package ${1} found"
 		if ! check_permission ${1} ${2}; then
-			echo "granting permission ${permission}"
-			grant_permission ${1} ${2}
-		else	echo "already has permission ${permission}"
+			grant_permission ${1} ${2} && \
+				echo "permission ${2} granted" || \
+				echo "failed to grant permission ${2}"
+		else	echo "already has permission ${2}"
 		fi
 	fi
 }
 
 # check for configuration files
-config_locations="/sdcard /external_sd /persist @ZIPDIR@ /data"
+config_locations="/sdcard /external_sd /persist /data/user/0/com.topjohnwu.magisk/cache /data"
 
 get_config .nanomod-overlay
 
 [[ "${MODPATH}" != "/magisk/"* ]] && NO_MAGISK=1
 
+if [[ ${NO_MAGISK} -eq 0 ]]; then
+
 if [[ -f ${config} ]]; then
 	export config
-else	genconfig
+else
+	genconfig
 	export config="/data/.nanomod-overlay"
 fi
-
-if [[ ${NO_MAGISK} -eq 0 ]]; then
 
 case ${1} in
 	-l | --list )
@@ -204,23 +214,19 @@ case ${1} in
 
 	-a | --add )
 		if [[ -d /system/app/${2} ]]; then
-			echo "Adding override for app: \"${2}\""
 			add_override "app/${2}"
 			echo "${2}" >> "${config}"
 		elif [[ -d /system/priv-app/${2} ]]; then
-			echo "Adding override for priv-app \"${2}\""
-			echo "${2}" >> "${config}"
+			add_override "priv-app/${2}"
 			echo "${2}" >> "${config}"
 		else	echo "app \"${2}\" is not installed"
 		fi
 	;;
 
 	-r | --remove )
-		if [[ -d ${MODPATH}/system/app/${2}/.replace ]]; then
-			echo "Removing override for app: \"${2}\""
+		if [[ -f ${OVERLAY_PATH}/system/app/${2}/.replace ]]; then
 			rm_override "app/${2}"
-		elif [[ -d ${MODPATH}/system/priv-app/${2}/.replace ]]; then
-			echo "Removing override for priv-app: \"${2}\""
+		elif [[ -f ${OVERLAY_PATH}/system/priv-app/${2}/.replace ]]; then
 			rm_override "priv-app/${2}"
 		else	echo "No override for \"${2}\" found"
 		fi
@@ -239,7 +245,12 @@ case ${1} in
 	;;
 
 	-g | --genconfig )
+		rm -f ${config}
 		genconfig
+	;;
+
+	-x | --create )
+		gen_overrides
 	;;
 
 	-p | --permission )
@@ -265,7 +276,8 @@ Options:
 -r | --remove	[appname]	remove override for app [appname]
 -s | --show			show non-overriden /system applications
 -l | --list			show all overriden /system applications
--u | --update			update all overrides
+-x | --create			create all overrides
+-u | --update			update all overrides (= clear + create)
 -c | --clear			remove all overrides
 -g | --genconfig		(re-)create configuration from existing overrides
 -p | --permission		grant signature spoofing permission to
