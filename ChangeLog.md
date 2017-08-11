@@ -27,6 +27,7 @@
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` property
   * Documentation:
      * add various additional links
+     * fully document `nanomod-overlay` script
      * other minor improvements
   * build-package:
      * `swipe` parameter updates swipe libraries using shadow53's website

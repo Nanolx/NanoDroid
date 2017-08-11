@@ -44,7 +44,7 @@ on your device, in one of the following directories
 
 See the [default settings](.nanomod-overlay).
 
-Alternatively you can also use the NanoMod-setupwizard package instead of manual creation of the configuration file.
+Alternatively you can also use the NanoMod Setup Wizard package instead of manual creation of the configuration file.
 
 The syntax is pretty simple:
 
@@ -57,6 +57,51 @@ After you've made your changes, issue the following command on your device, eith
 
 This needs to be done in normal environment. If you're in **TWRP** you'll have to manually mount `/magisk` (you may use the `mount-magisk` script from the git repo for this purpose).
 
-For more options, check
+## Additional options
 
-`nanomod-overlay --help`
+The `nanomod-overlay` script has more options than just `--update`.
+
+`-a`, `--add` [app]
+
+add Overlay for [app] (if it exists) and add it to the config file
+
+`-r`, `--remove` [app]
+
+remove Overlay for [app] (if it exists) and remove it from the config file
+
+`-s`, `--show`
+
+show all apps that **don't** have an Overlay (slow)
+
+`-l`, `--list`
+
+show all apps that **do** have an Overlay
+
+`-x`, `--create`
+
+create Overlays from config file
+
+`-u`, `--update`
+
+remove existing Overlays and re-create them from the config file
+
+`-c`, `--clear`
+
+remove existing Overlays
+
+`-g`, `--genconfig`
+
+(re-)create config file from existing Overlays
+
+`-p`, `--permission`
+
+grant signature spoofing permission to microG GmsCore and Play Store, also grant permission to Google Sync Adapters (if they are installed)
+
+### System Mode
+
+In Sytem Mode the Pseudo Debloat feature does not work, so you only have
+
+* `-p`, `--permission`
+* `-h`, `--help`
+
+available.
