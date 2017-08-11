@@ -156,7 +156,7 @@ checkbox(
 	"ViaBrowser",			"Web Browser",			1,
 	"Wallpaper",			"Wallpaper App (Google)",	1,
 	"WallpaperBackup",		"Wallpaper Backup (Google)",	1,
-	"WallpaperPickerGoogle",	"Wallpaper App (Google",	1
+	"WallpaperPickerGoogle",	"Wallpaper App (Google)",	1
 );
 
 viewbox(
