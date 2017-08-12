@@ -152,7 +152,10 @@ or you can use **Kernel Adiutor's** init.d emulation.
 
 #### Shell Utilities
 
-Several utilities from `bsdmainutils` [> Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils) and `util-linux` [> GitHub](https://github.com/karelzak/util-linux) are included:
+Several utilities from `bsdmainutils` and `util-linux` are included:
+
+[> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils)
+[> util-linux GitHub](https://github.com/karelzak/util-linux)
 
 * col
 * colcrt
@@ -181,7 +184,10 @@ Other shell utilities
 
 #### GNU Bash and GNU Nano
 
-NanoMod includes GNU Bash [> Website](https://www.gnu.org/software/bash/bash.html) shell and the GNU Nano [> Website](https://www.nano-editor.org/) terminal editor.
+NanoMod includes GNU Bash shell and the GNU Nano terminal editor.
+
+[> GNU Bash Website](https://www.gnu.org/software/bash/bash.html)
+[> GNU Nano Website](https://www.nano-editor.org/)
 
 ### microG
 
@@ -251,9 +257,8 @@ Full [> Details](doc/AlterInstallation.md) on altering installation manually, or
 
 For **microG** to work, your ROM needs to have signature spoofing enabled (or a **deodexed** ROM to patch yourself).
 
-If your ROM does not have signature spoofing support, you can manually patch it using either
-  * the on-device framework-patcher zip
-     * flash from TWRP after booting into the ROM once
+If your ROM does **not** have signature spoofing support, you can manually patch it using either
+  * the on-device framework-patcher zip (needs a full ROM start first, as it requires dalvik-cache to be in place)
   * the `framework-patcher` script (found in the github repository)
      * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified **services.jar** on the device.
 
