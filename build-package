@@ -245,8 +245,11 @@ increase_module_version () {
 }
 
 update_swipe () {
+	echo -e "\nUpdating Swipe libaries"
 	BASE_URL="https://dl.shadow53.com/no-gapps/"
 	for arch in arm arm64 x86 x86_64; do
+		echo -ne " \x08"
+		echo -e "\tarchitecture: ${arch}"
 		wget -q "${BASE_URL}/swipelib-${arch}.zip" -O "${CWD}/tmp.zip" || exit 1
 		unzip -ojq "${CWD}/tmp.zip" "files/*.so" -d "${CWD}/Full/swipe/${arch}/" || exit 1
 		rm "${CWD}/tmp.zip"
@@ -254,8 +257,16 @@ update_swipe () {
 }
 
 update_gsync () {
+	echo -e "\nUpdating Google Sync Adapters"
 	BASE_URL="https://dl.shadow53.com/no-gapps/"
 	for sdk in l m n; do
+		echo -ne " \x08"
+		case ${sdk} in
+			l )	echo -e "\tLollipop"	;;
+			m )	echo -e "\tMarshmallow"	;;
+			n )	echo -e "\tNougat"	;;
+		esac
+
 		wget -q "${BASE_URL}/contacts-calendar-sync-${sdk}.zip" -O "${CWD}/tmp.zip" || exit 1
 		unzip -ojq "${CWD}/tmp.zip" "files/*" -d "${CWD}/tmp/" || exit 1
 		mv "${CWD}/tmp/com.google.android.backuptransport.apk" \
