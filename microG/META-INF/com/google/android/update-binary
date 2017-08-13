@@ -413,7 +413,7 @@ install_gsync () {
 		nanomod_install /gsync/${GSYNC_VER}/app/GoogleCalendarSync /system/app/
 		nanomod_libs app/GoogleCalendarSync
 		nanomod_install /gsync/${GSYNC_VER}/app/GoogleContactsSync /system/app/
-		nanomod_libs app/GoogleContactSync
+		nanomod_libs app/GoogleContactsSync
 		nanomod_install /gsync/${GSYNC_VER}/priv-app/GoogleBackupTransport /system/priv-app/
 		nanomod_libs priv-app/GoogleBackupTransport
 		nanomod_install /gsync/etc/permissions/ /system/etc/
