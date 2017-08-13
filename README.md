@@ -81,11 +81,12 @@ Extra packages, always flash through TWRP.
   * on-device framework-patcher
   * creates the file `/system/.nanomod-patcher` after successful patching
 * **NanoMod-setupwizard**: includes
-  * AROMA based Setup Wizard to create the configuration files
+  * **AROMA** based Setup Wizard to create the configuration files
   * user can choose where to store the configuration files
      * `/sdcard`
      * `/external_sd`
      * `/data` (fallback)
+  * **NOTE:** AROMA only works on `arm` and `arm64`, if your device is `x86` or `x86_64`, it won't work
 * **NanoMod-uninstaller**: includes
   * uninstalls any NanoMod Magisk Module
   * uninstalls NanoMod installed in System Mode aswell
@@ -231,13 +232,13 @@ Full [> Details](doc/ZeldaSounds.md)
 
 NanoMod supports altering the installation settings to a certain degree.
 
-Full [> Details](doc/AlterInstallation.md) on altering installation manually, or use the Setup Wizard.
+Full [> Details](doc/AlterInstallation.md) on altering installation manually, or use the Setup Wizard (if you've got an arm/arm64 device).
 
 ### Installation Process
 
 #### NanoMod
 
-* Use Setup Wizard to create configuration files, or create manually (see above)
+* Use Setup Wizard to create configuration files (if you've got an arm/arm64 device), or create manually (see above)
 * Download pre-built zip or create one from this repository
 * perform full wipe (/system, /data, /cache, Dalvik/ART cache)
   * recommended, but not required

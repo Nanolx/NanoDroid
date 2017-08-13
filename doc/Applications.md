@@ -53,7 +53,7 @@ on your device, in one of the following directories
 
 All applications listed in that file will be installed. See the [default settings](.nanomod-apps), which are used when no `.nanomod-apps` configuration file was found. 
 
-Alternatively you can also use the NanoMod-setupwizard package instead of manual creation of the configuration file.
+Alternatively you can also use the Setup Wizard instead of manual creation of the configuration file (if you've got an arm/arm64 device).
 
 The syntax is pretty simple:
 
