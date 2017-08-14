@@ -132,7 +132,7 @@ detect_arch () {
 		IS64BIT=true
 	fi
 
-	if [[ "${SDK_VERSION}" -lt 20 ]]; then
+	if [[ "${SDK_VERSION}" -lt 21 ]]; then
 		UNFOLD_APP_DIR=1
 		ui_print " "
 		ui_print " ++ Installing on pre-Lollipop ROM, full"
@@ -359,7 +359,11 @@ nanomod_install () {
 				file )	echo "      setting permissions: data"
 					if [ -f ${destination} ]; then
 						set_perm_data ${destination}
-					else	set_perm_data ${destination}$(basename ${source})
+					elif [ -f ${destination}$(basename ${source}).apk ]; then
+						set_perm_data ${destination}$(basename ${source}).apk
+					elif [ -f ${destination}$(basename ${source}) ]; then
+						set_perm_data ${destination}$(basename ${source})
+					else	error " !!  dafuq?"
 					fi
 				;;
 			esac
@@ -378,7 +382,11 @@ nanomod_install () {
 					;;
 					file )	if [ -f ${destination} ]; then
 							echo ${destination} >> /system/.nanomod-list
-						else	echo ${destination}$(basename ${source}) >> /system/.nanomod-list
+						elif [ -f ${destination}$(basename ${source}) ]; then
+							echo ${destination}$(basename ${source}) >> /system/.nanomod-list
+						elif [ -f ${destination}$(basename ${source}).apk ]; then
+							echo ${destination}$(basename ${source}).apk >> /system/.nanomod-list
+						else	error " !! dafuq?"
 						fi
 					;;
 				esac
@@ -388,14 +396,13 @@ nanomod_install () {
 }
 
 nanomod_libs () {
-	apk=${MODPATH}/system/${1}/*.apk
-
 	if [ "${UNFOLD_APP_DIR}" -eq 1 ]; then
 		# KitKat support
 		case ${ARCH} in
 			arm | x86 )      libd=/system/lib   ;;
 			arm64 | x86_64 ) libd=/system/lib64 ;;
 		esac
+		apk=${MODPATH}/system/${1}.apk
 	else
 		case ${ARCH} in
 			arm )	 libd=$(dirname ${apk})/lib/arm    ;;
@@ -403,6 +410,7 @@ nanomod_libs () {
 			x86 )	 libd=$(dirname ${apk})/lib/x86    ;;
 			x86_64 ) libd=$(dirname ${apk})/lib/x86_64 ;;
 		esac
+		apk=${MODPATH}/system/${1}/*.apk
 	fi
 
 	tmpd=${TMPDIR}/nanomod-lib
