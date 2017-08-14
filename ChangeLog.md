@@ -10,6 +10,7 @@
      * fix pseudo-debloat feature not enabled when installing from Magisk Manager
      * many fixes in `nanomod-overlay` Script
      * call `nanomod-overlay --create` during installation, instead of `nanomod-overlay --update`
+     * fixed that directory for **Nominatim** was accidently **Nomiantim**
   * Full, microG packages, Framework-Patcher packages:
      * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
   * Framework-Patcher package:
@@ -35,6 +36,8 @@
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` setup variable
      * add `nanomod_sigspoofui` setup variable
          * whether to add user interface into Developer Settings to enable or disable signature spoofing globally (for **non-prepatched** ROMs)
+  * Uninstaller package:
+     * also remove empty directories
   * Documentation:
      * add various additional links
      * fully document `nanomod-overlay` script
