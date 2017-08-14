@@ -356,11 +356,25 @@ nanomod_install () {
 
 nanomod_libs () {
 	apk=${MODPATH}/system/${1}/*.apk
-	libd=$(dirname ${apk})/lib
+
+	if [ "${UNFOLD_APP_DIR}" -eq 1]
+		# KitKat support
+		libd=/sytem/lib
+	else
+		case ${ARCH} in
+			arm )	 libd=$(dirname ${apk})/lib/arm    ;;
+			arm64 )  libd=$(dirname ${apk})/lib/arm64  ;;
+			x86 )	 libd=$(dirname ${apk})/lib/x86    ;;
+			x86_64 ) libd=$(dirname ${apk})/lib/x86_64 ;;
+		esac
+	fi
+
 	tmpd=${TMPDIR}/nanomod-lib
 
 	rm -rf ${tmpd}
 	mkdir ${tmpd}
+
+	srcdir=""
 
 	if [ ! -f ${apk} ]; then
 		error " !! apk ${apk} not found"
@@ -369,64 +383,63 @@ nanomod_libs () {
 			-oq ${apk} "lib/*" -d "${tmpd}" \
 			2>/dev/null
 		unzip_return=$?
+
 		if [ ${unzip_return} -eq 0 ]; then
 			echo "      $(basename ${apk}) does have libs"
 		elif [ ${unzip_return} -eq 11 ]; then
 			echo "      $(basename ${apk}) does not have any libs"
 		else	error "  !! installing libs for $(basename ${apk}) failed"
 		fi
+
 		if [ -d ${tmpd}/lib ]; then
-			mkdir -p ${libd}
 			case ${ARCH} in
 				arm )
 					if [ -d ${tmpd}/lib/armeabi-v7a ]; then
-						mkdir -p ${libd}/arm
-						echo "      $(basename ${apk}): installing arm libs"
-						cp ${tmpd}/lib/armeabi-v7a/* ${libd}/arm/
+						srcdir=${tmpd}/lib/armeabi-v7a
 					elif [ -d ${tmpd}/lib/armeabi ]; then
-						mkdir -p ${libd}/arm
-						echo "      $(basename ${apk}): installing arm libs"
-						cp ${tmpd}/lib/armeabi/* ${libd}/arm/
+						srcdir=${tmpd}/lib/armeabi
 					fi
 				;;
 				arm64 )
 					if [ -d ${tmpd}/lib/arm64-v8a ]; then
-						mkdir -p ${libd}/arm64
-						echo "      $(basename ${apk}): installing arm64 libs"
-						cp ${tmpd}/lib/arm64-v8a/* ${libd}/arm64/
+						srcdir=${tmpd}/lib/arm64-v8a
 					elif [ -d ${tmpd}/lib/armeabi-v7a ]; then
-						mkdir -p ${libd}/arm
-						echo "      $(basename ${apk}): installing arm libs"
-						cp ${tmpd}/lib/armeabi-v7a/* ${libd}/arm/
+						srcdir=${tmpd}/lib/armeabi-v7a
 					elif [ -d ${tmpd}/lib/armeabi ]; then
-						mkdir -p ${libd}/arm
-						echo "      $(basename ${apk}): installing arm libs"
-						cp ${tmpd}/lib/armeabi/* ${libd}/arm/
+						srcdir=${tmpd}/lib/armeabi
 					fi
 				;;
 				x86 )
 					if [ -d ${tmpd}/lib/x86 ]; then
-						mkdir -p ${libd}/x86
-						echo "      $(basename ${apk}): installing x86 libs"
-						cp ${tmpd}/lib/x86/* ${libd}/x86/
+						srcdir=${tmpd}/lib/x86
 					fi
 				;;
 				x86_64 )
 					if [ -d ${tmpd}/lib/x86_64 ]; then
-						mkdir -p ${libd}/x86_64
-						echo "      $(basename ${apk}): installing x86_64 libs"
-						${tmpd}/lib/x86_64/* ${libd}/x86_64/
+						srcdir=${tmpd}/lib/x86_64
 					elif [ -d ${tmpd}/lib/x86 ]; then
-						mkdir -p ${libd}/x86
-						echo "      $(basename ${apk}): installing x86 libs"
-						cp ${tmpd}/lib/x86/* ${libd}/x86/
+						srcdir=${tmpd}/lib/x86
 					fi
 				;;
 			esac
-			set_perm_dir ${libd}
-			if [ "${MODE}" = "SYSTEM" ]; then
-				find "${libd}" -type f >> /system/.nanomod-list
-			fi
+
+			if [ -d ${srcdir} ]; then
+				case ${srcdir} in
+					*arm64*  ) echo "      $(basename ${apk}): installing arm64 libs"  ;;
+					*arm*	 ) echo "      $(basename ${apk}): installing arm libs"    ;;
+					*x86_64* ) echo "      $(basename ${apk}): installing x86_64 libs" ;;
+					*x86*	 ) echo "      $(basename ${apk}): installing x86 libs"    ;;
+				esac
+
+				mkdir -p ${libd}
+
+				for lib in ${srcdir}/*; do
+					cp ${lib} ${libd}/
+					set_perm_file ${libd}/$(basename ${lib})
+					if [ "${MODE}" = "SYSTEM" ]; then
+						echo ${libd}/$(basename ${lib}) >> /system/.nanomod-list
+					fi
+				done
 		fi
 	fi
 }
