@@ -96,7 +96,8 @@ Module packages, flashing through TWRP recommended, though flashing through Magi
 Extra packages, always flash through TWRP.
 
 * **NanoMod-patcher**: includes
-  * on-device framework-patcher
+  * on-device framework-patcher for signature spoofing support
+     * optionally can patch user interface for it into Developer Settings
   * creates the file `/system/.nanomod-patcher` after successful patching
 * **NanoMod-setupwizard**: includes
   * **AROMA** based Setup Wizard to create the configuration files
@@ -114,7 +115,7 @@ Extra packages, always flash through TWRP.
 Misc. Script for use from PC/Notebook, while device is in TWRP.
 
 * **framework-patcher** (clone this repository)
-  * on-pc framework-patcher
+  * on-pc framework-patcher for signature spoofing support
   * creates the file `/system/.nanomod-patcher` after successful patching
 * **force-debloat** (clone this repository)
   * system debloater
