@@ -155,8 +155,8 @@ or you can use **Kernel Adiutor's** init.d emulation.
 
 Several utilities from `bsdmainutils` and `util-linux` are included:
 
-[> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils)
-[> util-linux GitHub](https://github.com/karelzak/util-linux)
+* [> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils)
+* [> util-linux GitHub](https://github.com/karelzak/util-linux)
 
 * col
 * colcrt
@@ -187,8 +187,8 @@ Other shell utilities
 
 NanoMod includes GNU Bash shell and the GNU Nano terminal editor.
 
-[> GNU Bash Website](https://www.gnu.org/software/bash/bash.html)
-[> GNU Nano Website](https://www.nano-editor.org/)
+* [> GNU Bash Website](https://www.gnu.org/software/bash/bash.html)
+* [> GNU Nano Website](https://www.nano-editor.org/)
 
 ### microG
 
