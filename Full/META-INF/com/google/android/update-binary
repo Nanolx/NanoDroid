@@ -654,6 +654,9 @@ nanomod_libs () {
 				;;
 			esac
 			set_perm_dir ${libd}
+			if [ "${MODE}" = "SYSTEM" ]; then
+				find "${libd}" -type f >> /system/.nanomod-list
+			fi
 		fi
 	fi
 }
@@ -680,6 +683,12 @@ nanomod_substitute () {
 nanomod_finalize () {
 	if [ "${MODE}" = "SYSTEM" ]; then
 		sed -e "s,^${INSTALLER},,g" -i /system/.nanomod-list \
+			|| error " !! failed to create uninstaller information"
+		sed -e "s,/swipe/${ARCH},/system/${SWIPE_LIBDIR},g" -i /system/.nanomod-list \
+			|| error " !! failed to create uninstaller information"
+		sed -e "s,/gsync/${GSYNC_VER},/system,g" -i /system/.nanomod-list \
+			|| error " !! failed to create uninstaller information"
+		sed -e "s,/gsync/etc,/system/etc,g" -i /system/.nanomod-list \
 			|| error " !! failed to create uninstaller information"
 		sort /system/.nanomod-list | uniq > /system/.nanomod-list.tmp \
 			|| error " !! failed to create uninstaller information"

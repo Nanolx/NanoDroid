@@ -15,6 +15,8 @@
   * Framework-Patcher package:
      * properly install `services.jar` into merge-pending NanoMod Magisk Modules
      * don't mount `/system` twice and don't try to unmount it, when installing through Magisk Manager
+  * Full, microG, F-Droid packages:
+     * fix that uninstaller information for System Mode is not correctly recorded in all cases
 * General Changes:
   * Full, microG, F-Droid packages:
      * ignore `nanomod_forcesystem` when installing through Magisk Manager
