@@ -294,6 +294,7 @@ possible opts:
 	uninstaller		| create uninstaller zip from repo
 	setupwizard		| create setup-wizard zip from repo
 	swipe			| update swipe libraries
+	gsync			| update Google Sync Adapters
 	all			| create all zips from repo
 	ver	[ver] [date]	| bump version
 	bump			| bump versionCode in Magisk Modules
