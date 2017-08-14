@@ -17,11 +17,13 @@
      * don't mount `/system` twice and don't try to unmount it, when installing through Magisk Manager
   * Full, microG, F-Droid packages:
      * fix that uninstaller information for System Mode is not correctly recorded in all cases
+     * fix that permissions were not properly set on non-binary files
 * General Changes:
   * Full, microG, F-Droid packages:
      * ignore `nanomod_forcesystem` when installing through Magisk Manager
      * deeper indent `nanomod_libs` output, makes recovery.log easier to read
      * print a warning message on pre-Lollipop ROMs that compatibility is not garantueed
+     * add work-in-progress support for KitKat (Android 4.4)
   * Full, microG packages:
      * update swipe libraries for x86_64
      * provide separate Google Sync Adapters for LL, MM and N, install correct version

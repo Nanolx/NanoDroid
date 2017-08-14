@@ -564,10 +564,18 @@ nanomod_install () {
 	perm=$3
 
 	if [[ -d ${source} ]]; then
-		echo "    dir: ${source} > ${destination}"
-		cp -r ${source} ${destination} || \
-			error " !! failed to install ${source} to ${destination}"
-		perm_x=dir
+		if [ "${UNFOLD_APP_DIR}" -eq 1 -a -f ${source}/*.apk ]; then
+			#KitKat Support
+			echo "    file: ${source}/*.apk > ${destination}"
+			cp ${source}/*.apk ${destination} || \
+				error " !! failed to install ${source}/*.apk to ${destination}"
+			perm_x=file
+		else
+			echo "    dir: ${source} > ${destination}"
+			cp -r ${source} ${destination} || \
+				error " !! failed to install ${source} to ${destination}"
+			perm_x=dir
+		fi
 	elif [[ -f ${source} ]]; then
 		echo "    file: ${source} > ${destination}" || \
 			error " !! failed to install ${source} to ${destination}"
@@ -580,20 +588,38 @@ nanomod_install () {
 	else	error " !! file ${source} not found"
 	fi
 
-	case perm in
+	case ${perm} in
 		bin )	echo "    permissions: binary"
 			set_perm_bin ${destination} ;;
-		* )	case perm_x in
+		* )	case ${perm_x} in
 				dir )	echo "    permissions: directory"
-					set_perm_dir ${destination} ;;
+					set_perm_dir ${destination}
+				;;
 				file )	echo "    permissions: data"
-					set_perm_file ${destination} ;;
+					if [ -f ${destination} ]; then
+						set_perm_file ${destination}
+					else	set_perm_file ${destination}$(basename ${source})
+					fi
+				;;
 			esac
 		;;
 	esac
 
 	if [ "${MODE}" = "SYSTEM" ]; then
-		find "${source}" -type f >> /system/.nanomod-list
+		case ${perm} in
+			bin )	echo ${destination} >> /system/.nanomod-list
+			;;
+			* )	case ${perm_x} in
+					dir )	find "${source}" -type f >> /system/.nanomod-list
+					;;
+					file )	if [ -f ${destination} ]; then
+							echo ${destination} >> /system/.nanomod-list
+						else	echo ${destination}$(basename ${source}) >> /system/.nanomod-list
+						fi
+					;;
+				esac
+			;;
+		esac
 	fi
 }
 
@@ -686,6 +712,7 @@ nanomod_libs () {
 						echo ${libd}/$(basename ${lib}) >> /system/.nanomod-list
 					fi
 				done
+			fi
 		fi
 	fi
 }
