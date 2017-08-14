@@ -159,6 +159,14 @@ if [ -f /system/.nanomod-list ]; then
 	xargs rm -f < /system/.nanomod-list \
 		|| " !! failed to remove files"
 	ui_print " << uninstalling: /system/.nanomod-list"
+
+	# remove empty directories
+	# (find -empty not available on Android)
+	find /system/app -type d | \
+		xargs rmdir --ignore-fail-on-non-empty
+	find /system/priv-app -type d | \
+		xargs rmdir --ignore-fail-on-non-empty
+
 	rm -f /system/.nanomod-list
 fi
 
