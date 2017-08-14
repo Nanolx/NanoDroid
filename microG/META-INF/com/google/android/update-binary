@@ -530,7 +530,7 @@ nanomod_install () {
 nanomod_libs () {
 	apk=${MODPATH}/system/${1}/*.apk
 
-	if [ "${UNFOLD_APP_DIR}" -eq 1]
+	if [ "${UNFOLD_APP_DIR}" -eq 1 ]; then
 		# KitKat support
 		libd=/sytem/lib
 	else
