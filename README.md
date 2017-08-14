@@ -30,7 +30,13 @@ NanoMod officially supports the following Android versions:
 * 7.0 (Nougat)
 * 7.1 (Nougat)
 
-previous versions are not officially supported (you may still report bugs, though), later versions will be, eventually.
+Support for the following Android versions is currently work-in-progress:
+
+* 4.4 (KitKat)
+
+earlier versions will never officially be supported (you may still report bugs, though).
+
+Future versions will be officially supported, eventually.
 
 ## Support
 
