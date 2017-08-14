@@ -30,7 +30,9 @@
          * makes it easier to understand the recovery.log
      * `nanomod-overlay` has new `-x`, `--create` parameter, to create overlays without removing them before
   * Framework-Patcher package:
-     * check for `.nanomod-setup` and respect `nanomod_forcesystem` property
+     * check for `.nanomod-setup` and respect `nanomod_forcesystem` setup variable
+     * add `nanomod_sigspoofui` setup variable
+         * whether to add user interface into Developer Settings to enable or disable signature spoofing globally (for **non-prepatched** ROMs)
   * Documentation:
      * add various additional links
      * fully document `nanomod-overlay` script

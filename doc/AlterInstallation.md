@@ -41,10 +41,17 @@ nanomod_swipe=0
 nanomod_forcesystem=0
 ```
 
-the **F-Droid** and **Patcher** packages support the following options
+the **F-Droid** package supports the following options
 
 ```
 nanomod_forcesystem=0
+```
+
+the **Patcher** package supports the following options
+
+```
+nanomod_forcesystem=0
+nanomod_sigspoofui=0
 ```
 
 where `1` means `on` and `0` means `off`. If no `.nanomod-setup` is found, the [default settings](.nanomod-setup) will be used (equals to the example above), if your `.nanomod-setup` file exists, but is missing entries, those entries will be added, using the default values.
@@ -99,3 +106,7 @@ whether to provide Swipe libraries
 `nanomod_forcesystem=[0|1]`
 
 whether to force system mode installation, regardless whether Magisk is installed
+
+`nanomod_sigspoofui=[0|1]`
+
+whether to patch `Settings.apk` to feature a user interface for enabling and disabling signature spoofing feature globally on **non-prepatched** ROMs.
