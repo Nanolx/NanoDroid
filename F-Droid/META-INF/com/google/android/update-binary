@@ -368,7 +368,10 @@ nanomod_install () {
 
 	if [ "${MODE}" = "SYSTEM" ]; then
 		case ${perm} in
-			bin )	echo ${destination} >> /system/.nanomod-list
+			bin )	if [ -f ${destination} ]; then
+					echo ${destination} >> /system/.nanomod-list
+				else	echo ${destination}$(basename ${source}) >> /system/.nanomod-list
+				fi
 			;;
 			* )	case ${perm_x} in
 					dir )	find "${source}" -type f >> /system/.nanomod-list
