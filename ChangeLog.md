@@ -21,9 +21,11 @@
   * Full, microG, F-Droid packages:
      * ignore `nanomod_forcesystem` when installing through Magisk Manager
      * deeper indent `nanomod_libs` output, makes recovery.log easier to read
+     * print a warning message on pre-Lollipop ROMs that compatibility is not garantueed
   * Full, microG packages:
      * update swipe libraries for x86_64
      * provide separate Google Sync Adapters for LL, MM and N, install correct version
+         * on pre-Lollipop ROMs print a message that Google Sync Adapters are not supported
      * first print messages then do installation of the given component, not the over way round
          * makes it easier to understand the recovery.log
      * `nanomod-overlay` has new `-x`, `--create` parameter, to create overlays without removing them before

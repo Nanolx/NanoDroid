@@ -131,6 +131,15 @@ detect_arch () {
 		ARCH=x64
 		IS64BIT=true
 	fi
+
+	if [[ "${SDK_VERSION}" -lt 20 ]]; then
+		UNFOLD_APP_DIR=1
+		ui_print " "
+		ui_print " ++ Installing on pre-Lollipop ROM, full"
+		ui_print " ++ compatibility is not garantueed!"
+		ui_print " "
+	fi
+
 }
 
 ##########################################################################################

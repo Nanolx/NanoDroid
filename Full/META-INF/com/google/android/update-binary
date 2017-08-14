@@ -213,7 +213,16 @@ detect_arch () {
 		21 | 22 )	GSYNC_VER=L	;;
 		23 )		GSYNC_VER=M	;;
 		24 | 25 )	GSYNC_VER=N	;;
+		* )	GSYNC_UNSUPPORTED=1	;;
 	esac
+
+	if [[ "${SDK_VERSION}" -lt 20 ]]; then
+		UNFOLD_APP_DIR=1
+		ui_print " "
+		ui_print " ++ Installing on pre-Lollipop ROM, full"
+		ui_print " ++ compatibility is not garantueed!"
+		ui_print " "
+	fi
 
 }
 
@@ -427,14 +436,18 @@ install_mapsv1 () {
 install_gsync () {
 	# install GSync if requested
 	if [ "${nanomod_gsync}" -eq 1 ]; then
-		ui_print " << with Google Sync (${GSYNC_VER})"
-		nanomod_install /gsync/${GSYNC_VER}/app/GoogleCalendarSync /system/app/
-		nanomod_libs app/GoogleCalendarSync
-		nanomod_install /gsync/${GSYNC_VER}/app/GoogleContactsSync /system/app/
-		nanomod_libs app/GoogleContactsSync
-		nanomod_install /gsync/${GSYNC_VER}/priv-app/GoogleBackupTransport /system/priv-app/
-		nanomod_libs priv-app/GoogleBackupTransport
-		nanomod_install /gsync/etc/permissions/ /system/etc/
+		if [ "${GSYNC_UNSUPPORTED}" -eq 1 ]; then
+			ui_print " << Google Sync Adapters are unsupported on pre-Lollipop ROMs"
+		else
+			ui_print " << with Google Sync (${GSYNC_VER})"
+			nanomod_install /gsync/${GSYNC_VER}/app/GoogleCalendarSync /system/app/
+			nanomod_libs app/GoogleCalendarSync
+			nanomod_install /gsync/${GSYNC_VER}/app/GoogleContactsSync /system/app/
+			nanomod_libs app/GoogleContactsSync
+			nanomod_install /gsync/${GSYNC_VER}/priv-app/GoogleBackupTransport /system/priv-app/
+			nanomod_libs priv-app/GoogleBackupTransport
+			nanomod_install /gsync/etc/permissions/ /system/etc/
+		fi
 	else	ui_print " << without Google Sync"
 	fi
 }
