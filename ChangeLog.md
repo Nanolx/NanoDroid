@@ -42,7 +42,7 @@
   * Twidere (3.6.24)
   * Yalp Store (0.22)
   * Play Store (8.1.29.S)
-  * Substratum (818)
+  * Substratum (819)
 
 ## 12.1.20170807
 * Bug Fixes
