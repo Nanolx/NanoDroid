@@ -602,7 +602,10 @@ nanomod_libs () {
 
 	if [ "${UNFOLD_APP_DIR}" -eq 1 ]; then
 		# KitKat support
-		libd=/sytem/lib
+		case ${ARCH} in
+			arm | x86 )      libd=/system/lib   ;;
+			arm64 | x86_64 ) libd=/system/lib64 ;;
+		esac
 	else
 		case ${ARCH} in
 			arm )	 libd=$(dirname ${apk})/lib/arm    ;;
