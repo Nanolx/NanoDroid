@@ -65,6 +65,7 @@ setup_add 7 nanomod_init
 setup_add 8 nanomod_gsync
 setup_add 9 nanomod_swipe
 setup_add 10 nanomod_forcesystem
+setup_add 11 nanomod_sigspoofui
 
 if grep -q "selected.1=1" "${store_prop}"; then
 	echo "nanomod_play=0" >> "${nanomod_setup}"

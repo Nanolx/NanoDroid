@@ -69,7 +69,8 @@ checkbox(
 	"Init Scripts",	"Install init scripts",					1,
 	"Google Sync",	"Install Google Contacts & Calendar Sync",		0,
 	"Swipe",	"Install Swipe libraries",				0,
-	"Force System",	"Force System Mode Installation",			0
+	"Force System",	"Force System Mode Installation",			0,
+	"Sigspoof UI",	"[Patcher] add Sigspoof UI to Developer Options",	0
 );
 
 selectbox(
