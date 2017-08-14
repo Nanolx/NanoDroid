@@ -20,6 +20,18 @@
      * `build-package setupwizard` for the Setup Wizard package
      * `build-package all` for all packages at once
 
+## Supported Android Versions
+
+NanoMod officially supports the following Android versions:
+
+* 5.0 (Lollipop)
+* 5.1 (Lollipop)
+* 6.0 (Marshmallow)
+* 7.0 (Nougat)
+* 7.1 (Nougat)
+
+previous versions are not officially supported (you may still report bugs, though), later versions will be, eventually.
+
 ## Support
 
 [> XDA](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928) Support Thread
