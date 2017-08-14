@@ -77,7 +77,7 @@ Creating Package
 
 	cd "${CWD}/Full"
 
-	for app in nlpBackendIchnaea nlpBackendNomiantim; do
+	for app in nlpBackendIchnaea nlpBackendNominatim; do
 		zip_add "system/app/${app}/"
 	done
 
