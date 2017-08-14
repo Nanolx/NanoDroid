@@ -520,7 +520,10 @@ nanomod_install () {
 
 	case ${perm} in
 		bin )	echo "      setting permissions: binary"
-			set_perm_bin ${destination}
+			if [ -f ${destination} ]; then
+				set_perm_bin ${destination}
+			else	set_perm_bin ${destination}$(basename ${source})
+			fi
 		;;
 		* )	case ${perm_x} in
 				dir )	echo "      setting permissions: directory"
