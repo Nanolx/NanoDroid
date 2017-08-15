@@ -11,7 +11,7 @@
      * many fixes in `nanomod-overlay` Script
      * call `nanomod-overlay --create` during installation, instead of `nanomod-overlay --update`
      * fixed that directory for **Nominatim** was accidently **Nomiantim**
-  * Full, microG packages, Framework-Patcher packages:
+  * Full, microG, Framework-Patcher packages:
      * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
   * Framework-Patcher package:
      * properly install `services.jar` into merge-pending NanoMod Magisk Modules
@@ -24,7 +24,7 @@
      * ignore `nanomod_forcesystem` when installing through Magisk Manager
      * deeper indent `nanomod_libs` output, makes recovery.log easier to read
      * print a warning message on pre-Lollipop ROMs that compatibility is not garantueed
-     * add work-in-progress support for KitKat (Android 4.4)
+     * add support for KitKat (Android 4.4)
   * Full, microG packages:
      * update swipe libraries for x86_64
      * provide separate Google Sync Adapters for LL, MM and N, install correct version
@@ -35,7 +35,7 @@
   * Framework-Patcher package:
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` setup variable
      * add `nanomod_sigspoofui` setup variable
-         * whether to add user interface into Developer Settings to enable or disable signature spoofing globally (for **non-prepatched** ROMs)
+         * whether to add toogle to Developer Settings to globally enable or disable signature spoofing
   * Uninstaller package:
      * also remove empty directories
   * Documentation:
