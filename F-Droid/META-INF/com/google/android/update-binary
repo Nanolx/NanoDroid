@@ -134,12 +134,14 @@ detect_arch () {
 
 	if [[ "${SDK_VERSION}" -lt 21 ]]; then
 		UNFOLD_APP_DIR=1
+	fi
+
+	if [[ "${SDK_VERSION}" -lt 19 ]]; then
 		ui_print " "
-		ui_print " ++ Installing on pre-Lollipop ROM, full"
+		ui_print " ++ Installing on pre-KitKat ROM, full"
 		ui_print " ++ compatibility is not garantueed!"
 		ui_print " "
 	fi
-
 }
 
 ##########################################################################################

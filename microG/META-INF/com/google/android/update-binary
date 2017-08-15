@@ -195,6 +195,7 @@ detect_arch () {
 	esac
 
 	case ${SDK_VERSION} in
+		19 )		GSYNC_VER=K	;;
 		21 | 22 )	GSYNC_VER=L	;;
 		23 )		GSYNC_VER=M	;;
 		24 | 25 )	GSYNC_VER=N	;;
@@ -203,12 +204,14 @@ detect_arch () {
 
 	if [[ "${SDK_VERSION}" -lt 21 ]]; then
 		UNFOLD_APP_DIR=1
+	fi
+
+	if [[ "${SDK_VERSION}" -lt 19 ]]; then
 		ui_print " "
-		ui_print " ++ Installing on pre-Lollipop ROM, full"
+		ui_print " ++ Installing on pre-KitKat ROM, full"
 		ui_print " ++ compatibility is not garantueed!"
 		ui_print " "
 	fi
-
 }
 
 ##########################################################################################
@@ -419,7 +422,7 @@ install_gsync () {
 	# install GSync if requested
 	if [ "${nanomod_gsync}" -eq 1 ]; then
 		if [ "${GSYNC_UNSUPPORTED}" -eq 1 ]; then
-			ui_print " << Google Sync Adapters are unsupported on pre-Lollipop ROMs"
+			ui_print " << Google Sync Adapters are unsupported on pre-KitKat ROMs"
 		else
 			ui_print " << with Google Sync (${GSYNC_VER})"
 			nanomod_install /gsync/${GSYNC_VER}/app/GoogleCalendarSync /system/app/
