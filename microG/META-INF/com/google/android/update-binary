@@ -639,7 +639,7 @@ nanomod_libs () {
 				*x86*	 ) echo "      $(basename ${apk}): installing x86 libs"    ;;
 			esac
 
-			echo "        into: ${libd}" | sed -e "s,${MODPATH},,g"
+			echo "        into: ${libd}"
 			mkdir -p ${libd}
 
 			for lib in ${srcdir}/*; do
