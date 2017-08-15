@@ -19,11 +19,15 @@
   * Full, microG, F-Droid packages:
      * fix that uninstaller information for System Mode is not correctly recorded in all cases
      * fix that permissions were not properly set on non-binary files
+  * F-Droid package:
+     * when looking for `.nanomod-setup` file `ZIPDIR` has higher priority than `/data`
 * General Changes:
   * Full, microG, F-Droid packages:
      * ignore `nanomod_forcesystem` when installing through Magisk Manager
      * deeper indent `nanomod_libs` output, makes recovery.log easier to read
      * print a warning message on pre-Lollipop ROMs that compatibility is not garantueed
+     * improve and simplify `nanomod_install` and `nanomod_libs` routines
+     * more detailed  and better indented log messages
      * add support for KitKat (Android 4.4)
   * Full, microG packages:
      * update swipe libraries for x86_64
