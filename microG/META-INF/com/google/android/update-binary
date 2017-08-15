@@ -493,97 +493,87 @@ nanomod_install () {
 	destination=${MODPATH}${2}
 	perm=$3
 
-	if [[ -d ${source} ]]; then
+	if [ -d ${source} ]; then
 		if [ "${UNFOLD_APP_DIR}" -eq 1 -a -f ${source}/*.apk ]; then
-			#KitKat Support
-			echo "    file: ${source}/*.apk > ${destination}"
+			echo "    file: ${source}.apk > ${destination}"
+
 			cp ${source}/*.apk ${destination} || \
-				error " !! failed to install ${source}/*.apk to ${destination}"
-			perm_x=file
+				error " !! failed to install ${source}.apk to ${destination}"
+
+			set_perm_data ${destination}$(basename ${source}).apk
+
+			if [ "${MODE}" = "SYSTEM" ]; then
+				echo ${destination}$(basename ${source}).apk >> /system/.nanomod-list
+			fi
 		else
 			echo "    dir: ${source} > ${destination}"
+
 			cp -r ${source} ${destination} || \
 				error " !! failed to install ${source} to ${destination}"
-			perm_x=dir
+
+			set_perm_dir ${destination}$(basename ${source})
+
+			if [ "${MODE}" = "SYSTEM" ]; then
+				find "${source}" -type f >> /system/.nanomod-list
+			fi
 		fi
-	elif [[ -f ${source} ]]; then
+	elif [ -f ${source} ]; then
 		echo "    file: ${source} > ${destination}" || \
 			error " !! failed to install ${source} to ${destination}"
+
 		cp ${source} ${destination}
+
 		if [[ -f ${destination} ]]; then
 			nanomod_substitute ${destination}
-		else	nanomod_substitute ${destination}$(basename ${source})
+		elif [[ -f ${destination}$(basename ${source}) ]]; then
+			nanomod_substitute ${destination}$(basename ${source})
 		fi
-		perm_x=file
-	else	error " !! file ${source} not found"
-	fi
 
-	case ${perm} in
-		bin )	echo "      setting permissions: binary"
-			if [ -f ${destination} ]; then
-				set_perm_bin ${destination}
-			else	set_perm_bin ${destination}$(basename ${source})
-			fi
-		;;
-		* )	case ${perm_x} in
-				dir )	echo "      setting permissions: directory"
-					set_perm_dir ${destination}$(basename ${source})
-				;;
-				file )	echo "      setting permissions: data"
-					if [ -f ${destination} ]; then
-						set_perm_data ${destination}
-					elif [ -f ${destination}$(basename ${source}).apk ]; then
-						set_perm_data ${destination}$(basename ${source}).apk
-					elif [ -f ${destination}$(basename ${source}) ]; then
-						set_perm_data ${destination}$(basename ${source})
-					else	error " !!  dafuq?"
-					fi
-				;;
-			esac
-		;;
-	esac
-
-	if [ "${MODE}" = "SYSTEM" ]; then
 		case ${perm} in
-			bin )	if [ -f ${destination} ]; then
-					echo ${destination} >> /system/.nanomod-list
-				else	echo ${destination}$(basename ${source}) >> /system/.nanomod-list
+			bin )
+				echo "      setting permissions: binary"
+				if [ -f ${destination} ]; then
+					set_perm_bin ${destination}
+				elif [ -f ${destination}$(basename ${source}) ]; then
+					set_perm_bin ${destination}$(basename ${source})
 				fi
 			;;
-			* )	case ${perm_x} in
-					dir )	find "${source}" -type f >> /system/.nanomod-list
-					;;
-					file )	if [ -f ${destination} ]; then
-							echo ${destination} >> /system/.nanomod-list
-						elif [ -f ${destination}$(basename ${source}) ]; then
-							echo ${destination}$(basename ${source}) >> /system/.nanomod-list
-						elif [ -f ${destination}$(basename ${source}).apk ]; then
-							echo ${destination}$(basename ${source}).apk >> /system/.nanomod-list
-						else	error " !! dafuq?"
-						fi
-					;;
-				esac
+			* )
+				echo "      setting permissions: data"
+				if [ -f ${destination} ]; then
+					set_perm_data ${destination}
+				elif [ -f ${destination}$(basename ${source}) ]; then
+					set_perm_data ${destination}$(basename ${source})
+				fi
 			;;
 		esac
+
+		if [ "${MODE}" = "SYSTEM" ]; then
+			if [ -f ${destination} ]; then
+				echo ${destination} >> /system/.nanomod-list
+			elif [ -f ${destination}$(basename ${source}) ]; then
+				echo ${destination}$(basename ${source}) >> /system/.nanomod-list
+			fi
+		fi
+	else	error " !! file ${source} not found"
 	fi
 }
 
 nanomod_libs () {
 	if [ "${UNFOLD_APP_DIR}" -eq 1 ]; then
-		# KitKat support
+		apk=${MODPATH}/system/${1}.apk
 		case ${ARCH} in
 			arm | x86 )      libd=/system/lib   ;;
 			arm64 | x86_64 ) libd=/system/lib64 ;;
 		esac
-		apk=${MODPATH}/system/${1}.apk
 	else
+		apk=${MODPATH}/system/${1}/*.apk
 		case ${ARCH} in
 			arm )	 libd=$(dirname ${apk})/lib/arm    ;;
 			arm64 )  libd=$(dirname ${apk})/lib/arm64  ;;
 			x86 )	 libd=$(dirname ${apk})/lib/x86    ;;
 			x86_64 ) libd=$(dirname ${apk})/lib/x86_64 ;;
 		esac
-		apk=${MODPATH}/system/${1}/*.apk
 	fi
 
 	tmpd=${TMPDIR}/nanomod-lib
@@ -595,69 +585,69 @@ nanomod_libs () {
 
 	if [ ! -f ${apk} ]; then
 		error " !! apk ${apk} not found"
-	else
-		"${INSTALLER}/system/bin/unzip.${BIN_ARCH}" \
-			-oq ${apk} "lib/*" -d "${tmpd}" \
-			2>/dev/null
-		unzip_return=$?
+	fi
 
-		if [ ${unzip_return} -eq 0 ]; then
-			echo "      $(basename ${apk}) does have libs"
-		elif [ ${unzip_return} -eq 11 ]; then
-			echo "      $(basename ${apk}) does not have any libs"
-		else	error "  !! installing libs for $(basename ${apk}) failed"
-		fi
+	"${INSTALLER}/system/bin/unzip.${BIN_ARCH}" \
+		-oq ${apk} "lib/*" -d "${tmpd}" \
+		2>/dev/null
+	unzip_return=$?
 
-		if [ -d ${tmpd}/lib ]; then
-			case ${ARCH} in
-				arm )
-					if [ -d ${tmpd}/lib/armeabi-v7a ]; then
-						srcdir=${tmpd}/lib/armeabi-v7a
-					elif [ -d ${tmpd}/lib/armeabi ]; then
-						srcdir=${tmpd}/lib/armeabi
-					fi
-				;;
-				arm64 )
-					if [ -d ${tmpd}/lib/arm64-v8a ]; then
-						srcdir=${tmpd}/lib/arm64-v8a
-					elif [ -d ${tmpd}/lib/armeabi-v7a ]; then
-						srcdir=${tmpd}/lib/armeabi-v7a
-					elif [ -d ${tmpd}/lib/armeabi ]; then
-						srcdir=${tmpd}/lib/armeabi
-					fi
-				;;
-				x86 )
-					if [ -d ${tmpd}/lib/x86 ]; then
-						srcdir=${tmpd}/lib/x86
-					fi
-				;;
-				x86_64 )
-					if [ -d ${tmpd}/lib/x86_64 ]; then
-						srcdir=${tmpd}/lib/x86_64
-					elif [ -d ${tmpd}/lib/x86 ]; then
-						srcdir=${tmpd}/lib/x86
-					fi
-				;;
+	if [ ${unzip_return} -eq 0 ]; then
+		echo "      $(basename ${apk}) does have libs"
+	elif [ ${unzip_return} -eq 11 ]; then
+		echo "      $(basename ${apk}) does not have any libs"
+	else	error "  !! installing libs for $(basename ${apk}) failed"
+	fi
+
+	if [ -d ${tmpd}/lib ]; then
+		case ${ARCH} in
+			arm )
+				if [ -d ${tmpd}/lib/armeabi-v7a ]; then
+					srcdir=${tmpd}/lib/armeabi-v7a
+				elif [ -d ${tmpd}/lib/armeabi ]; then
+					srcdir=${tmpd}/lib/armeabi
+				fi
+			;;
+			arm64 )
+				if [ -d ${tmpd}/lib/arm64-v8a ]; then
+					srcdir=${tmpd}/lib/arm64-v8a
+				elif [ -d ${tmpd}/lib/armeabi-v7a ]; then
+					srcdir=${tmpd}/lib/armeabi-v7a
+				elif [ -d ${tmpd}/lib/armeabi ]; then
+					srcdir=${tmpd}/lib/armeabi
+				fi
+			;;
+			x86 )
+				if [ -d ${tmpd}/lib/x86 ]; then
+					srcdir=${tmpd}/lib/x86
+				fi
+			;;
+			x86_64 )
+				if [ -d ${tmpd}/lib/x86_64 ]; then
+					srcdir=${tmpd}/lib/x86_64
+				elif [ -d ${tmpd}/lib/x86 ]; then
+					srcdir=${tmpd}/lib/x86
+				fi
+			;;
+		esac
+
+		if [ -d ${srcdir} ]; then
+			case ${srcdir} in
+				*arm64*  ) echo "      $(basename ${apk}): installing arm64 libs"  ;;
+				*arm*	 ) echo "      $(basename ${apk}): installing arm libs"    ;;
+				*x86_64* ) echo "      $(basename ${apk}): installing x86_64 libs" ;;
+				*x86*	 ) echo "      $(basename ${apk}): installing x86 libs"    ;;
 			esac
 
-			if [ -d ${srcdir} ]; then
-				case ${srcdir} in
-					*arm64*  ) echo "      $(basename ${apk}): installing arm64 libs"  ;;
-					*arm*	 ) echo "      $(basename ${apk}): installing arm libs"    ;;
-					*x86_64* ) echo "      $(basename ${apk}): installing x86_64 libs" ;;
-					*x86*	 ) echo "      $(basename ${apk}): installing x86 libs"    ;;
-				esac
+			mkdir -p ${libd}
 
-				mkdir -p ${libd}
-
-				for lib in ${srcdir}/*; do
-					cp ${lib} ${libd}/
-					set_perm_data ${libd}/$(basename ${lib})
-					if [ "${MODE}" = "SYSTEM" ]; then
-						echo ${libd}/$(basename ${lib}) >> /system/.nanomod-list
-					fi
-				done
-			fi
+			for lib in ${srcdir}/*; do
+				cp ${lib} ${libd}/
+				set_perm_data ${libd}/$(basename ${lib})
+				if [ "${MODE}" = "SYSTEM" ]; then
+					echo ${libd}/$(basename ${lib}) >> /system/.nanomod-list
+				fi
+			done
 		fi
 	fi
 }
