@@ -40,6 +40,8 @@
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` setup variable
      * add `nanomod_sigspoofui` setup variable
          * whether to add toogle to Developer Settings to globally enable or disable signature spoofing
+  * Setup Wizard:
+     * verbose output
   * Uninstaller package:
      * also remove empty directories
   * Documentation:
