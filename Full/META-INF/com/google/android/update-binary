@@ -106,7 +106,7 @@ error () {
 ##########################################################################################
 
 # check for configuration files
-config_locations="/sdcard /external_sd /persist $(dirname ${ZIP})) /data"
+config_locations="/sdcard /external_sd /persist ${ZIPDIR} /data"
 
 get_config () {
 	config=""
@@ -639,10 +639,10 @@ nanomod_libs () {
 	else
 		apk=${MODPATH}/system/${1}/*.apk
 		case ${ARCH} in
-			arm )	 libd=$(dirname ${apk})/lib/arm    ;;
-			arm64 )  libd=$(dirname ${apk})/lib/arm64  ;;
-			x86 )	 libd=$(dirname ${apk})/lib/x86    ;;
-			x86_64 ) libd=$(dirname ${apk})/lib/x86_64 ;;
+			arm )	 libd=${MODPATH}/system/${1}/lib/arm    ;;
+			arm64 )  libd=${MODPATH}/system/${1}/lib/arm64  ;;
+			x86 )	 libd=${MODPATH}/system/${1}/lib/x86    ;;
+			x86_64 ) libd=${MODPATH}/system/${1}/lib/x86_64 ;;
 		esac
 	fi
 
@@ -709,6 +709,7 @@ nanomod_libs () {
 				*x86*	 ) echo "      $(basename ${apk}): installing x86 libs"    ;;
 			esac
 
+			echo "        into: ${libd}" | sed -e "s,${MODPATH},,g"
 			mkdir -p ${libd}
 
 			for lib in ${srcdir}/*; do
