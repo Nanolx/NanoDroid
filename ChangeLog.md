@@ -41,6 +41,8 @@
      * add `nanomod_sigspoofui` setup variable
          * whether to add toogle to Developer Settings to globally enable or disable signature spoofing
      * `/system/.nanomod-patcher` file now includes ROM info
+         * will compare `ro.build.flavor` and `ro.build.id` to decide whether to stop or continue
+     * include vendor libraries in adjusted `LD_LIBRARY_PATH`
   * Setup Wizard:
      * verbose output
   * Uninstaller package:
