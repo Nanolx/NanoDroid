@@ -40,6 +40,7 @@
      * check for `.nanomod-setup` and respect `nanomod_forcesystem` setup variable
      * add `nanomod_sigspoofui` setup variable
          * whether to add toogle to Developer Settings to globally enable or disable signature spoofing
+     * `/system/.nanomod-patcher` file now includes ROM info
   * Setup Wizard:
      * verbose output
   * Uninstaller package:
