@@ -253,7 +253,7 @@ magisk_install_dirs () {
 	rm -rf $MODPATH 2>/dev/null
 	mkdir -p $MODPATH
 	mkdir $MODPATH/system
-	for dir in app etc priv-app bin; do
+	for dir in app etc priv-app xbin; do
 		mkdir $MODPATH/system/$dir
 	done
 }
@@ -347,8 +347,8 @@ magisk_install_postinst () {
 		if [ "${NO_NANOMODOVERLAY}" -eq 1 ]; then
 			cp "${nanomodoverlay}" /data/.nanomod-overlay
 		fi
-		${MODPATH}/system/bin/bash \
-			${MODPATH}/system/bin/nanomod-overlay --create
+		${MODPATH}/system/xbin/bash \
+			${MODPATH}/system/xbin/nanomod-overlay --create
 		if [ "${NO_NANOMODOVERLAY}" -eq 1 ]; then
 			rm /data/.nanomod-overlay
 		fi
@@ -518,7 +518,7 @@ install_misc () {
 	nanomod_install /system/share /system/
 
 	for binary in bash less nano nano.bin nanomod-overlay; do
-		nanomod_install /system/bin/${binary} /system/bin/ bin
+		nanomod_install /system/xbin/${binary} /system/xbin/ bin
 	done
 
 	ui_print " << Shell Utilities (util-linux, bsdmainutils, less)"
@@ -526,7 +526,7 @@ install_misc () {
 	for binary in aapt bash.bin bashbug col colcrt colrm column findfs findmnt \
 		hexdump less.bin lessecho lesskey look lsblk lscpu lsipc lslocks \
 		lsns ncal setterm unzip whereis; do
-		nanomod_install /system/bin/${binary}.${BIN_ARCH} /system/bin/${binary} bin
+		nanomod_install /system/xbin/${binary}.${BIN_ARCH} /system/xbin/${binary} bin
 	done
 
 	if [ "${nanomod_init}" -eq 1 ]; then
@@ -660,7 +660,7 @@ nanomod_libs () {
 		error " !! apk ${apk} not found"
 	fi
 
-	"${INSTALLER}/system/bin/unzip.${BIN_ARCH}" \
+	"${INSTALLER}/system/xbin/unzip.${BIN_ARCH}" \
 		-oq ${apk} "lib/*" -d "${tmpd}" \
 		2>/dev/null
 	unzip_return=$?
@@ -875,7 +875,7 @@ fi
 
 # When installing in Magisk mode we are forced to use our own unzip
 # for nanomod_libs() to work, use it in System mode aswell.
-chmod +x "${INSTALLER}/system/bin/unzip.${BIN_ARCH}"
+chmod +x "${INSTALLER}/system/xbin/unzip.${BIN_ARCH}"
 
 install_microg
 install_mapsv1
