@@ -178,6 +178,29 @@ store_info () {
 	done
 }
 
+compare_info () {
+	for prop in ro.build.flavor ro.build.id ro.build.version.release; do
+		sys_prop=$(grep "${prop}=" /system/build.prop)
+		nano_prop=$(grep "${prop}=" /system/.nanomod-patcher)
+		if [ "${sys_prop}" = "${nano_prop}" ]; then
+			info_result=${info_result}1
+		else	info_result=${info_result}0
+		fi
+	done
+
+	if [ "${info_result}" = "111" ]; then
+		ui_print " ++ /system/.nanomod-patcher exists"
+		ui_print " ++ assuming ROM is already patched"
+		ui_print " "
+		exit 0
+	else
+		ui_print " ++ /system/.nanomod-patcher exists"
+		ui_print " ++ but ROM info changed, assuming"
+		ui_print " ++ ROM update or change, continuing"
+		ui_print " "
+	fi
+}
+
 detect_dalvik () {
 	if [[ ! -f /system/bin/dalvikvm ]]; then
 		error "!! /system/bin/dalvikvm does not exist"
@@ -426,10 +449,7 @@ else
 fi
 
 if [ -f /system/.nanomod-patcher ]; then
-	ui_print " ++ /system/.nanomod-patcher exists"
-	ui_print " ++ assuming ROM is already patched"
-	ui_print " "
-	exit 0
+	compare_info
 fi
 
 detect_sdk
