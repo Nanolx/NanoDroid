@@ -171,6 +171,13 @@ detect_odex () {
 	fi
 }
 
+store_info () {
+	rm -f ${SYSPATH}/.nanomod-patcher
+	for prop in ro.build.flavor ro.build.id ro.build.version.release; do
+		grep "${prop}=" /system/build.prop >> ${SYSPATH}/.nanomod-patcher
+	done
+}
+
 detect_dalvik () {
 	if [[ ! -f /system/bin/dalvikvm ]]; then
 		error "!! /system/bin/dalvikvm does not exist"
@@ -348,7 +355,7 @@ install_services () {
 	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
 		mkdir -p "${install_path}/priv-app/Settings"
 		cp ${TMPDIR}/Settings.apk "${install_path}/priv-app/Settings" \
-		|| error " !! failed to install Settings.apk"
+			|| error " !! failed to install Settings.apk"
 	fi
 
 	if [ "${install_path}" = "${SYSPATH}" ]; then
@@ -357,11 +364,11 @@ install_services () {
 
 		if [ "${nanomod_sigspoofui}" -eq 1 ]; then
 			echo /system/priv-app/Settings/Settings.apk >> \
-			${SYSPATH}/.nanomod-list
+				${SYSPATH}/.nanomod-list
 		fi
 	fi
 
-	touch ${SYSPATH}/.nanomod-patcher
+	store_info
 }
 
 magisk_cleanup () {
