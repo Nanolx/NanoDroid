@@ -190,13 +190,13 @@ compare_info () {
 
 	if [ "${info_result}" = "111" ]; then
 		ui_print " ++ /system/.nanomod-patcher exists"
-		ui_print " ++ assuming ROM is already patched"
+		ui_print " ++ and ROM info matches, exiting"
 		ui_print " "
 		exit 0
 	else
 		ui_print " ++ /system/.nanomod-patcher exists"
 		ui_print " ++ but ROM info changed, assuming"
-		ui_print " ++ ROM update or change, continuing"
+		ui_print " ++ ROM update/change, continuing"
 		ui_print " "
 	fi
 }
