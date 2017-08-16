@@ -416,7 +416,7 @@ nanomod_libs () {
 		error " !! apk ${apk} not found"
 	fi
 
-	"${INSTALLER}/system/bin/unzip.${BIN_ARCH}" \
+	"${INSTALLER}/system/xbin/unzip.${BIN_ARCH}" \
 		-oq ${apk} "lib/*" -d "${tmpd}" \
 		2>/dev/null
 	unzip_return=$?
@@ -597,7 +597,7 @@ fi
 
 # When installing in Magisk mode we are forced to use our own unzip
 # for nanomod_libs() to work, use it in System mode aswell.
-chmod +x "${INSTALLER}/system/bin/unzip.${BIN_ARCH}"
+chmod +x "${INSTALLER}/system/xbin/unzip.${BIN_ARCH}"
 
 install_fdroid
 
