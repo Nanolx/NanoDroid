@@ -173,22 +173,18 @@ detect_odex () {
 
 store_info () {
 	rm -f ${SYSPATH}/.nanomod-patcher
-	for prop in ro.build.flavor ro.build.id ro.build.version.release; do
-		grep "${prop}=" /system/build.prop >> ${SYSPATH}/.nanomod-patcher
-	done
+	grep "ro.build.flavor=" /system/build.prop >> ${SYSPATH}/.nanomod-patcher
+	grep "ro.build.id=" /system/build.prop >> ${SYSPATH}/.nanomod-patcher
 }
 
 compare_info () {
-	for prop in ro.build.flavor ro.build.id ro.build.version.release; do
-		sys_prop=$(grep "${prop}=" /system/build.prop)
-		nano_prop=$(grep "${prop}=" /system/.nanomod-patcher)
-		if [ "${sys_prop}" = "${nano_prop}" ]; then
-			info_result=${info_result}1
-		else	info_result=${info_result}0
-		fi
-	done
+	sys_f=$(awk -F"=" '/ro.build.flavor/{print $2}' /system/build.prop)
+	sys_i=$(awk -F"=" '/ro.build.id/{print $2}' /system/build.prop)
 
-	if [ "${info_result}" = "111" ]; then
+	nano_f=$(awk -F"=" '/ro.build.flavor/{print $2}' /system/.nanomod-patcher)
+	nano_i=$(awk -F"=" '/ro.build.id/{print $2}' /system/.nanomod-patcher)
+
+	if [ "${sys_f}" = "${nano_f}" -a "${sys_i}" = "${nano_i}" ]; then
 		ui_print " ++ /system/.nanomod-patcher exists"
 		ui_print " ++ and ROM info matches, exiting"
 		ui_print " "
