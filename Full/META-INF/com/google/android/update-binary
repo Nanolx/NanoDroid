@@ -369,6 +369,7 @@ magisk_install_finish () {
 	mktouch $MODPATH/auto_mount
 	cp -af $INSTALLER/module.prop $MODPATH/module.prop
 	cp -af $INSTALLER/common/service.sh $MODPATH/service.sh
+	chmod +x $MODPATH/service.sh
 
 	if $BOOTMODE; then
 		# Update info for Magisk Manager
@@ -533,7 +534,7 @@ install_misc () {
 		ui_print " << with init scripts"
 		mkdir -p ${MODPATH}/${INIT_BASE}
 		for init in fstrim logscleaner sqlite external_sd permissions; do
-			nanomod_install /system/etc/init.d/${init} ${INIT_BASE}/
+			nanomod_install /system/etc/init.d/${init} ${INIT_BASE}/${init} bin
 		done
 	else	ui_print " << without init scripts"
 	fi
