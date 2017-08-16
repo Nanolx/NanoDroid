@@ -162,10 +162,10 @@ if [ -f /system/.nanomod-list ]; then
 
 	# remove empty directories
 	# (find -empty not available on Android)
-	find /system/app -type d | \
-		xargs rmdir --ignore-fail-on-non-empty
-	find /system/priv-app -type d | \
-		xargs rmdir --ignore-fail-on-non-empty
+	for dir in app priv-app share; do
+		find /system/${dir} -type d | \
+			xargs rmdir --ignore-fail-on-non-empty
+	done
 
 	rm -f /system/.nanomod-list
 fi

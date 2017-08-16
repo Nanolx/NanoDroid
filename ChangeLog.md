@@ -44,9 +44,12 @@
          * will compare `ro.build.flavor` and `ro.build.id` to decide whether to stop or continue
      * include vendor libraries in adjusted `LD_LIBRARY_PATH`
   * Setup Wizard:
-     * verbose output
+     * verbose output during setup file creation
   * Uninstaller package:
-     * also remove empty directories
+     * remove empty directories from
+         * /system/app
+         * /system/priv-app
+         * /system/share
   * Documentation:
      * add various additional links
      * fully document `nanomod-overlay` script
