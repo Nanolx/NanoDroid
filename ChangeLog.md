@@ -10,7 +10,8 @@
      * fix pseudo-debloat feature not enabled when installing from Magisk Manager
      * many fixes in `nanomod-overlay` Script
      * call `nanomod-overlay --create` during installation, instead of `nanomod-overlay --update`
-     * fixed that directory for **Nominatim** was accidently **Nomiantim**
+     * fixed that directory for nlpBackendNomi**na**tim was nlpBackendNomi**an**tim
+     * install binaries in `/system/xbin`, not `/system/bin`
   * Full, microG, Framework-Patcher packages:
      * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
   * Framework-Patcher package:
@@ -21,6 +22,8 @@
      * fix that permissions were not properly set on non-binary files
   * F-Droid package:
      * when looking for `.nanomod-setup` file `ZIPDIR` has higher priority than `/data`
+  * Full package:
+     * fixup init scripts installation
 * General Changes:
   * Full, microG, F-Droid packages:
      * ignore `nanomod_forcesystem` when installing through Magisk Manager
