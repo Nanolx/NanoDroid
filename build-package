@@ -86,8 +86,8 @@ Creating Package
 		zip_add "system/priv-app/${app}/"
 	done
 
-	for input in "system/bin/nanomod-overlay" "system/bin/bash*" "system/bin/aapt*" \
-		"system/bin/column*" "system/bin/unzip*" "system/framework/" "gsync/" \
+	for input in "system/xbin/nanomod-overlay" "system/xbin/bash*" "system/xbin/aapt*" \
+		"system/xbin/column*" "system/xbin/unzip*" "system/framework/" "gsync/" \
 		"system/etc/permissions/" "system/etc/bash*" "system/share/" "swipe/"; do
 		zip_add "${input}"
 	done
@@ -126,7 +126,7 @@ Creating Package
 	cd "${CWD}/Full"
 	zip_add "system/app/FDroid/"
 	zip_add "system/priv-app/FDroidPrivileged/"
-	zip_add "system/bin/unzip*"
+	zip_add "system/xbin/unzip*"
 	cd "${CWD}"
 
 	cd "${CWD}/F-Droid"
