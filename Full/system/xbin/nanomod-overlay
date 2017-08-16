@@ -1,4 +1,4 @@
-#!@MODPATH@/system/bin/bash
+#!@MODPATH@/system/xbin/bash
 
 export NO_MAGISK=0
 export NO_CONFIG=0
