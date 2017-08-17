@@ -72,9 +72,10 @@ NanoMod includes
 * custom init scripts
 * pseudo-debloat feature (Magisk-only)
   * disables applications systemless-ly
-  * pre-configured default settings
+  * pre-configured [> default settings](doc/PseudoDebloat.md)
 * several Open Source applications
   * include replacements for the pseudo-debloated applications
+  * full list of [> included applications](doc/Applications.md)
 * additional components
   * GNU Bash shell
   * GNU Nano terminal editor
