@@ -24,16 +24,23 @@
 
 NanoMod officially supports the following Android versions:
 
-* 4.4 (KitKat)
-* 5.0 (Lollipop)
-* 5.1 (Lollipop)
-* 6.0 (Marshmallow)
-* 7.0 (Nougat)
-* 7.1 (Nougat)
+* 4.4 / SDK 19 (KitKat)
+* 5.0 / SDK 21 (Lollipop)
+* 5.1 / SDK 22 (Lollipop)
+* 6.0 / SDK 23 (Marshmallow)
+* 7.0 / SDK 24 (Nougat)
+* 7.1 / SDK 25 (Nougat)
 
 earlier versions will never officially be supported (you may still report bugs, though).
 
 Future versions will be officially supported, eventually.
+
+## Important Notes
+
+NanoMod is currently incompatible with Magisk 13.5/13.6 beta versions. Possible workarounds:
+
+* stay at Magisk 13.3
+* install in System Mode
 
 ## Support
 
@@ -76,7 +83,7 @@ NanoMod includes
 
 ### Modules
 
-Module packages, flashing through TWRP recommended, though flashing through Magisk Manager likely works aswell.
+Module packages, flashing through TWRP recommended, though flashing through Magisk Manager works aswell.
 
 * **NanoMod**: includes
   * everything mentioned in the Summary
