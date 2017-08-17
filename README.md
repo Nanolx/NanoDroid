@@ -25,6 +25,7 @@
 NanoMod officially supports the following Android versions:
 
 * 4.4 / SDK 19 (KitKat)
+  * System Mode only (Magisk does not support KitKat)
 * 5.0 / SDK 21 (Lollipop)
 * 5.1 / SDK 22 (Lollipop)
 * 6.0 / SDK 23 (Marshmallow)
