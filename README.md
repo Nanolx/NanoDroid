@@ -179,10 +179,12 @@ or you can use **Kernel Adiutor's** init.d emulation.
 
 #### Shell Utilities
 
-Several utilities from `bsdmainutils` and `util-linux` are included:
+Several utilities from `bsdmainutils` and `util-linux`
 
 * [> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils)
 * [> util-linux GitHub](https://github.com/karelzak/util-linux)
+
+are included:
 
 * col
 * colcrt
@@ -285,11 +287,11 @@ Full [> Details](doc/AlterInstallation.md) on altering installation manually, or
 For **microG** to work, your ROM needs to have signature spoofing enabled (or a **deodexed** ROM to patch yourself).
 
 If your ROM does **not** have signature spoofing support, you can manually patch it using either
-  * the on-device framework-patcher zip (needs a full ROM start first, as it requires dalvik-cache to be in place)
-  * the `framework-patcher` script (found in the github repository)
-     * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified **services.jar** on the device.
+  * the on-device Patcher zip (needs a full ROM start first, as it requires dalvik-cache to be in place)
+  * the `framework-patcher` script (found in the git repository)
+     * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified `services.jar` on the device.
 
-Both patchers support installing the patched services.jar into the following locations
+Both patchers support installing the patched `services.jar` into the following locations:
   * NanoMod Magisk Module
   * NanoMod-microG Magisk Module
   * directly into `/system`
@@ -301,11 +303,11 @@ So you can use them regardless whether you're using NanoMod or not.
 Once your ROM supports signature spoofing, you need to setup microG like this
   * go into **microG settings** and set up everything like:
      * check results in **Self-Check**, grant missing permissions (by tapping on them)
-         * especially the 'Battery Optimization' item
+         * especially the **Battery Optimization** item
      * enable **Google device registration**
      * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
      * enable **Google SafetyNet** (required for applications that utilize SafetyNet, for example Pokémon GO, ...)
-         * menu > set to use the official servers
+         * '...' menu > set to use the **Official Server**
      * in **UnifiedNlp Settings** choose
          * **Mozilla Location Backend** as Geolocation backend
          * **Nominatim** as Address lockup backend
@@ -334,12 +336,11 @@ Special Thanks to the beta testers
 
 List of known issues
 
-* microG DroidGuard Helper or Play Store crashing
-  * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper or Play Store from properly working when magic-mounted as `/system` application, see Magisk Issue 155 [> GitHub](https://github.com/topjohnwu/Magisk/issues/155)
+* microG DroidGuard Helper crashing
+  * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper from properly working when magic-mounted as `/system` application, see Magisk Issue 155 [> GitHub](https://github.com/topjohnwu/Magisk/issues/155)
   * this does not happen on all devices
-  * if you are affected of this issue, instead install them as an user app, by installing the apk from
-     * `/system/priv-app/DroidGuard/DroidGuard.apk` for microG DroidGuard Helper
-     * `/system/priv-app/Phonesky/Phonesky.apk` for Play Store
+  * if you are affected of this issue, instead install it as an user app, using the apk from
+     * `/system/priv-app/DroidGuard/DroidGuard.apk`
 * SafetyNet check fails with `can't connect to Google API`
   * see `microG DroidGuard Helper or Play Store crashing` above and install microG DroidGuard Helper as user application
 * SafetyNet check fails with `Google Play Services not available`
