@@ -342,7 +342,7 @@ List of known issues
   * if you are affected of this issue, instead install it as an user app, using the apk from
      * `/system/priv-app/DroidGuard/DroidGuard.apk`
 * SafetyNet check fails with `can't connect to Google API`
-  * see `microG DroidGuard Helper or Play Store crashing` above and install microG DroidGuard Helper as user application
+  * see `microG DroidGuard Helper crashing` above and install microG DroidGuard Helper as user application
 * SafetyNet check fails with `Google Play Services not available`
   * you did not setup microG (or did not reboot afterwards)
 * Play Store lacks fake signature spoofing permission
