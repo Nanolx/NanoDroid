@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 13.0 in-dev
+## 13.0.20170817
 * Bug fixes
   * Full, microG, F-Droid, Framework-Patcher packages:
      * use `/dev/tmp` instead of `/tmp`, fixes several bugs when installing from Magisk Manager
