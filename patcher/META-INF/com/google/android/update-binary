@@ -171,32 +171,6 @@ detect_odex () {
 	fi
 }
 
-store_info () {
-	rm -f ${SYSPATH}/.nanomod-patcher
-	grep "ro.build.flavor=" /system/build.prop >> ${SYSPATH}/.nanomod-patcher
-	grep "ro.build.id=" /system/build.prop >> ${SYSPATH}/.nanomod-patcher
-}
-
-compare_info () {
-	sys_f=$(awk -F"=" '/ro.build.flavor/{print $2}' /system/build.prop)
-	sys_i=$(awk -F"=" '/ro.build.id/{print $2}' /system/build.prop)
-
-	nano_f=$(awk -F"=" '/ro.build.flavor/{print $2}' /system/.nanomod-patcher)
-	nano_i=$(awk -F"=" '/ro.build.id/{print $2}' /system/.nanomod-patcher)
-
-	if [ "${sys_f}" = "${nano_f}" -a "${sys_i}" = "${nano_i}" ]; then
-		ui_print " ++ /system/.nanomod-patcher exists"
-		ui_print " ++ and ROM info matches, exiting"
-		ui_print " "
-		exit 0
-	else
-		ui_print " ++ /system/.nanomod-patcher exists"
-		ui_print " ++ but ROM info changed, assuming"
-		ui_print " ++ ROM update/change, continuing"
-		ui_print " "
-	fi
-}
-
 detect_dalvik () {
 	if [[ ! -f /system/bin/dalvikvm ]]; then
 		error "!! /system/bin/dalvikvm does not exist"
@@ -387,7 +361,7 @@ install_services () {
 		fi
 	fi
 
-	store_info
+	touch ${SYSPATH}/.nanomod-patcher
 }
 
 magisk_cleanup () {
@@ -445,7 +419,9 @@ else
 fi
 
 if [ -f /system/.nanomod-patcher ]; then
-	compare_info
+	ui_print " ++ /system/.nanomod-patcher exists, exiting"
+	ui_print " "
+	exit 0
 fi
 
 detect_sdk
