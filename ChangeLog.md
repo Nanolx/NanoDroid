@@ -47,7 +47,7 @@
   * Setup Wizard:
      * verbose output during setup file creation
   * Uninstaller package:
-     * remove empty directories from
+     * [System Mode] remove empty directories from:
          * /system/app
          * /system/priv-app
          * /system/share
