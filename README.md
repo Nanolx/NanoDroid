@@ -79,6 +79,7 @@ NanoMod includes
 * additional components
   * GNU Bash shell
   * GNU Nano terminal editor
+  * several utilities from `util-linux`, `bsdmainutils` and more
 * The Legend of Zelda ringtones and sounds
 
 ## Packages
