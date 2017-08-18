@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 13.1 in-dev
+* Bug Fixes
+  * F-Droid package:
+     * Fix installation issue in `nanomod_libs`
+* Updates
+  * Play Store (8.1.31.S)
+
 ## 13.0.20170817
 * Bug fixes
   * Full, microG, F-Droid, Framework-Patcher packages:
