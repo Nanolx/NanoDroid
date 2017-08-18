@@ -49,7 +49,7 @@ location_prop="${aromapath}/location.prop"
 
 ui_print " "
 ui_print "******************************"
-ui_print "     NanoMod 13.0.20170817    "
+ui_print "     NanoMod 13.1.99999999    "
 ui_print "      created by @Nanolx      "
 ui_print "         Setup Wizard         "
 ui_print "******************************"
