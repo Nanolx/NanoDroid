@@ -4,6 +4,11 @@
 * Bug Fixes
   * F-Droid package:
      * Fix installation issue in `nanomod_libs`
+* General Changes:
+  * on-pc Framework-Patcher script:
+     * exit if not in TWRP immediately, not late in process
+     * add `--gui` parameter to patch Signature Spoofing toggle in UI
+     * clean-up previously patched files on start (if any)
 * Updates
   * Play Store (8.1.31.S)
 

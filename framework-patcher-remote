@@ -76,12 +76,6 @@ umount_magisk () {
 	rm /tmp/loopdevice
 }
 
-echo ""
-
-if [[ ! -d /twres ]]; then
-	echo "Not running in TWRP, exiting"
-	exit 1
-fi
 
 if [[ -f /data/magisk.img ]]; then
 	grow_magisk_img
@@ -99,25 +93,29 @@ install_path=""
 
 if [[ -d /magisk/NanoMod ]]; then
 	echo "NanoMod detected"
-	install_path="/magisk/NanoMod/system/framework"
+	install_path="/magisk/NanoMod/system"
 	mkdir -p "${install_path}"
 elif [[ -d /magisk/NanoModmicroG ]]; then
 	echo "NanoMod microG detected"
-	install_path="/magisk/NanoModmicroG/system/framework"
+	install_path="/magisk/NanoModmicroG/system"
 	mkdir -p "${install_path}"
 else
 	echo "backing up services.jar to /sdcard"
 	cp /tmp/services.jar /sdcard
 
 	echo "using ROM as destination"
-	install_path="/system/framework"
+	install_path="/system"
 
 	echo /system/framework/services.jar >> \
 		/system/.nanomod-list
 fi
 
 echo "install to \"${install_path}\""
-cp /tmp/services.jar "${install_path}/" || exit 1
+cp /tmp/services.jar "${install_path}/framework" || exit 1
+
+if [[ -f /tmp/Settings.apk ]]; then
+	cp /tmp/Settings.apk "${install_path}/priv-app/Settings/Settings.apk" || exit 1
+fi
 
 touch /system/.nanomod-patcher
 
