@@ -142,6 +142,13 @@ detect_arch () {
 		ui_print " ++ compatibility is not garantueed!"
 		ui_print " "
 	fi
+
+	case ${ARCH} in
+		arm )		BIN_ARCH="arm"	;;
+		arm64 )		BIN_ARCH="arm"	;;
+		x86 )		BIN_ARCH="x86"	;;
+		x86_64 )	BIN_ARCH="x86"	;;
+	esac
 }
 
 ##########################################################################################
@@ -417,8 +424,7 @@ nanomod_libs () {
 	fi
 
 	"${INSTALLER}/system/xbin/unzip.${BIN_ARCH}" \
-		-oq ${apk} "lib/*" -d "${tmpd}" \
-		2>/dev/null
+		-oq ${apk} "lib/*" -d "${tmpd}"
 	unzip_return=$?
 
 	if [ ${unzip_return} -eq 0 ]; then
