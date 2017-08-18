@@ -308,8 +308,6 @@ patch_services_ui () {
 	ui_print " "
 	ui_print " > patching signature spoofing user interface"
 	ui_print " "
-	ui_print " << this might take a few minutes!"
-	ui_print " "
 
 	ui_print " >> [1/2] applying ui patch (services.jar)"
 	apply_patch ${BASEDIR}/services.jar-hook-core-ui \
@@ -445,11 +443,11 @@ else
 	SYSPATH=/dev/magisk/mirror/system
 fi
 
-#if [ -f /system/.nanomod-patcher ]; then
-#	ui_print " ++ /system/.nanomod-patcher exists, exiting"
-#	ui_print " "
-#	exit 0
-#fi
+if [ -f /system/.nanomod-patcher ]; then
+	ui_print " ++ /system/.nanomod-patcher exists, exiting"
+	ui_print " "
+	exit 0
+fi
 
 detect_sdk
 detect_odex
