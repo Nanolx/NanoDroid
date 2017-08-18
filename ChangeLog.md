@@ -17,7 +17,7 @@
      * fix pseudo-debloat feature not enabled when installing from Magisk Manager
      * many fixes in `nanomod-overlay` Script
      * call `nanomod-overlay --create` during installation, instead of `nanomod-overlay --update`
-     * fixed that directory for nlpBackendNomi**na**tim was nlpBackendNomi**an**tim
+     * fixed that directory for nlpBackendNominatim was nlpBackendNomiantim
      * install binaries in `/system/xbin`, not `/system/bin`
   * Full, microG, Framework-Patcher packages:
      * fix `/system/.nanomod-patcher` handling when installing from Magisk Manager
@@ -89,7 +89,7 @@
   * Full, microG packages:
      * merge all nanomod-overlay sub-scripts into the main script
   * SetupWizard:
-     * print Yet Another Message™ that the SetupWizard is *only* the SetupWizard
+     * print Yet Another Message(tm) that the SetupWizard is *only* the SetupWizard
   * on-pc framework-patcher:
      * update hook patch name to reflect Haystack update
      * if Haystack repo is already downloaded, update it, instead of re-cloning it
