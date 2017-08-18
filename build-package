@@ -282,6 +282,22 @@ update_gsync () {
 	done
 }
 
+dalvikize_jar () {
+	if [[ -f ${1} ]]; then
+		${ANDROID_HOME}/build-tools/26.0.1/dx \
+			--dex \
+			--output="$(basename "${1}" .jar).dex" \
+			"${1}"
+
+		${ANDROID_HOME}/build-tools/26.0.1/aapt \
+			add \
+			"$(basename "${1}" .jar)-dalvik.jar" \
+			"$(basename "${1}" .jar).dex"
+	fi
+
+	exit 0
+}
+
 show_help () {
 	echo -e "
 ** NanoMod ${VERSION} helper script **
@@ -327,6 +343,7 @@ for opt in ${@}; do
 				progress $! ;;
 		gsync )		update_gsync &
 				progress $! ;;
+		dalvik )	dalvikize_jar "${2}" ;;
 		all )
 			create_full_package &
 			progress $!

@@ -5,6 +5,14 @@
   * F-Droid package:
      * Fix installation issue in `nanomod_libs`
 * General Changes:
+  * Framework-Patcher package:
+     * update `dexpatcher` to 1.3.0
+     * remove unused dexpatcher.jar file
+     * run `dexpatcher` using up to 4 CPU cores (if available)
+     * no longer requires booting into ROM before patching
+     * more reliably catch `dexpatcher` errors
+     * do all `dexpatcher` operations in `BASEDIR`, not `TMPDIR`
+     * clean-up environment (ensures patching more than once per session creates proper result)
   * on-pc Framework-Patcher script:
      * exit if not in TWRP immediately, not late in process
      * add `--gui` parameter to patch Signature Spoofing toggle in UI

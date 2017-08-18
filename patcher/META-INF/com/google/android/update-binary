@@ -11,8 +11,12 @@ $BOOTMODE || ps -A 2>/dev/null | grep zygote | grep -v grep >/dev/null && BOOTMO
 TMPDIR=/dev/tmp
 
 BASEDIR="${TMPDIR}/dexpatcher"
+ANDROID_DATA="${BASEDIR}"
 PATH="$PATH:/system/bin:/system/xbin"
 PATCH_CORE="core_services.jar.dex"
+
+rm -rf "${BASEDIR}/services*"
+rm -rf "${BASEDIR}/Settings*"
 
 readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
 if [ "$?" -eq "0" ]; then
@@ -160,8 +164,13 @@ detect_sdk () {
 		PATCH_UI_SETTINGS="ui_7.x_Settings.apk.dex"
 	fi
 
+	n_cpus=$(nproc)
+	if [ "${n_cpus}" -gt 4 ]; then
+		n_cpus=4
+	fi
+
 	if [ "${SDK_VERSION}" -gt 21 ]; then
-		DEX_OPTS="--multi-dex"
+		DEX_OPTS="--multi-dex-threaded --multi-dex-jobs ${n_cpus}"
 	fi
 }
 
@@ -215,17 +224,37 @@ mount_image() {
 	fi
 }
 
+dalvik_cache () {
+	ui_print " "
+	ui_print " > creating dalvik-cache"
+	ui_print " "
+	ui_print " << this might take a bit!"
+
+	# XXX do we really need all?
+	for jar in /system/framework/*.jar ; do
+		BOOTCLASSES=${BOOTCLASSES}:${jar}
+	done
+
+	LD_LIBRARY_PATH="${DP_LD}" \
+		/system/bin/dalvikvm \
+			-Xbootclasspath:"${BOOTCLASSES}"
+}
+
 apply_patch () {
 	if [ "${SDK_VERSION}" -gt 21 ]; then
 		mkdir -p "${1}"
 	fi
 
 	LD_LIBRARY_PATH="${DP_LD}" \
-		/system/bin/dalvikvm -cp "${BASEDIR}/dexpatcher.dex" \
+		/system/bin/dalvikvm \
+			-Xbootclasspath:"${BOOTCLASSES}" \
+			-classpath "${BASEDIR}/dexpatcher.dex" \
 			lanchon.dexpatcher.Main \
-			"${DEX_OPTS}" --api-level "${SDK_VERSION}" \
+			${DEX_OPTS} --api-level "${SDK_VERSION}" \
 			--verbose --output "${1}" "${2}" "${3}" || \
 				error "${4}"
+
+	[ ! -f "${1}/classes.dex" ] && error "${4}"
 
 	LD_LIBRARY_PATH="${DP_LD}" \
 		${ZIPB} -d "${2}" 'classes*.dex' || \
@@ -252,22 +281,20 @@ patch_services () {
 	ui_print " "
 	ui_print " > patching signature spoofing support"
 	ui_print " "
-	ui_print " << this might take a few minutes!"
-	ui_print " "
 
 	cp /system/framework/services.jar \
-		${TMPDIR}/services.jar || \
+		${BASEDIR}/services.jar || \
 		error " !! failed to copy services.jar"
 
 	ui_print " >> [1/2] applying hook patch (services.jar)"
-	apply_patch ${TMPDIR}/services.jar-hook \
-		${TMPDIR}/services.jar \
+	apply_patch ${BASEDIR}/services.jar-hook \
+		${BASEDIR}/services.jar \
 		"${BASEDIR}/${PATCH_HOOK}" \
 		" !! failed to apply ${PATCH_HOOK}"
 
 	ui_print " >> [2/2] applying core patch (services.jar)"
-	apply_patch ${TMPDIR}/services.jar-hook-core \
-		${TMPDIR}/services.jar \
+	apply_patch ${BASEDIR}/services.jar-hook-core \
+		${BASEDIR}/services.jar \
 		"${BASEDIR}/${PATCH_CORE}" \
 		" !! failed to apply ${PATCH_CORE}"
 
@@ -275,7 +302,7 @@ patch_services () {
 
 patch_services_ui () {
 	cp /system/priv-app/Settings/Settings.apk \
-		${TMPDIR}/Settings.apk || \
+		${BASEDIR}/Settings.apk || \
 		error " !! failed to copy Settings.apk"
 
 	ui_print " "
@@ -285,14 +312,14 @@ patch_services_ui () {
 	ui_print " "
 
 	ui_print " >> [1/2] applying ui patch (services.jar)"
-	apply_patch ${TMPDIR}/services.jar-hook-core-ui \
-		${TMPDIR}/services.jar \
+	apply_patch ${BASEDIR}/services.jar-hook-core-ui \
+		${BASEDIR}/services.jar \
 		"${BASEDIR}/${PATCH_UI_SERVICES}" \
 		" !! failed to apply ${PATCH_UI_SERVICES}"
 
 	ui_print " >> [2/2] applying ui patch (Settings.apk)"
-	apply_patch ${TMPDIR}/Settings.apk-ui \
-		${TMPDIR}/Settings.apk \
+	apply_patch ${BASEDIR}/Settings.apk-ui \
+		${BASEDIR}/Settings.apk \
 		"${BASEDIR}/${PATCH_UI_SETTINGS}" \
 		" !! failed to apply ${PATCH_UI_SETTINGS}"
 }
@@ -342,12 +369,12 @@ install_services () {
 	fi
 
 	mkdir -p "${install_path}/framework"
-	cp ${TMPDIR}/services.jar "${install_path}/framework" \
+	cp ${BASEDIR}/services.jar "${install_path}/framework" \
 		|| error " !! failed to install services.jar"
 
 	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
 		mkdir -p "${install_path}/priv-app/Settings"
-		cp ${TMPDIR}/Settings.apk "${install_path}/priv-app/Settings" \
+		cp ${BASEDIR}/Settings.apk "${install_path}/priv-app/Settings" \
 			|| error " !! failed to install Settings.apk"
 	fi
 
@@ -418,11 +445,11 @@ else
 	SYSPATH=/dev/magisk/mirror/system
 fi
 
-if [ -f /system/.nanomod-patcher ]; then
-	ui_print " ++ /system/.nanomod-patcher exists, exiting"
-	ui_print " "
-	exit 0
-fi
+#if [ -f /system/.nanomod-patcher ]; then
+#	ui_print " ++ /system/.nanomod-patcher exists, exiting"
+#	ui_print " "
+#	exit 0
+#fi
 
 detect_sdk
 detect_odex
@@ -452,6 +479,7 @@ if [ -f ${IMG} ]; then
 		error " !! failed to mount ${MOUNTPATH}"
 fi
 
+dalvik_cache
 patch_services
 
 if [ "${nanomod_sigspoofui}" -eq 1 ]; then
