@@ -36,7 +36,7 @@ earlier versions will never officially be supported (you may still report bugs, 
 
 Future versions will be officially supported, eventually.
 
-## Important Notes
+## Important Note
 
 NanoMod is currently incompatible with Magisk 13.5/13.6 beta versions. Possible workarounds:
 
@@ -286,9 +286,11 @@ Full [> Details](doc/AlterInstallation.md) on altering installation manually, or
 
 For **microG** to work, your ROM needs to have signature spoofing enabled (or a **deodexed** ROM to patch yourself).
 
-If your ROM does **not** have signature spoofing support, you can manually patch it using either
-  * the on-device Patcher zip (needs a full ROM start first, as it requires dalvik-cache to be in place)
-  * the `framework-patcher` script (found in the git repository)
+If your ROM does **not** have signature spoofing support, you can manually patch it either
+  * flashing the on-device Patcher zip
+     * versions up to *13.0* require to boot into the ROM once before patching
+     * versions starting from *13.1* no longer require to boot ROM once before patching
+  * running the `framework-patcher` script
      * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified `services.jar` on the device.
 
 Both patchers support installing the patched `services.jar` into the following locations:
