@@ -19,6 +19,7 @@
      * clean-up previously patched files on start (if any)
 * Updates
   * Play Store (8.1.31.S)
+  * Substratum (821)
 
 ## 13.0.20170817
 * Bug fixes
