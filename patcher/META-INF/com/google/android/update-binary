@@ -230,14 +230,14 @@ dalvik_cache () {
 	ui_print " "
 	ui_print " << this might take a bit!"
 
-	# XXX do we really need all?
 	for jar in /system/framework/*.jar ; do
 		BOOTCLASSES=${BOOTCLASSES}:${jar}
 	done
 
 	LD_LIBRARY_PATH="${DP_LD}" \
 		/system/bin/dalvikvm \
-			-Xbootclasspath:"${BOOTCLASSES}"
+			-Xbootclasspath:"${BOOTCLASSES}" \
+			--help 2>/dev/null
 }
 
 apply_patch () {
