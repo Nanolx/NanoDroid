@@ -17,6 +17,8 @@
      * exit if not in TWRP immediately, not late in process
      * add `--gui` parameter to patch Signature Spoofing toggle in UI
      * clean-up previously patched files on start (if any)
+  * build-package:
+     * add `dalvik` option, prepares a jar file for use with DalvikVM
 * Updates
   * Play Store (8.1.31.S)
   * Substratum (821)
