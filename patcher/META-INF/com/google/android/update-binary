@@ -164,7 +164,7 @@ detect_sdk () {
 		PATCH_UI_SETTINGS="ui_7.x_Settings.apk.dex"
 	fi
 
-	n_cpus=$(nproc)
+	n_cpus=$(grep -c ^processor /proc/cpuinfo)
 	if [ "${n_cpus}" -gt 4 ]; then
 		n_cpus=4
 	fi
