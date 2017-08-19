@@ -298,7 +298,7 @@ show_help () {
 usage:	build-package [opt] [arg]
 
 possible opts:
-	zip			| create full package zip from repo
+	full			| create full package zip from repo
 	microg			| create microG package zip from repo
 	fdroid			| create F-Droid package zip from repo
 	patcher			| create framework patcher zip from repo
