@@ -20,6 +20,14 @@
      * `build-package setupwizard` for the Setup Wizard package
      * `build-package all` for all packages at once
 
+the `build-package` script additionally supports the following parameters:
+
+* `swipe` update swipe libaries using shadow53's website
+* `gsync` update Google Sync Adapters using shadow53's website
+* `dalvik [.jar]` prepare a jar file for use with DalvikVM
+* `ver [version] [date]` change project version
+* `bump` increment Magisk module version by 1
+
 ## Supported Android Versions
 
 NanoMod officially supports the following Android versions:

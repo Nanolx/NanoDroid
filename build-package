@@ -306,7 +306,7 @@ possible opts:
 	setupwizard		| create setup-wizard zip from repo
 	swipe			| update swipe libraries
 	gsync			| update Google Sync Adapters
-	dalvik			| prepare a jar file for dalvikvm usage
+	dalvik	[jar]		| prepare a jar file for dalvikvm usage
 	all			| create all zips from repo
 	ver	[ver] [date]	| bump version
 	bump			| bump versionCode in Magisk Modules
