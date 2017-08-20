@@ -15,9 +15,6 @@ ANDROID_DATA="${BASEDIR}"
 PATH="$PATH:/system/bin:/system/xbin"
 PATCH_CORE="core_services.jar.dex"
 
-rm -rf "${BASEDIR}/services*"
-rm -rf "${BASEDIR}/Settings*"
-
 readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
 if [ "$?" -eq "0" ]; then
 	OUTFD=0
