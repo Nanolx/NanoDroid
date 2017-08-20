@@ -23,6 +23,7 @@
 * Updates
   * Play Store (8.1.31.S)
   * Substratum (822)
+  * Amaze (3.2.0)
 
 ## 13.0.20170817
 * Bug fixes
