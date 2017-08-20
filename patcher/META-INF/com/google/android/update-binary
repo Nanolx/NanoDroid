@@ -8,7 +8,7 @@ ps | grep zygote | grep -v grep >/dev/null && BOOTMODE=true || BOOTMODE=false
 $BOOTMODE || ps -A 2>/dev/null | grep zygote | grep -v grep >/dev/null && BOOTMODE=true
 
 # This path should work in any cases
-TMPDIR=/dev/tmp
+TMPDIR=/dev/tmp/NanoModPatcher
 
 BASEDIR="${TMPDIR}/dexpatcher"
 ANDROID_DATA="${BASEDIR}"
@@ -265,10 +265,15 @@ apply_patch () {
 setup_patcher () {
 	ui_print " > preparing environment"
 
+	rm -rf ${TMPDIR}
 	mkdir -p ${TMPDIR}
-	unzip -o "${ZIP}" "dexpatcher/*" -d ${TMPDIR}
+
+	unzip -o "${ZIP}" -d ${TMPDIR} || \
+		error " !! failed to prepare environment"
+
 	for bin in zip.arm zip.x86 file.arm file.x86; do 
-		chmod 0755 "${BASEDIR}/${bin}"
+		chmod 0755 "${BASEDIR}/${bin}" || \
+			error " !! failed to prepare environment"
 	done
 }
 
