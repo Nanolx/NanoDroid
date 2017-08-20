@@ -4,6 +4,8 @@
 * Bug Fixes
   * F-Droid package:
      * Fix installation issue in `nanomod_libs`
+  * Full, microG packages:
+     * Downgrade Google Sync Adapters for LL to 5.0
 * General Changes:
   * Framework-Patcher package:
      * update `dexpatcher` to 1.3.0
