@@ -21,7 +21,7 @@
      * add `dalvik` option, prepares a jar file for use with DalvikVM
 * Updates
   * Play Store (8.1.31.S)
-  * Substratum (821)
+  * Substratum (822)
 
 ## 13.0.20170817
 * Bug fixes
