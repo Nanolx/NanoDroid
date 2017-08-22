@@ -8,7 +8,7 @@
      * Downgrade Google Sync Adapters for LL to 5.0
 * General Changes:
   * Framework-Patcher package:
-     * update `dexpatcher` to 1.3.0
+     * update `dexpatcher` to 1.3.1
      * remove unused dexpatcher.jar file
      * no longer requires booting into ROM before patching
      * more reliably catch `dexpatcher` errors
