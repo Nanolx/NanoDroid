@@ -13,7 +13,8 @@
      * no longer requires booting into ROM before patching
      * more reliably catch `dexpatcher` errors
      * do all `dexpatcher` operations in `BASEDIR`, not `TMPDIR`
-     * clean-up environment (ensures patching more than once per session creates proper result)
+     * clean-up environment before doing anything
+     * update to new Haystack patches
   * on-pc Framework-Patcher script:
      * exit if not in TWRP immediately, not late in process
      * add `--gui` parameter to patch Signature Spoofing toggle in UI
