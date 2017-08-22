@@ -289,6 +289,8 @@ dalvikize_jar () {
 			--output="$(basename "${1}" .jar).dex" \
 			"${1}"
 	fi
+
+	exit 0
 }
 
 show_help () {
