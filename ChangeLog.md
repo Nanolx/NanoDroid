@@ -27,6 +27,7 @@
   * Yalp Store (0.23)
   * Kernel Adiutor (0.9.72)
   * Simple Gallery (2.13.1)
+  * Lightning (4.5.1+snapshot20170813)
 
 ## 13.0.20170817
 * Bug fixes
