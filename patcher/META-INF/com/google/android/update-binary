@@ -489,6 +489,9 @@ if ! ${BOOTMODE}; then
 			MODE=SYSTEM
 			ui_print " ++ forced system mode installation"
 		fi
+	else
+		nanomod_forcesystem=0
+		nanomod_sigspoofui=0
 	fi
 else
 	mount -orw,remount /dev/magisk/mirror/system

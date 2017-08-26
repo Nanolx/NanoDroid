@@ -424,6 +424,9 @@ main () {
 		if [ "${nanomod_forcesystem}" -eq 1 ]; then
 			MODE=SYSTEM
 			ui_print " ++ forced system mode installation"
+		else
+			nanomod_forcesystem=0
+			nanomod_sigspoofui=0
 		fi
 	fi
 
