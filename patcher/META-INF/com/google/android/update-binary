@@ -15,20 +15,23 @@ ANDROID_DATA="${BASEDIR}"
 PATH="$PATH:/system/bin:/system/xbin"
 PATCH_CORE="core_services.jar.dex"
 
-readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
-if [ "$?" -eq "0" ]; then
-	OUTFD=0
-	for FD in `ls /proc/$$/fd`; do
-		readlink /proc/$$/fd/$FD 2>/dev/null | grep pipe >/dev/null
-		if [ "$?" -eq "0" ]; then
-			ps | grep " 3 $FD " | grep -v grep >/dev/null
+detect_outfd () {
+	readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
+	if [ "$?" -eq "0" ]; then
+		OUTFD=0
+
+		for FD in `ls /proc/$$/fd`; do
+			readlink /proc/$$/fd/$FD 2>/dev/null | grep pipe >/dev/null
 			if [ "$?" -eq "0" ]; then
-				OUTFD=$FD
-				break
+				ps | grep " 3 $FD " | grep -v grep >/dev/null
+				if [ "$?" -eq "0" ]; then
+					OUTFD=$FD
+					break
+				fi
 			fi
-		fi
-	done
-fi
+		done
+	fi
+}
 
 ui_print() {
 	if $BOOTMODE; then
@@ -50,10 +53,9 @@ is_mounted() {
 
 error () {
 	ui_print "${@}"
-	ui_print " "
-	ui_print " ** post your /tmp/recovery.log"
-	ui_print " ** in the XDA support thread"
-	ui_print " "
+	if [ "${MODE}" = "MAGISK" ]; then
+		magisk_cleanup
+	fi
 	exit 1
 }
 
@@ -73,22 +75,15 @@ image_size_check() {
 }
 
 grow_magisk_img () {
-	request_size_check ${TMPDIR}/services.jar
-	image_size_check ${IMG}
-	if [ "$reqSizeM" -gt "$curFreeM" ]; then
-		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-		resize2fs -f ${IMG} ${SIZE}M
-		e2fsck -yf ${IMG}
-	fi
+	e2fsck -yf ${IMG}
+	resize2fs -f ${IMG} ${newSizeM}M
+	e2fsck -yf ${IMG}
 }
 
 shrink_magisk_img () {
-	image_size_check ${IMG}
-	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
-	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-		resize2fs -f ${IMG} ${NEWDATASIZE}M
-		e2fsck -yf ${IMG}
-	fi
+	e2fsck -yf ${IMG}
+	resize2fs -f ${IMG} ${newSizeM}M
+	e2fsck -yf ${IMG}
 }
 
 grep_prop() {
@@ -399,14 +394,57 @@ install_services () {
 	touch ${SYSPATH}/.nanomod-patcher
 }
 
-magisk_cleanup () {
-	if (is_mounted ${MOUNTPATH}); then
-		umount ${MOUNTPATH}
-		losetup -d $LOOPDEVICE
-		rmdir ${MOUNTPATH}
-		shrink_magisk_img || \
-			error " !! failed to shrink ${IMG}"
+magisk_setup () {
+	ui_print " > setup Magisk environment"
+
+	MAGISKBIN=/data/magisk
+
+	[ -d $MAGISKBIN -a -f $MAGISKBIN/magisk -a -f $MAGISKBIN/util_functions.sh ] || \
+		error " !! Magisk version 13.1 or newer is required"
+
+	. $MAGISKBIN/util_functions.sh
+	[ ! -z $SCRIPT_VERSION -a $SCRIPT_VERSION -ge 1310 ] || \
+		error " !! Magisk version 13.1 or newer is required"
+
+	MOUNTPATH=/magisk
+	IMG=/data/magisk.img
+
+	if $BOOTMODE; then
+		MOUNTPATH=/dev/magisk_merge
+		IMG=/data/magisk_merge.img
 	fi
+
+	request_size_check "${INSTALLER}"
+
+	$BOOTMODE || recovery_actions
+
+	if [ -f "$IMG" ]; then
+		image_size_check "${IMG}"
+		if [ "$reqSizeM" -gt "$curFreeM" ]; then
+			newSizeM=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
+			$MAGISKBIN/magisk --resizeimg $IMG $newSizeM || grow_magisk_img
+		fi
+	else
+		newSizeM=$((reqSizeM / 32 * 32 + 64))
+		$MAGISKBIN/magisk --createimg $IMG $newSizeM
+	fi
+
+	MAGISKLOOP=`$MAGISKBIN/magisk --mountimg $IMG $MOUNTPATH`
+	if ! is_mounted $MOUNTPATH; then
+		error " !! $IMG mount failed... abort"
+	fi
+}
+
+magisk_cleanup () {
+	$MAGISKBIN/magisk --umountimg $MOUNTPATH $MAGISKLOOP
+
+	image_size_check $IMG
+	newSizeM=$((curUsedM / 32 * 32 + 64))
+	if [ $curSizeM -gt $newSizeM ]; then
+		$MAGISKBIN/magisk --resizeimg $IMG $newSizeM || shrink_magisk_img
+	fi
+
+	$BOOTMODE || recovery_cleanup
 }
 
 # check for configuration files
@@ -472,19 +510,9 @@ if ! (is_mounted /data); then
 else	mount -orw,remount /data || error " !! failed to remount /data read-write"
 fi
 
-if $BOOTMODE; then
-	MOUNTPATH=/dev/magisk_merge
-	IMG=/data/magisk_merge.img
-else
-	MOUNTPATH=/magisk
-	IMG=/data/magisk.img
-fi
-
-if [ -f ${IMG} ]; then
-	grow_magisk_img || \
-		error " !! failed to grow ${IMG}"
-	mount_image ${IMG} ${MOUNTPATH} || \
-		error " !! failed to mount ${MOUNTPATH}"
+if [ -f /data/magisk.img ]; then
+	MODE="MAGISK"
+	magisk_setup
 fi
 
 dalvik_cache
