@@ -425,10 +425,10 @@ main () {
 		if [ "${nanomod_forcesystem}" -eq 1 ]; then
 			MODE=SYSTEM
 			ui_print " ++ forced system mode installation"
-		else
-			nanomod_forcesystem=0
-			nanomod_sigspoofui=0
 		fi
+	else
+		nanomod_forcesystem=0
+		nanomod_sigspoofui=0
 	fi
 
 	for bin in zip.arm zip.x86 file.arm file.x86; do 
@@ -447,8 +447,8 @@ main () {
 	else	mount -orw,remount /data || error " !! failed to remount /data read-write"
 	fi
 
-	if [ "${nanomod_forcesystem}" -ne 1 ]; then
-		if [ -f /data/magisk.img  ]; then
+	if [ "${nanomod_forcesystem}" -eq 0 ]; then
+		if [ -f /data/magisk.img ]; then
 			MODE=MAGISK
 			magisk_setup
 		fi

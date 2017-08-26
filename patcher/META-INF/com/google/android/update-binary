@@ -515,7 +515,7 @@ if ! (is_mounted /data); then
 else	mount -orw,remount /data || error " !! failed to remount /data read-write"
 fi
 
-if [ "${nanomod_forcesystem}" -ne 1 ]; then
+if [ "${nanomod_forcesystem}" -eq 0 ]; then
 	if [ -f /data/magisk.img  ]; then
 		MODE=MAGISK
 		magisk_setup
