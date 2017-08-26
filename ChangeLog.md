@@ -24,7 +24,7 @@
 * Updates
   * Play Store (8.1.73.S)
   * Substratum (823)
-  * Amaze (3.2.0)
+  * Amaze (3.2.1)
   * Yalp Store (0.23)
   * Kernel Adiutor (0.9.72)
   * Simple Gallery (2.13.1)
