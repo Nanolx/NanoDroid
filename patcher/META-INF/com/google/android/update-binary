@@ -15,6 +15,10 @@ ANDROID_DATA="${BASEDIR}"
 PATH="$PATH:/system/bin:/system/xbin"
 PATCH_CORE="core_services.jar.dex"
 
+##########################################################################################
+# Generic Functions
+##########################################################################################
+
 detect_outfd () {
 	readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
 	if [ "$?" -eq "0" ]; then
@@ -59,33 +63,6 @@ error () {
 	exit 1
 }
 
-request_size_check() {
-	reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
-	reqSizeM=$((reqSizeM / 1048576 + 1))
-}
-
-image_size_check() {
-	e2fsck -yf $1
-	curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`
-	curUsedM=`echo "$curBlocks" | cut -d/ -f1`
-	curSizeM=`echo "$curBlocks" | cut -d/ -f1`
-	curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
-	curUsedM=$((curUsedM * 4 / 1024 + 1))
-	curSizeM=$((curSizeM * 4 / 1024))
-}
-
-grow_magisk_img () {
-	e2fsck -yf ${IMG}
-	resize2fs -f ${IMG} ${newSizeM}M
-	e2fsck -yf ${IMG}
-}
-
-shrink_magisk_img () {
-	e2fsck -yf ${IMG}
-	resize2fs -f ${IMG} ${newSizeM}M
-	e2fsck -yf ${IMG}
-}
-
 grep_prop() {
 	shift
 	FILES=$@
@@ -93,6 +70,33 @@ grep_prop() {
 		FILES='/system/build.prop'
 	fi
 	cat $FILES 2>/dev/null | sed -n "s/^$1=//p" | head -n 1
+}
+
+detect_odex () {
+	if [ -n "$(find '/system/app/' -name '*.odex')" ]; then
+		error " !! odexed ROMs are not supported"
+	fi
+}
+
+detect_dalvik () {
+	if [[ ! -f /system/bin/dalvikvm ]]; then
+		error "!! /system/bin/dalvikvm does not exist"
+	else	DALVIK_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
+	fi
+
+	case ${DALVIK_ARCH} in
+		*32-bit* )
+			DP_LD="/system/lib:/system/vendor/lib:$LD_LIBRARY_PATH"
+			ui_print " > DalvikVM bitness: 32-bit"
+		;;
+		*64-bit* )
+			DP_LD="/system/lib64:/system/vendor/lib64:$LD_LIBRARY_PATH"
+			ui_print " > DalvikVM bitness: 64-bit"
+		;;
+		* )
+			error " !! could not detect dalvikvm architecture"
+		;;
+	esac
 }
 
 detect_arch () {
@@ -161,54 +165,23 @@ detect_sdk () {
 	fi
 }
 
-detect_odex () {
-	if [ -n "$(find '/system/app/' -name '*.odex')" ]; then
-		error " !! odexed ROMs are not supported"
-	fi
-}
+##########################################################################################
+# Patcher Functions
+##########################################################################################
 
-detect_dalvik () {
-	if [[ ! -f /system/bin/dalvikvm ]]; then
-		error "!! /system/bin/dalvikvm does not exist"
-	else	DALVIK_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
-	fi
+setup_patcher () {
+	ui_print " > preparing environment"
 
-	case ${DALVIK_ARCH} in
-		*32-bit* )
-			DP_LD="/system/lib:/system/vendor/lib:$LD_LIBRARY_PATH"
-			ui_print " > DalvikVM bitness: 32-bit"
-		;;
-		*64-bit* )
-			DP_LD="/system/lib64:/system/vendor/lib64:$LD_LIBRARY_PATH"
-			ui_print " > DalvikVM bitness: 64-bit"
-		;;
-		* )
-			error " !! could not detect dalvikvm architecture"
-		;;
-	esac
-}
+	rm -rf ${TMPDIR}
+	mkdir -p ${TMPDIR}
 
-mount_image() {
-	if [ ! -d "$2" ]; then
-		mount -o rw,remount rootfs /
-		mkdir -p "$2" 2>/dev/null
-		$BOOTMODE && mount -o ro,remount rootfs /
-		[ ! -d "$2" ] && return 1
-	fi
+	unzip -o "${ZIP}" -d ${TMPDIR} || \
+		error " !! failed to prepare environment"
 
-	if ! is_mounted "$2"; then
-		LOOPDEVICE=
-		for LOOP in 0 1 2 3 4 5 6 7; do
-			if ! is_mounted "$2"; then
-				LOOPDEVICE=/dev/block/loop$LOOP
-				[ -e $LOOPDEVICE ] || mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
-				losetup $LOOPDEVICE "$1" && mount -t ext4 -o loop $LOOPDEVICE "$2"
-				if is_mounted "$2"; then
-					break;
-				fi
-			fi
-		done
-	fi
+	for bin in zip.arm zip.x86 file.arm file.x86; do 
+		chmod 0755 "${BASEDIR}/${bin}" || \
+			error " !! failed to prepare environment"
+	done
 }
 
 dalvik_cache () {
@@ -226,6 +199,10 @@ dalvik_cache () {
 			-Xbootclasspath:"${BOOTCLASSES}" \
 			--help 2>/dev/null
 }
+
+##########################################################################################
+# Patcher Functions
+##########################################################################################
 
 apply_patch () {
 	if [ "${SDK_VERSION}" -gt 21 ]; then
@@ -252,21 +229,6 @@ apply_patch () {
 			error " !! zip failed"
 
 	rm -rf "${1}"
-}
-
-setup_patcher () {
-	ui_print " > preparing environment"
-
-	rm -rf ${TMPDIR}
-	mkdir -p ${TMPDIR}
-
-	unzip -o "${ZIP}" -d ${TMPDIR} || \
-		error " !! failed to prepare environment"
-
-	for bin in zip.arm zip.x86 file.arm file.x86; do 
-		chmod 0755 "${BASEDIR}/${bin}" || \
-			error " !! failed to prepare environment"
-	done
 }
 
 patch_services () {
@@ -394,6 +356,22 @@ install_services () {
 	touch ${SYSPATH}/.nanomod-patcher
 }
 
+##########################################################################################
+# Magisk Functions
+##########################################################################################
+
+grow_magisk_img () {
+	e2fsck -yf ${IMG}
+	resize2fs -f ${IMG} ${newSizeM}M
+	e2fsck -yf ${IMG}
+}
+
+shrink_magisk_img () {
+	e2fsck -yf ${IMG}
+	resize2fs -f ${IMG} ${newSizeM}M
+	e2fsck -yf ${IMG}
+}
+
 magisk_setup () {
 	ui_print " > setup Magisk environment"
 
@@ -447,6 +425,10 @@ magisk_cleanup () {
 	$BOOTMODE || recovery_cleanup
 }
 
+##########################################################################################
+# Configuration File
+##########################################################################################
+
 # check for configuration files
 config_locations="/sdcard /external_sd /persist $(dirname ${ZIP})) /data"
 
@@ -461,6 +443,8 @@ get_config () {
 		fi
 	done
 }
+
+detect_outfd
 
 ui_print " "
 ui_print "********************************"
@@ -499,9 +483,7 @@ fi
 
 detect_sdk
 detect_odex
-
 setup_patcher
-
 detect_arch
 detect_dalvik
 
