@@ -375,11 +375,12 @@ install_services () {
 		|| error " !! failed to install services.jar"
 
 	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-		mkdir -p "${install_path}/priv-app/Settings"
 		if [[ -f ${BASEDIR}/Settings.apk ]]; then
+			mkdir -p "${install_path}/priv-app/Settings"
 			cp ${BASEDIR}/Settings.apk "${install_path}/priv-app/Settings" \
 				|| error " !! failed to install Settings.apk"
 		elif [[ -f ${BASEDIR}/SecSettings.apk ]]; then
+			mkdir -p "${install_path}/priv-app/SecSettings"
 			cp ${BASEDIR}/SecSettings.apk "${install_path}/priv-app/SecSettings" \
 				|| error " !! failed to install SecSettings.apk"
 		fi
