@@ -411,6 +411,7 @@ main () {
 	ui_print "       created by @Nanolx       "
 	ui_print "       Framework Patcher        "
 	ui_print "Powered by DexPatcher (@lanchon)"
+	ui_print "         addon.d Script         "
 	ui_print "********************************"
 	ui_print " "
 
