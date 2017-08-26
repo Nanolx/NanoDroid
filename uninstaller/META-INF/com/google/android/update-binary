@@ -170,6 +170,12 @@ if [ -f /system/.nanomod-list ]; then
 	rm -f /system/.nanomod-list
 fi
 
+if [ -f /system/addon.d/75-nanomodpatcher.sh ]; then
+	ui_print " << uninstalling: patcher addon.d"
+	rm /system/addon.d/75-nanomodpatcher.sh
+	rm -rf /data/nanomod.patcher
+fi
+
 if [ -f /data/magisk.img ]; then
 	mount_image /data/magisk.img /magisk || \
 		error " !! failed to mount /magisk"

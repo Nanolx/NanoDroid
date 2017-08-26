@@ -26,6 +26,8 @@
      * clean-up previously patched files on start (if any)
   * build-package:
      * add `dalvik` option, prepares a jar file for use with DalvikVM
+  * Uninstaller:
+     * also remove Framework-Patcher addon.d upon uninstallation
 * Updates
   * Play Store (8.1.73.S)
   * Substratum (823)
