@@ -22,7 +22,7 @@
   * build-package:
      * add `dalvik` option, prepares a jar file for use with DalvikVM
 * Updates
-  * Play Store (8.1.31.S)
+  * Play Store (8.1.73.S)
   * Substratum (823)
   * Amaze (3.2.0)
   * Yalp Store (0.23)
