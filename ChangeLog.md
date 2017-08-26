@@ -12,6 +12,10 @@
      * remove unused dexpatcher.jar file
      * no longer requires booting into ROM before patching
      * more reliably catch `dexpatcher` errors
+     * patching signature spoofing UI now supports
+         * LineageOS/AOSP Settings.apk
+         * Samsung TouchWiz SecSettings.apk
+     * update to use Magisk v13 functions when Magisk is utilized
      * do all `dexpatcher` operations in `BASEDIR`, not `TMPDIR`
      * clean-up environment before doing anything
      * update to new Haystack patches
