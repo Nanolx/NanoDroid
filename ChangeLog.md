@@ -19,6 +19,7 @@
      * do all `dexpatcher` operations in `BASEDIR`, not `TMPDIR`
      * clean-up environment before doing anything
      * update to new Haystack patches
+     * addon.d support (auto repatch after ROM update)
   * on-pc Framework-Patcher script:
      * exit if not in TWRP immediately, not late in process
      * add `--gui` parameter to patch Signature Spoofing toggle in UI

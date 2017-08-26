@@ -1,52 +1,39 @@
 #!/sbin/sh
+##########################################################################################
+# 
+# NanoMod Patcher survival script
+# by Nanolx
+# 
+# Inspired by 99-flashafterupdate.sh of osm0sis @ xda-developers
+# Forked from 99-magisk.sh of topjohnwu @ xda-developers
+# 
+##########################################################################################
 
-OUTFD=$2
-ZIP=$3
+. /tmp/backuptool.functions
 
-# Detect whether in boot mode
-ps | grep zygote | grep -v grep >/dev/null && BOOTMODE=true || BOOTMODE=false
-$BOOTMODE || ps -A 2>/dev/null | grep zygote | grep -v grep >/dev/null && BOOTMODE=true
+# This script always run in recovery
+BOOTMODE=false
+SYSPATH=/system
 
 # This path should work in any cases
-TMPDIR=/dev/tmp/NanoModPatcher
-
-BASEDIR="${TMPDIR}/dexpatcher"
+BASEDIR=/data/nanomod.patcher
 ANDROID_DATA="${BASEDIR}"
 PATH="$PATH:/system/bin:/system/xbin"
 PATCH_CORE="core_services.jar.dex"
+
+# remove our own, temporary dalvik-cache
+rm -rf "${BASEDIR}/dalvik-cache"
 
 ##########################################################################################
 # Generic Functions
 ##########################################################################################
 
-detect_outfd () {
-	readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
-	if [ "$?" -eq "0" ]; then
-		OUTFD=0
-
-		for FD in `ls /proc/$$/fd`; do
-			readlink /proc/$$/fd/$FD 2>/dev/null | grep pipe >/dev/null
-			if [ "$?" -eq "0" ]; then
-				ps | grep " 3 $FD " | grep -v grep >/dev/null
-				if [ "$?" -eq "0" ]; then
-					OUTFD=$FD
-					break
-				fi
-			fi
-		done
-	fi
+ui_print () {
+	echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
+	echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
 }
 
-ui_print() {
-	if $BOOTMODE; then
-		echo "$1"
-	else 
-		echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
-		echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
-	fi
-}
-
-is_mounted() {
+is_mounted () {
 	if [ ! -z "$2" ]; then
 		cat /proc/mounts | grep $1 | grep $2, >/dev/null
 	else
@@ -62,6 +49,7 @@ error () {
 	fi
 	exit 1
 }
+
 
 grep_prop() {
 	shift
@@ -169,21 +157,6 @@ detect_sdk () {
 # Patcher Functions
 ##########################################################################################
 
-setup_patcher () {
-	ui_print " > preparing environment"
-
-	rm -rf ${TMPDIR}
-	mkdir -p ${TMPDIR}
-
-	unzip -o "${ZIP}" -d ${TMPDIR} || \
-		error " !! failed to prepare environment"
-
-	for bin in zip.arm zip.x86 file.arm file.x86; do 
-		chmod 0755 "${BASEDIR}/${bin}" || \
-			error " !! failed to prepare environment"
-	done
-}
-
 dalvik_cache () {
 	ui_print " "
 	ui_print " > creating dalvik-cache"
@@ -199,10 +172,6 @@ dalvik_cache () {
 			-Xbootclasspath:"${BOOTCLASSES}" \
 			--help 2>/dev/null
 }
-
-##########################################################################################
-# Patcher Functions
-##########################################################################################
 
 apply_patch () {
 	if [ "${SDK_VERSION}" -gt 21 ]; then
@@ -357,27 +326,6 @@ install_services () {
 }
 
 ##########################################################################################
-# addon.d
-##########################################################################################
-
-install_addond () {
-	ui_print " "
-	ui_print " Installing addon.d restoration setup"
-
-	mkdir -p /data/nanomod.patcher
-
-	for file in core_serivces.jar.dex dexpatcher.dex file.arm file.x86 \
-		hook_4.1-6.0_services.jar.dex hook_7.x_services.jar.dex magic.mgc \
-		ui_4.1-6.0_Settings.apk.dex ui_4.1-6.0_services.jar.dex \
-		ui_7.x_Settings.apk.dex ui_7.x_services.jar.dex zip.arm zip.x86; do 
-		cp "${BASEDIR}/${file}" /data/nanomod.patcher/
-	done
-
-	cp "${BASEDIR}/75-nanomodpatcher.sh" "/system/addon.d/"
-	chmod 0755 "/system/addon.d/75-nanomodpatcher.sh"
-}
-
-##########################################################################################
 # Magisk Functions
 ##########################################################################################
 
@@ -408,14 +356,7 @@ magisk_setup () {
 	MOUNTPATH=/magisk
 	IMG=/data/magisk.img
 
-	if $BOOTMODE; then
-		MOUNTPATH=/dev/magisk_merge
-		IMG=/data/magisk_merge.img
-	fi
-
 	request_size_check "${INSTALLER}"
-
-	$BOOTMODE || recovery_actions
 
 	if [ -f "$IMG" ]; then
 		image_size_check "${IMG}"
@@ -442,8 +383,6 @@ magisk_cleanup () {
 	if [ $curSizeM -gt $newSizeM ]; then
 		$MAGISKBIN/magisk --resizeimg $IMG $newSizeM || shrink_magisk_img
 	fi
-
-	$BOOTMODE || recovery_cleanup
 }
 
 ##########################################################################################
@@ -465,22 +404,19 @@ get_config () {
 	done
 }
 
-detect_outfd
+main () {
+	ui_print " "
+	ui_print "********************************"
+	ui_print "      NanoMod 13.1.99999999     "
+	ui_print "       created by @Nanolx       "
+	ui_print "       Framework Patcher        "
+	ui_print "Powered by DexPatcher (@lanchon)"
+	ui_print "********************************"
+	ui_print " "
 
-ui_print " "
-ui_print "********************************"
-ui_print "      NanoMod 13.1.99999999     "
-ui_print "       created by @Nanolx       "
-ui_print "       Framework Patcher        "
-ui_print "Powered by DexPatcher (@lanchon)"
-ui_print "********************************"
-ui_print " "
-
-if ! ${BOOTMODE}; then
 	if ! (is_mounted /system); then
 		mount /system
 	fi
-	SYSPATH=/system
 
 	get_config .nanomod-setup
 	if [ "$config_exists" -eq 1 ]; then
@@ -490,63 +426,77 @@ if ! ${BOOTMODE}; then
 			ui_print " ++ forced system mode installation"
 		fi
 	fi
-else
-	mount -orw,remount /dev/magisk/mirror/system
-	SYSPATH=/dev/magisk/mirror/system
-fi
 
-if [ -f /system/.nanomod-patcher ]; then
-	ui_print " ++ /system/.nanomod-patcher exists, exiting"
-	ui_print " "
-	install_addond
-	exit 0
-fi
+	for bin in zip.arm zip.x86 file.arm file.x86; do 
+		chmod 0755 "${BASEDIR}/${bin}" || \
+			error " !! failed to prepare environment"
+	done
 
-detect_sdk
-detect_odex
-setup_patcher
-detect_arch
-detect_dalvik
+	detect_sdk
+	detect_odex
+	setup_patcher
+	detect_arch
+	detect_dalvik
 
-if ! (is_mounted /data); then
-	mount -orw /data || error " !! failed to mount /data"
-else	mount -orw,remount /data || error " !! failed to remount /data read-write"
-fi
-
-if [ "${nanomod_forcesystem}" -ne 1 ]; then
-	if [ -f /data/magisk.img  ]; then
-		MODE=MAGISK
-		magisk_setup
+	if ! (is_mounted /data); then
+		mount -orw /data || error " !! failed to mount /data"
+	else	mount -orw,remount /data || error " !! failed to remount /data read-write"
 	fi
-fi
 
-if [ "${MODE}" = "SYSTEM" ]; then
-	mount -orw,remount /system
-fi
+	if [ "${nanomod_forcesystem}" -ne 1 ]; then
+		if [ -f /data/magisk.img  ]; then
+			MODE=MAGISK
+			magisk_setup
+		fi
+	fi
 
-dalvik_cache
-patch_services
+	if [ "${MODE}" = "SYSTEM" ]; then
+		mount -orw,remount /system
+	fi
 
-if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-	patch_services_ui
-fi
+	dalvik_cache
+	patch_services
 
-install_services
-install_addond
+	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
+		patch_services_ui
+	fi
 
-ui_print " "
-ui_print " >> clean up"
-ui_print " "
-magisk_cleanup
+	install_services
 
-if ! ${BOOTMODE}; then
-	umount /system
-fi
+	ui_print " "
+	ui_print " >> clean up"
+	magisk_cleanup
 
-ui_print " "
-ui_print " > Done!"
-ui_print " "
-ui_print "Thanks for using NanoMod"
-ui_print " "
+	ui_print " "
+	ui_print " > Done!"
+	ui_print " "
+	ui_print "Thanks for using NanoMod"
+	ui_print " "
 
-exit 0
+	exit 0
+}
+
+case "$1" in
+	backup)
+		# Stub
+	;;
+	restore)
+		# Stub
+	;;
+	pre-backup)
+		# Stub
+	;;
+	post-backup)
+		# Stub
+	;;
+	pre-restore)
+		# Stub
+	;;
+	post-restore)
+		# Get the FD for ui_print
+		OUTFD=`ps | grep -v grep | grep -oE "update(.*)" | cut -d" " -f3`
+		# Run the main function in a parallel subshell 
+		main
+	;;
+esac
+
