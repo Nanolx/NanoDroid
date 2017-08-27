@@ -406,13 +406,12 @@ get_config () {
 
 main () {
 	ui_print " "
-	ui_print "********************************"
-	ui_print "      NanoMod 13.1.99999999     "
-	ui_print "       created by @Nanolx       "
-	ui_print "       Framework Patcher        "
-	ui_print "Powered by DexPatcher (@lanchon)"
-	ui_print "         addon.d Script         "
-	ui_print "********************************"
+	ui_print "*******************************"
+	ui_print "   NanoMod Framework Patcher   "
+	ui_print "         addon.d Script        "
+	ui_print "       created by @Nanolx      "
+	ui_print " Utilizing DexPatcher @lanchon "
+	ui_print "*******************************"
 	ui_print " "
 
 	if ! (is_mounted /system); then
@@ -479,6 +478,23 @@ main () {
 
 	exit 0
 }
+
+##########################################################################################
+# Check environment
+##########################################################################################
+
+if [[ ! -d /data/nanomod.patcher ]]; then
+	ui_print " "
+	ui_print " !! NanoMod-Patcher environment missing"
+	ui_print " !! guessing, you've wiped /data ?"
+	ui_print " !! re-flash the NanoMod-Patcher zip"
+	ui_print " "
+	exit 0
+fi
+
+##########################################################################################
+# Stuffz
+##########################################################################################
 
 case "$1" in
 	backup)
