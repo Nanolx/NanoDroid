@@ -415,7 +415,8 @@ main () {
 	ui_print " "
 
 	if ! (is_mounted /system); then
-		mount /system
+		mount -orw /system || error " !! failed to mount /system"
+	else	mount -orw,remount /system || error " !! failed to remount /system read-write"
 	fi
 
 	get_config .nanomod-setup
@@ -451,10 +452,6 @@ main () {
 			MODE=MAGISK
 			magisk_setup
 		fi
-	fi
-
-	if [ "${MODE}" = "SYSTEM" ]; then
-		mount -orw,remount /system
 	fi
 
 	dalvik_cache

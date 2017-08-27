@@ -478,8 +478,10 @@ ui_print " "
 
 if ! ${BOOTMODE}; then
 	if ! (is_mounted /system); then
-		mount /system
+		mount -orw /system || error " !! failed to mount /system"
+	else	mount -orw,remount /system || error " !! failed to remount /system read-write"
 	fi
+
 	SYSPATH=/system
 
 	get_config .nanomod-setup
@@ -526,10 +528,6 @@ if [ "${nanomod_forcesystem}" -eq 0 ]; then
 		MODE=MAGISK
 		magisk_setup
 	fi
-fi
-
-if [ "${MODE}" = "SYSTEM" ]; then
-	mount -orw,remount /system
 fi
 
 dalvik_cache
