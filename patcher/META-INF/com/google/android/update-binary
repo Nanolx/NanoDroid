@@ -499,8 +499,14 @@ else
 fi
 
 if [ -f /system/.nanomod-patcher ]; then
-	ui_print " ++ /system/.nanomod-patcher exists, exiting"
+	ui_print " ++ /system/.nanomod-patcher exists"
 	ui_print " "
+	ui_print " ++ installing addon.d environment"
+
+	install_addond
+
+	ui_print " "
+	ui_print " ++ exiting"
 	exit 0
 fi
 
