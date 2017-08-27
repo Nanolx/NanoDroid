@@ -70,7 +70,6 @@ NanoMod includes
 * microG and it's companions
   * on-device framework-patcher for microG support (signature spoofing)
   * on-pc framework-patcher for microG support (signature spoofing)
-  * both patchers create the `/system/.nanomod-patcher` file after patching
 * F-Droid and it's privileged extension
 * modified Play Store to allow (in-)app-purchases with microG
   * this required two steps
@@ -114,6 +113,7 @@ Extra packages, always flash through TWRP.
   * on-device framework-patcher for signature spoofing support
      * optionally can patch user interface for it into Developer Settings
   * creates the file `/system/.nanomod-patcher` after successful patching
+  * installs an addon.d script for automatic re-patching after ROM update
 * **NanoMod-setupwizard**: includes
   * **AROMA** based Setup Wizard to create the configuration files
   * user can choose where to store the configuration files
@@ -122,8 +122,10 @@ Extra packages, always flash through TWRP.
      * `/data` (fallback)
   * **NOTE:** AROMA only works on `arm` and `arm64`, if your device is `x86` or `x86_64`, it won't work
 * **NanoMod-uninstaller**: includes
-  * uninstalls any NanoMod Magisk Module
-  * uninstalls NanoMod installed in System Mode aswell
+  * uninstalls *all* NanoMod Magisk Modules
+  * uninstalls NanoMod installed in System Mode
+  * uninstalls NanoMod configuration files
+  * uninstalls NanoMod-Patcher addon.d environment
 
 ### Scripts
 
@@ -298,6 +300,7 @@ If your ROM does **not** have signature spoofing support, you can manually patch
   * flashing the on-device Patcher zip
      * versions up to *13.0* require to boot into the ROM once before patching
      * versions starting from *13.1* no longer require to boot ROM once before patching
+         * it also installs an addon.d script that auto re-patches the ROM upon update
   * running the `framework-patcher` script
      * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified `services.jar` on the device.
 
