@@ -517,6 +517,9 @@ if [ -f /system/.nanomod-patcher ]; then
 
 	ui_print " "
 	ui_print " ++ exiting"
+
+	umount /system
+
 	exit 0
 fi
 
