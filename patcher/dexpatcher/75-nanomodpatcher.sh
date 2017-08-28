@@ -24,6 +24,10 @@ PATCH_CORE="core_services.jar.dex"
 # remove our own, temporary dalvik-cache
 rm -rf "${BASEDIR}/dalvik-cache"
 
+# fallback values
+nanomod_forcesystem=0
+nanomod_sigspoofui=0
+
 ##########################################################################################
 # Generic Functions
 ##########################################################################################
@@ -426,9 +430,6 @@ main () {
 			MODE=SYSTEM
 			ui_print " ++ forced system mode installation"
 		fi
-	else
-		nanomod_forcesystem=0
-		nanomod_sigspoofui=0
 	fi
 
 	for bin in zip.arm zip.x86 file.arm file.x86; do 
