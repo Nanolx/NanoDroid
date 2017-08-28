@@ -500,6 +500,13 @@ else
 	SYSPATH=/dev/magisk/mirror/system
 fi
 
+if ! (is_mounted /data); then
+	mount -orw /data || error " !! failed to mount /data"
+else	mount -orw,remount /data || error " !! failed to remount /data read-write"
+fi
+
+setup_patcher
+
 if [ -f /system/.nanomod-patcher ]; then
 	ui_print " ++ /system/.nanomod-patcher exists"
 	ui_print " "
@@ -514,14 +521,8 @@ fi
 
 detect_sdk
 detect_odex
-setup_patcher
 detect_arch
 detect_dalvik
-
-if ! (is_mounted /data); then
-	mount -orw /data || error " !! failed to mount /data"
-else	mount -orw,remount /data || error " !! failed to remount /data read-write"
-fi
 
 if [ "${nanomod_forcesystem}" -eq 0 ]; then
 	if [ -f /data/magisk.img  ]; then
