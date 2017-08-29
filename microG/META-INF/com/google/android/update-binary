@@ -382,7 +382,7 @@ install_init () {
 
 	ui_print " "
 	ui_print "******************************"
-	ui_print "     NanoMod 13.1.99999999    "
+	ui_print "     NanoMod 13.1.20170829    "
 	ui_print "      created by @Nanolx      "
 	ui_print "        microG package        "
 	ui_print "******************************"

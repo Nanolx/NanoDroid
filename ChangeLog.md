@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 13.1 in-dev
+## 13.1.20170829
 * Bug Fixes
   * F-Droid package:
      * Fix installation issue in `nanomod_libs`
