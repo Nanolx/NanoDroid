@@ -1,5 +1,16 @@
 # ChangeLog
 
+## 13.2 in-dev
+* Bug Fixes
+  * Framework-Patcher package, Framework-Patcher addon.d:
+     * include 32 bit paths in LD_LIBRARY_PATH on 64 bit devices
+* Updates
+  * Yalp Store (0.24)
+  * Simple Gallery (2.13.3)
+  * K9-Mail (5.208)
+  * OpenKeychain (4.6)
+  * Play Store (8.1.73.S)
+
 ## 13.1.20170829
 * Bug Fixes
   * F-Droid package:
