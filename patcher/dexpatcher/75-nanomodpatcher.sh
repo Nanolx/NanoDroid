@@ -82,7 +82,7 @@ detect_dalvik () {
 			ui_print " > DalvikVM bitness: 32-bit"
 		;;
 		*64-bit* )
-			DP_LD="/system/lib64:/system/vendor/lib64:$LD_LIBRARY_PATH"
+			DP_LD="/system/lib64:/system/vendor/lib64:/system/lib:/vendor/lib:$LD_LIBRARY_PATH"
 			ui_print " > DalvikVM bitness: 64-bit"
 		;;
 		* )
