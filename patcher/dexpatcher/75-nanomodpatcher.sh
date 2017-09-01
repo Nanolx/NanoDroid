@@ -18,7 +18,7 @@ SYSPATH=/system
 # This path should work in any cases
 BASEDIR=/data/nanomod.patcher
 ANDROID_DATA="${BASEDIR}"
-PATH="$PATH:/system/bin:/system/xbin"
+PATH="/system/bin:/system/xbin:$PATH"
 PATCH_CORE="core_services.jar.dex"
 
 # remove our own, temporary dalvik-cache
@@ -76,13 +76,14 @@ detect_dalvik () {
 	else	DALVIK_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
 	fi
 
+	OLD_LD=${LD_LIBRARY_PATH}
 	case ${DALVIK_ARCH} in
 		*32-bit* )
-			DP_LD="/system/lib:/system/vendor/lib:$LD_LIBRARY_PATH"
+			LD_LIBRARY_PATH="/system/lib:/system/vendor/lib:$LD_LIBRARY_PATH"
 			ui_print " > DalvikVM bitness: 32-bit"
 		;;
 		*64-bit* )
-			DP_LD="/system/lib64:/system/vendor/lib64:/system/lib:/vendor/lib:$LD_LIBRARY_PATH"
+			LD_LIBRARY_PATH="/system/lib64:/system/vendor/lib64:/system/lib:/vendor/lib:$LD_LIBRARY_PATH"
 			ui_print " > DalvikVM bitness: 64-bit"
 		;;
 		* )
@@ -171,10 +172,9 @@ dalvik_cache () {
 		BOOTCLASSES=${BOOTCLASSES}:${jar}
 	done
 
-	LD_LIBRARY_PATH="${DP_LD}" \
-		/system/bin/dalvikvm \
-			-Xbootclasspath:"${BOOTCLASSES}" \
-			--help 2>/dev/null
+	/system/bin/dalvikvm \
+		-Xbootclasspath:"${BOOTCLASSES}" \
+		--help 2>/dev/null
 }
 
 apply_patch () {
@@ -182,24 +182,21 @@ apply_patch () {
 		mkdir -p "${1}"
 	fi
 
-	LD_LIBRARY_PATH="${DP_LD}" \
-		/system/bin/dalvikvm \
-			-Xbootclasspath:"${BOOTCLASSES}" \
-			-classpath "${BASEDIR}/dexpatcher.dex" \
-			lanchon.dexpatcher.Main \
-			${DEX_OPTS} --api-level "${SDK_VERSION}" \
-			--verbose --output "${1}" "${2}" "${3}" || \
-				error "${4}"
+	/system/bin/dalvikvm \
+		-Xbootclasspath:"${BOOTCLASSES}" \
+		-classpath "${BASEDIR}/dexpatcher.dex" \
+		lanchon.dexpatcher.Main \
+		${DEX_OPTS} --api-level "${SDK_VERSION}" \
+		--verbose --output "${1}" "${2}" "${3}" || \
+			error "${4}"
 
 	[ ! -f "${1}/classes.dex" ] && error "${4}"
 
-	LD_LIBRARY_PATH="${DP_LD}" \
-		${ZIPB} -d "${2}" 'classes*.dex' || \
-			error " !! zip failed"
+	${ZIPB} -d "${2}" 'classes*.dex' || \
+		error " !! zip failed"
 
-	LD_LIBRARY_PATH="${DP_LD}" \
-		${ZIPB} -j "${2}" "${1}"/classes*.dex || \
-			error " !! zip failed"
+	${ZIPB} -j "${2}" "${1}"/classes*.dex || \
+		error " !! zip failed"
 
 	rm -rf "${1}"
 }
@@ -360,7 +357,7 @@ magisk_setup () {
 	MOUNTPATH=/magisk
 	IMG=/data/magisk.img
 
-	request_size_check "${INSTALLER}"
+	request_size_check "${BASEDIR}"
 
 	if [ -f "$IMG" ]; then
 		image_size_check "${IMG}"
@@ -466,6 +463,8 @@ main () {
 
 	ui_print " "
 	ui_print " >> clean up"
+
+	LD_LIBRARY_PATH=${OLD_LD}
 	magisk_cleanup
 
 	ui_print " "

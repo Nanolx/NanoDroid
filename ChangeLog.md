@@ -3,7 +3,10 @@
 ## 13.2 in-dev
 * Bug Fixes
   * Framework-Patcher package, Framework-Patcher addon.d:
-     * include 32 bit paths in LD_LIBRARY_PATH on 64 bit devices
+     * include 32 bit paths in `${LD_LIBRARY_PATH}` on 64 bit devices
+     * change the way `${LD_LIBRARY_PATH}` is used, internally
+     * put ROM paths before TWRP paths in `${PATH}`
+     * other minor fixes
 * Updates
   * Yalp Store (0.24)
   * Simple Gallery (2.13.3)
