@@ -550,7 +550,7 @@ LD_LIBRARY_PATH=${OLD_LD}
 magisk_cleanup
 
 if ! ${BOOTMODE}; then
-	umount /system
+	umount /system 2>/dev/null
 fi
 
 ui_print " "
