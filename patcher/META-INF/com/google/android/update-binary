@@ -12,7 +12,7 @@ TMPDIR=/dev/tmp/NanoModPatcher
 
 BASEDIR="${TMPDIR}/dexpatcher"
 ANDROID_DATA="${BASEDIR}"
-PATH="/system/bin:/system/xbin:$PATH"
+PATH="${PATH}:/system/bin:/system/xbin"
 PATCH_CORE="core_services.jar.dex"
 
 ##########################################################################################
@@ -98,6 +98,8 @@ detect_dalvik () {
 			error " !! could not detect dalvikvm architecture"
 		;;
 	esac
+
+	PATH="/system/bin:/system/xbin:$PATH"
 }
 
 detect_arch () {
