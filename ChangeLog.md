@@ -13,7 +13,7 @@
      * Nougat patches also work on Oreo, remove restriction for SDK 26
 * Updates
   * Yalp Store (0.24)
-  * Simple Gallery (2.13.3)
+  * Simple Gallery (2.13.4)
   * K9-Mail (5.208)
   * OpenKeychain (4.6)
   * Play Store (8.1.73.S)
