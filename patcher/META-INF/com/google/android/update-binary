@@ -141,8 +141,8 @@ detect_arch () {
 detect_sdk () {
 	SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
 
-	if [ "${SDK_VERSION}" -gt 25 ]; then
-		error " !! Android versions beyond Nougat are not yet supported"
+	if [ "${SDK_VERSION}" -gt 26 ]; then
+		error " !! Android versions beyond Oreo are not yet supported"
 	fi
 
 	if [ "${SDK_VERSION}" -lt 16 ]; then
@@ -155,10 +155,10 @@ detect_sdk () {
 		PATCH_UI_SERVICES="ui_4.1-6.0_services.jar.dex"
 		PATCH_UI_SETTINGS="ui_4.1-6.0_Settings.apk.dex"
 	else
-		ui_print " > Android 7.x (SDK ${SDK_VERSION}) detected"
-		PATCH_HOOK="hook_7.x_services.jar.dex"
-		PATCH_UI_SERVICES="ui_7.x_services.jar.dex"
-		PATCH_UI_SETTINGS="ui_7.x_Settings.apk.dex"
+		ui_print " > Android 7.0 - 8.0 (SDK ${SDK_VERSION}) detected"
+		PATCH_HOOK="hook_7.0-8.0_services.jar.dex"
+		PATCH_UI_SERVICES="ui_7.0-8.0_services.jar.dex"
+		PATCH_UI_SETTINGS="ui_7.0-8.0_Settings.apk.dex"
 	fi
 
 	if [ "${SDK_VERSION}" -gt 21 ]; then

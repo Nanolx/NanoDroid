@@ -27,6 +27,7 @@ there version is one of:
 	6.0	[MM]
 	7.0	[N]
 	7.1	[N]
+	8.0	[O]
 
 --gui	enables Signature Spoofing toggle in Developer Settings.
 
@@ -46,6 +47,7 @@ case "${1}" in
 	6.0 )	API=23	;;
 	7.0 )	API=24	;;
 	7.1 )	API=25	;;
+	8.0 )	API=26	;;
 	*   )	help	;;
 esac
 
