@@ -116,6 +116,7 @@ Extra packages, always flash through TWRP.
      * optionally can patch user interface for it into Developer Settings
   * creates the file `/system/.nanomod-patcher` after successful patching
   * installs an addon.d script for automatic re-patching after ROM update
+     * addon.d support files reside in `/data/nanomod-patcher/`
 * **NanoMod-setupwizard**: includes
   * **AROMA** based Setup Wizard to create the configuration files
   * user can choose where to store the configuration files
