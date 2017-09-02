@@ -17,6 +17,7 @@
   * K9-Mail (5.208)
   * OpenKeychain (4.6)
   * Play Store (8.1.73.S)
+  * GNU Nano (2.8.7)
 
 ## 13.1.20170829
 * Bug Fixes
