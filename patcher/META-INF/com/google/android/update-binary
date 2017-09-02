@@ -366,9 +366,10 @@ install_addond () {
 	mkdir -p /data/nanomod.patcher
 
 	for file in core_services.jar.dex dexpatcher.dex file.arm file.x86 \
-		hook_4.1-6.0_services.jar.dex hook_7.x_services.jar.dex magic.mgc \
+		hook_4.1-6.0_services.jar.dex hook_7.0-8.0_services.jar.dex \
 		ui_4.1-6.0_Settings.apk.dex ui_4.1-6.0_services.jar.dex \
-		ui_7.x_Settings.apk.dex ui_7.x_services.jar.dex zip.arm zip.x86; do 
+		ui_7.0-8.0_Settings.apk.dex ui_7.0-8.0_services.jar.dex \
+		zip.arm zip.x86 magic.mgc; do
 		cp "${BASEDIR}/${file}" /data/nanomod.patcher/
 	done
 
