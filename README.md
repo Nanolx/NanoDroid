@@ -48,7 +48,15 @@ the `build-package` script does not download/update the following applications:
 * YahooWeatherProvider (reason: auto-download from APK Mirror not (yet) supported)
 * API 26 / Oreo Google Sync Adapters (reason: not yet part of OpenGApps)
 
-those are still included in the repo itself
+those are still included in the repo itself. Also `build-package` now looks if the configuration files
+
+* `.nanomod-setup`
+* `.nanomod-apps`
+* `.nanomod-overlay`
+
+exist in the `data` directory of the repository, if so, those files are used when creating packages instead of the default ones.
+
+See the documentation below for more information on those files and what they do.
 
 ## Supported Android Versions
 

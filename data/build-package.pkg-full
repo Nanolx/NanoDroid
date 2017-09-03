@@ -16,15 +16,12 @@ Creating Package
 	zip_add
 	cd "${CWD}"
 
-	for file in README.md ChangeLog.md; do
-		zip_add "${file}"
-	done
+	zip_add README.md
+	zip_add ChangeLog.md
 
-	cd "${CWD}/doc"
-	for file in .nanomod-overlay .nanomod-apps .nanomod-setup; do
-		zip_add "${file}"
-	done
-	cd "${CWD}"
+	zip_add_config .nanomod-overlay 0
+	zip_add_config .nanomod-setup 0
+	zip_add_config .nanomod-apps 0
 
 	echo "Done"
 }

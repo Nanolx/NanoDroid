@@ -18,6 +18,23 @@ zip_add () {
 	esac
 }
 
+zip_add_config () {
+	if [ -f "${CWD}/data/${1}" ]; then
+		cd "${CWD}/data"
+	else	cd "${CWD}/doc"
+	fi
+
+	if [ "${2}" -eq 1 ]; then
+		sed -e 's/nanomod_overlay=1/nanomod_overlay=0/' -i "${1}"
+		zip_add "${1}"
+		sed -e 's/nanomod_overlay=0/nanomod_overlay=1/' -i "${1}"
+	else
+		zip_add "${1}"
+	fi
+
+	cd "${CWD}"
+}
+
 increase_version_number() {
 	sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i "${CWD}/build-package"
 

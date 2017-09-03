@@ -25,9 +25,7 @@ Creating Package
 	zip_add README.md
 	zip_add ChangeLog.md
 
-	cd "${CWD}/doc"
-	zip_add .nanomod-setup
-	cd "${CWD}"
+	zip_add_config .nanomod-setup 0
 
 	echo "Done"
 }

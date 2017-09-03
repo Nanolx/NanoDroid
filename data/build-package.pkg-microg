@@ -38,12 +38,8 @@ Creating Package
 	zip_add README.md
 	zip_add ChangeLog.md
 
-	cd "${CWD}/doc"
-	zip_add .nanomod-overlay
-	sed -e 's/nanomod_overlay=1/nanomod_overlay=0/' -i .nanomod-setup
-	zip_add .nanomod-setup
-	sed -e 's/nanomod_overlay=0/nanomod_overlay=1/' -i .nanomod-setup
-	cd "${CWD}"
+	zip_add_config .nanomod-overlay 0
+	zip_add_config .nanomod-setup 1
 
 	echo "Done"
 }
