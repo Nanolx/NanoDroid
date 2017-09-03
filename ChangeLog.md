@@ -18,6 +18,7 @@
          * a few apks are still in the repo as `build-package` can't (yet) grab them automatically
          * a few apks are still in the repo as they are self-built or modified
          * thanks to shadow53's `android-zip-builder` [> GitLab](https://gitlab.com/Shadow53/android-zip-builder)
+  * `build-package` Script
      * `build-package` now prefers configuration files from `repo/data` over `repo/doc` during package creation
          * `.nanomod-setup`
          * `.nanomod-apps`
@@ -30,6 +31,7 @@
          * `build-package u-swipe` to update swipe libraries
          * `build-package u-gsync` to update Google Sync Adapters
          * `clean` remove any untracked files from the repo (e. g. from `build-package pull`)
+     * `build-package` script no longer supresses `zip` error messages
 * Updates
   * Yalp Store (0.24)
   * Simple Gallery (2.13.4)

@@ -12,9 +12,9 @@ progress () {
 
 zip_add () {
 	case ${1} in
-		*/ )	zip -r "${ZIP}" ${1} &>/dev/null || exit 1 ;;
-		"" )	zip -r "${ZIP}" * &>/dev/null    || exit 1 ;;
-		*  )	zip "${ZIP}" ${1} &>/dev/null    || exit 1 ;;
+		*/ )	zip -qr "${ZIP}" ${1} || exit 1 ;;
+		"" )	zip -qr "${ZIP}" *    || exit 1 ;;
+		*  )	zip -q "${ZIP}" ${1}  || exit 1 ;;
 	esac
 }
 
