@@ -4,7 +4,7 @@
 * Bug Fixes
   * Framework-Patcher package, Framework-Patcher addon.d:
      * include 32 bit paths in `${LD_LIBRARY_PATH}` on 64 bit devices
-     * return back to own Magisk functions
+     * revert back to own magisk.img handling functions
      * other minor fixes
 * General Changes
   * Framework-Patcher package, Framework-Patcher addon.d,
@@ -12,6 +12,11 @@
      * Nougat patches also work on Oreo, remove restriction for SDK 26
   * Full, microG packages:
      * add Oreo Google Sync Adapters (from O DP4)
+  * Full, microG, F-Droid packages:
+     * remove most apks from GitLab repository
+         * instead use `build-package pull` to download latests apks automatically
+         * a few apks are still in the repo as `build-package` can't (yet) grab them automatically
+         * a few apks are still in the repo as they are self-built or modified
 * Updates
   * Yalp Store (0.24)
   * Simple Gallery (2.13.4)

@@ -12,21 +12,41 @@
   * Archived Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_BetaArchive)
 * Snapshot
   * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
-     * `build-package full` for the full package
-     * `build-package microg` for the microg only package
-     * `build-package fdroid` for the F-Droid only package
-     * `build-package patcher` for the on-device framework-patcher package
-     * `build-package uninstaller` for the uninstaller package
-     * `build-package setupwizard` for the Setup Wizard package
-     * `build-package all` for all packages at once
+     * first step:
+         * `build-package pull` to download all required apks
+     * second step:
+         * `build-package full` to create the full package
+         * `build-package microg` to create the microG only package
+         * `build-package fdroid` to create the F-Droid only package
+         * `build-package patcher` to create the on-device framework-patcher package
+         * `build-package uninstaller` to create the uninstaller package
+         * `build-package setupwizard` to create the Setup Wizard package
+         * `build-package all` to create all packages at once
+     * third step:
+         * `build-package u-microg` to update microG
+         * `build-package u-fdroid` to update F-Droid
+         * `build-package u-apps` to update (most) applications
+         * `build-package u-swipe` to update swipe libraries
+         * `build-package u-gsync` to update Google Sync Adapters
+         * `build-package pull` to update/re-download everything
 
 the `build-package` script additionally supports the following parameters:
 
-* `swipe` update swipe libaries using shadow53's website
-* `gsync` update Google Sync Adapters using shadow53's website
 * `dalvik [.jar]` prepare a jar file for use with DalvikVM
 * `ver [version] [date]` change project version
 * `bump` increment Magisk module version by 1
+
+the `build-package` script does not update the following applications:
+
+* microG GmsCore (reason: re-signed to support (in-)app-purchases with Play Store)
+* Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
+* Lightning (reason: self-built snapshot)
+* Kernel Adiutor (reason: auto-download from APK Mirror not (yet) supported)
+* OpenWeatherMapProvider (reason: auto-download from APK Mirror not (yet) supported)
+* Substratum (reason: auto-download from APK Mirror not (yet) supported)
+* XDA Labs (reason: auto-download from APK Mirror not (yet) supported)
+* YahooWeatherProvider (reason: auto-download from APK Mirror not (yet) supported)
+* API 26 / Oreo Google Sync Adapters (reason: not yet part of OpenGApps)
 
 ## Supported Android Versions
 
