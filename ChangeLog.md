@@ -22,6 +22,14 @@
          * `.nanomod-setup`
          * `.nanomod-apps`
          * `.nanomod-overlay`
+     * `build-package` now has new switches:
+         * `build-package pull` to download all required apks for Full, microG and F-Droid package
+         * `build-package u-microg` to update microG
+         * `build-package u-fdroid` to update F-Droid
+         * `build-package u-apps` to update (most) applications
+         * `build-package u-swipe` to update swipe libraries
+         * `build-package u-gsync` to update Google Sync Adapters
+         * `clean` remove any untracked files from the repo (e. g. from `build-package pull`)
 * Updates
   * Yalp Store (0.24)
   * Simple Gallery (2.13.4)
