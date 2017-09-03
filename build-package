@@ -107,7 +107,7 @@ for opt in ${@}; do
 		;;
 
 		clean )
-			echo -e "\nAre you sure to delete all untracked files?\n >> enter [y] or [j] to continue: "
+			echo -ne "\nAre you sure to delete all untracked files?\n >> enter [y] or [j] to continue: "
 			read -r user_input
 
 			case "${user_input}" in
