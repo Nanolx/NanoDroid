@@ -93,6 +93,7 @@ usage:	build-package [opt] [arg]
 
 setup NanoMod [! do this first !]:
 	pull			| download all required apks for NanoMod
+				|| required for: Full, F-Droid, microG packages
 
 update contents:
 	u-microg		| update microG and companions
@@ -103,6 +104,7 @@ update contents:
 				||         Substratum, XDA Labs, YahooWeatherProvider
 	u-swipe			| update swipe libraries
 	u-gsync			| update Google Sync Adapters
+				|| except: Android Oreo / SDK 26
 
 create zip files:
 	full			| create full package zip from repo
@@ -114,6 +116,7 @@ create zip files:
 	all			| create all zips from repo
 
 misc. stuff:
+	clean			| remove any untracked files from the repo
 	dalvik	[jar]		| prepare a jar file for dalvikvm usage
 	ver	[ver] [date]	| bump version
 	bump			| bump versionCode in Magisk Modules

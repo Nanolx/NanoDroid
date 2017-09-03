@@ -106,6 +106,21 @@ for opt in ${@}; do
 			update_gsync
 		;;
 
+		clean )
+			echo -e "\nAre you sure to delete all untracked files?\n >> enter [y] or [j] to continue: "
+			read -r user_input
+
+			case "${user_input}" in
+				y | Y | j | J )
+					git clean -fd
+				;;
+
+				* )
+					echo "aborted"
+				;;
+			esac
+		;;
+
 		* )
 			show_help
 		;;

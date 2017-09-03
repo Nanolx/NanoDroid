@@ -13,7 +13,7 @@
 * Snapshot
   * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
      * first step:
-         * `build-package pull` to download all required apks
+         * `build-package pull` to download all required apks for Full, microG and F-Droid package
      * second step:
          * `build-package full` to create the full package
          * `build-package microg` to create the microG only package
@@ -32,6 +32,7 @@
 
 the `build-package` script additionally supports the following parameters:
 
+* `clean` remove any untracked files from the repo (e. g. from `build-package pull`)
 * `dalvik [.jar]` prepare a jar file for use with DalvikVM
 * `ver [version] [date]` change project version
 * `bump` increment Magisk module version by 1
