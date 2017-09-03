@@ -4,8 +4,8 @@
 * Bug Fixes
   * Framework-Patcher package, Framework-Patcher addon.d:
      * include 32 bit paths in `${LD_LIBRARY_PATH}` on 64 bit devices
-     * change the way `${LD_LIBRARY_PATH}` is used, internally
      * put ROM paths before TWRP paths in `${PATH}`
+     * return back to own Magisk functions
      * other minor fixes
 * General Changes
   * Framework-Patcher package, Framework-Patcher addon.d,
