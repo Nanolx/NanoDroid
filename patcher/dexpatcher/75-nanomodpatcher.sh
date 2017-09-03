@@ -76,14 +76,13 @@ detect_dalvik () {
 	else	DALVIK_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
 	fi
 
-	OLD_LD=${LD_LIBRARY_PATH}
 	case ${DALVIK_ARCH} in
 		*32-bit* )
-			LD_LIBRARY_PATH="/system/lib:/system/vendor/lib:$LD_LIBRARY_PATH"
+			C_LD="/system/lib:/system/vendor/lib:$LD_LIBRARY_PATH"
 			ui_print " > DalvikVM bitness: 32-bit"
 		;;
 		*64-bit* )
-			LD_LIBRARY_PATH="/system/lib64:/system/vendor/lib64:/system/lib:/vendor/lib:$LD_LIBRARY_PATH"
+			C_LD="/system/lib64:/system/vendor/lib64:/system/lib:/vendor/lib:$LD_LIBRARY_PATH"
 			ui_print " > DalvikVM bitness: 64-bit"
 		;;
 		* )
@@ -174,9 +173,11 @@ dalvik_cache () {
 		BOOTCLASSES=${BOOTCLASSES}:${jar}
 	done
 
-	/system/bin/dalvikvm \
-		-Xbootclasspath:"${BOOTCLASSES}" \
-		--help 2>/dev/null
+	LD_LIBRARY_PATH=${C_LD} \
+		/system/bin/dalvikvm \
+			-Xbootclasspath:"${BOOTCLASSES}" \
+			-classpath "${BASEDIR}/dexpatcher.dex" \
+			lanchon.dexpatcher.Main --help >/dev/null
 }
 
 apply_patch () {
@@ -184,21 +185,24 @@ apply_patch () {
 		mkdir -p "${1}"
 	fi
 
-	/system/bin/dalvikvm \
-		-Xbootclasspath:"${BOOTCLASSES}" \
-		-classpath "${BASEDIR}/dexpatcher.dex" \
-		lanchon.dexpatcher.Main \
-		${DEX_OPTS} --api-level "${SDK_VERSION}" \
-		--verbose --output "${1}" "${2}" "${3}" || \
-			error "${4}"
+	LD_LIBRARY_PATH=${C_LD} \
+		/system/bin/dalvikvm \
+			-Xbootclasspath:"${BOOTCLASSES}" \
+			-classpath "${BASEDIR}/dexpatcher.dex" \
+			lanchon.dexpatcher.Main \
+			${DEX_OPTS} --api-level "${SDK_VERSION}" \
+			--verbose --output "${1}" "${2}" "${3}" || \
+				error "${4}"
 
 	[ ! -f "${1}/classes.dex" ] && error "${4}"
 
-	${ZIPB} -d "${2}" 'classes*.dex' || \
-		error " !! zip failed"
+	LD_LIBRARY_PATH=${C_LD} \
+		${ZIPB} -d "${2}" 'classes*.dex' || \
+			error " !! zip failed"
 
-	${ZIPB} -j "${2}" "${1}"/classes*.dex || \
-		error " !! zip failed"
+	LD_LIBRARY_PATH=${C_LD} \
+		${ZIPB} -j "${2}" "${1}"/classes*.dex || \
+			error " !! zip failed"
 
 	rm -rf "${1}"
 }
@@ -333,58 +337,55 @@ install_services () {
 ##########################################################################################
 
 grow_magisk_img () {
-	e2fsck -yf ${IMG}
-	resize2fs -f ${IMG} ${newSizeM}M
-	e2fsck -yf ${IMG}
+	request_size_check /tmp/services.jar
+	image_size_check /data/magisk.img
+	if [ "$reqSizeM" -gt "$curFreeM" ]; then
+		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
+		resize2fs -f /data/magisk.img ${SIZE}M
+		e2fsck -yf /data/magisk.img
+	fi
 }
 
 shrink_magisk_img () {
-	e2fsck -yf ${IMG}
-	resize2fs -f ${IMG} ${newSizeM}M
-	e2fsck -yf ${IMG}
+	image_size_check /data/magisk.img
+	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
+	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
+		resize2fs -f /data/magisk.img ${NEWDATASIZE}M
+		e2fsck -yf /data/magisk.img
+	fi
+}
+
+request_size_check() {
+	reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
+	reqSizeM=$((reqSizeM / 1048576 + 1))
+}
+
+image_size_check() {
+	e2fsck -yf $1
+	curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
+	curUsedM=`echo "$curBlocks" | cut -d/ -f1`
+	curSizeM=`echo "$curBlocks" | cut -d/ -f1`
+	curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
+	curUsedM=$((curUsedM * 4 / 1024 + 1))
+	curSizeM=$((curSizeM * 4 / 1024))
 }
 
 magisk_setup () {
-	ui_print " > setup Magisk environment"
-
-	MAGISKBIN=/data/magisk
-
-	[ -d $MAGISKBIN -a -f $MAGISKBIN/magisk -a -f $MAGISKBIN/util_functions.sh ] || \
-		error " !! Magisk version 13.1 or newer is required"
-
-	. $MAGISKBIN/util_functions.sh
-	[ ! -z $SCRIPT_VERSION -a $SCRIPT_VERSION -ge 1310 ] || \
-		error " !! Magisk version 13.1 or newer is required"
-
-	MOUNTPATH=/magisk
-	IMG=/data/magisk.img
-
-	request_size_check "${BASEDIR}"
-
-	if [ -f "$IMG" ]; then
-		image_size_check "${IMG}"
-		if [ "$reqSizeM" -gt "$curFreeM" ]; then
-			newSizeM=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-			$MAGISKBIN/magisk --resizeimg $IMG $newSizeM || grow_magisk_img
-		fi
-	else
-		newSizeM=$((reqSizeM / 32 * 32 + 64))
-		$MAGISKBIN/magisk --createimg $IMG $newSizeM
-	fi
-
-	MAGISKLOOP=`$MAGISKBIN/magisk --mountimg $IMG $MOUNTPATH`
-	if ! is_mounted $MOUNTPATH; then
-		error " !! $IMG mount failed... abort"
+	if [ -f /data/magisk.img ]; then
+		grow_magisk_img || \
+			error " !! failed to grow magisk.img"
+		mount_image /data/magisk.img /magisk || \
+			error " !! failed to mount /magisk"
 	fi
 }
 
 magisk_cleanup () {
-	$MAGISKBIN/magisk --umountimg $MOUNTPATH $MAGISKLOOP
-
-	image_size_check $IMG
-	newSizeM=$((curUsedM / 32 * 32 + 64))
-	if [ $curSizeM -gt $newSizeM ]; then
-		$MAGISKBIN/magisk --resizeimg $IMG $newSizeM || shrink_magisk_img
+	if (is_mounted /magisk); then
+		umount /magisk
+		losetup -d $LOOPDEVICE
+		rmdir /magisk
+		shrink_magisk_img || \
+			error " !! failed to shrink magisk.img"
 	fi
 }
 
