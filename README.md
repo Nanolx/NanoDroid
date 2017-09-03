@@ -137,6 +137,9 @@ Misc. Script for use from PC/Notebook, while device is in TWRP.
 * **framework-patcher** (clone this repository)
   * on-pc framework-patcher for signature spoofing support
   * creates the file `/system/.nanomod-patcher` after successful patching
+  * invoke like `framework-patcher [ver] [--gui]`
+     * where [ver] is your Android version (6.0, 7.1, ...)
+     * where `--gui` is an optional switch to patch a global toggle for signature spoofing into Developer Settings
 * **force-debloat** (clone this repository)
   * system debloater
   * the list of applications resides in the script itself
@@ -301,9 +304,7 @@ For **microG** to work, your ROM needs to have signature spoofing enabled (or a 
 
 If your ROM does **not** have signature spoofing support, you can manually patch it either
   * flashing the on-device Patcher zip
-     * versions up to *13.0* require to boot into the ROM once before patching
-     * versions starting from *13.1* no longer require to boot ROM once before patching
-         * it also installs an addon.d script that auto re-patches the ROM upon update
+     * it also installs an addon.d script that auto re-patches the ROM upon update
   * running the `framework-patcher` script
      * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified `services.jar` on the device.
 
