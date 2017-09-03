@@ -217,9 +217,11 @@ dalvik_cache () {
 		BOOTCLASSES=${BOOTCLASSES}:${jar}
 	done
 
-	/system/bin/dalvikvm \
-		-Xbootclasspath:"${BOOTCLASSES}" \
-		--help 2>/dev/null
+	LD_LIBRARY_PATH=${C_LD} \
+		/system/bin/dalvikvm \
+			-Xbootclasspath:"${BOOTCLASSES}" \
+			-classpath "${BASEDIR}/dexpatcher.dex" \
+			lanchon.dexpatcher.Main --help 2>/dev/null
 }
 
 ##########################################################################################
