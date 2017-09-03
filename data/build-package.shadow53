@@ -48,7 +48,7 @@ grab_apk_from_url () {
 }
 
 grab_apk_from_github () {
-	APK_URL="${curl -s https://api.github.com/repos/${1}/releases | gawk -F\" '/name.*.apk/{print $4; exit}'}"
+	APK_URL="$(curl -s https://api.github.com/repos/${1}/releases | gawk -F\" '/name.*.apk/{print $4; exit}')"
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
 
 	mkdir -p "${APK_DEST}"

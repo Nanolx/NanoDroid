@@ -17,6 +17,7 @@
          * instead use `build-package pull` to download latests apks automatically
          * a few apks are still in the repo as `build-package` can't (yet) grab them automatically
          * a few apks are still in the repo as they are self-built or modified
+         * thanks to shadow53's `android-zip-builder` [> GitLab](https://gitlab.com/Shadow53/android-zip-builder)
 * Updates
   * Yalp Store (0.24)
   * Simple Gallery (2.13.4)

@@ -19,8 +19,8 @@ CWD=$(dirname "${CWD}")
 for funcfile in nanolx pkg-full pkg-microg pkg-fdroid \
 	pkg-patcher pkg-setupwizard pkg-uninstaller \
 	upd-apps upd-gsync upd-swipe upd-microg upd-fdroid \
-	shadow53 database; do
-	source "{CWD}/data/build-package.${funcfile}"
+	shadow53 database pull; do
+	source "${CWD}/data/build-package.${funcfile}"
 done
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
