@@ -40,7 +40,6 @@ NanoMod officially supports the following Android versions:
 * 7.0 / SDK 24 (Nougat)
 * 7.1 / SDK 25 (Nougat)
 * 8.0 / SDK 26 (Oreo)
-  * work-in-progress
 
 earlier versions will never officially be supported (you may still report bugs, though).
 

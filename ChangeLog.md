@@ -10,6 +10,8 @@
   * Framework-Patcher package, Framework-Patcher addon.d,
   * Framework-Patcher Script:
      * Nougat patches also work on Oreo, remove restriction for SDK 26
+  * Full, microG packages:
+     * add Oreo Google Sync Adapters (from O DP4)
 * Updates
   * Yalp Store (0.24)
   * Simple Gallery (2.13.4)
