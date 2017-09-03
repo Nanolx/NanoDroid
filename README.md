@@ -36,7 +36,7 @@ the `build-package` script additionally supports the following parameters:
 * `ver [version] [date]` change project version
 * `bump` increment Magisk module version by 1
 
-the `build-package` script does not update the following applications:
+the `build-package` script does not download/update the following applications:
 
 * microG GmsCore (reason: re-signed to support (in-)app-purchases with Play Store)
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
@@ -47,6 +47,8 @@ the `build-package` script does not update the following applications:
 * XDA Labs (reason: auto-download from APK Mirror not (yet) supported)
 * YahooWeatherProvider (reason: auto-download from APK Mirror not (yet) supported)
 * API 26 / Oreo Google Sync Adapters (reason: not yet part of OpenGApps)
+
+those are still included in the repo itself
 
 ## Supported Android Versions
 
