@@ -1,6 +1,12 @@
 #!/bin/bash
 
 create_microg_package() {
+
+	if [[ ! -f "${CWD}/.nanomod-pull" ]]; then
+		echo "run \"build-package pull\" first!"
+		exit 1
+	fi
+
 	ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
 	rm -f "${ZIP}"
 

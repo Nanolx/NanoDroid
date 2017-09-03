@@ -6,4 +6,6 @@ nanomod_pull () {
 	update_apps
 	update_swipe
 	update_gsync
+
+	touch "${CWD}/.nanomod-pull"
 }

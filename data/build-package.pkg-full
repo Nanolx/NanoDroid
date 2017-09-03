@@ -1,6 +1,12 @@
 #!/bin/bash
 
 create_full_package () {
+
+	if [[ ! -f "${CWD}/.nanomod-pull" ]]; then
+		echo "run \"build-package pull\" first!"
+		exit 1
+	fi
+
 	ZIP="${CWD}/NanoMod-${VERSION}".zip
 	rm -f "${ZIP}"
 
