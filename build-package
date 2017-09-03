@@ -4,7 +4,24 @@ VERSION=13.2.99999999
 CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
-	SHADOW53_URL="https://dl.shadow53.com/no-gapps/"
+# not auto-updated (because reasons):
+# microG GmsCore	>> self-signed
+# Play Store		>> patched and self-signed
+# Lightning		>> self-built and self-signed
+
+# not auto-updated (missing link):
+# Kernel Adiutor
+# OpenWeatherMapProvider
+# Substratum
+# XDA Labs
+# YahooWeatherProvider
+
+for funcfile in nanolx pkg-full pkg-microg pkg-fdroid \
+	pkg-patcher pkg-setupwizard pkg-uninstaller \
+	upd-apps upd-gsync upd-swipe upd-microg upd-fdroid \
+	shadow53 database; do
+	source "${BASH_SOURCE%/*}"/data/build-package.${funcfile}
+done
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	if ! [ -x "$(command -v brew)" ]; then
@@ -16,344 +33,83 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	alias sed=gsed
 fi
 
-progress () {
-	sleep 0.5
-	while [ -d "/proc/${1}" ];do
-		echo -ne '/\x08' ; sleep 0.05
-		echo -ne '-\x08' ; sleep 0.05
-		echo -ne '\\\x08' ; sleep 0.05
-		echo -ne '|\x08' ; sleep 0.05
-	done
-}
-
-zip_add () {
-	case ${1} in
-		*/ )	zip -r "${ZIP}" ${1} &>/dev/null || exit 1 ;;
-		"" )	zip -r "${ZIP}" * &>/dev/null    || exit 1 ;;
-		*  )	zip "${ZIP}" ${1} &>/dev/null    || exit 1 ;;
-	esac
-}
-
-create_full_package () {
-	ZIP="${CWD}/NanoMod-${VERSION}".zip
-	rm -f "${ZIP}"
-
-	echo "
-Creating Package
-
-	Type		Full
-	Name		$(basename ${ZIP})
-	Directory	$(dirname ${ZIP})
-"
-
-	cd "${CWD}/Full"
-	zip_add
-	cd "${CWD}"
-
-	for file in README.md ChangeLog.md; do
-		zip_add "${file}"
-	done
-
-	cd "${CWD}/doc"
-	for file in .nanomod-overlay .nanomod-apps .nanomod-setup; do
-		zip_add "${file}"
-	done
-	cd "${CWD}"
-
-	echo "Done"
-}
-
-create_microg_package() {
-	ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
-	rm -f "${ZIP}"
-
-	echo "
-Creating Package
-
-	Type		microG
-	File		$(basename ${ZIP})
-	Directory	$(dirname ${ZIP})
-"
-
-	cd "${CWD}/Full"
-
-	for app in nlpBackendIchnaea nlpBackendNominatim; do
-		zip_add "system/app/${app}/"
-	done
-
-	for app in DroidGuard FakeStore GmsCore \
-		GsfProxy Phonesky YalpStore; do
-		zip_add "system/priv-app/${app}/"
-	done
-
-	for input in "system/xbin/nanomod-overlay" "system/xbin/bash*" "system/xbin/aapt*" \
-		"system/xbin/column*" "system/xbin/unzip*" "system/framework/" "gsync/" \
-		"system/etc/permissions/" "system/etc/bash*" "system/share/" "swipe/"; do
-		zip_add "${input}"
-	done
-
-	cd "${CWD}"
-
-	cd "${CWD}/microG"
-	zip_add
-	cd "${CWD}"
-
-	zip_add README.md
-	zip_add ChangeLog.md
-
-	cd "${CWD}/doc"
-	zip_add .nanomod-overlay
-	sed -e 's/nanomod_overlay=1/nanomod_overlay=0/' -i .nanomod-setup
-	zip_add .nanomod-setup
-	sed -e 's/nanomod_overlay=0/nanomod_overlay=1/' -i .nanomod-setup
-	cd "${CWD}"
-
-	echo "Done"
-}
-
-create_fdroid_package() {
-	ZIP="${CWD}/NanoMod-fdroid-${VERSION}".zip
-	rm -f "${ZIP}"
-
-	echo "
-Creating Package
-
-	Type		F-Droid
-	Name		$(basename ${ZIP})
-	Directory	$(dirname ${ZIP})
-"
-
-	cd "${CWD}/Full"
-	zip_add "system/app/FDroid/"
-	zip_add "system/priv-app/FDroidPrivileged/"
-	zip_add "system/xbin/unzip*"
-	cd "${CWD}"
-
-	cd "${CWD}/F-Droid"
-	zip_add
-	cd "${CWD}"
-
-	zip_add README.md
-	zip_add ChangeLog.md
-
-	cd "${CWD}/doc"
-	zip_add .nanomod-setup
-	cd "${CWD}"
-
-	echo "Done"
-}
-
-create_patcher_package() {
-	ZIP="${CWD}/NanoMod-patcher-${VERSION}".zip
-	rm -f "${ZIP}"
-
-	echo "
-Creating Package
-
-	Type		Framework Patcher
-	Name		$(basename ${ZIP})
-	Directory	$(dirname ${ZIP})
-"
-
-	cd "${CWD}/patcher"
-	zip_add
-	cd "${CWD}"
-
-	zip_add README.md
-	zip_add ChangeLog.md
-
-	echo "Done"
-}
-
-create_uninstaller_package() {
-	ZIP="${CWD}/NanoMod-uninstaller-${VERSION}".zip
-	rm -f "${ZIP}"
-
-	echo "
-Creating Package
-
-	Type		Uninstaller
-	Name		$(basename ${ZIP})
-	Directory	$(dirname ${ZIP})
-"
-
-	cd "${CWD}/uninstaller"
-	zip_add
-	cd "${CWD}"
-
-	zip_add README.md
-	zip_add ChangeLog.md
-
-	echo "Done"
-}
-
-create_setupwizard_package() {
-	ZIP="${CWD}/NanoMod-setupwizard-${VERSION}".zip
-	rm -f "${ZIP}"
-
-	echo "
-Creating Package
-
-	Type		Setup Wizard
-	Name		$(basename ${ZIP})
-	Directory	$(dirname ${ZIP})
-"
-
-	cd "${CWD}/setup-wizard"
-	zip_add
-	cd "${CWD}"
-
-	zip_add README.md
-	zip_add ChangeLog.md
-
-	echo "Done"
-}
-
-increase_version_number() {
-	sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i "${CWD}/build-package"
-
-	for module in Full microG F-Droid; do
-		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}    \"/" -i \
-			"${CWD}/${module}/META-INF/com/google/android/update-binary"
-		sed -e "s/version=.*/version=v${2}.${3}/" -i \
-			"${CWD}/${module}/module.prop"
-	done
-
-	for module in uninstaller patcher; do
-		sed -e "s/\"      NanoMod.*/\"      NanoMod ${2}.${3}     \"/" -i \
-			"${CWD}/${module}/META-INF/com/google/android/update-binary"
-	done
-
-	sed -e "s/rom_version\",.*/rom_version\",	\"${2}\")\;/" -i \
-		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
-	sed -e "s/rom_date\",.*/rom_date\",	\"${3}\")\;/" -i \
-		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
-	sed -e "s/Wizard.*/Wizard ${2}.${3}\")\;/" -i \
-		"${CWD}/setup-wizard/META-INF/com/google/android/updater-script"
-	sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}    \"/" -i \
-		"${CWD}/setup-wizard/nanomod-setup"
-
-	exit 0
-
-}
-
-increase_module_version () {
-	for module in Full microG F-Droid; do
-		eval $(grep versionCode "${PWD}"/"${module}"/module.prop)
-		versionCode=$((versionCode+1))
-		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
-			-i "${CWD}/${module}/module.prop"
-	done
-
-	exit 0
-}
-
-update_swipe () {
-	echo -e "\nUpdating Swipe libaries"
-	for arch in arm arm64 x86 x86_64; do
-		echo -ne " \x08"
-		echo -e "\tarchitecture: ${arch}"
-		wget -q "${SHADOW53_URL}/swipelib-${arch}.zip" -O "${CWD}/tmp.zip" || exit 1
-		unzip -ojq "${CWD}/tmp.zip" "files/*.so" -d "${CWD}/Full/swipe/${arch}/" || exit 1
-		rm "${CWD}/tmp.zip"
-	done
-}
-
-update_gsync () {
-	echo -e "\nUpdating Google Sync Adapters"
-	for sdk in l m n; do
-		echo -ne " \x08"
-		case ${sdk} in
-			l )	echo -e "\tLollipop"	;;
-			m )	echo -e "\tMarshmallow"	;;
-			n )	echo -e "\tNougat"	;;
-		esac
-
-		wget -q "${SHADOW53_URL}/contacts-calendar-sync-${sdk}.zip" -O "${CWD}/tmp.zip" || exit 1
-		unzip -ojq "${CWD}/tmp.zip" "files/*" -d "${CWD}/tmp/" || exit 1
-		mv "${CWD}/tmp/com.google.android.backuptransport.apk" \
-			"${CWD}/Full/gsync/${sdk^^}/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk"
-		mv "${CWD}/tmp/com.google.android.syncadapters.calendar.apk" \
-			"${CWD}/Full/gsync/${sdk^^}/app/GoogleCalendarSync/GoogleCalendarSync.apk"
-		mv "${CWD}/tmp/com.google.android.syncadapters.contacts.apk" \
-			"${CWD}/Full/gsync/${sdk^^}/app/GoogleContactsSync/GoogleContactsSync.apk"
-		rm "${CWD}/tmp.zip"
-		rm -rf "${CWD}/tmp"
-	done
-}
-
-dalvikize_jar () {
-	if [[ -f ${1} ]]; then
-		${ANDROID_HOME}/build-tools/26.0.1/dx \
-			--dex \
-			--output="$(basename "${1}" .jar).dex" \
-			"${1}"
-	fi
-
-	exit 0
-}
-
-show_help () {
-	echo -e "
-** NanoMod ${VERSION} helper script **
-
-usage:	build-package [opt] [arg]
-
-possible opts:
-	full			| create full package zip from repo
-	microg			| create microG package zip from repo
-	fdroid			| create F-Droid package zip from repo
-	patcher			| create framework patcher zip from repo
-	uninstaller		| create uninstaller zip from repo
-	setupwizard		| create setup-wizard zip from repo
-	swipe			| update swipe libraries
-	gsync			| update Google Sync Adapters
-	dalvik	[jar]		| prepare a jar file for dalvikvm usage
-	all			| create all zips from repo
-	ver	[ver] [date]	| bump version
-	bump			| bump versionCode in Magisk Modules
-"
-
-	exit 0
-}
-
 [[ -z ${1} ]] && show_help
 
 for opt in ${@}; do
 	case ${opt} in
-		zip | full)	create_full_package &
-				progress $! ;;
-		ver)		increase_version_number "${@}"	;;
-		bump)		increase_module_version		;;
-		microg )	create_microg_package &
-				progress $! ;;
-		fdroid )	create_fdroid_package &
-				progress $! ;;
-		patcher )	create_patcher_package &
-				progress $! ;;
-		uninstaller )	create_uninstaller_package &
-				progress $! ;;
-		setupwizard )	create_setupwizard_package &
-				progress $! ;;
-		swipe )		update_swipe &
-				progress $! ;;
-		gsync )		update_gsync &
-				progress $! ;;
-		dalvik )	dalvikize_jar "${2}" ;;
-		all )
-			create_full_package &
-			progress $!
-			create_microg_package &
-			progress $!
-			create_fdroid_package &
-			progress $!
-			create_patcher_package &
-			progress $!
-			create_uninstaller_package &
-			progress $!
-			create_setupwizard_package &
-			progress $!
+		full)
+			mk_pkg_full
 		;;
-		*)		show_help			;;
+
+		microg )
+			mk_pkg_microg
+		;;
+
+		fdroid )
+			mk_pkg_fdroid
+		;;
+
+		patcher )
+			mk_pkg_patcher
+		;;
+
+		uninstaller )
+			mk_pkg_uninstaller
+		;;
+
+		setupwizard )
+			mk_pkg_setupwizard
+		;;
+
+		all )
+			mk_pkg_full
+			mk_pkg_microg
+			mk_pkg_fdroid
+			mk_pkg_patcher
+			mk_pkg_uninstaller
+			mk_pkg_setupwizard
+		;;
+
+		ver )
+			increase_version_number "${@}"
+		;;
+
+		bump )
+			increase_module_version
+		;;
+
+		dalvik )
+			dalvikize_jar "${2}"
+		;;
+
+		pull )
+			nanomod_pull
+		;;
+
+		u-microg )
+			update_microg
+		;;
+
+		u-fdroid )
+			update_fdroid
+		;;
+
+		u-apps )
+			update_apps
+		;;
+
+		u-swipe )
+			update_swipe
+		;;
+
+		u-gsync )
+			update_gsync
+		;;
+
+		* )
+			show_help
+		;;
 	esac
 done
+
+rm -f ${CWD}/data/*.xml

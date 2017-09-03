@@ -1,0 +1,57 @@
+#!/bin/bash
+
+###
+# microG
+###
+
+uG_GMSCORE=(microg com.google.android.gms priv-app GmsCore)
+uG_GSFPROXY=(microg com.google.android.gsf priv-app GsfProxy)
+uG_DROIDGUARD=(microg org.microg.gms.droidguard priv-app DroidGuard)
+uG_FAKESTORE=(microg com.android.vending priv-app FakeStore)
+fd_NLPMOZILLA=(fdroid org.microg.nlp.backend.ichnaea app nlpBackendIchnaea)
+fd_NLPNOMINATIM=(fdroid org.microg.nlp.backend.nominatim app nlpBackendNominatim)
+fd_YALPSTORE=(fdroid com.github.yeriomin.yalpstore priv-app YalpStore)
+
+###
+# F-Droid
+###
+
+fd_FDROID=(fdroid org.fdroid.fdroid app FDroid)
+fd_FDROID_PE=(fdroid org.fdroid.fdroid.privileged priv-app FDroidPrivileged)
+
+###
+# Apps
+###
+
+fd_ADAWAY=(fdroid org.adaway app Adaway)
+fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
+fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
+fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
+fd_HACKERKEYBOARD=(fdroid org.pocketworkstation.pckeyboard app HackerKeyboard)
+fd_K9MAIL=(fdroid com.fsck.k9 app K9Mail)
+fd_KEEPASSDROID=(fdroid com.android.keepass app KeePassDroid)
+fd_NEWPIPE=(fdroid org.schabi.newpipe app NewPipe)
+fd_OANDBACKUP=(fdroid dk.jens.backup app Oandbackup)
+fd_ODYSSEY=(fdroid org.gateshipone.odyssey app Odyssey)
+fd_OPENCAMERA=(fdroid net.sourceforge.opencamera app OpenCamera)
+fd_OPENKEYCHAIN=(fdroid org.sufficientlysecure.keychain app OpenKeyChain)
+fd_OPENLAUNCHER=(fdroid com.benny.openlauncher app OpenLauncher)
+fd_OPENVPN=(fdroid de.blinkt.openvpn app OpenVPN)
+fd_QKSMS=(fdroid com.moez.QKSMS app QKSMS)
+fd_SIMPLECALENDAR=(fdroid com.simplemobiletools.calendar app SimpleCalendar)
+fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery app SimpleGallery)
+fd_TERMUX=(fdroid com.termux app Termux)
+fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
+
+gd_ORBOT=(https://guardianproject.info/releases/orbot-latest.apk app Orbot)
+gd_ORFOX=(https://guardianproject.info/releases/Orfox-v1.4-beta3.apk app Orfox)
+
+gh_MPV=(mpv-android/mpv-android app MPV)
+
+###
+# Google Sync Adapters
+###
+
+og_CALSYNC=(com.google.android.syncadapters.calendar app GoogleCalendarSync)
+og_CONSYNC=(com.google.android.syncadapters.contacts app GoogleContactsSync)
+og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)

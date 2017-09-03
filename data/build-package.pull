@@ -1,0 +1,9 @@
+#!/bin/bash
+
+nanomod_pull () {
+	update_microg
+	update_fdroid
+	update_apps
+	update_swipe
+	update_gsync
+}

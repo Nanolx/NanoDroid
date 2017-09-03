@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# Functions borrowed or derived from
+# Michael Bryant / Shadow53
+# https://gitlab.com/Shadow53/android-zip-builder
+
+REPO_FDROID="https://f-droid.org/repo"
+REPO_GUARDIAN="https://guardianproject.info/fdroid/repo/"
+REPO_MICROG="https://microg.org/fdroid/repo"
+
+grab_apk_from_repo () {
+	case "${1}" in
+		fdroid )
+			REPO=${REPO_FDROID}
+		;;
+
+		guardian )
+			REPO=${REPO_GUARDIAN}
+		;;
+
+		microg )
+			REPO=${REPO_MICROG}
+		;;
+	esac
+
+	DOMAIN="$(awk -F/ '{print $3}' <<< ${REPO})"
+	INDEX_FILE="${CWD}/data/${DOMAIN}.index.xml"
+
+	[ ! -f "${INDEX_FILE}" ] && \
+		wget -nv -c -O "${INDEX_FILE}" "${REPO}/index.xml"
+
+	PKG_NAME="${2}"
+	APK_NAME="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/apkname/text()" ${INDEX_FILE})"
+
+	APK_URL="${REPO}/${APK_NAME}"
+	APK_DEST="${CWD}/Full/system/${3}/${4}"
+
+	mkdir -p "${APK_DEST}"
+	wget -nv -O "${APK_DEST}/${4}.apk" "${APK_URL}"
+}
+
+grab_apk_from_url () {
+	APK_URL="${1}"
+	APK_DEST="${CWD}/Full/system/${2}/${3}"
+
+	mkdir -p "${APK_DEST}"
+	wget -nv -O "${APK_DEST}/${3}.apk" "${APK_URL}"
+}
+
+grab_apk_from_github () {
+	APK_URL="${curl -s https://api.github.com/repos/${1}/releases | gawk -F\" '/name.*.apk/{print $4; exit}'}"
+	APK_DEST="${CWD}/Full/system/${2}/${3}"
+
+	mkdir -p "${APK_DEST}"
+	wget -nv -O "${APK_DEST}/${3}.apk" "${APK_URL}"
+}
+
+grab_apk_from_ogapps () {
+	case "${1}" in
+		"com.google.android.syncadapters.calendar" )
+			APK_URL="https://github.com/opengapps/all/blob/master/${2}/${1}/15/nodpi/2015080710.apk?raw=true"
+		;;
+
+		* )
+			APK_URL="https://github.com/opengapps/all/blob/master/${2}/${1}/${4}/nodpi/${4}.apk?raw=true"
+		;;
+	esac
+
+	case "${4}" in
+		19 ) API_LETTER=K ;;
+		21 ) API_LETTER=L ;;
+		23 ) API_LETTER=M ;;
+		24 ) API_LETTER=N ;;
+		26 ) API_LETTER=O ;;
+	esac
+
+	APK_DEST="${CWD}/Full/gsync/${API_LETTER}/${2}/${3}"
+
+	mkdir -p "${APK_DEST}"
+	wget -nv -O "${APK_DEST}/${3}.apk" "${APK_URL}"
+}
+
+grab_lib_from_ogapps () {
+	case "${3}" in
+		arm | x86 )	 LIBD=lib   ;;
+		arm64 | x86_64 ) LIBD=lib64 ;;
+	esac
+
+	APK_URL="https://github.com/opengapps/${3}/blob/master/${LIBD}/${2}/${1}?raw=true"
+
+	APK_DEST="${CWD}/Full/swipe/${3}"
+
+	mkdir -p "${APK_DEST}"
+	wget -nv -O "${APK_DEST}/${1}" "${APK_URL}"
+}

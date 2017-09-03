@@ -1,0 +1,106 @@
+#!/bin/bash
+
+progress () {
+	sleep 0.5
+	while [ -d "/proc/${1}" ];do
+		echo -ne '/\x08' ; sleep 0.05
+		echo -ne '-\x08' ; sleep 0.05
+		echo -ne '\\\x08' ; sleep 0.05
+		echo -ne '|\x08' ; sleep 0.05
+	done
+}
+
+zip_add () {
+	case ${1} in
+		*/ )	zip -r "${ZIP}" ${1} &>/dev/null || exit 1 ;;
+		"" )	zip -r "${ZIP}" * &>/dev/null    || exit 1 ;;
+		*  )	zip "${ZIP}" ${1} &>/dev/null    || exit 1 ;;
+	esac
+}
+
+increase_version_number() {
+	sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i "${CWD}/build-package"
+
+	for module in Full microG F-Droid; do
+		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}    \"/" -i \
+			"${CWD}/${module}/META-INF/com/google/android/update-binary"
+		sed -e "s/version=.*/version=v${2}.${3}/" -i \
+			"${CWD}/${module}/module.prop"
+	done
+
+	for module in uninstaller patcher; do
+		sed -e "s/\"      NanoMod.*/\"      NanoMod ${2}.${3}     \"/" -i \
+			"${CWD}/${module}/META-INF/com/google/android/update-binary"
+	done
+
+	sed -e "s/rom_version\",.*/rom_version\",	\"${2}\")\;/" -i \
+		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
+	sed -e "s/rom_date\",.*/rom_date\",	\"${3}\")\;/" -i \
+		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
+	sed -e "s/Wizard.*/Wizard ${2}.${3}\")\;/" -i \
+		"${CWD}/setup-wizard/META-INF/com/google/android/updater-script"
+	sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}    \"/" -i \
+		"${CWD}/setup-wizard/nanomod-setup"
+
+	exit 0
+
+}
+
+increase_module_version () {
+	for module in Full microG F-Droid; do
+		eval $(grep versionCode "${PWD}"/"${module}"/module.prop)
+		versionCode=$((versionCode+1))
+		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
+			-i "${CWD}/${module}/module.prop"
+	done
+
+	exit 0
+}
+
+dalvikize_jar () {
+	if [[ -f ${1} ]]; then
+		${ANDROID_HOME}/build-tools/26.0.1/dx \
+			--dex \
+			--output="$(basename "${1}" .jar).dex" \
+			"${1}"
+	fi
+
+	exit 0
+}
+
+show_help () {
+	echo -e "
+** NanoMod ${VERSION} helper script **
+
+usage:	build-package [opt] [arg]
+
+setup NanoMod [! do this first !]:
+	pull			| download all required apks for NanoMod
+
+update contents:
+	u-microg		| update microG and companions
+				|| except: microG GmsCore, Play Store
+	u-fdroid		| update F-Droid and Extension
+	u-apps			| update most applications
+				|| except: Kernel Adiutor, Lightning, OpenWeatherMapProvider,
+				||         Substratum, XDA Labs, YahooWeatherProvider
+	u-swipe			| update swipe libraries
+	u-gsync			| update Google Sync Adapters
+
+create zip files:
+	full			| create full package zip from repo
+	microg			| create microG package zip from repo
+	fdroid			| create F-Droid package zip from repo
+	patcher			| create framework patcher zip from repo
+	uninstaller		| create uninstaller zip from repo
+	setupwizard		| create setup-wizard zip from repo
+	all			| create all zips from repo
+
+misc. stuff:
+	dalvik	[jar]		| prepare a jar file for dalvikvm usage
+	ver	[ver] [date]	| bump version
+	bump			| bump versionCode in Magisk Modules
+"
+
+	exit 0
+}

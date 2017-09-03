@@ -1,0 +1,29 @@
+#!/bin/bash
+
+update_apps () {
+	# applications managed by repos
+	grab_apk_from_repo ${fd_ADAWAY[@]}
+	grab_apk_from_repo ${fd_AMAZE[@]}
+	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
+	grab_apk_from_repo ${fd_FACESLIM[@]}
+	grab_apk_from_repo ${fd_HACKERKEYBOARD[@]}
+	grab_apk_from_repo ${fd_K9MAIL[@]}
+	grab_apk_from_repo ${fd_KEEPASSDROID[@]}
+	grab_apk_from_repo ${fd_NEWPIPE[@]}
+	grab_apk_from_repo ${fd_OANDBACKUP[@]}
+	grab_apk_from_repo ${fd_ODYSSEY[@]}
+	grab_apk_from_repo ${fd_OPENCAMERA[@]}
+	grab_apk_from_repo ${fd_OPENKEYCHAIN[@]}
+	grab_apk_from_repo ${fd_OPENLAUNCHER[@]}
+	grab_apk_from_repo ${fd_OPENVPN[@]}
+	grab_apk_from_repo ${fd_QKSMS[@]}
+	grab_apk_from_repo ${fd_SIMPLECALENDAR[@]}
+	grab_apk_from_repo ${fd_SIMPLEGALLERY[@]}
+	grab_apk_from_repo ${fd_TERMUX[@]}
+	grab_apk_from_repo ${fd_TWIDERE[@]}
+
+	# applications not managed by repos
+	grab_apk_from_url ${gd_ORBOT[@]}
+	grab_apk_from_url ${gd_ORFOX[@]}
+	grab_apk_from_github ${gh_MPV[@]}
+}

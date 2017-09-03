@@ -1,0 +1,54 @@
+#!/bin/bash
+
+create_microg_package() {
+	ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	echo "
+Creating Package
+
+	Type		microG
+	File		$(basename ${ZIP})
+	Directory	$(dirname ${ZIP})
+"
+
+	cd "${CWD}/Full"
+
+	for app in nlpBackendIchnaea nlpBackendNominatim; do
+		zip_add "system/app/${app}/"
+	done
+
+	for app in DroidGuard FakeStore GmsCore \
+		GsfProxy Phonesky YalpStore; do
+		zip_add "system/priv-app/${app}/"
+	done
+
+	for input in "system/xbin/nanomod-overlay" "system/xbin/bash*" "system/xbin/aapt*" \
+		"system/xbin/column*" "system/xbin/unzip*" "system/framework/" "gsync/" \
+		"system/etc/permissions/" "system/etc/bash*" "system/share/" "swipe/"; do
+		zip_add "${input}"
+	done
+
+	cd "${CWD}"
+
+	cd "${CWD}/microG"
+	zip_add
+	cd "${CWD}"
+
+	zip_add README.md
+	zip_add ChangeLog.md
+
+	cd "${CWD}/doc"
+	zip_add .nanomod-overlay
+	sed -e 's/nanomod_overlay=1/nanomod_overlay=0/' -i .nanomod-setup
+	zip_add .nanomod-setup
+	sed -e 's/nanomod_overlay=0/nanomod_overlay=1/' -i .nanomod-setup
+	cd "${CWD}"
+
+	echo "Done"
+}
+
+mk_pkg_microg () {
+	create_microg_package &
+	progress $!
+}

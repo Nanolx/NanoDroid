@@ -1,0 +1,35 @@
+#!/bin/bash
+
+create_full_package () {
+	ZIP="${CWD}/NanoMod-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	echo "
+Creating Package
+
+	Type		Full
+	Name		$(basename ${ZIP})
+	Directory	$(dirname ${ZIP})
+"
+
+	cd "${CWD}/Full"
+	zip_add
+	cd "${CWD}"
+
+	for file in README.md ChangeLog.md; do
+		zip_add "${file}"
+	done
+
+	cd "${CWD}/doc"
+	for file in .nanomod-overlay .nanomod-apps .nanomod-setup; do
+		zip_add "${file}"
+	done
+	cd "${CWD}"
+
+	echo "Done"
+}
+
+mk_pkg_full () {
+	create_full_package &
+	progress $!
+}

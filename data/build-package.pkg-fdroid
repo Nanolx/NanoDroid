@@ -1,0 +1,38 @@
+#!/bin/bash
+
+create_fdroid_package() {
+	ZIP="${CWD}/NanoMod-fdroid-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	echo "
+Creating Package
+
+	Type		F-Droid
+	Name		$(basename ${ZIP})
+	Directory	$(dirname ${ZIP})
+"
+
+	cd "${CWD}/Full"
+	zip_add "system/app/FDroid/"
+	zip_add "system/priv-app/FDroidPrivileged/"
+	zip_add "system/xbin/unzip*"
+	cd "${CWD}"
+
+	cd "${CWD}/F-Droid"
+	zip_add
+	cd "${CWD}"
+
+	zip_add README.md
+	zip_add ChangeLog.md
+
+	cd "${CWD}/doc"
+	zip_add .nanomod-setup
+	cd "${CWD}"
+
+	echo "Done"
+}
+
+mk_pkg_fdroid () {
+	create_fdroid_package &
+	progress $!
+}

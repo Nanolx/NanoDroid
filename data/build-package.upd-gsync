@@ -1,0 +1,10 @@
+#!/bin/bash
+
+update_gsync () {
+	#          KK LL M  N
+	for API in 19 21 23 24; do
+		grab_apk_from_ogapps ${og_CALSYNC[@]} ${API}
+		grab_apk_from_ogapps ${og_CONSYNC[@]} ${API}
+		grab_apk_from_ogapps ${og_BTRANSP[@]} ${API}
+	done
+}
