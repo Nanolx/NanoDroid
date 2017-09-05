@@ -36,7 +36,7 @@ grab_apk_from_repo () {
 	APK_DEST="${CWD}/Full/system/${3}/${4}"
 
 	mkdir -p "${APK_DEST}"
-	wget -nv -O "${APK_DEST}/${4}.apk" "${APK_URL}"
+	wget -nv -c -O "${APK_DEST}/${4}.apk" "${APK_URL}"
 }
 
 grab_apk_from_url () {
@@ -44,7 +44,7 @@ grab_apk_from_url () {
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
 
 	mkdir -p "${APK_DEST}"
-	wget -nv -O "${APK_DEST}/${3}.apk" "${APK_URL}"
+	wget -nv -c -O "${APK_DEST}/${3}.apk" "${APK_URL}"
 }
 
 # XXX
@@ -70,7 +70,7 @@ ${5}-${VERSION}-android-apk-download/download/"
 
 	mkdir -p "${APK_DEST}"
 	wget --user-agent="${USER_AGENT}" -nv \
-		"${APK_URL}" -O "${APK_DEST}/${4}.apk"
+		-c "${APK_URL}" -O "${APK_DEST}/${4}.apk"
 }
 
 
@@ -82,7 +82,7 @@ grab_apk_from_github () {
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
 
 	mkdir -p "${APK_DEST}"
-	wget -nv -O "${APK_DEST}/${3}.apk" "${APK_URL}"
+	wget -nv -c -O "${APK_DEST}/${3}.apk" "${APK_URL}"
 }
 
 grab_apk_from_ogapps () {
@@ -107,7 +107,7 @@ grab_apk_from_ogapps () {
 	APK_DEST="${CWD}/Full/gsync/${API_LETTER}/${2}/${3}"
 
 	mkdir -p "${APK_DEST}"
-	wget -nv -O "${APK_DEST}/${3}.apk" "${APK_URL}"
+	wget -nv -c -O "${APK_DEST}/${3}.apk" "${APK_URL}"
 }
 
 grab_lib_from_ogapps () {
@@ -121,5 +121,5 @@ grab_lib_from_ogapps () {
 	APK_DEST="${CWD}/Full/swipe/${3}"
 
 	mkdir -p "${APK_DEST}"
-	wget -nv -O "${APK_DEST}/${1}" "${APK_URL}"
+	wget -nv -c -O "${APK_DEST}/${1}" "${APK_URL}"
 }
