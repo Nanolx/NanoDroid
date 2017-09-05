@@ -42,11 +42,6 @@ the `build-package` script does not download/update the following applications:
 * microG GmsCore (reason: re-signed to support (in-)app-purchases with Play Store)
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
 * Lightning (reason: self-built snapshot)
-* Kernel Adiutor (reason: auto-download from APK Mirror not (yet) supported)
-* OpenWeatherMapProvider (reason: auto-download from APK Mirror not (yet) supported)
-* Substratum (reason: auto-download from APK Mirror not (yet) supported)
-* XDA Labs (reason: auto-download from APK Mirror not (yet) supported)
-* YahooWeatherProvider (reason: auto-download from APK Mirror not (yet) supported)
 * API 26 / Oreo Google Sync Adapters (reason: not yet part of OpenGApps)
 
 those are still included in the repo itself. Also `build-package` now looks if the configuration files

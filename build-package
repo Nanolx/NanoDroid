@@ -4,18 +4,6 @@ VERSION=13.2.99999999
 CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
-# not auto-updated (because reasons):
-# microG GmsCore	>> self-signed
-# Play Store		>> patched and self-signed
-# Lightning		>> self-built and self-signed
-
-# not auto-updated (missing link):
-# Kernel Adiutor
-# OpenWeatherMapProvider
-# Substratum
-# XDA Labs
-# YahooWeatherProvider
-
 for funcfile in nanolx pkg-full pkg-microg pkg-fdroid \
 	pkg-patcher pkg-setupwizard pkg-uninstaller \
 	upd-apps upd-gsync upd-swipe upd-microg upd-fdroid \

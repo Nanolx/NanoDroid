@@ -47,6 +47,33 @@ grab_apk_from_url () {
 	wget -nv -O "${APK_DEST}/${3}.apk" "${APK_URL}"
 }
 
+# XXX
+# I've never used curl, nor whatever, I suck at
+# automated HTML parsing, so you'll get eyesore
+# from looking at his code, you've been warned.
+
+USER_AGENT="Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0"
+grab_apk_from_apkmirror () {
+	VERSION=$(curl -s https://www.apkmirror.com/apk/${1}/${2}/ | \
+		gawk -F\" '/apk.*release/{print $4 ; exit}' | \
+		sed -e "s,.*${2}-,,g;s,-release/,,g")
+
+	URL_STRING="https://www.apkmirror.com/apk/\
+${1}/${2}/${2}-${VERSION}-release/\
+${5}-${VERSION}-android-apk-download/download/"
+
+	URL_WP=$(curl -s ${URL_STRING} | \
+		gawk -F\" '/If not, please click/{print $16}')
+
+	APK_URL="https://www.apkmirror.com${URL_WP}"
+	APK_DEST="${CWD}/Full/system/${3}/${4}"
+
+	mkdir -p "${APK_DEST}"
+	wget --user-agent="${USER_AGENT}" -nv \
+		"${APK_URL}" -O "${APK_DEST}/${4}.apk"
+}
+
+
 grab_apk_from_github () {
 	TAG_NAME="$(curl -s https://api.github.com/repos/${1}/releases | gawk -F\" '/tag_name/{print $4; exit}')"
 	APK_NAME="$(curl -s https://api.github.com/repos/${1}/releases | gawk -F\" '/name.*.apk/{print $4; exit}')"

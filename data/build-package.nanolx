@@ -100,8 +100,7 @@ update contents:
 				|| except: microG GmsCore, Play Store
 	u-fdroid		| update F-Droid and Extension
 	u-apps			| update most applications
-				|| except: Kernel Adiutor, Lightning, OpenWeatherMapProvider,
-				||         Substratum, XDA Labs, YahooWeatherProvider
+				|| except: Lightning
 	u-swipe			| update swipe libraries
 	u-gsync			| update Google Sync Adapters
 				|| except: Android Oreo / SDK 26

@@ -55,3 +55,13 @@ gh_MPV=(mpv-android/mpv-android app MPV)
 og_CALSYNC=(com.google.android.syncadapters.calendar app GoogleCalendarSync)
 og_CONSYNC=(com.google.android.syncadapters.contacts app GoogleContactsSync)
 og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
+
+###
+# APK Mirror
+###
+
+am_KERNELADIUTOR=(willi-ye kernel-adiutor app KernelAdiutor kernel-adiutor-root)
+am_SUBSTRATUM=(projekt substratum-theme-engine app Substratum substratum-theme-engine-★-root)
+am_OPENWEATHER=(lineageos openweathermap app OpenWeatherMapProvider openweathermap)
+am_YAHOOWEATHER=(lineageos yahoo-weather-2 app YahooWeatherProvider yahoo-weather)
+am_XDALABS=(xda xda-labs app XDALabs xda-labs)

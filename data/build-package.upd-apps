@@ -26,4 +26,10 @@ update_apps () {
 	grab_apk_from_url ${gd_ORBOT[@]}
 	grab_apk_from_url ${gd_ORFOX[@]}
 	grab_apk_from_github ${gh_MPV[@]}
+	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
+	grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
+	grab_apk_from_apkmirror ${am_OPENWEATHER[@]}
+	grab_apk_from_apkmirror ${am_YAHOOWEATHER[@]}
+	grab_apk_from_apkmirror ${am_XDALABS[@]}
+
 }
