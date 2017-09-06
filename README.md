@@ -72,13 +72,6 @@ earlier versions will never officially be supported (you may still report bugs, 
 
 Future versions will be officially supported, eventually.
 
-## Important Note
-
-NanoMod is currently incompatible with Magisk 13.5/13.6 beta versions. Possible workarounds:
-
-* stay at Magisk 13.3
-* install in System Mode
-
 ## Support
 
 [> XDA](https://forum.xda-developers.com/apps/magisk/module-nanomod-5-0-20170405-microg-t3584928) Support Thread
