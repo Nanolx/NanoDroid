@@ -517,7 +517,6 @@ install_misc () {
 	nanomod_install /system/etc/terminfo /system/etc/
 	nanomod_install /system/etc/bash_logout /system/etc/
 	nanomod_install /system/etc/bashrc /system/etc/
-	nanomod_install /system/share /system/
 
 	for binary in bash less nano nano.bin nanomod-overlay; do
 		nanomod_install /system/xbin/${binary} /system/xbin/ bin

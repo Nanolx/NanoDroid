@@ -31,7 +31,7 @@ Creating Package
 
 	for input in "system/xbin/nanomod-overlay" "system/xbin/bash*" "system/xbin/aapt*" \
 		"system/xbin/column*" "system/xbin/unzip*" "system/framework/" "gsync/" \
-		"system/etc/permissions/" "system/etc/bash*" "system/share/" "swipe/"; do
+		"system/etc/permissions/" "system/etc/bash*" "swipe/"; do
 		zip_add "${input}"
 	done
 

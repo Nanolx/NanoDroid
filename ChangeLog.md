@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 13.2a.20170906
+* Bug Fixes
+  * Full, microG packages:
+     * Fix bootloop with Magisk 13.5 / 13.6 / 14.0
+
 ## 13.2.20170906
 * Bug Fixes
   * Framework-Patcher package, Framework-Patcher addon.d:
