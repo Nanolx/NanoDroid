@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 13.2 in-dev
+## 13.2.20170906
 * Bug Fixes
   * Framework-Patcher package, Framework-Patcher addon.d:
      * include 32 bit paths in `${LD_LIBRARY_PATH}` on 64 bit devices
