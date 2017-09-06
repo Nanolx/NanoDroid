@@ -114,5 +114,3 @@ for opt in ${@}; do
 		;;
 	esac
 done
-
-rm -f ${CWD}/data/*.xml
