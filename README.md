@@ -32,6 +32,7 @@
 
 the `build-package` script additionally supports the following parameters:
 
+* `check` check if all files were properly downloaded
 * `clean` remove any untracked files from the repo (e. g. from `build-package pull`)
 * `dalvik [.jar]` prepare a jar file for use with DalvikVM
 * `ver [version] [date]` change project version

@@ -115,6 +115,7 @@ create zip files:
 	all			| create all zips from repo
 
 misc. stuff:
+	check			| check if all files were properly downloaded
 	clean			| remove any untracked files from the repo
 	dalvik	[jar]		| prepare a jar file for dalvikvm usage
 	ver	[ver] [date]	| bump version

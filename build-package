@@ -7,7 +7,7 @@ CWD=$(dirname "${CWD}")
 for funcfile in nanolx pkg-full pkg-microg pkg-fdroid \
 	pkg-patcher pkg-setupwizard pkg-uninstaller \
 	upd-apps upd-gsync upd-swipe upd-microg upd-fdroid \
-	shadow53 database pull; do
+	shadow53 database pull check; do
 	source "${CWD}/data/build-package.${funcfile}"
 done
 
@@ -72,6 +72,7 @@ for opt in ${@}; do
 
 		pull )
 			nanomod_pull
+			check_nanomod
 		;;
 
 		u-microg )
@@ -92,6 +93,10 @@ for opt in ${@}; do
 
 		u-gsync )
 			update_gsync
+		;;
+
+		check )
+			check_nanomod
 		;;
 
 		clean )

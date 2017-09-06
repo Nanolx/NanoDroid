@@ -1,0 +1,20 @@
+#!/bin/bash
+
+NANOMOD_MISSING_FILES=0
+missing_database=""
+
+check_nanomod () {
+	for file in ${files_database[@]}; do
+		if [[ ! -f ${CWD}/${file} ]]; then
+			NANOMOD_MISSING_FILES=1
+			missing_database=(${missing_databse[@]} ${file})
+		fi
+	done
+
+	if [[ ${NANOMOD_MISSING_FILES} -ne 0 ]]; then
+		rm -f ${CWD}/.nanomod-pull
+		echo -e "\nThe following files are missing:\n"
+		print f '%s\n' ${missing_database[@]}
+	else	echo -e "\nNanoMod correctly populated\n"
+	fi
+}
