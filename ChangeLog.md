@@ -7,6 +7,8 @@
          * F-Droid
          * microG repository
          * APK Mirror
+* Updates
+  * Play Store (8.2.32.T)
 
 ## 13.2a.20170906
 * Bug Fixes
