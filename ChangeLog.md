@@ -3,7 +3,7 @@
 ## 13.3 in-dev
 * General Changes
   * build-package Script
-     * check SHA256 has of apks downloaded from
+     * check SHA256 hash of apks downloaded from
          * F-Droid
          * microG repository
          * APK Mirror
