@@ -1,5 +1,13 @@
 # ChangeLog
 
+## 13.3 in-dev
+* General Changes
+  * build-package Script
+     * check SHA256 has of apks downloaded from
+         * F-Droid
+         * microG repository
+         * APK Mirror
+
 ## 13.2a.20170906
 * Bug Fixes
   * Full, microG packages:
