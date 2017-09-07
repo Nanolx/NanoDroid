@@ -12,14 +12,17 @@ grab_apk_from_repo () {
 	case "${1}" in
 		fdroid )
 			REPO=${REPO_FDROID}
+			REPO_P="F-Droid"
 		;;
 
 		guardian )
 			REPO=${REPO_GUARDIAN}
+			REPO_P="Guardian Project"
 		;;
 
 		microg )
 			REPO=${REPO_MICROG}
+			REPO_P="microG"
 		;;
 	esac
 
@@ -27,25 +30,47 @@ grab_apk_from_repo () {
 	INDEX_FILE="${CWD}/data/${DOMAIN}.index.xml"
 
 	[ ! -f "${INDEX_FILE}" ] && \
-		wget -nv -c -O "${INDEX_FILE}" "${REPO}/index.xml"
+		wget -q -c -O "${INDEX_FILE}" "${REPO}/index.xml"
 
 	PKG_NAME="${2}"
 	APK_NAME="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/apkname/text()" ${INDEX_FILE})"
+	SHA_SUM="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/hash/text()" ${INDEX_FILE})"
 
 	APK_URL="${REPO}/${APK_NAME}"
 	APK_DEST="${CWD}/Full/system/${3}/${4}"
 
-	mkdir -p "${APK_DEST}"
-	wget -nv -c -O "${APK_DEST}/${4}.apk" "${APK_URL}" || \
+	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
+		echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
+	else	echo -e "\nDownloading from ${REPO_P}: ${4}.apk"
+		mkdir -p "${APK_DEST}"
+	fi
+
+	wget -q -c -O "${APK_DEST}/${4}.apk" "${APK_URL}"
+
+	TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
+
+	if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
+		echo "	SHA256 hash of ${4}.apk is correct"
+	else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
+		\n	expected	: ${SHA_SUM}\
+		\n	got		: ${TMP_SUM/ *}"
 		rm -f "${APK_DEST}/${4}.apk"
+	fi
 }
 
 grab_apk_from_url () {
 	APK_URL="${1}"
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
 
-	mkdir -p "${APK_DEST}"
-	wget -nv -c -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+		echo -e "\nUpdating from URL         : ${3}.apk"
+	else	echo -e "\nDownloading from URL      : ${3}.apk"
+		mkdir -p "${APK_DEST}"
+	fi
+
+	echo "	Checking SHA256 hash not (yet) supported"
+
+	wget -q -c -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 }
 
@@ -62,18 +87,36 @@ grab_apk_from_apkmirror () {
 
 	URL_STRING="https://www.apkmirror.com/apk/\
 ${1}/${2}/${2}-${VERSION}-release/\
-${5}-${VERSION}-android-apk-download/download/"
+${5}-${VERSION}-android-apk-download"
 
-	URL_WP=$(curl -s ${URL_STRING} | \
+	URL_WP=$(curl -s "${URL_STRING}/download/" | \
 		gawk -F\" '/If not, please click/{print $16}')
+
+	SHA_SUM=$(curl -s "${URL_STRING}/" | \
+		grep "SHA-256.*[^>]</span>" | \
+		sed -e 's,.*\">,,;s,</span>,,')
 
 	APK_URL="https://www.apkmirror.com${URL_WP}"
 	APK_DEST="${CWD}/Full/system/${3}/${4}"
 
-	mkdir -p "${APK_DEST}"
+	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
+		echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
+	else	echo -e "\nDownloading from ${REPO_P}: ${4}.apk"
+		mkdir -p "${APK_DEST}"
+	fi
+
 	wget --user-agent="${USER_AGENT}" -nv \
-		-c "${APK_URL}" -O "${APK_DEST}/${4}.apk" || \
+		-c "${APK_URL}" -O "${APK_DEST}/${4}.apk"
+
+	TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
+
+	if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
+		echo "	SHA256 hash of ${4}.apk is correct"
+	else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
+		\n	expected	: ${SHA_SUM}\
+		\n	got		: ${TMP_SUM/ *}"
 		rm -f "${APK_DEST}/${4}.apk"
+	fi
 }
 
 
@@ -84,7 +127,14 @@ grab_apk_from_github () {
 	APK_URL="https://github.com/${1}/releases/download/${TAG_NAME}/${APK_NAME}"
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
 
-	mkdir -p "${APK_DEST}"
+	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+		echo -e "\nUpdating from GitHub      : ${3}.apk"
+	else	echo -e "\nDownloading from GitHub   : ${3}.apk"
+		mkdir -p "${APK_DEST}"
+	fi
+
+	echo "	Checking SHA256 hash not (yet) supported"
+
 	wget -nv -c -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 }
@@ -110,8 +160,15 @@ grab_apk_from_ogapps () {
 
 	APK_DEST="${CWD}/Full/gsync/${API_LETTER}/${2}/${3}"
 
-	mkdir -p "${APK_DEST}"
-	wget -nv -c -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+		echo -e "\nUpdating from OpenGApps   : ${3}.apk [${API_LETTER}]"
+	else	echo -e "\nDownloading from OpenGApps: ${3}.apk [${API_LETTER}]"
+		mkdir -p "${APK_DEST}"
+	fi
+
+	echo "	Checking SHA256 hash not (yet) supported"
+
+	wget -q -c -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 }
 
@@ -122,10 +179,16 @@ grab_lib_from_ogapps () {
 	esac
 
 	APK_URL="https://github.com/opengapps/${3}/blob/master/${LIBD}/${2}/${1}?raw=true"
-
 	APK_DEST="${CWD}/Full/swipe/${3}"
 
-	mkdir -p "${APK_DEST}"
-	wget -nv -c -O "${APK_DEST}/${1}" "${APK_URL}" || \
+	if [[ -f "${APK_DEST}/${1}" ]]; then
+		echo -e "\nUpdating from OpenGApps   : ${1} [${3}]"
+	else	echo -e "\nDownloading from OpenGApps: ${1} [${3}]"
+		mkdir -p "${APK_DEST}"
+	fi
+
+	echo "	Checking SHA256 hash not (yet) supported"
+
+	wget -q -c -O "${APK_DEST}/${1}" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${1}"
 }
