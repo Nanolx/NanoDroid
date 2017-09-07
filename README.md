@@ -30,7 +30,9 @@
          * `build-package u-gsync` to update Google Sync Adapters
          * `build-package pull` to update/re-download everything
 
-the `build-package` script additionally supports the following parameters:
+for apks downloaded from F-Droid or microG repository or from APK Mirror, `build-package` checks the SHA256 hash.
+
+The `build-package` script additionally supports the following parameters:
 
 * `check` check if all files were properly downloaded
 * `clean` remove any untracked files from the repo (e. g. from `build-package pull`)
