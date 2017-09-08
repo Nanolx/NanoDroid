@@ -138,6 +138,8 @@ Extra packages, always flash through TWRP.
   * creates the file `/system/.nanomod-patcher` after successful patching
   * installs an addon.d script for automatic re-patching after ROM update
      * addon.d support files reside in `/data/nanomod-patcher/`
+  * the original, unpatched `services.jar` (and optionally `Settings.apk`) are backed up to `/sdcard/`
+     * respectively `SecSettings.apk` on TouchWiz ROMs
 * **NanoMod-setupwizard**: includes
   * **AROMA** based Setup Wizard to create the configuration files
   * user can choose where to store the configuration files
@@ -150,6 +152,8 @@ Extra packages, always flash through TWRP.
   * uninstalls NanoMod installed in System Mode
   * uninstalls NanoMod configuration files
   * uninstalls NanoMod-Patcher addon.d environment
+  * if `services.jar` or `Settings.apk` backups are found they get restored
+     * respectively `SecSettings.apk` on TouchWiz ROMs
 
 ### Scripts
 
@@ -161,6 +165,8 @@ Misc. Script for use from PC/Notebook, while device is in TWRP.
   * invoke like `framework-patcher [ver] [--gui]`
      * where [ver] is your Android version (6.0, 7.1, ...)
      * where `--gui` is an optional switch to patch a global toggle for signature spoofing into Developer Settings
+  * the original, unpatched `services.jar` (and optionally `Settings.apk`) are backed up to `/sdcard/`
+     * respectively `SecSettings.apk` on TouchWiz ROMs
 * **force-debloat** (clone this repository)
   * system debloater
   * the list of applications resides in the script itself
