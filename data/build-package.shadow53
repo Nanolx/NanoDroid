@@ -40,12 +40,19 @@ grab_apk_from_repo () {
 	APK_DEST="${CWD}/Full/system/${3}/${4}"
 
 	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
-		echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
-	else	echo -e "\nDownloading from ${REPO_P}: ${4}.apk"
-		mkdir -p "${APK_DEST}"
-	fi
+		TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
 
-	wget -q -c -O "${APK_DEST}/${4}.apk" "${APK_URL}"
+		if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
+			echo -e "\nUp-to-Date from ${REPO_P} : ${4}.apk"
+		else	echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
+			rm -f "${APK_DEST}/${4}.apk"
+			wget -q -O "${APK_DEST}/${4}.apk" "${APK_URL}"
+		fi
+	else
+		echo -e "\nDownloading from ${REPO_P}: ${4}.apk"
+		mkdir -p "${APK_DEST}"
+		wget -q -O "${APK_DEST}/${4}.apk" "${APK_URL}"
+	fi
 
 	TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
 
@@ -70,7 +77,7 @@ grab_apk_from_url () {
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -q -c -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 }
 
@@ -100,13 +107,21 @@ ${5}-${VERSION}-android-apk-download"
 	APK_DEST="${CWD}/Full/system/${3}/${4}"
 
 	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
-		echo -e "\nUpdating from APKMirror   : ${4}.apk"
-	else	echo -e "\nDownloading from APKMirror: ${4}.apk"
-		mkdir -p "${APK_DEST}"
-	fi
+		TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
 
-	wget --user-agent="${USER_AGENT}" -q \
-		-c "${APK_URL}" -O "${APK_DEST}/${4}.apk"
+		if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
+			echo -e "\nUp-to-Date from ${REPO_P} : ${4}.apk"
+		else	echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
+			rm -f "${APK_DEST}/${4}.apk"
+			wget --user-agent="${USER_AGENT}" -q \
+				"${APK_URL}" -O "${APK_DEST}/${4}.apk"
+		fi
+	else
+		echo -e "\nDownloading from ${REPO_P}: ${4}.apk"
+		mkdir -p "${APK_DEST}"
+		wget --user-agent="${USER_AGENT}" -q \
+			"${APK_URL}" -O "${APK_DEST}/${4}.apk"
+	fi
 
 	TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
 
@@ -135,7 +150,7 @@ grab_apk_from_github () {
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -q -c -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 }
 
@@ -168,7 +183,7 @@ grab_apk_from_ogapps () {
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -q -c -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 }
 
@@ -189,6 +204,6 @@ grab_lib_from_ogapps () {
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -q -c -O "${APK_DEST}/${1}" "${APK_URL}" || \
+	wget -q -O "${APK_DEST}/${1}" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${1}"
 }
