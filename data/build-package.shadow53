@@ -100,12 +100,12 @@ ${5}-${VERSION}-android-apk-download"
 	APK_DEST="${CWD}/Full/system/${3}/${4}"
 
 	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
-		echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
-	else	echo -e "\nDownloading from ${REPO_P}: ${4}.apk"
+		echo -e "\nUpdating from APKMirror   : ${4}.apk"
+	else	echo -e "\nDownloading from APKMirror: ${4}.apk"
 		mkdir -p "${APK_DEST}"
 	fi
 
-	wget --user-agent="${USER_AGENT}" -nv \
+	wget --user-agent="${USER_AGENT}" -q \
 		-c "${APK_URL}" -O "${APK_DEST}/${4}.apk"
 
 	TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
@@ -135,7 +135,7 @@ grab_apk_from_github () {
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -nv -c -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+	wget -q -c -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 }
 
