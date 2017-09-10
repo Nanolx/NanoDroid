@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 13.3 in-dev
+## 13.3.20170910
 * Bug Fixes
   * Full, microG, F-Droid packages:
      * `magisk.img` is not always created by Magisk 14.0
@@ -13,9 +13,12 @@
          * microG repository
          * APK Mirror
      * other internal improvements
-* Updates
+* Updates (manual)
   * Play Store (8.2.36.T)
   * microG GmsCore (0.2.4-105)
+* Updates (automatically)
+  * (Simple) Calendar (2.7.4)
+  * F-Droid (1.0-alpha2)
 
 ## 13.2a.20170906
 * Bug Fixes
