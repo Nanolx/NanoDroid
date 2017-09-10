@@ -567,12 +567,12 @@ if [ "${nanomod_forcesystem}" -eq 1 ]; then
 		MODE=MAGISK
 		MODE_TEXT=" > Mode   | Magisk          | forced"
 	fi
-elif [ ! -f /data/magisk.img  ]; then
-	MODE=SYSTEM
-	MODE_TEXT=" > Mode   | System          | detected"
-else
+elif [ -f /data/magisk/magisk  ]; then
 	MODE=MAGISK
 	MODE_TEXT=" > Mode   | Magisk          | detected"
+else
+	MODE=SYSTEM
+	MODE_TEXT=" > Mode   | System          | detected"
 fi
 
 ##########################################################################################

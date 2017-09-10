@@ -1,6 +1,11 @@
 # ChangeLog
 
 ## 13.3 in-dev
+* Bug Fixes
+  * Full, microG, F-Droid packages:
+     * `magisk.img` is not always created by Magisk 14.0
+         * change the way Magisk is detected
+         * create `magisk.img` if required
 * General Changes
   * build-package Script
      * check SHA256 hash of apks downloaded from
