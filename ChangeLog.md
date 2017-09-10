@@ -15,6 +15,7 @@
      * other internal improvements
 * Updates
   * Play Store (8.2.36.T)
+  * microG GmsCore (0.2.4-105)
 
 ## 13.2a.20170906
 * Bug Fixes
