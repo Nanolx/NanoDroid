@@ -1,5 +1,32 @@
 # ChangeLog
 
+## 13.4 in-dev
+* Bug Fixes
+  * Full, microG packages:
+     * install DroidGuard Helper as user app (fixes it crashing)
+  * Full, microG, F-Droid packages:
+     * fix that under certain circumstances installation errors don't cause the installer to abort
+  * Full package:
+     * when `.nanomod-apps` contains an application that is not included don't abort
+         * instead just print a message
+* General Changes
+  * Full, microG, F-Droid packages:
+     * minor internal improvements
+  * SetupWizard:
+     * updated
+  * build-package Script:
+     * Fix repo index.xml downloading
+  * Documentatation:
+     * updated
+* Updates (automatic)
+  * F-Droid Privileged Extension (0.2.6)
+  * (Simple) Gallery (2.14.1)
+  * Substratum (841)
+* Removed Applications
+  * Hacker Keyboard
+* New Applications
+  * BeHe Keyboard
+
 ## 13.3.20170910
 * Bug Fixes
   * Full, microG, F-Droid packages:
@@ -16,7 +43,7 @@
 * Updates (manual)
   * Play Store (8.2.36.T)
   * microG GmsCore (0.2.4-105)
-* Updates (automatically)
+* Updates (automatic)
   * (Simple) Calendar (2.7.4)
   * F-Droid (1.0-alpha2)
 
