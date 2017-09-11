@@ -171,15 +171,6 @@ shrink_magisk_img () {
 # Magisk Mode Installation
 ##########################################################################################
 
-magisk_install_dirs () {
-	rm -rf $MODPATH 2>/dev/null
-	mkdir -p $MODPATH
-	mkdir $MODPATH/system
-	for dir in app priv-app; do
-		mkdir $MODPATH/system/$dir
-	done
-}
-
 magisk_install_setup () {
 	ui_print "******************************"
 	ui_print "Powered by Magisk (@topjohnwu)"
@@ -226,6 +217,10 @@ magisk_install_setup () {
 	fi
 
 	MODPATH=$MOUNTPATH/$MODID
+
+	rm -rf "${MODPATH}"
+	mkdir -p "${MODPATH}/system/app"
+	mkdir -p "${MODPATH}/system/priv-app"
 }
 
 magisk_install_finish () {
@@ -354,10 +349,10 @@ nanomod_install () {
 			fi
 		fi
 	elif [ -f ${source} ]; then
-		echo "    file: ${source} > ${destination}" || \
-			error " !! failed to install ${source} to ${destination}"
+		echo "    file: ${source} > ${destination}"
 
-		cp ${source} ${destination}
+		cp ${source} ${destination} || \
+			error " !! failed to install ${source} to ${destination}"
 
 		if [[ -f ${destination} ]]; then
 			nanomod_substitute ${destination}
@@ -592,7 +587,6 @@ ui_print " "
 
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_setup
-	magisk_install_dirs
 fi
 
 if [ "${MODE}" = "SYSTEM" ]; then
