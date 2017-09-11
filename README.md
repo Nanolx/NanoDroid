@@ -380,13 +380,6 @@ Special Thanks to the beta testers
 
 List of known issues
 
-* microG DroidGuard Helper crashing
-  * there's currently an issue with **Magisk** that prevents microG DroidGuard Helper from properly working when magic-mounted as `/system` application, see Magisk Issue 155 [> GitHub](https://github.com/topjohnwu/Magisk/issues/155)
-  * this does not happen on all devices
-  * if you are affected of this issue, instead install it as an user app, using the apk from
-     * `/system/priv-app/DroidGuard/DroidGuard.apk`
-* SafetyNet check fails with `can't connect to Google API`
-  * see `microG DroidGuard Helper crashing` above and install microG DroidGuard Helper as user application
 * SafetyNet check fails with `Google Play Services not available`
   * you did not setup microG (or did not reboot afterwards)
 * Play Store lacks fake signature spoofing permission
