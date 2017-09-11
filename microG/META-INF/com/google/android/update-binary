@@ -235,15 +235,6 @@ shrink_magisk_img () {
 # Magisk Mode Installation
 ##########################################################################################
 
-magisk_install_dirs () {
-	rm -rf $MODPATH 2>/dev/null
-	mkdir -p $MODPATH
-	mkdir $MODPATH/system
-	for dir in app etc priv-app xbin; do
-		mkdir $MODPATH/system/$dir
-	done
-}
-
 magisk_install_setup () {
 	ui_print "******************************"
 	ui_print "Powered by Magisk (@topjohnwu)"
@@ -290,6 +281,12 @@ magisk_install_setup () {
 	fi
 
 	MODPATH=$MOUNTPATH/$MODID
+
+	rm -rf "${MODPATH}"
+
+	for dir in app etc priv-app xbin; do
+		mkdir -p "${MODPATH}/system/${dir}"
+	done
 }
 
 magisk_install_preinst () {
@@ -403,10 +400,16 @@ install_microg () {
 		nanomod_install /system/app/${app} /system/app/
 		nanomod_libs app/${app}
 	done
-	for app in DroidGuard GmsCore GsfProxy; do
+	for app in GmsCore GsfProxy; do
 		nanomod_install /system/priv-app/${app} /system/priv-app/
 		nanomod_libs priv-app/${app}
 	done
+
+	# DroidGuard Helper as user app
+	mkdir -p /data/app/org.microg.gms.droidguard-1/
+	cp ${INSTALLER}/system/priv-app/DroidGuard/DroidGuard.apk \
+		/data/app/org.microg.gms.droidguard-1/base.apk
+	set_perm_dir /data/app/org.microg.gms.droidguard-1/
 }
 
 install_mapsv1 () {
@@ -521,10 +524,10 @@ nanomod_install () {
 			fi
 		fi
 	elif [ -f ${source} ]; then
-		echo "    file: ${source} > ${destination}" || \
-			error " !! failed to install ${source} to ${destination}"
+		echo "    file: ${source} > ${destination}"
 
-		cp ${source} ${destination}
+		cp ${source} ${destination} || \
+			error " !! failed to install ${source} to ${destination}"
 
 		if [[ -f ${destination} ]]; then
 			nanomod_substitute ${destination}
@@ -777,7 +780,6 @@ ui_print " "
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_setup
 	magisk_install_preinst
-	magisk_install_dirs
 fi
 
 if [ "${MODE}" = "SYSTEM" ]; then
