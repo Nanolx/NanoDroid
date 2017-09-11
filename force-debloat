@@ -1,5 +1,38 @@
 #!/sbin/sh
 
+# check for configuration files
+config_locations="/sdcard /external_sd /persist /tmp /data"
+
+get_config () {
+	config=""
+	config_exists=0
+	for path in ${config_locations}; do
+		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
+			config="${path}/${1}"
+			config_exists=1
+			return
+		fi
+	done
+}
+
+# check whether '.nanomod-overlay' has new format
+# and update if required
+check_nanomodoverlay () {
+	if grep -q "APPS=(" "${nanomodoverlay}"; then
+		ui_print " ++ migrating ${nanomodoverlay} to new format"
+		sed -e 's/^.*APPS=//;s/(//g;s/)//g' -i "${nanomodoverlay}"
+		sed '/^\s*$/d' -i "${nanomodoverlay}"
+	fi
+}
+
+# check whether '.nanomod-overlay' exists,
+# if not, use fallback ${APPS}
+get_config .nanomod-overlay
+if [ "$config_exists" -eq 1 ]; then
+	APPS="$(cat "${nanomodoverlay}")"
+	NO_NANOMODOVERLAY=0
+	check_nanomodoverlay
+else	NO_NANOMODOVERLAY=1
 APPS="BasicDreams
 Browser
 Calendar
@@ -29,6 +62,7 @@ ViaBrowser
 Wallpaper
 WallpaperBackup
 WallpaperPickerGoogle"
+fi
 
 is_mounted() {
 	if [ ! -z "$2" ]; then
@@ -52,9 +86,33 @@ debloat_system () {
 		elif [[ -d /system/priv-app/${app} ]; then
 			rm -rf /system/priv-app/${app}
 			echo "${app} removed from /system/priv-app"
-		else	echo "${app} is not installed"
 		fi
 	done
+
+	umount /system
+}
+
+test_debloat_system () {
+	if (is_mounted /system); then
+		mount -orw,remount /system || error "!! failed to remount system read-write"
+	else	mount -orw /system || error "!! failed to mount system read-write"
+	fi
+
+	echo "***** TEST MODE *****"
+
+	for app in ${APPS}; do
+		if [[ -d /system/app/${app} ]; then
+			echo "${app} would be removed from /system/app"
+		elif [[ -d /system/priv-app/${app} ]; then
+			rm -rf /system/priv-app/${app}
+			echo "${app} would be removed from /system/priv-app"
+		fi
+	done
+
+	echo "***** END TEST MODE *****
+
+if that looks good to you, re-run the Script, else
+edit the Script or your '.nanomod-overlay' file"
 
 	umount /system
 }
@@ -64,21 +122,30 @@ error () {
 	exit 1
 }
 
-
 [[ ! -d /twres ]] && error "Not running from TWRP, exiting"
 is_mounted /data || mount /data
-[[ -f /data/magisk.img ]] && error "Magisk is installed, exiting"
 
 echo "NanoMod force-debloat script
 
-This script will actually remove apps from
+This script will actually remove apps from your ROM
+"
 
-	/system/app
-	/system/priv-app
+if [[ ${NO_NANOMODOVERLAY} -eq 0 ]]; then
+	echo "using \"${nanomodoverlay}\" file for values"
+else	echo "using fallback values"
+fi
 
+[[ -f /data/magisk/magisk ]] && echo "Magisk is installed!
+
+instead of using this Script, consider using Magisk
+to pseudo-debloat your ROM instead. NanoMod includes
+the 'nanomod-overlay' Script to ease doing so."
+
+echo "
 Are you sure you want to proceed?
 
-Enter [y] / [j]
+Enter [y] / [j]  to remove applications
+Enter [t] / [d]  to test what would be done
 "
 
 read -r USER_INPUT
@@ -88,11 +155,11 @@ case ${USER_INPUT} in
 		debloat_system
 	;;
 
-	"" )
-		error "No user input, exiting"
+	t | T | d | D )
+		debloat_system --test
 	;;
 
-	* )
-		error "Unknown user input, exiting"
+	*)
+		error "Exiting"
 	;;
 esac

@@ -16,6 +16,14 @@
      * updated
   * build-package Script:
      * Fix repo index.xml downloading
+  * force-debloat Script:
+     * support `.nanomod-overlay` configuration file
+         * uses fallback values, if none found, which are in the script itself and can be edited
+     * no longer abort when Magisk is installed
+     * suggest the user to pseudo-debloat instead when Magisk is installed
+     * change the way Magisk is detected
+     * add the ability to only test what would be done
+     * other minor internal changes
   * Documentatation:
      * updated
 * Updates (automatic)

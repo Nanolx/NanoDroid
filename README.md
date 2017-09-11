@@ -171,6 +171,10 @@ Misc. Script for use from PC/Notebook, while device is in TWRP.
   * system debloater
   * the list of applications resides in the script itself
   * needs to be run from TWRP, requires explicit user acceptance
+  * supports `.nanomod-overlay` configuration file
+     * uses fallback values, if none found
+         * which are in the script itself and can be edited
+  * has a test mode which prints what would be done
 * **mount-magisk** (clone this repository)
   * script to mount or unmount Magisk in TWRP
   * script toggles mount-state (read: will mount Magisk if unmounted and unmount Magisk if mounted)
