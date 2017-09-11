@@ -29,7 +29,7 @@ grab_apk_from_repo () {
 	DOMAIN="$(awk -F/ '{print $3}' <<< ${REPO})"
 	INDEX_FILE="${CWD}/data/${DOMAIN}.index.xml"
 
-	wget -q -c -O "${INDEX_FILE}" "${REPO}/index.xml"
+	wget -q -O "${INDEX_FILE}" "${REPO}/index.xml"
 
 	PKG_NAME="${2}"
 	APK_NAME="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/apkname/text()" ${INDEX_FILE})"
