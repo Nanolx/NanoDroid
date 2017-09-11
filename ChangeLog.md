@@ -22,6 +22,7 @@
   * F-Droid Privileged Extension (0.2.6)
   * (Simple) Gallery (2.14.1)
   * Substratum (841)
+  * XDA Labs (1.1.2.4b)
 * Removed Applications
   * Hacker Keyboard
 * New Applications

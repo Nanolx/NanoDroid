@@ -423,10 +423,10 @@ install_microg () {
 		done
 
 		# DroidGuard Helper as user app
-		mkdir -p /data/app/org.microg.gms.droidguard-1/
+		mkdir -p /data/app/org.microg.gms.droidguard/
 		cp ${INSTALLER}/system/priv-app/DroidGuard/DroidGuard.apk \
-			/data/app/org.microg.gms.droidguard-1/base.apk
-		set_perm_dir /data/app/org.microg.gms.droidguard-1/
+			/data/app/org.microg.gms.droidguard/base.apk
+		set_perm_dir /data/app/org.microg.gms.droidguard/
 
 	else	ui_print " << without microG"
 	fi
