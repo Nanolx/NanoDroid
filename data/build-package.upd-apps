@@ -5,8 +5,8 @@ update_apps () {
 	grab_apk_from_repo ${fd_ADAWAY[@]}
 	grab_apk_from_repo ${fd_AMAZE[@]}
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
+	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
 	grab_apk_from_repo ${fd_FACESLIM[@]}
-	grab_apk_from_repo ${fd_HACKERKEYBOARD[@]}
 	grab_apk_from_repo ${fd_K9MAIL[@]}
 	grab_apk_from_repo ${fd_KEEPASSDROID[@]}
 	grab_apk_from_repo ${fd_NEWPIPE[@]}
