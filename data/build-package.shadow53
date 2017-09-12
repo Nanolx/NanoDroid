@@ -109,14 +109,14 @@ ${5}-${VERSION}-android-apk-download"
 		TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
 
 		if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
-			echo -e "\nUp-to-Date from ${REPO_P} : ${4}.apk"
-		else	echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
+			echo -e "\nUp-to-Date from APK Mirror: ${4}.apk"
+		else	echo -e "\nUpdating from APK Mirror  : ${4}.apk"
 			rm -f "${APK_DEST}/${4}.apk"
 			wget --user-agent="${USER_AGENT}" -q \
 				"${APK_URL}" -O "${APK_DEST}/${4}.apk"
 		fi
 	else
-		echo -e "\nDownloading from ${REPO_P}: ${4}.apk"
+		echo -e "\nDownloading from APK Mirror: ${4}.apk"
 		mkdir -p "${APK_DEST}"
 		wget --user-agent="${USER_AGENT}" -q \
 			"${APK_URL}" -O "${APK_DEST}/${4}.apk"
