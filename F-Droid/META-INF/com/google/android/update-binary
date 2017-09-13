@@ -399,12 +399,8 @@ nanomod_libs () {
 		esac
 	else
 		apk=${MODPATH}/system/${1}/*.apk
-		case ${ARCH} in
-			arm )	 libd=${MODPATH}/system/${1}/lib/arm    ;;
-			arm64 )  libd=${MODPATH}/system/${1}/lib/arm64  ;;
-			x86 )	 libd=${MODPATH}/system/${1}/lib/x86    ;;
-			x86_64 ) libd=${MODPATH}/system/${1}/lib/x86_64 ;;
-		esac
+		libd=${MODPATH}/system/${1}/lib
+		lib_arch=${ARCH}
 	fi
 
 	tmpd=${TMPDIR}/nanomod-lib
@@ -419,7 +415,8 @@ nanomod_libs () {
 	fi
 
 	"${INSTALLER}/system/xbin/unzip.${BIN_ARCH}" \
-		-oq ${apk} "lib/*" -d "${tmpd}"
+		-oq ${apk} "lib/*" -d "${tmpd}" \
+		2>/dev/null
 	unzip_return=$?
 
 	if [ ${unzip_return} -eq 0 ]; then
@@ -443,13 +440,21 @@ nanomod_libs () {
 					srcdir=${tmpd}/lib/arm64-v8a
 				elif [ -d ${tmpd}/lib/armeabi-v7a ]; then
 					srcdir=${tmpd}/lib/armeabi-v7a
+					lib_arch=arm
 				elif [ -d ${tmpd}/lib/armeabi ]; then
 					srcdir=${tmpd}/lib/armeabi
+					lib_arch=arm
 				fi
 			;;
 			x86 )
 				if [ -d ${tmpd}/lib/x86 ]; then
 					srcdir=${tmpd}/lib/x86
+				elif [ -d ${tmpd}/lib/armeabi-v7a ]; then
+					srcdir=${tmpd}/lib/armeabi-v7a
+					lib_arch=arm
+				elif [ -d ${tmpd}/lib/armeabi ]; then
+					srcdir=${tmpd}/lib/armeabi
+					lib_arch=arm
 				fi
 			;;
 			x86_64 )
@@ -457,6 +462,13 @@ nanomod_libs () {
 					srcdir=${tmpd}/lib/x86_64
 				elif [ -d ${tmpd}/lib/x86 ]; then
 					srcdir=${tmpd}/lib/x86
+					lib_arch=x86
+				elif [ -d ${tmpd}/lib/armeabi-v7a ]; then
+					srcdir=${tmpd}/lib/armeabi-v7a
+					lib_arch=arm
+				elif [ -d ${tmpd}/lib/armeabi ]; then
+					srcdir=${tmpd}/lib/armeabi
+					lib_arch=arm
 				fi
 			;;
 		esac
@@ -469,14 +481,19 @@ nanomod_libs () {
 				*x86*	 ) echo "      $(basename ${apk}): installing x86 libs"    ;;
 			esac
 
-			echo "        into: ${libd}"
-			mkdir -p ${libd}
+			echo "        into: ${libd}/${lib_arch}"
+			mkdir -p ${libd}/${lib_arch}
 
 			for lib in ${srcdir}/*; do
-				cp ${lib} ${libd}/
-				set_perm_data ${libd}/$(basename ${lib})
+				echo "        library: $(basename ${lib})"
+				cp ${lib} ${libd}/${lib_arch}/ || \
+					error " !! installing libraries failed"
+
+				set_perm_data ${libd}/${lib_arch}/$(basename ${lib})
+
 				if [ "${MODE}" = "SYSTEM" ]; then
-					echo ${libd}/$(basename ${lib}) >> /system/.nanomod-list
+					echo ${libd}/${lib_arch}/$(basename ${lib}) \
+						>> /system/.nanomod-list
 				fi
 			done
 		fi

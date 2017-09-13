@@ -6,6 +6,13 @@
      * install DroidGuard Helper as user app (fixes it crashing)
   * Full, microG, F-Droid packages:
      * fix that under certain circumstances installation errors don't cause the installer to abort
+     * fix that arm libraries are not properly installed on arm64 devices
+         * affects applications that have arm libraries, but not arm64 (namely: Play Store)
+     * fix that x86 libraries are not properly installed on x86_64 devices
+         * affects applications that have x86 libraries, but not x86_64 (namely: Play Store)
+     * on x86 / x86_64 try to extract arm libraries, if no x86 / x86_64 libraries are found
+     * fix that the installer doesn't clean up if installation of libraries fails in Magisk Mode
+     * more verbose recovery.log regarding library installation
   * Full package:
      * when `.nanomod-apps` contains an application that is not included don't abort
          * instead just print a message
