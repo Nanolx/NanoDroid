@@ -8,7 +8,7 @@ for funcfile in nanolx pkg-full pkg-microg pkg-fdroid \
 	pkg-patcher pkg-setupwizard pkg-uninstaller \
 	upd-apps upd-gsync upd-swipe upd-microg upd-fdroid \
 	shadow53 database pull check; do
-	source "${CWD}/data/build-package.${funcfile}"
+	source "${CWD}/data/build-package.${funcfile}" || exit 1
 done
 
 if [[ "$OSTYPE" == "darwin"* ]]; then

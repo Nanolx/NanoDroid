@@ -99,8 +99,7 @@ update contents:
 	u-microg		| update microG and companions
 				|| except: microG GmsCore, Play Store
 	u-fdroid		| update F-Droid and Extension
-	u-apps			| update most applications
-				|| except: Lightning
+	u-apps			| update applications
 	u-swipe			| update swipe libraries
 	u-gsync			| update Google Sync Adapters
 				|| except: Android Oreo / SDK 26

@@ -30,6 +30,7 @@ fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
 fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
 fd_K9MAIL=(fdroid com.fsck.k9 app K9Mail)
 fd_KEEPASSDROID=(fdroid com.android.keepass app KeePassDroid)
+fd_LIGHTNING=(fdroid acr.browser.lightning app Lightning)
 fd_NEWPIPE=(fdroid org.schabi.newpipe app NewPipe)
 fd_OANDBACKUP=(fdroid dk.jens.backup app Oandbackup)
 fd_ODYSSEY=(fdroid org.gateshipone.odyssey app Odyssey)
@@ -99,6 +100,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/K9Mail/K9Mail.apk
 	Full/system/app/KeePassDroid/KeePassDroid.apk
 	Full/system/app/KernelAdiutor/KernelAdiutor.apk
+	Full/system/app/Lightning/Lightning.apk
 	Full/system/app/MPV/MPV.apk
 	Full/system/app/NewPipe/NewPipe.apk
 	Full/system/app/Oandbackup/Oandbackup.apk

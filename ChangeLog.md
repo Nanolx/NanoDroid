@@ -12,6 +12,8 @@
 * General Changes
   * Full, microG, F-Droid packages:
      * minor internal improvements
+  * Full package:
+     * switch to official F-Droid build for Lightning browser
   * SetupWizard:
      * updated
   * build-package Script:
@@ -29,8 +31,9 @@
 * Updates (automatic)
   * F-Droid Privileged Extension (0.2.6)
   * (Simple) Gallery (2.14.1)
-  * Substratum (841)
-  * XDA Labs (1.1.2.4b)
+  * (Simple) Calendar (2.7.5)
+  * Substratum (842)
+  * XDA Labs (1.1.3.2b)
 * Removed Applications
   * Hacker Keyboard
 * New Applications
