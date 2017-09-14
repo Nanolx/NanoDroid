@@ -23,6 +23,8 @@
      * switch to official F-Droid build for Lightning browser
   * SetupWizard:
      * updated
+  * Framework-Patcher package:
+     * support patching of `SecSettings2.apk` for optional UI patch, aswell
   * build-package Script:
      * Fix repo index.xml downloading
   * force-debloat Script:

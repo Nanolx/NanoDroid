@@ -287,7 +287,11 @@ patch_services_ui () {
 		cp /system/priv-app/SecSettings/SecSettings.apk \
 			${BASEDIR}/SecSettings.apk || \
 			error " !! failed to copy SecSettings.apk"
-	else	error " !! neither Settings.apk nor SecSettings.apk found"
+	elif [[ -f /system/priv-app/SecSettings2/SecSettings2.apk ]]; then
+		cp /system/priv-app/SecSettings2/SecSettings2.apk \
+			${BASEDIR}/SecSettings2.apk || \
+			error " !! failed to copy SecSettings2.apk"
+	else	error " !! neither Settings.apk nor SecSettings[2].apk found"
 	fi
 
 	ui_print " "
@@ -364,6 +368,10 @@ install_services () {
 			mkdir -p "${install_path}/priv-app/SecSettings"
 			cp ${BASEDIR}/SecSettings.apk "${install_path}/priv-app/SecSettings" \
 				|| error " !! failed to install SecSettings.apk"
+		elif [[ -f ${BASEDIR}/SecSettings2.apk ]]; then
+			mkdir -p "${install_path}/priv-app/SecSettings2"
+			cp ${BASEDIR}/SecSettings2.apk "${install_path}/priv-app/SecSettings2" \
+				|| error " !! failed to install SecSettings2.apk"
 		fi
 	fi
 
