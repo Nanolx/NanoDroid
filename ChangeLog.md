@@ -4,6 +4,9 @@
 * Bug Fixes
   * Full, microG packages:
      * install DroidGuard Helper as user app (fixes it crashing)
+     * `com.qualcomm.location` conflicts with microG location backends, so when installing microG
+         * in Magisk Mode pseudo-debloat `com.qualcomm.location` (if it exists)
+         * in System Mode move `com.qualcomm.location` (if it exists) to /sdcard
   * Full, microG, F-Droid packages:
      * fix that under certain circumstances installation errors don't cause the installer to abort
      * fix that arm libraries are not properly installed on arm64 devices
@@ -23,6 +26,9 @@
      * switch to official F-Droid build for Lightning browser
   * SetupWizard:
      * updated
+  * Uninstaller:
+     * if `com.qualcomm.location` was backed up to /scard, restore it
+     * restore `SecSettings.apk` and `SecSettings2.apk` if it was backed up to /sdcard
   * Framework-Patcher package:
      * support patching of `SecSettings2.apk` for optional UI patch, aswell
   * build-package Script:
