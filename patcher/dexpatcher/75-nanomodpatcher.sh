@@ -230,7 +230,7 @@ patch_services () {
 
 }
 
-check_services_ui () {
+check_settings_apk () {
 	if [[ -f /system/priv-app/Settings/Settings.apk ]]; then
 		SETTINGS_APK_PATH=/system/priv-app/Settings/Settings.apk
 	elif [[ -f /system/priv-app/SecSettings/SecSettings.apk ]]; then
@@ -283,14 +283,14 @@ install_services () {
 	ui_print " "
 	if [ "${MODE}" = "SYSTEM" ]; then
 		ui_print " << installing patched files to: ${SYSPATH}"
-		install_path="${SYSPATH}/"
+		install_path="${SYSPATH}"
 	else
 		for destination in /dev/magisk_merge/NanoMod /dev/magisk_merge//NanoModmicroG \
 			/magisk/NanoMod /magisk/NanoModmicroG ${SYSPATH}; do
 			if [ -d ${destination} ]; then
 				ui_print " << installing patched files to: ${destination}"
-				install_path="${destination}/system"
-				break
+				install_path="${destination}"
+				continue
 			fi
 		done
 	fi
@@ -300,14 +300,14 @@ install_services () {
 		backup_settings_ui
 	fi
 
-	mkdir -p "${install_path}/framework"
-	cp ${BASEDIR}/services.jar "${install_path}/framework" \
+	mkdir -p "${install_path}/system/framework"
+	cp ${BASEDIR}/services.jar "${install_path}/system/framework" \
 		|| error " !! failed to install services.jar"
 
 	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-		mkdir -p "${install_path}/priv-app/${SETTINGS_APK_DIR}"
+		mkdir -p "${install_path}/system/priv-app/${SETTINGS_APK_DIR}"
 		cp ${BASEDIR}/${SETTINGS_APK_NAME} \
-			"${install_path}/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME}" \
+			"${install_path}/system/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME}" \
 			|| error " !! failed to install ${SETTINGS_APK_NAME}"
 
 	fi
@@ -461,7 +461,6 @@ main () {
 	ui_print " "
 	ui_print " >> clean up"
 
-	LD_LIBRARY_PATH=${OLD_LD}
 	magisk_cleanup
 
 	ui_print " "

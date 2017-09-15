@@ -20,6 +20,8 @@
   * Full package:
      * when `.nanomod-apps` contains an application that is not included don't abort
          * instead just print a message
+  * Framework-Patcher package:
+     * actually patch SecSettings.apk
 * General Changes
   * Full, microG, F-Droid packages:
      * minor internal improvements
@@ -32,6 +34,7 @@
      * restore `SecSettings.apk` and `SecSettings2.apk` if it was backed up to /sdcard
   * Framework-Patcher package:
      * support patching of `SecSettings2.apk` for optional UI patch, aswell
+     * big internal code consolidation
   * build-package Script:
      * Fix repo index.xml downloading
   * force-debloat Script:
@@ -42,7 +45,7 @@
      * change the way Magisk is detected
      * add the ability to only test what would be done
      * other minor internal changes
-  * Documentatation:
+  * Documentation:
      * updated
 * Updates (automatic)
   * F-Droid (1.0-alpha3)
