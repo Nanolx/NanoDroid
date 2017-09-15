@@ -152,7 +152,8 @@ Extra packages, always flash through TWRP.
   * uninstalls NanoMod configuration files
   * uninstalls NanoMod-Patcher addon.d environment
   * if `services.jar` or `Settings.apk` backups are found they get restored
-     * respectively `SecSettings.apk` on TouchWiz ROMs
+     * respectively `SecSettings.apk` or `SecSettings2.apk` on TouchWiz ROMs
+  * if `com.qualcomm.location` backup is found it gets restored
 
 ### Scripts
 
@@ -285,6 +286,10 @@ NanoMod includes microG as follows
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
      * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
   * Play Store is modified to allow (in-)app-purchases with microG
+* if `com.qualcomm.location` exists it will either be
+  * pseudo-debloated (in Magisk Mode)
+  * moved to /sdcard (in System Mode)
+     * it conflicts with microG's location backend
 
 ### F-Droid and Applications
 
