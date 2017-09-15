@@ -38,11 +38,14 @@
   * Documentatation:
      * updated
 * Updates (automatic)
+  * F-Droid (1.0-alpha3)
   * F-Droid Privileged Extension (0.2.6)
-  * (Simple) Gallery (2.14.1)
+  * (Simple) Gallery (2.14.2)
   * (Simple) Calendar (2.7.5)
   * Substratum (842)
-  * XDA Labs (1.1.3.2b)
+  * XDA Labs (1.1.3.3b)
+  * Yalp Store (0.25)
+  * Twidere (3.6.29)
 * Removed Applications
   * Hacker Keyboard
 * New Applications
