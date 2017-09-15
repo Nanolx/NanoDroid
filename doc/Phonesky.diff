@@ -1,13 +1,13 @@
-diff -Nupr PS_8232T.orig/AndroidManifest.xml PS_8232T/AndroidManifest.xml
---- PS_8232T.orig/AndroidManifest.xml	2017-09-07 19:14:59.287767746 +0200
-+++ PS_8232T/AndroidManifest.xml	2017-09-07 19:19:00.000000000 +0200
+diff -Nupr PS_8237T.orig/AndroidManifest.xml PS_8237T/AndroidManifest.xml
+--- PS_8237T.orig/AndroidManifest.xml	2017-09-15 20:24:01.311059706 +0200
++++ PS_8237T/AndroidManifest.xml	2017-09-15 20:25:14.856401727 +0200
 @@ -1,4 +1,5 @@
  <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" package="com.android.vending" platformBuildVersionCode="26" platformBuildVersionName="OMR1">
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
      <uses-permission android:name="com.android.vending.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.android.vending.billing.IN_APP_NOTIFY.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-@@ -98,13 +99,14 @@
+@@ -98,6 +99,7 @@
      <permission android:name="com.google.android.vending.verifier.ACCESS_VERIFIER" android:protectionLevel="signature"/>
      <permission android:name="com.google.android.finsky.permission.INSTANT_APP_STATE" android:protectionLevel="signature"/>
      <application android:backupAgent="com.android.vending.VendingBackupAgent" android:debuggable="@bool/is_debuggable" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher_play_store" android:killAfterRestore="false" android:label="@string/app_long_name" android:name="com.google.android.finsky.application.FinskyAppImpl" android:requiredForAllUsers="true" android:restoreAnyVersion="true" android:restoreNeedsApplication="true" android:restrictedAccountType="com.google" android:roundIcon="@mipmap/ic_round_launcher_play_store" android:supportsRtl="@bool/is_rtl_enabled">
@@ -15,14 +15,6 @@ diff -Nupr PS_8232T.orig/AndroidManifest.xml PS_8232T/AndroidManifest.xml
          <activity android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.wallet.instrumentmanager.redirect.ImStartAndroidAppRedirectActivity" android:theme="@style/Theme.UiComponents.Translucent.NoActionBar"/>
          <activity android:exported="true" android:name="com.google.android.wallet.instrumentmanager.redirect.ImFinishAndroidAppRedirectActivity">
              <intent-filter>
-                 <action android:name="android.intent.action.VIEW"/>
-                 <category android:name="android.intent.category.DEFAULT"/>
-                 <category android:name="android.intent.category.BROWSABLE"/>
--                <data android:host="@string/wallet_uic_android_app_redirect_callback_uri_host" android:scheme="@string/wallet_uic_android_app_redirect_callback_uri_scheme"/>
-+                <data android:host="@string/wallet_uic_android_app_redirect_callback_uri_host" android:scheme="google-orchestration"/>
-             </intent-filter>
-         </activity>
-         <activity android:configChanges="orientation|screenSize" android:name="com.google.android.wallet.instrumentmanager.ui.redirect.ImPopupRedirectActivity" android:theme="@style/Theme.UiComponents.PopupRedirect"/>
 @@ -132,7 +134,7 @@
              <meta-data android:name="com.android.launcher.toolbar_icon" android:resource="@drawable/ic_menu_shop_holo_dark"/>
              <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
@@ -36,8 +28,8 @@ diff -Nupr PS_8232T.orig/AndroidManifest.xml PS_8232T/AndroidManifest.xml
                  <action android:name="android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE"/>
              </intent-filter>
          </receiver>
--        <activity android:name="com.google.android.finsky.activities.LaunchUrlHandlerActivity" android:taskAffinity="@string/inline_details_task_affinity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:visibleToInstantApps="true">
-+        <activity android:name="com.google.android.finsky.activities.LaunchUrlHandlerActivity" android:taskAffinity="@string/inline_details_task_affinity" android:theme="@android:style/Theme.Translucent.NoTitleBar">
+-        <activity android:excludeFromRecents="true" android:name="com.google.android.finsky.activities.LaunchUrlHandlerActivity" android:taskAffinity="@string/inline_details_task_affinity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:visibleToInstantApps="true">
++        <activity android:excludeFromRecents="true" android:name="com.google.android.finsky.activities.LaunchUrlHandlerActivity" android:taskAffinity="@string/inline_details_task_affinity" android:theme="@android:style/Theme.Translucent.NoTitleBar">
              <meta-data android:name="instantapps.clients.allowed" android:value="true"/>
              <intent-filter>
                  <action android:name="android.intent.action.VIEW"/>
@@ -45,8 +37,8 @@ diff -Nupr PS_8232T.orig/AndroidManifest.xml PS_8232T/AndroidManifest.xml
                  <data android:host="details" android:path="" android:scheme="market"/>
              </intent-filter>
          </activity>
--        <activity android:enabled="false" android:exported="true" android:label="" android:name="com.google.android.finsky.activities.MarketDeepLinkHandlerActivity" android:taskAffinity="@string/inline_details_task_affinity" android:theme="@style/InlineAppDetailsDialog" android:visibleToInstantApps="true">
-+        <activity android:enabled="false" android:exported="true" android:label="" android:name="com.google.android.finsky.activities.MarketDeepLinkHandlerActivity" android:taskAffinity="@string/inline_details_task_affinity" android:theme="@style/InlineAppDetailsDialog">
+-        <activity android:enabled="false" android:excludeFromRecents="true" android:exported="true" android:label="" android:name="com.google.android.finsky.activities.MarketDeepLinkHandlerActivity" android:taskAffinity="@string/inline_details_task_affinity" android:theme="@style/InlineAppDetailsDialog" android:visibleToInstantApps="true">
++        <activity android:enabled="false" android:excludeFromRecents="true" android:exported="true" android:label="" android:name="com.google.android.finsky.activities.MarketDeepLinkHandlerActivity" android:taskAffinity="@string/inline_details_task_affinity" android:theme="@style/InlineAppDetailsDialog">
              <meta-data android:name="instantapps.clients.allowed" android:value="true"/>
              <intent-filter>
                  <action android:name="android.intent.action.VIEW"/>
@@ -66,9 +58,9 @@ diff -Nupr PS_8232T.orig/AndroidManifest.xml PS_8232T/AndroidManifest.xml
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_8232T.orig/res/layout-v26/abc_screen_toolbar.xml PS_8232T/res/layout-v26/abc_screen_toolbar.xml
---- PS_8232T.orig/res/layout-v26/abc_screen_toolbar.xml	2017-09-07 19:14:57.817800019 +0200
-+++ PS_8232T/res/layout-v26/abc_screen_toolbar.xml	2017-09-07 19:18:02.668725221 +0200
+diff -Nupr PS_8237T.orig/res/layout-v26/abc_screen_toolbar.xml PS_8237T/res/layout-v26/abc_screen_toolbar.xml
+--- PS_8237T.orig/res/layout-v26/abc_screen_toolbar.xml	2017-09-15 20:24:00.165086491 +0200
++++ PS_8237T/res/layout-v26/abc_screen_toolbar.xml	2017-09-15 20:25:22.133102769 +0200
 @@ -2,8 +2,8 @@
  <android.support.v7.widget.ActionBarOverlayLayout android:id="@id/decor_content_parent" android:fitsSystemWindows="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -81,9 +73,9 @@ diff -Nupr PS_8232T.orig/res/layout-v26/abc_screen_toolbar.xml PS_8232T/res/layo
 -</android.support.v7.widget.ActionBarOverlayLayout>
 \ Kein Zeilenumbruch am Dateiende.
 +</android.support.v7.widget.ActionBarOverlayLayout>
-diff -Nupr PS_8232T.orig/res/values/public.xml PS_8232T/res/values/public.xml
---- PS_8232T.orig/res/values/public.xml	2017-09-07 19:14:57.838799558 +0200
-+++ PS_8232T/res/values/public.xml	2017-09-07 19:16:22.060946882 +0200
+diff -Nupr PS_8237T.orig/res/values/public.xml PS_8237T/res/values/public.xml
+--- PS_8237T.orig/res/values/public.xml	2017-09-15 20:24:00.166086468 +0200
++++ PS_8237T/res/values/public.xml	2017-09-15 20:25:47.205016054 +0200
 @@ -7722,6 +7722,7 @@
      <public type="string" name="year" id="0x7f1306fa" />
      <public type="string" name="yes" id="0x7f1306fb" />
@@ -99,9 +91,9 @@ diff -Nupr PS_8232T.orig/res/values/public.xml PS_8232T/res/values/public.xml
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_8232T.orig/res/values/strings.xml PS_8232T/res/values/strings.xml
---- PS_8232T.orig/res/values/strings.xml	2017-09-07 19:14:57.836799602 +0200
-+++ PS_8232T/res/values/strings.xml	2017-09-07 19:16:39.850554677 +0200
+diff -Nupr PS_8237T.orig/res/values/strings.xml PS_8237T/res/values/strings.xml
+--- PS_8237T.orig/res/values/strings.xml	2017-09-15 20:24:00.165086491 +0200
++++ PS_8237T/res/values/strings.xml	2017-09-15 20:25:32.311655460 +0200
 @@ -1718,4 +1718,5 @@ First turn on NFC in your settings, then
      <string name="year">Year</string>
      <string name="yes">Yes</string>

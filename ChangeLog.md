@@ -53,6 +53,7 @@
   * XDA Labs (1.1.3.3b)
   * Yalp Store (0.25)
   * Twidere (3.6.29)
+  * Play Store (8.2.37.T)
 * Removed Applications
   * Hacker Keyboard
 * New Applications
