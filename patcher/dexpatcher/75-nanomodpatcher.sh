@@ -282,13 +282,11 @@ backup_settings_ui () {
 install_services () {
 	ui_print " "
 	if [ "${MODE}" = "SYSTEM" ]; then
-		ui_print " << installing patched files to: ${SYSPATH}"
 		install_path="${SYSPATH}"
 	else
 		for destination in /dev/magisk_merge/NanoMod /dev/magisk_merge//NanoModmicroG \
 			/magisk/NanoMod /magisk/NanoModmicroG ${SYSPATH}; do
 			if [ -d ${destination} ]; then
-				ui_print " << installing patched files to: ${destination}"
 				install_path="${destination}"
 				continue
 			fi
@@ -299,6 +297,8 @@ install_services () {
 		backup_services_jar
 		backup_settings_ui
 	fi
+
+	ui_print " << installing patched files to: ${install_path}"
 
 	mkdir -p "${install_path}/system/framework"
 	cp ${BASEDIR}/services.jar "${install_path}/system/framework" \
