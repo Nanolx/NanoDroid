@@ -327,15 +327,31 @@ magisk_install_postinst () {
 	# Setup Overrides
 	if [ "${nanomod_overlay}" -eq 1 ]; then
 		ui_print " << with /system applications override"
+
+		# remove com.qualcomm.location when using microG
+		if [ "${nanomod_microg}" -eq 1 ]; then
+			echo "com.qualcomm.location" >> "${nanomodoverlay}"
+		fi
+
 		if [ "${NO_NANOMODOVERLAY}" -eq 1 ]; then
 			cp "${nanomodoverlay}" /data/.nanomod-overlay
 		fi
+
 		${MODPATH}/system/xbin/bash \
 			${MODPATH}/system/xbin/nanomod-overlay --create
+
 		if [ "${NO_NANOMODOVERLAY}" -eq 1 ]; then
 			rm /data/.nanomod-overlay
 		fi
-	else	ui_print " << without /system applications override"
+	else
+		ui_print " << without /system applications override"
+
+		# Sorry, but com.qualcomm.location conflicts with microG
+		if [ "${nanomod_microg}" -eq 1 ]; then
+			${MODPATH}/system/xbin/bash \
+				${MODPATH}/system/xbin/nanomod-overlay \
+				--add com.qualcomm.location
+		fi
 	fi
 
 	if [ -f ${TMPDIR}/services.jar ]; then
@@ -817,6 +833,14 @@ install_misc
 if [ "${MODE}" = "MAGISK" ]; then
 	magisk_install_postinst
 	magisk_install_finish
+else
+	if [ -d /system/priv-app/com.qualcomm.location -a "${nanomod_microg}" -eq 1 ]; then
+		mv /system/priv-app/com.qualcomm.location /sdcard/
+
+		ui_print " "
+		ui_print " ++ Moving com.qualcomm.location to /scard"
+		ui_print " ++ it conflicts with microG location backends"
+	fi
 fi
 
 nanomod_finalize
