@@ -355,15 +355,15 @@ install_services () {
 				error " !! failed to backup services.jar"
 
 			if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-				if [ -f/system/priv-app/Settings/Settings.apk ]; then
+				if [ -f /system/priv-app/Settings/Settings.apk ]; then
 					ui_print " << backing up Settings.apk to: /sdcard"
 					cp /system/priv-app/Settings/Settings.apk /sdcard || \
 						error " !! failed to backup Settings.apk"
-				elif [ -f/system/priv-app/SecSettings/SecSettings.apk ]; then
+				elif [ -f /system/priv-app/SecSettings/SecSettings.apk ]; then
 					ui_print " << backing up SecSettings.apk to: /sdcard"
 					cp /system/priv-app/SecSettings/SecSettings.apk /sdcard || \
 						error " !! failed to backup SecSettings.apk"
-				elif [ -f/system/priv-app/SecSettings2/SecSettings2.apk ]; then
+				elif [ -f /system/priv-app/SecSettings2/SecSettings2.apk ]; then
 					ui_print " << backing up SecSettings2.apk to: /sdcard"
 					cp /system/priv-app/SecSettings2/SecSettings2.apk /sdcard || \
 						error " !! failed to backup SecSettings2.apk"
