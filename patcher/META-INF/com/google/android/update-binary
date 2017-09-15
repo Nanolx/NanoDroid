@@ -346,14 +346,6 @@ install_services () {
 	if [ "${install_path}" = "${SYSPATH}" ]; then
 		backup_services_jar
 		backup_settings_ui
-
-		echo /system/framework/services.jar >> \
-			${SYSPATH}/.nanomod-list
-
-		if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-			echo /system/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME} >> \
-				${SYSPATH}/.nanomod-list
-		fi
 	fi
 
 	mkdir -p "${install_path}/framework"
@@ -366,6 +358,16 @@ install_services () {
 			"${install_path}/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME}" \
 			|| error " !! failed to install ${SETTINGS_APK_NAME}"
 
+	fi
+
+	if [ "${install_path}" = "${SYSPATH}" ]; then
+		echo /system/framework/services.jar >> \
+			${SYSPATH}/.nanomod-list
+
+		if [ "${nanomod_sigspoofui}" -eq 1 ]; then
+			echo /system/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME} >> \
+				${SYSPATH}/.nanomod-list
+		fi
 	fi
 
 	touch ${SYSPATH}/.nanomod-patcher
