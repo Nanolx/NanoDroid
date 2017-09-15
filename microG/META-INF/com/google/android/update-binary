@@ -205,6 +205,7 @@ detect_arch () {
 
 	if [[ "${SDK_VERSION}" -lt 21 ]]; then
 		UNFOLD_APP_DIR=1
+	else	UNFOLD_APP_DIR=0
 	fi
 
 	if [[ "${SDK_VERSION}" -lt 19 ]]; then
