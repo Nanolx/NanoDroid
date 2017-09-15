@@ -279,21 +279,6 @@ patch_services () {
 }
 
 patch_services_ui () {
-	if [[ -f /system/priv-app/Settings/Settings.apk ]]; then
-		cp /system/priv-app/Settings/Settings.apk \
-			${BASEDIR}/Settings.apk || \
-			error " !! failed to copy Settings.apk"
-	elif [[ -f /system/priv-app/SecSettings/SecSettings.apk ]]; then
-		cp /system/priv-app/SecSettings/SecSettings.apk \
-			${BASEDIR}/SecSettings.apk || \
-			error " !! failed to copy SecSettings.apk"
-	elif [[ -f /system/priv-app/SecSettings2/SecSettings2.apk ]]; then
-		cp /system/priv-app/SecSettings2/SecSettings2.apk \
-			${BASEDIR}/SecSettings2.apk || \
-			error " !! failed to copy SecSettings2.apk"
-	else	error " !! neither Settings.apk nor SecSettings[2].apk found"
-	fi
-
 	ui_print " "
 	ui_print " > patching signature spoofing user interface"
 	ui_print " "
@@ -305,10 +290,35 @@ patch_services_ui () {
 		" !! failed to apply ${PATCH_UI_SERVICES}"
 
 	ui_print " >> [2/2] applying ui patch (Settings.apk)"
-	apply_patch ${BASEDIR}/Settings.apk-ui \
-		${BASEDIR}/Settings.apk \
-		"${BASEDIR}/${PATCH_UI_SETTINGS}" \
-		" !! failed to apply ${PATCH_UI_SETTINGS}"
+	if [[ -f /system/priv-app/Settings/Settings.apk ]]; then
+		cp /system/priv-app/Settings/Settings.apk \
+			${BASEDIR}/Settings.apk || \
+			error " !! failed to copy Settings.apk"
+
+		apply_patch ${BASEDIR}/Settings.apk-ui \
+			${BASEDIR}/Settings.apk \
+			"${BASEDIR}/${PATCH_UI_SETTINGS}" \
+			" !! failed to apply ${PATCH_UI_SETTINGS}"
+	elif [[ -f /system/priv-app/SecSettings/SecSettings.apk ]]; then
+		cp /system/priv-app/SecSettings/SecSettings.apk \
+			${BASEDIR}/SecSettings.apk || \
+			error " !! failed to copy SecSettings.apk"
+
+		apply_patch ${BASEDIR}/SecSettings.apk-ui \
+			${BASEDIR}/SecSettings.apk \
+			"${BASEDIR}/${PATCH_UI_SETTINGS}" \
+			" !! failed to apply ${PATCH_UI_SETTINGS}"
+	elif [[ -f /system/priv-app/SecSettings2/SecSettings2.apk ]]; then
+		cp /system/priv-app/SecSettings2/SecSettings2.apk \
+			${BASEDIR}/SecSettings2.apk || \
+			error " !! failed to copy SecSettings2.apk"
+
+		apply_patch ${BASEDIR}/SecSettings2.apk-ui \
+			${BASEDIR}/SecSettings2.apk \
+			"${BASEDIR}/${PATCH_UI_SETTINGS}" \
+			" !! failed to apply ${PATCH_UI_SETTINGS}"
+	else	error " !! neither Settings.apk nor SecSettings[2].apk found"
+	fi
 }
 
 install_services () {
