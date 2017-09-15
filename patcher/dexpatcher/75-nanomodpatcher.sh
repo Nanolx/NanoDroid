@@ -230,18 +230,21 @@ patch_services () {
 
 }
 
-patch_services_ui () {
+check_services_ui () {
 	if [[ -f /system/priv-app/Settings/Settings.apk ]]; then
-		cp /system/priv-app/Settings/Settings.apk \
-			${BASEDIR}/Settings.apk || \
-			error " !! failed to copy Settings.apk"
+		SETTINGS_APK_PATH=/system/priv-app/Settings/Settings.apk
 	elif [[ -f /system/priv-app/SecSettings/SecSettings.apk ]]; then
-		cp /system/priv-app/SecSettings/SecSettings.apk \
-			${BASEDIR}/SecSettings.apk || \
-			error " !! failed to copy SecSettings.apk"
-	else	error " !! neither Settings.apk nor SecSettings.apk found"
+		SETTINGS_APK_PATH=/system/priv-app/SecSettings/SecSettings.apk
+	elif [[ -f /system/priv-app/SecSettings2/SecSettings2.apk ]]; then
+		SETTINGS_APK_PATH=/system/priv-app/SecSettings2/SecSettings2.apk
+	else	error " !! neither Settings.apk nor SecSettings[2].apk found"
 	fi
 
+	SETTINGS_APK_NAME=$(basename ${SETTINGS_APK_PATH})
+	SETTINGS_APK_DIR=$(basename ${SETTINGS_APK_NAME} .apk)
+}
+
+patch_services_ui () {
 	ui_print " "
 	ui_print " > patching signature spoofing user interface"
 	ui_print " "
@@ -252,55 +255,49 @@ patch_services_ui () {
 		"${BASEDIR}/${PATCH_UI_SERVICES}" \
 		" !! failed to apply ${PATCH_UI_SERVICES}"
 
-	ui_print " >> [2/2] applying ui patch (Settings.apk)"
-	apply_patch ${BASEDIR}/Settings.apk-ui \
-		${BASEDIR}/Settings.apk \
+	ui_print " >> [2/2] applying ui patch (${SETTINGS_APK_NAME})"
+	cp ${SETTINGS_APK_PATH} ${BASEDIR}/${SETTINGS_APK_NAME} || \
+		error " !! failed to copy Settings.apk"
+
+	apply_patch ${BASEDIR}/${SETTINGS_APK_NAME}-ui \
+		${BASEDIR}/${SETTINGS_APK_NAME} \
 		"${BASEDIR}/${PATCH_UI_SETTINGS}" \
 		" !! failed to apply ${PATCH_UI_SETTINGS}"
+}
+
+backup_services_jar () {
+	ui_print " << backing up services.jar to: /sdcard"
+	cp /system/framework/services.jar /sdcard || \
+		error " !! failed to backup services.jar"
+}
+
+backup_settings_ui () {
+	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
+		ui_print " << backing up ${SETTINGS_APK_NAME} to: /sdcard"
+		cp ${SETTINGS_APK_PATH} /sdcard || \
+			error " !! failed to backup ${SETTINS_APK_NAME}"
+	fi
 }
 
 install_services () {
 	ui_print " "
 	if [ "${MODE}" = "SYSTEM" ]; then
-		ui_print " << backing up services.jar to: /sdcard"
-		cp /system/framework/services.jar /sdcard || \
-			error " !! failed to backup services.jar"
-
-		if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-			ui_print " << backing up Settings.apk to: /sdcard"
-			cp /system/priv-app/Settings/Settings.apk /sdcard || \
-				error " !! failed to backup Settings.apk"
-		fi
-
-		ui_print " << installing patched files to: ROM"
+		ui_print " << installing patched files to: ${SYSPATH}"
 		install_path="${SYSPATH}/"
 	else
-		if [ -d /dev/magisk_merge/NanoMod ]; then
-			ui_print " << installing patched files to: NanoMod (full) [merge]"
-			install_path="/magisk/NanoMod/system/framework/"
-		elif [ -d /dev/magisk_merge//NanoModmicroG ]; then
-			ui_print " << installing patched files to: NanoMod (microG) [merge]"
-			install_path="/magisk/NanoModmicroG/system/"
-		elif [ -d /magisk/NanoMod ]; then
-			ui_print " << installing patched files to: NanoMod (full)"
-			install_path="/magisk/NanoMod/system/"
-		elif [ -d /magisk/NanoModmicroG ]; then
-			ui_print " << installing patched files to: NanoMod (microG)"
-			install_path="/magisk/NanoModmicroG/system/"
-		else
-			ui_print " << backing up services.jar to: /sdcard"
-			cp /system/framework/services.jar /sdcard || \
-				error " !! failed to backup services.jar"
-
-			if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-				ui_print " << backing up Settings.apk to: /sdcard"
-				cp /system/priv-app/Settings/Settings.apk /sdcard || \
-					error " !! failed to backup Settings.apk"
+		for destination in /dev/magisk_merge/NanoMod /dev/magisk_merge//NanoModmicroG \
+			/magisk/NanoMod /magisk/NanoModmicroG ${SYSPATH}; do
+			if [ -d ${destination} ]; then
+				ui_print " << installing patched files to: ${destination}"
+				install_path="${destination}/system"
+				break
 			fi
+		done
+	fi
 
-			ui_print " << installing patched files to: ROM"
-			install_path="${SYSPATH}"
-		fi
+	if [ "${install_path}" = "${SYSPATH}" ]; then
+		backup_services_jar
+		backup_settings_ui
 	fi
 
 	mkdir -p "${install_path}/framework"
@@ -308,15 +305,11 @@ install_services () {
 		|| error " !! failed to install services.jar"
 
 	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-		if [[ -f ${BASEDIR}/Settings.apk ]]; then
-			mkdir -p "${install_path}/priv-app/Settings"
-			cp ${BASEDIR}/Settings.apk "${install_path}/priv-app/Settings" \
-				|| error " !! failed to install Settings.apk"
-		elif [[ -f ${BASEDIR}/SecSettings.apk ]]; then
-			mkdir -p "${install_path}/priv-app/SecSettings"
-			cp ${BASEDIR}/SecSettings.apk "${install_path}/priv-app/SecSettings" \
-				|| error " !! failed to install SecSettings.apk"
-		fi
+		mkdir -p "${install_path}/priv-app/${SETTINGS_APK_DIR}"
+		cp ${BASEDIR}/${SETTINGS_APK_NAME} \
+			"${install_path}/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME}" \
+			|| error " !! failed to install ${SETTINGS_APK_NAME}"
+
 	fi
 
 	if [ "${install_path}" = "${SYSPATH}" ]; then
@@ -324,7 +317,7 @@ install_services () {
 			${SYSPATH}/.nanomod-list
 
 		if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-			echo /system/priv-app/Settings/Settings.apk >> \
+			echo /system/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME} >> \
 				${SYSPATH}/.nanomod-list
 		fi
 	fi
@@ -459,6 +452,7 @@ main () {
 	patch_services
 
 	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
+		check_services_ui
 		patch_services_ui
 	fi
 
