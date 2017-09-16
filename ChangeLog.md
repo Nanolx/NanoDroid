@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 13.4 in-dev
+## 14.0.20170916
 * Bug Fixes
   * Full, microG packages:
      * install DroidGuard Helper as user app (fixes it crashing)
@@ -26,6 +26,8 @@
   * Framework-Patcher package:
      * actually patch SecSettings.apk
      * fix backing up SecSettings.apk to /sdcard in System Mode
+  * F-Droid package:
+     * fix SDK version detection
 * General Changes
   * Full, microG, F-Droid packages:
      * minor internal improvements
