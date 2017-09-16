@@ -111,6 +111,8 @@ detect_arch () {
 	ABI2=`grep_prop ro.product.cpu.abi2 | cut -c-3`
 	ABILONG=`grep_prop ro.product.cpu.abi`
 
+	SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
+
 	ARCH=arm
 	IS64BIT=false
 
@@ -132,6 +134,22 @@ detect_arch () {
 		IS64BIT=true
 	fi
 
+	case ${ARCH} in
+		arm )		BIN_ARCH="arm"	;;
+		arm64 )		BIN_ARCH="arm"	;;
+		x86 )		BIN_ARCH="x86"	;;
+		x86_64 )	BIN_ARCH="x86"	;;
+	esac
+
+	case ${SDK_VERSION} in
+		19 )		GSYNC_VER=K	;;
+		21 | 22 )	GSYNC_VER=L	;;
+		23 )		GSYNC_VER=M	;;
+		24 | 25 )	GSYNC_VER=N	;;
+		26 )		GSYNC_VER=O	;;
+		* )	GSYNC_UNSUPPORTED=1	;;
+	esac
+
 	if [[ "${SDK_VERSION}" -lt 21 ]]; then
 		UNFOLD_APP_DIR=1
 	else	UNFOLD_APP_DIR=0
@@ -143,13 +161,6 @@ detect_arch () {
 		ui_print " ++ compatibility is not garantueed!"
 		ui_print " "
 	fi
-
-	case ${ARCH} in
-		arm )		BIN_ARCH="arm"	;;
-		arm64 )		BIN_ARCH="arm"	;;
-		x86 )		BIN_ARCH="x86"	;;
-		x86_64 )	BIN_ARCH="x86"	;;
-	esac
 }
 
 ##########################################################################################
