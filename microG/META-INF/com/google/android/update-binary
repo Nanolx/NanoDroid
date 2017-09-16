@@ -245,25 +245,28 @@ magisk_install_setup () {
 
 	MAGISKBIN=/data/magisk
 
-	[ -d $MAGISKBIN -a -f $MAGISKBIN/magisk -a -f $MAGISKBIN/util_functions.sh ] || \
-		error " !! Magisk version 13.1 or newer is required"
-
-	. $MAGISKBIN/util_functions.sh
-	[ ! -z $SCRIPT_VERSION -a $SCRIPT_VERSION -ge 1310 ] || \
-		error " !! Magisk version 13.1 or newer is required"
-
 	MOUNTPATH=/magisk
 	REALPATH=${MOUNTPATH}/${MODID}
 	IMG=/data/magisk.img
+
+	[ -d $MAGISKBIN -a -f $MAGISKBIN/magisk -a -f $MAGISKBIN/util_functions.sh ] || \
+		error " !! Magisk version 14.0 or newer is required"
+
+	. $MAGISKBIN/util_functions.sh
+
+	MIN_VER=`grep_prop template $INSTALLER/module.prop`
+	[ ! -z $MAGISK_VER_CODE -a $MAGISK_VER_CODE -ge $MIN_VER ] || \
+		error " !! Magisk 14.0 or newer is required"
 
 	if $BOOTMODE; then
 		MOUNTPATH=/dev/magisk_merge
 		IMG=/data/magisk_merge.img
 	fi
 
-	request_size_check "${INSTALLER}"
+	$BOOTMODE && ! is_mounted /magisk && error "! Magisk is not activated!"
+	$BOOTMODE && boot_actions || recovery_actions
 
-	$BOOTMODE || recovery_actions
+	request_size_check "${INSTALLER}"
 
 	if [ -f "$IMG" ]; then
 		image_size_check "${IMG}"
@@ -277,12 +280,9 @@ magisk_install_setup () {
 	fi
 
 	MAGISKLOOP=`$MAGISKBIN/magisk --mountimg $IMG $MOUNTPATH`
-	if ! is_mounted $MOUNTPATH; then
-		error " !! $IMG mount failed... abort"
-	fi
+	is_mounted $MOUNTPATH || error " !! $IMG mount failed... abort"
 
 	MODPATH=$MOUNTPATH/$MODID
-
 	rm -rf "${MODPATH}"
 
 	for dir in app etc priv-app xbin; do
@@ -845,6 +845,8 @@ else
 fi
 
 nanomod_finalize
+
+rm -rf ${TMPDIR}
 
 ui_print " "
 ui_print " Thanks for using NanoMod "

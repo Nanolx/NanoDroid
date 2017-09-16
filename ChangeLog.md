@@ -17,6 +17,9 @@
      * fix that the installer doesn't clean up if installation of libraries fails in Magisk Mode
      * more verbose recovery.log regarding library installation
      * fix useless recovery.log messages on post-KitKat ROMs
+     * Update Magisk functions to Module Template 1400
+     * Update Magisk Module template versions to 1400
+     * remove TMPDIR after installation
   * Full package:
      * when `.nanomod-apps` contains an application that is not included don't abort
          * instead just print a message
@@ -27,6 +30,7 @@
      * minor internal improvements
   * Full package:
      * switch to official F-Droid build for Lightning browser
+     * update Magisk Manager module description
   * SetupWizard:
      * updated
   * Uninstaller:

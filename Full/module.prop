@@ -3,5 +3,5 @@ name=NanoMod
 version=v13.4.99999999
 versionCode=23
 author=Nanolx
-description=NanoMod microG, FOSS apps and system-app deactivation for LineageOS/AOSP based ROMs
-template=4
+description=NanoMod microG, FOSS apps, pseudo-debloat, Zelda ringtones, Shell utilities
+template=1400
