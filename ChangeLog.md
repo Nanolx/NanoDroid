@@ -25,6 +25,7 @@
          * instead just print a message
   * Framework-Patcher package:
      * actually patch SecSettings.apk
+     * fix backing up SecSettings.apk to /sdcard in System Mode
 * General Changes
   * Full, microG, F-Droid packages:
      * minor internal improvements
@@ -35,7 +36,7 @@
      * updated
   * Uninstaller:
      * if `com.qualcomm.location` was backed up to /scard, restore it
-     * restore `SecSettings.apk` and `SecSettings2.apk` if it was backed up to /sdcard
+     * restore `SecSettings.apk` or `SecSettings2.apk` if it was backed up to /sdcard
   * Framework-Patcher package:
      * support patching of `SecSettings2.apk` for optional UI patch, aswell
      * big internal code consolidation
@@ -51,6 +52,8 @@
      * other minor internal changes
   * Documentation:
      * updated
+* Updates (manual)
+  * Play Store (8.2.37.T)
 * Updates (automatic)
   * F-Droid (1.0-alpha3)
   * F-Droid Privileged Extension (0.2.6)
@@ -60,7 +63,6 @@
   * XDA Labs (1.1.3.3b)
   * Yalp Store (0.25)
   * Twidere (3.6.29)
-  * Play Store (8.2.37.T)
 * Removed Applications
   * Hacker Keyboard
 * New Applications
