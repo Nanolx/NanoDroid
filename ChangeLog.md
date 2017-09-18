@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 14.0a.20170918
+* Bug Fixes
+  * Framework-Patcher package
+     * fix installation path detection
+
 ## 14.0.20170916
 * Bug Fixes
   * Full, microG packages:
