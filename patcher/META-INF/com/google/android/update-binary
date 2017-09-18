@@ -332,11 +332,11 @@ install_services () {
 	if [ "${MODE}" = "SYSTEM" ]; then
 		install_path="${SYSPATH}"
 	else
-		for destination in /dev/magisk_merge/NanoMod /dev/magisk_merge//NanoModmicroG \
+		for destination in /dev/magisk_merge/NanoMod /dev/magisk_merge/NanoModmicroG \
 			/magisk/NanoMod /magisk/NanoModmicroG ${SYSPATH}; do
 			if [ -d ${destination} ]; then
 				install_path="${destination}"
-				continue
+				break
 			fi
 		done
 	fi
