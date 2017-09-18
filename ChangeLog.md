@@ -4,6 +4,8 @@
 * Bug Fixes
   * Framework-Patcher package
      * fix installation path detection
+  * force-delobat script:
+     * syntax fixes
 
 ## 14.0.20170916
 * Bug Fixes

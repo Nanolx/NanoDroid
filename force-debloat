@@ -18,10 +18,10 @@ get_config () {
 # check whether '.nanomod-overlay' has new format
 # and update if required
 check_nanomodoverlay () {
-	if grep -q "APPS=(" "${nanomodoverlay}"; then
-		ui_print " ++ migrating ${nanomodoverlay} to new format"
-		sed -e 's/^.*APPS=//;s/(//g;s/)//g' -i "${nanomodoverlay}"
-		sed '/^\s*$/d' -i "${nanomodoverlay}"
+	if grep -q "APPS=(" "${config}"; then
+		ui_print " ++ migrating ${config} to new format"
+		sed -e 's/^.*APPS=//;s/(//g;s/)//g' -i "${config}"
+		sed '/^\s*$/d' -i "${config}"
 	fi
 }
 
@@ -29,7 +29,7 @@ check_nanomodoverlay () {
 # if not, use fallback ${APPS}
 get_config .nanomod-overlay
 if [ "$config_exists" -eq 1 ]; then
-	APPS="$(cat "${nanomodoverlay}")"
+	APPS="$(cat "${config}")"
 	NO_NANOMODOVERLAY=0
 	check_nanomodoverlay
 else	NO_NANOMODOVERLAY=1
@@ -80,10 +80,10 @@ debloat_system () {
 	fi
 
 	for app in ${APPS}; do
-		if [[ -d /system/app/${app} ]; then
+		if [[ -d /system/app/${app} ]]; then
 			rm -rf /system/app/${app}
 			echo "${app} removed from /system/app"
-		elif [[ -d /system/priv-app/${app} ]; then
+		elif [[ -d /system/priv-app/${app} ]]; then
 			rm -rf /system/priv-app/${app}
 			echo "${app} removed from /system/priv-app"
 		fi
@@ -101,9 +101,9 @@ test_debloat_system () {
 	echo "***** TEST MODE *****"
 
 	for app in ${APPS}; do
-		if [[ -d /system/app/${app} ]; then
+		if [[ -d /system/app/${app} ]]; then
 			echo "${app} would be removed from /system/app"
-		elif [[ -d /system/priv-app/${app} ]; then
+		elif [[ -d /system/priv-app/${app} ]]; then
 			rm -rf /system/priv-app/${app}
 			echo "${app} would be removed from /system/priv-app"
 		fi
