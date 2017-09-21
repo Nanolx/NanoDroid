@@ -5,6 +5,11 @@
   * nanmod-overlay Script:
      * add `-C, --cast` parameter, fixes cast not working on some custom ROMs
          * uses Magisk to enable `persist.debug.wfd.enable` both on-the-fly and permanently
+         * on-the-fly setting may not work, in that case, simply reboot
+     * add `-A, --add-prop` parameter, add system property
+         * both on-the-fly and permanentyl
+     * add `-R, --remove-prop` parameter, remove a property previously added through `-A, --add-prop`
+         * requires reboot to take effect
 * Updates (automatic)
   * MPV (2017-09-20)
 

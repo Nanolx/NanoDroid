@@ -191,12 +191,15 @@ permissions () {
 	fi
 }
 
-enable_cast () {
-	resetprop  persist.debug.wfd.enable 1
-	if ! grep -q persist.debug.wfd.enable=1 ${MODPATH}/system.prop; then
-		echo "persist.debug.wfd.enable=1" \
-			>> "${MODPATH}/system.prop"
-	fi
+add_prop () {
+	resetprop ${1} ${2}
+
+	sed "/^${1}/d" -i ${MODPATH}/system.prop
+	echo "${1}=${2}" >> "${MODPATH}/system.prop"
+}
+
+remove_prop () {
+	sed "/^${1}/d" -i ${MODPATH}/system.prop
 }
 
 # check for configuration files
@@ -277,25 +280,35 @@ case ${1} in
 	;;
 
 	-C | --cast )
-		enable_cast
+		add_prop persist.debug.wfd.enable 1
+	;;
+
+	-A | --add-prop )
+		add_prop "${@}"
+	;;
+
+	-R | --remove-prop )
+		remove_prop "${@}"
 	;;
 
 	* )
 		echo "nanomod-overlay helper script
 
 Options:
--a | --add	[appname]	add override for app [appname]
--r | --remove	[appname]	remove override for app [appname]
--s | --show			show non-overriden /system applications
--l | --list			show all overriden /system applications
--x | --create			create all overrides
--u | --update			update all overrides (= clear + create)
--c | --clear			remove all overrides
--g | --genconfig		(re-)create configuration from existing overrides
--p | --permission		grant signature spoofing permission to
-				microG GmsCore and Play Store
--C | --cast			enable cast [fix for a few custom ROMS]
--h | --help			this message"
+-a | --add		[appname]	add override for app [appname]
+-r | --remove		[appname]	remove override for app [appname]
+-s | --show				show non-overriden /system applications
+-l | --list				show all overriden /system applications
+-x | --create				create all overrides
+-u | --update				update all overrides (= clear + create)
+-c | --clear				remove all overrides
+-g | --genconfig			(re-)create configuration from existing overrides
+-p | --permission			grant signature spoofing permission to
+					microG GmsCore and Play Store
+-C | --cast				enable cast [fix for a few custom ROMS]
+-A | --add-prop		[prop] [value]	add system property
+-R | --remove-prop	[prop]		remove system property
+-h | --help				this message"
 	;;
 esac
 
