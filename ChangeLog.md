@@ -1,5 +1,13 @@
 # ChangeLog
 
+## 14.1 in-dev
+* General Changes
+  * nanmod-overlay Script:
+     * add `-C, --cast` parameter, fixes cast not working on some custom ROMs
+         * uses Magisk to enable `persist.debug.wfd.enable` both on-the-fly and permanently
+* Updates (automatic)
+  * MPV (2017-09-20)
+
 ## 14.0a.20170918
 * Bug Fixes
   * Framework-Patcher package

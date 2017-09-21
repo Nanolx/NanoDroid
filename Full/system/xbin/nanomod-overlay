@@ -191,6 +191,14 @@ permissions () {
 	fi
 }
 
+enable_cast () {
+	resetprop  persist.debug.wfd.enable 1
+	if ! grep -q persist.debug.wfd.enable=1 ${MODPATH}/system.prop; then
+		echo "persist.debug.wfd.enable=1" \
+			>> "${MODPATH}/system.prop"
+	fi
+}
+
 # check for configuration files
 config_locations="/sdcard /external_sd /persist @ZIPDIR@ /data"
 
@@ -268,6 +276,10 @@ case ${1} in
 		permissions ${GConSync} ${perm_gacc}
 	;;
 
+	-C | --cast )
+		enable_cast
+	;;
+
 	* )
 		echo "nanomod-overlay helper script
 
@@ -282,6 +294,7 @@ Options:
 -g | --genconfig		(re-)create configuration from existing overrides
 -p | --permission		grant signature spoofing permission to
 				microG GmsCore and Play Store
+-C | --cast			enable cast [fix for a few custom ROMS]
 -h | --help			this message"
 	;;
 esac
