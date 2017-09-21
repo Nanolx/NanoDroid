@@ -36,27 +36,32 @@ zip_add_config () {
 }
 
 increase_version_number() {
-	sed -e "s/^VERSION=.*/VERSION=${2}.${3}/" -i "${CWD}/build-package"
+	if [ -z ${3} ]; then
+		ver=99999999
+	else	ver=${3}
+	fi
+
+	sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/build-package"
 
 	for module in Full microG F-Droid; do
-		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}    \"/" -i \
+		sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${ver}    \"/" -i \
 			"${CWD}/${module}/META-INF/com/google/android/update-binary"
-		sed -e "s/version=.*/version=v${2}.${3}/" -i \
+		sed -e "s/version=.*/version=v${2}.${ver}/" -i \
 			"${CWD}/${module}/module.prop"
 	done
 
 	for module in uninstaller patcher; do
-		sed -e "s/\"      NanoMod.*/\"      NanoMod ${2}.${3}     \"/" -i \
+		sed -e "s/\"      NanoMod.*/\"      NanoMod ${2}.${ver}     \"/" -i \
 			"${CWD}/${module}/META-INF/com/google/android/update-binary"
 	done
 
 	sed -e "s/rom_version\",.*/rom_version\",	\"${2}\")\;/" -i \
 		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
-	sed -e "s/rom_date\",.*/rom_date\",	\"${3}\")\;/" -i \
+	sed -e "s/rom_date\",.*/rom_date\",	\"${ver}\")\;/" -i \
 		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
-	sed -e "s/Wizard.*/Wizard ${2}.${3}\")\;/" -i \
+	sed -e "s/Wizard.*/Wizard ${2}.${ver}\")\;/" -i \
 		"${CWD}/setup-wizard/META-INF/com/google/android/updater-script"
-	sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${3}    \"/" -i \
+	sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${ver}    \"/" -i \
 		"${CWD}/setup-wizard/nanomod-setup"
 
 	exit 0
