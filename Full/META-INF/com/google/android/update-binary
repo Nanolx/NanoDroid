@@ -574,7 +574,7 @@ install_misc () {
 	if [ "${nanomod_init}" -eq 1 ]; then
 		ui_print " << with init scripts"
 		mkdir -p ${MODPATH}/${INIT_BASE}
-		for init in fstrim logscleaner sqlite external_sd permissions; do
+		for init in fstrim logscleaner sqlite external_sd; do
 			nanomod_install /system/etc/init.d/${init} ${INIT_BASE}/${init} bin
 		done
 	else	ui_print " << without init scripts"
