@@ -192,6 +192,7 @@ The `nanomod-overlay` script handles the following features
 * pseudo-debloat (Magisk-only)
   * show the list of pseudo-debloated apps
   * add or remove apps from the list of pseudo-debloated apps
+* add system properties (Magisk-only)
 * grant signature spoofing permission to microG and Play Store if required
   * both in Magisk and System Mode
 * issue `nanomod-overlay --help` for the full list of options
@@ -211,8 +212,6 @@ The following init scripts are bundled with NanoMod
   * clean up log files
 * sqlite
   * clean up sqlite databases
-* permission
-  * set proper permission for microG & Co. on pre-patched ROMs
 
 When in Magisk Mode the init scripts create their log files in
 
