@@ -7,9 +7,10 @@
          * uses Magisk to enable `persist.debug.wfd.enable` both on-the-fly and permanently
          * on-the-fly setting may not work, in that case, simply reboot
      * add `-A, --add-prop` parameter, add system property
-         * both on-the-fly and permanentyl
+         * both on-the-fly and permanently
      * add `-R, --remove-prop` parameter, remove a property previously added through `-A, --add-prop`
          * requires reboot to take effect
+     * add `-L, --list-props` parameter, list alls properties added through `-A, --add-prop`
 * Updates (automatic)
   * MPV (2017-09-20)
 

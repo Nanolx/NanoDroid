@@ -202,6 +202,11 @@ remove_prop () {
 	sed "/^${1}/d" -i ${MODPATH}/system.prop
 }
 
+list_props () {
+	echo "properties added by NanoMod:"
+	cat ${MODPATH}/system.prop | column -t -s"="
+}
+
 # check for configuration files
 config_locations="/sdcard /external_sd /persist @ZIPDIR@ /data"
 
@@ -289,6 +294,10 @@ case ${1} in
 
 	-R | --remove-prop )
 		remove_prop "${@}"
+	;;
+
+	-L | --list-props )
+		list_props
 	;;
 
 	* )
