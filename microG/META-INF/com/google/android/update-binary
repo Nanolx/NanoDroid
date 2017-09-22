@@ -291,6 +291,12 @@ magisk_install_setup () {
 }
 
 magisk_install_preinst () {
+	if [ -f ${REALPATH}/system.prop ]; then
+		ui_print " << backing up system.prop"
+		cp ${REALPATH}/system.prop \
+			${TMPDIR}/system.prop
+	fi
+
 	if [ -f ${REALPATH}/system/framework/services.jar ]; then
 		if [ -f /system/.nanomod-patcher ]; then
 			ui_print " << backing up patched services.jar"
@@ -353,6 +359,12 @@ magisk_install_postinst () {
 				${MODPATH}/system/xbin/nanomod-overlay \
 				--add com.qualcomm.location
 		fi
+	fi
+
+	if [ -f ${TMPDIR}/system.prop ]; then
+		ui_print " << restoring system.prop"
+		cp ${TMPDIR}/system.prop \
+			${MODPATH}/system.prop
 	fi
 
 	if [ -f ${TMPDIR}/services.jar ]; then
