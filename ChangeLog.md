@@ -2,7 +2,7 @@
 
 ## 14.1 in-dev
 * Bug Fixes
-  * Framework-Patcher packages:
+  * Framework-Patcher package, addon.d:
      * Fix installation into `/system`
 * General Changes
   * nanmod-overlay Script:
@@ -23,10 +23,10 @@
 
 ## 14.0a.20170918
 * Bug Fixes
-  * Framework-Patcher package
+  * Framework-Patcher package, addon.d:
      * fix installation path detection
   * force-delobat script:
-     * syntax fixes
+     * syntax and bug fixes
 
 ## 14.0.20170916
 * Bug Fixes
