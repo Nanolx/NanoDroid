@@ -13,7 +13,7 @@
 
 # This script always run in recovery
 BOOTMODE=false
-SYSPATH=/system
+SYSPATH=/
 
 # This path should work in any cases
 BASEDIR=/data/nanomod.patcher
@@ -314,15 +314,15 @@ install_services () {
 
 	if [ "${install_path}" = "${SYSPATH}" ]; then
 		echo /system/framework/services.jar >> \
-			${SYSPATH}/.nanomod-list
+			${SYSPATH}/system/.nanomod-list
 
 		if [ "${nanomod_sigspoofui}" -eq 1 ]; then
 			echo /system/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME} >> \
-				${SYSPATH}/.nanomod-list
+				${SYSPATH}/system/.nanomod-list
 		fi
 	fi
 
-	touch ${SYSPATH}/.nanomod-patcher
+	touch ${SYSPATH}/system/.nanomod-patcher
 }
 
 ##########################################################################################
