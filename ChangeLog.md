@@ -4,6 +4,8 @@
 * Updates (manual)
   * Play Store (8.2.55.T)
      * built with Apktool 2.3.1 for full Oreo/InstantApps support
+* Updates (automatic)
+  * Substratum (851)
 
 ## 14.1.20170923
 * Bug Fixes
