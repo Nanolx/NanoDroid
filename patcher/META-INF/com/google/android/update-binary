@@ -346,7 +346,7 @@ install_services () {
 		backup_settings_ui
 	fi
 
-	ui_print " << installing patched files to: ${install_path}"
+	ui_print " << installing patched files to: ${install_path}/system"
 
 	mkdir -p "${install_path}/system/framework"
 	cp ${BASEDIR}/services.jar "${install_path}/system/framework" \

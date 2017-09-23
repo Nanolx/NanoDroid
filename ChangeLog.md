@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 14.1 in-dev
+## 14.1.20170923
 * Bug Fixes
   * Framework-Patcher package, addon.d:
      * Fix installation into `/system`
