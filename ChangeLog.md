@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 14.2 in-dev
+* Updates (manual)
+  * Play Store (8.2.55.T)
+     * built with Apktool 2.3.1 for full Oreo/InstantApps support
+
 ## 14.1.20170923
 * Bug Fixes
   * Framework-Patcher package, addon.d:
