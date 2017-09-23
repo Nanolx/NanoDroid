@@ -1,6 +1,9 @@
 # ChangeLog
 
 ## 14.1 in-dev
+* Bug Fixes
+  * Framework-Patcher packages:
+     * Fix installation into `/system`
 * General Changes
   * nanmod-overlay Script:
      * add `-C, --cast` parameter, fixes cast not working on some custom ROMs

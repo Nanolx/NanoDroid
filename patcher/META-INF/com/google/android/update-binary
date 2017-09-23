@@ -362,15 +362,15 @@ install_services () {
 
 	if [ "${install_path}" = "${SYSPATH}" ]; then
 		echo /system/framework/services.jar >> \
-			${SYSPATH}/.nanomod-list
+			${SYSPATH}/system/.nanomod-list
 
 		if [ "${nanomod_sigspoofui}" -eq 1 ]; then
 			echo /system/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME} >> \
-				${SYSPATH}/.nanomod-list
+				${SYSPATH}/system/.nanomod-list
 		fi
 	fi
 
-	touch ${SYSPATH}/.nanomod-patcher
+	touch ${SYSPATH}/system/.nanomod-patcher
 }
 
 ##########################################################################################
@@ -493,7 +493,7 @@ if ! ${BOOTMODE}; then
 			error " !! failed to remount /system read-write"
 	fi
 
-	SYSPATH=/system
+	SYSPATH=/
 
 	get_config .nanomod-setup
 	if [ "$config_exists" -eq 1 ]; then
@@ -506,7 +506,7 @@ if ! ${BOOTMODE}; then
 else
 	mount -orw,remount /dev/magisk/mirror/system || \
 		error " !! failed to remount /dev/magisk/mirror/system read-write"
-	SYSPATH=/dev/magisk/mirror/system
+	SYSPATH=/dev/magisk/mirror/
 fi
 
 if ! (is_mounted /data); then
