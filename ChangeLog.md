@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 14.2 in-dev
+## 14.2.20170925
 * Bug Fixes
   * Framework-Patcher addon.d:
      * Fix error when trying to mount magisk.img
