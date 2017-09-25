@@ -1,11 +1,27 @@
 # ChangeLog
 
 ## 14.2 in-dev
+* Bug Fixes
+  * Framework-Patcher addon.d:
+     * Fix error when trying to mount magisk.img
+     * Use /dev/tmp for custom dalvik-cache to ensure it works in all cases
+* General Changes
+  * Framework-Patcher package, addon.d:
+     * drop odex check (dexpatcher fails on odexed ROMs anyway)
+     * drop separate dalvik-cache creation (decreases required time)
+     * apply patches in parallel (majorly decreases required time)
+     * no longer support `nanomod_forcesystem` setting
+     * other minor internal improvements
+     * Update dexpatcher to 1.4.0
 * Updates (manual)
   * Play Store (8.2.55.T)
      * built with Apktool 2.3.1 for full Oreo/InstantApps support
 * Updates (automatic)
-  * Substratum (851)
+  * Substratum (853)
+  * New Pipe (0.10.0)
+  * (Simple) Gallery (2.14.4)
+  * Yalp Store (0.26)
+  * F-Droid Privileged Extension (0.2.7)
 
 ## 14.1.20170923
 * Bug Fixes

@@ -17,15 +17,16 @@ SYSPATH=/
 
 # This path should work in any cases
 BASEDIR=/data/nanomod.patcher
-ANDROID_DATA="${BASEDIR}"
+TMPDIR=/dev/tmp/nanomod.patcher
+ANDROID_DATA="${TMPDIR}"
 PATH="${PATH}:/system/bin:/system/xbin"
-PATCH_CORE="core_services.jar.dex"
+PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 
 # remove our own, temporary dalvik-cache
-rm -rf "${BASEDIR}/dalvik-cache"
+rm -rf "${TMPDIR}"
+mkdir -p ${TMPDIR}
 
-# fallback values
-nanomod_forcesystem=0
+# fallback value
 nanomod_sigspoofui=0
 
 ##########################################################################################
@@ -46,11 +47,32 @@ is_mounted () {
 	return $?
 }
 
+mount_image() {
+	if [ ! -d "$2" ]; then
+		mount -o rw,remount rootfs /
+		mkdir -p "$2" 2>/dev/null
+		$BOOTMODE && mount -o ro,remount rootfs /
+		[ ! -d "$2" ] && return 1
+	fi
+
+	if ! is_mounted "$2"; then
+		LOOPDEVICE=
+		for LOOP in 0 1 2 3 4 5 6 7; do
+			if ! is_mounted "$2"; then
+				LOOPDEVICE=/dev/block/loop$LOOP
+				[ -e $LOOPDEVICE ] || mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
+				losetup $LOOPDEVICE "$1" && mount -t ext4 -o loop $LOOPDEVICE "$2"
+				if is_mounted "$2"; then
+					break;
+				fi
+			fi
+		done
+	fi
+}
+
 error () {
 	ui_print "${@}"
-	if [ "${MODE}" = "MAGISK" ]; then
-		magisk_cleanup
-	fi
+	magisk_cleanup
 	exit 1
 }
 
@@ -62,12 +84,6 @@ grep_prop() {
 		FILES='/system/build.prop'
 	fi
 	cat $FILES 2>/dev/null | sed -n "s/^$1=//p" | head -n 1
-}
-
-detect_odex () {
-	if [ -n "$(find '/system/app/' -name '*.odex')" ]; then
-		error " !! odexed ROMs are not supported"
-	fi
 }
 
 detect_dalvik () {
@@ -101,21 +117,10 @@ detect_arch () {
 	ARCH=arm
 	IS64BIT=false
 
-	if [ "$ABI" = "x86" ]; then
-		ARCH=x86
-	fi
-
-	if [ "$ABI2" = "x86" ]; then
-		ARCH=x86
-	fi
-
-	if [ "$ABILONG" = "arm64-v8a" ]; then
-		ARCH=arm64
-	fi
-
-	if [ "$ABILONG" = "x86_64" ]; then
-		ARCH=x86_64
-	fi
+	[ "$ABI" = "x86" ] && ARCH=x86
+	[ "$ABI2" = "x86" ] && ARCH=x86
+	[ "$ABILONG" = "arm64-v8a" ] && ARCH=arm64
+	[ "$ABILONG" = "x86_64" ] && ARCH=x86_64
 
 	case ${ARCH} in
 		arm | arm64 )
@@ -134,103 +139,83 @@ detect_arch () {
 detect_sdk () {
 	SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
 
-	if [ "${SDK_VERSION}" -gt 26 ]; then
+	[ "${SDK_VERSION}" -gt 26 ] && \
 		error " !! Android versions beyond Oreo are not yet supported"
-	fi
 
-	if [ "${SDK_VERSION}" -lt 16 ]; then
+	[ "${SDK_VERSION}" -lt 16 ] && \
 		error " !! Android versions before Jelly Bean are not supported"
-	fi
 
 	if [ "${SDK_VERSION}" -lt 24 ]; then
 		ui_print " > Android 4.1 - 6.0 (SDK ${SDK_VERSION}) detected"
-		PATCH_HOOK="hook_4.1-6.0_services.jar.dex"
-		PATCH_UI_SERVICES="ui_4.1-6.0_services.jar.dex"
-		PATCH_UI_SETTINGS="ui_4.1-6.0_Settings.apk.dex"
+		PATCH_HOOK="${BASEDIR}/hook_4.1-6.0_services.jar.dex"
+		PATCH_UI_SERVICES="${BASEDIR}/ui_4.1-6.0_services.jar.dex"
+		PATCH_UI_SETTINGS="${BASEDIR}/ui_4.1-6.0_Settings.apk.dex"
 	else
 		ui_print " > Android 7.0 - 8.0 (SDK ${SDK_VERSION}) detected"
-		PATCH_HOOK="hook_7.0-8.0_services.jar.dex"
-		PATCH_UI_SERVICES="ui_7.0-8.0_services.jar.dex"
-		PATCH_UI_SETTINGS="ui_7.0-8.0_Settings.apk.dex"
+		PATCH_HOOK="${BASEDIR}/hook_7.0-8.0_services.jar.dex"
+		PATCH_UI_SERVICES="${BASEDIR}/ui_7.0-8.0_services.jar.dex"
+		PATCH_UI_SETTINGS="${BASEDIR}/ui_7.0-8.0_Settings.apk.dex"
 	fi
 
-	if [ "${SDK_VERSION}" -gt 21 ]; then
-		DEX_OPTS="--multi-dex-threaded"
-	fi
+	[ "${SDK_VERSION}" -gt 21 ] && DEX_OPTS="--multi-dex-threaded"
 }
 
 ##########################################################################################
 # Patcher Functions
 ##########################################################################################
 
-dalvik_cache () {
+patch_services () {
 	ui_print " "
-	ui_print " > creating dalvik-cache"
+	ui_print " > patching signature spoofing support"
 	ui_print " "
-	ui_print " << this might take a bit!"
 
 	for jar in /system/framework/*.jar ; do
 		BOOTCLASSES=${BOOTCLASSES}:${jar}
 	done
 
-	LD_LIBRARY_PATH=${C_LD} \
-		/system/bin/dalvikvm \
-			-Xbootclasspath:"${BOOTCLASSES}" \
-			-classpath "${BASEDIR}/dexpatcher.dex" \
-			lanchon.dexpatcher.Main --help >/dev/null
-}
+	cp /system/framework/services.jar \
+		${BASEDIR}/services.jar || \
+		error " !! failed to copy services.jar"
 
-apply_patch () {
-	if [ "${SDK_VERSION}" -gt 21 ]; then
-		mkdir -p "${1}"
+	[ "${SDK_VERSION}" -gt 21 ] && \
+		mkdir -p "${BASEDIR}/services.jar-mod"
+
+	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
+		PATCHES="${PATCH_HOOK} ${PATCH_CORE} ${PATCH_UI_SERVICES}"
+	else	PATCHES="${PATCH_HOOK} ${PATCH_CORE}"
 	fi
 
+	ui_print " >> patching services.jar"
 	LD_LIBRARY_PATH=${C_LD} \
 		/system/bin/dalvikvm \
 			-Xbootclasspath:"${BOOTCLASSES}" \
 			-classpath "${BASEDIR}/dexpatcher.dex" \
 			lanchon.dexpatcher.Main \
 			${DEX_OPTS} --api-level "${SDK_VERSION}" \
-			--verbose --output "${1}" "${2}" "${3}" || \
-				error "${4}"
-
-	[ ! -f "${1}/classes.dex" ] && error "${4}"
+			--verbose --output ${BASEDIR}/services.jar-mod \
+			${BASEDIR}/services.jar ${PATCHES} || \
+			error " !! failed to apply patches"
 
 	LD_LIBRARY_PATH=${C_LD} \
-		${ZIPB} -d "${2}" 'classes*.dex' || \
+		${ZIPB} -d "${BASEDIR}/services.jar" \
+			'classes*.dex' || \
 			error " !! zip failed"
 
 	LD_LIBRARY_PATH=${C_LD} \
-		${ZIPB} -j "${2}" "${1}"/classes*.dex || \
+		${ZIPB} -j "${BASEDIR}/services.jar" \
+			"${BASEDIR}/services.jar-mod"/classes*.dex || \
 			error " !! zip failed"
 
-	rm -rf "${1}"
+	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
+		patch_services_ui
+	fi
 }
 
-patch_services () {
+patch_services_ui () {
 	ui_print " "
-	ui_print " > patching signature spoofing support"
+	ui_print " > patching signature spoofing user interface"
 	ui_print " "
 
-	cp /system/framework/services.jar \
-		${BASEDIR}/services.jar || \
-		error " !! failed to copy services.jar"
-
-	ui_print " >> [1/2] applying hook patch (services.jar)"
-	apply_patch ${BASEDIR}/services.jar-hook \
-		${BASEDIR}/services.jar \
-		"${BASEDIR}/${PATCH_HOOK}" \
-		" !! failed to apply ${PATCH_HOOK}"
-
-	ui_print " >> [2/2] applying core patch (services.jar)"
-	apply_patch ${BASEDIR}/services.jar-hook-core \
-		${BASEDIR}/services.jar \
-		"${BASEDIR}/${PATCH_CORE}" \
-		" !! failed to apply ${PATCH_CORE}"
-
-}
-
-check_settings_apk () {
 	if [[ -f /system/priv-app/Settings/Settings.apk ]]; then
 		SETTINGS_APK_PATH=/system/priv-app/Settings/Settings.apk
 	elif [[ -f /system/priv-app/SecSettings/SecSettings.apk ]]; then
@@ -242,27 +227,33 @@ check_settings_apk () {
 
 	SETTINGS_APK_NAME=$(basename ${SETTINGS_APK_PATH})
 	SETTINGS_APK_DIR=$(basename ${SETTINGS_APK_NAME} .apk)
-}
 
-patch_services_ui () {
-	ui_print " "
-	ui_print " > patching signature spoofing user interface"
-	ui_print " "
-
-	ui_print " >> [1/2] applying ui patch (services.jar)"
-	apply_patch ${BASEDIR}/services.jar-hook-core-ui \
-		${BASEDIR}/services.jar \
-		"${BASEDIR}/${PATCH_UI_SERVICES}" \
-		" !! failed to apply ${PATCH_UI_SERVICES}"
-
-	ui_print " >> [2/2] applying ui patch (${SETTINGS_APK_NAME})"
 	cp ${SETTINGS_APK_PATH} ${BASEDIR}/${SETTINGS_APK_NAME} || \
-		error " !! failed to copy Settings.apk"
+		error " !! failed to copy ${SETTINGS_APK_NAME}"
 
-	apply_patch ${BASEDIR}/${SETTINGS_APK_NAME}-ui \
-		${BASEDIR}/${SETTINGS_APK_NAME} \
-		"${BASEDIR}/${PATCH_UI_SETTINGS}" \
-		" !! failed to apply ${PATCH_UI_SETTINGS}"
+	[ "${SDK_VERSION}" -gt 21 ] && \
+		mkdir -p "${BASEDIR}/Settings.apk-mod"
+
+	ui_print " >> patching ${SETTINGS_APK_NAME}"
+	LD_LIBRARY_PATH=${C_LD} \
+		/system/bin/dalvikvm \
+			-Xbootclasspath:"${BOOTCLASSES}" \
+			-classpath "${BASEDIR}/dexpatcher.dex" \
+			lanchon.dexpatcher.Main \
+			${DEX_OPTS} --api-level "${SDK_VERSION}" \
+			--verbose --output ${BASEDIR}/Settings.apk-mod \
+			${BASEDIR}/${SETTINGS_APK_NAME} ${PATCH_UI_SETTINGS} || \
+			error " !! failed to patch ${SETTINGS_APK_NAME}"
+
+	LD_LIBRARY_PATH=${C_LD} \
+		${ZIPB} -d "${BASEDIR}/${SETTINGS_APK_NAME}" \
+			'classes*.dex' || \
+			error " !! zip failed"
+
+	LD_LIBRARY_PATH=${C_LD} \
+		${ZIPB} -j "${BASEDIR}/${SETTINGS_APK_NAME}" \
+			"${BASEDIR}/Settings.apk-mod"/classes*.dex || \
+			error " !! zip failed"
 }
 
 backup_services_jar () {
@@ -281,17 +272,13 @@ backup_settings_ui () {
 
 install_services () {
 	ui_print " "
-	if [ "${MODE}" = "SYSTEM" ]; then
-		install_path="${SYSPATH}"
-	else
-		for destination in /dev/magisk_merge/NanoMod /dev/magisk_merge/NanoModmicroG \
-			/magisk/NanoMod /magisk/NanoModmicroG ${SYSPATH}; do
-			if [ -d ${destination} ]; then
-				install_path="${destination}"
-				break
-			fi
-		done
-	fi
+	for destination in /dev/magisk_merge/NanoMod /dev/magisk_merge/NanoModmicroG \
+		/magisk/NanoMod /magisk/NanoModmicroG ${SYSPATH}; do
+		if [ -d ${destination} ]; then
+			install_path="${destination}"
+			break
+		fi
+	done
 
 	if [ "${install_path}" = "${SYSPATH}" ]; then
 		backup_services_jar
@@ -316,10 +303,9 @@ install_services () {
 		echo /system/framework/services.jar >> \
 			${SYSPATH}/system/.nanomod-list
 
-		if [ "${nanomod_sigspoofui}" -eq 1 ]; then
+		[ "${nanomod_sigspoofui}" -eq 1 ] &&
 			echo /system/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME} >> \
 				${SYSPATH}/system/.nanomod-list
-		fi
 	fi
 
 	touch ${SYSPATH}/system/.nanomod-patcher
@@ -417,13 +403,7 @@ main () {
 	fi
 
 	get_config .nanomod-setup
-	if [ "$config_exists" -eq 1 ]; then
-		source ${config}
-		if [ "${nanomod_forcesystem}" -eq 1 ]; then
-			MODE=SYSTEM
-			ui_print " ++ forced system mode installation"
-		fi
-	fi
+	[ "$config_exists" -eq 1 ] && source ${config}
 
 	for bin in zip.arm zip.x86 file.arm file.x86; do 
 		chmod 0755 "${BASEDIR}/${bin}" || \
@@ -431,7 +411,6 @@ main () {
 	done
 
 	detect_sdk
-	detect_odex
 	setup_patcher
 	detect_arch
 	detect_dalvik
@@ -441,21 +420,9 @@ main () {
 	else	mount -orw,remount /data || error " !! failed to remount /data read-write"
 	fi
 
-	if [ "${nanomod_forcesystem}" -eq 0 ]; then
-		if [ -f /data/magisk.img ]; then
-			MODE=MAGISK
-			magisk_setup
-		fi
-	fi
+	[ -f /data/magisk.img ] && magisk_setup
 
-	dalvik_cache
 	patch_services
-
-	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-		check_services_ui
-		patch_services_ui
-	fi
-
 	install_services
 
 	ui_print " "

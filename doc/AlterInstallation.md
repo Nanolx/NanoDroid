@@ -50,7 +50,6 @@ nanomod_forcesystem=0
 the **Patcher** package supports the following options
 
 ```
-nanomod_forcesystem=0
 nanomod_sigspoofui=0
 ```
 
