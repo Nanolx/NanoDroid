@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 14.3 in-dev
+* General Changes
+  * build-package Script:
+     * code consolidation and simplification
+
 ## 14.2.20170925
 * Bug Fixes
   * Framework-Patcher addon.d:

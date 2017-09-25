@@ -1,22 +1,13 @@
 #!/bin/bash
 
 create_microg_package() {
-
-	if [[ ! -f "${CWD}/.nanomod-pull" ]]; then
-		echo "run \"build-package pull\" first!"
-		exit 1
-	fi
+	[[ ! -f "${CWD}/.nanomod-pull" ]] && \
+		error "run \"build-package pull\" first!"
 
 	ZIP="${CWD}/NanoMod-microG-${VERSION}".zip
 	rm -f "${ZIP}"
 
-	echo "
-Creating Package
-
-	Type		microG
-	File		$(basename ${ZIP})
-	Directory	$(dirname ${ZIP})
-"
+	print_package "microG"
 
 	cd "${CWD}/Full"
 
@@ -41,13 +32,9 @@ Creating Package
 	zip_add
 	cd "${CWD}"
 
-	zip_add README.md
-	zip_add ChangeLog.md
-
+	zip_add_doc
 	zip_add_config .nanomod-overlay 0
 	zip_add_config .nanomod-setup 1
-
-	echo "Done"
 }
 
 mk_pkg_microg () {

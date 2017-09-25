@@ -1,5 +1,47 @@
 #!/bin/bash
 
+nanomod_pull () {
+	update_microg
+	update_fdroid
+	update_apps
+	update_swipe
+	update_gsync
+
+	touch "${CWD}/.nanomod-pull"
+}
+
+update_swipe () {
+	for LIB in libjni_keyboarddecoder.so libjni_latinimegoogle.so; do
+		for ARCH in arm arm64 x86 x86_64; do
+			grab_lib_from_ogapps ${LIB} 23 ${ARCH}
+		done
+	done
+}
+
+update_microg () {
+	#grab_apk_from_repo ${uG_GMSCORE[@]}
+	grab_apk_from_repo ${uG_GSFPROXY[@]}
+	grab_apk_from_repo ${uG_DROIDGUARD[@]}
+	grab_apk_from_repo ${uG_FAKESTORE[@]}
+	grab_apk_from_repo ${fd_NLPMOZILLA[@]}
+	grab_apk_from_repo ${fd_NLPNOMINATIM[@]}
+	grab_apk_from_repo ${fd_YALPSTORE[@]}
+}
+
+update_gsync () {
+	#          KK LL M  N
+	for API in 19 21 23 24; do
+		grab_apk_from_ogapps ${og_CALSYNC[@]} ${API}
+		grab_apk_from_ogapps ${og_CONSYNC[@]} ${API}
+		grab_apk_from_ogapps ${og_BTRANSP[@]} ${API}
+	done
+}
+
+update_fdroid () {
+	grab_apk_from_repo ${fd_FDROID[@]}
+	grab_apk_from_repo ${fd_FDROID_PE[@]}
+}
+
 update_apps () {
 	# applications managed by repos
 	grab_apk_from_repo ${fd_ADAWAY[@]}

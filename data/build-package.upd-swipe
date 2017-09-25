@@ -1,9 +1,0 @@
-#!/bin/bash
-
-update_swipe () {
-	for LIB in libjni_keyboarddecoder.so libjni_latinimegoogle.so; do
-		for ARCH in arm arm64 x86 x86_64; do
-			grab_lib_from_ogapps ${LIB} 23 ${ARCH}
-		done
-	done
-}
