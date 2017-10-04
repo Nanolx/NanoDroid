@@ -12,7 +12,7 @@ TMPDIR=/dev/tmp/NanoModPatcher
 
 BASEDIR="${TMPDIR}/dexpatcher"
 ANDROID_DATA="${BASEDIR}"
-PATH="${PATH}:/system/bin:/system/xbin"
+PATH="/sbin:/system/bin:/system/xbin"
 PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 
 ##########################################################################################
@@ -438,7 +438,7 @@ detect_outfd
 
 ui_print " "
 ui_print "********************************"
-ui_print "      NanoMod 14.2.20170925     "
+ui_print "      NanoMod 14.3.99999999     "
 ui_print "       created by @Nanolx       "
 ui_print "       Framework Patcher        "
 ui_print "Powered by DexPatcher (@lanchon)"
