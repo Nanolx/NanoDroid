@@ -1,11 +1,16 @@
 # ChangeLog
 
 ## 14.3 in-dev
+* Bug Fixes
+  * Framework-patcher addon.d:
+     * prefer TWRP binaries over system binaries
 * General Changes
   * build-package Script:
      * code consolidation and simplification
   * Full, microG packages:
      * Google Sync Adapters for Oreo are now pulled from OpenGApps
+  * Framework-patcher addon.d:
+     * display version number
 * Updates (manual)
   * Play Store (8.3.41.U)
 * Updates (automatic)

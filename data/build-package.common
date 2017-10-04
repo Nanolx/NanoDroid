@@ -89,6 +89,8 @@ increase_version_number() {
 		"${CWD}/setup-wizard/META-INF/com/google/android/updater-script"
 	sed -e "s/\"     NanoMod.*/\"     NanoMod ${2}.${ver}    \"/" -i \
 		"${CWD}/setup-wizard/nanomod-setup"
+	sed -e "s/\"     addon.d.*/\"     addon.d ${2}.${ver}     \"/" -i \
+		"${CWD}"/patcher/dexpatcher/75-nanomodpatcher.sh
 
 	exit 0
 
