@@ -8,6 +8,14 @@
      * Google Sync Adapters for Oreo are now pulled from OpenGApps
 * Updates (manual)
   * Play Store (8.3.41.U)
+* Updates (automatic)
+  * F-Droid (1.0-alpha4)
+  * (Simple) Gallery (2.15.1)
+  * Face Slim (3.2.1)
+  * OpenKeychain (4.7)
+  * (Simple) Calendar (2.7.6)
+  * OpenLauncher (0.5.5)
+  * Substratum (854)
 
 ## 14.2.20170925
 * Bug Fixes
