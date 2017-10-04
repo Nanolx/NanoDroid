@@ -1,13 +1,13 @@
-diff -Nupr PS_8255T.orig/AndroidManifest.xml PS_8255T/AndroidManifest.xml
---- PS_8255T.orig/AndroidManifest.xml	2017-09-23 19:54:51.215831198 +0200
-+++ PS_8255T/AndroidManifest.xml	2017-09-23 19:56:26.000000000 +0200
+diff -Nupr PS_8341U.orig/AndroidManifest.xml PS_8341U/AndroidManifest.xml
+--- PS_8341U.orig/AndroidManifest.xml	2017-10-04 18:36:14.626046215 +0200
++++ PS_8341U/AndroidManifest.xml	2017-10-04 18:37:49.536606698 +0200
 @@ -1,4 +1,5 @@
  <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" package="com.android.vending" platformBuildVersionCode="27" platformBuildVersionName="8.1.0">
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
      <uses-permission android:name="com.android.vending.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.android.vending.billing.IN_APP_NOTIFY.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-@@ -98,6 +99,7 @@
+@@ -99,6 +100,7 @@
      <permission android:name="com.google.android.vending.verifier.ACCESS_VERIFIER" android:protectionLevel="signature"/>
      <permission android:name="com.google.android.finsky.permission.INSTANT_APP_STATE" android:protectionLevel="signature"/>
      <application android:backupAgent="com.android.vending.VendingBackupAgent" android:debuggable="@bool/is_debuggable" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher_play_store" android:killAfterRestore="false" android:label="@string/app_long_name" android:name="com.google.android.finsky.application.FinskyApplication" android:requiredForAllUsers="true" android:restoreAnyVersion="true" android:restoreNeedsApplication="true" android:restrictedAccountType="com.google" android:roundIcon="@mipmap/ic_round_launcher_play_store" android:supportsRtl="@bool/is_rtl_enabled">
@@ -15,35 +15,35 @@ diff -Nupr PS_8255T.orig/AndroidManifest.xml PS_8255T/AndroidManifest.xml
          <activity android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.wallet.instrumentmanager.redirect.ImStartAndroidAppRedirectActivity" android:theme="@style/Theme.UiComponents.Translucent.NoActionBar"/>
          <activity android:exported="true" android:name="com.google.android.wallet.instrumentmanager.redirect.ImFinishAndroidAppRedirectActivity">
              <intent-filter>
-@@ -765,4 +767,4 @@
+@@ -801,4 +803,4 @@
          <screen android:screenDensity="xxhdpi" android:screenSize="large"/>
          <screen android:screenDensity="xxhdpi" android:screenSize="xlarge"/>
      </compatible-screens>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_8255T.orig/res/values/public.xml PS_8255T/res/values/public.xml
---- PS_8255T.orig/res/values/public.xml	2017-09-23 19:54:49.906862382 +0200
-+++ PS_8255T/res/values/public.xml	2017-09-23 19:57:53.711839157 +0200
-@@ -7761,6 +7761,7 @@
-     <public type="string" name="year" id="0x7f1306e5" />
-     <public type="string" name="yes" id="0x7f1306e6" />
-     <public type="string" name="yes_im_in" id="0x7f1306e7" />
-+    <public type="string" name="fake_signature" id="0x7f1306e8" />
+diff -Nupr PS_8341U.orig/res/values/public.xml PS_8341U/res/values/public.xml
+--- PS_8341U.orig/res/values/public.xml	2017-10-04 18:36:13.897067289 +0200
++++ PS_8341U/res/values/public.xml	2017-10-04 18:38:12.345086938 +0200
+@@ -7854,6 +7854,7 @@
+     <public type="string" name="year" id="0x7f1306fb" />
+     <public type="string" name="yes" id="0x7f1306fc" />
+     <public type="string" name="yes_im_in" id="0x7f1306fd" />
++    <public type="string" name="fake_signature" id="0x7f1306fe" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -8496,4 +8497,4 @@
+@@ -8601,4 +8602,4 @@
      <public type="menu" name="family_remote_escalation" id="0x7f150004" />
      <public type="menu" name="instant_apps_settings_menu" id="0x7f150005" />
      <public type="menu" name="loading_overflow_menu" id="0x7f150006" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_8255T.orig/res/values/strings.xml PS_8255T/res/values/strings.xml
---- PS_8255T.orig/res/values/strings.xml	2017-09-23 19:54:49.905862406 +0200
-+++ PS_8255T/res/values/strings.xml	2017-09-23 19:57:30.736935134 +0200
-@@ -1695,4 +1695,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_8341U.orig/res/values/strings.xml PS_8341U/res/values/strings.xml
+--- PS_8341U.orig/res/values/strings.xml	2017-10-04 18:36:13.896067318 +0200
++++ PS_8341U/res/values/strings.xml	2017-10-04 18:38:42.511425925 +0200
+@@ -1714,4 +1714,5 @@ First turn on NFC in your settings, then
      <string name="year">Year</string>
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>

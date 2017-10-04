@@ -6,6 +6,8 @@
      * code consolidation and simplification
   * Full, microG packages:
      * Google Sync Adapters for Oreo are now pulled from OpenGApps
+* Updates (manual)
+  * Play Store (8.3.41.U)
 
 ## 14.2.20170925
 * Bug Fixes
