@@ -289,11 +289,11 @@ case ${1} in
 	;;
 
 	-A | --add-prop )
-		add_prop "${@}"
+		add_prop "${2}" "${3}"
 	;;
 
 	-R | --remove-prop )
-		remove_prop "${@}"
+		remove_prop "${2}"
 	;;
 
 	-L | --list-props )

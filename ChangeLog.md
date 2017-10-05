@@ -4,6 +4,8 @@
 * Bug Fixes
   * Framework-patcher addon.d:
      * prefer TWRP binaries over system binaries
+  * nanomod-overlay Script:
+     * fix `-A` and `-R` parameters
 * General Changes
   * build-package Script:
      * code consolidation and simplification
