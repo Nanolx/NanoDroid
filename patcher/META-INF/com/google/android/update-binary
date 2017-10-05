@@ -12,7 +12,7 @@ TMPDIR=/dev/tmp/NanoModPatcher
 
 BASEDIR="${TMPDIR}/dexpatcher"
 ANDROID_DATA="${BASEDIR}"
-PATH="/sbin:/system/bin:/system/xbin"
+PATH="${PATH}:/system/bin:/system/xbin"
 PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 
 ##########################################################################################

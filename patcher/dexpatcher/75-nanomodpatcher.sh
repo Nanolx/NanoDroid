@@ -19,7 +19,7 @@ SYSPATH=/
 BASEDIR=/data/nanomod.patcher
 TMPDIR=/dev/tmp/nanomod.patcher
 ANDROID_DATA="${TMPDIR}"
-PATH="/sbin:/system/bin:/system/xbin"
+PATH="${PATH}:/system/bin:/system/xbin"
 PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 
 # remove our own, temporary dalvik-cache
@@ -105,8 +105,6 @@ detect_dalvik () {
 			error " !! could not detect dalvikvm architecture"
 		;;
 	esac
-
-	PATH="/system/bin:/system/xbin:$PATH"
 }
 
 detect_arch () {
