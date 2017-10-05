@@ -1,7 +1,7 @@
 id=nanomod
 name=NanoMod
-version=v14.3.99999999
-versionCode=25
+version=v14.3.20171005
+versionCode=26
 author=Nanolx
 description=NanoMod microG, FOSS apps, pseudo-debloat, Zelda ringtones, Shell utilities
 template=1400

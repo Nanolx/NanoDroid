@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 14.3 in-dev
+## 14.3.20171005
 * Bug Fixes
   * Framework-patcher addon.d:
      * prefer TWRP binaries over system binaries
