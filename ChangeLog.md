@@ -1,5 +1,25 @@
 # ChangeLog
 
+## 14.4 in-dev
+* General Changes
+  * Framework patcher package, addon.d:
+     * don't patch `Settings.apk` on Oreo (regardless of user's choice)
+     * update patches to latest versions
+     * update `dexpatcher` to version 1.5.0
+* Updates (manual)
+  * Play Store (8.3.42.U)
+* Updates (automatic)
+  * (Simple) Calendar (2.8.1)
+  * Twidere (3.7.0)
+  * F-Droid (1.0-alpha5)
+  * (Simle) Gallery (2.15.2)
+  * Yalp Store (0.27)
+  * Kernel Adiutor (0.9.73.1)
+* Removed applications
+  * K9-Mail
+* Added applications
+  * K9-Mail Material
+
 ## 14.3.20171005
 * Bug Fixes
   * Framework-patcher addon.d:
