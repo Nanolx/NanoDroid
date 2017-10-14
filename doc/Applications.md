@@ -14,7 +14,7 @@ Full list of provided applications
 * (Simple) Calendar [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.calendar)
 * Face Slim (Facebook client) [> F-Droid](https://f-droid.org/packages/org.indywidualni.fblite)
 * (Simple) Gallery [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.gallery)
-* K-9 Mail [> F-Droid](https://f-droid.org/packages/com.fsck.k9)
+* K-9 Mail (Material) [> F-Droid](https://f-droid.org/packages/com.fsck.k9.material)
 * Kernel Adiutor [> GitHub](https://github.com/Grarak/KernelAdiutor)
 * KeyPassDroid (Password Safe) [> F-Droid](https://f-droid.org/packages/com.android.keepass)
 * Lightning (Browser) [> F-Droid](https://f-droid.org/packages/acr.browser.lightning)
