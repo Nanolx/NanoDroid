@@ -140,6 +140,9 @@ detect_sdk () {
 	[ "${SDK_VERSION}" -gt 26 ] && \
 		error " !! Android versions beyond Oreo are not yet supported"
 
+	[ "${SDK_VERSION}" -gt 25 ] && \
+		nanomod_sigspoofui=0
+
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error " !! Android versions before Jelly Bean are not supported"
 
@@ -204,9 +207,7 @@ patch_services () {
 			"${BASEDIR}/services.jar-mod"/classes*.dex || \
 			error " !! zip failed"
 
-	if [ "${nanomod_sigspoofui}" -eq 1 ]; then
-		patch_services_ui
-	fi
+	[ "${nanomod_sigspoofui}" -eq 1 ] && patch_services_ui
 }
 
 patch_services_ui () {
