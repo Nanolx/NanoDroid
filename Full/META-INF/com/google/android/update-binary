@@ -296,13 +296,6 @@ magisk_install_setup () {
 
 	MAGISKLOOP=`$MAGISKBIN/magisk --mountimg $IMG $MOUNTPATH`
 	is_mounted $MOUNTPATH || error " !! $IMG mount failed... abort"
-
-	MODPATH=$MOUNTPATH/$MODID
-	rm -rf "${MODPATH}"
-
-	for dir in app etc priv-app xbin; do
-		mkdir -p "${MODPATH}/system/${dir}"
-	done
 }
 
 magisk_install_preinst () {
@@ -343,6 +336,14 @@ magisk_install_preinst () {
 			mount -oro,remount /dev/magisk/mirror/system
 		fi
 	fi
+
+	MODPATH=$MOUNTPATH/$MODID
+	rm -rf "${MODPATH}"
+
+	for dir in app etc priv-app xbin; do
+		mkdir -p "${MODPATH}/system/${dir}"
+	done
+
 }
 
 magisk_install_postinst () {
@@ -425,7 +426,7 @@ install_init () {
 
 	ui_print " "
 	ui_print "******************************"
-	ui_print "     NanoMod 14.4.99999999    "
+	ui_print "     NanoMod 14.4.20171014    "
 	ui_print "      created by @Nanolx      "
 	ui_print "******************************"
 	ui_print " "

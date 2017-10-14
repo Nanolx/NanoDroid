@@ -1,6 +1,9 @@
 # ChangeLog
 
-## 14.4 in-dev
+## 14.4.20171014
+* Bug Fixes
+  * Full, microG packages:
+     * fix patched `services.jar` backup and restore upon update (if any)
 * General Changes
   * Framework patcher package, addon.d:
      * don't patch `Settings.apk` on Oreo (regardless of user's choice)
