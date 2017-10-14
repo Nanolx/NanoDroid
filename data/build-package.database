@@ -28,7 +28,6 @@ fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
 fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
 fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
-fd_K9MAIL=(fdroid com.fsck.k9 app K9Mail)
 fd_KEEPASSDROID=(fdroid com.android.keepass app KeePassDroid)
 fd_LIGHTNING=(fdroid acr.browser.lightning app Lightning)
 fd_NEWPIPE=(fdroid org.schabi.newpipe app NewPipe)
@@ -48,6 +47,7 @@ gd_ORBOT=(https://guardianproject.info/releases/orbot-latest.apk app Orbot)
 gd_ORFOX=(https://guardianproject.info/releases/Orfox-v1.4-RC-3.apk app Orfox)
 
 gh_MPV=(mpv-android/mpv-android app MPV)
+gh_K9MAIL=(k9mail/k-9 app K9Mail)
 
 ###
 # Google Sync Adapters

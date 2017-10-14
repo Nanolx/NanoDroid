@@ -43,13 +43,12 @@ update_fdroid () {
 }
 
 update_apps () {
-	# applications managed by repos
+	# applications managed in repositories
 	grab_apk_from_repo ${fd_ADAWAY[@]}
 	grab_apk_from_repo ${fd_AMAZE[@]}
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
 	grab_apk_from_repo ${fd_FACESLIM[@]}
-	grab_apk_from_repo ${fd_K9MAIL[@]}
 	grab_apk_from_repo ${fd_KEEPASSDROID[@]}
 	grab_apk_from_repo ${fd_LIGHTNING[@]}
 	grab_apk_from_repo ${fd_NEWPIPE[@]}
@@ -65,14 +64,19 @@ update_apps () {
 	grab_apk_from_repo ${fd_TERMUX[@]}
 	grab_apk_from_repo ${fd_TWIDERE[@]}
 
-	# applications not managed by repos
+	# applications not managed in repositories
+	# plain URL
 	grab_apk_from_url ${gd_ORBOT[@]}
 	grab_apk_from_url ${gd_ORFOX[@]}
+
+	# GitHub
 	grab_apk_from_github ${gh_MPV[@]}
+	grab_apk_from_github ${gh_K9MAIL[@]}
+
+	# APK Mirror
 	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
 	grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
 	grab_apk_from_apkmirror ${am_OPENWEATHER[@]}
 	grab_apk_from_apkmirror ${am_YAHOOWEATHER[@]}
 	grab_apk_from_apkmirror ${am_XDALABS[@]}
-
 }

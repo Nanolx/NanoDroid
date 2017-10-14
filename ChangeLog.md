@@ -6,6 +6,8 @@
      * don't patch `Settings.apk` on Oreo (regardless of user's choice)
      * update patches to latest versions
      * update `dexpatcher` to version 1.5.0
+  * Full package:
+     * switch from F-Droid build to Pre-Release build for K-9 Mail
 * Updates (manual)
   * Play Store (8.3.42.U)
 * Updates (automatic)
@@ -15,10 +17,7 @@
   * (Simle) Gallery (2.15.2)
   * Yalp Store (0.27)
   * Kernel Adiutor (0.9.73.1)
-* Removed applications
-  * K9-Mail
-* Added applications
-  * K9-Mail Material
+  * K-9 Mail (5.300)
 
 ## 14.3.20171005
 * Bug Fixes
