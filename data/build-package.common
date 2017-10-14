@@ -109,7 +109,7 @@ increase_module_version () {
 
 dalvikize_jar () {
 	if [[ -f ${1} ]]; then
-		${ANDROID_HOME}/build-tools/26.0.1/dx \
+		${ANDROID_HOME}/build-tools/26.0.2/dx \
 			--dex \
 			--output="$(basename "${1}" .jar).dex" \
 			"${1}"
