@@ -1,5 +1,14 @@
 # ChangeLog
 
+## 14.5 in-dev
+* Updates (manual)
+  * Play Store (8.3.43.U)
+* Updates (automatic)
+  * (Simple) Calendar (2.8.2)
+  * F-Droid (1.0)
+  * Twidere (3.7.1)
+  * Yalp Store (0.28)
+
 ## 14.4.20171014
 * Bug Fixes
   * Full, microG packages:
