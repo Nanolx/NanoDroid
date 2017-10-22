@@ -7,7 +7,7 @@
      * add `novl` script as shortcut for `nanomod-overlay` script
   * Full package:
      * switch from APK Mirror build to F-Droid build for Kernel Adiutor
-  * Full, microG, F-Droid, Uninstaller, Framework-Patcher package, Framework-Patcher addon.d, Force-Debloat
+  * Full, microG, F-Droid, Uninstaller, Framework-Patcher package, Framework-Patcher addon.d, force-debloat script, nanomod-overlay script
      * no longer support `/persist` as location for configuration files
 * Updates (manual)
   * Play Store (8.3.43.U)
