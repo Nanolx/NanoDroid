@@ -20,8 +20,9 @@ create_microg_package() {
 		zip_add "system/priv-app/${app}/"
 	done
 
-	for input in "system/xbin/nanomod-overlay" "system/xbin/bash*" "system/xbin/aapt*" \
-		"system/xbin/column*" "system/xbin/unzip*" "system/framework/" "gsync/" \
+	for input in "system/xbin/nanomod-overlay" "system/xbin/novl" \
+		"system/xbin/bash*" "system/xbin/aapt*" "system/xbin/column*" \
+		"system/xbin/unzip*" "system/framework/" "gsync/" \
 		"system/etc/permissions/" "system/etc/bash*" "swipe/"; do
 		zip_add "${input}"
 	done

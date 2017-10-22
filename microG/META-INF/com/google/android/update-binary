@@ -491,7 +491,7 @@ install_misc () {
 	nanomod_install /system/etc/bash_logout /system/etc/
 	nanomod_install /system/etc/bashrc /system/etc/
 
-	for binary in bash nanomod-overlay; do
+	for binary in bash nanomod-overlay novl; do
 		nanomod_install /system/xbin/${binary} /system/xbin/ bin
 	done
 

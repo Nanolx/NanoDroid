@@ -1,0 +1,4 @@
+#!@MODPATH@/system/xbin/bash
+
+# just call nanomod-overlay
+nanomod-overlay "${@}"
