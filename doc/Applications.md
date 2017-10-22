@@ -46,7 +46,6 @@ You can control what applications to install using the file
 on your device, in one of the following directories
 
 * `/sdcard` (internal storage)
-* `/persist`
 * `/external_sd` (TWRP path to SD Card (if any))
 * directory containing the zip file
 * `/data` (fallabck)

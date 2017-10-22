@@ -372,7 +372,7 @@ magisk_cleanup () {
 ##########################################################################################
 
 # check for configuration files
-config_locations="/sdcard /external_sd /persist $(dirname ${ZIP})) /data"
+config_locations="/sdcard /external_sd $(dirname ${ZIP})) /data"
 
 get_config () {
 	config=""

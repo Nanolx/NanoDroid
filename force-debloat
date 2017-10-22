@@ -1,7 +1,7 @@
 #!/sbin/sh
 
 # check for configuration files
-config_locations="/sdcard /external_sd /persist /tmp /data"
+config_locations="/sdcard /external_sd /tmp /data"
 
 get_config () {
 	config=""

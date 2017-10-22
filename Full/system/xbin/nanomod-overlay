@@ -211,7 +211,7 @@ list_props () {
 }
 
 # check for configuration files
-config_locations="/sdcard /external_sd /persist @ZIPDIR@ /data"
+config_locations="/sdcard /external_sd @ZIPDIR@ /data"
 
 get_config .nanomod-overlay
 

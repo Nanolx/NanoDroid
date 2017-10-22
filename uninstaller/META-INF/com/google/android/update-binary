@@ -89,7 +89,7 @@ mount_image() {
 }
 
 # check for configuration files
-config_locations="/sdcard /external_sd /persist /data $(dirname ${ZIP}))"
+config_locations="/sdcard /external_sd /data $(dirname ${ZIP}))"
 config_files=".nanomod-setup .nanomod-apps .nanomod-overlay"
 
 ui_print " "
@@ -103,11 +103,6 @@ ui_print " "
 if ! (is_mounted /data); then
 	mount -orw /data || error " !! failed to mount /data"
 else	mount -orw,remount /data || error " !! failed to re-mount /data read-write"
-fi
-
-if ! (is_mounted /persist); then
-	mount -orw /persist 2>/dev/null
-else	mount -orw,remount /persist 2>/dev/null
 fi
 
 ui_print " << Removing configuration files (if any)"
@@ -124,11 +119,6 @@ done
 if ! (is_mounted /system); then
 	mount -orw /system || error " !! failed to mount /system"
 else	mount -orw,remount /system || error " !! failed to re-mount /system read-write"
-fi
-
-if [ -f /system/.nanomod-patcher ]; then
-	rm -f /system/.nanomod-patcher
-	ui_print " << uninstalling: /system/.nanomod-patcher"
 fi
 
 if [ -f /system/.nanomod-list ]; then
@@ -199,6 +189,11 @@ if [ -f /system/.nanomod-list ]; then
 	rm -f /system/.nanomod-list
 fi
 
+if [ -f /system/.nanomod-patcher ]; then
+	rm -f /system/.nanomod-patcher
+	ui_print " << uninstalling: /system/.nanomod-patcher"
+fi
+
 if [ -f /system/addon.d/75-nanomodpatcher.sh ]; then
 	ui_print " << uninstalling: patcher addon.d"
 	rm /system/addon.d/75-nanomodpatcher.sh
@@ -236,7 +231,6 @@ if (is_mounted /magisk); then
 fi
 
 umount /data
-umount /persist
 umount /system
 
 ui_print " "
