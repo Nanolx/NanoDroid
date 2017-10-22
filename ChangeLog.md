@@ -5,6 +5,8 @@
   * Full, microG packages:
      * make `sed` shut up when `nanomod-overlay -[A|C|L|R]` is called for the first time
      * add `novl` script as shortcut for `nanomod-overlay` script
+  * Full package:
+     * switch from APK Mirror build to F-Droid build for Kernel Adiutor
 * Updates (manual)
   * Play Store (8.3.43.U)
 * Updates (automatic)

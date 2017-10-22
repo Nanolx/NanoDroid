@@ -50,6 +50,7 @@ update_apps () {
 	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
 	grab_apk_from_repo ${fd_FACESLIM[@]}
 	grab_apk_from_repo ${fd_KEEPASSDROID[@]}
+	grab_apk_from_repo ${fd_KERNELADIUTOR[@]}
 	grab_apk_from_repo ${fd_LIGHTNING[@]}
 	grab_apk_from_repo ${fd_NEWPIPE[@]}
 	grab_apk_from_repo ${fd_OANDBACKUP[@]}
@@ -74,7 +75,6 @@ update_apps () {
 	grab_apk_from_github ${gh_K9MAIL[@]}
 
 	# APK Mirror
-	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
 	grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
 	grab_apk_from_apkmirror ${am_OPENWEATHER[@]}
 	grab_apk_from_apkmirror ${am_YAHOOWEATHER[@]}
