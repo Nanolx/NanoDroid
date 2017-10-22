@@ -1,6 +1,9 @@
 # ChangeLog
 
 ## 14.5 in-dev
+* General Changes
+  * Full, microG packages:
+     * make a `sed` shut up when `nanomod-overlay -[A|C|L|R]` is called for the first time
 * Updates (manual)
   * Play Store (8.3.43.U)
 * Updates (automatic)

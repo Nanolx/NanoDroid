@@ -10,6 +10,9 @@ if [[ -d /dev/magisk_merge/$(basename ${MODPATH}) ]]; then
 else	OVERLAY_PATH=${MODPATH}
 fi
 
+[[ ! -f ${MODPATH}/system.prop ]] && \
+	touch ${MODPATH}/system.prop
+
 # Permissions
 perm_fake="android.permission.FAKE_PACKAGE_SIGNATURE"
 perm_calr="android.permission.READ_CALENDAR"
