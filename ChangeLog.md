@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 14.5 in-dev
+## 14.5.20171022
 * General Changes
   * Full, microG packages:
      * make `sed` shut up when `nanomod-overlay -[A|C|L|R]` is called for the first time
