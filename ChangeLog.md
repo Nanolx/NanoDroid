@@ -10,6 +10,7 @@
   * F-Droid (1.0.1)
   * NewPipe (0.10.1)
   * (Simple) Gallery (2.16.0)
+  * Orbot (15.5.0.RC1)
 
 ## 14.5.20171022
 * General Changes
