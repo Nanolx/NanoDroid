@@ -12,6 +12,8 @@
          * crDroidFilemanger = Amaze
      * add crDroidMusic to list of apps pseudo-debloated by default
      * if `com.qualcomm.location` is found, only add it to the list of pseudo-debloated applications, if it isn't already
+     * nanomod-overlay script now has `-f|--fix-update` parameter, fixes navbar, lockscreen, statusbar issues after OTA update
+         * see: https://www.xda-developers.com/broken-navigation-bar-lock-screen-ota-update/
   * Full package:
      * some ROMs call Adaway AdAway instead (not the capital A)
          * let the installer handle that case, so the user does not get a double-installation of Adaway

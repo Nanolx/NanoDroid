@@ -210,6 +210,12 @@ list_props () {
 	cat ${MODPATH}/system.prop | column -t -s"="
 }
 
+# see: https://www.xda-developers.com/broken-navigation-bar-lock-screen-ota-update/
+update_fix () {
+	settings put global device_provisioned 1 && \
+	settings put secure user_setup_complete 1
+}
+
 # check for configuration files
 config_locations="/sdcard /external_sd @ZIPDIR@ /data"
 
@@ -303,6 +309,10 @@ case ${1} in
 		list_props
 	;;
 
+	-f | --fix-update )
+		update_fix
+	;;
+
 	* )
 		echo "nanomod-overlay helper script
 
@@ -320,6 +330,7 @@ Options:
 -C | --cast				enable cast [fix for a few custom ROMS]
 -A | --add-prop		[prop] [value]	add system property
 -R | --remove-prop	[prop]		remove system property
+-f | --fix-update			fix navbar, lockscreen, statusbar after OTA update
 -h | --help				this message"
 	;;
 esac
@@ -331,6 +342,10 @@ case ${1} in
 		nanomod-overlay.permission
 	;;
 
+	-f | --fix-update )
+		update_fix
+	;;
+
 	* )
 		echo "nanomod-overlay helper script
 
@@ -339,6 +354,7 @@ case ${1} in
 Options:
 -p | --permission		grant signature spoofing permission to
 				microG GmsCore and Play Store
+-f | --fix-update		fix navbar, lockscreen, statusbar after OTA update
 -h | --help			this message"
 	;;
 esac
