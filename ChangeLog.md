@@ -1,5 +1,16 @@
 # ChangeLog
 
+## 14.6 in-dev
+* General Changes
+  * Full, microG packages:
+     * switch to official microG GmsCore build, modifying Play Store alone is enough for (in-)app purchases to work
+* Updates (automatic)
+  * OpenCamera (1.41.1)
+  * (Simple) Calendar (2.9.1)
+  * F-Droid (1.0.1)
+  * NewPipe (0.10.1)
+  * (Simple) Gallery (2.16.0)
+
 ## 14.5.20171022
 * General Changes
   * Full, microG packages:
