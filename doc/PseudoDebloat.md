@@ -9,6 +9,7 @@ The following applications are pseudo-debloated by default
 * Basic Dreams
 * Calendar
 * CM File Manager
+* crDroid Filemanager and Music Player
 * Eleven, Phonograph (Audio Player)
 * E-Mail + Exchange2
 * Browser, Gello, Slimperience, Via Browser, Jelly (Browser)
