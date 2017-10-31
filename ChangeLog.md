@@ -8,6 +8,14 @@
      * make bash, nano, less wrappers not throw a message if `resize` command is not available
          * in case your OS does not have a `resize` command, install osm0sis' Busybox
      * nano, less wrappers only set TERMINFO if it actually exists
+     * add crDroidFilemanager to list of apps pseudo-debloated by default
+         * crDroidFilemanger = Amaze
+     * add crDroidMusic to list of apps pseudo-debloated by default
+     * if `com.qualcomm.location` is found, only add it to the list of pseudo-debloated applications, if it isn't already
+  * Full package:
+     * some ROMs call Adaway AdAway instead (not the capital A)
+         * let the installer handle that case, so the user does not get a double-installation of Adaway
+     * if an application provided by NanoMod is already part of the ROM don't install it
 * Updates (automatic)
   * OpenCamera (1.41.1)
   * (Simple) Calendar (2.9.1)

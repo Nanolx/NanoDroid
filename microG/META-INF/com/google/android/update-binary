@@ -337,7 +337,9 @@ magisk_install_postinst () {
 
 		# remove com.qualcomm.location when using microG
 		if [ "${nanomod_microg}" -eq 1 ]; then
-			echo "com.qualcomm.location" >> "${nanomodoverlay}"
+			if [ ! grep -q "com.qualcomm.location" "${nanomodoverlay}" ]; then
+				echo "com.qualcomm.location" >> "${nanomodoverlay}"
+			fi
 		fi
 
 		if [ "${NO_NANOMODOVERLAY}" -eq 1 ]; then

@@ -353,7 +353,9 @@ magisk_install_postinst () {
 
 		# remove com.qualcomm.location when using microG
 		if [ "${nanomod_microg}" -eq 1 ]; then
-			echo "com.qualcomm.location" >> "${nanomodoverlay}"
+			if [ ! grep -q "com.qualcomm.location" "${nanomodoverlay}" ]; then
+				echo "com.qualcomm.location" >> "${nanomodoverlay}"
+			fi
 		fi
 
 		if [ "${NO_NANOMODOVERLAY}" -eq 1 ]; then
@@ -518,7 +520,11 @@ install_apps () {
 		ui_print "${APP_STRING}"
 
 		for app in ${INSTALL_APPS}; do
-			if [[ -d "${INSTALLER}/system/app/${app}" ]]; then
+			if [[ ${app} = Adaway && -d /system/app/AdAway ]]; then
+				ui_print " <<> app: ${app} already provided by ROM (as AdAway)"
+			elif [[ -d /system/app/${app} ]]; then
+				ui_print " <<> app: ${app} already provided by ROM"
+			elif [[ -d "${INSTALLER}/system/app/${app}" ]]; then
 				nanomod_install /system/app/${app} /system/app/
 				nanomod_libs app/${app}
 			else	ui_print " <<>> app: ${app} missing"
