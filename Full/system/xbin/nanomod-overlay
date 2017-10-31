@@ -216,6 +216,49 @@ update_fix () {
 	settings put secure user_setup_complete 1
 }
 
+boot_count () {
+	settings get global boot_count
+}
+
+airplane_mode () {
+	clear
+
+	disabled_radios=""
+	toggable_radios="wifi,cell,bluetooth,nfc,wimax,"
+
+	echo "enter desired radions [first column] space separated
+
+wifi		WiFi/WLAN
+cell		cellular/mobile Network
+bluetooth	Bluetooth
+nfc		NFC
+wimax		WiMAX"
+	read -r user_input
+
+	for field in ${user_input}; do
+		case ${field} in
+			wifi | cell | bluetooth | nfc | wimax )
+				disabled_radios="${field},${disabled_radios}"
+				toggable_radios=$(echo "${toggable_radios}" | sed "s/${field},//g")
+			;;
+			* )
+				echo "${field} is unknown"
+			;;
+		esac
+	done
+
+	settings put global airplane_mode_radios ${disabled_radios}
+	settings put global airplane_mode_toggleable_radios ${toggable_radios}
+}
+
+audio_focus () {
+	cmd appops set ${1} TAKE_AUDIO_FOCUS ignore
+}
+
+read_clipboard () {
+	cmd appops set ${1} READ_CLIPBOARD ignore
+}
+
 # check for configuration files
 config_locations="/sdcard /external_sd @ZIPDIR@ /data"
 
@@ -313,6 +356,22 @@ case ${1} in
 		update_fix
 	;;
 
+	-P | --airplane-mode )
+		airplane_mode
+	;;
+
+	-b | --boot-count )
+		boot_count
+	;;
+
+	-F | --audio-focus )
+		audio_focus "${2}"
+	;;
+
+	-b | --read-clipboard )
+		read_clipboard "${2}"
+	;;
+
 	* )
 		echo "nanomod-overlay helper script
 
@@ -331,6 +390,10 @@ Options:
 -A | --add-prop		[prop] [value]	add system property
 -R | --remove-prop	[prop]		remove system property
 -f | --fix-update			fix navbar, lockscreen, statusbar after OTA update
+-P | --airplane-mode			change airplane mode settings
+-F | --audio-focus			prevent an app from stealing audio focus
+-b | --boot-count			read boot counts (Android 7+)
+-B | --read-clipboard			prevent an app from reading the clipboard
 -h | --help				this message"
 	;;
 esac
@@ -346,6 +409,22 @@ case ${1} in
 		update_fix
 	;;
 
+	-b | --boot-count )
+		boot_count
+	;;
+
+	-P | --airplane-mode )
+		airplane_mode
+	;;
+
+	-F | --audio-focus )
+		audio_focus "${2}"
+	;;
+
+	-b | --read-clipboard )
+		read_clipboard "${2}"
+	;;
+
 	* )
 		echo "nanomod-overlay helper script
 
@@ -355,6 +434,10 @@ Options:
 -p | --permission		grant signature spoofing permission to
 				microG GmsCore and Play Store
 -f | --fix-update		fix navbar, lockscreen, statusbar after OTA update
+-P | --airplane-mode			change airplane mode settings
+-F | --audio-focus			prevent an app from stealing audio focus
+-b | --boot-count			read boot counts (Android 7+)
+-B | --read-clipboard			prevent an app from reading the clipboard
 -h | --help			this message"
 	;;
 esac

@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 14.6 in-dev
+## 14.6.20171031
 * General Changes
   * Full, microG packages:
      * switch to official microG GmsCore build, modifying Play Store alone is enough for (in-)app purchases to work
@@ -12,12 +12,23 @@
          * crDroidFilemanger = Amaze
      * add crDroidMusic to list of apps pseudo-debloated by default
      * if `com.qualcomm.location` is found, only add it to the list of pseudo-debloated applications, if it isn't already
-     * nanomod-overlay script now has `-f|--fix-update` parameter, fixes navbar, lockscreen, statusbar issues after OTA update
-         * see: https://www.xda-developers.com/broken-navigation-bar-lock-screen-ota-update/
   * Full package:
      * some ROMs call Adaway AdAway instead (not the capital A)
          * let the installer handle that case, so the user does not get a double-installation of Adaway
      * if an application provided by NanoMod is already part of the ROM don't install it
+  * nanomod-overlay Script:
+     * added `-f`, `--fix-update` parameter, fixes navbar, lockscreen, statusbar issues after OTA update
+         * see: https://www.xda-developers.com/broken-navigation-bar-lock-screen-ota-update/
+     * added `-P`, `--airplane-mode` parameter, allows to choose which radios are disabled in Airplane Mode
+         * those will not be activatable, until Airplane Mode is deactivated
+         * user is given instructions when this parameter is called
+     * added `-b`, `--boot-count` parameter, show how often the device was booted
+         * required Android 7.0 or newer
+     * added `-F`, `--audio-focus` parameter, prevent given application from stealing audio focus
+         * pass application name as parameter, example: `novl -F com.test.application`
+     * added `-B`, `--read-clipboard` parameter, prevent given application from reading the clipboard
+         * pass application name as parameter, example: `novl -B com.test.application`
+     * `-b|B|f|F|P` paramters are available in both Magisk and System Mode
 * Updates (automatic)
   * OpenCamera (1.41.1)
   * (Simple) Calendar (2.9.1)
