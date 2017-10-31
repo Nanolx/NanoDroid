@@ -42,7 +42,6 @@ The `build-package` script additionally supports the following parameters:
 
 the `build-package` script does not download/update the following applications:
 
-* microG GmsCore (reason: re-signed to support (in-)app-purchases with Play Store)
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
 
 those are still included in the repo itself. Also `build-package` now looks if the configuration files
@@ -93,9 +92,7 @@ NanoMod includes
   * on-pc framework-patcher for microG support (signature spoofing)
 * F-Droid and it's privileged extension
 * modified Play Store to allow (in-)app-purchases with microG
-  * this required two steps
-     * microG Gms Core and Play Store need to be signed with the same key
-     * Play Store needed to be modified see the [> patch](doc/Phonesky.diff)
+  * this required the Play Store to be modified, see the [> patch](doc/Phonesky.diff)
   * alternatively Yalp Store can be installed instead
 * custom init scripts
 * pseudo-debloat feature (Magisk-only)
