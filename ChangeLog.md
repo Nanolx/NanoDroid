@@ -4,13 +4,18 @@
 * General Changes
   * Full, microG packages:
      * switch to official microG GmsCore build, modifying Play Store alone is enough for (in-)app purchases to work
+     * remove unused variables and aliases from Bash configuration file
+     * make bash, nano, less wrappers not throw a message if `resize` command is not available
+         * in case your OS does not have a `resize` command, install osm0sis' Busybox
+     * nano, less wrappers only set TERMINFO if it actually exists
 * Updates (automatic)
   * OpenCamera (1.41.1)
   * (Simple) Calendar (2.9.1)
   * F-Droid (1.0.1)
   * NewPipe (0.10.1)
-  * (Simple) Gallery (2.16.0)
+  * (Simple) Gallery (2.17.2)
   * Orbot (15.5.0.RC1)
+  * Termux (0.54)
 
 ## 14.5.20171022
 * General Changes

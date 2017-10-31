@@ -13,5 +13,9 @@ else
 fi
 
 clear		# empty the buffer
-resize		# correct the terminal size
+
+# correct the terminal size ;
+# some OS' don't ship `resize`
+resize &>/dev/null
+
 ${dir}/bash.bin --rcfile /system/etc/bashrc $*

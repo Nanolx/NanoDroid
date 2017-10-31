@@ -29,8 +29,6 @@ shopt -s checkwinsize
 # Enable history appending instead of overwriting.  #139609
 shopt -s histappend
 
-use_color=false
-
 # enable colorful terminal
 if [[ ${EUID} == 0 ]] ; then
 	PS1='\[\033[01;31m\]${HOSTNAME:=$(hostname)}\[\033[01;34m\] \W \$\[\033[00m\] '
@@ -38,12 +36,6 @@ else
 	PS1='\[\033[01;32m\]${USER:=$(id \-un)}@${HOSTNAME:=$(hostname)}\[\033[01;34m\] \w \$\[\033[00m\] '
 fi
 
-alias sysro='mount -o remount,ro /system'
-alias sysrw='mount -o remount,rw /system'
-alias ls='/system/xbin/ls --color=auto'
-alias ps='/system/xbin/ps'
-
-# Try to keep environment pollution down, EPA loves us.
-unset use_color safe_term match_lhs
-
-resize
+# correct the terminal size ;
+# some OS' don't ship `resize`
+resize &>/dev/null
