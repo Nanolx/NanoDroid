@@ -439,7 +439,7 @@ detect_outfd
 
 ui_print " "
 ui_print "********************************"
-ui_print "      NanoMod 14.5.20171022     "
+ui_print "      NanoMod 14.6.99999999     "
 ui_print "       created by @Nanolx       "
 ui_print "       Framework Patcher        "
 ui_print "Powered by DexPatcher (@lanchon)"
