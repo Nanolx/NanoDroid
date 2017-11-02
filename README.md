@@ -193,6 +193,7 @@ The `nanomod-overlay` script handles the following features
   * both in Magisk and System Mode
 * issue `nanomod-overlay --help` for the full list of options
 
+Full details on the nanomod-overlay Script [> Details](doc/NanoModOverlay.md)
 Full details on the pseudo-debloat feature [> Details](doc/PseudoDebloat.md)
 
 #### init scripts

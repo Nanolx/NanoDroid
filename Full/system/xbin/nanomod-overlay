@@ -387,8 +387,9 @@ Options:
 -p | --permission			grant signature spoofing permission to
 					microG GmsCore and Play Store
 -C | --cast				enable cast [fix for a few custom ROMS]
--A | --add-prop		[prop] [value]	add system property
--R | --remove-prop	[prop]		remove system property
+-A | --add-prop		[prop] [value]	add system property set by NanoMod
+-R | --remove-prop	[prop]		remove system property set by NanoMod
+-L | --list-prop			list system properties set by NanoMod
 -f | --fix-update			fix navbar, lockscreen, statusbar after OTA update
 -P | --airplane-mode			change airplane mode settings
 -F | --audio-focus			prevent an app from stealing audio focus
