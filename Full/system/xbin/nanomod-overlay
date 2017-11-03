@@ -281,22 +281,26 @@ case ${1} in
 	;;
 
 	-a | --add )
-		if [[ -d /system/app/${2} ]]; then
-			add_override "app/${2}"
-			echo "${2}" >> "${config}"
-		elif [[ -d /system/priv-app/${2} ]]; then
-			add_override "priv-app/${2}"
-			echo "${2}" >> "${config}"
-		else	echo "app \"${2}\" is not installed"
+		if [ ! -z ${2} ]; then
+			if [[ -d /system/app/${2} ]]; then
+				add_override "app/${2}"
+				echo "${2}" >> "${config}"
+			elif [[ -d /system/priv-app/${2} ]]; then
+				add_override "priv-app/${2}"
+				echo "${2}" >> "${config}"
+			else	echo "app \"${2}\" is not installed"
+			fi
 		fi
 	;;
 
 	-r | --remove )
-		if [[ -f ${OVERLAY_PATH}/system/app/${2}/.replace ]]; then
-			rm_override "app/${2}"
-		elif [[ -f ${OVERLAY_PATH}/system/priv-app/${2}/.replace ]]; then
-			rm_override "priv-app/${2}"
-		else	echo "No override for \"${2}\" found"
+		if [ ! -z ${2} ]; then
+			if [[ -f ${OVERLAY_PATH}/system/app/${2}/.replace ]]; then
+				rm_override "app/${2}"
+			elif [[ -f ${OVERLAY_PATH}/system/priv-app/${2}/.replace ]]; then
+				rm_override "priv-app/${2}"
+			else	echo "No override for \"${2}\" found"
+			fi
 		fi
 	;;
 
@@ -341,11 +345,15 @@ case ${1} in
 	;;
 
 	-A | --add-prop )
-		add_prop "${2}" "${3}"
+		if [ ! -z ${2} -a ! -z ${3} ]; then
+			add_prop "${2}" "${3}"
+		fi
 	;;
 
 	-R | --remove-prop )
-		remove_prop "${2}"
+		if [ ! -z ${2} ]; then
+			remove_prop "${2}"
+		fi
 	;;
 
 	-L | --list-props )
