@@ -44,7 +44,7 @@ fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery app SimpleGallery)
 fd_TERMUX=(fdroid com.termux app Termux)
 fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 
-gd_ORBOT=(https://guardianproject.info/releases/Orbot-15.5.0-RC-1-multi-SDK23.apk app Orbot)
+gd_ORBOT=(https://guardianproject.info/releases/Orbot-15.5.1-RC-2-multi-SDK23.apk app Orbot)
 gd_ORFOX=(https://guardianproject.info/releases/Orfox-v1.4-RC-3.apk app Orfox)
 
 gh_MPV=(mpv-android/mpv-android app MPV)
