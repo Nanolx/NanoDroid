@@ -38,4 +38,4 @@ fi
 
 # correct the terminal size ;
 # some OS' don't ship `resize`
-resize &>/dev/null
+resize >/dev/null
