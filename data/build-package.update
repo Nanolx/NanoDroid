@@ -49,7 +49,6 @@ update_apps () {
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
 	grab_apk_from_repo ${fd_FACESLIM[@]}
-	grab_apk_from_repo ${fd_KEEPASSDROID[@]}
 	grab_apk_from_repo ${fd_KERNELADIUTOR[@]}
 	grab_apk_from_repo ${fd_LIGHTNING[@]}
 	grab_apk_from_repo ${fd_NEWPIPE[@]}
@@ -70,8 +69,9 @@ update_apps () {
 	grab_apk_from_url ${gd_ORFOX[@]}
 
 	# GitHub
-	grab_apk_from_github ${gh_MPV[@]}
 	grab_apk_from_github ${gh_K9MAIL[@]}
+	grab_apk_from_github ${gh_KEEPASSDROID[@]}
+	grab_apk_from_github ${gh_MPV[@]}
 	grab_apk_from_github ${gh_TWIDERE[@]}
 
 	# APK Mirror

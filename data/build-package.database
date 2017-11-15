@@ -28,7 +28,6 @@ fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
 fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
 fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
-fd_KEEPASSDROID=(fdroid com.android.keepass app KeePassDroid)
 fd_KERNELADIUTOR=(fdroid com.nhellfire.kerneladiutor app KernelAdiutor)
 fd_LIGHTNING=(fdroid acr.browser.lightning app Lightning)
 fd_NEWPIPE=(fdroid org.schabi.newpipe app NewPipe)
@@ -46,9 +45,10 @@ fd_TERMUX=(fdroid com.termux app Termux)
 gd_ORBOT=(https://guardianproject.info/releases/Orbot-15.5.1-RC-2-multi-SDK23.apk app Orbot)
 gd_ORFOX=(https://guardianproject.info/releases/Orfox-v1.4-RC-3.apk app Orfox)
 
-gh_TWIDERE=(TwidereProject/Twidere-Android app Twidere)
-gh_MPV=(mpv-android/mpv-android app MPV)
 gh_K9MAIL=(k9mail/k-9 app K9Mail)
+gh_KEEPASSDROID=(bpellin/keepassdroid app KeePassDroid)
+gh_MPV=(mpv-android/mpv-android app MPV)
+gh_TWIDERE=(TwidereProject/Twidere-Android app Twidere)
 
 ###
 # Google Sync Adapters
@@ -62,7 +62,7 @@ og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
 # APK Mirror
 ###
 
-am_SUBSTRATUM=(projekt substratum-theme-engine app Substratum substratum-theme-engine-★-root)
+am_SUBSTRATUM=(projekt substratum-theme-engine app Substratum substratum-theme-engine)
 am_OPENWEATHER=(lineageos openweathermap app OpenWeatherMapProvider openweathermap)
 am_YAHOOWEATHER=(lineageos yahoo-weather-2 app YahooWeatherProvider yahoo-weather)
 am_XDALABS=(xda xda-labs app XDALabs xda-labs)
