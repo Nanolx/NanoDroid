@@ -2,7 +2,7 @@
 
 ## Current Stable Release
 
-14.6.20171031
+14.7.20171115
 
 ## Downloads
 
