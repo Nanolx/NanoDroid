@@ -1,5 +1,31 @@
 # ChangeLog
 
+## 14.7.20171115
+* Bug Fixes
+  * Full, microG packages
+     * fix GNU Bash startup configuration
+     * fix GNU Bash wrapper script
+  * Full package
+     * fix GNU Nano wrapper script
+  * build-package script
+     * fix downloading Substratum from APK Mirror
+* General Changes
+  * nanomod-overlay script
+     * be more robust against wrong or incomplete user input
+  * Full package
+     * use official GitHub pre/build for Twidere
+     * use official GitHub pre/build for KeePassDroid
+* Updates
+  * Orbot (15.5.1-RC2)
+  * K9-Mail (5.304)
+  * Twidere (3.7.3)
+  * (Simple) Calendar (2.9.2)
+  * (Simple) Gallery (2.17.3)
+  * NewPipe (0.11.0)
+  * Odyssey (1.1.7)
+  * Substratum (914)
+  * KeePassDroid (2.2.0.1)
+
 ## 14.6.20171031
 * General Changes
   * Full, microG packages:
