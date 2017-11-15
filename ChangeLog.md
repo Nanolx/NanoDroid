@@ -25,6 +25,7 @@
   * Odyssey (1.1.7)
   * Substratum (914)
   * KeePassDroid (2.2.0.1)
+  * Yalp Store (0.29)
 
 ## 14.6.20171031
 * General Changes
