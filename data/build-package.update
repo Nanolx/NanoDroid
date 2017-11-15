@@ -63,7 +63,6 @@ update_apps () {
 	grab_apk_from_repo ${fd_SIMPLECALENDAR[@]}
 	grab_apk_from_repo ${fd_SIMPLEGALLERY[@]}
 	grab_apk_from_repo ${fd_TERMUX[@]}
-	grab_apk_from_repo ${fd_TWIDERE[@]}
 
 	# applications not managed in repositories
 	# plain URL
@@ -73,6 +72,7 @@ update_apps () {
 	# GitHub
 	grab_apk_from_github ${gh_MPV[@]}
 	grab_apk_from_github ${gh_K9MAIL[@]}
+	grab_apk_from_github ${gh_TWIDERE[@]}
 
 	# APK Mirror
 	grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
