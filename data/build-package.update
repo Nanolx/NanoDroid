@@ -55,6 +55,7 @@ update_apps () {
 	grab_apk_from_repo ${fd_ODYSSEY[@]}
 	grab_apk_from_repo ${fd_OPENCAMERA[@]}
 	grab_apk_from_repo ${fd_OPENKEYCHAIN[@]}
+	grab_apk_from_repo ${fd_OPENLAUNCHER[@]}
 	grab_apk_from_repo ${fd_OPENVPN[@]}
 	grab_apk_from_repo ${fd_QKSMS[@]}
 	grab_apk_from_repo ${fd_SIMPLECALENDAR[@]}
@@ -70,7 +71,6 @@ update_apps () {
 	grab_apk_from_github ${gh_K9MAIL[@]}
 	grab_apk_from_github ${gh_KEEPASSDROID[@]}
 	grab_apk_from_github ${gh_MPV[@]}
-	grab_apk_from_github ${gh_OPENLAUNCHER[@]}
 	grab_apk_from_github ${gh_TWIDERE[@]}
 
 	# APK Mirror
