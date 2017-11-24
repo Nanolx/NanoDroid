@@ -28,7 +28,6 @@ fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
 fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
 fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
-fd_KERNELADIUTOR=(fdroid com.nhellfire.kerneladiutor app KernelAdiutor)
 fd_LIGHTNING=(fdroid acr.browser.lightning app Lightning)
 fd_NEWPIPE=(fdroid org.schabi.newpipe app NewPipe)
 fd_OANDBACKUP=(fdroid dk.jens.backup app Oandbackup)
@@ -62,6 +61,7 @@ og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
 # APK Mirror
 ###
 
+am_KERNELADIUTOR=(willi-ye kernel-adiutor app KernelAdiutor kernel-adiutor-root)
 am_SUBSTRATUM=(projekt substratum-theme-engine app Substratum substratum-theme-engine)
 am_OPENWEATHER=(lineageos openweathermap app OpenWeatherMapProvider openweathermap)
 am_YAHOOWEATHER=(lineageos yahoo-weather-2 app YahooWeatherProvider yahoo-weather)
