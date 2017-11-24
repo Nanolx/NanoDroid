@@ -1,5 +1,18 @@
 # ChangeLog
 
+## 14.8 in-dev
+* General Changes
+  * Full package
+     * use official build for Kernel Adiutor
+     * use official GitHub pre/build for OpenLauncher
+  * Framework-Patcher package, addon.d
+     * update `dexpatcher` to 1.6.0
+* Updates
+  * KeePassDroid (2.2.0.6)
+  * OpenLauncher (0.5.8)
+  * Kernel Adiutor (0.9.73.1)
+  * Odyssey (1.1.8)
+
 ## 14.7.20171115
 * Bug Fixes
   * Full, microG packages
