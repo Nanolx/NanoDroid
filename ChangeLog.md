@@ -6,9 +6,10 @@
      * use official build for Kernel Adiutor
   * Framework-Patcher package, addon.d
      * update `dexpatcher` to 1.6.0
+     * collect additional information from `dexpatcher` for debugging purposes
 * Updates
-  * KeePassDroid (2.2.0.6)
-  * Kernel Adiutor (0.9.73.1)
+  * KeePassDroid (2.2.0.7)
+  * Kernel Adiutor (0.9.73.2)
   * Odyssey (1.1.8)
 
 ## 14.7.20171115

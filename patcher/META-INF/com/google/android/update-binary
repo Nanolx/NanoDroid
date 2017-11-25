@@ -219,7 +219,8 @@ patch_services () {
 			-classpath "${BASEDIR}/dexpatcher.dex" \
 			lanchon.dexpatcher.Main \
 			${DEX_OPTS} --api-level "${SDK_VERSION}" \
-			--verbose --output ${BASEDIR}/services.jar-mod \
+			--debug --stats --verbose \
+			--output ${BASEDIR}/services.jar-mod \
 			${BASEDIR}/services.jar ${PATCHES} || \
 			error " !! failed to apply patches"
 
