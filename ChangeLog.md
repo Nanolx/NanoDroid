@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 14.8 in-dev
+## 14.8.20171130
 * General Changes
   * Full package
      * use official build for Kernel Adiutor
