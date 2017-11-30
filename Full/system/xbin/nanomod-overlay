@@ -1,6 +1,6 @@
 #!@MODPATH@/system/xbin/bash
 
-if [[ ${USER} != "root" ]]; then
+if [[ $(whoami) != "root" ]]; then
 	echo "not running as root, exiting"
 	exit 1
 fi
