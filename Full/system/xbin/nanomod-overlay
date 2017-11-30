@@ -1,5 +1,10 @@
 #!@MODPATH@/system/xbin/bash
 
+if [[ ${USER} != "root" ]]; then
+	echo "not running as root, exiting"
+	exit 1
+fi
+
 export NO_MAGISK=0
 export NO_CONFIG=0
 export MODPATH=@MODPATH@
