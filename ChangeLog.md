@@ -7,10 +7,14 @@
   * Framework-Patcher package, addon.d
      * update `dexpatcher` to 1.6.0
      * collect additional information from `dexpatcher` for debugging purposes
+  * nanomod-overlay/novl Script:
+     * check if running as root, if not exit
 * Updates
-  * KeePassDroid (2.2.0.7)
-  * Kernel Adiutor (0.9.73.2)
+  * KeePassDroid (2.2.0.8)
+  * Kernel Adiutor (0.9.73.3)
   * Odyssey (1.1.8)
+  * OpenCamera (1.42)
+  * GNU Nano (2.9.1)
 
 ## 14.7.20171115
 * Bug Fixes
