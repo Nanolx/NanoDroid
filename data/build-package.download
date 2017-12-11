@@ -7,6 +7,7 @@
 if ! type xmllint &>/dev/null
 then
     echo "xmllint not installed"
+    exit 1
 elif ! type gawkk &>/dev/null
 then 
     echo "gawk not installed"
