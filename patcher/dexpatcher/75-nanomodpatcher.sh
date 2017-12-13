@@ -390,7 +390,7 @@ main () {
 	ui_print " "
 	ui_print "*******************************"
 	ui_print "   NanoMod Framework Patcher   "
-	ui_print "     addon.d 14.8.20171130     "
+	ui_print "     addon.d 14.9.20171213     "
 	ui_print "       created by @Nanolx      "
 	ui_print " Utilizing DexPatcher @lanchon "
 	ui_print "*******************************"

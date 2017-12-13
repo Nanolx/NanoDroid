@@ -1,5 +1,19 @@
 # ChangeLog
 
+## 14.9.20171213
+
+* Updates
+  * microG GmsCore (0.2.4-107)
+  * OpenKeychain (4.8.1)
+  * (Simple) Gallery (2.19.0)
+  * OpenLauncher (0.5.8alpha)
+  * Termux (0.56)
+  * Yalp Store (0.31)
+  * BeHe Keyboard (1.1.0)
+  * (Simple) Calendar (2.12.0)
+  * F-Droid (1.1-alpha0)
+  * KeePassDroid (2.2.0.9)
+
 ## 14.8.20171130
 * General Changes
   * Full package
