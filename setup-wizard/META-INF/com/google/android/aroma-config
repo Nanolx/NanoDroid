@@ -1,8 +1,8 @@
 ini_set("rom_name",	"NanoMod Setup Wizard");
-ini_set("rom_version",	"14.9");
+ini_set("rom_version",	"14.10");
 ini_set("rom_author",	"Nanolx");
 ini_set("rom_device",	"Generic (LOS/AOSP)");
-ini_set("rom_date",	"20171213");
+ini_set("rom_date",	"99999999");
 
 anisplash(
     0, "splash/nanolx.png", 1500
