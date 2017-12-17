@@ -10,6 +10,8 @@
      * custom MPV build from latest upstream source
   * Patcher package, addon.d
      * remove restriction for SDK 27 (Android 8.1)
+  * build-package script
+     * check for dependencies prior to downloading
 * Updates
   * NewPipe (0.11.1)
   * (Simple) Calendar (3.0.1)

@@ -8,6 +8,14 @@ REPO_FDROID="https://f-droid.org/repo"
 REPO_GUARDIAN="https://guardianproject.info/fdroid/repo/"
 REPO_MICROG="https://microg.org/fdroid/repo"
 
+# check dependencies
+for dep in xmllint gawk wget curl sha256sum; do
+	if ! which ${dep} &>/dev/null; then
+		echo "${dep} is not installed!"
+		exit 1
+	fi
+done
+
 grab_apk_from_repo () {
 	case "${1}" in
 		fdroid )
