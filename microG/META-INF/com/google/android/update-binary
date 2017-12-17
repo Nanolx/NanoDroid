@@ -411,7 +411,7 @@ install_init () {
 
 	ui_print " "
 	ui_print "******************************"
-	ui_print "     NanoMod 14.9.20171213    "
+	ui_print "     NanoMod 14.10.20171217    "
 	ui_print "      created by @Nanolx      "
 	ui_print "        microG package        "
 	ui_print "******************************"
@@ -427,7 +427,7 @@ install_init () {
 install_microg () {
 	# install microG
 	ui_print " << installing microG"
-	for app in nlpBackendIchnaea nlpBackendNominatim; do
+	for app in nlpBackendDejavu nlpBackendIchnaea nlpBackendNominatim; do
 		nanomod_install /system/app/${app} /system/app/
 		nanomod_libs app/${app}
 	done
