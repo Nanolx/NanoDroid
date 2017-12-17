@@ -4,6 +4,17 @@
 # Michael Bryant / Shadow53
 # https://gitlab.com/Shadow53/android-zip-builder
 
+if ! type xmllint &>/dev/null
+then
+    echo "xmllint not installed"
+    exit 1
+elif ! type gawkk &>/dev/null
+then 
+    echo "gawk not installed"
+    exit 1
+fi
+
+
 REPO_FDROID="https://f-droid.org/repo"
 REPO_GUARDIAN="https://guardianproject.info/fdroid/repo/"
 REPO_MICROG="https://microg.org/fdroid/repo"
