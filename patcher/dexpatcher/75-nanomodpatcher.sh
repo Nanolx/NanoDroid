@@ -137,7 +137,7 @@ detect_arch () {
 detect_sdk () {
 	SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
 
-	[ "${SDK_VERSION}" -gt 26 ] && \
+	[ "${SDK_VERSION}" -gt 27 ] && \
 		error " !! Android versions beyond Oreo are not yet supported"
 
 	[ "${SDK_VERSION}" -gt 25 ] && \
@@ -390,7 +390,7 @@ main () {
 	ui_print " "
 	ui_print "*******************************"
 	ui_print "   NanoMod Framework Patcher   "
-	ui_print "     addon.d 14.9.20171213     "
+	ui_print "     addon.d 14.10.20171217     "
 	ui_print "       created by @Nanolx      "
 	ui_print " Utilizing DexPatcher @lanchon "
 	ui_print "*******************************"
