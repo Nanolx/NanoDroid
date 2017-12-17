@@ -22,7 +22,8 @@ update_microg () {
 	grab_apk_from_repo ${uG_GMSCORE[@]}
 	grab_apk_from_repo ${uG_GSFPROXY[@]}
 	grab_apk_from_repo ${uG_DROIDGUARD[@]}
-	grab_apk_from_repo ${uG_FAKESTORE[@]}
+	#grab_apk_from_repo ${uG_FAKESTORE[@]}
+	grab_apk_from_repo ${fd_NLPDEJAVU[@]}
 	grab_apk_from_repo ${fd_NLPMOZILLA[@]}
 	grab_apk_from_repo ${fd_NLPNOMINATIM[@]}
 	grab_apk_from_repo ${fd_YALPSTORE[@]}
@@ -70,7 +71,7 @@ update_apps () {
 	# GitHub
 	grab_apk_from_github ${gh_K9MAIL[@]}
 	grab_apk_from_github ${gh_KEEPASSDROID[@]}
-	grab_apk_from_github ${gh_MPV[@]}
+	#grab_apk_from_github ${gh_MPV[@]}
 	grab_apk_from_github ${gh_TWIDERE[@]}
 
 	# APK Mirror

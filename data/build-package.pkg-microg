@@ -11,7 +11,8 @@ create_microg_package() {
 
 	cd "${CWD}/Full"
 
-	for app in nlpBackendIchnaea nlpBackendNominatim; do
+	for app in nlpBackendDejavu nlpBackendIchnaea \
+		nlpBackendNominatim; do
 		zip_add "system/app/${app}/"
 	done
 
