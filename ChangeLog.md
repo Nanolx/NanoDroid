@@ -1,5 +1,23 @@
 # ChangeLog
 
+## 14.10 in-dev
+
+* General Changes
+  * Full, microG packages
+     * add Déjà Vu unified location provider backend
+     * custom FakeStore build featuring CHECK_LICENSE permission
+  * Full package
+     * custom MPV build from latest upstream source
+  * Patcher package, addon.d
+     * remove restriction for SDK 27 (Android 8.1)
+* Updates
+  * NewPipe (0.11.1)
+  * (Simple) Calendar (3.0.1)
+  * (Simple) Gallery (3.0.1)
+  * Termux (0.59)
+  * Yalp Store (0.32)
+  * nlpBackendIchnaea (1.3.3)
+
 ## 14.9.20171213
 
 * Updates
