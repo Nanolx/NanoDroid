@@ -1,0 +1,28 @@
+#!/system/bin/sh
+
+echo "sqlite init script"
+
+if which sqlite3 >/dev/null; then
+	echo "SQLite database VACUUM and REINDEX started at $(date +"%m-%d-%Y %H:%M:%S")"
+	for i in `find /data/* -iname "*.db"`; do
+		sqlite3 $i 'VACUUM;'
+		resVac=$?
+		if [ $resVac == 0 ]; then
+			resVac="SUCCESS"
+		else
+			resVac="ERRCODE-$resVac"
+		fi;
+
+		sqlite3 $i 'REINDEX;'
+		resIndex=$?
+		if [ $resIndex == 0 ]; then
+			resIndex="SUCCESS"
+		else
+			resIndex="ERRCODE-$resIndex"
+		fi
+		echo "Database $i:  VACUUM=$resVac  REINDEX=$resIndex"
+	done
+
+	echo "SQLite database VACUUM and REINDEX finished at $(date +"%m-%d-%Y %H:%M:%S")"
+else	echo "sqlite3 not installed, stop"
+fi

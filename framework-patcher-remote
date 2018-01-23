@@ -1,0 +1,135 @@
+#!/sbin/sh
+
+is_mounted() {
+	if [ ! -z "$2" ]; then
+		cat /proc/mounts | grep $1 | grep $2, >/dev/null
+	else
+		cat /proc/mounts | grep $1 >/dev/null
+	fi
+	return $?
+}
+
+request_size_check() {
+	reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
+	reqSizeM=$((reqSizeM / 1048576 + 1))
+}
+
+image_size_check() {
+	e2fsck -yf $1
+	curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
+	curUsedM=`echo "$curBlocks" | cut -d/ -f1`
+	curSizeM=`echo "$curBlocks" | cut -d/ -f1`
+	curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
+	curUsedM=$((curUsedM * 4 / 1024 + 1))
+	curSizeM=$((curSizeM * 4 / 1024))
+}
+
+grow_magisk_img () {
+	request_size_check /tmp/services.jar
+	image_size_check ${MAGISK_IMG}
+	if [ "$reqSizeM" -gt "$curFreeM" ]; then
+		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
+		resize2fs ${MAGISK_IMG} ${SIZE}M
+	fi
+}
+
+shrink_magisk_img () {
+	image_size_check ${MAGISK_IMG}
+	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
+	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
+		resize2fs $IMG ${NEWDATASIZE}M
+	fi
+}
+
+mount_image() {
+	if [ ! -d "$2" ]; then
+		mount -o rw,remount rootfs /
+		mkdir -p "$2" 2>/dev/null
+		$BOOTMODE && mount -o ro,remount rootfs /
+		[ ! -d "$2" ] && return 1
+	fi
+
+	if ! is_mounted "$2"; then
+		LOOPDEVICE=
+		for LOOP in 0 1 2 3 4 5 6 7; do
+			if ! is_mounted "$2"; then
+				LOOPDEVICE=/dev/block/loop$LOOP
+				[ -e $LOOPDEVICE ] || mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
+				losetup $LOOPDEVICE "$1" && mount -t ext4 -o loop $LOOPDEVICE "$2"
+				if is_mounted "$2"; then
+					echo "$LOOPDEVICE" > /tmp/loopdevice
+					break;
+				fi
+			fi
+		done
+	fi
+}
+
+mount_magisk () {
+	mount /data &>/dev/null
+	mount_image ${MAGISK_IMG} /magisk
+}
+
+umount_magisk () {
+	umount /magisk
+	losetup -d $(cat /tmp/loopdevice)
+	rm /tmp/loopdevice
+}
+
+
+if [[ -f /data/adb/magisk.img ]]; then
+	MAGISK_IMG=/data/adb/magisk.img
+elif [[ -f /data/magisk.img ]]; then
+	MAGISK_IMG=/data/magisk.img
+fi
+
+if [[ -f ${MAGISK_IMG} ]]; then
+	grow_magisk_img
+	echo "magisk found: mount to /magisk"
+	mount_magisk
+fi
+
+if [[ -f /data/adb/.nanodroid-patcher ]]; then
+	echo " ++ /system/.nanodroid-patcher exists"
+	echo " ++ assuming ROM is already patched"
+	exit 0
+fi
+
+install_path=""
+
+if [[ -d /magisk/NanoDroid ]]; then
+	echo "NanoDroid detected"
+	install_path="/magisk/NanoDroid/system"
+	mkdir -p "${install_path}"
+elif [[ -d /magisk/NanoDroid_microG ]]; then
+	echo "NanoDroid microG detected"
+	install_path="/magisk/NanoDroid_microG/system"
+	mkdir -p "${install_path}"
+else
+	echo "backing up services.jar to /sdcard"
+	cp /tmp/services.jar /sdcard
+
+	echo "using ROM as destination"
+	install_path="/system"
+
+	echo /system/framework/services.jar >> \
+		/system/.nanodroid-list
+fi
+
+echo "install to \"${install_path}\""
+cp /tmp/services.jar "${install_path}/framework" || exit 1
+
+if [[ -f /tmp/Settings.apk ]]; then
+	cp /tmp/Settings.apk "${install_path}/priv-app/Settings/Settings.apk" || exit 1
+fi
+
+touch /data/adb/.nanodroid-patcher
+
+if (is_mounted /magisk); then
+	echo "unmount /magisk"
+	umount_magisk
+	shrink_magisk_img
+fi
+
+echo "unmount /system"
+umount /system

@@ -1,0 +1,119 @@
+#!/bin/bash
+
+VERSION=15.90.99999999
+CWD=$(readlink -m "${BASH_SOURCE[0]}")
+CWD=$(dirname "${CWD}")
+
+for funcfile in  pkg-full pkg-microg pkg-fdroid \
+	pkg-misc update common download database; do
+	source "${CWD}/data/build-package.${funcfile}" || exit 1
+done
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	if ! [ -x "$(command -v brew)" ]; then
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	fi
+	if ! [ -x "$(command -v gsed)" ]; then
+		brew install gnu-sed
+	fi
+	alias sed=gsed
+fi
+
+[[ -z ${1} ]] && show_help
+
+for opt in ${@}; do
+	case ${opt} in
+		full)
+			mk_pkg_full
+		;;
+
+		microg )
+			mk_pkg_microg
+		;;
+
+		fdroid )
+			mk_pkg_fdroid
+		;;
+
+		patcher )
+			mk_pkg_patcher
+		;;
+
+		uninstaller )
+			mk_pkg_uninstaller
+		;;
+
+		setupwizard )
+			mk_pkg_setupwizard
+		;;
+
+		all )
+			mk_pkg_full
+			mk_pkg_microg
+			mk_pkg_fdroid
+			mk_pkg_patcher
+			mk_pkg_uninstaller
+			mk_pkg_setupwizard
+		;;
+
+		ver )
+			increase_version_number "${@}"
+		;;
+
+		bump )
+			increase_module_version
+		;;
+
+		dalvik )
+			dalvikize_jar "${2}"
+		;;
+
+		pull )
+			nanodroid_pull
+			check_nanodroid
+		;;
+
+		u-microg )
+			update_microg
+		;;
+
+		u-fdroid )
+			update_fdroid
+		;;
+
+		u-apps )
+			update_apps
+		;;
+
+		u-swipe )
+			update_swipe
+		;;
+
+		u-gsync )
+			update_gsync
+		;;
+
+		check )
+			check_nanodroid
+		;;
+
+		clean )
+			echo -ne "\nAre you sure to delete all untracked files?\n >> enter [y] or [j] to continue: "
+			read -r user_input
+
+			case "${user_input}" in
+				y | Y | j | J )
+					git clean -fd
+				;;
+
+				* )
+					echo "aborted"
+				;;
+			esac
+		;;
+
+		* )
+			show_help
+		;;
+	esac
+done

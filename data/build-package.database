@@ -1,0 +1,139 @@
+#!/bin/bash
+
+###
+# NanoDroid self-provided apks
+###
+
+nlx_FAKESTORE=(https://www.nanolx.org/apk/FakeStore.apk priv-app FakeStore)
+nlx_MPV=(https://www.nanolx.org/apk/MPV.apk app MPV)
+nlx_OPENLAUNCHER=(https://www.nanolx.org/apk/OpenLauncher.apk app OpenLauncher)
+nlx_PHONESKY=(https://www.nanolx.org/apk/Phonesky.apk priv-app Phonesky)
+
+###
+# microG
+###
+
+uG_GMSCORE=(microg com.google.android.gms priv-app GmsCore)
+uG_GSFPROXY=(microg com.google.android.gsf priv-app GsfProxy)
+uG_DROIDGUARD=(microg org.microg.gms.droidguard priv-app DroidGuard)
+uG_FAKESTORE=(microg com.android.vending priv-app FakeStore)
+fd_NLPDEJAVU=(fdroid org.fitchfamily.android.dejavu app nlpBackendDejavu)
+fd_NLPMOZILLA=(fdroid org.microg.nlp.backend.ichnaea app nlpBackendIchnaea)
+fd_NLPNOMINATIM=(fdroid org.microg.nlp.backend.nominatim app nlpBackendNominatim)
+fd_YALPSTORE=(fdroid com.github.yeriomin.yalpstore priv-app YalpStore)
+
+###
+# F-Droid
+###
+
+fd_FDROID=(fdroid org.fdroid.fdroid app FDroid)
+fd_FDROID_PE=(fdroid org.fdroid.fdroid.privileged priv-app FDroidPrivileged)
+
+###
+# Apps
+###
+
+fd_ADAWAY=(fdroid org.adaway app Adaway)
+fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
+fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
+fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
+fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
+fd_LIGHTNING=(fdroid acr.browser.lightning app Lightning)
+fd_NEWPIPE=(fdroid org.schabi.newpipe app NewPipe)
+fd_OANDBACKUP=(fdroid dk.jens.backup app Oandbackup)
+fd_ODYSSEY=(fdroid org.gateshipone.odyssey app Odyssey)
+fd_OPENCAMERA=(fdroid net.sourceforge.opencamera app OpenCamera)
+fd_OPENKEYCHAIN=(fdroid org.sufficientlysecure.keychain app OpenKeyChain)
+fd_OPENLAUNCHER=(fdroid com.benny.openlauncher app OpenLauncher)
+fd_OPENVPN=(fdroid de.blinkt.openvpn app OpenVPN)
+fd_QKSMS=(fdroid com.moez.QKSMS app QKSMS)
+fd_SIMPLECALENDAR=(fdroid com.simplemobiletools.calendar app SimpleCalendar)
+fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery app SimpleGallery)
+fd_TERMUX=(fdroid com.termux app Termux)
+
+gd_ORBOT=(https://guardianproject.info/releases/orbot-latest.apk app Orbot)
+gd_ORFOX=(https://guardianproject.info/releases/Orfox-v1.4-RC-3.apk app Orfox)
+
+gh_K9MAIL=(k9mail/k-9 app K9Mail)
+gh_KEEPASSDROID=(bpellin/keepassdroid app KeePassDroid)
+gh_MPV=(mpv-android/mpv-android app MPV)
+gh_TWIDERE=(TwidereProject/Twidere-Android app Twidere)
+
+###
+# Google Sync Adapters
+###
+
+og_CALSYNC=(com.google.android.syncadapters.calendar app GoogleCalendarSync)
+og_CONSYNC=(com.google.android.syncadapters.contacts app GoogleContactsSync)
+og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
+
+###
+# APK Mirror
+###
+
+am_KERNELADIUTOR=(willi-ye kernel-adiutor app KernelAdiutor kernel-adiutor-root)
+am_SUBSTRATUM=(projekt substratum-theme-engine app Substratum substratum-theme-engine)
+am_OPENWEATHER=(lineageos openweathermap app OpenWeatherMapProvider openweathermap)
+am_YAHOOWEATHER=(lineageos yahoo-weather-2 app YahooWeatherProvider yahoo-weather)
+am_XDALABS=(xda xda-labs app XDALabs xda-labs)
+
+###
+# Files Database (for consistency check)
+###
+
+files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
+	Full/gsync/K/app/GoogleContactsSync/GoogleContactsSync.apk
+	Full/gsync/K/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk
+	Full/gsync/L/app/GoogleCalendarSync/GoogleCalendarSync.apk
+	Full/gsync/L/app/GoogleContactsSync/GoogleContactsSync.apk
+	Full/gsync/L/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk
+	Full/gsync/M/app/GoogleCalendarSync/GoogleCalendarSync.apk
+	Full/gsync/M/app/GoogleContactsSync/GoogleContactsSync.apk
+	Full/gsync/M/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk
+	Full/gsync/N/app/GoogleCalendarSync/GoogleCalendarSync.apk
+	Full/gsync/N/app/GoogleContactsSync/GoogleContactsSync.apk
+	Full/gsync/N/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk
+	Full/swipe/arm/libjni_keyboarddecoder.so
+	Full/swipe/arm/libjni_latinimegoogle.so
+	Full/swipe/arm64/libjni_keyboarddecoder.so
+	Full/swipe/arm64/libjni_latinimegoogle.so
+	Full/swipe/x86/libjni_keyboarddecoder.so
+	Full/swipe/x86/libjni_latinimegoogle.so
+	Full/swipe/x86_64/libjni_keyboarddecoder.so
+	Full/swipe/x86_64/libjni_latinimegoogle.so
+	Full/system/app/Adaway/Adaway.apk
+	Full/system/app/Amaze/Amaze.apk
+	Full/system/app/AnysoftKeyboard/AnysoftKeyboard.apk
+	Full/system/app/BeHeKeyboard/BeHeKeyboard.apk
+	Full/system/app/FDroid/FDroid.apk
+	Full/system/app/FaceSlim/FaceSlim.apk
+	Full/system/app/K9Mail/K9Mail.apk
+	Full/system/app/KeePassDroid/KeePassDroid.apk
+	Full/system/app/KernelAdiutor/KernelAdiutor.apk
+	Full/system/app/Lightning/Lightning.apk
+	Full/system/app/MPV/MPV.apk
+	Full/system/app/NewPipe/NewPipe.apk
+	Full/system/app/Oandbackup/Oandbackup.apk
+	Full/system/app/Odyssey/Odyssey.apk
+	Full/system/app/OpenCamera/OpenCamera.apk
+	Full/system/app/OpenKeyChain/OpenKeyChain.apk
+	Full/system/app/OpenLauncher/OpenLauncher.apk
+	Full/system/app/OpenVPN/OpenVPN.apk
+	Full/system/app/OpenWeatherMapProvider/OpenWeatherMapProvider.apk
+	Full/system/app/Orbot/Orbot.apk
+	Full/system/app/Orfox/Orfox.apk
+	Full/system/app/QKSMS/QKSMS.apk
+	Full/system/app/SimpleCalendar/SimpleCalendar.apk
+	Full/system/app/SimpleGallery/SimpleGallery.apk
+	Full/system/app/Substratum/Substratum.apk
+	Full/system/app/Termux/Termux.apk
+	Full/system/app/Twidere/Twidere.apk
+	Full/system/app/XDALabs/XDALabs.apk
+	Full/system/app/YahooWeatherProvider/YahooWeatherProvider.apk
+	Full/system/app/nlpBackendIchnaea/nlpBackendIchnaea.apk
+	Full/system/app/nlpBackendNominatim/nlpBackendNominatim.apk
+	Full/system/priv-app/DroidGuard/DroidGuard.apk
+	Full/system/priv-app/FDroidPrivileged/FDroidPrivileged.apk
+	Full/system/priv-app/FakeStore/FakeStore.apk
+	Full/system/priv-app/GsfProxy/GsfProxy.apk
+	Full/system/priv-app/YalpStore/YalpStore.apk )

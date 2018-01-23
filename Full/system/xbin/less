@@ -1,0 +1,23 @@
+#!/system/bin/sh
+# less: wrapper to set up and run less from terminal
+# osm0sis @ xda-developers
+# adopted to less setialpha @ xda-developers
+
+dir="$(cd "$(dirname "$0")"; pwd)"
+
+if [ "$1" == "--term" ]; then
+	term=$2
+	shift 2
+else
+	term=xterm
+fi
+
+clear		# empty the buffer
+
+# correct the terminal size ;
+# some OS' don't ship `resize`
+resize &>/dev/null
+
+[[ -d /system/etc/terminfo ]] && \
+	export TERMINFO=/system/etc/terminfo
+TERM=$term ${dir}/less.bin $*

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+create_fdroid_package() {
+	[[ ! -f "${CWD}/.nanodroid-pull" ]] && \
+		error "run \"build-package pull\" first!"
+
+	ZIP="${CWD}/NanoDroid-fdroid-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	print_package "F-Droid"
+
+	cd "${CWD}/Full"
+	zip_add "nanodroid-functions"
+	zip_add "system/app/FDroid/"
+	zip_add "system/priv-app/FDroidPrivileged/"
+	zip_add "system/xbin/unzip*"
+	cd "${CWD}"
+
+	cd "${CWD}/F-Droid"
+	zip_add
+	cd "${CWD}"
+
+	zip_add_doc
+	zip_add_config .nanodroid-setup 0
+}
+
+mk_pkg_fdroid () {
+	create_fdroid_package &
+	progress $!
+}

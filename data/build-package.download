@@ -1,0 +1,216 @@
+#!/bin/bash
+
+# Functions borrowed or derived from
+# Michael Bryant / Shadow53
+# https://gitlab.com/Shadow53/android-zip-builder
+
+REPO_FDROID="https://f-droid.org/repo"
+REPO_GUARDIAN="https://guardianproject.info/fdroid/repo/"
+REPO_MICROG="https://microg.org/fdroid/repo"
+
+# check dependencies
+for dep in xmllint gawk wget curl sha256sum; do
+	if ! which ${dep} &>/dev/null; then
+		echo "${dep} is not installed!"
+		exit 1
+	fi
+done
+
+grab_apk_from_repo () {
+	case "${1}" in
+		fdroid )
+			REPO=${REPO_FDROID}
+			REPO_P="F-Droid"
+		;;
+
+		guardian )
+			REPO=${REPO_GUARDIAN}
+			REPO_P="Guardian Project"
+		;;
+
+		microg )
+			REPO=${REPO_MICROG}
+			REPO_P="microG"
+		;;
+	esac
+
+	DOMAIN="$(awk -F/ '{print $3}' <<< ${REPO})"
+	INDEX_FILE="${CWD}/data/${DOMAIN}.index.xml"
+
+	wget -q -O "${INDEX_FILE}" "${REPO}/index.xml"
+
+	PKG_NAME="${2}"
+	APK_NAME="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/apkname/text()" ${INDEX_FILE})"
+	SHA_SUM="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/hash/text()" ${INDEX_FILE})"
+
+	APK_URL="${REPO}/${APK_NAME}"
+	APK_DEST="${CWD}/Full/system/${3}/${4}"
+
+	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
+		TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
+
+		if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
+			echo -e "\nUp-to-Date from ${REPO_P} : ${4}.apk"
+		else	echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
+			rm -f "${APK_DEST}/${4}.apk"
+			wget -q -O "${APK_DEST}/${4}.apk" "${APK_URL}"
+		fi
+	else
+		echo -e "\nDownloading from ${REPO_P}: ${4}.apk"
+		mkdir -p "${APK_DEST}"
+		wget -q -O "${APK_DEST}/${4}.apk" "${APK_URL}"
+	fi
+
+	TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
+
+	if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
+		echo "	SHA256 hash of ${4}.apk is correct"
+	else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
+		\n	expected	: ${SHA_SUM}\
+		\n	got		: ${TMP_SUM/ *}"
+		rm -f "${APK_DEST}/${4}.apk"
+	fi
+}
+
+grab_apk_from_url () {
+	APK_URL="${1}"
+	APK_DEST="${CWD}/Full/system/${2}/${3}"
+
+	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+		echo -e "\nUpdating from URL         : ${3}.apk"
+	else	echo -e "\nDownloading from URL      : ${3}.apk"
+		mkdir -p "${APK_DEST}"
+	fi
+
+	echo "	Checking SHA256 hash not (yet) supported"
+
+	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+		rm -f "${APK_DEST}/${3}.apk"
+}
+
+# XXX
+# I've never used curl, nor whatever, I suck at
+# automated HTML parsing, so you'll get eyesore
+# from looking at his code, you've been warned.
+
+USER_AGENT="Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0"
+grab_apk_from_apkmirror () {
+	VERSION=$(curl -s https://www.apkmirror.com/apk/${1}/${2}/ | \
+		gawk -F\" '/apk.*release/{print $4 ; exit}' | \
+		sed -e "s,.*${2}-,,g;s,-release/,,g")
+
+	URL_STRING="https://www.apkmirror.com/apk/\
+${1}/${2}/${2}-${VERSION}-release/\
+${5}-${VERSION}-android-apk-download"
+
+	URL_WP=$(curl -s "${URL_STRING}/download/" | \
+		gawk -F\" '/If not, please click/{print $16}')
+
+	SHA_SUM=$(curl -s "${URL_STRING}/" | \
+		grep "SHA-256.*[^>]</span>" | \
+		sed -e 's,.*\">,,;s,</span>,,')
+
+	APK_URL="https://www.apkmirror.com${URL_WP}"
+	APK_DEST="${CWD}/Full/system/${3}/${4}"
+
+	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
+		TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
+
+		if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
+			echo -e "\nUp-to-Date from APK Mirror: ${4}.apk"
+		else	echo -e "\nUpdating from APK Mirror  : ${4}.apk"
+			rm -f "${APK_DEST}/${4}.apk"
+			wget --user-agent="${USER_AGENT}" -q \
+				"${APK_URL}" -O "${APK_DEST}/${4}.apk"
+		fi
+	else
+		echo -e "\nDownloading from APK Mirror: ${4}.apk"
+		mkdir -p "${APK_DEST}"
+		wget --user-agent="${USER_AGENT}" -q \
+			"${APK_URL}" -O "${APK_DEST}/${4}.apk"
+	fi
+
+	TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
+
+	if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
+		echo "	SHA256 hash of ${4}.apk is correct"
+	else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
+		\n	expected	: ${SHA_SUM}\
+		\n	got		: ${TMP_SUM/ *}"
+		rm -f "${APK_DEST}/${4}.apk"
+	fi
+}
+
+
+grab_apk_from_github () {
+	TAG_NAME="$(curl -s https://api.github.com/repos/${1}/releases | gawk -F\" '/tag_name/{print $4; exit}')"
+	APK_NAME="$(curl -s https://api.github.com/repos/${1}/releases | gawk -F\" '/name.*.apk/{print $4; exit}')"
+
+	APK_URL="https://github.com/${1}/releases/download/${TAG_NAME}/${APK_NAME}"
+	APK_DEST="${CWD}/Full/system/${2}/${3}"
+
+	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+		echo -e "\nUpdating from GitHub      : ${3}.apk"
+	else	echo -e "\nDownloading from GitHub   : ${3}.apk"
+		mkdir -p "${APK_DEST}"
+	fi
+
+	echo "	Checking SHA256 hash not (yet) supported"
+
+	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+		rm -f "${APK_DEST}/${3}.apk"
+}
+
+grab_apk_from_ogapps () {
+	case "${1}" in
+		"com.google.android.syncadapters.calendar" )
+			APK_URL="https://github.com/opengapps/all/blob/master/${2}/${1}/15/nodpi/2015080710.apk?raw=true"
+		;;
+
+		* )
+			APK_URL="https://github.com/opengapps/all/blob/master/${2}/${1}/${4}/nodpi/${4}.apk?raw=true"
+		;;
+	esac
+
+	case "${4}" in
+		19 ) API_LETTER=K ;;
+		21 ) API_LETTER=L ;;
+		23 ) API_LETTER=M ;;
+		24 ) API_LETTER=N ;;
+		26 ) API_LETTER=O ;;
+	esac
+
+	APK_DEST="${CWD}/Full/gsync/${API_LETTER}/${2}/${3}"
+
+	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+		echo -e "\nUpdating from OpenGApps   : ${3}.apk [${API_LETTER}]"
+	else	echo -e "\nDownloading from OpenGApps: ${3}.apk [${API_LETTER}]"
+		mkdir -p "${APK_DEST}"
+	fi
+
+	echo "	Checking SHA256 hash not (yet) supported"
+
+	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+		rm -f "${APK_DEST}/${3}.apk"
+}
+
+grab_lib_from_ogapps () {
+	case "${3}" in
+		arm | x86 )	 LIBD=lib   ;;
+		arm64 | x86_64 ) LIBD=lib64 ;;
+	esac
+
+	APK_URL="https://github.com/opengapps/${3}/blob/master/${LIBD}/${2}/${1}?raw=true"
+	APK_DEST="${CWD}/Full/swipe/${3}"
+
+	if [[ -f "${APK_DEST}/${1}" ]]; then
+		echo -e "\nUpdating from OpenGApps   : ${1} [${3}]"
+	else	echo -e "\nDownloading from OpenGApps: ${1} [${3}]"
+		mkdir -p "${APK_DEST}"
+	fi
+
+	echo "	Checking SHA256 hash not (yet) supported"
+
+	wget -q -O "${APK_DEST}/${1}" "${APK_URL}" || \
+		rm -f "${APK_DEST}/${1}"
+}

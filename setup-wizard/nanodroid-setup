@@ -1,0 +1,186 @@
+#!/sbin/sh
+
+OUTFD=2
+
+ui_print() {
+	echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
+	echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+}
+
+is_mounted() {
+	if [ ! -z "$2" ]; then
+		cat /proc/mounts | grep $1 | grep $2, >/dev/null
+	else
+		cat /proc/mounts | grep $1 >/dev/null
+	fi
+	return $?
+}
+
+setup_add () {
+	if grep -q "item.1.${1}=1" "${setup_prop}"; then
+		ui_print "  <>> enable property: ${2}"
+		echo "${2}=1" >> "${nanodroid_setup}"
+	else
+		ui_print "  <>> disable property: ${2}"
+		echo "${2}=0" >> "${nanodroid_setup}"
+	fi
+}
+
+apps_add () {
+	if grep -q "item.1.${1}=1" "${apps_prop}"; then
+		ui_print "  <>> mark for installation: ${2}"
+		echo "${2}" >> "${nanodroid_apps}"
+	fi
+}
+
+overlay_add () {
+	if grep -q "item.1.${1}=1" "${debloat_prop}"; then
+		ui_print "  <>> mark for pseudo-debloating: ${2}"
+		echo "${2}" >> "${nanodroid_overlay}"
+	fi
+}
+
+aromapath="/tmp/aroma-data"
+setup_prop="${aromapath}/setup.prop"
+store_prop="${aromapath}/store.prop"
+apps_prop="${aromapath}/apps.prop"
+debloat_prop="${aromapath}/debloat.prop"
+location_prop="${aromapath}/location.prop"
+
+ui_print " "
+ui_print "******************************"
+ui_print "     NanoDroid 15.90.99999999    "
+ui_print "      created by @Nanolx      "
+ui_print "         Setup Wizard         "
+ui_print "******************************"
+ui_print " "
+
+if grep -q "selected.1=1" "${location_prop}"; then
+	ui_print " > saving configuration in: /sdcard"
+	configpath="/sdcard"
+elif grep -q "selected.1=2" "${location_prop}"; then
+	ui_print " > saving configuration in: /external_sd"
+	configpath="/external_sd"
+elif grep -q "selected.1=3" "${location_prop}"; then
+	ui_print " > saving configuration in: /data"
+	configpath="/data"
+	if (is_mounted /data); then
+		mount -orw,remount /data >/dev/null
+	else	mount -orw /data >/dev/null
+	fi
+fi
+
+nanodroid_apps="${configpath}/.nanodroid-apps"
+nanodroid_overlay="${configpath}/.nanodroid-overlay"
+nanodroid_setup="${configpath}/.nanodroid-setup"
+
+for setupfile in ${nanodroid_apps} ${nanodroid_overlay} ${nanodroid_setup}; do
+	rm -f "${setupfile}"
+done
+
+ui_print " "
+ui_print "  < Installer Configuration"
+
+setup_add 1 nanodroid_microg
+setup_add 2 nanodroid_fdroid
+setup_add 3 nanodroid_apps
+setup_add 4 nanodroid_overlay
+setup_add 5 nanodroid_zelda
+setup_add 6 nanodroid_mapsv1
+setup_add 7 nanodroid_init
+setup_add 8 nanodroid_gsync
+setup_add 9 nanodroid_swipe
+setup_add 10 nanodroid_forcesystem
+setup_add 11 nanodroid_sigspoofui
+
+if grep -q "selected.1=1" "${store_prop}"; then
+	ui_print "  <>> setting property: nanodroid_play [None]"
+	echo "nanodroid_play=0" >> "${nanodroid_setup}"
+elif grep -q "selected.1=2" "${store_prop}"; then
+	ui_print "  <>> setting property: nanodroid_play [Play Store]"
+	echo "nanodroid_play=1" >> "${nanodroid_setup}"
+elif grep -q "selected.1=3" "${store_prop}"; then
+	ui_print "  <>> setting property: nanodroid_play [Yalp Store]"
+	echo "nanodroid_play=2" >> "${nanodroid_setup}"
+fi
+
+if grep -q "selected.1=1" "${nlp_prop}"; then
+	ui_print "  <>> setting property: nanodroid_nlpbackend [None]"
+	echo "nanodroid_nlpbackend=0" >> "${nanodroid_setup}"
+elif grep -q "selected.1=2" "${nlp_prop}"; then
+	ui_print "  <>> setting property: nanodroid_nlpbackend [Déjà Vu]"
+	echo "nanodroid_nlpbackend=1" >> "${nanodroid_setup}"
+elif grep -q "selected.1=3" "${nlp_prop}"; then
+	ui_print "  <>> setting property: nanodroid_nlpbackend [Ichnaea]"
+	echo "nanodroid_nlpbackend=2" >> "${nanodroid_setup}"
+elif grep -q "selected.1=4" "${nlp_prop}"; then
+	ui_print "  <>> setting property: nanodroid_nlpbackend [Déjà Vu + Ichnaea]"
+	echo "nanodroid_nlpbackend=3" >> "${nanodroid_setup}"
+fi
+
+ui_print " "
+ui_print "  < Installed Applications"
+
+apps_add 1 Adaway
+apps_add 2 Amaze
+apps_add 3 AnysoftKeyboard
+apps_add 4 FaceSlim
+apps_add 5 BeHeKeyboard
+apps_add 6 K9Mail
+apps_add 7 KeePassDroid
+apps_add 8 KernelAdiutor
+apps_add 9 Lightning
+apps_add 10 MPV
+apps_add 11 NewPipe
+apps_add 12 Oandbackup
+apps_add 13 Odyssey
+apps_add 14 OpenCamera
+apps_add 15 OpenKeyChain
+apps_add 16 OpenLauncher
+apps_add 17 OpenWeatherMapProvider
+apps_add 18 OpenVPN
+apps_add 19 Orbot
+apps_add 20 Orfox
+apps_add 21 QKSMS
+apps_add 22 SimpleCalendar
+apps_add 23 SimpleGallery
+apps_add 24 Substratum
+apps_add 25 Termux
+apps_add 26 Twidere
+apps_add 27 XDALabs
+apps_add 28 YahooWeatherProvider
+
+ui_print " "
+ui_print "  < Pseudo-Debloated Applications"
+
+overlay_add 1 BasicDreams
+overlay_add 2 Browser
+overlay_add 3 Calendar
+overlay_add 4 Camera2
+overlay_add 5 CMFileManager
+overlay_add 6 Eleven
+overlay_add 7 Email
+overlay_add 8 Exchange2
+overlay_add 9 FMRadio
+overlay_add 10 Gallery2
+overlay_add 11 Gello
+overlay_add 12 Jelly
+overlay_add 13 messaging
+overlay_add 14 mGerrit
+overlay_add 15 OmniSwitch
+overlay_add 16 Phonograph
+overlay_add 17 PhotoTable
+overlay_add 18 Recorder
+overlay_add 19 ResurrectionStats
+overlay_add 20 Screencast
+overlay_add 21 Slimperience
+overlay_add 22 Snap
+overlay_add 23 SnapdragonCamera
+overlay_add 24 SoundRecorder
+overlay_add 25 Stk
+overlay_add 26 ViaBrowser
+overlay_add 27 Wallpaper
+overlay_add 28 WallpaperBackup
+overlay_add 29 WallpaperPickerGoogle
+
+exit 0

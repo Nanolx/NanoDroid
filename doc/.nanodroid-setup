@@ -1,0 +1,13 @@
+nanodroid_microg=1
+nanodroid_fdroid=1
+nanodroid_apps=1
+nanodroid_play=1
+nanodroid_overlay=1
+nanodroid_zelda=1
+nanodroid_mapsv1=1
+nanodroid_init=1
+nanodroid_gsync=0
+nanodroid_swipe=0
+nanodroid_forcesystem=0
+nanodroid_sigspoofui=0
+nanodroid_nlpbackend=1

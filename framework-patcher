@@ -1,0 +1,130 @@
+#!/bin/bash
+
+GITHUB_URL="https://github.com/Lanchon/haystack.git"
+PATCH_CORE="sigspoof-core"
+CWD=$(readlink -m "${BASH_SOURCE[0]}")
+CWD=$(dirname "${CWD}")
+
+error () {
+	echo -e "${@}"
+	exit 1
+}
+
+help () {
+
+echo -e "haystack framework patcher helper
+
+provide Android Version like:
+	framework-patcher.sh [version] [--gui]
+
+there version is one of:
+	4.1	[JB]
+	4.2	[JB]
+	4.3	[JB]
+	4.4	[KK]
+	5.0	[LL]
+	5.1	[LL]
+	6.0	[MM]
+	7.0	[N]
+	7.1	[N]
+	8.0	[O]
+	8.1	[O]
+
+--gui	enables Signature Spoofing toggle in Developer Settings.
+
+your device must be in TWRP and connected to PC."
+
+exit 0
+
+}
+
+case "${1}" in
+	4.1 )	API=16	;;
+	4.2 )	API=17	;;
+	4.3 )	API=18	;;
+	4.4 )	API=19	;;
+	5.0 )	API=21	;;
+	5.1 )	API=22	;;
+	6.0 )	API=23	;;
+	7.0 )	API=24	;;
+	7.1 )	API=25	;;
+	8.0 )	API=26	;;
+	8.1 )	API=27	;;
+	*   )	help	;;
+esac
+
+[[ "${2}" == "--gui" && ${API} -lt 25 ]] && WITH_UI=1
+
+if [[ ${API} -lt 24 ]]; then
+	PATCH_HOOK="sigspoof-hook-4.1-6.0"
+	PATCH_UI="sigspoof-ui-global-4.1-6.0"
+else
+	PATCH_HOOK="sigspoof-hook-7.0-7.1"
+	PATCH_UI="sigspoof-ui-global-7.0-7.1"
+fi
+
+adb shell "[[ -d /twres ]] && exit 0" || error "Device is not in TWRP!"
+
+if [[ -d ${CWD}/haystack/.git ]]; then
+	cd "${CWD}/haystack"
+	rm -rf mydevice*
+	git pull
+else
+	rm -rf "${CWD}/haystack"
+	git clone "${GITHUB_URL}" || error "Failed to down haystack!"
+	cd "${CWD}/haystack"
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	if ! [ -x "$(command -v brew)" ]; then
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	fi
+	if ! [ -x "$(command -v greadlink)" ]; then
+		brew install coreutils
+	fi
+	alias readlink=greadlink
+	alias cp=gcp
+fi
+
+adb shell "umount /system"
+adb shell "mount -orw /system" || error "Failed to mount /system read-write"
+
+rm -rf "${CWD}/haystack/mydevice*"
+"${CWD}/haystack/pull-fileset" mydevice || error "Failed to pull files from device!"
+
+"${CWD}/haystack/patch-fileset" "${CWD}/haystack/patches/${PATCH_HOOK}" \
+	"${API}" "${CWD}/haystack/mydevice" || \
+	error "Failed applying sigspoof hook patch!"
+
+"${CWD}/haystack/patch-fileset" "${CWD}/haystack/patches/${PATCH_CORE}" "${API}" \
+	"${CWD}/haystack/mydevice__${PATCH_HOOK}" \
+	|| error "Failed applying sigspoof core patch!"
+
+if [[ ${WITH_UI} -eq 1 ]]; then
+	"${CWD}/haystack/patch-fileset" "${CWD}/haystack/patches/${PATCH_UI}" "${API}" \
+		"${CWD}/haystack/mydevice__${PATCH_HOOK}__${PATCH_CORE}" \
+		|| error "Failed applying sigspoof ui patch!"
+
+	adb push "${CWD}/haystack/mydevice__${PATCH_HOOK}__${PATCH_CORE}__${PATCH_UI}/services.jar" \
+		/tmp/services.jar || error "Failed to push services.jar to device"
+
+	adb push "${CWD}/haystack/mydevice__${PATCH_HOOK}__${PATCH_CORE}__${PATCH_UI}/Settings.apk" \
+		/tmp/Settings.apk || error "Failed to push services.jar to device"
+
+else
+	adb push "${CWD}/haystack/mydevice__${PATCH_HOOK}__${PATCH_CORE}/services.jar" \
+		/tmp/services.jar || error "Failed to push services.jar to device"
+fi
+
+adb push "${CWD}/framework-patcher-remote" /tmp/ || \
+	error "Failed to push helper script to device"
+
+adb shell "chmod 0755 /tmp/framework-patcher-remote" || \
+	error "Failed to set permissions for helper script"
+
+adb shell "/tmp/framework-patcher-remote" || \
+	error "Failed to install services.jar"
+
+echo -e "\nNow reboot device and enjoy microG!"
+
+cd "${CWD}"

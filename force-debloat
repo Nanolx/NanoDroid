@@ -1,0 +1,165 @@
+#!/sbin/sh
+
+# check for configuration files
+config_locations="/sdcard /external_sd /tmp /data"
+
+get_config () {
+	config=""
+	config_exists=0
+	for path in ${config_locations}; do
+		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
+			config="${path}/${1}"
+			config_exists=1
+			return
+		fi
+	done
+}
+
+# check whether '.nanodroid-overlay' has new format
+# and update if required
+check_nanodroidoverlay () {
+	if grep -q "APPS=(" "${config}"; then
+		ui_print " ++ migrating ${config} to new format"
+		sed -e 's/^.*APPS=//;s/(//g;s/)//g' -i "${config}"
+		sed '/^\s*$/d' -i "${config}"
+	fi
+}
+
+# check whether '.nanodroid-overlay' exists,
+# if not, use fallback ${APPS}
+get_config .nanodroid-overlay
+if [ "$config_exists" -eq 1 ]; then
+	APPS="$(cat "${config}")"
+	NO_NANODROIDOVERLAY=0
+	check_nanodroidoverlay
+else	NO_NANODROIDOVERLAY=1
+APPS="BasicDreams
+Browser
+Calendar
+Camera2
+CMFileManager
+Eleven
+Email
+Exchange2
+FMRadio
+Gallery2
+Gello
+Jelly
+messaging
+mGerrit
+OmniSwitch
+Phonograph
+PhotoTable
+Recorder
+ResurrectionStats
+Screencast
+Slimperience
+Snap
+SnapdragonCamera
+SoundRecorder
+Stk
+ViaBrowser
+Wallpaper
+WallpaperBackup
+WallpaperPickerGoogle"
+fi
+
+is_mounted() {
+	if [ ! -z "$2" ]; then
+		cat /proc/mounts | grep $1 | grep $2, >/dev/null
+	else
+		cat /proc/mounts | grep $1 >/dev/null
+	fi
+	return $?
+}
+
+debloat_system () {
+	if (is_mounted /system); then
+		mount -orw,remount /system || error "!! failed to remount system read-write"
+	else	mount -orw /system || error "!! failed to mount system read-write"
+	fi
+
+	for app in ${APPS}; do
+		if [[ -d /system/app/${app} ]]; then
+			rm -rf /system/app/${app}
+			echo "${app} removed from /system/app"
+		elif [[ -d /system/priv-app/${app} ]]; then
+			rm -rf /system/priv-app/${app}
+			echo "${app} removed from /system/priv-app"
+		fi
+	done
+
+	umount /system
+}
+
+test_debloat_system () {
+	if (is_mounted /system); then
+		mount -orw,remount /system || error "!! failed to remount system read-write"
+	else	mount -orw /system || error "!! failed to mount system read-write"
+	fi
+
+	echo "***** TEST MODE *****"
+
+	for app in ${APPS}; do
+		if [[ -d /system/app/${app} ]]; then
+			echo "${app} would be removed from /system/app"
+		elif [[ -d /system/priv-app/${app} ]]; then
+			rm -rf /system/priv-app/${app}
+			echo "${app} would be removed from /system/priv-app"
+		fi
+	done
+
+	echo "***** END TEST MODE *****
+
+if that looks good to you, re-run the Script, else
+edit the Script or your '.nanodroid-overlay' file"
+
+	umount /system
+}
+
+error () {
+	echo "${@}"
+	exit 1
+}
+
+[[ ! -d /twres ]] && error "Not running from TWRP, exiting"
+is_mounted /data || mount /data
+
+echo "NanoDroid force-debloat script
+
+This script will actually remove apps from your ROM
+"
+
+if [[ ${NO_NANODROIDOVERLAY} -eq 0 ]]; then
+	echo "using \"${nanodroidoverlay}\" file for values"
+else	echo "using fallback values"
+fi
+
+[[ -f /data/adb/magisk/magisk ]] && echo "Magisk is installed!
+
+instead of using this Script, consider using Magisk
+to pseudo-debloat your ROM instead. NanoDroid includes
+the 'nanodroid-overlay' Script to ease doing so."
+
+echo "
+Are you sure you want to proceed?
+
+Enter [y] / [j]  to remove applications
+Enter [t] / [d]  to test what would be done
+"
+
+read -r USER_INPUT
+
+case ${USER_INPUT} in
+	y | Y | j | J )
+		debloat_system
+	;;
+
+	t | T | d | D )
+		debloat_system --test
+	;;
+
+	*)
+		error "Exiting"
+	;;
+esac

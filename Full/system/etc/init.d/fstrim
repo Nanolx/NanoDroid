@@ -1,0 +1,14 @@
+#!/system/bin/sh
+
+echo "fstrim init script"
+
+if [ -e /init.fstrim.sh ]; then
+	echo "/init.fstrim.sh exists, trimming /preload only"
+	fstrim -v /preload
+else
+	echo "/init.fstrim.sh does not exist, trimming /cache, /system, /data, /preload"
+	fstrim -v /cache
+	fstrim -v /system
+	fstrim -v /data
+	fstrim -v /preload
+fi

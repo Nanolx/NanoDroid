@@ -1,0 +1,47 @@
+#!/system/bin/sh
+
+echo "external_sd init script"
+
+# retry 6 times, wait 5 seconds between each try
+count=0
+
+while [[ -z $(grep "^/dev/block.*/mnt/media_rw" /proc/mounts) ]]; do
+	count=$((count+1))
+	if [ "${count}" -lt 7 ]; then
+		sleep 5
+	else
+		echo ">> no SD Card found"
+		exit 1
+	fi
+done
+
+media_rw=$(grep "^/dev/block.*/mnt/media_rw" /proc/mounts \
+	| cut -d " " -f 2 \
+	| cut -d "/" -f 4)
+storage="/storage/${media_rw}"
+
+if [[ -d ${storage} ]]; then
+	echo ">> SD Card found"
+	echo ">> storage:  \"${storage}\""
+
+	if [[ -e /external_sd ]]; then
+		link=$(ls -l /external_sd | sed -e 's/.*-> //g')
+		if [[ "${link}" != "${storage}" ]]; then
+			echo ">> removing old link: \"${link}\""
+			mount -orw,remount /
+			rm -f /external_sd
+			mount -oro,remount /
+		fi
+	fi
+
+	if [[ -e /external_sd ]]; then
+		echo ">> /external_sd link up to date"
+	else
+		echo ">> /external_sd link created"
+		mount -orw,remount /
+		ln -sf ${storage} /external_sd
+		mount -oro,remount /
+	fi
+else
+	echo ">> no SD Card found"
+fi

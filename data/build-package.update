@@ -1,0 +1,88 @@
+#!/bin/bash
+
+nanodroid_pull () {
+	update_microg
+	update_fdroid
+	update_apps
+	update_swipe
+	update_gsync
+
+	touch "${CWD}/.nanodroid-pull"
+}
+
+update_swipe () {
+	for LIB in libjni_keyboarddecoder.so libjni_latinimegoogle.so; do
+		for ARCH in arm arm64 x86 x86_64; do
+			grab_lib_from_ogapps ${LIB} 23 ${ARCH}
+		done
+	done
+}
+
+update_microg () {
+	grab_apk_from_repo ${uG_GMSCORE[@]}
+	grab_apk_from_repo ${uG_GSFPROXY[@]}
+	grab_apk_from_repo ${uG_DROIDGUARD[@]}
+	#grab_apk_from_repo ${uG_FAKESTORE[@]}
+	grab_apk_from_repo ${fd_NLPDEJAVU[@]}
+	grab_apk_from_repo ${fd_NLPMOZILLA[@]}
+	grab_apk_from_repo ${fd_NLPNOMINATIM[@]}
+	grab_apk_from_repo ${fd_YALPSTORE[@]}
+
+	grab_apk_from_url ${nlx_PHONESKY[@]}
+	grab_apk_from_url ${nlx_FAKESTORE[@]}
+}
+
+update_gsync () {
+	#          KK LL M  N  O
+	for API in 19 21 23 24 26; do
+		grab_apk_from_ogapps ${og_CALSYNC[@]} ${API}
+		grab_apk_from_ogapps ${og_CONSYNC[@]} ${API}
+		grab_apk_from_ogapps ${og_BTRANSP[@]} ${API}
+	done
+}
+
+update_fdroid () {
+	grab_apk_from_repo ${fd_FDROID[@]}
+	grab_apk_from_repo ${fd_FDROID_PE[@]}
+}
+
+update_apps () {
+	# applications managed in repositories
+	grab_apk_from_repo ${fd_ADAWAY[@]}
+	grab_apk_from_repo ${fd_AMAZE[@]}
+	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
+	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
+	grab_apk_from_repo ${fd_FACESLIM[@]}
+	grab_apk_from_repo ${fd_LIGHTNING[@]}
+	grab_apk_from_repo ${fd_NEWPIPE[@]}
+	grab_apk_from_repo ${fd_OANDBACKUP[@]}
+	grab_apk_from_repo ${fd_ODYSSEY[@]}
+	grab_apk_from_repo ${fd_OPENCAMERA[@]}
+	grab_apk_from_repo ${fd_OPENKEYCHAIN[@]}
+	#grab_apk_from_repo ${fd_OPENLAUNCHER[@]}
+	grab_apk_from_repo ${fd_OPENVPN[@]}
+	grab_apk_from_repo ${fd_QKSMS[@]}
+	grab_apk_from_repo ${fd_SIMPLECALENDAR[@]}
+	grab_apk_from_repo ${fd_SIMPLEGALLERY[@]}
+	grab_apk_from_repo ${fd_TERMUX[@]}
+
+	# applications not managed in repositories
+	# plain URL
+	grab_apk_from_url ${gd_ORBOT[@]}
+	grab_apk_from_url ${gd_ORFOX[@]}
+	grab_apk_from_url ${nlx_OPENLAUNCHER[@]}
+	grab_apk_from_url ${nlx_MPV[@]}
+
+	# GitHub
+	grab_apk_from_github ${gh_K9MAIL[@]}
+	grab_apk_from_github ${gh_KEEPASSDROID[@]}
+	#grab_apk_from_github ${gh_MPV[@]}
+	grab_apk_from_github ${gh_TWIDERE[@]}
+
+	# APK Mirror
+	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
+	grab_apk_from_apkmirror ${am_OPENWEATHER[@]}
+	grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
+	grab_apk_from_apkmirror ${am_YAHOOWEATHER[@]}
+	grab_apk_from_apkmirror ${am_XDALABS[@]}
+}

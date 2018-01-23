@@ -1,0 +1,20 @@
+#!/system/bin/sh
+
+echo "logscleaner init script"
+echo "Starting Automatic Cleaning $(date +"%m-%d-%Y %H:%M:%S")"
+rm -f /data/data/*/*/*/*.tmp
+rm -f /data/data/*/*/*/*/*.tmp
+rm -f /data/local/*.apk
+rm -f /data/local/tmp/*.apk
+rm -f /data/log/*
+rm -f /data/slog/*
+rm -f /cache/*.*
+rm -f /cache/recovery/*.*
+rm -f /data/system/dropbox/*.*
+rm -f /data/backup/pending/*.tmp
+rm -f /data/tombstones/*
+rm -f /data/system/usagestats/0/daily/*
+rm -f /data/system/usagestats/0/monthly/*
+rm -f /data/system/usagestats/0/weekly/*
+rm -f /data/system/usagestats/0/yearly/*
+echo "Automatic Cleaning finished at $(date +"%m-%d-%Y %H:%M:%S")"

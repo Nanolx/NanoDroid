@@ -1,0 +1,21 @@
+#!/system/bin/sh
+# bash: wrapper to set up and run bash from terminal
+# osm0sis @ xda-developers
+# adopted to GNU Bash setialpha @ xda-developers
+
+dir="$(cd "$(dirname "$0")"; pwd)"
+
+if [ "$1" == "--term" ]; then
+	term=$2;
+	shift 2;
+else
+	term=xterm
+fi
+
+clear		# empty the buffer
+
+# correct the terminal size ;
+# some OS' don't ship `resize`
+resize >/dev/null
+
+${dir}/bash.bin --rcfile /system/etc/bashrc $*

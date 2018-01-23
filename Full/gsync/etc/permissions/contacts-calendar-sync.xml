@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <exceptions>
+      <exception package="com.google.android.backuptransport"></exception>
+      <exception package="com.google.android.syncadapters.contacts">
+          <permission name="android.permission.READ_CONTACTS" fixed="false"></permission>
+          <permission name="android.permission.WRITE_CONTACTS" fixed="false"></permission>
+          <permission name="android.permission.GET_ACCOUNTS" fixed="false"></permission>
+          <permission name="android.permission.USE_CREDENTIALS" fixed="false"></permission>
+          <permission name="android.permission.READ_SYNC_SETTINGS" fixed="false"></permission>
+          <permission name="android.permission.WRITE_SYNC_SETTINGS" fixed="false"></permission>
+      </exception>
+      <exception package="com.google.android.syncadapters.calendar">
+          <permission name="android.permission.READ_CALENDAR" fixed="false"></permission>
+          <permission name="android.permission.WRITE_CALENDAR" fixed="false"></permission>
+          <permission name="android.permission.USE_CREDENTIALS" fixed="false"></permission>
+          <permission name="android.permission.READ_SYNC_SETTINGS" fixed="false"></permission>
+          <permission name="android.permission.WRITE_SYNC_SETTINGS" fixed="false"></permission>
+      </exception>
+  </exceptions>

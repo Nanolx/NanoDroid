@@ -1,0 +1,1027 @@
+#!/sbin/sh
+
+VERSION=15.90.99999999
+
+##########################################################################################
+# Misc. Functions
+##########################################################################################
+
+detect_bootmode () {
+	ps | grep zygote | grep -v grep >/dev/null && BOOTMODE=true || BOOTMODE=false
+	${BOOTMODE} || ps -A 2>/dev/null | grep zygote | grep -v grep >/dev/null && BOOTMODE=true
+}
+
+ui_print() {
+	if ${BOOTMODE}; then
+		echo "${@}"
+	else 
+		echo -n -e "ui_print ${@}\n" >> /proc/self/fd/$OUTFD
+		echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+	fi
+}
+
+grep_prop() {
+	REGEX="${1}"
+	shift
+	[ -z "${@}" ] && FILES='/system/build.prop'
+	cat "${@}" 2>/dev/null | \
+		sed -n "s/^${REGEX}=//p" | \
+		head -n 1
+}
+
+is_mounted() {
+	if [ ! -z "$2" ]; then
+		cat /proc/mounts | grep ${1} | grep ${2}, >/dev/null
+	else	cat /proc/mounts | grep ${1} >/dev/null
+	fi
+	return $?
+}
+
+set_perm() {
+	chown ${2}:${3} ${1} || error " !! failed change owner for ${1}"
+	chmod ${4} ${1} || error " !! failed to change mode for ${1}"
+	if [ ! -z "${5}" ]; then
+		chcon ${5} ${1} 2>/dev/null
+	else	chcon 'u:object_r:system_file:s0' ${1} 2>/dev/null
+	fi
+}
+
+set_perm_recursive() {
+	find ${1} -type d 2>/dev/null | while read dir; do
+		set_perm ${dir} ${2} ${3} ${4} ${6}
+	done
+	find ${1} -type f 2>/dev/null | while read file; do
+		set_perm ${file} ${2} ${3} ${5} ${6}
+	done
+}
+
+set_perm_data () {
+	if [ "${1}" = "-r" ]; then
+		echo "    perm: data [recursive] {${2}}"
+		set_perm_recursive ${2} 0 0 0755 0644
+	else
+		echo "    perm: data [single] {${1}}"
+		set_perm ${1} 0 0 0644
+	fi
+}
+
+set_perm_bin () {
+	if [ "${1}" = "-r" ]; then
+		echo "    perm: exec [recursive] {${2}}"
+		set_perm_recursive ${2} 0 0 0755 0755
+	else
+		echo "    perm: exec [single] {${1}}"
+		set_perm ${1} 0 0 0755
+	fi
+}
+
+detect_outfd () {
+	readlink /proc/$$/fd/${OUTFD} 2>/dev/null | grep /tmp >/dev/null
+	if [ "$?" -eq "0" ]; then
+		OUTFD=0
+
+		for FD in `ls /proc/$$/fd`; do
+			readlink /proc/$$/fd/${FD} 2>/dev/null | grep pipe >/dev/null
+			if [ "$?" -eq "0" ]; then
+				ps | grep " 3 ${FD} " | grep -v grep >/dev/null
+				if [ "$?" -eq "0" ]; then
+					OUTFD=${FD}
+					break
+				fi
+			fi
+		done
+	fi
+}
+
+show_banner () {
+	ui_print " "
+	ui_print "*****************************"
+	ui_print "   NanoDroid ${VERSION}   "
+	ui_print "      created by Nanolx      "
+	case ${MODID} in
+		NanoDroid_microG )
+			ui_print "       microG package        "
+		;;
+		NanoDroid_FDroid )
+			ui_print "       F-Droid package       "
+		;;
+	esac
+	ui_print "*****************************"
+	ui_print " "
+}
+
+check_system () {
+	is_mounted /system || mount -o ro /system 2>/dev/null
+	is_mounted /data || mount /data 2>/dev/null
+
+	[ ! -f '/system/build.prop' ] && \
+		error " !! /system/build.prop does not exist"
+}
+
+error () {
+	ui_print " !!"
+	ui_print "${@}"
+	ui_print " !!"
+
+	if [ "${MODE}" = "MAGISK" ]; then
+		rm -rf "${MODPATH}"
+		magisk_install_cleanup
+	fi
+
+	nanodroid_storelogs
+
+	exit 1
+}
+
+detect_mode () {
+	case "${nanodroid_forcesystem}" in
+		0 )
+			if [ -f /data/adb/magisk/magisk ]; then
+				MODE=MAGISK
+				MODE_TEXT=" > Mode   | Magisk            | detected"
+			else
+				MODE=SYSTEM
+				MODE_TEXT=" > Mode   | System            | detected"
+			fi
+		;;
+
+		1 )
+			if ! ${BOOTMODE}; then
+				MODE=SYSTEM
+				MODE_TEXT=" > Mode   | System            | forced"
+			else
+				MODE=MAGISK
+				MODE_TEXT=" > Mode   | Magisk            | forced"
+			fi
+		;;
+	esac
+
+	ui_print "${MODE_TEXT}"
+	ui_print " "
+
+	if [ "${MODE}" = "MAGISK" ]; then
+		magisk_install_setup
+		case ${MODID} in
+			NanoDroid | NanoDroid_microG )
+				magisk_install_preinst
+			;;
+		esac
+	else
+		mount -orw,remount /system 2>/dev/null || \
+			error " !! failed to re-mount /system read-write"
+		unset MODPATH
+	fi
+}
+
+backup_nlpconflicts () {
+	if [ -d "/system/priv-app/com.qualcomm.location" -a "${nanodroid_microg}" -eq 1 ]; then
+		mv /system/priv-app/com.qualcomm.location /sdcard/
+
+		ui_print " "
+		ui_print " ++ Moving com.qualcomm.location to /sdcard"
+		ui_print " ++ it conflicts with microG location backends"
+		ui_print " "
+	fi
+}
+
+unpack_zip () {
+	TMPDIR=/dev/tmp
+	TMP_LIBDIR=${TMPDIR}/nanodroid-lib
+	INSTALLER=${TMPDIR}/install
+
+	rm -rf ${INSTALLER}
+	mkdir -p ${INSTALLER} || error " !! failed to prepare environment!"
+
+	ui_print " > prepare installation"
+	unzip -o "${ZIP}" -d "${INSTALLER}" || \
+		error " !! failed to prepare environment!"
+	chmod +x "${INSTALLER}/system/xbin/unzip.${BIN_ARCH}"
+}
+
+nanodroid_finalize () {
+	if [ "${MODE}" = "MAGISK" ]; then
+		magisk_install_finish
+	else
+		case ${MODID} in
+			NanoDroid | NanoDroid_microG )
+				backup_nlpconflicts
+			;;
+		esac
+	fi
+
+	nanodroid_storelogs
+
+	rm -rf ${INSTALLER}
+
+	if [ "${MODE}" = "MAGISK" ]; then
+		magisk_install_cleanup
+	elif ! ${BOOTMODE}; then
+		umount /system 2>/dev/null
+	fi
+
+	ui_print " "
+	ui_print " Thanks for using NanoDroid "
+	ui_print " "
+}
+
+##########################################################################################
+# Architecture detection
+##########################################################################################
+
+detect_arch () {
+	SDK_VERSION=$(grep_prop ro.build.version.sdk)
+
+	ABI=$(grep_prop ro.product.cpu.abi | cut -c-3)
+	ABI2=$(grep_prop ro.product.cpu.abi2 | cut -c-3)
+	ABILONG=$(grep_prop ro.product.cpu.abi)
+
+	ARCH=arm
+
+	[ "$ABI" = "x86" ] && ARCH=x86
+	[ "$ABI2" = "x86" ] && ARCH=x86
+	[ "$ABILONG" = "arm64-v8a" ] && ARCH=arm64
+	[ "$ABILONG" = "x86_64" ] && ARCH=x64
+
+	case ${ARCH} in
+		arm )		BIN_ARCH="arm"
+				LIB_ARCHES="armeabi-v7a armeabi"
+				SWIPE_LIBDIR=lib ;;
+		arm64 )		BIN_ARCH="arm"
+				LIB_ARCHES="arm64-v8a armeabi-v7a armeabi"
+				SWIPE_LIBDIR=lib64 ;;
+		x86 )		BIN_ARCH="x86"
+				LIB_ARCHES="x86 armeabi-v7a armeabi"
+				SWIPE_LIBDIR=lib ;;
+		x86_64 )	BIN_ARCH="x86"
+				LIB_ARCHES="x86_64 x86 armeabi-v7a armeabi"
+				SWIPE_LIBDIR=lib64 ;;
+	esac
+
+	case ${SDK_VERSION} in
+		19 )		GSYNC_VER=K	;;
+		21 | 22 )	GSYNC_VER=L	;;
+		23 )		GSYNC_VER=M	;;
+		24 | 25 )	GSYNC_VER=N	;;
+		26 | 27 )	GSYNC_VER=O	;;
+		* )	GSYNC_UNSUPPORTED=1	;;
+	esac
+
+	if [[ "${SDK_VERSION}" -lt 21 ]]; then
+		UNFOLD_APP_DIR=1
+	else	UNFOLD_APP_DIR=0
+	fi
+
+	if [[ "${SDK_VERSION}" -lt 19 ]]; then
+		ui_print " "
+		ui_print " ++ Installing on pre-KitKat ROM, full"
+		ui_print " ++ compatibility is not garantueed!"
+		ui_print " "
+	fi
+}
+
+##########################################################################################
+# Magisk Mode Installation
+##########################################################################################
+
+magisk_install_setup () {
+	ui_print "******************************"
+	ui_print "Powered by Magisk (@topjohnwu)"
+	ui_print "******************************"
+	ui_print " "
+	ui_print " > setup Magisk environment"
+
+	MAGISKBIN=/data/adb/magisk
+	MOUNTPATH=${TMPDIR}/magisk_img
+
+	[ -d ${MAGISKBIN} -a -f ${MAGISKBIN}/magisk -a -f ${MAGISKBIN}/util_functions.sh ] || \
+		error " !! Magisk version 15.0 or newer is required"
+
+	. ${MAGISKBIN}/util_functions.sh
+
+	MIN_VER=`grep_prop minMagisk ${INSTALLER}/module.prop`
+	[ ! -z ${MAGISK_VER_CODE} -a ${MAGISK_VER_CODE} -ge ${MIN_VER} ] || \
+		error " !! Magisk 15.0 or newer is required"
+
+	${BOOTMODE} && IMG=/data/adb/magisk_merge.img || IMG=/data/adb/magisk.img
+
+	MODPATH=${MOUNTPATH}/${MODID}
+	REALPATH=/sbin/.core/img/${MODID}
+
+	${BOOTMODE} && boot_actions || recovery_actions
+
+	request_size_check "${INSTALLER}"
+	mount_magisk_img
+
+	case ${MODID} in
+		NanoDroid )
+			# check for old-named module or sub-modules are
+			# not supposed to be installed alongside
+			for dir in NanoMod NanoModmicroG NanoDroid_microG \
+				NanoModfdroid NanoDroid_FDroid; do
+				if [[ -d ${MOUNTPATH}/${dir} ]]; then
+					ui_print " !! ${dir} module detected - uninstalling!"
+					rm -rf ${MOUNTPATH}/${dir}
+				fi
+			done
+		;;
+
+		NanoDroid_microG )
+			# check for Full package and abort if found
+			if [[ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid ]]; then
+				error " !! ${MODID} can't be installed along side the Full package"
+			fi
+
+			# check for old-named module
+			if [[ -d ${MOUNTPATH}/NanoModmicroG ]]; then
+				ui_print " !! old version module detected - uninstalling!"
+				rm -rf ${MOUNTPATH}/NanoModmicroG
+			fi
+		;;
+
+		NanoDroid_FDroid )
+			# check for Full package and abort if found
+			if [[ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid ]]; then
+				error " !! ${MODID} can't be installed along side the Full package"
+			fi
+
+			# check for old-named module
+			if [[ -d ${MOUNTPATH}/NanoModfdroid ]]; then
+				ui_print " !! old version module detected - uninstalling!"
+				rm -rf ${MOUNTPATH}/NanoModfdroid
+			fi
+		;;
+	esac
+}
+
+magisk_install_preinst () {
+	if [ -f ${MODPATH}/system.prop ]; then
+		ui_print " << backing up module's system.prop"
+		cp ${MODPATH}/system.prop \
+			${TMPDIR}/system.prop
+	fi
+
+	if [ -f ${MODPATH}/system/framework/services.jar ]; then
+		if [ -f /data/adb/.nanodroid-patcher ]; then
+			ui_print " << backing up patched services.jar"
+			cp ${MODPATH}/system/framework/services.jar \
+				${TMPDIR}/services.jar
+		else	ui_print " "
+			ui_print " ++ /data/adb/.nanodroid-patcher is missing, assuming"
+			ui_print " ++ ROM was updated, please re-run NanoDroid-Patcher"
+			ui_print " "
+			rm -f ${MODPATH}/system/framework/services.jar
+		fi
+	elif [ -f /data/adb/.nanodroid-patcher ]; then
+		ui_print " "
+		ui_print " ++ /data/adb/.nanodroid-patcher exists, but"
+		ui_print " ++ ${MODPATH}/system/framework/services.jar"
+		ui_print " ++ doesn't, assuming Magisk was uninstalled"
+		ui_print " ++ re-run NanoDroid-Patcher if required"
+		ui_print " "
+		rm -f /data/adb/.nanodroid-patcher
+	fi
+
+	rm -rf "${MODPATH}"
+
+	for dir in app etc priv-app xbin; do
+		mkdir -p "${MODPATH}/system/${dir}"
+	done
+
+}
+
+magisk_install_postinst () {
+	# Setup Overrides
+	if [ "${nanodroid_overlay}" -eq 1 ]; then
+		ui_print " << with /system applications override"
+
+		${MODPATH}/system/xbin/bash \
+			${MODPATH}/system/xbin/nanodroid-overlay --create
+	else
+		ui_print " << without /system applications override"
+	fi
+
+	# Sorry, but com.qualcomm.location conflicts with microG
+	if [ "${nanodroid_microg}" -eq 1 ]; then
+		${MODPATH}/system/xbin/bash \
+			${MODPATH}/system/xbin/nanodroid-overlay \
+			--add com.qualcomm.location
+	fi
+
+	if [ -f ${TMPDIR}/system.prop ]; then
+		ui_print " << restoring system.prop"
+		cp ${TMPDIR}/system.prop \
+			${MODPATH}/system.prop
+	fi
+
+	if [ -f ${TMPDIR}/services.jar ]; then
+		ui_print " << restoring patched services.jar"
+		mkdir -p ${MODPATH}/system/framework
+		cp ${TMPDIR}/services.jar \
+			${MODPATH}/system/framework/services.jar
+	fi
+}
+
+magisk_install_finish () {
+	# Magisk Module files
+	mktouch ${MODPATH}/auto_mount
+	cp -af ${INSTALLER}/module.prop ${MODPATH}/module.prop
+	cp -af ${INSTALLER}/common/service.sh ${MODPATH}/service.sh
+	chmod +x ${MODPATH}/service.sh
+
+	if ${BOOTMODE}; then
+		# Update info for Magisk Manager
+		mktouch /sbin/.core/img/${MODID}/update
+		cp -af ${INSTALLER}/module.prop /sbin/.core/img/${MODID}/module.prop
+	fi
+
+	case ${MODID} in
+		NanoDroid | NanoDroid_microG )
+			magisk_install_postinst
+		;;
+	esac
+
+	magisk_install_cleanup
+}
+
+magisk_install_cleanup () {
+	unmount_magisk_img
+	${BOOTMODE} || recovery_cleanup
+}
+
+##########################################################################################
+# Generic Installation
+##########################################################################################
+
+install_microg () {
+	# install microG if requested
+	# respectively force if it's the microG package
+	if [ "${nanodroid_microg}" -eq 1 -o "${MODID}" = "NanoDroid_microG" ]; then
+		case ${nanodroid_nlpbackend} in
+			0 ) NLPBACKEND=""
+			    ui_print " << with microG [Nominatim]" ;;
+			1 ) NLPBACKEND="nlpBackendDejavu"
+			    ui_print " << with microG [Déjà Vu, Nominatim]" ;;
+			2 ) NLPBACKEND="nlpBackendIchnaea"
+			    ui_print " << with microG [Ichnaea, Nominatim]" ;;
+			3 ) NLPBACKEND="nlpBackendDejavu nlpBackendIchnaea"
+			    ui_print " << with microG [Déjà Vu, Ichnaea, Nominatim]" ;;
+		esac
+
+		for app in ${NLPBACKEND} nlpBackendNominatim GmsCore GsfProxy; do
+			nanodroid_install_apk ${app}
+		done
+
+		# DroidGuard Helper as user app
+		mkdir -p /data/app/org.microg.gms.droidguard/
+		cp ${INSTALLER}/system/priv-app/DroidGuard/DroidGuard.apk \
+			/data/app/org.microg.gms.droidguard/base.apk
+		set_perm_data -r /data/app/org.microg.gms.droidguard/
+	else	ui_print " << without microG"
+	fi
+}
+
+install_mapsv1 () {
+	# install mapsv1 if requested
+	if [ "${nanodroid_mapsv1}" -eq 1 ]; then
+		ui_print " << with Maps API version 1"
+		nanodroid_install_dir etc/permissions
+		nanodroid_install_dir framework
+	else	ui_print " << without Maps API version 1"
+	fi
+}
+
+install_gsync () {
+	# install GSync if requested
+	if [ "${nanodroid_gsync}" -eq 1 ]; then
+		if [ "${GSYNC_UNSUPPORTED}" -eq 1 ]; then
+			ui_print " << Google Sync Adapters are unsupported on pre-KitKat ROMs"
+		else
+			GSYNC_BASE="${INSTALLER}/gsync/${GSYNC_VER}"
+			ui_print " << with Google Sync Adapters (${GSYNC_VER})"
+
+			for app in CalendarSync ContactsSync; do
+				echo "    installing app: Google${app}"
+				mkdir -p "${MODPATH}/system/app/Google${app}"
+
+				cp "${GSYNC_BASE}/app/Google${app}/Google${app}.apk" \
+					"${MODPATH}/system/app/Google${app}/"  || \
+					error " !! failed to install Google${app}"
+
+				set_perm_data -r "${MODPATH}/system/app/Google${app}"
+
+				[ "${MODE}" = "${SYSTEM}" ] && \
+					echo "/system/app/Google${app}/Google${app}.apk" \
+						>> /data/adb/.nanodroid-list
+			done
+
+			echo "    installing app: GoogleBackupTransport"
+			mkdir -p "${MODPATH}/system/priv-app/GoogleBackupTransport"
+
+			cp "${GSYNC_BASE}/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk" \
+				"${MODPATH}/system/priv-app/GoogleBackupTransport/" || \
+				error " !! failed to install GoogleBackupTransport"
+
+			set_perm_data -r "${MODPATH}/system/priv-app/GoogleBackupTransport"
+
+			[ "${MODE}" = "SYSTEM" ] && \
+				echo "/system/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk" \
+					>> /data/adb/.nanodroid-list
+
+			cp -r "${INSTALLER}/gsync/permissions/" "${MODPATH}/system/etc/"
+			set_perm_data -r "${MODPATH}/system/etc/"
+
+			[ "${MODE}" = "SYSTEM" ] && \
+				find -type f "${INSTALLER}/gsync/permissions/" |
+					sed -e "s,${INSTALLER}/gsync,/system/etc,g" \
+					>> /data/adb/.nanodroid-list
+		fi
+	else	ui_print " << without Google Sync Adapters"
+	fi
+}
+
+install_fdroid () {
+	# install F-Droid if requested
+	# respectively force if it's the F-Droid package
+	if [ "${nanodroid_fdroid}" -eq 1 -o "${MODID}" = "NanoDroid_FDroid" ]; then
+		ui_print " << with F-Droid"
+		nanodroid_install_apk FDroid
+		nanodroid_install_apk FDroidPrivileged
+	else	ui_print " << without F-Droid"
+	fi
+}
+
+install_apps () {
+	# install apps if requested
+	if [ "${nanodroid_apps}" -eq 1 ]; then
+		ui_print " << with applications"
+		APP_STRING=" <<>"
+
+		INSTALL_APPS=$(cat "${cfg_apps}")
+		for app in ${INSTALL_APPS}; do
+			[[ -d "${INSTALLER}/system/app/${app}" ]] && \
+				APP_STRING="${APP_STRING} ${app}, "
+		done
+
+		ui_print "${APP_STRING}"
+
+		for app in ${INSTALL_APPS}; do
+			if [[ ${app} = Adaway && -d /system/app/AdAway ]]; then
+				ui_print " <<> app: ${app} already provided by ROM (as AdAway)"
+			elif [[ -d /system/app/${app} && ! -d ${REALPATH}/system/app/${app} ]]; then
+				ui_print " <<> app: ${app} already provided by ROM"
+			elif [[ -d "${INSTALLER}/system/app/${app}" ]]; then
+				nanodroid_install_apk ${app}
+			else	ui_print " <<>> app: ${app} missing"
+			fi
+		done
+
+	else	ui_print " << without applications"
+	fi
+}
+
+install_store () {
+	# install Yalp Store or Play Store whichever requested
+	if [ "${nanodroid_play}" -eq 1 ]; then
+		ui_print " << with Play Store"
+		nanodroid_install_apk Phonesky
+	elif [ "${nanodroid_play}" -eq 2 ]; then
+		ui_print " << with Yalp Store (and Fake Store)"
+		nanodroid_install_apk YalpStore
+		nanodroid_install_apk FakeStore
+	else	ui_print " << without App Store"
+	fi
+}
+
+install_zelda () {
+	# install Zelda Ringtones when requested
+	if [ "${nanodroid_zelda}" -eq 1 ]; then
+		ui_print " << with Zelda sounds"
+		nanodroid_install_dir media
+	else	ui_print " << without Zelda sounds"
+	fi
+}
+
+install_bash () {
+	ui_print " << GNU Bash Shell"
+	nanodroid_install_file etc/bash_logout
+	nanodroid_install_file etc/bashrc
+
+	nanodroid_install_file xbin/bash bin
+	nanodroid_install_file xbin/bash.bin.${BIN_ARCH} bin
+	nanodroid_install_file xbin/bashbug.${BIN_ARCH} bin
+}
+
+install_novl () {
+	ui_print " << NanoDroid-Overlay Script"
+
+	nanodroid_install_file xbin/nanodroid-overlay bin
+	nanodroid_substitute xbin/nanodroid-overlay
+
+	nanodroid_install_file xbin/novl bin
+	nanodroid_substitute xbin/novl
+
+	nanodroid_install_file xbin/column.${BIN_ARCH} bin
+	nanodroid_install_file xbin/aapt.${BIN_ARCH} bin
+}
+
+install_nano () {
+	ui_print " << GNU Nano Terminal Editor"
+	nanodroid_install_dir etc/terminfo
+
+	nanodroid_install_file xbin/nano bin
+	nanodroid_install_file xbin/nano.bin bin
+}
+
+install_shell_utils () {
+	ui_print " << Shell Utilities (util-linux, bsdmainutils, less)"
+	nanodroid_install_file xbin/less bin
+
+	# architecture dependend stuff
+	for binary in col colcrt colrm findfs findmnt hexdump \
+		less.bin lessecho lesskey look lsblk lscpu lsipc \
+		lslocks lsns ncal setterm unzip whereis; do
+		nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
+	done
+}
+
+install_initd () {
+	if [ "${nanodroid_init}" -eq 1 ]; then
+		ui_print " << with init scripts"
+
+		if [ "${MODE}" = "SYSTEM" ]; then
+			INIT_BASE="${MODPATH}/system/etc/init.d"
+		else	INIT_BASE="${MODPATH}/init.d"
+		fi
+
+		mkdir -p "${INIT_BASE}"
+		cp "${INSTALLER}/system/etc/init.d"/* "${INIT_BASE}/"
+		set_perm_bin "${INIT_BASE}"
+
+		[ "${MODE}" = "SYSTEM" ] && \
+			for init in fstrim logscleaner sqlite external_sd; do
+				echo "/system/etc/init.d/${init}" \
+					>> /data/adb/.nanodroid-list
+			done
+	else	ui_print " << without init scripts"
+	fi
+}
+
+install_swipe () {
+	if [ "${nanodroid_swipe}" -eq 1 ]; then
+		ui_print " << with swipe libraries"
+
+		SWIPE_SRC="${INSTALLER}/swipe/${ARCH}"
+		SWIPE_DEST="/system/${SWIPE_LIBDIR}"
+
+		mkdir -p "${MODPATH}${SWIPE_DEST}"
+
+		for lib in latinimegoogle keyboarddecoder; do
+			cp "${SWIPE_SRC}/libjni_${lib}.so" "${MODPATH}${SWIPE_DEST}" || \
+				error " !! failed to install libjni_${lib}.so"
+			set_perm_data "${MODPATH}${SWIPE_DEST}/libjni_${lib}.so"
+
+			[ "${MODE}" = "SYSTEM" ] && \
+				echo "${SWIPE_DEST}/libjni_${lib}.so" \
+					>> /data/adb/.nanodroid-list
+		done
+	else	ui_print " << without swipe libraries"
+	fi
+}
+
+##########################################################################################
+# Advanced Installation Functions
+##########################################################################################
+
+nanodroid_install_dir () {
+	dir="${1}"
+	dest="/system/${dir}"
+
+	[ ! -d "${INSTALLER}/system/${dir}" ] && \
+		error " !! dir: ${dir} not found"
+
+	echo "    installing dir: ${dir}"
+
+	mkdir -p "${MODPATH}${dest}"
+	cp -r "${INSTALLER}/system/${dir}"/* "${MODPATH}${dest}/" || \
+		error " !! failed to install ${dir}"
+
+	case ${2} in
+		bin ) set_perm_bin -r "${MODPATH}${dest}" ;;
+		*   ) set_perm_data -r "${MODPATH}${dest}" ;;
+	esac
+
+	[ "${MODE}" = "SYSTEM" ] && \
+		find -type f "${INSTALLER}${dest}" | \
+			sed -e "s,^${INSTALLER},,g" \
+			>> /data/adb/.nanodroid-list
+}
+
+nanodroid_install_apk () {
+	app=${1}
+	unset prefix
+
+	if [ -f "${INSTALLER}/system/app/${app}/${app}.apk" ]; then
+		dir=system/app
+	elif [ -f "${INSTALLER}/system/priv-app/${app}/${app}.apk" ]; then
+		dir=system/priv-app
+	else
+		error " !! app ${app} not found"
+	fi
+
+	source="${INSTALLER}/${dir}/${app}/${app}.apk"
+
+	if [ "${UNFOLD_APP_DIR}" -eq 1 ]; then
+		dest="${dir}"
+		mkdir -p "${MODPATH}/${dir}"
+	else
+		dest="${dir}/${app}"
+		mkdir -p "${MODPATH}/${dir}/${app}"
+	fi
+
+	echo "    installing app: ${app}"
+	cp "${source}" "${MODPATH}/${dest}" || \
+		error " !! failed to install ${source} to ${dest}"
+
+	set_perm_data -r "${MODPATH}/${dest}"
+
+	[ "${MODE}" = "${SYSTEM}" ] && \
+		echo "${dest}/${app}.apk" >> /data/adb/.nanodroid-list
+
+	nanodroid_install_lib
+}
+
+nanodroid_install_file () {
+	dir="$(dirname "${1}")"
+	file="$(basename "${1}")"
+
+	[ ! -f "${INSTALLER}/system/${dir}/${file}" ] && \
+		error " !! file: ${file} not found"
+
+	# strip off .${BIN_ARCH} from final filename (if any)
+	xfile=$(basename ${file} .${BIN_ARCH})
+
+	echo "    installing file: ${xfile}"
+
+	mkdir -p "${MODPATH}/system/${dir}/"
+	cp "${INSTALLER}/system/${dir}/${file}" \
+		"${MODPATH}/system/${dir}/${xfile}" || \
+		error " !! failed to install ${xfile}"
+
+	case ${2} in
+		bin ) set_perm_bin "${MODPATH}/system/${dir}/${xfile}" ;;
+		*   ) set_perm_data "${MODPATH}/system/${dir}/${xfile}" ;;
+	esac
+
+	[ "${MODE}" = "${SYSTEM}" ] && \
+		echo "/system/${dir}/${xfile}" >> /data/adb/.nanodroid-list
+}
+
+nanodroid_install_lib () {
+	apk="${MODPATH}/${dest}/${app}.apk"
+
+	if [ "${UNFOLD_APP_DIR}" -eq 1 ]; then
+		case ${ARCH} in
+			arm | x86 )      libd=${MODPATH}/system/lib   ;;
+			arm64 | x86_64 ) libd=${MODPATH}/system/lib64 ;;
+		esac
+	else
+		libd=${MODPATH}/${dir}/${app}/lib
+	fi
+
+	rm -rf ${TMP_LIBDIR}
+	mkdir -p ${TMP_LIBDIR}
+
+	unset srcdir
+
+	"${INSTALLER}/system/xbin/unzip.${BIN_ARCH}" \
+		-oq ${apk} "lib/*" -d "${TMP_LIBDIR}" \
+		2>/dev/null
+	unzip_return=$?
+
+	case ${unzip_return} in
+		0  ) echo "      ${app} does have libs" ;;
+		11 ) echo "      ${app} does not have any libs" ;;
+		*  ) error "  !! installing libs for ${app} failed" ;;
+	esac
+
+	if [ -d ${TMP_LIBDIR}/lib ]; then
+		for ARCHLIB in ${LIB_ARCHES}; do
+			if [ -d ${TMP_LIBDIR}/lib/${ARCHLIB} ]; then
+				srcdir=${TMP_LIBDIR}/lib/${ARCHLIB}
+				break
+			fi
+		done
+
+		if [ -d "${srcdir}" ]; then
+			case ${srcdir} in
+				*arm64*  ) echo "      ${app}: installing arm64 libs"
+					   lib_arch=arm64 ;;
+				*arm*	 ) echo "      ${app}: installing arm libs"
+					   lib_arch=arm ;;
+				*x86_64* ) echo "      ${app}: installing x86_64 libs"
+					   lib_arch=x86_64 ;;
+				*x86*	 ) echo "      ${app}: installing x86 libs"
+					   lib_arch=x86 ;;
+			esac
+
+			echo "        from: ${srcdir}"
+			echo "        into: ${libd}/${lib_arch}"
+			mkdir -p ${libd}/${lib_arch}
+
+			for lib in ${srcdir}/*; do
+				echo "        library: $(basename ${lib})"
+				cp ${lib} ${libd}/${lib_arch}/ || \
+					error " !! installing libraries failed"
+
+				set_perm_data ${libd}/${lib_arch}/$(basename ${lib})
+
+				[ "${MODE}" = "SYSTEM" ] && \
+					echo /${dir}/${app}/${lib_arch}/$(basename ${lib}) \
+						>> /data/adb/.nanodroid-list
+			done
+		fi
+	fi
+}
+
+nanodroid_substitute () {
+	target="${MODPATH}/system/${1}"
+
+	if grep -q @ZIPDIR@ "${target}"; then
+		if [[ "${ZIPDIR}" == "/external_sd" ]]; then
+			# /external_sd is already known by `nanodroid-overlay`
+			# no need to add it a second time
+			sed -e 's|@ZIPDIR@||' -i ${target}
+			echo "    substitute: remove @ZIPDIR@ in ${target}"
+		else
+			sed -e "s|@ZIPDIR@|${ZIPDIR}|g" -i ${target}
+			echo "    substitute: adjust @ZIPDIR@ in ${target}"
+		fi
+	fi
+
+	if grep -q @MODPATH@ ${target}; then
+		sed -e "s|@MODPATH@|${REALPATH}|g" -i ${target}
+		echo "    substitute: adjust @MODPATH@ in ${target}"
+	fi
+}
+
+nanodroid_storelogs () {
+	${BOOTMODE} || cp /tmp/recovery.log /data/adb/.recovery_${MODID}
+
+	echo "\
+### VALUES ###
+ZIP=${ZIP}
+ZIPDIR=${ZIPDIR}
+TMPDIR=${TMPDIR}
+TMP_LIBDIR=${TMP_LIBDIR}
+INSTALLER=${INSTALLER}
+MODID=${MODID}
+SDK_VERSION=${SDK_VERSION}
+ARCH=${ARCH}
+LIB_ARCHES=${LIB_ARCHES}
+MODPATH=${MODPATH}
+SWIPE_LIBDIR=${SWIPE_LIBDIR}
+REALPATH=${REALPATH}
+MODE=${MODE}
+MAGISK_VER_CODE=${MAGISK_VER_CODE}
+
+### SETUP ###
+" > /data/adb/.nanodroid_${MODID}
+
+cat "${cfg_setup}" >> /data/adb/.nanodroid_${MODID}
+
+echo "
+### APPS ###
+" >> /data/adb/.nanodroid_${MODID}
+
+cat "${cfg_apps}" >> /data/adb/.nanodroid_${MODID}
+
+echo "
+### OVERLAY ###
+" >> /data/adb/.nanodroid_${MODID}
+
+cat "${cfg_overlay}" >> /data/adb/.nanodroid_${MODID}
+
+}
+
+##########################################################################################
+# NanoDroid Configuration File Handling
+##########################################################################################
+
+# check for configuration files
+config_locations="/sdcard /external_sd ${ZIPDIR} /data"
+
+get_config () {
+	config=""
+	config_exists=0
+	for path in ${config_locations}; do
+		# rename config files if required (< 15.1)
+		if test -r "${path}/.nanomod-${1}"; then
+			mv "${path}/.nanomod-${1}" "${path}/.nanodroid-${1}"
+		fi
+
+		if test -r "${path}/.nanodroid-${1}"; then
+			config="${path}/.nanodroid-${1}"
+			config_exists=1
+			return
+		fi
+	done
+}
+
+set_prop () {
+	echo "${1}=${2}" >> ${cfg_setup}
+}
+
+# check whether '.nanodroid-setup' has all required entries
+# update format if required
+check_cfg_setup () {
+	# < 12.0
+	if grep -q "nanomod\." "${cfg_setup}"; then
+		ui_print " ++ migrating ${cfg_setup} to new format"
+		sed -e 's/nanomod\./nanomod_/g' -i "${cfg_setup}"
+	fi
+
+	# < 16.0
+	if grep -q "nanomod_" "${cfg_setup}"; then
+		ui_print " ++ migrating ${cfg_setup} to new format"
+		sed -e 's/nanomod_/nanodroid_/g' -i "${cfg_setup}"
+	fi
+
+	source ${cfg_setup}
+
+	[ -z ${nanodroid_fdroid} ] && set_prop nanodroid_fdroid 1
+	[ -z ${nanodroid_microg} ] && set_prop nanodroid_microg 1
+	[ -z ${nanodroid_apps} ] && set_prop nanodroid_apps 1
+	[ -z ${nanodroid_play} ] && set_prop nanodroid_play 1
+
+	if [ "${MODID}" = "NanoDroid" ]; then
+		[ -z ${nanodroid_overlay} ] && set_prop nanodroid_overlay 1
+	else	[ -z ${nanodroid_overlay} ] && set_prop nanodroid_overlay 0
+	fi
+
+	[ -z ${nanodroid_zelda} ] && set_prop nanodroid_zelda 1
+	[ -z ${nanodroid_mapsv1} ] && set_prop nanodroid_mapsv1 1
+	[ -z ${nanodroid_init} ] && set_prop nanodroid_init 1
+	[ -z ${nanodroid_gsync} ] && set_prop nanodroid_gsync 0
+	[ -z ${nanodroid_forcesystem} ] && set_prop nanodroid_forcesystem 0
+	[ -z ${nanodroid_swipe} ] && set_prop nanodroid_swipe 0
+	[ -z ${nanodroid_nlpbackend} ] && set_prop nanodroid_nlpbackend 1
+
+	source ${cfg_setup}
+}
+
+# check whether '.nanodroid-apps' has new format
+# and update if required
+check_cfg_apps () {
+	# < 12.0
+	if grep -q INSTALL_APPS "${cfg_apps}"; then
+		ui_print " ++ migrating ${cfg_apps} to new format"
+		sed -e 's/^INSTALL_APPS=//;s/\"//g' -i "${cfg_apps}"
+	fi
+}
+
+# check whether '.nanodroid-overlay' has new format
+# and update if required
+check_cfg_overlay () {
+	if grep -q "APPS=(" "${cfg_overlay}"; then
+		ui_print " ++ migrating ${cfg_overlay} to new format"
+		sed -e 's/^.*APPS=//;s/(//g;s/)//g' -i "${cfg_overlay}"
+		sed '/^\s*$/d' -i "${cfg_overlay}"
+	fi
+}
+
+get_cfg_setup () {
+	get_config setup
+	if [ "$config_exists" -eq 1 ]; then
+		cfg_setup="${config}"
+		check_cfg_setup
+		ui_print " > Config | nanodroid-setup   | $(dirname ${cfg_setup})"
+	else
+		cfg_setup="${INSTALLER}/.nanodroid-setup"
+		source "${cfg_setup}"
+		ui_print " > Config | nanodroid-setup   | fallback"
+	fi
+}
+
+get_cfg_overlay () {
+	get_config overlay
+	if [ "$config_exists" -eq 1 ]; then
+		cfg_overlay="${config}"
+		check_cfg_overlay
+		ui_print " > Config | nanodroid-overlay | $(dirname ${cfg_overlay})"
+	else
+		cfg_overlay="${INSTALLER}/.nanodroid-overlay"
+		ui_print " > Config | nanodroid-overlay | fallback"
+	fi
+}
+
+get_cfg_apps () {
+	get_config apps
+	if [ "$config_exists" -eq 1 ]; then
+		cfg_apps="${config}"
+		check_cfg_apps
+		ui_print " > Config | nanodroid-apps    | $(dirname ${cfg_apps})"
+	else
+		cfg_apps="${INSTALLER}/.nanodroid-apps"
+		ui_print " > Config | nanodroid-apps    | fallback"
+	fi
+}

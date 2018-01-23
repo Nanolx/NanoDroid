@@ -1,0 +1,47 @@
+#!/sbin/sh
+
+umask 022
+OUTFD=${2}
+ZIP=${3}
+
+ZIPDIR=$(dirname "${ZIP}")
+MODID=NanoDroid
+
+unzip -o "${ZIP}" nanodroid-functions -d "/tmp" || \
+	error " !! failed to load Common Installer"
+source "/tmp/nanodroid-functions" || \
+	error " !! failed to load Common Installer"
+
+detect_bootmode
+detect_outfd
+
+show_banner
+
+check_system
+unpack_zip
+
+detect_arch
+
+get_cfg_setup
+get_cfg_apps
+get_cfg_overlay
+
+detect_mode
+
+install_microg
+install_mapsv1
+install_gsync
+install_fdroid
+install_store
+install_apps
+install_zelda
+install_initd
+install_swipe
+install_bash
+install_nano
+install_novl
+install_shell_utils
+
+nanodroid_finalize
+
+exit 0

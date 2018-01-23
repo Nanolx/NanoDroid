@@ -1,0 +1,25 @@
+#!/bin/bash
+
+create_full_package () {
+	[[ ! -f "${CWD}/.nanodroid-pull" ]] && \
+		error "run \"build-package pull\" first!"
+
+	ZIP="${CWD}/NanoDroid-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	print_package "Full"
+
+	cd "${CWD}/Full"
+	zip_add
+	cd "${CWD}"
+
+	zip_add_doc
+	zip_add_config .nanodroid-overlay 0
+	zip_add_config .nanodroid-setup 0
+	zip_add_config .nanodroid-apps 0
+}
+
+mk_pkg_full () {
+	create_full_package &
+	progress $!
+}

@@ -1,0 +1,237 @@
+#!/sbin/sh
+
+OUTFD=$2
+ZIP=$3
+
+ui_print() {
+	echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
+	echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+}
+
+grep_prop() {
+	REGEX="s/^$1=//p"
+	shift
+	FILES=$@
+	if [ -z "$FILES" ]; then
+		FILES='/system/build.prop'
+	fi
+	cat $FILES 2>/dev/null | sed -n "$REGEX" | head -n 1
+}
+
+is_mounted() {
+	if [ ! -z "$2" ]; then
+		cat /proc/mounts | grep $1 | grep $2, >/dev/null
+	else
+		cat /proc/mounts | grep $1 >/dev/null
+	fi
+	return $?
+}
+
+error () {
+	ui_print "${@}"
+	ui_print " "
+	ui_print " ** post your /tmp/recovery.log"
+	ui_print " ** in the XDA support thread"
+	ui_print " "
+	exit 1
+}
+
+request_size_check() {
+	reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
+	reqSizeM=$((reqSizeM / 1048576 + 1))
+}
+
+image_size_check() {
+	e2fsck -yf $1
+	curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
+	curUsedM=`echo "$curBlocks" | cut -d/ -f1`
+	curSizeM=`echo "$curBlocks" | cut -d/ -f1`
+	curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
+	curUsedM=$((curUsedM * 4 / 1024 + 1))
+	curSizeM=$((curSizeM * 4 / 1024))
+}
+
+shrink_magisk_img () {
+	image_size_check /data/magisk.img
+	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
+	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
+		resize2fs $IMG ${NEWDATASIZE}M
+	fi
+}
+
+mount_image() {
+	if [ ! -d "$2" ]; then
+		mount -o rw,remount rootfs /
+		mkdir -p "$2" 2>/dev/null
+		$BOOTMODE && mount -o ro,remount rootfs /
+		[ ! -d "$2" ] && return 1
+	fi
+
+	if ! is_mounted "$2"; then
+		LOOPDEVICE=
+		for LOOP in 0 1 2 3 4 5 6 7; do
+			if ! is_mounted "$2"; then
+				LOOPDEVICE=/dev/block/loop$LOOP
+				[ -e $LOOPDEVICE ] || mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
+				losetup $LOOPDEVICE "$1" && mount -t ext4 -o loop $LOOPDEVICE "$2"
+				if is_mounted "$2"; then
+					break;
+				fi
+			fi
+		done
+	fi
+}
+
+# check for configuration files
+config_locations="/sdcard /external_sd /data $(dirname ${ZIP}))"
+config_files=".nanomod-setup .nanomod-apps .nanomod-overlay .nanodroid-setup .nanodroid-apps .nanodroid-overlay"
+
+system_mode_uninstall () {
+	if ! (is_mounted /system); then
+		mount -orw /system || error " !! failed to mount /system"
+	else	mount -orw,remount /system || error " !! failed to re-mount /system read-write"
+	fi
+
+	ui_print " << uninstalling: NanoDroid (System)"
+
+	# services.jar needs special treament
+	if grep -q /system/framework/services.jar ${system_list}; then
+		if [ -f /sdcard/services.jar ]; then
+			ui_print " << restoring: unpatched services.jar"
+			mv /sdcard/services.jar /system/framework/services.jar \
+				|| error " !! failed to restore services.jar"
+		else	ui_print " << can't restore unpatched services.jar"
+		fi
+		sed '/\/system\/framework\/services.jar/d' -i ${system_list}
+	fi
+
+	for sapp in Settings SecSettings SecSettings2; do
+		if grep -q /system/priv-app/${sapp}/${sapp}.apk ${system_list}; then
+			if [ -f /sdcard/${sapp}.apk ]; then
+				ui_print " << restoring: unpatched ${sapp}.apk"
+				mv /sdcard/${sapp}.apk /system/priv-app/${sapp}/${sapp}.apk \
+					|| error " !! failed to restore ${sapp}.apk"
+			else	ui_print " << can't restore unpatched ${sapp}.apk"
+			fi
+			sed "/\/system\/priv-app\/${sapp}\/${sapp}.apk/d" \
+				-i ${system_list}
+			break
+		fi
+	done
+
+	# com.qualcomm.location needs special treament
+	if [ -d /sdcard/com.qualcomm.location ]; then
+		ui_print " << restoring: com.qualcomm.location"
+		mv /sdcard/com.qualcomm.location /system/priv-app/ \
+			|| error " !! failed to restore com.qualcomm.lcation"
+	fi
+
+	xargs rm -f < ${system_list} \
+		|| " !! failed to remove files"
+
+	# remove empty directories
+	# (find -empty not available on Android)
+	for dir in app priv-app share; do
+		find /system/${dir} -type d | \
+			xargs rmdir --ignore-fail-on-non-empty
+	done
+
+	rm -f "${system_list}"
+
+	if [ -f /data/adb/.nanodroid-patcher ]; then
+		rm -rf /data/adb/.nanodroid-patcher \
+			/system/addon.d/75-nanodroidpatcher.sh \
+			/data/adb/nanodroid_patcher
+		ui_print " << uninstalling: NanoDroid-Patcher artifacts"
+	elif [ -f /data/adb/.nanomod-patcher ]; then
+		rm -rf /data/adb/.nanomod-pacher \
+			/system/addon.d/75-nanomodpatcher.sh \
+			/data/adb/nanomod_patcher
+		ui_print " << uninstalling: NanoMod-Patcher artifacts"
+	elif [ -f /system/.nanomod-patcher ]; then
+		rm -rf /system/.nanomod-patcher \
+			/data/nanomod.patcher \
+			/system/addon.d/75-nanomodpatcher.sh
+		ui_print " << uninstalling: NanoMod-Patcher artifacts"
+	fi
+}
+
+ui_print " "
+ui_print "*****************************"
+ui_print "   NanoDroid 15.90.20180119   "
+ui_print "      created by Nanolx      "
+ui_print "        Uninstaller          "
+ui_print "*****************************"
+ui_print " "
+
+if ! (is_mounted /data); then
+	mount -orw /data || error " !! failed to mount /data"
+else	mount -orw,remount /data || error " !! failed to re-mount /data read-write"
+fi
+
+if ! (is_mounted /system); then
+	mount -oro /system || error " !! failed to mount /system"
+fi
+
+ui_print " << Removing configuration files (if any)"
+
+for path in ${config_locations}; do
+	for file in ${config_files}; do
+		if [ -f "${path}/${file}" ]; then
+			rm -f "${path}/${file}"
+			ui_print " <<> removing ${path}/${file}"
+		fi
+	done
+done
+
+# System Mode uninstallation
+if [ -f /system/.nanomod-list ]
+	system_list=/system/.nanomod-list
+	system_mode_uninstall
+elif [ -f /data/adb/.nanomod-list ]; then
+	system_list=/data/adb/.nanomod-list
+	system_mode_uninstall
+elif [ -f /data/adb/.nanodroid-list ]; then
+	system_list=/data/adb/.nanodroid-list
+	system_mode_uninstall
+fi
+
+if [ -f /data/adb/magisk.img ]; then
+	mkdir -p /magisk
+	mount_image /data/adb/magisk.img /magisk || \
+		error " !! failed to mount /magisk"
+elif [ -f /data/magisk.img ]; then
+	mkdir -p /magisk
+	mount_image /data/magisk.img || \
+		error " !! failed to mount /magisk"
+fi
+
+if (is_mounted /magisk); then
+	for module in NanoMod NanoDroid NanoModmicroG NanoDroid_microG \
+		NanoModfdroid NanoDroid_FDroid; do
+		if [ -d /magisk/${module} ]; then
+			ui_print " << uninstalling: ${module}"
+			rm -rf /magisk/${module}
+		fi
+	done
+fi
+
+ui_print " >> clean up"
+
+if (is_mounted /magisk); then
+	umount /magisk
+	losetup -d $LOOPDEVICE
+	rmdir /magisk
+	shrink_magisk_img || \
+		error " !! failed to shrink magisk.img"
+fi
+
+umount /system
+
+ui_print " "
+ui_print " > Done!"
+ui_print " "
+ui_print "Thanks for giving NanoDroid a try"
+ui_print " "
+
+exit 0

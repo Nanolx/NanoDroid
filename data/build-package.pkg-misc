@@ -1,0 +1,56 @@
+#!/bin/bash
+
+create_patcher_package() {
+	ZIP="${CWD}/NanoDroid-patcher-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	print_package "Framework Patcher"
+
+	cd "${CWD}/patcher"
+	zip_add
+	cd "${CWD}"
+
+	zip_add_doc
+}
+
+mk_pkg_patcher () {
+	create_patcher_package &
+	progress $!
+}
+
+
+create_setupwizard_package() {
+	ZIP="${CWD}/NanoDroid-setupwizard-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	print_package "Setup Wizard"
+
+	cd "${CWD}/setup-wizard"
+	zip_add
+	cd "${CWD}"
+
+	zip_add_doc
+}
+
+mk_pkg_setupwizard () {
+	create_setupwizard_package &
+	progress $!
+}
+
+create_uninstaller_package() {
+	ZIP="${CWD}/NanoDroid-uninstaller-${VERSION}".zip
+	rm -f "${ZIP}"
+
+	print_package "Uninstaller"
+
+	cd "${CWD}/uninstaller"
+	zip_add
+	cd "${CWD}"
+
+	zip_add_doc
+}
+
+mk_pkg_uninstaller () {
+	create_uninstaller_package &
+	progress $!
+}

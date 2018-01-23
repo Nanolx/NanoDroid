@@ -1,0 +1,475 @@
+#!@MODPATH@/system/xbin/bash
+
+if [[ $(whoami) != "root" ]]; then
+	echo "not running as root, exiting"
+	exit 1
+fi
+
+export NO_MAGISK=0
+export NO_CONFIG=0
+export MODPATH=@MODPATH@
+export PATH="${PATH}:${MODPATH}/system/bin"
+
+if [[ -d /dev/tmp/magisk_img/$(basename ${MODPATH}) ]]; then
+	OVERLAY_PATH=/dev/tmp/magisk_img/$(basename ${MODPATH})
+elif [[ -d /dev/magisk_merge/$(basename ${MODPATH}) ]]; then
+	OVERLAY_PATH=/dev/magisk_merge/$(basename ${MODPATH})
+else
+	OVERLAY_PATH=${MODPATH}
+	[[ "${MODPATH}" != "/sbin/.core/"* ]] && NO_MAGISK=1
+fi
+
+# Permissions
+perm_fake="android.permission.FAKE_PACKAGE_SIGNATURE"
+perm_calr="android.permission.READ_CALENDAR"
+perm_calw="android.permission.WRITE_CALENDAR"
+perm_conr="android.permission.READ_CONTACTS"
+perm_conw="android.permission.WRITE_CONTACTS"
+perm_gacc="android.permission.GET_ACCOUNTS"
+
+# Packages
+microG="com.google.android.gms"
+PlayStore="com.android.vending"
+GCalSync="com.google.android.syncadapters.calendar"
+GConSync="com.google.android.syncadapters.contacts"
+
+get_config () {
+	config=""
+	config_exists=0
+	for path in ${config_locations}; do
+		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
+			config="${path}/${1}"
+			config_exists=1
+			return
+		fi
+	done
+}
+
+show_app_name () {
+	aapt dump badging "${1}" 2>/dev/null | \
+		grep "application: label" | \
+		sed -e "s/.*label='//g;s/' icon.*//g"
+}
+
+add_override () {
+	echo "  creating overlay: $(basename ${1})"
+	mkdir -p "${OVERLAY_PATH}/system/${1}"
+	touch "${OVERLAY_PATH}/system/${1}/.replace"
+}
+
+rm_override () {
+	xapp=$(basename ${1})
+	echo "  removing overlay: ${xapp}"
+	rm -rf  "${OVERLAY_PATH}/system/${1}"
+	sed -e "/^${xapp}$/d" -i "${config}"
+}
+
+update_overrides () {
+	clear_overrides
+	gen_overrides
+}
+
+gen_overrides () {
+	OVERLAY_APPS=$(cat "${config}")
+
+	echo "  creating Overlays in ${OVERLAY_PATH}"
+
+	for app in ${OVERLAY_APPS}; do
+		if [ -d /system/app/${app} ]; then
+			add_override "app/${app}" ${OVERLAY_PATH}
+		elif [ -d /system/priv-app/${app} ]; then
+			add_override "priv-app/${app}" ${OVERLAY_PATH}
+		else	echo "  app \"${app}\" is not installed"
+		fi
+	done
+}
+
+list_overrides () {
+	LIST_APPS=($(find "${OVERLAY_PATH}/system/app" -name "*.replace"))
+	for app in "${LIST_APPS[@]}"; do
+		APPS=(${APPS[@]} "$(basename $(dirname "${app}"))")
+	done
+
+	LIST_PRIV_APPS=($(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"))
+	for app in "${LIST_PRIV_APPS[@]}"; do
+		PRIV_APPS=(${PRIV_APPS[@]} "$(basename $(dirname "${app}"))")
+	done
+
+	echo "Overlays exist for following applications in /system/app:
+
+$(printf '  * %s\n' "${APPS[@]}")
+
+Overlays exist for following applications in /system/priv-app:
+
+$(printf '  * %s\n' "${PRIV_APPS[@]}")
+"
+}
+
+show_nooverrides () {
+	echo " >> processing /system/app"
+
+	for app in /system/app/*/*.apk; do
+		sysname=$(basename "${app}" .apk)
+		if [[ ! -f ${OVERLAY_PATH}/system/app/${sysname}/.replace ]]; then
+			humname=$(show_app_name "${app}")
+			S_APPS="${S_APPS}
+	* ${sysname}		|(${humname})"
+		fi
+	done
+
+	echo " >> processing /system/priv-app"
+
+	for app in /system/priv-app/*/*.apk; do
+		sysname=$(basename "${app}" .apk)
+		if [[ ! -f ${OVERLAY_PATH}/system/priv-app/${sysname}/.replace ]]; then
+			humname=$(show_app_name "${app}")
+			S_PRIV_APPS="${S_PRIV_APPS}
+	* ${sysname}		|(${humname})"
+		fi
+	done
+
+	echo "Non-Overlayed applications in /system/app:
+
+$(printf '* %s\n' "${S_APPS[@]}" | column -t -s \|)
+
+Non-Overlayed applications in /system/priv-app:
+
+$(printf '* %s\n' "${S_PRIV_APPS[@]}" | column -t -s \|)
+"
+}
+
+clear_overrides () {
+	echo "  removing Overlays from ${OVERLAY_PATH}"
+	RM_APPS=($(find "${OVERLAY_PATH}/system/app" -name "*.replace"))
+	for app in "${RM_APPS[@]}"; do
+		echo "  removing override: $(basename $(dirname ${app}))"
+		rm -rf "$(dirname "${app}")"
+	done
+
+	RM_PRIV_APPS=($(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"))
+	for app in "${RM_PRIV_APPS[@]}"; do
+		echo "  removing override: $(basename $(dirname ${app}))"
+		rm -rf "$(dirname "${app}")"
+	done
+}
+
+genconfig () {
+	[[ ! -f "${config}" ]] && config="/data/.nanodroid-overlay"
+
+	APPS=($(find "${OVERLAY_PATH}/system/app" -name "*.replace"))
+	PRIV_APPS=($(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"))
+
+	if [[ ${APPS[*]} != "" ]]; then
+		for app in "${APPS[@]}"; do
+			xapp=$(basename $(dirname ${app}))
+			echo "  adding ${xapp} to configuration"
+			echo "${xapp}" >> "${config}"
+		done
+	fi
+
+	if [[ ${PRIV_APPS[*]} != "" ]]; then
+		for app in "${PRIV_APPS[@]}"; do
+			xapp=$(basename $(dirname ${app}))
+			echo "  adding ${xapp} to configuration"
+			echo "${xapp}" >> "${config}"
+		done
+	fi
+}
+
+check_package () {
+	[[ $(grep "^${1} " /data/system/packages.list) ]] && return 0 || return 1
+}
+
+check_permission () {
+	[[ $(dumpsys package ${1} | grep -Eo "^[ ]+${2}: granted=true") ]] && return 0 || return 1
+}
+
+grant_permission () {
+	pm grant ${1} ${2} 2>/dev/null
+}
+
+permissions () {
+	if check_package ${1}; then
+		echo "package ${1} found"
+		if ! check_permission ${1} ${2}; then
+			grant_permission ${1} ${2} && \
+				echo "permission ${2} granted" || \
+				echo "failed to grant permission ${2}"
+		else	echo "already has permission ${2}"
+		fi
+	fi
+}
+
+add_prop () {
+	[[ ! -f ${MODPATH}/system.prop ]] && \
+		touch ${MODPATH}/system.prop
+
+	resetprop ${1} ${2}
+
+	sed "/^${1}/d" -i ${MODPATH}/system.prop
+	echo "${1}=${2}" >> "${MODPATH}/system.prop"
+}
+
+remove_prop () {
+	[[ -f ${MODPATH}/system.prop ]] && \
+		sed "/^${1}/d" -i ${MODPATH}/system.prop
+}
+
+list_props () {
+	if [[ ! -f ${MODPATH}/system.prop ]]; then
+		echo "no properties added by NanoDroid"
+	else	echo "properties added by NanoDroid:"
+		cat ${MODPATH}/system.prop | column -t -s"="
+	fi
+}
+
+# see: https://www.xda-developers.com/broken-navigation-bar-lock-screen-ota-update/
+update_fix () {
+	settings put global device_provisioned 1 && \
+	settings put secure user_setup_complete 1
+}
+
+boot_count () {
+	settings get global boot_count
+}
+
+airplane_mode () {
+	clear
+
+	disabled_radios=""
+	toggable_radios="wifi,cell,bluetooth,nfc,wimax,"
+
+	echo "enter desired radions [first column] space separated
+
+wifi		WiFi/WLAN
+cell		cellular/mobile Network
+bluetooth	Bluetooth
+nfc		NFC
+wimax		WiMAX"
+	read -r user_input
+
+	for field in ${user_input}; do
+		case ${field} in
+			wifi | cell | bluetooth | nfc | wimax )
+				disabled_radios="${field},${disabled_radios}"
+				toggable_radios=$(echo "${toggable_radios}" | sed "s/${field},//g")
+			;;
+			* )
+				echo "${field} is unknown"
+			;;
+		esac
+	done
+
+	settings put global airplane_mode_radios ${disabled_radios}
+	settings put global airplane_mode_toggleable_radios ${toggable_radios}
+}
+
+audio_focus () {
+	cmd appops set ${1} TAKE_AUDIO_FOCUS ignore
+}
+
+read_clipboard () {
+	cmd appops set ${1} READ_CLIPBOARD ignore
+}
+
+# check for configuration files
+config_locations="/sdcard /external_sd @ZIPDIR@ /data /dev/tmp/install"
+get_config .nanodroid-overlay
+
+if [[ ${NO_MAGISK} -eq 0 ]]; then
+
+if [[ -f ${config} ]]; then
+	export config
+else
+	genconfig
+	export config="/data/.nanodroid-overlay"
+fi
+
+case ${1} in
+	-l | --list )
+		list_overrides
+	;;
+
+	-a | --add )
+		if [ ! -z ${2} ]; then
+			if [[ -d /system/app/${2} ]]; then
+				add_override "app/${2}"
+				echo "${2}" >> "${config}"
+			elif [[ -d /system/priv-app/${2} ]]; then
+				add_override "priv-app/${2}"
+				echo "${2}" >> "${config}"
+			else	echo "app \"${2}\" is not installed"
+			fi
+		fi
+	;;
+
+	-r | --remove )
+		if [ ! -z ${2} ]; then
+			if [[ -f ${OVERLAY_PATH}/system/app/${2}/.replace ]]; then
+				rm_override "app/${2}"
+			elif [[ -f ${OVERLAY_PATH}/system/priv-app/${2}/.replace ]]; then
+				rm_override "priv-app/${2}"
+			else	echo "No override for \"${2}\" found"
+			fi
+		fi
+	;;
+
+	-u | --update )
+		update_overrides
+	;;
+
+	-s | --show )
+		show_nooverrides
+	;;
+
+	-c | --clear )
+		clear_overrides
+	;;
+
+	-g | --genconfig )
+		rm -f ${config}
+		genconfig
+	;;
+
+	-x | --create )
+		gen_overrides
+	;;
+
+	-p | --permission )
+		# microG and Play Store
+		permissions ${microG} ${perm_fake}
+		permissions ${PlayStore} ${perm_fake}
+
+		# Google Calendar Sync
+		permissions ${GCalSync} ${perm_calr}
+		permissions ${GCalSync} ${perm_calw}
+
+		# Google Contacts Sync
+		permissions ${GConSync} ${perm_conr}
+		permissions ${GConSync} ${perm_conw}
+		permissions ${GConSync} ${perm_gacc}
+	;;
+
+	-C | --cast )
+		add_prop persist.debug.wfd.enable 1
+	;;
+
+	-A | --add-prop )
+		if [ ! -z ${2} -a ! -z ${3} ]; then
+			add_prop "${2}" "${3}"
+		fi
+	;;
+
+	-R | --remove-prop )
+		if [ ! -z ${2} ]; then
+			remove_prop "${2}"
+		fi
+	;;
+
+	-L | --list-props )
+		list_props
+	;;
+
+	-f | --fix-update )
+		update_fix
+	;;
+
+	-P | --airplane-mode )
+		airplane_mode
+	;;
+
+	-b | --boot-count )
+		boot_count
+	;;
+
+	-F | --audio-focus )
+		audio_focus "${2}"
+	;;
+
+	-b | --read-clipboard )
+		read_clipboard "${2}"
+	;;
+
+	* )
+		echo "nanodroid-overlay helper script
+
+Options:
+-a | --add		[appname]	add override for app [appname]
+-r | --remove		[appname]	remove override for app [appname]
+-s | --show				show non-overriden /system applications
+-l | --list				show all overriden /system applications
+-x | --create				create all overrides
+-u | --update				update all overrides (= clear + create)
+-c | --clear				remove all overrides
+-g | --genconfig			(re-)create configuration from existing overrides
+-p | --permission			grant signature spoofing permission to
+					microG GmsCore and Play Store
+-C | --cast				enable cast [fix for a few custom ROMS]
+-A | --add-prop		[prop] [value]	add system property set by NanoDroid
+-R | --remove-prop	[prop]		remove system property set by NanoDroid
+-L | --list-prop			list system properties set by NanoDroid
+-f | --fix-update			fix navbar, lockscreen, statusbar after OTA update
+-P | --airplane-mode			change airplane mode settings
+-F | --audio-focus			prevent an app from stealing audio focus
+-b | --boot-count			read boot counts (Android 7+)
+-B | --read-clipboard			prevent an app from reading the clipboard
+-h | --help				this message"
+	;;
+esac
+
+else
+
+case ${1} in
+	-p | --permission )
+		# microG and Play Store
+		permissions ${microG} ${perm_fake}
+		permissions ${PlayStore} ${perm_fake}
+
+		# Google Calendar Sync
+		permissions ${GCalSync} ${perm_calr}
+		permissions ${GCalSync} ${perm_calw}
+
+		# Google Contacts Sync
+		permissions ${GConSync} ${perm_conr}
+		permissions ${GConSync} ${perm_conw}
+		permissions ${GConSync} ${perm_gacc}
+	;;
+
+	-f | --fix-update )
+		update_fix
+	;;
+
+	-b | --boot-count )
+		boot_count
+	;;
+
+	-P | --airplane-mode )
+		airplane_mode
+	;;
+
+	-F | --audio-focus )
+		audio_focus "${2}"
+	;;
+
+	-b | --read-clipboard )
+		read_clipboard "${2}"
+	;;
+
+	* )
+		echo "nanodroid-overlay helper script
+
+*** SYSTEM MODE! LIMITED FUNCTIONALITY! ***
+
+Options:
+-p | --permission		grant signature spoofing permission to
+				microG GmsCore and Play Store
+-f | --fix-update		fix navbar, lockscreen, statusbar after OTA update
+-P | --airplane-mode			change airplane mode settings
+-F | --audio-focus			prevent an app from stealing audio focus
+-b | --boot-count			read boot counts (Android 7+)
+-B | --read-clipboard			prevent an app from reading the clipboard
+-h | --help			this message"
+	;;
+esac
+
+fi
