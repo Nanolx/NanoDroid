@@ -18,6 +18,12 @@
   * microG package
      * fix aapt not installed
 * General Changes:
+  * Downloads
+     * as before all files are available from AFH (including archive)
+         * short-links renamed from NanoMod to NanoDroid
+     * additionally the latest stable and beta releases are now mirrored on Nanolx
+         * Stable Downloads [> Nanolx](https://download.nanolx.org/NanoMod/Stable)
+         * Beta Downloads [> Nanolx](https://download.nanolx.org/NanoMod/Beta)
   * Common Installer
      * take care of getting rid of old-named module upon installation
      * generalize function showing the NanoDroid banner
@@ -36,6 +42,13 @@
   * Uninstaller
      * support all installations (NanoMod <15.0, NanoMod <16.0 and NanoDroid)
      * minor code revision
+* Updates (automatic)
+  * Substratum (953)
+  * NewPipe (0.11.5)
+  * BeHeKeyboard (1.1.2)
+  * (Simple) Gallery (3.2.4)
+  * Yalp Store (0.34)
+  * K-9 Mail (5.403)
 
 ## 15.1.20180119
 * Bug Fixes:

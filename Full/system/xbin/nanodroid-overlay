@@ -464,10 +464,10 @@ Options:
 -p | --permission		grant signature spoofing permission to
 				microG GmsCore and Play Store
 -f | --fix-update		fix navbar, lockscreen, statusbar after OTA update
--P | --airplane-mode			change airplane mode settings
--F | --audio-focus			prevent an app from stealing audio focus
--b | --boot-count			read boot counts (Android 7+)
--B | --read-clipboard			prevent an app from reading the clipboard
+-P | --airplane-mode		change airplane mode settings
+-F | --audio-focus		prevent an app from stealing audio focus
+-b | --boot-count		read boot counts (Android 7+)
+-B | --read-clipboard		prevent an app from reading the clipboard
 -h | --help			this message"
 	;;
 esac

@@ -1,34 +1,52 @@
 # NanoDroid
 
-## Current Stable Release
+Versions until 15.1 were called **NanoMod**, starting with 16.0 the're called **NanoDroid**.
 
-15.1.20180119
+## Current Release
+
+* Stable: 15.1.20180119
+* Beta: 16.0~beta1.20180125 [15.90]
 
 ## Downloads
 
-* Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Stable)
-  * Archived Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_StableArchive)
-* Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_Beta)
-  * Archived Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoMod_BetaArchive)
-* Snapshot
-  * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
-     * first step:
-         * `build-package pull` to download all required apks for Full, microG and F-Droid package
-     * second step:
-         * `build-package full` to create the full package
-         * `build-package microg` to create the microG only package
-         * `build-package fdroid` to create the F-Droid only package
-         * `build-package patcher` to create the on-device framework-patcher package
-         * `build-package uninstaller` to create the uninstaller package
-         * `build-package setupwizard` to create the Setup Wizard package
-         * `build-package all` to create all packages at once
-     * third step:
-         * `build-package u-microg` to update microG
-         * `build-package u-fdroid` to update F-Droid
-         * `build-package u-apps` to update (most) applications
-         * `build-package u-swipe` to update swipe libraries
-         * `build-package u-gsync` to update Google Sync Adapters
-         * `build-package pull` to update/re-download everything
+### Primary Mirror
+
+On AndroidFileHost **all** stable and beta releases are available.
+
+* Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoDroid_Stable)
+  * Archived Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoDroid_StableArchive)
+* Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoDroid_Beta)
+  * Archived Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoDroid_BetaArchive)
+
+### Secondary Mirror
+
+On Nanolx the latest stable and beta releases are available, no previous releases.
+
+* Stable Downloads [> Nanolx](https://download.nanolx.org/NanoMod/Stable)
+* Beta Downloads [> Nanolx](https://download.nanolx.org/NanoMod/Beta)
+
+### Snapshots
+
+You can create snapshots from this repository.
+
+* on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
+  * first step:
+     * `build-package pull` to download all required apks for Full, microG and F-Droid package
+  * second step:
+     * `build-package full` to create the full package
+     * `build-package microg` to create the microG only package
+     * `build-package fdroid` to create the F-Droid only package
+     * `build-package patcher` to create the on-device framework-patcher package
+     * `build-package uninstaller` to create the uninstaller package
+     * `build-package setupwizard` to create the Setup Wizard package
+     * `build-package all` to create all packages at once
+  * third step:
+     * `build-package u-microg` to update microG
+     * `build-package u-fdroid` to update F-Droid
+     * `build-package u-apps` to update (most) applications
+     * `build-package u-swipe` to update swipe libraries
+     * `build-package u-gsync` to update Google Sync Adapters
+     * `build-package pull` to update/re-download everything
 
 for apks downloaded from F-Droid or microG repository or from APK Mirror, `build-package` checks the SHA256 hash.
 
@@ -47,13 +65,13 @@ the `build-package` script does not download/update the following applications:
 * MPV (reason: last F-Droid build outdated)
 * OpenLauncher (reason: last F-Droid build outdated)
 
-those are still included in the repo itself. Also `build-package` now looks if the configuration files
+those are still included in the repo itself. Also `build-package` looks if the configuration files
 
 * `.nanodroid-setup`
 * `.nanodroid-apps`
 * `.nanodroid-overlay`
 
-exist in the `data` directory of the repository, if so, those files are used when creating packages instead of the default ones.
+exist in the `data` directory of the repository, if so, those files are used when creating packages instead of the default ones from the `doc` directory.
 
 See the documentation below for more information on those files and what they do.
 
