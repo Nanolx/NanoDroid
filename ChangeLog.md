@@ -22,8 +22,8 @@
      * as before all files are available from AFH (including archive)
          * short-links renamed from NanoMod to NanoDroid
      * additionally the latest stable and beta releases are now mirrored on Nanolx
-         * Stable Downloads [> Nanolx](https://download.nanolx.org/NanoMod/Stable)
-         * Beta Downloads [> Nanolx](https://download.nanolx.org/NanoMod/Beta)
+         * Stable Downloads [> Nanolx](https://downloads.nanolx.org/NanoDroid/Stable)
+         * Beta Downloads [> Nanolx](https://downloads.nanolx.org/NanoDroid/Beta)
   * Common Installer
      * take care of getting rid of old-named module upon installation
      * generalize function showing the NanoDroid banner
