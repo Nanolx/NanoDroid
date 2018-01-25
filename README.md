@@ -22,8 +22,8 @@ On AndroidFileHost **all** stable and beta releases are available.
 
 On Nanolx the latest stable and beta releases are available, no previous releases.
 
-* Stable Downloads [> Nanolx](https://download.nanolx.org/NanoMod/Stable)
-* Beta Downloads [> Nanolx](https://download.nanolx.org/NanoMod/Beta)
+* Stable Downloads [> Nanolx](https://downloads.nanolx.org/NanoMod/Stable)
+* Beta Downloads [> Nanolx](https://downloads.nanolx.org/NanoMod/Beta)
 
 ### Snapshots
 
