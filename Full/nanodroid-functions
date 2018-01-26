@@ -23,9 +23,9 @@ ui_print() {
 grep_prop() {
 	REGEX="${1}"
 	shift
+	FILES="${@}"
 	[ -z "${@}" ] && FILES='/system/build.prop'
-	cat "${@}" 2>/dev/null | \
-		sed -n "s/^${REGEX}=//p" | \
+	sed -n "s/^${REGEX}=//p" ${FILES} | \
 		head -n 1
 }
 
@@ -195,7 +195,6 @@ unpack_zip () {
 	ui_print " > prepare installation"
 	unzip -o "${ZIP}" -d "${INSTALLER}" || \
 		error " !! failed to prepare environment!"
-	chmod +x "${INSTALLER}/system/xbin/unzip.${BIN_ARCH}"
 }
 
 nanodroid_finalize () {
@@ -256,6 +255,8 @@ detect_arch () {
 				LIB_ARCHES="x86_64 x86 armeabi-v7a armeabi"
 				SWIPE_LIBDIR=lib64 ;;
 	esac
+
+	chmod +x "${INSTALLER}/system/xbin/unzip.${BIN_ARCH}"
 
 	case ${SDK_VERSION} in
 		19 )		GSYNC_VER=K	;;
