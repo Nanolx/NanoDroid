@@ -17,6 +17,8 @@
      * fix Google Sync Adapters installation
   * microG package
      * fix aapt not installed
+  * Common Installer
+     * fix system environment detection bugs
 * General Changes:
   * Downloads
      * as before all files are available from AFH (including archive)
