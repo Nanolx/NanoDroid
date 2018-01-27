@@ -345,12 +345,9 @@ install_addond () {
 
 	mkdir -p /data/adb/nanodroid_patcher
 
-	if [ -d /data/nanomod.patcher ]; then
-		ui_print " "
-		ui_print " Removing old NanoMod restoration setup"
-		rm -rf /data/nanomod.patcher
-		rm -f /system/addon.d/75-nanomodpatcher.sh
-	fi
+	[ -d /data/nanomod.patcher ] && rm -rf /data/nanomod.patcher
+	[ -d /data/adb/nanomod_patcher ] && rm -rf /data/nanomod_patcher
+	rm -f /system/addon.d/75-nanomodpatcher.sh
 
 	for file in core_services.jar.dex dexpatcher.dex file.arm file.x86 \
 		hook_4.1-6.0_services.jar.dex hook_7.0-8.0_services.jar.dex \
