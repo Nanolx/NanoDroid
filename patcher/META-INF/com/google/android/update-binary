@@ -306,8 +306,6 @@ install_services () {
 	done
 
 	if [ "${install_path}" = "/" ]; then
-		mount -orw,remount /system || \
-			error " !! failed to mount /system read-write"
 		backup_services_jar
 		backup_settings_ui
 	fi
@@ -346,6 +344,13 @@ install_addond () {
 	ui_print " Installing addon.d restoration setup"
 
 	mkdir -p /data/adb/nanodroid_patcher
+
+	if [ -d /data/nanomod.patcher ]; then
+		ui_print " "
+		ui_print " Removing old NanoMod restoration setup"
+		rm -rf /data/nanomod.patcher
+		rm -f /system/addon.d/75-nanomodpatcher.sh
+	fi
 
 	for file in core_services.jar.dex dexpatcher.dex file.arm file.x86 \
 		hook_4.1-6.0_services.jar.dex hook_7.0-8.0_services.jar.dex \
@@ -465,7 +470,9 @@ if [ -f /data/adb/.nanodroid-patcher ]; then
 fi
 
 if ! (is_mounted /system); then
-	mount -oro /system || error " !! failed to mount /system"
+	mount -orw /system || error " !! failed to mount /system"
+else	mount -orw,remount /system || \
+		error " !! failed to remount /system read-write"
 fi
 
 setup_patcher
