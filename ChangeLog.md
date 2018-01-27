@@ -19,6 +19,9 @@
      * fix aapt not installed
   * Common Installer
      * fix system environment detection bugs
+  * Uninstaller
+     * fix that Patcher addon.d was only removed in System Mode
+     * remove Patcher lockfile aswell
 * General Changes:
   * Downloads
      * as before all files are available from AFH (including archive)
@@ -35,6 +38,8 @@
      * update Magisk module.props for name change
      * improve Magisk module.props description
      * more simplification
+  * Patcher:
+     * remove old addon.d setups when installing new
   * Configuration Files
      * the installers will auto-rename configuration files if necessary
          * .nanomod-setup	.nanodroid-setup
@@ -43,7 +48,7 @@
      * the installers will migrate the variable names to the new ones if necessary
   * Uninstaller
      * support all installations (NanoMod <15.0, NanoMod <16.0 and NanoDroid)
-     * minor code revision
+     * code revision and simplification
 * Updates (automatic)
   * Substratum (953)
   * NewPipe (0.11.5)
