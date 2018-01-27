@@ -151,6 +151,11 @@ addond_uninstall () {
 		/system/addon.d/75-nanodroidpatcher.sh; do
 		[ -f ${addonsh} ] && rm -f ${addonsh}
 	done
+
+	for pfile in /system/.nanomod-patcher /data/adb/.nanomod-patcher \
+		/data/adb/.nanodroid-patcher; do
+		[ -f ${pfile} ] && ${pfile}
+	done
 }
 
 ui_print " "
