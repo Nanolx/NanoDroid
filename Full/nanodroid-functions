@@ -139,6 +139,9 @@ detect_mode () {
 			if [ -f /data/adb/magisk/magisk ]; then
 				MODE=MAGISK
 				MODE_TEXT=" > Mode   | Magisk            | detected"
+			elif [ -f /data/magisk/magisk.img ]; then
+				MODE=SYSTEM
+				MODE_TEXT=" > Mode   | System            | forced [ancient Magisk]"
 			else
 				MODE=SYSTEM
 				MODE_TEXT=" > Mode   | System            | detected"
@@ -151,7 +154,7 @@ detect_mode () {
 				MODE_TEXT=" > Mode   | System            | forced"
 			else
 				MODE=MAGISK
-				MODE_TEXT=" > Mode   | Magisk            | forced"
+				MODE_TEXT=" > Mode   | Magisk            | forced [device in BOOTMODE]"
 			fi
 		;;
 	esac
