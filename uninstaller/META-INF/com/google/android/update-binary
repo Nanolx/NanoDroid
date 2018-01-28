@@ -87,11 +87,6 @@ config_locations="/sdcard /external_sd /data $(dirname ${ZIP}))"
 config_files=".nanomod-setup .nanomod-apps .nanomod-overlay .nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 
 system_mode_uninstall () {
-	if ! (is_mounted /system); then
-		mount -orw /system || error " !! failed to mount /system"
-	else	mount -orw,remount /system || error " !! failed to re-mount /system read-write"
-	fi
-
 	ui_print " << uninstalling: NanoDroid (System)"
 	ui_print " << using: ${1}"
 	system_list=${1}
@@ -172,7 +167,8 @@ else	mount -orw,remount /data || error " !! failed to re-mount /data read-write"
 fi
 
 if ! (is_mounted /system); then
-	mount -oro /system || error " !! failed to mount /system"
+	mount -orw /system || error " !! failed to mount /system"
+else	mount -orw,remount /system || error " !! failed to re-mount /system read-write"
 fi
 
 ui_print " << Removing configuration files (if any)"
