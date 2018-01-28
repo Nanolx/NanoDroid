@@ -177,13 +177,27 @@ detect_mode () {
 }
 
 backup_nlpconflicts () {
-	if [ -d "/system/priv-app/com.qualcomm.location" -a "${nanodroid_microg}" -eq 1 ]; then
-		mv /system/priv-app/com.qualcomm.location /sdcard/
+	if [ "${nanodroid_microg}" -eq 1 -o "${MODID}" = "NanoDroid_microG" ]; then
+		for app in com.qualcomm.location; do
+			case ${MODE} in
+				SYSTEM )
+					if [ -d "/system/priv-app/${app}" ]; then
+						mv /system/priv-app/com.qualcomm.location /sdcard/
 
-		ui_print " "
-		ui_print " ++ Moving com.qualcomm.location to /sdcard"
-		ui_print " ++ it conflicts with microG location backends"
-		ui_print " "
+						ui_print " "
+						ui_print " ++ Moving ${app} to /sdcard"
+						ui_print " ++ it conflicts with microG location backends"
+						ui_print " "
+					fi
+				;;
+
+				MAGISK )
+					${MODPATH}/system/xbin/bash \
+						${MODPATH}/system/xbin/nanodroid-overlay \
+						--add com.qualcomm.location
+				;;
+			esac
+		done
 	fi
 }
 
@@ -402,13 +416,6 @@ magisk_install_postinst () {
 			${MODPATH}/system/xbin/nanodroid-overlay --create
 	else
 		ui_print " << without /system applications override"
-	fi
-
-	# Sorry, but com.qualcomm.location conflicts with microG
-	if [ "${nanodroid_microg}" -eq 1 ]; then
-		${MODPATH}/system/xbin/bash \
-			${MODPATH}/system/xbin/nanodroid-overlay \
-			--add com.qualcomm.location
 	fi
 
 	if [ -f ${TMPDIR}/system.prop ]; then
