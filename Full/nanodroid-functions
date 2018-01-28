@@ -143,7 +143,7 @@ detect_mode () {
 				MODE=SYSTEM
 				MODE_TEXT=" > Mode   | System            | detected"
 			else
-				error " !! Magisk 15.0+ not found an device in BOOTMODE"
+				error " !! Magisk 15.0+ not found and device in BOOTMODE"
 			fi
 		;;
 
