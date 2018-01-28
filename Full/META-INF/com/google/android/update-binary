@@ -7,10 +7,14 @@ ZIP=${3}
 ZIPDIR=$(dirname "${ZIP}")
 MODID=NanoDroid
 
-unzip -o "${ZIP}" nanodroid-functions -d "/tmp" || \
-	error " !! failed to load Common Installer"
-source "/tmp/nanodroid-functions" || \
-	error " !! failed to load Common Installer"
+mkdir /dev/tmp
+unzip -o "${ZIP}" nanodroid-functions -d "/dev/tmp"
+if [ ! -f /dev/tmp/nanodroid-functions ]; then
+	echo " !! failed to load Common Installer"
+	exit 1
+else
+	source "/dev/tmp/nanodroid-functions"
+fi
 
 detect_bootmode
 detect_outfd

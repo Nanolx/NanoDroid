@@ -9,6 +9,7 @@ VERSION=15.91.99999999
 detect_bootmode () {
 	ps | grep zygote | grep -v grep >/dev/null && BOOTMODE=true || BOOTMODE=false
 	${BOOTMODE} || ps -A 2>/dev/null | grep zygote | grep -v grep >/dev/null && BOOTMODE=true
+	${BOOTMODE} || id | grep -q 'uid=0' || BOOTMODE=true
 }
 
 ui_print() {
@@ -180,7 +181,7 @@ backup_nlpconflicts () {
 			case ${MODE} in
 				SYSTEM )
 					if [ -d "/system/priv-app/${app}" ]; then
-						mv /system/priv-app/com.qualcomm.location /sdcard/
+						mv /system/priv-app/${app} /sdcard/
 
 						ui_print " "
 						ui_print " ++ Moving ${app} to /sdcard"
@@ -190,9 +191,16 @@ backup_nlpconflicts () {
 				;;
 
 				MAGISK )
-					${MODPATH}/system/xbin/bash \
-						${MODPATH}/system/xbin/nanodroid-overlay \
-						--add com.qualcomm.location
+					if [ -d "/system/priv-app/${app}" ]; then
+						ui_print " "
+						ui_print " ++ Creating overlay for ${app}"
+						ui_print " ++ it conflicts with microG location backends"
+						ui_print " "
+
+						${MODPATH}/system/xbin/bash \
+							${MODPATH}/system/xbin/nanodroid-overlay \
+							--add ${app}
+					fi
 				;;
 			esac
 		done
@@ -213,25 +221,16 @@ unpack_zip () {
 }
 
 nanodroid_finalize () {
-	if [ "${MODE}" = "MAGISK" ]; then
-		magisk_install_finish
-	else
-		case ${MODID} in
-			NanoDroid | NanoDroid_microG )
-				backup_nlpconflicts
-			;;
-		esac
-	fi
+	case ${MODID} in
+		NanoDroid | NanoDroid_microG )
+			backup_nlpconflicts
+		;;
+	esac
 
 	nanodroid_storelogs
-
+	[ "${MODE}" = "MAGISK" ] && magisk_install_finish
 	rm -rf ${INSTALLER}
-
-	if [ "${MODE}" = "MAGISK" ]; then
-		magisk_install_cleanup
-	elif ! ${BOOTMODE}; then
-		umount /system 2>/dev/null
-	fi
+	${BOOTMODE} || umount /system 2>/dev/null
 
 	ui_print " "
 	ui_print " Thanks for using NanoDroid "
@@ -307,7 +306,7 @@ magisk_install_setup () {
 	ui_print " > setup Magisk environment"
 
 	MAGISKBIN=/data/adb/magisk
-	MOUNTPATH=${TMPDIR}/magisk_img
+	${BOOTMODE} && MOUNTPATH=${TMPDIR}/magisk_merge_img || MOUNTPATH=${TMPDIR}/magisk_img
 
 	[ -d ${MAGISKBIN} -a -f ${MAGISKBIN}/magisk -a -f ${MAGISKBIN}/util_functions.sh ] || \
 		error " !! Magisk version 15.0 or newer is required"
@@ -334,7 +333,7 @@ magisk_install_setup () {
 			# not supposed to be installed alongside
 			for dir in NanoMod NanoModmicroG NanoDroid_microG \
 				NanoModfdroid NanoDroid_FDroid; do
-				if [[ -d ${MOUNTPATH}/${dir} ]]; then
+				if [ -d ${MOUNTPATH}/${dir} ]; then
 					ui_print " !! ${dir} module detected - uninstalling!"
 					rm -rf ${MOUNTPATH}/${dir}
 				fi
@@ -343,12 +342,12 @@ magisk_install_setup () {
 
 		NanoDroid_microG )
 			# check for Full package and abort if found
-			if [[ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid ]]; then
+			if [ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid ]; then
 				error " !! ${MODID} can't be installed along side the Full package"
 			fi
 
 			# check for old-named module
-			if [[ -d ${MOUNTPATH}/NanoModmicroG ]]; then
+			if [ -d ${MOUNTPATH}/NanoModmicroG ]; then
 				ui_print " !! old version module detected - uninstalling!"
 				rm -rf ${MOUNTPATH}/NanoModmicroG
 			fi
@@ -356,12 +355,12 @@ magisk_install_setup () {
 
 		NanoDroid_FDroid )
 			# check for Full package and abort if found
-			if [[ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid ]]; then
+			if [ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid ]; then
 				error " !! ${MODID} can't be installed along side the Full package"
 			fi
 
 			# check for old-named module
-			if [[ -d ${MOUNTPATH}/NanoModfdroid ]]; then
+			if [ -d ${MOUNTPATH}/NanoModfdroid ]; then
 				ui_print " !! old version module detected - uninstalling!"
 				rm -rf ${MOUNTPATH}/NanoModfdroid
 			fi
@@ -410,7 +409,7 @@ magisk_install_postinst () {
 	if [ "${nanodroid_overlay}" -eq 1 ]; then
 		ui_print " << with /system applications override"
 
-		${MODPATH}/system/xbin/bash \
+		${MODPATH}/system/xbin/bash.bin -e \
 			${MODPATH}/system/xbin/nanodroid-overlay --create
 	else
 		ui_print " << without /system applications override"
@@ -449,10 +448,6 @@ magisk_install_finish () {
 		;;
 	esac
 
-	magisk_install_cleanup
-}
-
-magisk_install_cleanup () {
 	unmount_magisk_img
 	${BOOTMODE} || recovery_cleanup
 }

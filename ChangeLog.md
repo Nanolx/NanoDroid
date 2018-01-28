@@ -19,6 +19,11 @@
      * fix aapt not installed
   * Common Installer
      * fix system environment detection bugs
+     * improve installation mode detection
+     * fix installation through Magisk Manager
+     * fix creating system overlays when installing through Magisk Manager
+     * fixed the most A-N-C-I-E-N-T NanoDroid bug (TMANB™)
+         * fix installation through Magisk Manager does not reach end properly
   * Uninstaller
      * fix that Patcher addon.d was only removed in System Mode
      * remove Patcher lockfile aswell
@@ -32,12 +37,12 @@
   * Common Installer
      * take care of getting rid of old-named module upon installation
      * generalize function showing the NanoDroid banner
-     * minor code revision
+     * improve and revise several code segments
   * Full, microG, F-Droid packages
      * move banner displaying into Common Installer
      * update Magisk module.props for name change
      * improve Magisk module.props description
-     * more simplification
+     * further code simplification
   * Patcher:
      * remove old addon.d setups when installing new
   * Configuration Files
