@@ -1,11 +1,11 @@
 # NanoDroid
 
-Versions until 15.1 were called **NanoMod**, starting with 16.0 the're called **NanoDroid**.
+Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called **NanoDroid**.
 
 ## Current Release
 
-* Stable: 15.1.20180119
-* Beta: 16.0~beta2.20180128 [15.91]
+* Stable: 16.0.20180130
+* Beta: ---
 
 ## Downloads
 

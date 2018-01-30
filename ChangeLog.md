@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 16.0 in-dev
+## 16.0.20180130
 * Important Notes
   * this release changes the name from 'NanoMod' to 'NanoDroid'
      * the module IDs will change as follows
