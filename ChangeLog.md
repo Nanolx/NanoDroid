@@ -61,6 +61,8 @@
   * (Simple) Gallery (3.2.4)
   * Yalp Store (0.34)
   * K-9 Mail (5.403)
+* Updates (manual)
+  * Play Store (8.8.12)
 
 ## 15.1.20180119
 * Bug Fixes:
