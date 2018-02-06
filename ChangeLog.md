@@ -4,7 +4,7 @@
 
 * General Changes
   * Full, microG packages
-     * when starting GNU Bash cd into /sdcard on start
+     * when starting GNU Bash cd into /sdcard
      * export ${SHELL} set to GNU Bash when it is invoked in interactive mode
      * only clear the buffer on start when GNU Bash is invoked in interactive mode
 * Updates (automatic)
