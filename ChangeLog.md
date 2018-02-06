@@ -1,5 +1,18 @@
 # ChangeLog
 
+## 16.1 in-dev
+
+* Updates (automatic)
+  * XDA Labs (1.1.4b)
+  * (Simple) Calendar (3.2.3)
+  * F-Droid (1.1~alpha1)
+  * (Simple) Gallery (3.3.1)
+  * Déjà Vu nlpBackend (1.1.1)
+  * Termux (0.60)
+  * Yalp Store (0.35)
+  * GNU Nano (2.9.3)
+  * GNU Bash (4.4.18)
+
 ## 16.0.20180130
 * Important Notes
   * this release changes the name from 'NanoMod' to 'NanoDroid'
