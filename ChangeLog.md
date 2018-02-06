@@ -2,6 +2,9 @@
 
 ## 16.1 in-dev
 
+* General Changes
+  * Full, microG packages
+     * when starting GNU Bash cd into /sdcard on start
 * Updates (automatic)
   * XDA Labs (1.1.4b)
   * (Simple) Calendar (3.2.3)
