@@ -36,8 +36,12 @@ else
 	PS1='\[\033[01;32m\]${USER:=$(id \-un)}@${HOSTNAME:=$(hostname)}\[\033[01;34m\] \w \$\[\033[00m\] '
 fi
 
-# correct the terminal size ;
-# some OS' don't ship `resize`
+export SHELL=/system/xbin/bash.bin
+
+# empty the buffer
+clear
+
+# correct the terminal size
 resize >/dev/null
 
 cd ${HOME}

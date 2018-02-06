@@ -5,6 +5,8 @@
 * General Changes
   * Full, microG packages
      * when starting GNU Bash cd into /sdcard on start
+     * export ${SHELL} set to GNU Bash when it is invoked in interactive mode
+     * only clear the buffer on start when GNU Bash is invoked in interactive mode
 * Updates (automatic)
   * XDA Labs (1.1.4b)
   * (Simple) Calendar (3.2.3)
