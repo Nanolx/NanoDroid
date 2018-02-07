@@ -17,6 +17,7 @@ shopt -s checkwinsize
 shopt -s histappend
 
 alias su="su --shell ${SHELL}"
+alias ls="ls --color=auto"
 
 red="\[\033[01;38;5;1m\]"
 gre="\[\033[01;38;5;2m\]"
