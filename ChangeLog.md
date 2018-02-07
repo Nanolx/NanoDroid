@@ -19,6 +19,7 @@
      * nicer ${PS1} for interactive GNU Bash sessions
      * ensure GNU Bash uses our version of the less pager, even if busybox' version is installed
      * make ls use colors, if possible when in GNU Bash
+     * make grep use colors, if possible when in GNU Bash
 * Updates (automatic)
   * XDA Labs (1.1.4b)
   * (Simple) Calendar (3.2.4)
