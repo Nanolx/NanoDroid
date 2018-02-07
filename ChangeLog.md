@@ -1,12 +1,23 @@
 # ChangeLog
 
 ## 16.1 in-dev
-
+* Bug Fixes:
+  * Full, microG packages
+     * when becoming su from GNU Bash the default sh instead of GNU Bash would become the active shell
+         * this is fixed now by always passing `--shell /system/xbin/bash.bin` to su when it is invoked from with a running GNU Bash instance
+     * fix ${TMPDIR} for GNU Bash is set to a non-writable directory
+         * create ${TMPDIR} for GNU Bash if it does not exist
+         * defaults to /sdcard/.bash_tmp
+     * fix ${HISTFILE} for GNU Bash not being set, thus history functionality not working
+         * defaults to /sdcard/.bash_history
 * General Changes
   * Full, microG packages
      * when starting GNU Bash cd into /sdcard
+     * make /sdcard ${HOME} for non-root users in GNU Bash
      * export ${SHELL} set to GNU Bash when it is invoked in interactive mode
-     * only clear the buffer on start when GNU Bash is invoked in interactive mode
+     * only clear and resize the buffer on start for interactive GNU Bash sessions
+     * nicer ${PS1} for interactive GNU Bash sessions
+     * ensure GNU Bash uses our version of the less pager, even if busybox' version is installed
 * Updates (automatic)
   * XDA Labs (1.1.4b)
   * (Simple) Calendar (3.2.4)

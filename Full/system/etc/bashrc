@@ -1,47 +1,33 @@
-# /etc/bash/bashrc
-#
-# This file is sourced by all *interactive* bash shells on startup,
-# including some apparently interactive shells such as scp and rcp
-# that can't tolerate any output.  So make sure this doesn't display
-# anything or bad things will happen !
+# /system/etc/bashrc
+
+export SHELL=${BASH}
 
 export HOME=/sdcard
-export HOSTNAME=$(getprop ro.cm.device)
+export TMPDIR=${HOME}/.bash_tmp
+export HISTFILE=${HOME}/.bash_history
+
+mkdir -p ${TMPDIR}
+
 export TERM=xterm
-export TMPDIR=/data/local/tmp
-export USER=$(id -un)
-export PAGER=less
+export PAGER=less.bin
 
-# Test for an interactive shell.  There is no need to set anything
-# past this point for scp and rcp, and it's important to refrain from
-# outputting anything in those cases.
-if [[ $- != *i* ]] ; then
-	# Shell is non-interactive.  Be done now!
-	return
-fi
+[[ $- != *i* ]] && return
 
-# Bash won't get SIGWINCH if another process is in the foreground.
-# Enable checkwinsize so that bash will check the terminal size when
-# it regains control.  #65623
-# http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
 shopt -s checkwinsize
-
-# Enable history appending instead of overwriting.  #139609
 shopt -s histappend
 
-# enable colorful terminal
-if [[ ${EUID} == 0 ]] ; then
-	PS1='\[\033[01;31m\]${HOSTNAME:=$(hostname)}\[\033[01;34m\] \W \$\[\033[00m\] '
-else
-	PS1='\[\033[01;32m\]${USER:=$(id \-un)}@${HOSTNAME:=$(hostname)}\[\033[01;34m\] \w \$\[\033[00m\] '
-fi
+alias su="su --shell ${SHELL}"
 
-export SHELL=/system/xbin/bash.bin
+red="\[\033[01;38;5;1m\]"
+gre="\[\033[01;38;5;2m\]"
+blu="\[\033[01;38;5;4m\]"
+whi="\[\033[01;38;5;7m\]"
 
-# empty the buffer
-clear
+export HOSTNAME=$(hostname)
+export USER=$(whoami)
+export PS1="${whi}[ ${blu}${USER} ${whi}@ ${red}${HOSTNAME} ${whi}: ${gre}\w ${whi}] "
 
-# correct the terminal size
 resize >/dev/null
+clear
 
 cd ${HOME}
