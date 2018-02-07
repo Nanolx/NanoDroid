@@ -9,12 +9,13 @@
      * only clear the buffer on start when GNU Bash is invoked in interactive mode
 * Updates (automatic)
   * XDA Labs (1.1.4b)
-  * (Simple) Calendar (3.2.3)
-  * F-Droid (1.1~alpha1)
-  * (Simple) Gallery (3.3.1)
+  * (Simple) Calendar (3.2.4)
+  * F-Droid (1.1~alpha2)
+  * (Simple) Gallery (3.4.0)
   * Déjà Vu nlpBackend (1.1.1)
   * Termux (0.60)
   * Yalp Store (0.35)
+  * Odyssey (1.1.12)
   * GNU Nano (2.9.3)
   * GNU Bash (4.4.18)
 
