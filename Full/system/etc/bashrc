@@ -25,9 +25,8 @@ gre="\[\033[01;38;5;2m\]"
 blu="\[\033[01;38;5;4m\]"
 whi="\[\033[01;38;5;7m\]"
 
-export HOSTNAME=$(hostname)
-export USER=$(whoami)
-export PS1="${whi}[ ${blu}${USER} ${whi}@ ${red}${HOSTNAME} ${whi}: ${gre}\w ${whi}] "
+export HOSTNAME=$(getprop ro.product.device)
+export PS1="${whi}[ ${blu}\$(whoami) ${whi}@ ${red}${HOSTNAME} ${whi}: ${gre}\w ${whi}] "
 
 resize >/dev/null
 clear
