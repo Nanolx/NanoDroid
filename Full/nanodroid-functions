@@ -662,7 +662,7 @@ install_initd () {
 		set_perm_bin "${INIT_BASE}"
 
 		[ "${MODE}" = "SYSTEM" ] && \
-			for init in fstrim logscleaner sqlite external_sd; do
+			for init in fstrim logcat logscleaner sqlite external_sd; do
 				echo "/system/etc/init.d/${init}" \
 					>> /data/adb/.nanodroid-list
 			done

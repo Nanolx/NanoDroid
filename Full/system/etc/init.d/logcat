@@ -1,0 +1,7 @@
+#!/system/bin/sh
+
+CURDATE=$(date +%Y%m%d-%I.%M.%S)
+
+[[ ! -d /data/adb/logcat ]] && mkdir -p /data/adb/logcat
+
+logcat | tee -a "/data/adb/logcat/${CURDATE}"

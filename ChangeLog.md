@@ -20,6 +20,9 @@
      * ensure GNU Bash uses our version of the less pager, even if busybox' version is installed
      * make ls use colors, if possible when in GNU Bash
      * make grep use colors, if possible when in GNU Bash
+  * Full packages
+     * record logcat in /data/adb/logcat/${CURDATE}
+         * e.g.: /data/adb/logcat/20180208-07.05.18
 * Updates (automatic)
   * XDA Labs (1.1.4b)
   * (Simple) Calendar (3.2.4)
