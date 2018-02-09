@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 16.1 in-dev
+## 16.1.20180209
 * Bug Fixes:
   * Full, microG packages
      * when becoming su from GNU Bash the default sh instead of GNU Bash would become the active shell

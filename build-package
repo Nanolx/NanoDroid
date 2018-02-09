@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=16.1.99999999
+VERSION=16.1.20180209
 CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 

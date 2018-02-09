@@ -383,7 +383,7 @@ main () {
 	ui_print " "
 	ui_print "*******************************"
 	ui_print "   NanoDroid Framework Patcher   "
-	ui_print "     addon.d 16.1.99999999     "
+	ui_print "     addon.d 16.1.20180209     "
 	ui_print "       created by @Nanolx      "
 	ui_print " Utilizing DexPatcher @lanchon "
 	ui_print "*******************************"
