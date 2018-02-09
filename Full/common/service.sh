@@ -18,4 +18,4 @@ for init in fstrim logscleaner sqlite external_sd permissions; do
 		tee -a "${LOGDIR}/${init}.log.${CURDATE}" &
 done
 
-"${MODDIR}/init.d/logcat"
+"${MODDIR}/init.d/logcat" &
