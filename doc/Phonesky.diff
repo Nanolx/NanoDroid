@@ -1,49 +1,49 @@
-diff -Nupr PS_8812.orig/AndroidManifest.xml PS_8812/AndroidManifest.xml
---- PS_8812.orig/AndroidManifest.xml	2018-01-30 19:55:10.329415716 +0100
-+++ PS_8812/AndroidManifest.xml	2018-01-30 19:47:34.000000000 +0100
+diff -Nupr PS_8923.orig/AndroidManifest.xml PS_8923/AndroidManifest.xml
+--- PS_8923.orig/AndroidManifest.xml	2018-02-09 17:01:31.522155510 +0100
++++ PS_8923/AndroidManifest.xml	2018-02-09 17:03:42.514567863 +0100
 @@ -1,4 +1,5 @@
  <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" package="com.android.vending" platformBuildVersionCode="27" platformBuildVersionName="8.1.0">
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
      <uses-permission android:name="com.android.vending.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.android.vending.billing.IN_APP_NOTIFY.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-@@ -107,6 +108,7 @@
+@@ -108,6 +109,7 @@
      <permission android:name="com.google.android.finsky.permission.INSTANT_APP_STATE" android:protectionLevel="signature"/>
      <permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" android:protectionLevel="normal"/>
      <application android:backupAgent="com.android.vending.VendingBackupAgent" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher_play_store" android:killAfterRestore="false" android:label="@LEMON_transformed_from_string/app_long_name" android:name="com.google.android.finsky.application.impl.FinskyApplication" android:requiredForAllUsers="true" android:restoreAnyVersion="true" android:restoreNeedsApplication="true" android:restrictedAccountType="com.google" android:roundIcon="@mipmap/ic_round_launcher_play_store" android:supportsRtl="@bool/is_rtl_enabled">
 +        <meta-data android:name="fake-signature" android:value="@string/fake_signature"/>
+         <activity android:configChanges="orientation|screenSize" android:name="com.google.android.wallet.instrumentmanager.ui.redirect.ImPopupRedirectActivity" android:theme="@style/Theme.UiComponents.PopupRedirect"/>
          <activity android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.wallet.instrumentmanager.redirect.ImStartAndroidAppRedirectActivity" android:theme="@style/Theme.UiComponents.Translucent.NoActionBar"/>
          <activity android:exported="true" android:name="com.google.android.wallet.instrumentmanager.redirect.ImFinishAndroidAppRedirectActivity">
-             <intent-filter>
-@@ -850,4 +852,4 @@
+@@ -851,4 +853,4 @@
          <screen android:screenDensity="xxhdpi" android:screenSize="large"/>
          <screen android:screenDensity="xxhdpi" android:screenSize="xlarge"/>
      </compatible-screens>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_8812.orig/res/values/public.xml PS_8812/res/values/public.xml
---- PS_8812.orig/res/values/public.xml	2018-01-30 19:55:10.578415359 +0100
-+++ PS_8812/res/values/public.xml	2018-01-30 19:48:42.315962463 +0100
-@@ -8747,6 +8747,7 @@
-     <public type="string" name="yes" id="0x7f13079e" />
-     <public type="string" name="yes_im_in" id="0x7f13079f" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f1307a0" />
-+    <public type="string" name="fake_signature" id="0x7f1307a1" />
+diff -Nupr PS_8923.orig/res/values/public.xml PS_8923/res/values/public.xml
+--- PS_8923.orig/res/values/public.xml	2018-02-09 17:01:31.080127957 +0100
++++ PS_8923/res/values/public.xml	2018-02-09 17:02:42.446347186 +0100
+@@ -8764,6 +8764,7 @@
+     <public type="string" name="yes" id="0x7f1307a3" />
+     <public type="string" name="yes_im_in" id="0x7f1307a4" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f1307a5" />
++    <public type="string" name="fake_signature" id="0x7f1307a6" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -9626,4 +9627,4 @@
+@@ -9616,4 +9617,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f170029" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f17002a" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f17002b" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_8812.orig/res/values/strings.xml PS_8812/res/values/strings.xml
---- PS_8812.orig/res/values/strings.xml	2018-01-30 19:55:10.550415399 +0100
-+++ PS_8812/res/values/strings.xml	2018-01-30 19:47:34.357185191 +0100
-@@ -1843,4 +1843,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_8923.orig/res/values/strings.xml PS_8923/res/values/strings.xml
+--- PS_8923.orig/res/values/strings.xml	2018-02-09 17:01:31.080127957 +0100
++++ PS_8923/res/values/strings.xml	2018-02-09 17:02:58.403230562 +0100
+@@ -1845,4 +1845,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />

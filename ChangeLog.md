@@ -32,6 +32,8 @@
   * Termux (0.60)
   * Yalp Store (0.35)
   * Odyssey (1.1.12)
+* Updates (manual)
+  * PLay Store (8.9.23)
   * GNU Nano (2.9.3)
   * GNU Bash (4.4.18)
 
