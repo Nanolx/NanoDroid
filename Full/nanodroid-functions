@@ -433,8 +433,11 @@ magisk_install_finish () {
 	# Magisk Module files
 	mktouch ${MODPATH}/auto_mount
 	cp -af ${INSTALLER}/module.prop ${MODPATH}/module.prop
-	cp -af ${INSTALLER}/common/service.sh ${MODPATH}/service.sh
-	chmod +x ${MODPATH}/service.sh
+
+	if [[ -f ${INSTALLER}/common/service.sh ]]; then
+		cp -af ${INSTALLER}/common/service.sh ${MODPATH}/service.sh
+		chmod +x ${MODPATH}/service.sh
+	fi
 
 	if ${BOOTMODE}; then
 		# Update info for Magisk Manager
