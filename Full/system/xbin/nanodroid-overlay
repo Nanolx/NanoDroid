@@ -1,23 +1,9 @@
 #!@MODPATH@/system/xbin/bash
 
-if [[ $(whoami) != "root" ]]; then
-	echo "not running as root, exiting"
-	exit 1
-fi
-
 export NO_MAGISK=0
 export NO_CONFIG=0
 export MODPATH=@MODPATH@
 export PATH="${PATH}:${MODPATH}/system/bin"
-
-if [[ -d /dev/tmp/magisk_img/$(basename ${MODPATH}) ]]; then
-	OVERLAY_PATH=/dev/tmp/magisk_img/$(basename ${MODPATH})
-elif [[ -d /dev/tmp/magisk_merge_img/$(basename ${MODPATH}) ]]; then
-	OVERLAY_PATH=/dev/tmp/magisk_merge_img/$(basename ${MODPATH})
-else
-	OVERLAY_PATH=${MODPATH}
-	[[ "${MODPATH}" != "/sbin/.core/"* ]] && NO_MAGISK=1
-fi
 
 # Permissions
 perm_fake="android.permission.FAKE_PACKAGE_SIGNATURE"
@@ -32,6 +18,29 @@ microG="com.google.android.gms"
 PlayStore="com.android.vending"
 GCalSync="com.google.android.syncadapters.calendar"
 GConSync="com.google.android.syncadapters.contacts"
+
+# APK Links
+nlx="https://www.nanolx.org/apk"
+nlx_fakestore="${nlx}/FakeStore.apk"
+nlx_mpv="${nlx}/MPV.apk"
+nlx_openlauncher="${nlx}/OpenLauncher.apk"
+nlx_playstore="${nlx}/Phonesky.apk"
+
+if [[ -d /dev/tmp/magisk_img/$(basename ${MODPATH}) ]]; then
+	OVERLAY_PATH=/dev/tmp/magisk_img/$(basename ${MODPATH})
+elif [[ -d /dev/tmp/magisk_merge_img/$(basename ${MODPATH}) ]]; then
+	OVERLAY_PATH=/dev/tmp/magisk_merge_img/$(basename ${MODPATH})
+else
+	OVERLAY_PATH=${MODPATH}
+	[[ "${MODPATH}" != "/sbin/.core/"* ]] && NO_MAGISK=1
+fi
+
+error () {
+	echo "!! ${@}"
+	exit 1
+}
+
+[[ $(whoami) != "root" ]] && error "not running as root"
 
 get_config () {
 	config=""
@@ -272,6 +281,41 @@ read_clipboard () {
 	cmd appops set ${1} READ_CLIPBOARD ignore
 }
 
+update_apks () {
+	if $(which wget >/dev/null); then
+		APK_DIR=/sdcard/nanodroid_apks
+		mkdir -p ${APK_DIR}
+
+		if [[ -f /system/priv-app/FakeStore/FakeStore.apk ]]; then
+			echo -e "\nUpdating: Fake Store"
+			rm -f ${APK_DIR}/FakeStore.apk
+			wget ${nlx_fakestore} -O ${APK_DIR}/FakeStore.apk || \
+				error "failed to download Fake Store"
+			pm install -r ${APK_DIR}/FakeStore.apk || \
+				error "failed to install Fake Store"
+		fi
+
+		if [[ -f /system/priv-app/Phonesky/Phonesky.apk ]]; then
+			echo -e "\nUpdating: Play Store"
+			wget ${nlx_playstore} -O ${APK_DIR}/Phonesky.apk || \
+				error "failed to download Play Store"
+			pm install -r ${APK_DIR}/Phonesky.apk || \
+				error "failed to install Play Store"
+		fi
+
+		for apk in ${nlx_mpv} ${nlx_openlauncher}; do
+			echo -e "\nUpdating $(basename ${apk} .apk)"
+			rm -f ${APK_DIR}/$(basename ${apk})
+			wget ${apk} -O ${APK_DIR}/$(basename ${apk}) || \
+				error "failed to download $(basename ${apk} .apk)"
+			pm install -r ${APK_DIR}/$(basename ${apk}) || \
+				error "failed to install $(basename ${apk} .apk)"
+		done
+	else
+		error "wget is not installed, install Busybox"
+	fi
+}
+
 # check for configuration files
 config_locations="/sdcard /external_sd @ZIPDIR@ /data /dev/tmp/install"
 get_config .nanodroid-overlay
@@ -390,6 +434,10 @@ case ${1} in
 		read_clipboard "${2}"
 	;;
 
+	-U | --update-apks )
+		update_apks
+	;;
+
 	* )
 		echo "nanodroid-overlay helper script
 
@@ -413,6 +461,7 @@ Options:
 -F | --audio-focus			prevent an app from stealing audio focus
 -b | --boot-count			read boot counts (Android 7+)
 -B | --read-clipboard			prevent an app from reading the clipboard
+-U | --update-apks			update NanoDroid custom apks
 -h | --help				this message"
 	;;
 esac
@@ -455,6 +504,10 @@ case ${1} in
 		read_clipboard "${2}"
 	;;
 
+	-U | --update-apks )
+		update_apks
+	;;
+
 	* )
 		echo "nanodroid-overlay helper script
 
@@ -468,6 +521,7 @@ Options:
 -F | --audio-focus		prevent an app from stealing audio focus
 -b | --boot-count		read boot counts (Android 7+)
 -B | --read-clipboard		prevent an app from reading the clipboard
+-U | --update-apks		update NanoDroid custom apks
 -h | --help			this message"
 	;;
 esac
