@@ -126,3 +126,14 @@ many apps have the permission to read the clipboard for no reason, with this you
 `-b`, `--boot-count`
 
 show how often the device was booted; requires Anroid 7.0 or newer
+
+### Update custom APKs
+
+`-U`, `--update-apks`
+
+update custom NanoDroid apks:
+
+* Fake Store
+* Play Store
+* MPV
+* OpenLauncher

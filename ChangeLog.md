@@ -1,5 +1,17 @@
 # ChangeLog
 
+## 16.2 in-dev
+
+* General Changes:
+  * nanodroid-overlay Script
+     * add `-U`, `--update-apks` switch to nanodroid-overlay script, downloads and installs latest versions of custom NanoDroid apks, requires Busybox to be installed (for wget applet)
+         * Fake Store
+         * Play Store
+         * MPV
+         * OpenLauncher
+* Updates (manual)
+  * Play Store (8.9.24)
+
 ## 16.1.20180209
 * Bug Fixes:
   * Full, microG packages
