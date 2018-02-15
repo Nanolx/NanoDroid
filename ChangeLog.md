@@ -3,6 +3,8 @@
 ## 16.2 in-dev
 
 * General Changes:
+  * Full, microG, F-Droid packages
+     * use Magisk's mount code to support of devices with A/B partion scheme
   * nanodroid-overlay Script
      * add `-U`, `--update-apks` switch to nanodroid-overlay script, downloads and installs latest versions of custom NanoDroid apks, requires Busybox to be installed (for wget applet)
          * Fake Store
@@ -11,6 +13,7 @@
          * OpenLauncher
 * Updates (manual)
   * Play Store (8.9.24)
+  * Kernel Adiutor (0.9.74.3)
 
 ## 16.1.20180209
 * Bug Fixes:

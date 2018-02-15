@@ -21,7 +21,7 @@ detect_outfd
 
 show_banner
 
-check_system
+mount_all_partitions
 unpack_zip
 detect_arch
 
