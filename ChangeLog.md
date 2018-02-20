@@ -2,6 +2,9 @@
 
 ## 16.2 in-dev
 
+* Bug Fixes
+  * Full, microG, F-Droid packages
+     * fix storing recovery.log in /data/adb/ after installation
 * General Changes:
   * Full, microG, F-Droid packages
      * use Magisk's mount code to support of devices with A/B partion scheme
