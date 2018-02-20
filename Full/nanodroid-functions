@@ -263,9 +263,15 @@ nanodroid_finalize () {
 		;;
 	esac
 
-	nanodroid_storelogs
 	[ "${MODE}" = "MAGISK" ] && magisk_install_finish
 	rm -rf ${INSTALLER}
+
+	ui_print " "
+	ui_print " Thanks for using NanoDroid "
+	ui_print " "
+
+	sync
+	nanodroid_storelogs
 
 	if ! ${BOOTMODE} ; then
 		umount -l /system_root 2>/dev/null
@@ -273,10 +279,6 @@ nanodroid_finalize () {
 		umount -l /vendor 2>/dev/null
 		umount -l /dev/random 2>/dev/null
 	fi
-
-	ui_print " "
-	ui_print " Thanks for using NanoDroid "
-	ui_print " "
 }
 
 ##########################################################################################
@@ -914,7 +916,6 @@ nanodroid_substitute () {
 }
 
 nanodroid_storelogs () {
-	${BOOTMODE} || cp /tmp/recovery.log /data/adb/.recovery_${MODID}
 
 	echo "\
 ### VALUES ###
@@ -950,6 +951,7 @@ echo "
 
 cat "${cfg_overlay}" >> /data/adb/.nanodroid_${MODID}
 
+${BOOTMODE} || cp /tmp/recovery.log /data/adb/.recovery_${MODID}
 }
 
 ##########################################################################################
