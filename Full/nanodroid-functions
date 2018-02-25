@@ -127,7 +127,7 @@ error () {
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
-mount_all_partitions () {
+mount_partitions () {
 	SLOT=$(getprop ro.boot.slot_suffix)
 	if [ -z ${SLOT} ]; then
 		SLOT=$(getprop ro.boot.slot)
@@ -138,31 +138,14 @@ mount_all_partitions () {
 
 	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
 
-	is_mounted /system || [ -f /system/build.prop ] || mount -o ro /system 2>/dev/null
+	[ ! -f /system/build.prop ] && mount -o ro /system 2>/dev/null
 
-	if ! is_mounted /system && ! [ -f /system/build.prop ]; then
+	if [ ! -f /system/build.prop ]; then
 		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
 		mount -t ext4 -o ro $SYSTEMBLOCK /system
 	fi
 
-	is_mounted /system || [ -f /system/build.prop ] || error "failed to mount /system"
-
-	cat /proc/mounts | grep -E '/dev/root|/system_root' >/dev/null && SKIP_INITRAMFS=true || SKIP_INITRAMFS=false
-	if [ -f /system/init.rc ]; then
-		SKIP_INITRAMFS=true
-		mkdir /system_root 2>/dev/null
-		mount --move /system /system_root
-		mount -o bind /system_root/system /system
-	fi
-
-	if [ -L /system/vendor ]; then
-		is_mounted /vendor || mount -o ro /vendor 2>/dev/null
-			if ! is_mounted /vendor; then
-			VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
-			mount -t ext4 -o ro ${VENDORLOCK} /vendor
-		fi
-		is_mounted /vendor || error "failed to mount /vendor"
-	fi
+	[ ! -f /system/build.prop ] && error "failed to mount /system"
 }
 
 detect_mode () {
@@ -200,13 +183,8 @@ detect_mode () {
 			;;
 		esac
 	else
-		if is_mounted /system_root; then
-			mount -orw,remount /system_root 2>/dev/null || \
+		mount -orw,remount /system 2>/dev/null || \
 				error " !! failed to re-mount /system read-write"
-		else
-			mount -orw,remount /system 2>/dev/null || \
-				error " !! failed to re-mount /system read-write"
-		fi
 		unset MODPATH
 	fi
 }

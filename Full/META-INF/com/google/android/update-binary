@@ -7,6 +7,8 @@ ZIP=${3}
 ZIPDIR=$(dirname "${ZIP}")
 MODID=NanoDroid
 
+umount /system
+
 mkdir /dev/tmp
 unzip -o "${ZIP}" nanodroid-functions -d "/dev/tmp"
 if [ ! -f /dev/tmp/nanodroid-functions ]; then
@@ -21,7 +23,7 @@ detect_outfd
 
 show_banner
 
-mount_all_partitions
+mount_partitions
 unpack_zip
 detect_arch
 
