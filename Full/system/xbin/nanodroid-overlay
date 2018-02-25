@@ -286,7 +286,7 @@ update_apks () {
 		APK_DIR=/sdcard/nanodroid_apks
 		mkdir -p ${APK_DIR}
 
-		if [[ -f /system/priv-app/FakeStore/FakeStore.apk ]]; then
+		if [[ -f ${MODPATH}/system/priv-app/FakeStore/FakeStore.apk ]]; then
 			echo -e "\nUpdating: Fake Store"
 			rm -f ${APK_DIR}/FakeStore.apk
 			wget ${nlx_fakestore} -O ${APK_DIR}/FakeStore.apk || \
@@ -295,7 +295,7 @@ update_apks () {
 				error "failed to install Fake Store"
 		fi
 
-		if [[ -f /system/priv-app/Phonesky/Phonesky.apk ]]; then
+		if [[ -f ${MODPATH}/system/priv-app/Phonesky/Phonesky.apk ]]; then
 			echo -e "\nUpdating: Play Store"
 			wget ${nlx_playstore} -O ${APK_DIR}/Phonesky.apk || \
 				error "failed to download Play Store"
@@ -303,14 +303,23 @@ update_apks () {
 				error "failed to install Play Store"
 		fi
 
-		for apk in ${nlx_mpv} ${nlx_openlauncher}; do
-			echo -e "\nUpdating $(basename ${apk} .apk)"
-			rm -f ${APK_DIR}/$(basename ${apk})
-			wget ${apk} -O ${APK_DIR}/$(basename ${apk}) || \
-				error "failed to download $(basename ${apk} .apk)"
-			pm install -r ${APK_DIR}/$(basename ${apk}) || \
-				error "failed to install $(basename ${apk} .apk)"
-		done
+		if [[ -f ${MODPATH}/system/app/MPV/MPV.apk ]]; then
+			echo -e "\nUpdating: MPV"
+			rm -f ${APK_DIR}/MPV.apk
+			wget ${nlx_mpv} -O ${APK_DIR}/MPV.apk || \
+				error "failed to download MPV"
+			pm install -r ${APK_DIR}/MPV.apk || \
+				error "failed to install MPV"
+		fi
+
+		if [[ -f ${MODPATH}/system/app/OpenLauncher/OpenLauncher.apk ]]; then
+			echo -e "\nUpdating: OpenLauncher"
+			rm -f ${APK_DIR}/OpenLauncher.apk
+			wget ${nlx_fakestore} -O ${APK_DIR}/OpenLauncher.apk || \
+				error "failed to download OpenLauncher"
+			pm install -r ${APK_DIR}/OpenLauncher.apk || \
+				error "failed to install OpenLauncher"
+		fi
 	else
 		error "wget is not installed, install Busybox"
 	fi
