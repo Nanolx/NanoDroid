@@ -131,7 +131,7 @@ mount_partitions () {
 	SLOT=$(getprop ro.boot.slot_suffix)
 	if [ -z ${SLOT} ]; then
 		SLOT=$(getprop ro.boot.slot)
-		[ ${SLOT} = "_" ] && SLOT=
+		[ "${SLOT}" = "_" ] && SLOT=
 	fi
 
 	is_mounted /data || mount /data 2>/dev/null

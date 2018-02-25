@@ -7,7 +7,7 @@ ZIP=${3}
 ZIPDIR=$(dirname "${ZIP}")
 MODID=NanoDroid
 
-umount /system
+umount /system &>/dev/null
 
 mkdir /dev/tmp
 unzip -o "${ZIP}" nanodroid-functions -d "/dev/tmp"
