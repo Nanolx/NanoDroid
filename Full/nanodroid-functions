@@ -496,15 +496,9 @@ install_microg () {
 			    ui_print " << with microG [Déjà Vu, Ichnaea, Nominatim]" ;;
 		esac
 
-		for app in ${NLPBACKEND} nlpBackendNominatim GmsCore GsfProxy; do
+		for app in ${NLPBACKEND} nlpBackendNominatim GmsCore GsfProxy DroidGuard; do
 			nanodroid_install_apk ${app}
 		done
-
-		# DroidGuard Helper as user app
-		mkdir -p /data/app/org.microg.gms.droidguard/
-		cp ${INSTALLER}/system/priv-app/DroidGuard/DroidGuard.apk \
-			/data/app/org.microg.gms.droidguard/base.apk
-		set_perm_data -r /data/app/org.microg.gms.droidguard/
 
 		nanodroid_install_file etc/permissions/features.xml
 		nanodroid_install_file etc/default-permissions/microg-permissions.xml

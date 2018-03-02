@@ -13,6 +13,9 @@
          * updated Credits section in README
          * extended by FAKE_SIGNATURE permission for microG Gms Core and Play Store
          * removed NewPipe from microG permissions file
+     * install DroidGuard Helper as system app
+         * fixes SafetyNet attesting CTS-Profile on several devices
+         * in Magisk Mode Droid Guard Helper crashes as system app, thus it will be re-installed as user app upon first boot
   * Full package
      * logcat init script removes all logcats older than 7 days upon reboot to prevent pollution
   * nanodroid-overlay Script

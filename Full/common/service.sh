@@ -18,4 +18,8 @@ for init in fstrim logscleaner sqlite external_sd permissions; do
 		tee -a "${LOGDIR}/${init}.log.${CURDATE}" &
 done
 
+# in Magisk Mode microG DroidGuard Helper needs to be installed as user app
+sleep 30 && pm list packages -f | grep -q /data.*org.microg.gms.droidguard || \
+	pm install -r "${MODDIR}/system/priv-app/DroidGuard/DroidGuard.apk" &
+
 "${MODDIR}/init.d/logcat" &
