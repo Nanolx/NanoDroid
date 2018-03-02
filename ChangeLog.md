@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 16.2 in-dev
+## 16.2.20180302
 
 * Bug Fixes
   * Full, microG, F-Droid packages
