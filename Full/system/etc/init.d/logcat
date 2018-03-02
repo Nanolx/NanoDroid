@@ -4,4 +4,7 @@ CURDATE=$(date +%Y%m%d-%I.%M.%S)
 
 [[ ! -d /data/adb/logcat ]] && mkdir -p /data/adb/logcat
 
+# remove files older than a week to prevent pollution
+find /data/adb/logcat/ -mtime +8 -exec rm -f {} \;
+
 logcat | tee -a "/data/adb/logcat/${CURDATE}"

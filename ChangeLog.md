@@ -13,7 +13,8 @@
          * updated Credits section in README
          * extended by FAKE_SIGNATURE permission for microG Gms Core and Play Store
          * removed NewPipe from microG permissions file
-  * Full, microG packages
+  * Full package
+     * logcat init script removes all logcats older than 7 days upon reboot to prevent pollution
   * nanodroid-overlay Script
      * add `-U`, `--update-apks` switch to nanodroid-overlay script, downloads and installs latest versions of custom NanoDroid apks, requires Busybox to be installed (for wget applet)
          * Fake Store
