@@ -303,14 +303,14 @@ update_apks () {
 				error "failed to install Play Store"
 		fi
 
-		if [[ -f ${MODPATH}/system/app/MPV/MPV.apk ]]; then
-			echo -e "\nUpdating: MPV"
-			rm -f ${APK_DIR}/MPV.apk
-			wget ${nlx_mpv} -O ${APK_DIR}/MPV.apk || \
-				error "failed to download MPV"
-			pm install -r ${APK_DIR}/MPV.apk || \
-				error "failed to install MPV"
-		fi
+		#if [[ -f ${MODPATH}/system/app/MPV/MPV.apk ]]; then
+		#	echo -e "\nUpdating: MPV"
+		#	rm -f ${APK_DIR}/MPV.apk
+		#	wget ${nlx_mpv} -O ${APK_DIR}/MPV.apk || \
+		#		error "failed to download MPV"
+		#	pm install -r ${APK_DIR}/MPV.apk || \
+		#		error "failed to install MPV"
+		#fi
 
 		if [[ -f ${MODPATH}/system/app/OpenLauncher/OpenLauncher.apk ]]; then
 			echo -e "\nUpdating: OpenLauncher"
