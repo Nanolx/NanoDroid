@@ -7,20 +7,24 @@
      * fix storing recovery.log in /data/adb/ after installation
 * General Changes:
   * Full, microG, F-Droid packages
-     * use Magisk's mount code to support of devices with A/B partion scheme
+     * use modified Magisk mount code to support of devices with A/B partion scheme
+  * Full, microG packages
   * nanodroid-overlay Script
      * add `-U`, `--update-apks` switch to nanodroid-overlay script, downloads and installs latest versions of custom NanoDroid apks, requires Busybox to be installed (for wget applet)
          * Fake Store
          * Play Store
-         * MPV
          * OpenLauncher
 * Updates (automatic)
   * KeePassDroid (2.2.1)
   * F-Droid (1.1-alpha3)
   * Odyssey (1.1.13)
   * (Simple) Calendar (3.3.0)
-  * (Simple) Gallery (3.4.1)
+  * (Simple) Gallery (3.5.2)
   * Kernel Adiutor (0.9.74.3)
+  * K-9 Mail (5.501)
+  * OpenKeychain (4.9)
+  * MPV (20180222)
+     * switch from custom to official build
 * Updates (manual)
   * Play Store (9.0.15)
 

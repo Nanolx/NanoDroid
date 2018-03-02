@@ -62,7 +62,6 @@ the `build-package` script does not download/update the following applications:
 
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
 * Fake Store (reason: built with CHECK_LICENSE permission)
-* MPV (reason: last F-Droid build outdated)
 * OpenLauncher (reason: last F-Droid build outdated)
 
 those are still included in the repo itself. Also `build-package` looks if the configuration files
