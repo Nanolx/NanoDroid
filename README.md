@@ -396,6 +396,8 @@ Additional credits go to
 * topjohnwu for Magisk
 * Lanchon for dexpatcher and haystack
 * osm0sis for GNU Nano build
+* shadow53 for automatic apk grabbing base code
+* ale5000 for microG system permission files
 
 Special Thanks to the beta testers
 

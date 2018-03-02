@@ -505,6 +505,14 @@ install_microg () {
 		cp ${INSTALLER}/system/priv-app/DroidGuard/DroidGuard.apk \
 			/data/app/org.microg.gms.droidguard/base.apk
 		set_perm_data -r /data/app/org.microg.gms.droidguard/
+
+		nanodroid_install_file etc/permissions/features.xml
+		nanodroid_install_file etc/default-permissions/microg-permissions.xml
+		nanodroid_install_file etc/sysconfig/microg-a5k.xml
+
+		if ! grep -q 'com.google.android.gms' /data/system/users/*/runtime-permissions.xml; then
+			rm /data/system/users/*/runtime-permissions.xml
+		fi
 	else	ui_print " << without microG"
 	fi
 }
@@ -513,7 +521,7 @@ install_mapsv1 () {
 	# install mapsv1 if requested
 	if [ "${nanodroid_mapsv1}" -eq 1 ]; then
 		ui_print " << with Maps API version 1"
-		nanodroid_install_dir etc/permissions
+		nanodroid_install_file etc/permissions/com.google.android.maps.xml
 		nanodroid_install_dir framework
 	else	ui_print " << without Maps API version 1"
 	fi

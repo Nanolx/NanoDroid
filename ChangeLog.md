@@ -9,6 +9,11 @@
   * Full, microG, F-Droid packages
      * use modified Magisk mount code to support of devices with A/B partion scheme
   * Full, microG packages
+     * install microG permission settings file by ale5000
+         * updated Credits section in README
+         * extended by FAKE_SIGNATURE permission for microG Gms Core and Play Store
+         * removed NewPipe from microG permissions file
+  * Full, microG packages
   * nanodroid-overlay Script
      * add `-U`, `--update-apks` switch to nanodroid-overlay script, downloads and installs latest versions of custom NanoDroid apks, requires Busybox to be installed (for wget applet)
          * Fake Store
