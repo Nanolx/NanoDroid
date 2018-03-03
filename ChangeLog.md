@@ -4,6 +4,7 @@
 
 * Updates (manual)
   * GNU Bash (4.4.19)
+  * Play Store (9.1.23)
 
 ## 16.2.20180302
 
