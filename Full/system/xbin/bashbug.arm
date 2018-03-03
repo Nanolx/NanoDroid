@@ -27,13 +27,13 @@
 #	these variables are filled in by the make target in Makefile
 #
 MACHINE="arm"
-OS="linux-androideabi"
-CC="arm-linux-androideabi-gcc"
-CFLAGS=" -DPROGRAM='bash' -DCONF_HOSTTYPE='arm' -DCONF_OSTYPE='linux-androideabi' -DCONF_MACHTYPE='arm-unknown-linux-androideabi' -DCONF_VENDOR='unknown' -DLOCALEDIR='/usr/local/share/locale' -DPACKAGE='bash' -DSHELL -DHAVE_CONFIG_H   -I.  -I/storage/projects/NanoMod/bash-on-android/bash-4.4 -I/storage/projects/NanoMod/bash-on-android/bash-4.4/include -I/storage/projects/NanoMod/bash-on-android/bash-4.4/lib   -g -O2 -Wno-parentheses -Wno-format-security"
+OS="linux-gnueabi"
+CC="arm-linux-gnueabi-gcc"
+CFLAGS=" -DPROGRAM='bash' -DCONF_HOSTTYPE='arm' -DCONF_OSTYPE='linux-gnueabi' -DCONF_MACHTYPE='arm-unknown-linux-gnueabi' -DCONF_VENDOR='unknown' -DLOCALEDIR='/usr/local/share/locale' -DPACKAGE='bash' -DSHELL -DHAVE_CONFIG_H   -I.  -I. -I./include -I./lib   -g -O2 -Wno-parentheses -Wno-format-security"
 RELEASE="4.4"
-PATCHLEVEL="12"
+PATCHLEVEL="19"
 RELSTATUS="release"
-MACHTYPE="arm-unknown-linux-androideabi"
+MACHTYPE="arm-unknown-linux-gnueabi"
 
 PATH=/bin:/usr/bin:/usr/local/bin:$PATH
 export PATH
@@ -117,6 +117,7 @@ alpha*|beta*|devel*|rc*)
 		esac ;;
 esac
 
+BUGBASH="${BUGBASH},bash@packages.debian.org"
 BUGADDR="${1-$BUGBASH}"
 
 if [ -z "$DEFEDITOR" ] && [ -z "$EDITOR" ]; then
