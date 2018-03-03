@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 16.3 in-dev
+
+* Updates (manual)
+  * GNU Bash (4.4.19)
+
 ## 16.2.20180302
 
 * Bug Fixes
