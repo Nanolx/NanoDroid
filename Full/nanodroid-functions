@@ -145,6 +145,12 @@ mount_partitions () {
 		mount -t ext4 -o ro $SYSTEMBLOCK /system
 	fi
 
+	if [ -f /system/init.rc ]; then
+		mkdir /system_root 2>/dev/null
+		mount --move /system /system_root
+		mount -o bind /system_root/system /system
+	fi
+
 	[ ! -f /system/build.prop ] && error "failed to mount /system"
 }
 
