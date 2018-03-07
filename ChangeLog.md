@@ -2,9 +2,14 @@
 
 ## 16.3 in-dev
 
+* Updates (automatic)
+  * AnySoftKeyboard (1.9.1117)
+  * Déjà Vu nlpBackend (1.1.3)
+  * Open KeyChain (4.9.1)
+  * XDA Labs (1.1.5.2b)
 * Updates (manual)
   * GNU Bash (4.4.19)
-  * Play Store (9.1.23)
+  * Play Store (9.1.24)
 
 ## 16.2.20180302
 
