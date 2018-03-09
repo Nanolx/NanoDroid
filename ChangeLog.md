@@ -4,7 +4,7 @@
 
 * Full, microG, F-Droid packages
   * improved A/B partition scheme support
-* Patcher
+* Patcher, Uninstaller
   * initial A/B parition scheme support
 * Updates (automatic)
   * AnySoftKeyboard (1.9.1117)
