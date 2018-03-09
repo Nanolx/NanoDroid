@@ -68,6 +68,34 @@ mount_image() {
 	fi
 }
 
+# taken from Magisk, with minor modifications for NanoDroid
+mount_partitions () {
+	SLOT=$(getprop ro.boot.slot_suffix)
+	if [ -z ${SLOT} ]; then
+		SLOT=$(getprop ro.boot.slot)
+		[ "${SLOT}" = "_" ] && SLOT=
+	fi
+
+	is_mounted /data || mount /data 2>/dev/null
+
+	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
+
+	[ ! -f /system/build.prop ] && mount -o ro /system 2>/dev/null
+
+	if [ ! -f /system/build.prop ]; then
+		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
+		mount -t ext4 -o ro $SYSTEMBLOCK /system
+	fi
+
+	if [ -f /system/init.rc ]; then
+		mkdir /system_root 2>/dev/null
+		mount --move /system /system_root
+		mount -o bind /system_root/system /system
+	fi
+
+	[ ! -f /system/build.prop ] && error "failed to mount /system"
+}
+
 error () {
 	ui_print "${@}"
 	magisk_cleanup
@@ -389,17 +417,10 @@ main () {
 	ui_print "*******************************"
 	ui_print " "
 
+	mount_partitions
+
 	[ -f /data/adb/.nanodroid-patcher ] && \
 		rm -f /data/adb/.nanodroid-patcher
-
-	if ! (is_mounted /data); then
-		mount -orw /data || error " !! failed to mount /data"
-	else	mount -orw,remount /data || error " !! failed to remount /data read-write"
-	fi
-
-	if ! (is_mounted /system); then
-		mount -oro /system || error " !! failed to mount /system"
-	fi
 
 	get_config .nanodroid-setup
 	[ "$config_exists" -eq 1 ] && source ${config}

@@ -2,6 +2,10 @@
 
 ## 16.3 in-dev
 
+* Full, microG, F-Droid packages
+  * improved A/B partition scheme support
+* Patcher
+  * initial A/B parition scheme support
 * Updates (automatic)
   * AnySoftKeyboard (1.9.1117)
   * Déjà Vu nlpBackend (1.1.3)
