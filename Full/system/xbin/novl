@@ -1,4 +1,4 @@
-#!@MODPATH@/system/xbin/bash
+#!/system/bin/sh
 
 # just call nanodroid-overlay
 nanodroid-overlay "${@}"

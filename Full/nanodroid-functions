@@ -217,9 +217,7 @@ backup_nlpconflicts () {
 						ui_print " ++ it conflicts with microG location backends"
 						ui_print " "
 
-						${MODPATH}/system/xbin/bash \
-							${MODPATH}/system/xbin/nanodroid-overlay \
-							--add ${app}
+						${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
 					fi
 				;;
 			esac
@@ -437,8 +435,7 @@ magisk_install_postinst () {
 	if [ "${nanodroid_overlay}" -eq 1 ]; then
 		ui_print " << with /system applications override"
 
-		${MODPATH}/system/xbin/bash.bin -e \
-			${MODPATH}/system/xbin/nanodroid-overlay --create
+		${MODPATH}/system/xbin/nanodroid-overlay --create
 	else
 		ui_print " << without /system applications override"
 	fi
@@ -652,11 +649,8 @@ install_novl () {
 	ui_print " << NanoDroid-Overlay Script"
 
 	nanodroid_install_file xbin/nanodroid-overlay bin
-	nanodroid_substitute xbin/nanodroid-overlay
 
 	nanodroid_install_file xbin/novl bin
-	nanodroid_substitute xbin/novl
-
 	nanodroid_install_file xbin/column.${BIN_ARCH} bin
 	nanodroid_install_file xbin/aapt.${BIN_ARCH} bin
 }

@@ -8,6 +8,8 @@
   * switch from stable to beta build for QKSMS
 * Patcher, Uninstaller
   * initial A/B parition scheme support
+* NanoDroid-Overlay Script
+  * does not (more precisly: no longer) require Bash, default Shell is enough
 * Updates (automatic)
   * AnySoftKeyboard (1.9.1117)
   * Déjà Vu nlpBackend (1.1.3)
