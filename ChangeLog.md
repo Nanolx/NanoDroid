@@ -18,6 +18,7 @@
   * F-Droid (1.1-alpha4)
   * (Simple) Gallery (3.5.3)
   * QKSMS (3.0-beta5)
+  * K-9 Mail (5.502)
 * Updates (manual)
   * GNU Bash (4.4.19)
   * Play Store (9.1.24)
