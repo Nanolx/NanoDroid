@@ -649,6 +649,7 @@ install_novl () {
 	ui_print " << NanoDroid-Overlay Script"
 
 	nanodroid_install_file xbin/nanodroid-overlay bin
+	nanodroid_substitute xbin/nanodroid-overlay
 
 	nanodroid_install_file xbin/novl bin
 	nanodroid_install_file xbin/column.${BIN_ARCH} bin
