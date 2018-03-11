@@ -61,7 +61,7 @@ update_apps () {
 	grab_apk_from_repo ${fd_OPENKEYCHAIN[@]}
 	#grab_apk_from_repo ${fd_OPENLAUNCHER[@]}
 	grab_apk_from_repo ${fd_OPENVPN[@]}
-	grab_apk_from_repo ${fd_QKSMS[@]}
+	#grab_apk_from_repo ${fd_QKSMS[@]}
 	grab_apk_from_repo ${fd_SIMPLECALENDAR[@]}
 	grab_apk_from_repo ${fd_SIMPLEGALLERY[@]}
 	grab_apk_from_repo ${fd_TERMUX[@]}
@@ -78,6 +78,7 @@ update_apps () {
 	grab_apk_from_github ${gh_KEEPASSDROID[@]}
 	grab_apk_from_github ${gh_MPV[@]}
 	grab_apk_from_github ${gh_TWIDERE[@]}
+	grab_apk_from_github ${gh_QKSMS[@]}
 
 	# APK Mirror
 	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}

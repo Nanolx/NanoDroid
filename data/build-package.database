@@ -58,6 +58,7 @@ gh_K9MAIL=(k9mail/k-9 app K9Mail)
 gh_KEEPASSDROID=(bpellin/keepassdroid app KeePassDroid)
 gh_MPV=(mpv-android/mpv-android app MPV)
 gh_TWIDERE=(TwidereProject/Twidere-Android app Twidere)
+gh_QKSMS=(moezbhatti/qksms app QKSMS)
 
 ###
 # Google Sync Adapters
