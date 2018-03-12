@@ -636,44 +636,57 @@ install_zelda () {
 }
 
 install_bash () {
-	ui_print " << GNU Bash Shell"
-	nanodroid_install_file etc/bash_logout
-	nanodroid_install_file etc/bashrc
+	if [ "${nanodroid_bash}" -eq 1 ]; then
+		ui_print " << GNU Bash Shell"
+		nanodroid_install_file etc/bash_logout
+		nanodroid_install_file etc/bashrc
 
-	nanodroid_install_file bin/bash bin
-	nanodroid_install_file bin/bash.bin.${BIN_ARCH} bin
-	nanodroid_install_file bin/bashbug.${BIN_ARCH} bin
+		nanodroid_install_file bin/bash bin
+		nanodroid_install_file bin/bash.bin.${BIN_ARCH} bin
+		nanodroid_install_file bin/bashbug.${BIN_ARCH} bin
+		nanodroid_install_file bin/less bin
+		nanodroid_install_file bin/less.bin.${BIN_ARCH} bin
+	else	ui_print " << without GNU Bash Shell"
+	fi
 }
 
 install_novl () {
-	ui_print " << NanoDroid-Overlay Script"
+	if [ "${nanodroid_overlay}" -eq 1 ]; then
+		ui_print " << NanoDroid-Overlay Script"
 
-	nanodroid_install_file bin/nanodroid-overlay bin
-	nanodroid_substitute bin/nanodroid-overlay
+		nanodroid_install_file bin/nanodroid-overlay bin
+		nanodroid_substitute bin/nanodroid-overlay
 
-	nanodroid_install_file bin/novl bin
-	nanodroid_install_file bin/column.${BIN_ARCH} bin
-	nanodroid_install_file bin/aapt.${BIN_ARCH} bin
+		nanodroid_install_file bin/novl bin
+		nanodroid_install_file bin/column.${BIN_ARCH} bin
+		nanodroid_install_file bin/aapt.${BIN_ARCH} bin
+	else	ui_print " << without NanoDroid-Overlay Script"
+	fi
 }
 
 install_nano () {
-	ui_print " << GNU Nano Terminal Editor"
-	nanodroid_install_dir etc/terminfo
+	if [ "${nanodroid_nano}" -eq 1 ]; then
+		ui_print " << GNU Nano Terminal Editor"
+		nanodroid_install_dir etc/terminfo
 
-	nanodroid_install_file bin/nano bin
-	nanodroid_install_file bin/nano.bin bin
+		nanodroid_install_file bin/nano bin
+		nanodroid_install_file bin/nano.bin bin
+	else	ui_print " << without GNU Nano Terminal Editor"
+	fi
 }
 
 install_shell_utils () {
-	ui_print " << Shell Utilities (util-linux, bsdmainutils, less)"
-	nanodroid_install_file bin/less bin
+	if [ "${nanodroid_utils}" -eq 1 ]; then
+		ui_print " << Shell Utilities"
 
-	# architecture dependend stuff
-	for binary in col colcrt colrm findfs findmnt hexdump \
-		less.bin lessecho lesskey look lsblk lscpu lsipc \
-		lslocks lsns ncal setterm unzip whereis; do
-		nanodroid_install_file bin/${binary}.${BIN_ARCH} bin
-	done
+		# architecture dependend stuff
+		for binary in col colcrt colrm findfs findmnt hexdump \
+			lessecho lesskey look lsblk lscpu lsipc \
+			lslocks lsns ncal setterm unzip whereis; do
+			nanodroid_install_file bin/${binary}.${BIN_ARCH} bin
+		done
+	else	ui_print " << without Shell Utilities"
+	fi
 }
 
 install_initd () {
@@ -997,6 +1010,9 @@ check_cfg_setup () {
 	[ -z ${nanodroid_forcesystem} ] && set_prop nanodroid_forcesystem 0
 	[ -z ${nanodroid_swipe} ] && set_prop nanodroid_swipe 0
 	[ -z ${nanodroid_nlpbackend} ] && set_prop nanodroid_nlpbackend 1
+	[ -z ${nanodroid_bash} ] && set_prop nanodroid_bash 1
+	[ -z ${nanodroid_nano} ] && set_prop nanodroid_nano 1
+	[ -z ${nanodroid_utils} ] && set_prop nanodroid_utils 1
 
 	source ${cfg_setup}
 }
