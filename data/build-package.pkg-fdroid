@@ -13,7 +13,7 @@ create_fdroid_package() {
 	zip_add "nanodroid-functions"
 	zip_add "system/app/FDroid/"
 	zip_add "system/priv-app/FDroidPrivileged/"
-	zip_add "system/xbin/unzip*"
+	zip_add "system/bin/unzip*"
 	cd "${CWD}"
 
 	cd "${CWD}/F-Droid"

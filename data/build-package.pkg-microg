@@ -21,9 +21,9 @@ create_microg_package() {
 		zip_add "system/priv-app/${app}/"
 	done
 
-	for input in "system/xbin/nanodroid-overlay" "system/xbin/novl" \
-		"system/xbin/bash*" "system/xbin/aapt*" "system/xbin/column*" \
-		"system/xbin/unzip*" "system/framework/" "gsync/" \
+	for input in "system/bin/nanodroid-overlay" "system/bin/novl" \
+		"system/bin/bash*" "system/bin/aapt*" "system/bin/column*" \
+		"system/bin/unzip*" "system/framework/" "gsync/" \
 		"system/etc/permissions/" "system/etc/sysconfig/" \
 		"system/etc/default-permissions/" "system/etc/bash*" "swipe/"; do
 		zip_add "${input}"
