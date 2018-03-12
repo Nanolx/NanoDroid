@@ -7,12 +7,13 @@
 * Full, microG packages
   * move binaries from /system/xbin to /system/bin
      * some stock ROMs no longer have /system/xbin, which will cause bootloops if Magisk creates it nonetheless
+  * also see SetupWizard changes for now more flexible Full and microG package setups
 * Full package
   * switch from stable to beta build for QKSMS
 * SetupWizard
   * change default location for configuration files from /data to /sdcard
   * new setup variables
-     * nanodroid_bash=[0|1] whether to install GNU Bash (Full, microG packages)
+     * nanodroid_bash=[0|1] whether to install GNU Bash, Less pager (Full, microG packages)
      * nanodroid_nano=[0|1] whether to install GNU Nano Editor (Full package)
      * nanodroid_utils=[0|1] whether to install Shell Utilities (Full package)
   * changed setup variables

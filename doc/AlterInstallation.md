@@ -28,6 +28,9 @@ nanodroid_gsync=0
 nanodroid_swipe=0
 nanodroid_forcesystem=0
 nanodroid_nlpbackend=1
+nanodroid_bash=1
+nanodroid_nano=1
+nanodroid_utils=1
 ```
 
 the **microG** package supports the following options
@@ -114,6 +117,18 @@ what location backend for microG to install
 * 1 = Déjà Vu location backend
 * 2 = Ichnaea (Mozilla) location backend
 * 3 = Déjà Vu and Ichnaea location backends
+
+`nanodroid_bash=[0|1]`
+
+whether to install GNU Bash Shell
+
+`nanoroid_nano=[0|1]`
+
+whether to install GNU Nano Editor
+
+`nanodroid_utils=[0|1]`
+
+whether to install Shell Utils from util-linux and bsdmainutils
 
 `nanodroid_sigspoofui=[0|1]`
 
