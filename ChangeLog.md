@@ -4,6 +4,9 @@
 
 * Full, microG, F-Droid packages
   * improved A/B partition scheme support
+* Full, microG packages
+  * move binaries from /system/xbin to /system/bin
+     * some stock ROMs no longer have /system/xbin, which will cause bootloops if Magisk creates it nonetheless
 * Full package
   * switch from stable to beta build for QKSMS
 * Patcher, Uninstaller
@@ -14,7 +17,7 @@
   * AnySoftKeyboard (1.9.1117)
   * Déjà Vu nlpBackend (1.1.3)
   * Open KeyChain (4.9.1)
-  * XDA Labs (1.1.5.3b)
+  * XDA Labs (1.1.5.4b)
   * F-Droid (1.1-alpha4)
   * (Simple) Gallery (3.5.3)
   * QKSMS (3.0-beta5)

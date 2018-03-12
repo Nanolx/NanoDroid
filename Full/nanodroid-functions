@@ -217,7 +217,7 @@ backup_nlpconflicts () {
 						ui_print " ++ it conflicts with microG location backends"
 						ui_print " "
 
-						${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
+						${MODPATH}/system/bin/nanodroid-overlay --add ${app}
 					fi
 				;;
 			esac
@@ -296,7 +296,7 @@ detect_arch () {
 				SWIPE_LIBDIR=lib64 ;;
 	esac
 
-	chmod +x "${INSTALLER}/system/xbin/unzip.${BIN_ARCH}"
+	chmod +x "${INSTALLER}/system/bin/unzip.${BIN_ARCH}"
 
 	case ${SDK_VERSION} in
 		19 )		GSYNC_VER=K	;;
@@ -424,7 +424,7 @@ magisk_install_preinst () {
 
 	rm -rf "${MODPATH}"
 
-	for dir in app etc priv-app xbin; do
+	for dir in app etc priv-app bin; do
 		mkdir -p "${MODPATH}/system/${dir}"
 	done
 
@@ -435,7 +435,7 @@ magisk_install_postinst () {
 	if [ "${nanodroid_overlay}" -eq 1 ]; then
 		ui_print " << with /system applications override"
 
-		${MODPATH}/system/xbin/nanodroid-overlay --create
+		${MODPATH}/system/bin/nanodroid-overlay --create
 	else
 		ui_print " << without /system applications override"
 	fi
@@ -640,39 +640,39 @@ install_bash () {
 	nanodroid_install_file etc/bash_logout
 	nanodroid_install_file etc/bashrc
 
-	nanodroid_install_file xbin/bash bin
-	nanodroid_install_file xbin/bash.bin.${BIN_ARCH} bin
-	nanodroid_install_file xbin/bashbug.${BIN_ARCH} bin
+	nanodroid_install_file bin/bash bin
+	nanodroid_install_file bin/bash.bin.${BIN_ARCH} bin
+	nanodroid_install_file bin/bashbug.${BIN_ARCH} bin
 }
 
 install_novl () {
 	ui_print " << NanoDroid-Overlay Script"
 
-	nanodroid_install_file xbin/nanodroid-overlay bin
-	nanodroid_substitute xbin/nanodroid-overlay
+	nanodroid_install_file bin/nanodroid-overlay bin
+	nanodroid_substitute bin/nanodroid-overlay
 
-	nanodroid_install_file xbin/novl bin
-	nanodroid_install_file xbin/column.${BIN_ARCH} bin
-	nanodroid_install_file xbin/aapt.${BIN_ARCH} bin
+	nanodroid_install_file bin/novl bin
+	nanodroid_install_file bin/column.${BIN_ARCH} bin
+	nanodroid_install_file bin/aapt.${BIN_ARCH} bin
 }
 
 install_nano () {
 	ui_print " << GNU Nano Terminal Editor"
 	nanodroid_install_dir etc/terminfo
 
-	nanodroid_install_file xbin/nano bin
-	nanodroid_install_file xbin/nano.bin bin
+	nanodroid_install_file bin/nano bin
+	nanodroid_install_file bin/nano.bin bin
 }
 
 install_shell_utils () {
 	ui_print " << Shell Utilities (util-linux, bsdmainutils, less)"
-	nanodroid_install_file xbin/less bin
+	nanodroid_install_file bin/less bin
 
 	# architecture dependend stuff
 	for binary in col colcrt colrm findfs findmnt hexdump \
 		less.bin lessecho lesskey look lsblk lscpu lsipc \
 		lslocks lsns ncal setterm unzip whereis; do
-		nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
+		nanodroid_install_file bin/${binary}.${BIN_ARCH} bin
 	done
 }
 
@@ -825,7 +825,7 @@ nanodroid_install_lib () {
 
 	unset srcdir
 
-	"${INSTALLER}/system/xbin/unzip.${BIN_ARCH}" \
+	"${INSTALLER}/system/bin/unzip.${BIN_ARCH}" \
 		-oq ${apk} "lib/*" -d "${TMP_LIBDIR}" \
 		2>/dev/null
 	unzip_return=$?
