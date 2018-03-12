@@ -48,9 +48,9 @@ selectbox(
 	"location.prop",
 
 	"Where to store configuration", "", 2, #-- Group 1. key = "selected.1"
-	"/sdcard",	"Internal Storage (wipe-safe)",		0,	#-- selected.1 = 1
+	"/sdcard",	"Internal Storage (wipe-safe)",		1,	#-- selected.1 = 1
 	"/external_sd",	"External SD Card (if any)",		0,	#-- selected.1 = 2
-	"/data",	"Data Storage (not wipe-safe) ",	1	#-- selected.1 = 3
+	"/data",	"Data Storage (not wipe-safe) ",	0	#-- selected.1 = 3
 );
 
 checkbox(
@@ -70,6 +70,9 @@ checkbox(
 	"Google Sync",	"Install Google Contacts & Calendar Sync",		0,
 	"Swipe",	"Install Swipe libraries",				0,
 	"Force System",	"Force System Mode Installation",			0,
+	"GNU Bash",	"Install GNU Bash Shell",				1,
+	"GNU Nano",	"Install GNU Nano Terminal Editor",			1,
+	"Shell Utils",	"Install Shell Utils from bsdmainutils and util-linux",	1,
 	"Sigspoof UI",	"[Patcher, SDK <25] Sigspoof UI in Developer Options",	0
 );
 
