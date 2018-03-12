@@ -11,3 +11,6 @@ nanodroid_swipe=0
 nanodroid_forcesystem=0
 nanodroid_sigspoofui=0
 nanodroid_nlpbackend=1
+nanodroid_nano=1
+nanodroid_bash=1
+nanodroid_utils=1
