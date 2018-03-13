@@ -23,8 +23,8 @@ create_microg_package() {
 
 	for input in "system/bin/nanodroid-overlay" "system/bin/novl" \
 		"system/bin/bash*" "system/bin/aapt*" "system/bin/column*" \
-		"system/bin/unzip*" "system/framework/" "gsync/" \
-		"system/etc/permissions/" "system/etc/sysconfig/" \
+		"system/bin/unzip*" "system/bin/less*" "system/framework/" \
+		"gsync/" "system/etc/permissions/" "system/etc/sysconfig/" \
 		"system/etc/default-permissions/" "system/etc/bash*" "swipe/"; do
 		zip_add "${input}"
 	done
