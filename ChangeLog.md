@@ -7,6 +7,9 @@
 * Full, microG packages
   * move binaries from /system/xbin to /system/bin
      * some stock ROMs no longer have /system/xbin, which will cause bootloops if Magisk creates it nonetheless
+  * remove conflicting GApps during installation, list by ale5000
+     * in Magisk Mode they will be pseudo-debloated
+     * in System Mode they will be moved to /sdcard/nanodroid_backup
   * also see SetupWizard changes for now more flexible Full and microG package setups
 * Full package
   * switch from stable to beta build for QKSMS
@@ -16,10 +19,6 @@
      * nanodroid_bash=[0|1] whether to install GNU Bash, Less pager (Full, microG packages)
      * nanodroid_nano=[0|1] whether to install GNU Nano Editor (Full package)
      * nanodroid_utils=[0|1] whether to install Shell Utilities (Full package)
-  * changed setup variables
-     * nanodroid_overlay=[0|1] (Full, microG packages)
-         * previously: whether to create overlays (in Magisk Mode)
-         * now: whether to install nanodroid-overlay script and whether to create overlays
 * Patcher, Uninstaller
   * initial A/B parition scheme support
 * NanoDroid-Overlay Script
