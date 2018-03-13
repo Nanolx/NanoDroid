@@ -21,6 +21,8 @@
      * nanodroid_utils=[0|1] whether to install Shell Utilities (Full package)
 * Patcher, Uninstaller
   * initial A/B parition scheme support
+* Uninstaller
+  * restore GApps backup upon uninstallation (System Mode)
 * NanoDroid-Overlay Script
   * does not (more precisly: no longer) require Bash, default Shell is enough
 * Updates (automatic)
