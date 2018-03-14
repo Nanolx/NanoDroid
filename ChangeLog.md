@@ -36,7 +36,7 @@
   * K-9 Mail (5.502)
 * Updates (manual)
   * GNU Bash (4.4.19)
-  * Play Store (9.1.24)
+  * Play Store (9.2.11)
 
 ## 16.2.20180302
 
