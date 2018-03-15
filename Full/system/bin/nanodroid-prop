@@ -1,0 +1,64 @@
+#!/system/bin/sh
+
+add_prop () {
+	[[ ! -f ${MODPATH}/system.prop ]] && \
+		touch ${MODPATH}/system.prop
+
+	resetprop ${1} ${2}
+
+	sed "/^${1}/d" -i ${MODPATH}/system.prop
+	echo "${1}=${2}" >> "${MODPATH}/system.prop"
+}
+
+remove_prop () {
+	[[ -f ${MODPATH}/system.prop ]] && \
+		sed "/^${1}/d" -i ${MODPATH}/system.prop
+}
+
+list_props () {
+	if [[ ! -f ${MODPATH}/system.prop ]]; then
+		echo "no properties added by NanoDroid"
+	else	echo "properties added by NanoDroid:"
+		cat ${MODPATH}/system.prop | column -t -s"="
+	fi
+}
+
+error () {
+	echo "!! ${@}"
+	exit 1
+}
+
+[[ $(whoami) != "root" ]] && error "not running as root"
+
+case ${1} in
+	-C | --cast )
+		add_prop persist.debug.wfd.enable 1
+	;;
+
+	-A | --add-prop )
+		if [ ! -z ${2} -a ! -z ${3} ]; then
+			add_prop "${2}" "${3}"
+		fi
+	;;
+
+	-R | --remove-prop )
+		if [ ! -z ${2} ]; then
+			remove_prop "${2}"
+		fi
+	;;
+
+	-L | --list-props )
+		list_props
+	;;
+
+	* )
+	echo "nanodroid-prop
+
+Utilize Magisk's resetprop (props survive NanoDroid update)
+
+-C | --cast				enable cast [fix for a few custom ROMS]
+-A | --add-prop		[prop] [value]	add system property set by NanoDroid
+-R | --remove-prop	[prop]		remove system property set by NanoDroid
+-L | --list-prop			list system properties set by NanoDroid"
+	;;
+esac
