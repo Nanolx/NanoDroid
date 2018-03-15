@@ -708,7 +708,7 @@ install_bash () {
 	fi
 }
 
-install_novl () {
+install_nanodroidscripts () {
 	ui_print " << NanoDroid Scripts"
 
 	for script in novl npem nprp nupd nutl \

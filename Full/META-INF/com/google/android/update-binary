@@ -44,7 +44,7 @@ install_initd
 install_swipe
 install_bash
 install_nano
-install_novl
+install_nanodroidscripts
 install_shell_utils
 
 nanodroid_finalize

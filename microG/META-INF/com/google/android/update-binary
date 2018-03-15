@@ -38,7 +38,7 @@ install_gsync
 install_store
 install_swipe
 install_bash
-install_novl
+install_nanodroidscripts
 
 nanodroid_finalize
 
