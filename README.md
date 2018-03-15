@@ -205,20 +205,57 @@ Misc. Script for use from PC/Notebook, while device is in TWRP.
 
 This lists features unique to NanoDroid.
 
-#### nanodroid-overlay
+#### NanoDroid-Overlay
 
-The `nanodroid-overlay` script handles the following features
+The `nanodroid-overlay` script handles the pseudo-debloat feature (Magisk-only)
 
-* pseudo-debloat (Magisk-only)
   * show the list of pseudo-debloated apps
   * add or remove apps from the list of pseudo-debloated apps
-* add system properties (Magisk-only)
-* grant signature spoofing permission to microG and Play Store if required
-  * both in Magisk and System Mode
-* issue `nanodroid-overlay --help` for the full list of options
 
-Full details on the nanodroid-overlay Script [> Details](doc/NanoDroidOverlay.md)
-Full details on the pseudo-debloat feature [> Details](doc/PseudoDebloat.md)
+Full details on the Pseudo Debloat feature [> Details](doc/PseudoDebloat.md)
+Full details on the NanoDroid-Overlay Script [> Details](doc/NanoDroidOverlay.md)
+
+#### NanoDroid-Prop
+
+The `nanodroid-prop` script utilizes Magisk's resetprop to alter system properties
+
+  * add system properties (Magisk-only)
+     * both on-the-fly and permanently
+  * properties set by this script survive NanoDroid updates
+
+Full details on the NanoDroid-Prop Script [> Details](doc/NanoDroidProp.md)
+
+#### NanoDroid-Perm
+
+The `nanodroid-perm` script grants microG and Co. required permissions, if lacking
+
+Full details on the NanoDroid-Perm Script [> Details](doc/NanoDroidPerm.md)
+
+#### NanoDroid-UPD
+
+The `nanodroid-upd` script allows to update NanoDroid's custom apks
+
+  * Play Store
+  * Fake Store
+  * OpenLauncher
+
+which can't be updated through Play/Yalp Store or F-Droid otherwise
+
+Full details on the NanoDroid-UPD Script [> Details](doc/NanoDroidUPD.md)
+
+#### NanoDroid-Util
+
+The `nanodroid-util` script contains the following features
+
+  * show boot count
+  * fix OTA update issues (like non-working navbar)
+  * handle Audio Focus permission
+     * prevent apps from stealing audio output, for example listen to Music while playing Pokémon Go
+  * handle Read Clipboard permission
+  * modify Airplane Mode settings
+     * choose which radios are on or off in Airplane mode
+
+Full details on the NanoDroid-Util Script [> Details](doc/NanoDroidUtil.md)
 
 #### init scripts
 
@@ -229,6 +266,9 @@ The following init scripts are bundled with NanoDroid
   * SD Card needs to be inserted upon boot
 * fstrim
   * trim file systems (may increase speed)
+* logcat
+  * store logcat in /data/adb
+     * logs older than 7 days are deleted on every reboot
 * logscleaner
   * clean up log files
 * sqlite
