@@ -2,15 +2,23 @@
 
 ## 16.3 in-dev
 
-* Full, microG, F-Droid packages
-  * improved A/B partition scheme support
-* Full, microG packages
-  * move binaries from /system/xbin to /system/bin
-     * some stock ROMs no longer have /system/xbin, which will cause bootloops if Magisk creates it nonetheless
-  * remove conflicting GApps during installation, list by ale5000
-     * in Magisk Mode they will be pseudo-debloated
-     * in System Mode they will be moved to /sdcard/nanodroid_backup
-  * also see SetupWizard changes for now more flexible Full and microG package setups
+### Bug Fixes
+
+* SetupWizard
+  * fix creating setup value for location backend
+
+### General Changes
+
+* Common Installer
+  * Full, microG, F-Droid packages
+     * improved A/B partition scheme support
+  * Full, microG packages
+     * move binaries from /system/xbin to /system/bin
+         * some stock ROMs no longer have /system/xbin, which will cause bootloops if Magisk creates it nonetheless
+     * remove conflicting GApps during installation, list by ale5000
+         * in Magisk Mode they will be pseudo-debloated
+         * in System Mode they will be moved to /sdcard/nanodroid_backup
+     * also see SetupWizard changes for now more flexible Full and microG package setups
 * Full package
   * switch from stable to beta build for QKSMS
 * SetupWizard
@@ -25,16 +33,19 @@
   * restore GApps backup upon uninstallation (System Mode)
 * NanoDroid-Overlay Script
   * does not (more precisly: no longer) require Bash, default Shell is enough
-* Updates (automatic)
+
+### Software Updates
+
+* Automatic
   * AnySoftKeyboard (1.9.1117)
   * Déjà Vu nlpBackend (1.1.3)
   * Open KeyChain (4.9.1)
   * XDA Labs (1.1.5.4b)
   * F-Droid (1.1-alpha4)
   * (Simple) Gallery (3.5.3)
-  * QKSMS (3.0-beta5)
+  * QKSMS (3.0-beta6)
   * K-9 Mail (5.502)
-* Updates (manual)
+* Manual
   * GNU Bash (4.4.19)
   * Play Store (9.2.11)
 
