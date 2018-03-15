@@ -9,6 +9,8 @@
 
 ### General Changes
 
+* Documentation
+  * updated
 * Common Installer
   * Full, microG, F-Droid packages
      * improved A/B partition scheme support
