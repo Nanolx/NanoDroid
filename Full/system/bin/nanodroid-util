@@ -1,0 +1,90 @@
+#!/system/bin/sh
+
+# see: https://www.xda-developers.com/broken-navigation-bar-lock-screen-ota-update/
+update_fix () {
+	settings put global device_provisioned 1 && \
+	settings put secure user_setup_complete 1
+}
+
+boot_count () {
+	settings get global boot_count
+}
+
+airplane_mode () {
+	clear
+
+	disabled_radios=""
+	toggable_radios="wifi,cell,bluetooth,nfc,wimax,"
+
+	echo "enter desired radions [first column] space separated
+
+wifi		WiFi/WLAN
+cell		cellular/mobile Network
+bluetooth	Bluetooth
+nfc		NFC
+wimax		WiMAX"
+	read -r user_input
+
+	for field in ${user_input}; do
+		case ${field} in
+			wifi | cell | bluetooth | nfc | wimax )
+				disabled_radios="${field},${disabled_radios}"
+				toggable_radios=$(echo "${toggable_radios}" | sed "s/${field},//g")
+			;;
+			* )
+				echo "${field} is unknown"
+			;;
+		esac
+	done
+
+	settings put global airplane_mode_radios ${disabled_radios}
+	settings put global airplane_mode_toggleable_radios ${toggable_radios}
+}
+
+audio_focus () {
+	cmd appops set ${1} TAKE_AUDIO_FOCUS ignore
+}
+
+read_clipboard () {
+	cmd appops set ${1} READ_CLIPBOARD ignore
+}
+
+error () {
+	echo "!! ${@}"
+	exit 1
+}
+
+[[ $(whoami) != "root" ]] && error "not running as root"
+
+case ${1} in
+	-f | --fix-update )
+		update_fix
+	;;
+
+	-P | --airplane-mode )
+		airplane_mode
+	;;
+
+	-b | --boot-count )
+		boot_count
+	;;
+
+	-F | --audio-focus )
+		audio_focus "${2}"
+	;;
+
+	-b | --read-clipboard )
+		read_clipboard "${2}"
+	;;
+
+	* )
+	echo "nanodroid-util
+
+Misc. Functions
+-f | --fix-update			fix navbar, lockscreen, statusbar after OTA update
+-P | --airplane-mode			change airplane mode settings
+-F | --audio-focus			prevent an app from stealing audio focus
+-b | --boot-count			read boot counts (Android 7+)
+-B | --read-clipboard			prevent an app from reading the clipboard"
+	;;
+esac
