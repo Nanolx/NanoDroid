@@ -1,0 +1,54 @@
+#!/system/bin/sh
+
+# Permissions
+perm_fake="android.permission.FAKE_PACKAGE_SIGNATURE"
+perm_calr="android.permission.READ_CALENDAR"
+perm_calw="android.permission.WRITE_CALENDAR"
+perm_conr="android.permission.READ_CONTACTS"
+perm_conw="android.permission.WRITE_CONTACTS"
+perm_gacc="android.permission.GET_ACCOUNTS"
+
+# Packages
+microG="com.google.android.gms"
+PlayStore="com.android.vending"
+GCalSync="com.google.android.syncadapters.calendar"
+GConSync="com.google.android.syncadapters.contacts"
+
+check_package () {
+	[[ $(grep "^${1} " /data/system/packages.list) ]] && return 0 || return 1
+}
+
+check_permission () {
+	[[ $(dumpsys package ${1} | grep -Eo "^[ ]+${2}: granted=true") ]] && return 0 || return 1
+}
+
+grant_permission () {
+	pm grant ${1} ${2} 2>/dev/null
+}
+
+permissions () {
+	if check_package ${1}; then
+		echo "package ${1} found"
+		if ! check_permission ${1} ${2}; then
+			grant_permission ${1} ${2} && \
+				echo "permission ${2} granted" || \
+				echo "failed to grant permission ${2}"
+		else	echo "already has permission ${2}"
+		fi
+	fi
+}
+
+[[ $(whoami) != "root" ]] && error "not running as root"
+
+# microG and Play Store
+permissions ${microG} ${perm_fake}
+permissions ${PlayStore} ${perm_fake}
+
+# Google Calendar Sync
+permissions ${GCalSync} ${perm_calr}
+permissions ${GCalSync} ${perm_calw}
+
+# Google Contacts Sync
+permissions ${GConSync} ${perm_conr}
+permissions ${GConSync} ${perm_conw}
+permissions ${GConSync} ${perm_gacc}
