@@ -21,18 +21,53 @@
      * also see SetupWizard changes for now more flexible Full and microG package setups
 * Full package
   * switch from stable to beta build for QKSMS
+* microG package
+  * no longer include GNU Bash
 * SetupWizard
   * change default location for configuration files from /data to /sdcard
   * new setup variables
-     * nanodroid_bash=[0|1] whether to install GNU Bash, Less pager (Full, microG packages)
+     * nanodroid_bash=[0|1] whether to install GNU Bash, Less pager (Full)
      * nanodroid_nano=[0|1] whether to install GNU Nano Editor (Full package)
      * nanodroid_utils=[0|1] whether to install Shell Utilities (Full package)
 * Patcher, Uninstaller
   * initial A/B parition scheme support
 * Uninstaller
   * restore GApps backup upon uninstallation (System Mode)
+
+### NanoDroid Scripts
+
 * NanoDroid-Overlay Script
   * does not (more precisly: no longer) require Bash, default Shell is enough
+  * split into different scripts
+
+* NanoDroid-Overlay Script
+  * now only includes overlay (= Pseudo Debloat) related functions
+  * shell name: nanodroid-overlay
+  * shell name: novl
+* NanoDroid-UPD
+  * functions to update custom NanoDroid apks
+     * PlayStore
+     * FakeStore
+     * OpenLauncher
+  * shell name: nanodroid-upd
+  * shell name: nupd
+* NanoDroid-Prop
+  * functions related to resetprop
+  * shell name: nanodroid-prop
+  * shell name: nprp
+* NanoDrod-Perm
+  * functions releated to permissions
+  * shell name: nanodroid-perm
+  * shell name: npem
+* NanoDroid-Util
+  * remaining functions
+     * OTA update fix (non-working navbar et all)
+     * Airplane Mode settings
+     * Audio Focus Permission management
+     * Display Boot Count
+     * Clipboard Reading Permission management
+  * shell name: nanodroid-util
+  * shell name: nutl
 
 ### Software Updates
 
