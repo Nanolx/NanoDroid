@@ -709,14 +709,18 @@ install_bash () {
 }
 
 install_novl () {
-	ui_print " << NanoDroid-Overlay Script"
+	ui_print " << NanoDroid Scripts"
 
-	nanodroid_install_file bin/nanodroid-overlay bin
+	for script in novl npem nprp nupd nutl \
+		nanodroid-overlay nanodroid-perm \
+		nanodroid-prop nanodroid-upd \
+		nanodroid-util column.${BIN_ARCH} \
+		aapt.${BIN_ARCH}; do
+		nanodroid_install_file bin/${script} bin
+	done
+
 	nanodroid_substitute bin/nanodroid-overlay
-
-	nanodroid_install_file bin/novl bin
-	nanodroid_install_file bin/column.${BIN_ARCH} bin
-	nanodroid_install_file bin/aapt.${BIN_ARCH} bin
+	nanodroid_substitute bin/nanodroid-prop
 }
 
 install_nano () {
