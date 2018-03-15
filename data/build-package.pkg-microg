@@ -20,15 +20,13 @@ create_microg_package() {
 	done
 
 	for input in "system/bin/nanodroid*" "system/bin/novl" \
-		"system/bin/npem" "system/bin/prp" "system/bin/nupd" \
+		"system/bin/npem" "system/bin/nprp" "system/bin/nupd" \
 		"system/bin/nutl" "system/bin/aapt*" "system/bin/column*" \
 		"system/bin/unzip*" "system/framework/" "gsync/" \
 		"system/etc/permissions/" "system/etc/sysconfig/" \
 		"system/etc/default-permissions/" "swipe/"; do
 		zip_add "${input}"
 	done
-
-	cd "${CWD}"
 
 	cd "${CWD}/microG"
 	zip_add
