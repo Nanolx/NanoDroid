@@ -5,7 +5,7 @@ Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called *
 ## Current Release
 
 * Stable: 16.2.20180302
-* Beta: ---
+* Beta: 16.3~beta1 [20180313]
 
 ## Downloads
 
@@ -61,8 +61,11 @@ The `build-package` script additionally supports the following parameters:
 the `build-package` script does not download/update the following applications:
 
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
+  * [Download Link](https://www.nanolx.org/apk/Phonesky.apk)
 * Fake Store (reason: built with CHECK_LICENSE permission)
+  * [Download Link](https://www.nanolx.org/apk/FakeStore.apk)
 * OpenLauncher (reason: last F-Droid build outdated)
+  * [Download Link](https://www.nanolx.org/apk/OpenLauncher.apk)
 
 those are still included in the repo itself. Also `build-package` looks if the configuration files
 
