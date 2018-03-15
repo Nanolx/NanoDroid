@@ -13,6 +13,8 @@ create_full_package () {
 	zip_add
 	cd "${CWD}"
 
+	zip_add CommonInstaller
+
 	zip_add_doc
 	zip_add_config .nanodroid-overlay 0
 	zip_add_config .nanodroid-setup 0

@@ -10,12 +10,12 @@ MODID=NanoDroid_microG
 umount /system &>/dev/null
 
 mkdir /dev/tmp
-unzip -o "${ZIP}" nanodroid-functions -d "/dev/tmp"
-if [ ! -f /dev/tmp/nanodroid-functions ]; then
+unzip -o "${ZIP}" CommonInstaller -d "/dev/tmp"
+if [ ! -f /dev/tmp/CommonInstaller ]; then
 	echo " !! failed to load Common Installer"
 	exit 1
 else
-	source "/dev/tmp/nanodroid-functions"
+	source "/dev/tmp/CommonInstaller"
 fi
 
 detect_bootmode

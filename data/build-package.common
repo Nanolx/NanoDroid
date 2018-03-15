@@ -68,7 +68,7 @@ increase_version_number() {
 	fi
 
 	sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/build-package"
-	sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/Full/nanodroid-functions"
+	sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/CommonInstaller"
 
 	for module in Full microG F-Droid; do
 		sed -e "s/version=.*/version=v${2}.${ver}/" -i \
