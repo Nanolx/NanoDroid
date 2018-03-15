@@ -157,6 +157,17 @@ Module packages, flashing through TWRP recommended, though flashing through Magi
 * **NanoDroid-fdroid**: includes (only)
   * F-Droid and it's privileged extension
 
+#### Installation Logfiles
+
+The recovery log and installation configuration is stored after installation, regardless with it succeeded or failed.
+
+You'll find the files in
+
+* /data/adb/.recovery_MODID
+* /data/adb/.nanodroid_MODID
+
+where MODID is either NanoDroid, NanoDroid_microG or NanoDroid_FDroid. In case of installation errors, issues or questions provide theese files in your report for easier debugging.
+
 #### Parallel Installations
 
 Since the microG and F-Droid packages are subsets of the Full NanoDroid package, they can't be installed alongside.
