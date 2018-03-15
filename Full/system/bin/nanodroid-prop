@@ -1,5 +1,17 @@
 #!/system/bin/sh
 
+export NO_MAGISK=0
+export MODPATH=@MODPATH@
+
+if [[ -d /dev/tmp/magisk_img/$(basename ${MODPATH}) ]]; then
+	OVERLAY_PATH=/dev/tmp/magisk_img/$(basename ${MODPATH})
+elif [[ -d /dev/tmp/magisk_merge_img/$(basename ${MODPATH}) ]]; then
+	OVERLAY_PATH=/dev/tmp/magisk_merge_img/$(basename ${MODPATH})
+else
+	OVERLAY_PATH=${MODPATH}
+	[[ "${MODPATH}" != "/sbin/.core/"* ]] && NO_MAGISK=1
+fi
+
 add_prop () {
 	[[ ! -f ${MODPATH}/system.prop ]] && \
 		touch ${MODPATH}/system.prop
@@ -29,6 +41,8 @@ error () {
 }
 
 [[ $(whoami) != "root" ]] && error "not running as root"
+
+if [[ ${NO_MAGISK} -eq 0 ]]; then
 
 case ${1} in
 	-C | --cast )
@@ -62,3 +76,7 @@ Utilize Magisk's resetprop (props survive NanoDroid update)
 -L | --list-prop			list system properties set by NanoDroid"
 	;;
 esac
+
+else
+	error "*** Resetprop feature is not available in System Mode! ***"
+fi
