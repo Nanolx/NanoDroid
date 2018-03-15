@@ -2,6 +2,8 @@
 
 Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called **NanoDroid**.
 
+The transistion in Magisk Mode installation between old and new module name is handled by the installer.
+
 ## Current Release
 
 * Stable: 16.2.20180302
@@ -114,6 +116,14 @@ NanoDroid includes
 * microG and it's companions
   * on-device framework-patcher for microG support (signature spoofing)
   * on-pc framework-patcher for microG support (signature spoofing)
+  * GApps are auto-removed during installation
+     * in Magisk Mode using [> Pseudo Debloat](doc/PseudoDebloat.md)
+     * in System Mode they are moved to `/sdcard/nandroid_backups`
+         * the Uninstaller will restore them (or re-flash the ROM)
+  * location packages conflicting with unified Nlp will are auto-removed during installation
+     * in Magisk Mode using [> Pseudo Debloat](doc/PseudoDebloat.md)
+     * in System Mode they are moved to `/sdcard/nandroid_backups`
+         * the Uninstaller will restore them (or re-flash the ROM)
 * F-Droid and it's privileged extension
 * modified Play Store to allow (in-)app-purchases with microG
   * this required the Play Store to be modified, see the [> patch](doc/Phonesky.diff)
@@ -139,13 +149,19 @@ Module packages, flashing through TWRP recommended, though flashing through Magi
 
 * **NanoDroid**: includes
   * everything mentioned in the Summary
-* **NanoDroid-microG**: includes
+* **NanoDroid-microG**: includes (only)
   * microG and it's companions
-  * GNU Bash
   * pseudo-debloat feature
   * app store(s)
-* **NanoDroid-fdroid**: includes
+  * GApps and location packages auto-removal
+* **NanoDroid-fdroid**: includes (only)
   * F-Droid and it's privileged extension
+
+#### Parallel Installations
+
+Since the microG and F-Droid packages are subsets of the Full NanoDroid package, they can't be installed alongside.
+
+The microG and F-Droid packages however can be installed in parallel, as they complement each other.
 
 ### Extras
 
@@ -168,12 +184,12 @@ Extra packages, always flash through TWRP.
   * **NOTE:** AROMA only works on `arm` and `arm64`, if your device is `x86` or `x86_64`, it won't work
 * **NanoDroid-uninstaller**: includes
   * uninstalls *all* NanoDroid Magisk Modules
+     * also old NanoMod Magisk Modules
   * uninstalls NanoDroid installed in System Mode
   * uninstalls NanoDroid configuration files
   * uninstalls NanoDroid-Patcher addon.d environment
-  * if `services.jar` or `Settings.apk` backups are found they get restored
-     * respectively `SecSettings.apk` or `SecSettings2.apk` on TouchWiz ROMs
-  * if `com.qualcomm.location` backup is found it gets restored
+  * restores applications auto-removed during installation
+  * restores `services.jar` or `Settings.apk` patched by NanoDroid-Patcher
 
 ### Scripts
 
