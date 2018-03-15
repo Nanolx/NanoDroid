@@ -46,6 +46,7 @@ store_prop="${aromapath}/store.prop"
 apps_prop="${aromapath}/apps.prop"
 debloat_prop="${aromapath}/debloat.prop"
 location_prop="${aromapath}/location.prop"
+nlp_prop="${aromapath}/nlp.prop"
 
 ui_print " "
 ui_print "******************************"
