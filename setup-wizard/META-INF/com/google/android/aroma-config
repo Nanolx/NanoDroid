@@ -73,6 +73,7 @@ checkbox(
 	"GNU Bash",	"Install GNU Bash Shell",				1,
 	"GNU Nano",	"Install GNU Nano Terminal Editor",			1,
 	"Shell Utils",	"Install Shell Utils from bsdmainutils and util-linux",	1,
+	"Nintendo Fonts", "Install Nintendo Fonts",				1,
 	"Sigspoof UI",	"[Patcher, SDK <25] Sigspoof UI in Developer Options",	0
 );
 

@@ -27,10 +27,11 @@
   * no longer include GNU Bash
 * SetupWizard
   * change default location for configuration files from /data to /sdcard
-  * new setup variables
-     * nanodroid_bash=[0|1] whether to install GNU Bash, Less pager (Full)
-     * nanodroid_nano=[0|1] whether to install GNU Nano Editor (Full package)
-     * nanodroid_utils=[0|1] whether to install Shell Utilities (Full package)
+  * new setup variables (Full package)
+     * nanodroid_bash=[0|1] whether to install GNU Bash, Less pager
+     * nanodroid_nano=[0|1] whether to install GNU Nano Editor
+     * nanodroid_utils=[0|1] whether to install Shell Utilities
+     * nanodroid_fonts=[0|1] whether to install NanoDroid-Fonts script and Nintendo Fonts
 * Patcher, Uninstaller
   * initial A/B parition scheme support
 * Uninstaller
@@ -71,11 +72,25 @@
   * shell name: nanodroid-util
   * shell name: nutl
 
+* NanoDroid-Font
+  * new script to change the system font (Full package only)
+  * controlled by nanodroid_fonts setup variable
+  * possible fonts:
+     * FAST
+     * NintendoLabo
+     * NintendoSwitch
+     * Splatoon2
+     * SuperMarioMaker
+     * SuperMario
+  * example: `nanodroid-font --set Splatoon2` and reboot
+  * shell name: nanodroid-font
+  * shell name: nfnt
+
 ### Software Updates
 
 * Automatic
   * AnySoftKeyboard (1.9.1117)
-  * Déjà Vu nlpBackend (1.1.3)
+  * Déjà Vu nlpBackend (1.1.4)
   * Open KeyChain (4.9.1)
   * XDA Labs (1.1.5.4b)
   * F-Droid (1.1-alpha4)
