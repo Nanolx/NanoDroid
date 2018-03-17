@@ -82,6 +82,7 @@
 
 * NanoDroid-Font
   * new script to change the system font (Full package only)
+     * Magisk Mode only
   * controlled by nanodroid_fonts setup variable
   * possible fonts:
      * FAST
@@ -91,6 +92,7 @@
      * SuperMarioMaker
      * SuperMario
   * example: `nanodroid-font --set Splatoon2` and reboot
+     * currently this is not saved during updates
   * shell name: nanodroid-font
   * shell name: nfnt
 
