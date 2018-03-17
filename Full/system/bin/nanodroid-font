@@ -1,0 +1,87 @@
+#!/system/bin/sh
+
+export NO_MAGISK=0
+export MODPATH=@MODPATH@
+
+if [[ -d /dev/tmp/magisk_img/$(basename ${MODPATH}) ]]; then
+	OVERLAY_PATH=/dev/tmp/magisk_img/$(basename ${MODPATH})
+elif [[ -d /dev/tmp/magisk_merge_img/$(basename ${MODPATH}) ]]; then
+	OVERLAY_PATH=/dev/tmp/magisk_merge_img/$(basename ${MODPATH})
+else
+	OVERLAY_PATH=${MODPATH}
+	[[ "${MODPATH}" != "/sbin/.core/"* ]] && NO_MAGISK=1
+fi
+
+FONTPATH=${MODPATH}/system/fonts
+
+FONTFILES="Roboto-BlackItalic.ttf
+Roboto-Black.ttf
+Roboto-BoldItalic.ttf
+Roboto-Bold.ttf
+RobotoCondensed-BoldItalic.ttf
+RobotoCondensed-Bold.ttf
+RobotoCondensed-Italic.ttf
+RobotoCondensed-LightItalic.ttf
+RobotoCondensed-Light.ttf
+RobotoCondensed-Regular.ttf
+Roboto-Italic.ttf
+Roboto-LightItalic.ttf
+Roboto-Light.ttf
+Roboto-MediumItalic.ttf
+Roboto-Medium.ttf
+Roboto-Regular.ttf
+Roboto-ThinItalic.ttf
+Roboto-Thin.ttf"
+
+error () {
+	echo "!! ${@}"
+	exit 1
+}
+
+[[ $(whoami) != "root" ]] && error "not running as root"
+
+if [[ ${NO_MAGISK} -eq 0 ]]; then
+
+case ${1} in
+	-s | --set )
+		if [ -f ${FONTPATH}/NanoDroid/${2}.ttf ]; then
+			echo "Setting Font ${2}"
+			for font in ${FONTNAMES}; do
+				ln -sf ${FONTPATH}/NanoDroid/${2}.ttf ${FONTPATH}/${font} || \
+					error "Failed to apply Font ${2}"
+			done
+		else
+			error "Font ${2} does not exist"
+		fi
+	;;
+
+	-r | --reset )
+		echo "Restoring original Font"
+		for font in ${FONTNAMES}; do
+			rm -f ${FONTPATH}/${font}
+		done
+	;;
+
+	* )
+		echo "nanodroid-font
+Change System font
+
+Usage: nanodroid-font [opt] [font]
+
+where [opt] can be:
+  -s, --set [font]		set Font
+  -r, --reset			restore Original Font
+
+where [font] can be:
+  FAST				FAST RMX Game Font
+  NintendoLabo			NintendoLabo Logo/Packaging Font
+  NintendoSwitch		NintendoSwitch OS Font
+  Splatoon2			Splatoon2 Game Font
+  SuperMarioMaker		Super Mario Maker Game Font
+  Super Mario			Super Mario (World) Game Font"
+	;;
+esac
+
+else
+	error "*** Resetprop feature is not available in System Mode! ***"
+fi
