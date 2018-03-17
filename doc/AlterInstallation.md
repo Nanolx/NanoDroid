@@ -31,6 +31,7 @@ nanodroid_nlpbackend=1
 nanodroid_bash=1
 nanodroid_nano=1
 nanodroid_utils=1
+nanodroid_fonts=1
 ```
 
 the **microG** package supports the following options
@@ -129,6 +130,10 @@ whether to install GNU Nano Editor
 `nanodroid_utils=[0|1]`
 
 whether to install Shell Utils from util-linux and bsdmainutils
+
+`nanodroid_fonts=[0|1]`
+
+whether to install [NanoDroid-Font](NanoDroidFont.md) script and Nintendo Fonts
 
 `nanodroid_sigspoofui=[0|1]`
 

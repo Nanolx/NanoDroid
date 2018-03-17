@@ -140,6 +140,7 @@ NanoDroid includes
   * GNU Nano terminal editor
   * several utilities from `util-linux`, `bsdmainutils` and more
 * The Legend of Zelda ringtones and sounds
+* System UI fonts from several Nintendo games
 
 ## Packages
 
@@ -283,6 +284,12 @@ The `nanodroid-util` script contains the following features
      * choose which radios are on or off in Airplane mode
 
 Full details on the NanoDroid-Util Script [> Details](doc/NanoDroidUtil.md)
+
+#### NanoDroid-Font
+
+The `nanodroid-font` script changes the Sytem UI font
+
+Full details on the NanoDroid-Font Script [> Details](doc/NanoDroidFont.md)
 
 #### init scripts
 
