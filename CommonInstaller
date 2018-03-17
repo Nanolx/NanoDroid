@@ -719,6 +719,12 @@ install_nanodroidscripts () {
 		nanodroid_install_file bin/${script} bin
 	done
 
+	if [ "${MODID}" = "NanoDroid" ]; then
+		nanodroid_install_file bin/nanodroid-font bin
+		nanodroid_substitute bin/nanodroid-font
+		nanodroid_install_file bin/nfnt bin
+	fi
+
 	nanodroid_substitute bin/nanodroid-overlay
 	nanodroid_substitute bin/nanodroid-prop
 }
