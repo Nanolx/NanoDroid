@@ -38,6 +38,7 @@ fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
 fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
 fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
+fd_KEEPASSDX=(fdroid com.kunzisoft.keepass.libre app KeePassDX)
 fd_LIGHTNING=(fdroid acr.browser.lightning app Lightning)
 fd_NEWPIPE=(fdroid org.schabi.newpipe app NewPipe)
 fd_OANDBACKUP=(fdroid dk.jens.backup app Oandbackup)
@@ -55,7 +56,6 @@ gd_ORBOT=(https://guardianproject.info/releases/orbot-latest.apk app Orbot)
 gd_ORFOX=(https://guardianproject.info/releases/Orfox-v1.4-RC-3.apk app Orfox)
 
 gh_K9MAIL=(k9mail/k-9 app K9Mail)
-gh_KEEPASSDROID=(bpellin/keepassdroid app KeePassDroid)
 gh_MPV=(mpv-android/mpv-android app MPV)
 gh_TWIDERE=(TwidereProject/Twidere-Android app Twidere)
 gh_QKSMS=(moezbhatti/qksms app QKSMS)
@@ -109,7 +109,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/FDroid/FDroid.apk
 	Full/system/app/FaceSlim/FaceSlim.apk
 	Full/system/app/K9Mail/K9Mail.apk
-	Full/system/app/KeePassDroid/KeePassDroid.apk
+	Full/system/app/KeePassDX/KeePassDX.apk
 	Full/system/app/KernelAdiutor/KernelAdiutor.apk
 	Full/system/app/Lightning/Lightning.apk
 	Full/system/app/MPV/MPV.apk

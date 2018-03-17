@@ -21,8 +21,15 @@
          * in Magisk Mode they will be pseudo-debloated
          * in System Mode they will be moved to /sdcard/nanodroid_backup
      * also see SetupWizard changes for now more flexible Full and microG package setups
+  * Full package
+     * if the user has KeePassDroid in their list of applications to install, install KeePass DX instead
 * Full package
   * switch from stable to beta build for QKSMS
+  * drop KeePassDroid
+  * include KeePass DX
+     * Material UI
+     * Fingerprint support
+     * Android Oreo Autofill support
 * microG package
   * no longer include GNU Bash
 * SetupWizard
@@ -32,6 +39,7 @@
      * nanodroid_nano=[0|1] whether to install GNU Nano Editor
      * nanodroid_utils=[0|1] whether to install Shell Utilities
      * nanodroid_fonts=[0|1] whether to install NanoDroid-Fonts script and Nintendo Fonts
+  * update for KeePassDroid > KeePass DX transistion
 * Patcher, Uninstaller
   * initial A/B parition scheme support
 * Uninstaller
@@ -97,6 +105,7 @@
   * (Simple) Gallery (3.5.3)
   * QKSMS (3.0-beta6)
   * K-9 Mail (5.502)
+  * KeePass DX (2.5.0.0.beta6)
 * Manual
   * GNU Bash (4.4.19)
   * Play Store (9.2.11)

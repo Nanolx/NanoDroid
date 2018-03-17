@@ -53,6 +53,7 @@ update_apps () {
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
 	grab_apk_from_repo ${fd_FACESLIM[@]}
+	grab_apk_from_repo ${fd_KEEPASSDX[@]}
 	grab_apk_from_repo ${fd_LIGHTNING[@]}
 	grab_apk_from_repo ${fd_NEWPIPE[@]}
 	grab_apk_from_repo ${fd_OANDBACKUP[@]}
@@ -75,7 +76,6 @@ update_apps () {
 
 	# GitHub
 	grab_apk_from_github ${gh_K9MAIL[@]}
-	grab_apk_from_github ${gh_KEEPASSDROID[@]}
 	grab_apk_from_github ${gh_MPV[@]}
 	grab_apk_from_github ${gh_TWIDERE[@]}
 	grab_apk_from_github ${gh_QKSMS[@]}

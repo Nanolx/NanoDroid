@@ -16,7 +16,7 @@ Full list of provided applications
 * (Simple) Gallery [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.gallery)
 * K-9 Mail [> F-Droid](https://f-droid.org/packages/com.fsck.k9)
 * Kernel Adiutor [> GitHub](https://github.com/Grarak/KernelAdiutor)
-* KeyPassDroid (Password Safe) [> F-Droid](https://f-droid.org/packages/com.android.keepass)
+* KeyPassDX (Password Safe) [> F-Droid](https://f-droid.org/en/packages/com.kunzisoft.keepass.libre)
 * Lightning (Browser) [> F-Droid](https://f-droid.org/packages/acr.browser.lightning)
 * MPV (Video Player) [> GitHub](https://github.com/mpv-android/mpv-android)
 * New Pipe (YouTube client) [> F-Droid](https://f-droid.org/packages/org.schabi.newpipe)
