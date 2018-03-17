@@ -711,16 +711,21 @@ install_bash () {
 install_nanodroidscripts () {
 	ui_print " << NanoDroid Scripts"
 
-	for script in novl npem nprp nupd nutl \
-		nanodroid-overlay nanodroid-perm \
-		nanodroid-prop nanodroid-upd \
+	for script in npem nupd nutl \
+		nanodroid-perm nanodroid-upd \
 		nanodroid-util column.${BIN_ARCH} \
 		aapt.${BIN_ARCH}; do
 		nanodroid_install_file bin/${script} bin
 	done
 
-	nanodroid_substitute bin/nanodroid-overlay
-	nanodroid_substitute bin/nanodroid-prop
+	if [ "${MODE}" = "${MAGISK0}" ]; then
+		for script in novl nprp nanodroid-overlay nanodroid-prop; do
+			nanodroid_install_file bin/${script} bin
+		done
+
+		nanodroid_substitute bin/nanodroid-overlay
+		nanodroid_substitute bin/nanodroid-prop
+	fi
 }
 
 install_fonts () {
