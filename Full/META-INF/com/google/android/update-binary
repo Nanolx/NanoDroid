@@ -46,6 +46,7 @@ install_bash
 install_nano
 install_nanodroidscripts
 install_shell_utils
+install_fonts
 
 nanodroid_finalize
 

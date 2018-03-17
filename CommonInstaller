@@ -719,14 +719,20 @@ install_nanodroidscripts () {
 		nanodroid_install_file bin/${script} bin
 	done
 
-	if [ "${MODID}" = "NanoDroid" ]; then
+	nanodroid_substitute bin/nanodroid-overlay
+	nanodroid_substitute bin/nanodroid-prop
+}
+
+install_fonts () {
+	if [ "${nanodroid_fonts}" -eq 1 ]; then
+		ui_print " << Nintendo Fonts"
 		nanodroid_install_file bin/nanodroid-font bin
 		nanodroid_substitute bin/nanodroid-font
 		nanodroid_install_file bin/nfnt bin
+
+		nanodroid_install_dir fonts
 	fi
 
-	nanodroid_substitute bin/nanodroid-overlay
-	nanodroid_substitute bin/nanodroid-prop
 }
 
 install_nano () {
@@ -1078,6 +1084,7 @@ check_cfg_setup () {
 	[ -z ${nanodroid_bash} ] && set_prop nanodroid_bash 1
 	[ -z ${nanodroid_nano} ] && set_prop nanodroid_nano 1
 	[ -z ${nanodroid_utils} ] && set_prop nanodroid_utils 1
+	[ -z ${nanodroid_fonts} ] && set_prop nanodroid_fonts 1
 
 	source ${cfg_setup}
 }
