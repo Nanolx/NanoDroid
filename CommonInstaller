@@ -724,7 +724,7 @@ install_nanodroidscripts () {
 }
 
 install_fonts () {
-	if [ "${nanodroid_fonts}" -eq 1 ]; then
+	if [ "${nanodroid_fonts}" -eq 1 -a "${MODE}" = "MAGISK" ]; then
 		ui_print " << Nintendo Fonts"
 		nanodroid_install_file bin/nanodroid-font bin
 		nanodroid_substitute bin/nanodroid-font
@@ -732,7 +732,6 @@ install_fonts () {
 
 		nanodroid_install_dir fonts
 	fi
-
 }
 
 install_nano () {
