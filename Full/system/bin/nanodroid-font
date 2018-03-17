@@ -46,10 +46,11 @@ case ${1} in
 	-s | --set )
 		if [ -f ${FONTPATH}/NanoDroid/${2}.ttf ]; then
 			echo "Setting Font ${2}"
-			for font in ${FONTNAMES}; do
+			for font in ${FONTFILES}; do
 				ln -sf ${FONTPATH}/NanoDroid/${2}.ttf ${FONTPATH}/${font} || \
 					error "Failed to apply Font ${2}"
 			done
+			echo "Reboot to apply Font"
 		else
 			error "Font ${2} does not exist"
 		fi
@@ -57,7 +58,7 @@ case ${1} in
 
 	-r | --reset )
 		echo "Restoring original Font"
-		for font in ${FONTNAMES}; do
+		for font in ${FONTFILES}; do
 			rm -f ${FONTPATH}/${font}
 		done
 	;;
