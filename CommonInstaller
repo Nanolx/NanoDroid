@@ -718,7 +718,7 @@ install_nanodroidscripts () {
 		nanodroid_install_file bin/${script} bin
 	done
 
-	if [ "${MODE}" = "${MAGISK0}" ]; then
+	if [ "${MODE}" = "MAGISK" ]; then
 		for script in novl nprp nanodroid-overlay nanodroid-prop; do
 			nanodroid_install_file bin/${script} bin
 		done
