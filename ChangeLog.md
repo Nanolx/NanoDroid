@@ -60,6 +60,7 @@
      * PlayStore
      * FakeStore
      * OpenLauncher
+     * MPV
   * shell name: nanodroid-upd
   * shell name: nupd
 * NanoDroid-Prop
@@ -113,6 +114,7 @@
   * GNU Bash (4.4.19)
   * Play Store (9.2.11)
   * OpenLauncher (0.5.10)
+  * MPV (20180318+merges)
 
 ## 16.2.20180302
 

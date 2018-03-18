@@ -68,6 +68,8 @@ the `build-package` script does not download/update the following applications:
   * [Download Link](https://www.nanolx.org/apk/FakeStore.apk)
 * OpenLauncher (reason: last F-Droid build outdated)
   * [Download Link](https://www.nanolx.org/apk/OpenLauncher.apk)
+* MPV (reason: inferquent updates, merge-requests included)
+  * [Download Link](https://www.nanolx.org/apk/MPV.apk)
 
 those are still included in the repo itself. Also `build-package` looks if the configuration files
 

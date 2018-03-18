@@ -39,9 +39,9 @@ case ${1} in
 		update_apk app/OpenLauncher/OpenLauncher.apk "${nlx}/OpenLauncher.apk"
 	;;
 
-	#mpv | MPV )
-	#	update_apk app/MPV/MPV.apk "${nlx}/MPV.apk"
-	#;;
+	mpv | MPV )
+		update_apk app/MPV/MPV.apk "${nlx}/MPV.apk"
+	;;
 
 	fs | fakestore )
 		update_apk priv-app/FakeStore/FakeStore.apk "${nlx}/FakeStore.apk"
@@ -57,6 +57,7 @@ short	| long apk name
 
 ps	| playstore
 ol	| openlauncher
-fs	| fakestore"
+fs	| fakestore
+mpv	| MPV"
 	;;
 esac
