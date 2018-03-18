@@ -242,6 +242,12 @@ detect_mode () {
 				error " !! failed to re-mount /system read-write"
 		unset MODPATH
 	fi
+
+	# backup fonts
+	if [[ "$(file ${MODPATH}/system/fonts/Roboto-Regular.ttf)" = *symbolic* ]]; then
+		ui_print " << backing up custom font"
+		CUSTOM_FONT="$(basename $(ls -l ${MODPATH}/system/fonts/Roboto-Regular.ttf | awk -F '->' '{print $2}') .ttf)"
+	fi
 }
 
 backup_nlpconflicts () {
@@ -455,8 +461,7 @@ magisk_install_setup () {
 magisk_install_preinst () {
 	if [ -f ${MODPATH}/system.prop ]; then
 		ui_print " << backing up module's system.prop"
-		cp ${MODPATH}/system.prop \
-			${TMPDIR}/system.prop
+		cp ${MODPATH}/system.prop ${TMPDIR}/system.prop
 	fi
 
 	if [ -f ${MODPATH}/system/framework/services.jar ]; then
@@ -533,6 +538,11 @@ magisk_install_finish () {
 			magisk_install_postinst
 		;;
 	esac
+
+	if [ ! -z ${CUSTOM_FONT} ]; then
+		ui_print " << Restoring custom font"
+		${MODPATH}/system/bin/nanodroid-font -s "${CUSTOM_FONT}"
+	fi
 
 	unmount_magisk_img
 	${BOOTMODE} || recovery_cleanup
@@ -729,7 +739,7 @@ install_nanodroidscripts () {
 }
 
 install_fonts () {
-	if [ "${nanodroid_fonts}" -eq 1 -a "${MODE}" = "MAGISK" ]; then
+	if [ "${nanodroid_fonts}" -eq 1 ]; then
 		ui_print " << Nintendo Fonts"
 		nanodroid_install_file bin/nanodroid-font bin
 		nanodroid_substitute bin/nanodroid-font

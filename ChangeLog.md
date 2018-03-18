@@ -96,7 +96,6 @@
      * SuperMarioMaker
      * SuperMario
   * example: `nanodroid-font --set Splatoon2` and reboot
-     * currently this is not saved during updates
   * shell name: nanodroid-font
   * shell name: nfnt
 

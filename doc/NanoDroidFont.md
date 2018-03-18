@@ -4,8 +4,6 @@
 
 The `nanodroid-font` Script, respectively it's shortcut `nfnt` is used to change the System UI font (reboot required to take effect)
 
-The Font is not saved during NanoDroid Updates, thus needs to be re-applied after an update; restoration support during updates is a planned feature
-
 ## Invocation
 
 From within a terminal on your device, for example `adb shell` or `Termux` invoke the script using either
