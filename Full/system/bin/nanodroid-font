@@ -4,11 +4,11 @@ export NO_MAGISK=0
 export MODPATH=@MODPATH@
 
 if [[ -d /dev/tmp/magisk_img/$(basename ${MODPATH}) ]]; then
-	OVERLAY_PATH=/dev/tmp/magisk_img/$(basename ${MODPATH})
+	OVERLAY_PATH=/dev/tmp/magisk_img/$(basename ${MODPATH})/system/fonts
 elif [[ -d /dev/tmp/magisk_merge_img/$(basename ${MODPATH}) ]]; then
-	OVERLAY_PATH=/dev/tmp/magisk_merge_img/$(basename ${MODPATH})
+	OVERLAY_PATH=/dev/tmp/magisk_merge_img/$(basename ${MODPATH})/system/fonts
 else
-	OVERLAY_PATH=${MODPATH}
+	OVERLAY_PATH=${MODPATH}/system/fonts
 	[[ "${MODPATH}" != "/sbin/.core/"* ]] && NO_MAGISK=1
 fi
 
@@ -69,10 +69,10 @@ set_font () {
 	echo "Setting Font ${1}"
 
 	if [ ${NO_MAGISK} -eq 0 ]; then
-		if [ -f ${FONTPATH}/NanoDroid/${1}.ttf ]; then
+		if [ -f ${OVERLAY_PATH}/NanoDroid/${1}.ttf ]; then
 			for font in ${FONTFILES}; do
 				ln -sf ${FONTPATH}/NanoDroid/${1}.ttf \
-					${FONTPATH}/${font} || \
+					${OVERLAY_PATH}/${font} || \
 					error "Failed to apply Font ${1}"
 			done
 		else
