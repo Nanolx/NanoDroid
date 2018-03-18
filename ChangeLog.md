@@ -25,6 +25,10 @@
      * if the user has KeePassDroid in their list of applications to install, install KeePass DX instead
 * Full package
   * switch from stable to beta build for QKSMS
+  * switch to custom build for MPV from latest upstream and the following merge-requests
+     * [hwdec_surfacetexture support](https://github.com/mpv-android/mpv-android/pull/110)
+     * [mpv.conf editing](https://github.com/mpv-android/mpv-android/pull/108)
+     * [background playback improvements](https://github.com/mpv-android/mpv-android/pull/104)
   * drop KeePassDroid
   * include KeePass DX
      * Material UI
