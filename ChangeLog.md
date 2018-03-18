@@ -108,6 +108,7 @@
   * QKSMS (3.0-beta6)
   * K-9 Mail (5.502)
   * KeePass DX (2.5.0.0.beta6)
+  * Kernel Adiutor (0.9.10.beta)
 * Manual
   * GNU Bash (4.4.19)
   * Play Store (9.2.11)
