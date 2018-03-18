@@ -87,7 +87,6 @@
 
 * NanoDroid-Font
   * new script to change the system font (Full package only)
-     * Magisk Mode only
   * controlled by nanodroid_fonts setup variable
   * possible fonts:
      * FAST

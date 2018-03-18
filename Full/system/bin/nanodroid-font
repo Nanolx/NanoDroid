@@ -38,29 +38,72 @@ error () {
 	exit 1
 }
 
-[[ $(whoami) != "root" ]] && error "not running as root"
+backup_font () {
+	if [ ! -d /system/fonts/Original ]; then
+		echo "Backup original Fonts"
+		mkdir -p /system/fonts/Original
 
-if [[ ${NO_MAGISK} -eq 0 ]]; then
+		for font in ${FONTFILES}; do
+			cp /system/fonts/${font} /system/fonts/Original/
+		done
+	fi
+}
 
-case ${1} in
-	-s | --set )
-		if [ -f ${FONTPATH}/NanoDroid/${2}.ttf ]; then
-			echo "Setting Font ${2}"
-			for font in ${FONTFILES}; do
-				ln -sf ${FONTPATH}/NanoDroid/${2}.ttf ${FONTPATH}/${font} || \
-					error "Failed to apply Font ${2}"
-			done
-			echo "Reboot to apply Font"
-		else
-			error "Font ${2} does not exist"
-		fi
-	;;
+reset_font () {
+	echo "Restoring original Font"
 
-	-r | --reset )
-		echo "Restoring original Font"
+	if [ ${NO_MAGISK} -eq 0 ]; then
 		for font in ${FONTFILES}; do
 			rm -f ${FONTPATH}/${font}
 		done
+	else
+		for font in ${FONTFILES}; do
+			cp /system/fonts/Original/${font} /system/fonts/
+		done
+
+		rm -rf /system/fonts/Original
+	fi
+}
+
+set_font () {
+	echo "Setting Font ${2}"
+
+	if [ ${NO_MAGISK} -eq 0 ]; then
+		if [ -f ${FONTPATH}/NanoDroid/${2}.ttf ]; then
+			for font in ${FONTFILES}; do
+				ln -sf ${FONTPATH}/NanoDroid/${2}.ttf \
+					${FONTPATH}/${font} || \
+					error "Failed to apply Font ${2}"
+			done
+		else
+			error "Font ${2} does not exist"
+		fi
+	else
+		backup_font
+
+		if [ -f /system/fonts/NanoDroid/${2}.ttf ]; then
+			for font in ${FONTFILES}; do
+				ln -sf /system/fonts/NanoDroid/${2}.ttf \
+					/system/fonts/${font} || \
+					error "Failed to apply Font ${2}"
+			done
+		else
+			error "Font ${2} does not exist"
+		fi
+	fi
+
+	echo "Reboot to apply Font"
+}
+
+[[ $(whoami) != "root" ]] && error "not running as root"
+
+case ${1} in
+	-s | --set )
+		set_font
+	;;
+
+	-r | --reset )
+		reset_font
 	;;
 
 	* )
@@ -82,7 +125,3 @@ where [font] can be:
   Super Mario			Super Mario (World) Game Font"
 	;;
 esac
-
-else
-	error "*** Resetprop feature is not available in System Mode! ***"
-fi
