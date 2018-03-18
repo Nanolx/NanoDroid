@@ -4,6 +4,8 @@
 
 ### Bug Fixes
 
+* CommonInstaller
+  * on devices with A/B partition scheme System Mode installation did not mount /system read-write in all cases
 * SetupWizard
   * fix creating setup value for location backend
 

@@ -187,11 +187,11 @@ mount_partitions () {
 
 	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
 
-	[ ! -f /system/build.prop ] && mount -o ro /system 2>/dev/null
+	[ ! -f /system/build.prop ] && mount -o rw /system 2>/dev/null
 
 	if [ ! -f /system/build.prop ]; then
 		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
-		mount -t ext4 -o ro $SYSTEMBLOCK /system
+		mount -t ext4 -o rw $SYSTEMBLOCK /system
 	fi
 
 	if [ -f /system/init.rc ]; then
@@ -232,9 +232,11 @@ detect_mode () {
 
 	[ "${MODE}" = "MAGISK" ] && magisk_install_setup
 
-	if test -h ${MODPATH}/system/fonts/Roboto-Regular.ttf; then
-		CUSTOM_FONT="$(basename $(readlink ${MODPATH}/system/fonts/Roboto-Regular.ttf) .ttf)"
-		ui_print " << Detected NanoDroid-Font (${CUSTOM_FONT})"
+	if [ "${nanodroid_fonts}" -eq 1 ]; then
+		if test -h ${MODPATH}/system/fonts/Roboto-Regular.ttf; then
+			CUSTOM_FONT="$(basename $(readlink ${MODPATH}/system/fonts/Roboto-Regular.ttf) .ttf)"
+			ui_print " << Detected NanoDroid-Font (${CUSTOM_FONT})"
+		fi
 	fi
 
 	if [ "${MODE}" = "MAGISK" ]; then
@@ -243,10 +245,7 @@ detect_mode () {
 				magisk_install_preinst
 			;;
 		esac
-	else
-		mount -orw,remount /system 2>/dev/null || \
-				error " !! failed to re-mount /system read-write"
-		unset MODPATH
+	else	unset MODPATH
 	fi
 }
 
@@ -539,7 +538,7 @@ magisk_install_finish () {
 		;;
 	esac
 
-	if [ ! -z ${CUSTOM_FONT} -a -f ${MODPATH}/system/bin/nanodroid-font ]; then
+	if [ ! -z ${CUSTOM_FONT} -a ${nanodroid_fonts} -eq 1 ]; then
 		ui_print " << Restore NanoDroid-Font (${CUSTOM_FONT})"
 		${MODPATH}/system/bin/nanodroid-font -s "${CUSTOM_FONT}"
 	fi
