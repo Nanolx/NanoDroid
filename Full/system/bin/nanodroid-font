@@ -66,29 +66,29 @@ reset_font () {
 }
 
 set_font () {
-	echo "Setting Font ${2}"
+	echo "Setting Font ${1}"
 
 	if [ ${NO_MAGISK} -eq 0 ]; then
-		if [ -f ${FONTPATH}/NanoDroid/${2}.ttf ]; then
+		if [ -f ${FONTPATH}/NanoDroid/${1}.ttf ]; then
 			for font in ${FONTFILES}; do
-				ln -sf ${FONTPATH}/NanoDroid/${2}.ttf \
+				ln -sf ${FONTPATH}/NanoDroid/${1}.ttf \
 					${FONTPATH}/${font} || \
-					error "Failed to apply Font ${2}"
+					error "Failed to apply Font ${1}"
 			done
 		else
-			error "Font ${2} does not exist"
+			error "Font ${1} does not exist"
 		fi
 	else
 		backup_font
 
-		if [ -f /system/fonts/NanoDroid/${2}.ttf ]; then
+		if [ -f /system/fonts/NanoDroid/${1}.ttf ]; then
 			for font in ${FONTFILES}; do
-				ln -sf /system/fonts/NanoDroid/${2}.ttf \
+				ln -sf /system/fonts/NanoDroid/${1}.ttf \
 					/system/fonts/${font} || \
-					error "Failed to apply Font ${2}"
+					error "Failed to apply Font ${1}"
 			done
 		else
-			error "Font ${2} does not exist"
+			error "Font ${1} does not exist"
 		fi
 	fi
 
@@ -99,7 +99,7 @@ set_font () {
 
 case ${1} in
 	-s | --set )
-		set_font
+		set_font "${1}"
 	;;
 
 	-r | --reset )

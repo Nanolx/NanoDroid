@@ -230,6 +230,12 @@ detect_mode () {
 	ui_print "${MODE_TEXT}"
 	ui_print " "
 
+	# backup fonts
+	if [[ "$(file ${MODPATH}/system/fonts/Roboto-Regular.ttf)" = *symbolic* ]]; then
+		ui_print " << Backup custom font"
+		CUSTOM_FONT="$(basename $(ls -l ${MODPATH}/system/fonts/Roboto-Regular.ttf | awk -F '->' '{print $2}') .ttf)"
+	fi
+
 	if [ "${MODE}" = "MAGISK" ]; then
 		magisk_install_setup
 		case ${MODID} in
@@ -241,12 +247,6 @@ detect_mode () {
 		mount -orw,remount /system 2>/dev/null || \
 				error " !! failed to re-mount /system read-write"
 		unset MODPATH
-	fi
-
-	# backup fonts
-	if [[ "$(file ${MODPATH}/system/fonts/Roboto-Regular.ttf)" = *symbolic* ]]; then
-		ui_print " << backing up custom font"
-		CUSTOM_FONT="$(basename $(ls -l ${MODPATH}/system/fonts/Roboto-Regular.ttf | awk -F '->' '{print $2}') .ttf)"
 	fi
 }
 
@@ -540,7 +540,7 @@ magisk_install_finish () {
 	esac
 
 	if [ ! -z ${CUSTOM_FONT} ]; then
-		ui_print " << Restoring custom font"
+		ui_print " << Restore custom font"
 		${MODPATH}/system/bin/nanodroid-font -s "${CUSTOM_FONT}"
 	fi
 
