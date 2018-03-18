@@ -102,7 +102,7 @@
   * AnySoftKeyboard (1.9.1117)
   * Déjà Vu nlpBackend (1.1.4)
   * Open KeyChain (4.9.1)
-  * XDA Labs (1.1.5.4b)
+  * XDA Labs (1.1.5.5b)
   * F-Droid (1.1-alpha4)
   * (Simple) Gallery (3.5.3)
   * QKSMS (3.0-beta6)
@@ -111,6 +111,7 @@
 * Manual
   * GNU Bash (4.4.19)
   * Play Store (9.2.11)
+  * OpenLauncher (0.5.10)
 
 ## 16.2.20180302
 
