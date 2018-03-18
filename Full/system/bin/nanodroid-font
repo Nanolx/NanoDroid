@@ -122,6 +122,6 @@ where [font] can be:
   NintendoSwitch		NintendoSwitch OS Font
   Splatoon2			Splatoon2 Game Font
   SuperMarioMaker		Super Mario Maker Game Font
-  Super Mario			Super Mario (World) Game Font"
+  SuperMario			Super Mario (World) Game Font"
 	;;
 esac
