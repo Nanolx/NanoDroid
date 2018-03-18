@@ -167,7 +167,7 @@ detect_arch () {
 }
 
 detect_sdk () {
-	SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
+	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
 	[ "${SDK_VERSION}" -gt 27 ] && \
 		error " !! Android versions beyond Oreo are not yet supported"
