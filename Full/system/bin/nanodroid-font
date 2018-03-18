@@ -99,7 +99,7 @@ set_font () {
 
 case ${1} in
 	-s | --set )
-		set_font "${1}"
+		set_font "${2}"
 	;;
 
 	-r | --reset )
