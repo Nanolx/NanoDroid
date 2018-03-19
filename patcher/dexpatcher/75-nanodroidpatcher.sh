@@ -25,9 +25,6 @@ MAGISK_PATH=/dev/tmp/magisk_img
 rm -rf "${TMPDIR}"
 mkdir -p ${TMPDIR}
 
-# fallback value
-nanodroid_sigspoofui=0
-
 ##########################################################################################
 # Generic Functions
 ##########################################################################################
@@ -155,13 +152,10 @@ detect_arch () {
 }
 
 detect_sdk () {
-	SDK_VERSION=$(awk -F= '/^ro.build.version.sdk/{print $2}' /system/build.prop)
+	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
 	[ "${SDK_VERSION}" -gt 27 ] && \
 		error " !! Android versions beyond Oreo are not yet supported"
-
-	[ "${SDK_VERSION}" -ge 25 ] && \
-		nanodroid_sigspoofui=0
 
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error " !! Android versions before Jelly Bean are not supported"
@@ -170,12 +164,10 @@ detect_sdk () {
 		ui_print " > Android 4.1 - 6.0 (SDK ${SDK_VERSION}) detected"
 		PATCH_HOOK="${BASEDIR}/hook_4.1-6.0_services.jar.dex"
 		PATCH_UI_SERVICES="${BASEDIR}/ui_4.1-6.0_services.jar.dex"
-		PATCH_UI_SETTINGS="${BASEDIR}/ui_4.1-6.0_Settings.apk.dex"
 	else
 		ui_print " > Android 7.0 - 8.1 (SDK ${SDK_VERSION}) detected"
 		PATCH_HOOK="${BASEDIR}/hook_7.0-8.0_services.jar.dex"
 		PATCH_UI_SERVICES="${BASEDIR}/ui_7.0-8.0_services.jar.dex"
-		PATCH_UI_SETTINGS="${BASEDIR}/ui_7.0-8.0_Settings.apk.dex"
 	fi
 
 	[ "${SDK_VERSION}" -gt 21 ] && DEX_OPTS="--multi-dex-threaded"
@@ -201,10 +193,7 @@ patch_services () {
 	[ "${SDK_VERSION}" -gt 21 ] && \
 		mkdir -p "${BASEDIR}/services.jar-mod"
 
-	if [ "${nanodroid_sigspoofui}" -eq 1 ]; then
-		PATCHES="${PATCH_HOOK} ${PATCH_CORE} ${PATCH_UI_SERVICES}"
-	else	PATCHES="${PATCH_HOOK} ${PATCH_CORE}"
-	fi
+	PATCHES="${PATCH_HOOK} ${PATCH_CORE}"
 
 	ui_print " >> patching services.jar"
 	LD_LIBRARY_PATH=${C_LD} \
@@ -226,53 +215,6 @@ patch_services () {
 		${ZIPB} -j "${BASEDIR}/services.jar" \
 		"${BASEDIR}/services.jar-mod"/classes*.dex || \
 			error " !! zip failed"
-
-	[ "${nanodroid_sigspoofui}" -eq 1 ] && patch_services_ui
-}
-
-patch_services_ui () {
-	ui_print " "
-	ui_print " > patching signature spoofing user interface"
-	ui_print " "
-
-	if [[ -f /system/priv-app/Settings/Settings.apk ]]; then
-		SETTINGS_APK_PATH=/system/priv-app/Settings/Settings.apk
-	elif [[ -f /system/priv-app/SecSettings/SecSettings.apk ]]; then
-		SETTINGS_APK_PATH=/system/priv-app/SecSettings/SecSettings.apk
-	elif [[ -f /system/priv-app/SecSettings2/SecSettings2.apk ]]; then
-		SETTINGS_APK_PATH=/system/priv-app/SecSettings2/SecSettings2.apk
-	else	error " !! neither Settings.apk nor SecSettings[2].apk found"
-	fi
-
-	SETTINGS_APK_NAME=$(basename ${SETTINGS_APK_PATH})
-	SETTINGS_APK_DIR=$(basename ${SETTINGS_APK_NAME} .apk)
-
-	cp ${SETTINGS_APK_PATH} ${BASEDIR}/${SETTINGS_APK_NAME} || \
-		error " !! failed to copy ${SETTINGS_APK_NAME}"
-
-	[ "${SDK_VERSION}" -gt 21 ] && \
-		mkdir -p "${BASEDIR}/Settings.apk-mod"
-
-	ui_print " >> patching ${SETTINGS_APK_NAME}"
-	LD_LIBRARY_PATH=${C_LD} \
-		/system/bin/dalvikvm \
-			-Xbootclasspath:"${BOOTCLASSES}" \
-			-classpath "${BASEDIR}/dexpatcher.dex" \
-			lanchon.dexpatcher.Main \
-			${DEX_OPTS} --api-level "${SDK_VERSION}" \
-			--verbose --output ${BASEDIR}/Settings.apk-mod \
-			${BASEDIR}/${SETTINGS_APK_NAME} ${PATCH_UI_SETTINGS} || \
-			error " !! failed to patch ${SETTINGS_APK_NAME}"
-
-	LD_LIBRARY_PATH=${C_LD} \
-		${ZIPB} -d "${BASEDIR}/${SETTINGS_APK_NAME}" \
-			'classes*.dex' || \
-			error " !! zip failed"
-
-	LD_LIBRARY_PATH=${C_LD} \
-		${ZIPB} -j "${BASEDIR}/${SETTINGS_APK_NAME}" \
-			"${BASEDIR}/Settings.apk-mod"/classes*.dex || \
-			error " !! zip failed"
 }
 
 backup_services_jar () {
@@ -280,14 +222,6 @@ backup_services_jar () {
 	mkdir -p /sdcard/nanodroid_backups
 	cp /system/framework/services.jar /sdcard/nanodroid_backups || \
 		error " !! failed to backup services.jar"
-}
-
-backup_settings_ui () {
-	if [ "${nanodroid_sigspoofui}" -eq 1 ]; then
-		ui_print " << backing up ${SETTINGS_APK_NAME} to: /sdcard/nanodroid_backups"
-		cp ${SETTINGS_APK_PATH} /sdcard/nanodroid_backups || \
-			error " !! failed to backup ${SETTINS_APK_NAME}"
-	fi
 }
 
 install_services () {
@@ -304,7 +238,6 @@ install_services () {
 		mount -orw,remount /system || \
 			error " !! failed to mount /system read-write"
 		backup_services_jar
-		backup_settings_ui
 	fi
 
 	ui_print " << installing patched files to: ${install_path}"
@@ -313,20 +246,8 @@ install_services () {
 	cp ${BASEDIR}/services.jar "${install_path}/system/framework" \
 		|| error " !! failed to install services.jar"
 
-	if [ "${nanodroid_sigspoofui}" -eq 1 ]; then
-		mkdir -p "${install_path}/system/priv-app/${SETTINGS_APK_DIR}"
-		cp ${BASEDIR}/${SETTINGS_APK_NAME} \
-			"${install_path}/system/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME}" \
-			|| error " !! failed to install ${SETTINGS_APK_NAME}"
-
-	fi
-
 	if [ "${install_path}" = "/" ]; then
 		echo /system/framework/services.jar >> /data/adb/.nanodroid-list
-
-		[ "${nanodroid_sigspoofui}" -eq 1 ] &&
-			echo /system/priv-app/${SETTINGS_APK_DIR}/${SETTINGS_APK_NAME} >> \
-				/data/adb/.nanodroid-list
 	fi
 
 	touch /data/adb/.nanodroid-patcher
@@ -389,25 +310,6 @@ magisk_cleanup () {
 	fi
 }
 
-##########################################################################################
-# Configuration File
-##########################################################################################
-
-# check for configuration files
-config_locations="/sdcard /external_sd $(dirname ${ZIP})) /data"
-
-get_config () {
-	config=""
-	config_exists=0
-	for path in ${config_locations}; do
-		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
-			config="${path}/${1}"
-			config_exists=1
-			return
-		fi
-	done
-}
-
 main () {
 	ui_print " "
 	ui_print "*******************************"
@@ -422,9 +324,6 @@ main () {
 
 	[ -f /data/adb/.nanodroid-patcher ] && \
 		rm -f /data/adb/.nanodroid-patcher
-
-	get_config .nanodroid-setup
-	[ "$config_exists" -eq 1 ] && source ${config}
 
 	for bin in zip.arm zip.x86 file.arm file.x86; do 
 		chmod 0755 "${BASEDIR}/${bin}" || \
