@@ -40,14 +40,18 @@
   * no longer include GNU Bash
 * SetupWizard
   * change default location for configuration files from /data to /sdcard
+  * update for KeePassDroid > KeePass DX transistion
   * new setup variables (Full package)
      * nanodroid_bash=[0|1] whether to install GNU Bash, Less pager
      * nanodroid_nano=[0|1] whether to install GNU Nano Editor
      * nanodroid_utils=[0|1] whether to install Shell Utilities
      * nanodroid_fonts=[0|1] whether to install NanoDroid-Fonts script and Nintendo Fonts
-  * update for KeePassDroid > KeePass DX transistion
-* Patcher, Uninstaller
+  * removed setup variables (Patcher)
+     * nanodroid_sigspoofui=[0|1]
+* On-Device Patcher, Uninstaller
   * initial A/B parition scheme support
+* On-PC Patcher, On-Device Patcher
+  * drop Sigsppof UI support
 * Uninstaller
   * restore GApps backup upon uninstallation (System Mode)
 
@@ -65,7 +69,6 @@
   * functions to update custom NanoDroid apks
      * PlayStore
      * FakeStore
-     * OpenLauncher
      * MPV
   * shell name: nanodroid-upd
   * shell name: nupd
@@ -107,7 +110,7 @@
   * AnySoftKeyboard (1.9.1117)
   * Déjà Vu nlpBackend (1.1.4)
   * Open KeyChain (4.9.1)
-  * XDA Labs (1.1.5.5b)
+  * XDA Labs (1.1.6b)
   * F-Droid (1.1-alpha4)
   * (Simple) Gallery (3.5.3)
   * QKSMS (3.0-beta6)
@@ -117,7 +120,6 @@
 * Manual
   * GNU Bash (4.4.19)
   * Play Store (9.2.11)
-  * OpenLauncher (0.5.10)
   * MPV (20180318+merges)
 
 ## 16.2.20180302
