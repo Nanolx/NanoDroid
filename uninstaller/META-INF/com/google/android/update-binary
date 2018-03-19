@@ -170,7 +170,11 @@ system_mode_uninstall () {
 
 	# services.jar needs special treament
 	if grep -q /system/framework/services.jar ${system_list}; then
-		if [ -f /sdcard/services.jar ]; then
+		if [ -f /sdcard/nanodroid_backups/services.jar ]; then
+			ui_print " << restoring: unpatched services.jar"
+			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar \
+				|| error " !! failed to restore services.jar"
+		elif [ -f /sdcard/services.jar ]; then
 			ui_print " << restoring: unpatched services.jar"
 			mv /sdcard/services.jar /system/framework/services.jar \
 				|| error " !! failed to restore services.jar"
@@ -181,7 +185,11 @@ system_mode_uninstall () {
 
 	for sapp in Settings SecSettings SecSettings2; do
 		if grep -q /system/priv-app/${sapp}/${sapp}.apk ${system_list}; then
-			if [ -f /sdcard/${sapp}.apk ]; then
+			if [ -f /sdcard/nanodroid_backups/${sapp}.apk ]; then
+				ui_print " << restoring: unpatched ${sapp}.apk"
+				mv /sdcard/nanodroid_backups/${sapp}.apk /system/priv-app/${sapp}/${sapp}.apk \
+					|| error " !! failed to restore ${sapp}.apk"
+			elif [ -f /sdcard/${sapp}.apk ]; then
 				ui_print " << restoring: unpatched ${sapp}.apk"
 				mv /sdcard/${sapp}.apk /system/priv-app/${sapp}/${sapp}.apk \
 					|| error " !! failed to restore ${sapp}.apk"
