@@ -35,9 +35,9 @@ case ${1} in
 		update_apk priv-app/Phonesky/Phonesky.apk "${nlx}/Phonesky.apk"
 	;;
 
-	ol | openlauncher )
-		update_apk app/OpenLauncher/OpenLauncher.apk "${nlx}/OpenLauncher.apk"
-	;;
+	#ol | openlauncher )
+	#	update_apk app/OpenLauncher/OpenLauncher.apk "${nlx}/OpenLauncher.apk"
+	#;;
 
 	mpv | MPV )
 		update_apk app/MPV/MPV.apk "${nlx}/MPV.apk"
@@ -56,7 +56,6 @@ Usage: nanodroid-upd <apk>
 short	| long apk name
 
 ps	| playstore
-ol	| openlauncher
 fs	| fakestore
 mpv	| MPV"
 	;;
