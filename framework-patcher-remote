@@ -120,10 +120,6 @@ fi
 echo "install to \"${install_path}\""
 cp /tmp/services.jar "${install_path}/framework" || exit 1
 
-if [[ -f /tmp/Settings.apk ]]; then
-	cp /tmp/Settings.apk "${install_path}/priv-app/Settings/Settings.apk" || exit 1
-fi
-
 touch /data/adb/.nanodroid-patcher
 
 if (is_mounted /magisk); then
