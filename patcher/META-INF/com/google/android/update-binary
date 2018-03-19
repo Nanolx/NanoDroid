@@ -308,15 +308,15 @@ patch_services_ui () {
 }
 
 backup_services_jar () {
-	ui_print " << backing up services.jar to: /sdcard"
-	cp /system/framework/services.jar /sdcard || \
+	ui_print " << backing up services.jar to: /sdcard/nanodroid_backups"
+	cp /system/framework/services.jar /sdcard/nanodroid_backups || \
 		error " !! failed to backup services.jar"
 }
 
 backup_settings_ui () {
 	if [ "${nanodroid_sigspoofui}" -eq 1 ]; then
-		ui_print " << backing up ${SETTINGS_APK_NAME} to: /sdcard"
-		cp ${SETTINGS_APK_PATH} /sdcard || \
+		ui_print " << backing up ${SETTINGS_APK_NAME} to: /sdcard/nanodroid_backups"
+		cp ${SETTINGS_APK_PATH} /sdcard/nanodroid_backups || \
 			error " !! failed to backup ${SETTINS_APK_NAME}"
 	fi
 }
