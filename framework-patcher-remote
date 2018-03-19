@@ -106,8 +106,9 @@ elif [[ -d /magisk/NanoDroid_microG ]]; then
 	install_path="/magisk/NanoDroid_microG/system"
 	mkdir -p "${install_path}"
 else
-	echo "backing up services.jar to /sdcard"
-	cp /tmp/services.jar /sdcard
+	echo "backing up services.jar to /sdcard/nanodroid_backups"
+	mkdir -p /sdcard/nanodroid_backups
+	cp /tmp/services.jar /sdcard/nanodroid_backups
 
 	echo "using ROM as destination"
 	install_path="/system"
