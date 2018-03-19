@@ -6,7 +6,6 @@ The `nanodroid-upd` Script, respectively it's shortcut `nupd` is used by NanoDro
 
   * Fake Store
   * Play Store
-  * OpenLauncher
   * MPV
 
 Applications are only updated if they are installed already during NanoDroid installation
@@ -23,4 +22,4 @@ or
 
 where **apk** can be
 
-`ps`, `playstore`, `fs`, `fakestore`, `ol`, `openlauncher`, `mpv` or `MPV`
+`ps`, `playstore`, `fs`, `fakestore`, `mpv` or `MPV`

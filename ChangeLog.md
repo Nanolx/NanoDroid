@@ -27,6 +27,7 @@
      * if the user has KeePassDroid in their list of applications to install, install KeePass DX instead
 * Full package
   * switch from stable to beta build for QKSMS
+  * switch to official OpenLauncher F-Droid build as it was finally™ updated
   * switch to custom build for MPV from latest upstream and the following merge-requests
      * [hwdec_surfacetexture support](https://github.com/mpv-android/mpv-android/pull/110)
      * [mpv.conf editing](https://github.com/mpv-android/mpv-android/pull/108)
@@ -112,11 +113,14 @@
   * Open KeyChain (4.9.1)
   * XDA Labs (1.1.6b)
   * F-Droid (1.1-alpha4)
-  * (Simple) Gallery (3.5.3)
+  * (Simple) Gallery (3.6.0)
   * QKSMS (3.0-beta6)
   * K-9 Mail (5.502)
   * KeePass DX (2.5.0.0.beta6)
   * Kernel Adiutor (0.9.10.beta)
+  * OpenLauncher (0.5.10)
+  * AdAway (3.3)
+  * Oandbackup (0.2.13)
 * Manual
   * GNU Bash (4.4.19)
   * Play Store (9.2.11)

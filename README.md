@@ -60,18 +60,16 @@ The `build-package` script additionally supports the following parameters:
 * `ver [version] [date]` change project version
 * `bump` increment Magisk module version by 1
 
-the `build-package` script does not download/update the following applications:
+The following applications are custom builds:
 
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
   * [Download Link](https://www.nanolx.org/apk/Phonesky.apk)
 * Fake Store (reason: built with CHECK_LICENSE permission)
   * [Download Link](https://www.nanolx.org/apk/FakeStore.apk)
-* OpenLauncher (reason: last F-Droid build outdated)
-  * [Download Link](https://www.nanolx.org/apk/OpenLauncher.apk)
 * MPV (reason: inferquent updates, merge-requests included)
   * [Download Link](https://www.nanolx.org/apk/MPV.apk)
 
-those are still included in the repo itself. Also `build-package` looks if the configuration files
+Also `build-package` looks if the configuration files
 
 * `.nanodroid-setup`
 * `.nanodroid-apps`
@@ -122,10 +120,12 @@ NanoDroid includes
      * in Magisk Mode using [> Pseudo Debloat](doc/PseudoDebloat.md)
      * in System Mode they are moved to `/sdcard/nandroid_backups`
          * the Uninstaller will restore them (or re-flash the ROM)
+     * see the [> GApps Removal List](doc/GAppsRemoval.md)
   * location packages conflicting with unified Nlp will are auto-removed during installation
      * in Magisk Mode using [> Pseudo Debloat](doc/PseudoDebloat.md)
      * in System Mode they are moved to `/sdcard/nandroid_backups`
          * the Uninstaller will restore them (or re-flash the ROM)
+     * see the [> GApps Removal List](doc/GAppsRemoval.md)
 * F-Droid and it's privileged extension
 * modified Play Store to allow (in-)app-purchases with microG
   * this required the Play Store to be modified, see the [> patch](doc/Phonesky.diff)
@@ -187,14 +187,12 @@ Extra packages, always flash through TWRP.
   * creates the file `/data/adb/.nanodroid-patcher` after successful patching
   * installs an addon.d script for automatic re-patching after ROM update
      * addon.d support files reside in `/data/adb/nanodroid-patcher/`
-  * the original, unpatched `services.jar` (and optionally `Settings.apk`) are backed up to `/sdcard/`
-     * respectively `SecSettings.apk` on TouchWiz ROMs
 * **NanoDroid-setupwizard**: includes
   * **AROMA** based Setup Wizard to create the configuration files
   * user can choose where to store the configuration files
-     * `/sdcard`
+     * `/sdcard` (fallback)
      * `/external_sd`
-     * `/data` (fallback)
+     * `/data`
   * **NOTE:** AROMA only works on `arm` and `arm64`, if your device is `x86` or `x86_64`, it won't work
 * **NanoDroid-uninstaller**: includes
   * uninstalls *all* NanoDroid Magisk Modules
@@ -202,22 +200,20 @@ Extra packages, always flash through TWRP.
   * uninstalls NanoDroid installed in System Mode
   * uninstalls NanoDroid configuration files
   * uninstalls NanoDroid-Patcher addon.d environment
-  * restores applications auto-removed during installation
-  * restores `services.jar` or `Settings.apk` patched by NanoDroid-Patcher
+  * restores GApps and location services auto-removed during installation (System Mode)
+  * restores `services.jar` patched by NanoDroid-Patcher (System Mode)
 
 ### Scripts
 
-Misc. Script for use from PC/Notebook, while device is in TWRP.
+Misc. Script for use from PC/Notebook, while device is in TWRP, they are found in this repository
 
-* **framework-patcher** (clone this repository)
+* **framework-patcher**
   * on-pc framework-patcher for signature spoofing support
   * creates the file `/data/adb/.nanodroid-patcher` after successful patching
-  * invoke like `framework-patcher [ver] [--gui]`
+  * invoke like `framework-patcher [ver]`
      * where [ver] is your Android version (6.0, 7.1, ...)
-     * where `--gui` is an optional switch to patch a global toggle for signature spoofing into Developer Settings
-  * the original, unpatched `services.jar` (and optionally `Settings.apk`) are backed up to `/sdcard/`
-     * respectively `SecSettings.apk` on TouchWiz ROMs
-* **force-debloat** (clone this repository)
+  * the original, unpatched `services.jar` is backed up to `/sdcard/nanodroid_backups`
+* **force-debloat**
   * system debloater
   * the list of applications resides in the script itself
   * needs to be run from TWRP, requires explicit user acceptance
@@ -225,7 +221,7 @@ Misc. Script for use from PC/Notebook, while device is in TWRP.
      * uses fallback values, if none found
          * which are in the script itself and can be edited
   * has a test mode which prints what would be done
-* **mount-magisk** (clone this repository)
+* **mount-magisk**
   * script to mount or unmount Magisk in TWRP
   * script toggles mount-state (read: will mount Magisk if unmounted and unmount Magisk if mounted)
 
@@ -367,7 +363,7 @@ microG is an Open Source replacement for Google Services, full details can be fo
 
 NanoDroid includes microG as follows
 
-* microG GmsCore [> GitHub](https://github.com/microg/android_packages_apps_GmsCore) and Play Store [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/)  modified to allow (in-)app purchases
+* microG GmsCore [> GitHub](https://github.com/microg/android_packages_apps_GmsCore)
 * with **Déjà Vu** location provider backend [> F-Droid](https://f-droid.org/de/packages/org.fitchfamily.android.dejavu/)
 * with **Mozilla** location provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
 * with **Nominatim** adress provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
@@ -375,18 +371,19 @@ NanoDroid includes microG as follows
 * with **microG** DroidGuard Helper [> GitHub](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
   * required for SafetyNet support
 * support for Maps API version 1
-* support for Google Calendar and Contacts Sync
+* support for Google Calendar and Contacts Sync Adapter
   * disabled by default
 * optional Swipe libraries
   * disabled by default
-* choose between official **Play Store** or unofficial **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
+* choose between official **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/) or unofficial **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
-     * got to **Yalp Store** > Settings > Installation Method > `Using system permissions`
+     * go to **Yalp Store** > Settings > Installation Method > `Using system permissions`
   * Play Store is modified to allow (in-)app-purchases with microG
-* if `com.qualcomm.location` exists it will either be
-  * pseudo-debloated (in Magisk Mode)
-  * moved to /sdcard (in System Mode)
-     * it conflicts with microG's location backend
+* GApps and several location services conflict with microG and unified Nlp. Thus they are removed during NanoDroid installation
+  * in Magisk Mode using [> Pseudo Debloat](doc/PseudoDebloat.md)
+  * in System Mode they are moved to `/sdcard/nandroid_backups`
+  * see [> GAppsRemoval](doc/GAppsRemoval.md) for more details
+
 
 ### F-Droid and Applications
 
@@ -402,11 +399,17 @@ NanoDroid includes **The Legend of Zelda** [> Nintendo](http://www.zelda.com/) r
 
 Full [> Details](doc/ZeldaSounds.md)
 
+### Nintendo Fonts
+
+NanoDroid includes Nintendo Fonts.
+
+Full [> Details](doc/NanoDroidFont.md)
+
 ## Installation
 
 ### Alter Installation
 
-NanoDroid supports altering the installation settings to a certain degree.
+NanoDroid supports altering the installation settings to a wide degree.
 
 Full [> Details](doc/AlterInstallation.md) on altering installation manually, or use the Setup Wizard (if you've got an arm/arm64 device).
 
@@ -458,7 +461,7 @@ Once your ROM supports signature spoofing, you need to setup microG like this
      * enable **Google SafetyNet** (required for applications that utilize SafetyNet, for example Pokémon GO, ...)
          * '...' menu > set to use the **Official Server**
      * in **UnifiedNlp Settings** choose
-         * **Déjà Vu** or **Mozilla** as Geolocation backend
+         * **Déjà Vu** and/or **Mozilla** as Geolocation backend
          * **Nominatim** as Address lockup backend
      * after everything is done, reboot
      * go to **Play Store**, setup account and install your apps
@@ -476,7 +479,8 @@ Additional credits go to
 * Lanchon for dexpatcher and haystack
 * osm0sis for GNU Nano build
 * shadow53 for automatic apk grabbing base code
-* ale5000 for microG system permission files
+* ale5000 for microG system permission files and GApps Removal list
+* PaperYoshi for Nintendo Fonts
 
 Special Thanks to the beta testers
 
@@ -489,14 +493,6 @@ List of known issues
 
 * SafetyNet check fails with `Google Play Services not available`
   * you did not setup microG (or did not reboot afterwards)
-* Play Store lacks fake signature spoofing permission
-  * on ROMs like **crDroid** or **OmniROM**, that have built-in signature spoofing, in some cases the Play Store is not granted that permission automatically, to fix this either
-     * issue the command `nanodroid-overlay --permission` as root
-     * go to Settings > Apps > Gear Icon > App Permissions > `Signature Spoofing` > Enable for Play Store
-* Google Sync adapters lacking permissions
-  * to fix this either
-     * issue the command `nanodroid-overlay --permission` as root
-     * go to Settings > Apps > Google Contacts/Calendar Sync > Permissions > grant permissions
 * Battery Drain
   * microG fails to register applications  to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
      * do a clean flash of your ROM (, Magisk) and NanoDroid and install your apps after microG setup
@@ -509,7 +505,6 @@ Additional helpful information in the microG [> Wiki](https://github.com/microg/
 ## TODO
 
 * better error handling in **on-pc** framework-patcher
-* split installer code into module-specific and non-module-specific to prevent duplication
 
 ## FAQ
 

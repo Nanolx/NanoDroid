@@ -52,12 +52,6 @@ the **F-Droid** package supports the following options
 nanodroid_forcesystem=0
 ```
 
-the **Patcher** package supports the following options
-
-```
-nanodroid_sigspoofui=0
-```
-
 where `1` means `on` and `0` means `off`. If no `.nanodroid-setup` is found, the [default settings](.nanodroid-setup) will be used (equals to the example above), if your `.nanodroid-setup` file exists, but is missing entries, those entries will be added, using the default values.
 
 Alternatively you can also use the NanoDroid-SetupWizard package instead of manual creation of the configuration file.
@@ -134,7 +128,3 @@ whether to install Shell Utils from util-linux and bsdmainutils
 `nanodroid_fonts=[0|1]`
 
 whether to install [NanoDroid-Font](NanoDroidFont.md) script and Nintendo Fonts
-
-`nanodroid_sigspoofui=[0|1]`
-
-whether to patch `Settings.apk` to feature a user interface for enabling and disabling signature spoofing feature globally on **non-prepatched** ROMs. This patch is not applied on Android 7.1 (SDK 25) or later.
