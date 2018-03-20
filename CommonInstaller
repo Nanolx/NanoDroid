@@ -80,7 +80,7 @@ grep_prop() {
 }
 
 is_mounted() {
-	if [ ! -z "$2" ]; then
+	if [ ! -z "${2}" ]; then
 		cat /proc/mounts | grep ${1} | grep ${2}, >/dev/null
 	else	cat /proc/mounts | grep ${1} >/dev/null
 	fi
@@ -130,7 +130,7 @@ detect_outfd () {
 	if [ "$?" -eq "0" ]; then
 		OUTFD=0
 
-		for FD in `ls /proc/$$/fd`; do
+		for FD in $(ls /proc/$$/fd); do
 			readlink /proc/$$/fd/${FD} 2>/dev/null | grep pipe >/dev/null
 			if [ "$?" -eq "0" ]; then
 				ps | grep " 3 ${FD} " | grep -v grep >/dev/null
@@ -402,7 +402,7 @@ magisk_install_setup () {
 
 	. ${MAGISKBIN}/util_functions.sh
 
-	MIN_VER=`grep_prop minMagisk ${INSTALLER}/module.prop`
+	MIN_VER=$(grep_prop minMagisk ${INSTALLER}/module.prop)
 	[ ! -z ${MAGISK_VER_CODE} -a ${MAGISK_VER_CODE} -ge ${MIN_VER} ] || \
 		error " !! Magisk 15.0 or newer is required"
 
