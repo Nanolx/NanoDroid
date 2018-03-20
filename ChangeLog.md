@@ -51,8 +51,10 @@
      * nanodroid_sigspoofui=[0|1]
 * On-Device Patcher, Uninstaller
   * initial A/B parition scheme support
-* On-PC Patcher, On-Device Patcher
+* On-PC Patcher, On-Device Patcher, addon.d
   * drop Sigsppof UI support
+* On-Device Patcher, addon.d
+  * unify code into CommonPatcher
 * Uninstaller
   * restore GApps backup upon uninstallation (System Mode)
 
