@@ -125,7 +125,7 @@
   * Oandbackup (0.2.13)
 * Manual
   * GNU Bash (4.4.19)
-  * Play Store (9.2.11)
+  * Play Store (9.3.14)
   * MPV (20180318+merges)
 
 ## 16.2.20180302
