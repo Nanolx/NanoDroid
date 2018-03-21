@@ -32,7 +32,7 @@ ui_print "Powered by DexPatcher (@lanchon)"
 ui_print "********************************"
 ui_print " "
 
-mount_partition
+mount_partitions
 
 if [ -f /data/adb/.nanodroid-patcher ]; then
 	ui_print " !! /data/adb/.nanodroid-patcher exists"
