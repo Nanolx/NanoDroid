@@ -25,6 +25,8 @@
      * also see SetupWizard changes for now more flexible Full and microG package setups
   * Full package
      * if the user has KeePassDroid in their list of applications to install, install KeePass DX instead
+  * Full, F-Droid packages
+     * include default permissions file for F-Droid Privileged Extension
 * Full package
   * switch from stable to beta build for QKSMS
   * switch to official OpenLauncher F-Droid build as it was finally™ updated
@@ -111,15 +113,15 @@
 
 * Automatic
   * AnySoftKeyboard (1.9.1117)
-  * Déjà Vu nlpBackend (1.1.4)
+  * Déjà Vu nlpBackend (1.1.5)
   * Open KeyChain (4.9.1)
   * XDA Labs (1.1.6b)
-  * F-Droid (1.1-alpha4)
-  * (Simple) Gallery (3.6.0)
+  * F-Droid (1.1)
+  * (Simple) Gallery (3.6.2)
   * QKSMS (3.0-beta7)
   * K-9 Mail (5.502)
   * KeePass DX (2.5.0.0.beta6)
-  * Kernel Adiutor (0.9.10.beta)
+  * Kernel Adiutor (0.9.10.3)
   * OpenLauncher (0.5.10)
   * AdAway (3.3)
   * Oandbackup (0.2.13)

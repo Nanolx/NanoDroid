@@ -2,6 +2,7 @@
 
 VERSION=16.3.99999999
 
+
 GOOGLE_APPS="GoogleFeedback
 GoogleLoginService
 GoogleOneTimeInitializer
@@ -647,6 +648,7 @@ install_fdroid () {
 		ui_print " << with F-Droid"
 		nanodroid_install_apk FDroid
 		nanodroid_install_apk FDroidPrivileged
+		nanodroid_install_file etc/permissions/org.fdroid.fdroid.privileged.xml
 	else	ui_print " << without F-Droid"
 	fi
 }
