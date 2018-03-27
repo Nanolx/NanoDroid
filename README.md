@@ -15,10 +15,8 @@ The transistion in Magisk Mode installation between old and new module name is h
 
 On AndroidFileHost **all** stable and beta releases are available.
 
-* Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoDroid_Stable)
-  * Archived Stable Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoDroid_StableArchive)
-* Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoDroid_Beta)
-  * Archived Beta Downloads [> Androidfilehost](https://www.androidfilehost.com/f/NanoDroid_BetaArchive)
+* Stable Downloads [> Androidfilehost](https://androidfilehost.com/?w=files&flid=198483)
+* Beta Downloads [> Androidfilehost](https://androidfilehost.com/?w=files&flid=183250)
 
 ### Secondary Mirror
 
