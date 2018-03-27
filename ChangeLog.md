@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 16.3 in-dev
+## 16.3.20180327
 
 ### Bug Fixes
 
@@ -34,6 +34,7 @@
      * [hwdec_surfacetexture support](https://github.com/mpv-android/mpv-android/pull/110)
      * [mpv.conf editing](https://github.com/mpv-android/mpv-android/pull/108)
      * [background playback improvements](https://github.com/mpv-android/mpv-android/pull/104)
+     * [audio delay preferences](https://github.com/mpv-android/mpv-android/pull/113)
   * drop KeePassDroid
   * include KeePass DX
      * Material UI
