@@ -710,11 +710,11 @@ install_bash () {
 		nanodroid_install_file etc/bash_logout
 		nanodroid_install_file etc/bashrc
 
-		nanodroid_install_file bin/bash bin
-		nanodroid_install_file bin/bash.bin.${BIN_ARCH} bin
-		nanodroid_install_file bin/bashbug.${BIN_ARCH} bin
-		nanodroid_install_file bin/less bin
-		nanodroid_install_file bin/less.bin.${BIN_ARCH} bin
+		nanodroid_install_file xbin/bash bin
+		nanodroid_install_file xbin/bash.bin.${BIN_ARCH} bin
+		nanodroid_install_file xbin/bashbug.${BIN_ARCH} bin
+		nanodroid_install_file xbin/less bin
+		nanodroid_install_file xbin/less.bin.${BIN_ARCH} bin
 	else	ui_print " << without GNU Bash Shell"
 	fi
 }
@@ -726,12 +726,12 @@ install_nanodroidscripts () {
 		nanodroid-perm nanodroid-upd \
 		nanodroid-util column.${BIN_ARCH} \
 		aapt.${BIN_ARCH}; do
-		nanodroid_install_file bin/${script} bin
+		nanodroid_install_file xbin/${script} bin
 	done
 
 	if [ "${MODE}" = "MAGISK" ]; then
 		for script in novl nprp nanodroid-overlay nanodroid-prop; do
-			nanodroid_install_file bin/${script} bin
+			nanodroid_install_file xbin/${script} bin
 		done
 
 		nanodroid_substitute bin/nanodroid-overlay
@@ -742,9 +742,9 @@ install_nanodroidscripts () {
 install_fonts () {
 	if [ "${nanodroid_fonts}" -eq 1 ]; then
 		ui_print " << Nintendo Fonts"
-		nanodroid_install_file bin/nanodroid-font bin
+		nanodroid_install_file xbin/nanodroid-font bin
 		nanodroid_substitute bin/nanodroid-font
-		nanodroid_install_file bin/nfnt bin
+		nanodroid_install_file xbin/nfnt bin
 
 		nanodroid_install_dir fonts
 	fi
@@ -755,8 +755,8 @@ install_nano () {
 		ui_print " << GNU Nano Terminal Editor"
 		nanodroid_install_dir etc/terminfo
 
-		nanodroid_install_file bin/nano bin
-		nanodroid_install_file bin/nano.bin bin
+		nanodroid_install_file xbin/nano bin
+		nanodroid_install_file xbin/nano.bin bin
 	else	ui_print " << without GNU Nano Terminal Editor"
 	fi
 }
@@ -769,7 +769,7 @@ install_shell_utils () {
 		for binary in col colcrt colrm findfs findmnt hexdump \
 			lessecho lesskey look lsblk lscpu lsipc \
 			lslocks lsns ncal setterm unzip whereis; do
-			nanodroid_install_file bin/${binary}.${BIN_ARCH} bin
+			nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
 		done
 	else	ui_print " << without Shell Utilities"
 	fi
@@ -887,6 +887,14 @@ nanodroid_install_file () {
 
 	[ ! -f "${INSTALLER}/system/${dir}/${file}" ] && \
 		error " !! file: ${file} not found"
+
+	# if /system/xbin does not exist, use /system/bin
+	if [ "${dir}" = "xbin" ]; then
+		if [ ! -d /system/xbin ]; then
+			echo "  ++ xbin does not exist, using bin instead"
+			dir="bin"
+		fi
+	fi
 
 	# strip off .${BIN_ARCH} from final filename (if any)
 	xfile=$(basename ${file} .${BIN_ARCH})
