@@ -18,8 +18,10 @@ fi
 
 detect_bootmode
 detect_outfd
+show_progress 1.0 0
 
 show_banner
+set_progress 0.1
 
 mount_partitions
 unpack_zip
@@ -28,9 +30,13 @@ detect_arch
 get_cfg_setup
 
 detect_mode
+set_progress 0.5
 
 install_fdroid
+set_progress 0.9
 
 nanodroid_finalize
+set_progress 1.0
+
 
 exit 0

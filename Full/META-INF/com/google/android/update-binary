@@ -18,24 +18,33 @@ fi
 
 detect_bootmode
 detect_outfd
+show_progress 1.0 0
 
 show_banner
+set_progress 0.1
 
 mount_partitions
 unpack_zip
 detect_arch
+set_progress 0.2
 
 get_cfg_setup
 get_cfg_apps
 get_cfg_overlay
 
 detect_mode
+set_progress 0.3
+
 install_microg
 install_mapsv1
 install_gsync
 install_fdroid
 install_store
+set_progress 0.5
+
 install_apps
+set_progress 0.75
+
 install_zelda
 install_initd
 install_swipe
@@ -44,7 +53,9 @@ install_nano
 install_nanodroidscripts
 install_shell_utils
 install_fonts
+set_progress 0.9
 
 nanodroid_finalize
+set_progress 1.0
 
 exit 0
