@@ -1,5 +1,31 @@
 # ChangeLog
 
+## 16.4 20180328
+
+### Bug Fixes
+
+* CommonInstaller
+  * fix magisk.img handling when an installation error occurs
+* Full Package
+  * MPV build from 16.3 crashed on x86_64 and arm64, fixed build included
+
+### General Changes
+
+* CommonInstaller
+  * programmatic /system/xbin handling
+     * if /system/xbin exists in ROM use it for installing utilities and scripts
+     * if /system/xbin does not exist in ROM, use /system/bin instead
+  * progressbar functions
+     * stuff taken from osm0sis' busybox installer
+* Full, F-Droid, microG packages
+  * don't unmount /system at the beginning of the installation process, just to re-mount it later during mount_partitions()
+  * utilize CommonInstaller progressbar functions for proper progressbar display
+
+### Software Updates
+
+* Automatic
+  * GNU Nano (2.9.4)
+
 ## 16.3.20180327
 
 ### Bug Fixes
