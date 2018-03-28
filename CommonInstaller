@@ -1001,7 +1001,15 @@ nanodroid_install_lib () {
 }
 
 nanodroid_substitute () {
-	target="${MODPATH}/system/${1}"
+	dir="$(dirname "${1}")"
+	file="$(basename "${1}")"
+
+	# if /system/xbin does not exist, use /system/bin
+	[ "${dir}" = "xbin" -a "${ROM_NO_XBIN}" -eq 1 ] && dir="bin"
+
+	target="${MODPATH}/system/${dir}/${file}"
+
+	[ ! -f "${target}" ] && error " !! file: ${file} not found"
 
 	if grep -q @ZIPDIR@ "${target}"; then
 		if [[ "${ZIPDIR}" == "/external_sd" ]]; then
