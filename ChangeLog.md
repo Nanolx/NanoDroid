@@ -6,6 +6,7 @@
 
 * CommonInstaller
   * fix magisk.img handling when an installation error occurs
+  * fix storing recovery.log in /data/adb/ after installation
 * Full Package
   * MPV build from 16.3 crashed on x86_64 and arm64, fixed build included
 

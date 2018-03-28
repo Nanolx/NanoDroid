@@ -328,6 +328,7 @@ nanodroid_finalize () {
 	ui_print " "
 
 	sync
+
 	nanodroid_storelogs
 
 	if ! ${BOOTMODE} ; then
@@ -1067,7 +1068,7 @@ echo "
 
 cat "${cfg_overlay}" >> /data/adb/.nanodroid_${MODID}
 
-${BOOTMODE} || cp /tmp/recovery.log /data/adb/.recovery_${MODID}
+${BOOTMODE} || cat /tmp/recovery.log > /data/adb/.recovery_${MODID}
 }
 
 ##########################################################################################
