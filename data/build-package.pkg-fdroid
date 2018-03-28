@@ -13,7 +13,7 @@ create_fdroid_package() {
 	zip_add "system/app/FDroid/"
 	zip_add "system/priv-app/FDroidPrivileged/"
 	zip_add "system/etc/permissions/org.fdroid.fdroid.privileged.xml"
-	zip_add "system/bin/unzip*"
+	zip_add "system/xbin/unzip*"
 	cd "${CWD}"
 
 	cd "${CWD}/F-Droid"
