@@ -176,7 +176,8 @@ error () {
 
 	if [ "${MODE}" = "MAGISK" ]; then
 		rm -rf "${MODPATH}"
-		magisk_install_cleanup
+		unmount_magisk_img
+		${BOOTMODE} || recovery_cleanup
 	fi
 
 	nanodroid_storelogs
