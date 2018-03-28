@@ -71,6 +71,14 @@ ui_print() {
 	fi
 }
 
+show_progress() {
+	echo "progress ${1} ${2}" >> $OUTFD
+}
+
+set_progress() {
+	echo "set_progress ${1}" >> $OUTFD
+}
+
 grep_prop() {
 	REGEX="${1}"
 	shift
