@@ -757,8 +757,8 @@ install_nanodroidscripts () {
 			nanodroid_install_file xbin/${script} bin
 		done
 
-		nanodroid_substitute bin/nanodroid-overlay
-		nanodroid_substitute bin/nanodroid-prop
+		nanodroid_substitute xbin/nanodroid-overlay
+		nanodroid_substitute xbin/nanodroid-prop
 	fi
 }
 
@@ -766,7 +766,7 @@ install_fonts () {
 	if [ "${nanodroid_fonts}" -eq 1 ]; then
 		ui_print " << Nintendo Fonts"
 		nanodroid_install_file xbin/nanodroid-font bin
-		nanodroid_substitute bin/nanodroid-font
+		nanodroid_substitute xbin/nanodroid-font
 		nanodroid_install_file xbin/nfnt bin
 
 		nanodroid_install_dir fonts
