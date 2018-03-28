@@ -559,7 +559,7 @@ magisk_install_finish () {
 		;;
 	esac
 
-	if [ ! -z ${CUSTOM_FONT} -a ${nanodroid_fonts} -eq 1 ]; then
+	if [ ! -z ${CUSTOM_FONT} -a "${nanodroid_fonts}" -eq 1 ]; then
 		ui_print " << Restore NanoDroid-Font (${CUSTOM_FONT})"
 		if [ "${ROM_NO_XBIN}" -eq 1 ]; then
 			${MODPATH}/system/bin/nanodroid-font -s "${CUSTOM_FONT}"
