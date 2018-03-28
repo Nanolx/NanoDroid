@@ -7,8 +7,6 @@ ZIP=${3}
 ZIPDIR=$(dirname "${ZIP}")
 MODID=NanoDroid
 
-umount /system &>/dev/null
-
 mkdir /dev/tmp
 unzip -o "${ZIP}" CommonInstaller -d "/dev/tmp"
 if [ ! -f /dev/tmp/CommonInstaller ]; then
@@ -32,7 +30,6 @@ get_cfg_apps
 get_cfg_overlay
 
 detect_mode
-
 install_microg
 install_mapsv1
 install_gsync
