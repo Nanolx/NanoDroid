@@ -65,17 +65,17 @@ ui_print() {
 	if ${BOOTMODE}; then
 		echo "${@}"
 	else 
-		echo -n -e "ui_print ${@}\n" >> /proc/self/fd/$OUTFD
-		echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+		echo -n -e "ui_print ${@}\n" >> /proc/self/fd/${OUTFD}
+		echo -n -e "ui_print\n" >> /proc/self/fd/${OUTFD}
 	fi
 }
 
 show_progress() {
-	echo "progress ${1} ${2}" >> $OUTFD
+	echo "progress ${1} ${2}" >> /proc/self/fd/${OUTFD}
 }
 
 set_progress() {
-	echo "set_progress ${1}" >> $OUTFD
+	echo "set_progress ${1}" >> /proc/self/fd/${OUTFD}
 }
 
 grep_prop() {
