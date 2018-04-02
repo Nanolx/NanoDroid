@@ -1,6 +1,6 @@
 #!/sbin/sh
 
-VERSION=16.4.20180328
+VERSION=16.5.99999999
 
 GOOGLE_APPS="GoogleFeedback
 GoogleLoginService
