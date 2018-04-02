@@ -258,45 +258,43 @@ detect_mode () {
 }
 
 backup_nlpconflicts () {
-	if [ "${nanodroid_microg}" -eq 1 -o "${MODID}" = "NanoDroid_microG" ]; then
-		for app in ${GOOGLE_APPS}; do
-			case ${MODE} in
-				SYSTEM )
-					if [ -d "/system/priv-app/${app}" ]; then
-						mkdir -p /sdcard/nanodroid_backups/priv-app/
-						mv /system/priv-app/${app} /sdcard/nanodroid_backups/priv-app/
+	for app in ${GOOGLE_APPS}; do
+		case ${MODE} in
+			SYSTEM )
+				if [ -d "/system/priv-app/${app}" ]; then
+					mkdir -p /sdcard/nanodroid_backups/priv-app/
+					mv /system/priv-app/${app} /sdcard/nanodroid_backups/priv-app/
 
-						ui_print " "
-						ui_print " ++ Moving ${app} to /sdcard/nanodroid_backups/"
-						ui_print " ++ it conflicts with microG/location backends"
-						ui_print " "
-					elif [ -d "/system/app/${app}" ]; then
-						mkdir -p /sdcard/nanodroid_backups/app/
-						mv /system/app/${app} /sdcard/nanodroid_backups/app/
+					ui_print " "
+					ui_print " ++ Moving ${app} to /sdcard/nanodroid_backups/"
+					ui_print " ++ it conflicts with microG/location backends"
+					ui_print " "
+				elif [ -d "/system/app/${app}" ]; then
+					mkdir -p /sdcard/nanodroid_backups/app/
+					mv /system/app/${app} /sdcard/nanodroid_backups/app/
 
-						ui_print " "
-						ui_print " ++ Moving ${app} to /sdcard/nanodroid_backups/"
-						ui_print " ++ it conflicts with microG/location backends"
-						ui_print " "
+					ui_print " "
+					ui_print " ++ Moving ${app} to /sdcard/nanodroid_backups/"
+					ui_print " ++ it conflicts with microG/location backends"
+					ui_print " "
+				fi
+			;;
+
+			MAGISK )
+				if [ -d "/system/priv-app/${app}" -o -d "/system/app/${app}" ]; then
+					ui_print " "
+					ui_print " ++ Creating overlay for ${app}"
+					ui_print " ++ it conflicts with microG/location backends"
+					ui_print " "
+
+					if [ "${ROM_NO_XBIN}" -eq 1 ]; then
+						${MODPATH}/system/bin/nanodroid-overlay --add ${app}
+					else	${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
 					fi
-				;;
-
-				MAGISK )
-					if [ -d "/system/priv-app/${app}" -o -d "/system/app/${app}" ]; then
-						ui_print " "
-						ui_print " ++ Creating overlay for ${app}"
-						ui_print " ++ it conflicts with microG/location backends"
-						ui_print " "
-
-						if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-							${MODPATH}/system/bin/nanodroid-overlay --add ${app}
-						else	${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
-						fi
-					fi
-				;;
-			esac
-		done
-	fi
+				fi
+			;;
+		esac
+	done
 }
 
 unpack_zip () {
@@ -313,12 +311,6 @@ unpack_zip () {
 }
 
 nanodroid_finalize () {
-	case ${MODID} in
-		NanoDroid | NanoDroid_microG )
-			backup_nlpconflicts
-		;;
-	esac
-
 	[ "${MODE}" = "MAGISK" ] && magisk_install_finish
 	rm -rf ${INSTALLER}
 
@@ -579,6 +571,10 @@ install_microg () {
 	# install microG if requested
 	# respectively force if it's the microG package
 	if [ "${nanodroid_microg}" -eq 1 -o "${MODID}" = "NanoDroid_microG" ]; then
+
+		# first get rid of conflicting packages
+		backup_nlpconflicts
+
 		case ${nanodroid_nlpbackend} in
 			0 ) NLPBACKEND=""
 			    ui_print " << with microG [Nominatim]" ;;
