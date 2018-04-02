@@ -241,8 +241,8 @@ detect_mode () {
 	[ "${MODE}" = "MAGISK" ] && magisk_install_setup
 
 	if [ "${nanodroid_fonts}" -eq 1 ]; then
-		if test -h ${MODPATH}/system/fonts/Roboto-Regular.ttf; then
-			CUSTOM_FONT="$(basename $(readlink ${MODPATH}/system/fonts/Roboto-Regular.ttf) .ttf)"
+		if test -h ${RESTORE_PATH}/system/fonts/Roboto-Regular.ttf; then
+			CUSTOM_FONT="$(basename $(readlink ${RESTORE_PATH}/system/fonts/Roboto-Regular.ttf) .ttf)"
 			ui_print " << Detected NanoDroid-Font (${CUSTOM_FONT})"
 		fi
 	fi
@@ -421,6 +421,7 @@ magisk_install_setup () {
 	REALPATH=/sbin/.core/img/${MODID}
 
 	${BOOTMODE} && boot_actions || recovery_actions
+	${BOOTMODE} && RESTORE_PATH=${REALPATH} || RESTORE_PATH=${MODPATH}
 
 	request_size_check "${INSTALLER}"
 	mount_magisk_img
@@ -467,33 +468,33 @@ magisk_install_setup () {
 }
 
 magisk_install_preinst () {
-	if [ -f ${MODPATH}/system.prop ]; then
+	if [ -f ${RESTORE_PATH}/system.prop ]; then
 		ui_print " << backing up module's system.prop"
-		cp ${MODPATH}/system.prop ${TMPDIR}/system.prop
+		cp ${RESTORE_PATH}/system.prop ${TMPDIR}/system.prop
 	fi
 
-	if [ -f ${MODPATH}/system/framework/services.jar ]; then
+	if [ -f ${RESTORE_PATH}/system/framework/services.jar ]; then
 		if [ -f /data/adb/.nanodroid-patcher ]; then
 			ui_print " << backing up patched services.jar"
-			cp ${MODPATH}/system/framework/services.jar \
+			cp ${RESTORE_PATH}/system/framework/services.jar \
 				${TMPDIR}/services.jar
 		else	ui_print " "
 			ui_print " ++ /data/adb/.nanodroid-patcher is missing, assuming"
 			ui_print " ++ ROM was updated, please re-run NanoDroid-Patcher"
 			ui_print " "
-			rm -f ${MODPATH}/system/framework/services.jar
+			rm -f ${RESTORE_PATH}/system/framework/services.jar
 		fi
 	elif [ -f /data/adb/.nanodroid-patcher ]; then
 		ui_print " "
 		ui_print " ++ /data/adb/.nanodroid-patcher exists, but"
-		ui_print " ++ ${MODPATH}/system/framework/services.jar"
+		ui_print " ++ ${RESTORE_PATH}/system/framework/services.jar"
 		ui_print " ++ doesn't, assuming Magisk was uninstalled"
 		ui_print " ++ re-run NanoDroid-Patcher if required"
 		ui_print " "
 		rm -f /data/adb/.nanodroid-patcher
 	fi
 
-	rm -rf "${MODPATH}"
+	rm -rf "${RESTORE_PATH}"
 
 	for dir in app etc priv-app bin; do
 		mkdir -p "${MODPATH}/system/${dir}"
@@ -688,7 +689,7 @@ install_apps () {
 		for app in ${INSTALL_APPS}; do
 			if [[ ${app} = Adaway && -d /system/app/AdAway ]]; then
 				ui_print " <<> app: ${app} already provided by ROM (as AdAway)"
-			elif [[ -d /system/app/${app} && ! -d ${REALPATH}/system/app/${app} ]]; then
+			elif [[ -d /system/app/${app} && ! -d ${RESTORE_PATH}/system/app/${app} ]]; then
 				ui_print " <<> app: ${app} already provided by ROM"
 			elif [[ -d "${INSTALLER}/system/app/${app}" ]]; then
 				nanodroid_install_apk ${app}
@@ -1056,6 +1057,7 @@ MODE=${MODE}
 MAGISK_VER_CODE=${MAGISK_VER_CODE}
 CUSTOM_FONT=${CUSTOM_FONT}
 ROM_NO_XBIN=${ROM_NO_XBIN}
+RESTORE_PATH=${RESTORE_PATH}
 
 ### SETUP ###
 " > /data/adb/.nanodroid_${MODID}

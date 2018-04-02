@@ -6,6 +6,10 @@
 
 * CommonInstaller
   * fix microG GsfProxy not installed in System Mode
+  * fix restoration tasks during NanoDroid update when upgrading from Magisk Manager
+     * restore NanoDroid-Font settings
+     * restore NanoDroid-Prop settings
+     * restore patched `services.jar` (if applicable)
 
 ### General Changes
 
