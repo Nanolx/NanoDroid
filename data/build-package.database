@@ -52,8 +52,8 @@ fd_SIMPLECALENDAR=(fdroid com.simplemobiletools.calendar app SimpleCalendar)
 fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery app SimpleGallery)
 fd_TERMUX=(fdroid com.termux app Termux)
 
-gd_ORBOT=(https://guardianproject.info/releases/orbot-latest.apk app Orbot)
-gd_ORFOX=(https://guardianproject.info/releases/Orfox-v1.5.1-RC1-Fennec-52.7.2esr-TorBrowser-7.5-1.apk app Orfox)
+gd_ORBOT=(guardian org.torproject.android app Orbot)
+gd_ORFOX=(guardian info.guardianproject.orfox app Orfox)
 
 gh_K9MAIL=(k9mail/k-9 app K9Mail)
 gh_MPV=(mpv-android/mpv-android app MPV)

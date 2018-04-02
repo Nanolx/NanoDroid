@@ -14,6 +14,8 @@
      * improve GApps removal mechanism
 * Full, microG packages
   * move microG GsfProxy from /system/priv-app to /system/app
+* Full package
+  * download Orbot and Orfox from Guardian Project F-Droid repo instead from the release mirror
 
 ### Updates
 

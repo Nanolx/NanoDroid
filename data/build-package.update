@@ -66,11 +66,11 @@ update_apps () {
 	grab_apk_from_repo ${fd_SIMPLECALENDAR[@]}
 	grab_apk_from_repo ${fd_SIMPLEGALLERY[@]}
 	grab_apk_from_repo ${fd_TERMUX[@]}
+	grab_apk_from_repo ${gd_ORBOT[@]}
+	grab_apk_from_repo ${gd_ORFOX[@]}
 
 	# applications not managed in repositories
 	# plain URL
-	grab_apk_from_url ${gd_ORBOT[@]}
-	grab_apk_from_url ${gd_ORFOX[@]}
 	#grab_apk_from_url ${nlx_OPENLAUNCHER[@]}
 	grab_apk_from_url ${nlx_MPV[@]}
 
