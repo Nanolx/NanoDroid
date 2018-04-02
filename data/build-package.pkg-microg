@@ -11,11 +11,11 @@ create_microg_package() {
 
 	cd "${CWD}/Full"
 
-	for app in nlpBackendDejavu nlpBackendIchnaea nlpBackendNominatim; do
+	for app in GsfProxy nlpBackendDejavu nlpBackendIchnaea nlpBackendNominatim; do
 		zip_add "system/app/${app}/"
 	done
 
-	for app in DroidGuard FakeStore GmsCore GsfProxy Phonesky YalpStore; do
+	for app in DroidGuard FakeStore GmsCore Phonesky YalpStore; do
 		zip_add "system/priv-app/${app}/"
 	done
 
