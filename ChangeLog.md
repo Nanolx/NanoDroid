@@ -34,6 +34,7 @@
 
 * Manual
   * Play Store (9.4.18)
+  * MPV (20180402+merges)
 
 ## 16.4 20180328
 
