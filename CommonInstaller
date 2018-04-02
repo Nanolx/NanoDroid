@@ -287,9 +287,8 @@ backup_nlpconflicts () {
 					ui_print " ++ it conflicts with microG/location backends"
 					ui_print " "
 
-					if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-						${MODPATH}/system/bin/nanodroid-overlay --add ${app}
-					else	${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
+					if ! grep -q "^${app}" ${cfg_overlay}; then
+						echo ${app} >> ${cfg_overlay}
 					fi
 				fi
 			;;
