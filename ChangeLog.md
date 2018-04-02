@@ -1,5 +1,24 @@
 # ChangeLog
 
+## 16.5 in-dev
+
+### Bug Fixes
+
+* CommonInstaller
+  * fix microG GsfProxy not installed in System Mode
+
+### Updates
+
+* Automatic
+  * GNU Nano 2.9.5
+  * F-Droid (1.2-alpha0)
+  * (Simple) Calendar (3.4.1)
+  * (Simple) Gallery (3.6.3)
+  * KeePass DX (2.5.0.0-beta7)
+
+* Manual
+  * Play Store (9.4.18)
+
 ## 16.4 20180328
 
 ### Bug Fixes
