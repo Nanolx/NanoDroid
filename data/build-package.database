@@ -14,7 +14,7 @@ nlx_PHONESKY=(https://www.nanolx.org/apk/Phonesky.apk priv-app Phonesky)
 ###
 
 uG_GMSCORE=(microg com.google.android.gms priv-app GmsCore)
-uG_GSFPROXY=(microg com.google.android.gsf priv-app GsfProxy)
+uG_GSFPROXY=(microg com.google.android.gsf app GsfProxy)
 uG_DROIDGUARD=(microg org.microg.gms.droidguard priv-app DroidGuard)
 uG_FAKESTORE=(microg com.android.vending priv-app FakeStore)
 fd_NLPDEJAVU=(fdroid org.fitchfamily.android.dejavu app nlpBackendDejavu)
@@ -136,5 +136,5 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/priv-app/DroidGuard/DroidGuard.apk
 	Full/system/priv-app/FDroidPrivileged/FDroidPrivileged.apk
 	Full/system/priv-app/FakeStore/FakeStore.apk
-	Full/system/priv-app/GsfProxy/GsfProxy.apk
+	Full/system/app/GsfProxy/GsfProxy.apk
 	Full/system/priv-app/YalpStore/YalpStore.apk )
