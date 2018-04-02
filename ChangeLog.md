@@ -26,6 +26,7 @@
   * (Simple) Gallery (3.6.3)
   * KeePass DX (2.5.0.0-beta7)
   * QKSMS (3.0-beta8)
+  * microG GmsCore (0.2.4-111)
 
 * Manual
   * Play Store (9.4.18)
