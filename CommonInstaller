@@ -702,15 +702,27 @@ install_apps () {
 
 install_store () {
 	# install Yalp Store or Play Store whichever requested
-	if [ "${nanodroid_play}" -eq 1 ]; then
-		ui_print " << with Play Store"
-		nanodroid_install_apk Phonesky
-	elif [ "${nanodroid_play}" -eq 2 ]; then
-		ui_print " << with Yalp Store (and Fake Store)"
-		nanodroid_install_apk YalpStore
-		nanodroid_install_apk FakeStore
-	else	ui_print " << without App Store"
-	fi
+	case "${nanodroid_play}" in
+		0 )
+			ui_print " << without App Store"
+		;;
+
+		1 )
+			ui_print " << with Play Store"
+			nanodroid_install_apk Phonesky
+		;;
+
+		2 )
+			ui_print " << with Yalp Store (and Fake Store)"
+			nanodroid_install_apk YalpStore
+			nanodroid_install_apk FakeStore
+		;;
+
+		3 )
+			ui_print " << with Fake Store"
+			nanodroid_install_apk FakeStore
+		;;
+	esac
 }
 
 install_zelda () {
@@ -724,7 +736,7 @@ install_zelda () {
 
 install_bash () {
 	if [ "${nanodroid_bash}" -eq 1 ]; then
-		ui_print " << GNU Bash Shell"
+		ui_print " << with GNU Bash Shell"
 		nanodroid_install_file etc/bash_logout
 		nanodroid_install_file etc/bashrc
 
@@ -738,7 +750,7 @@ install_bash () {
 }
 
 install_nanodroidscripts () {
-	ui_print " << NanoDroid Scripts"
+	ui_print " << with NanoDroid Scripts"
 
 	for script in npem nupd nutl \
 		nanodroid-perm nanodroid-upd \
@@ -759,7 +771,7 @@ install_nanodroidscripts () {
 
 install_fonts () {
 	if [ "${nanodroid_fonts}" -eq 1 ]; then
-		ui_print " << Nintendo Fonts"
+		ui_print " << with Nintendo Fonts"
 		nanodroid_install_file xbin/nanodroid-font bin
 		nanodroid_substitute xbin/nanodroid-font
 		nanodroid_install_file xbin/nfnt bin
@@ -770,7 +782,7 @@ install_fonts () {
 
 install_nano () {
 	if [ "${nanodroid_nano}" -eq 1 ]; then
-		ui_print " << GNU Nano Terminal Editor"
+		ui_print " << with GNU Nano Terminal Editor"
 		nanodroid_install_dir etc/terminfo
 
 		nanodroid_install_file xbin/nano bin
@@ -781,7 +793,7 @@ install_nano () {
 
 install_shell_utils () {
 	if [ "${nanodroid_utils}" -eq 1 ]; then
-		ui_print " << Shell Utilities"
+		ui_print " << with Shell Utilities"
 
 		# architecture dependend stuff
 		for binary in col colcrt colrm findfs findmnt hexdump \

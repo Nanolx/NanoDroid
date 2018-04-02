@@ -76,6 +76,7 @@ what app store to use:
 * `0` will not provide any app store
 * `1` will provide **Play Store**
 * `2` will provide **Yalp Store** and **Fake Store**
+* `3` will provide **Fake Store** only
 
 `nanodroid_overlay=[0|1]`
 

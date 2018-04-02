@@ -12,10 +12,14 @@
 * CommonInstaller
   * Full, microG packages
      * improve GApps removal mechanism
+     * improve some installer messages
+     * new value 3 for nanodroid_play variable will install Fake Store only
 * Full, microG packages
   * move microG GsfProxy from /system/priv-app to /system/app
 * Full package
   * download Orbot and Orfox from Guardian Project F-Droid repo instead from the release mirror
+* SetupWizard
+  * update for nanodroid_play value 3
 
 ### Updates
 
