@@ -7,6 +7,14 @@
 * CommonInstaller
   * fix microG GsfProxy not installed in System Mode
 
+### General Changes
+
+* CommonInstaller
+  * Full, microG packages
+     * improve GApps removal mechanism
+* Full, microG packages
+  * move microG GsfProxy from /system/priv-app to /system/app
+
 ### Updates
 
 * Automatic
@@ -15,6 +23,7 @@
   * (Simple) Calendar (3.4.1)
   * (Simple) Gallery (3.6.3)
   * KeePass DX (2.5.0.0-beta7)
+  * QKSMS (3.0-beta8)
 
 * Manual
   * Play Store (9.4.18)
