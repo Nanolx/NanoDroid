@@ -1,13 +1,13 @@
-diff -Nupr PS_9314.orig/AndroidManifest.xml PS_9314/AndroidManifest.xml
---- PS_9314.orig/AndroidManifest.xml	2018-03-21 19:03:13.548203133 +0100
-+++ PS_9314/AndroidManifest.xml	2018-03-21 19:04:27.000000000 +0100
+diff -Nupr PS_9418.orig/AndroidManifest.xml PS_9418/AndroidManifest.xml
+--- PS_9418.orig/AndroidManifest.xml	2018-03-29 22:47:40.112813568 +0200
++++ PS_9418/AndroidManifest.xml	2018-03-29 22:48:26.236938838 +0200
 @@ -1,4 +1,5 @@
  <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" android:compileSdkVersion="27" android:compileSdkVersionCodename="P" package="com.android.vending">
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
      <uses-permission android:name="com.android.vending.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.android.vending.billing.IN_APP_NOTIFY.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-@@ -109,6 +110,7 @@
+@@ -110,6 +111,7 @@
      <permission android:name="com.google.android.finsky.permission.ACCESS_INSTANT_APP_NOTIFICATION_ENFORCEMENT" android:protectionLevel="signature"/>
      <permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" android:protectionLevel="normal"/>
      <application android:backupAgent="com.android.vending.VendingBackupAgent" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher_play_store" android:killAfterRestore="false" android:label="@LEMON_transformed_from_string/app_long_name" android:name="com.google.android.finsky.application.impl.FinskyApplication" android:requiredForAllUsers="true" android:restoreAnyVersion="true" android:restoreNeedsApplication="true" android:restrictedAccountType="com.google" android:roundIcon="@mipmap/ic_round_launcher_play_store" android:supportsRtl="@bool/is_rtl_enabled">
@@ -22,28 +22,28 @@ diff -Nupr PS_9314.orig/AndroidManifest.xml PS_9314/AndroidManifest.xml
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_9314.orig/res/values/public.xml PS_9314/res/values/public.xml
---- PS_9314.orig/res/values/public.xml	2018-03-21 19:03:12.970205847 +0100
-+++ PS_9314/res/values/public.xml	2018-03-21 19:05:01.377780380 +0100
-@@ -9049,6 +9049,7 @@
-     <public type="string" name="yes" id="0x7f1307c5" />
-     <public type="string" name="yes_im_in" id="0x7f1307c6" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f1307c7" />
-+    <public type="string" name="fake_signature" id="0x7f1307c8" />
+diff -Nupr PS_9418.orig/res/values/public.xml PS_9418/res/values/public.xml
+--- PS_9418.orig/res/values/public.xml	2018-03-29 22:47:39.571800345 +0200
++++ PS_9418/res/values/public.xml	2018-03-29 22:48:57.059689022 +0200
+@@ -9064,6 +9064,7 @@
+     <public type="string" name="yes" id="0x7f1307c4" />
+     <public type="string" name="yes_im_in" id="0x7f1307c5" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f1307c6" />
++    <public type="string" name="fake_signature" id="0x7f1307c7" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -9938,4 +9939,4 @@
+@@ -9951,4 +9952,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f190029" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002a" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002b" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_9314.orig/res/values/strings.xml PS_9314/res/values/strings.xml
---- PS_9314.orig/res/values/strings.xml	2018-03-21 19:03:12.969205852 +0100
-+++ PS_9314/res/values/strings.xml	2018-03-21 19:05:18.387721803 +0100
-@@ -1864,4 +1864,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_9418.orig/res/values/strings.xml PS_9418/res/values/strings.xml
+--- PS_9418.orig/res/values/strings.xml	2018-03-29 22:47:39.570800321 +0200
++++ PS_9418/res/values/strings.xml	2018-03-29 22:49:17.402183525 +0200
+@@ -1863,4 +1863,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />
