@@ -1,5 +1,17 @@
 # ChangeLog
 
+## 17.0 in-dev
+
+### General Changes
+
+* Full package
+  * switch to QKSMS beta build
+
+### Updates
+
+* Automatic
+  * QKSMS (3.0-beta10)
+
 ## 16.5.20180402
 
 ### Bug Fixes
@@ -34,12 +46,16 @@
   * (Simple) Calendar (3.4.1)
   * (Simple) Gallery (3.6.3)
   * KeePass DX (2.5.0.0-beta7)
-  * QKSMS (3.0-beta8)
   * microG GmsCore (0.2.4-111)
 
 * Manual
   * Play Store (9.4.18)
   * MPV (20180402+merges)
+
+### Downgrades
+
+* Automatic
+  * QKSMS (2.7.3)
 
 ## 16.4 20180328
 
