@@ -22,6 +22,7 @@
   * move microG GsfProxy from /system/priv-app to /system/app
 * Full package
   * download Orbot and Orfox from Guardian Project F-Droid repo instead from the release mirror
+  * revert to stable QKSMS build (2.7.3)
 * SetupWizard
   * update for nanodroid_play value 3
 
