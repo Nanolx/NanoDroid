@@ -5,12 +5,15 @@
 ### General Changes
 
 * Full package
-  * switch to QKSMS beta build
+  * switch to QKSMS 3
 
 ### Updates
 
-* Automatic
-  * QKSMS (3.0-beta10)
+* automatic
+  * QKSMS (3.0.0)
+
+* manual
+  * Play Store (9.5.09)
 
 ## 16.5.20180402
 
