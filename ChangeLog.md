@@ -11,6 +11,7 @@
 
 * automatic
   * QKSMS (3.0.0)
+  * NewPipe (0.13.1)
 
 * manual
   * Play Store (9.5.09)
