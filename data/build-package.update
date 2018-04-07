@@ -78,7 +78,7 @@ update_apps () {
 	grab_apk_from_github ${gh_K9MAIL[@]}
 	#grab_apk_from_github ${gh_MPV[@]}
 	grab_apk_from_github ${gh_TWIDERE[@]}
-	#grab_apk_from_github ${gh_QKSMS[@]}
+	grab_apk_from_github ${gh_QKSMS[@]}
 
 	# APK Mirror
 	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
