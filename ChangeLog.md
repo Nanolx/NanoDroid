@@ -10,8 +10,9 @@
 ### Updates
 
 * automatic
-  * QKSMS (3.0.0)
+  * QKSMS (3.0.2)
   * NewPipe (0.13.1)
+  * Orfox (1.5.2-RC1)
 
 * manual
   * Play Store (9.5.09)
