@@ -64,7 +64,7 @@ The following applications are custom builds:
   * [Download Link](https://www.nanolx.org/apk/Phonesky.apk)
 * Fake Store (reason: built with CHECK_LICENSE permission)
   * [Download Link](https://www.nanolx.org/apk/FakeStore.apk)
-* MPV (reason: inferquent updates, merge-requests included)
+* MPV (reason: infrequent updates, merge-requests included)
   * [Download Link](https://www.nanolx.org/apk/MPV.apk)
 
 Also `build-package` looks if the configuration files
@@ -236,8 +236,8 @@ The `nanodroid-overlay` script handles the pseudo-debloat feature (Magisk-only)
   * show the list of pseudo-debloated apps
   * add or remove apps from the list of pseudo-debloated apps
 
-Full details on the Pseudo Debloat feature [> Details](doc/PseudoDebloat.md)
-Full details on the NanoDroid-Overlay Script [> Details](doc/NanoDroidOverlay.md)
+  * Full details on the Pseudo Debloat feature [> Details](doc/PseudoDebloat.md)
+  * Full details on the NanoDroid-Overlay Script [> Details](doc/NanoDroidOverlay.md)
 
 #### NanoDroid-Prop
 
@@ -261,7 +261,7 @@ The `nanodroid-upd` script allows to update NanoDroid's custom apks
 
   * Play Store
   * Fake Store
-  * OpenLauncher
+  * MPV
 
 which can't be updated through Play/Yalp Store or F-Droid otherwise
 
