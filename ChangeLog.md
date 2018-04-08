@@ -6,6 +6,10 @@
 
 * Full package
   * switch to QKSMS 3
+* Uninstaller
+  * System Mode
+     * sync list of GApps with CommonInstaller
+     * restore System font if altered using NanoDroid-Font upon uninstallation
 
 ### Updates
 
