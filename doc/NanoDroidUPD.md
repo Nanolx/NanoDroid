@@ -10,6 +10,8 @@ The `nanodroid-upd` Script, respectively it's shortcut `nupd` is used by NanoDro
 
 Applications are only updated if they are installed already during NanoDroid installation
 
+**`nanodroid-upd` requires Busybox to be installed!**
+
 ## Invocation
 
 From within a terminal on your device, for example `adb shell` or `Termux` invoke the script using either

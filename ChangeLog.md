@@ -10,9 +10,10 @@
 ### Updates
 
 * automatic
-  * QKSMS (3.0.2)
+  * QKSMS (3.0.3)
   * NewPipe (0.13.1)
   * Orfox (1.5.2-RC1)
+  * F-Droid (1.2-alpha1)
 
 * manual
   * Play Store (9.5.09)
