@@ -503,6 +503,8 @@ Additional helpful information in the microG [> Wiki](https://github.com/microg/
 ## TODO
 
 * better error handling in **on-pc** framework-patcher
+* addon.d for System Mode installation (OTA-Survival)
+* on-device de-odexing of `services.jar` in NanoDroid-Patcher
 
 ## FAQ
 
@@ -511,8 +513,8 @@ Q: will there be a GApps version, instead of microG?
 A: no. but you can choose not to populate microG.
 
 Q: what devices is this tested on?
-A: Moto X Play (lux), Nexus 6 (shamu)
+A: One Plus 3T, Nexus 6, Moto G (3rd Gen)
 
 Q: what ROMs was this tested on?
-A: LineageOS, Resurrection Remix, AICP, AOSP Extended, crDroid, should work on any LineageOS / AOSP based ROM that is working with Magisk.
+A: OmniROM, AOSP Extended; should work on any LineageOS / AOSP based ROM that is working with Magisk.
 ```
