@@ -7,7 +7,6 @@ GOOGLE_APPS="GoogleFeedback
 GoogleLoginService
 GoogleOneTimeInitializer
 GoogleServicesFramework
-GsfProxy
 MarketUpdater
 PlayGames
 Velvet
