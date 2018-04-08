@@ -167,6 +167,18 @@ system_mode_uninstall () {
 	ui_print " << using: ${1}"
 	system_list=${1}
 
+	if test -h /system/fonts/Roboto-Regular.ttf; then
+		CUSTOM_FONT="$(basename $(readlink /system/fonts/Roboto-Regular.ttf) .ttf)"
+		ui_print " << Detected NanoDroid-Font (${CUSTOM_FONT})"
+		ui_print "  < Restoring original Font"
+
+		if [ -f /system/xbin/nanodroid-font ]; then
+			/system/xbin/nanodroid-font -r
+		elif [ -f /system/bin/nanodroid-font ]; then
+			/system/bin/nanodroid-font -r
+		fi
+	fi
+
 	# services.jar needs special treament
 	if grep -q /system/framework/services.jar ${system_list}; then
 		if [ -f /sdcard/nanodroid_backups/services.jar ]; then
