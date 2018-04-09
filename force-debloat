@@ -1,14 +1,20 @@
 #!/sbin/sh
 
 # check for configuration files
+# check for configuration files
 config_locations="/sdcard /external_sd /tmp /data"
 
 get_config () {
 	config=""
 	config_exists=0
 	for path in ${config_locations}; do
-		if test -r "${path}/${1}" -a -f "${path}/${1}"; then
-			config="${path}/${1}"
+		# rename config files if required (< 15.1)
+		if test -r "${path}/.nanomod-${1}"; then
+			mv "${path}/.nanomod-${1}" "${path}/.nanodroid-${1}"
+		fi
+
+		if test -r "${path}/.nanodroid-${1}"; then
+			config="${path}/.nanodroid-${1}"
 			config_exists=1
 			return
 		fi
@@ -27,7 +33,7 @@ check_nanodroidoverlay () {
 
 # check whether '.nanodroid-overlay' exists,
 # if not, use fallback ${APPS}
-get_config .nanodroid-overlay
+get_config overlay
 if [ "$config_exists" -eq 1 ]; then
 	APPS="$(cat "${config}")"
 	NO_NANODROIDOVERLAY=0
@@ -131,7 +137,7 @@ This script will actually remove apps from your ROM
 "
 
 if [[ ${NO_NANODROIDOVERLAY} -eq 0 ]]; then
-	echo "using \"${nanodroidoverlay}\" file for values"
+	echo "using \"${config}\" file for values"
 else	echo "using fallback values"
 fi
 
