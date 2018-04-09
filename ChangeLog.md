@@ -2,8 +2,17 @@
 
 ## 17.0 in-dev
 
+### Bug Fixes
+
+* CommonInstaller
+  * System Mode
+     * fix creating Uninstaller information for directories
+
 ### General Changes
 
+* CommonInstaller
+  * System Mode
+     * create /data/adb if it does not exist
 * Full package
   * switch to QKSMS 3
 * Uninstaller

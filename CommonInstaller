@@ -390,6 +390,8 @@ detect_arch () {
 		echo " ++ ROM has no /system/xbin, using /system/bin instead"
 	else	ROM_NO_XBIN=0
 	fi
+
+	[ ! -d /data/adb ] && mkdir /data/adb
 }
 
 ##########################################################################################
@@ -652,7 +654,7 @@ install_gsync () {
 			set_perm_data -r "${MODPATH}/system/etc/"
 
 			[ "${MODE}" = "SYSTEM" ] && \
-				find -type f "${INSTALLER}/gsync/permissions/" |
+				find "${INSTALLER}/gsync/permissions/" -type f |
 					sed -e "s,${INSTALLER}/gsync,/system/etc,g" \
 					>> /data/adb/.nanodroid-list
 		fi
@@ -873,7 +875,7 @@ nanodroid_install_dir () {
 	esac
 
 	[ "${MODE}" = "SYSTEM" ] && \
-		find -type f "${INSTALLER}${dest}" | \
+		find "${INSTALLER}/system/${dir}" -type f | \
 			sed -e "s,^${INSTALLER},,g" \
 			>> /data/adb/.nanodroid-list
 }
