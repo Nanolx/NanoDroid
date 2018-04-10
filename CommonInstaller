@@ -634,7 +634,7 @@ install_gsync () {
 
 				set_perm_data -r "${MODPATH}/system/app/Google${app}"
 
-				[ "${MODE}" = "${SYSTEM}" ] && \
+				[ "${MODE}" = "SYSTEM" ] && \
 					echo "/system/app/Google${app}/Google${app}.apk" \
 						>> /data/adb/.nanodroid-list
 			done
@@ -924,7 +924,7 @@ nanodroid_install_apk () {
 
 	set_perm_data -r "${MODPATH}/${dest}"
 
-	[ "${MODE}" = "${SYSTEM}" ] && \
+	[ "${MODE}" = "SYSTEM" ] && \
 		echo "${dest}/${app}.apk" >> /data/adb/.nanodroid-list
 
 	nanodroid_install_lib
@@ -955,7 +955,7 @@ nanodroid_install_file () {
 		*   ) set_perm_data "${MODPATH}/system/${dir}/${xfile}" ;;
 	esac
 
-	[ "${MODE}" = "${SYSTEM}" ] && \
+	[ "${MODE}" = "SYSTEM" ] && \
 		echo "/system/${dir}/${xfile}" >> /data/adb/.nanodroid-list
 }
 
