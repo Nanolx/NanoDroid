@@ -30,8 +30,8 @@ case "${1}" in
 			ui_print "${MODID} addon.d: backup"
 			cat /data/adb/.nanodroid-list | while read FILE; do
 				test -z "${FILE}" && continue
-				echo " ${S}/${FILE}"
-				backup_file "${S}/${FILE}"
+				echo " ${FILE}"
+				backup_file "${FILE}"
 			done
 			ui_print "${MODID} addon.d: backup done"
 		fi
@@ -39,9 +39,9 @@ case "${1}" in
 	restore)
 		if [ -r /data/adb/.nanodroid-list ]; then
 			ui_print "${MODID} addon.d: restore"
-			cat /data/adb/.nanodroid-list | while read FILE REPLACEMENT; do
+			cat /data/adb/.nanodroid-list | while read FILE; do
 				test -z "${FILE}" && continue
-				[ -f "${C}/${S}/${FILE}" ] && restore_file "${S}/${FILE}" "${FILE}"
+				[ -f "${C}/${FILE}" ] && restore_file "${FILE}"
 			done
 			ui_print "${MODID} addon.d: restore done"
 		fi
