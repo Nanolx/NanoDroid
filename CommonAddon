@@ -12,16 +12,11 @@
 . /tmp/backuptool.functions
 
 MODID=@MODID@
-
-##########################################################################################
-# Stuffz
-##########################################################################################
-
 OUTFD=$(ps | grep -v grep | grep -oE "update(.*)" | cut -d" " -f3)
 
 ui_print () {
-	echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
-	echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+	echo -n -e "ui_print ${1}\n" >> /proc/self/fd/${OUTFD}
+	echo -n -e "ui_print\n" >> /proc/self/fd/${OUTFD}
 }
 
 case "${1}" in
@@ -29,8 +24,7 @@ case "${1}" in
 		if [ -r /data/adb/.nanodroid-list ]; then
 			ui_print "${MODID} addon.d: backup"
 			cat /data/adb/.nanodroid-list | while read FILE; do
-				test -z "${FILE}" && continue
-				echo " ${FILE}"
+				echo " + backup: ${FILE}"
 				backup_file "${FILE}"
 			done
 			ui_print "${MODID} addon.d: backup done"
@@ -40,8 +34,8 @@ case "${1}" in
 		if [ -r /data/adb/.nanodroid-list ]; then
 			ui_print "${MODID} addon.d: restore"
 			cat /data/adb/.nanodroid-list | while read FILE; do
-				test -z "${FILE}" && continue
-				[ -f "${C}/${FILE}" ] && restore_file "${FILE}"
+				echo " + restore: ${FILE}"
+				restore_file "${FILE}"
 			done
 			ui_print "${MODID} addon.d: restore done"
 		fi
