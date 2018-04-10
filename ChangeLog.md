@@ -6,14 +6,19 @@
 
 * CommonInstaller
   * System Mode
-     * fix creating Uninstaller information
+     * fix creating Uninstaller/Addon information
 
 ### General Changes
 
 * CommonInstaller
   * System Mode
      * create /data/adb if it does not exist
-     * addon.d for OTA survival (work-in-progress)
+     * improve creation of Uninstaller/Addon information
+     * install addon.d (CommonAddon)
+* CommonAddon
+  * System Mode
+     * Addon for OTA survival (work-in-progress)
+     * shares file list with Uninstaller
 * Full package
   * switch to QKSMS 3
 * Uninstaller
