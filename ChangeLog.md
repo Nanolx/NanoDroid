@@ -6,7 +6,7 @@
 
 * CommonInstaller
   * System Mode
-     * fix creating Uninstaller information for directories
+     * fix creating Uninstaller information
 
 ### General Changes
 
