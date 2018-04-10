@@ -357,7 +357,8 @@ install_addond () {
 
 	[ -d /data/nanomod.patcher ] && rm -rf /data/nanomod.patcher
 	[ -d /data/adb/nanomod_patcher ] && rm -rf /data/nanomod_patcher
-	rm -f /system/addon.d/75-nanomodpatcher.sh
+	rm -f /system/addon.d/75-nanomodpatcher.sh \
+		/system/addon.d/75-nanodroidpatcher.sh
 
 	for file in core_services.jar.dex dexpatcher.dex file.arm file.x86 \
 		hook_4.1-6.0_services.jar.dex hook_7.0-8.0_services.jar.dex \
@@ -367,7 +368,7 @@ install_addond () {
 
 	cp /dev/tmp/CommonPatcher /data/adb/nanodroid_patcher/
 
-	cp "${BASEDIR}/75-nanodroidpatcher.sh" /system/addon.d/
-	chmod 0755 /system/addon.d/75-nanodroidpatcher.sh
+	cp "${BASEDIR}/999-nanodroidpatcher.sh" /system/addon.d/
+	chmod 0755 /system/addon.d/999-nanodroidpatcher.sh
 }
 
