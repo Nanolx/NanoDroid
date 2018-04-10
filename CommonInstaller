@@ -925,7 +925,7 @@ nanodroid_install_apk () {
 	set_perm_data -r "${MODPATH}/${dest}"
 
 	[ "${MODE}" = "SYSTEM" ] && \
-		echo "${dest}/${app}.apk" >> /data/adb/.nanodroid-list
+		echo "/${dest}/${app}.apk" >> /data/adb/.nanodroid-list
 
 	nanodroid_install_lib
 }
