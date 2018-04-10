@@ -326,7 +326,6 @@ nanodroid_finalize () {
 	ui_print " "
 
 	sync
-
 	nanodroid_storelogs
 
 	if ! ${BOOTMODE} ; then
@@ -1025,7 +1024,7 @@ nanodroid_install_lib () {
 				set_perm_data ${libd}/${lib_arch}/$(basename ${lib})
 
 				[ "${MODE}" = "SYSTEM" ] && \
-					echo /${dir}/${app}/${lib_arch}/$(basename ${lib}) \
+					echo /${dir}/${app}/lib/${lib_arch}/$(basename ${lib}) \
 						>> /data/adb/.nanodroid-list
 			done
 		fi
@@ -1088,17 +1087,25 @@ RESTORE_PATH=${RESTORE_PATH}
 
 cat "${cfg_setup}" >> /data/adb/.nanodroid_${MODID}
 
+if [ ! -z "${cfg_apps}" ]; then
+
 echo "
 ### APPS ###
 " >> /data/adb/.nanodroid_${MODID}
 
 cat "${cfg_apps}" >> /data/adb/.nanodroid_${MODID}
 
+fi
+
+if [ ! -z "${cfg_overlay}" ]; then
+
 echo "
 ### OVERLAY ###
 " >> /data/adb/.nanodroid_${MODID}
 
 cat "${cfg_overlay}" >> /data/adb/.nanodroid_${MODID}
+
+fi
 
 ${BOOTMODE} || cat /tmp/recovery.log > /data/adb/.recovery_${MODID}
 }
