@@ -56,7 +56,16 @@ case "${1}" in
 		# Stub
 	;;
 	post-restore)
-		# Stub
+		if test -h /system/fonts/Roboto-Regular.ttf; then
+			CUSTOM_FONT="$(basename $(readlink /system/fonts/Roboto-Regular.ttf) .ttf)"
+			ui_print " << ${MODID} addon.d: detected NanoDroid-Font (${CUSTOM_FONT})"
+
+			if [ -f /system/xbin/nanodroid-font ]; then
+				/system/xbin/nanodroid-font -s "${CUSTOM_FONT}"
+			elif [ -f /system/bin/nanodroid-font ]; then
+				/system/bin/nanodroid-font -s "${CUSTOM_FONT}"
+			fi
+		fi
 	;;
 esac
 
