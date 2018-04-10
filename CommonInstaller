@@ -310,8 +310,14 @@ unpack_zip () {
 }
 
 nanodroid_finalize () {
-	[ "${MODE}" = "MAGISK" ] && magisk_install_finish
-	[ "${MODE}" = "SYSTEM" ] && install_addond
+	if [ "${MODE}" = "MAGISK" ]; then
+		magisk_install_finish
+	else
+		install_addond
+
+		sort /data/adb/.nanodroid-list | uniq > /tmp/nanodroid-list
+		mv /tmp/nanodroid-list /data/adb/.nanodroid-list
+	fi
 
 	rm -rf ${INSTALLER}
 
