@@ -13,6 +13,7 @@
 * CommonInstaller
   * System Mode
      * create /data/adb if it does not exist
+     * addon.d for OTA survival (work-in-progress)
 * Full package
   * switch to QKSMS 3
 * Uninstaller
@@ -23,10 +24,12 @@
 ### Updates
 
 * automatic
-  * QKSMS (3.0.3)
+  * QKSMS (3.0.5)
   * NewPipe (0.13.1)
   * Orfox (1.5.2-RC1)
   * F-Droid (1.2-alpha1)
+  * Face Slim (3.3.0)
+  * Odyssey (1.1.14)
 
 * manual
   * Play Store (9.5.09)
