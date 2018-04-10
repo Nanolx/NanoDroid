@@ -311,6 +311,8 @@ unpack_zip () {
 
 nanodroid_finalize () {
 	[ "${MODE}" = "MAGISK" ] && magisk_install_finish
+	[ "${MODE}" = "SYSTEM" ] && install_addond
+
 	rm -rf ${INSTALLER}
 
 	ui_print " "
@@ -849,6 +851,20 @@ install_swipe () {
 					>> /data/adb/.nanodroid-list
 		done
 	else	ui_print " << without swipe libraries"
+	fi
+}
+
+install_addond () {
+	if [ -d /system/addon.d ]; then
+		ui_print " << System Mode OTA survival"
+
+		cp "${INSTALLER}/CommonAddon" "/system/addon.d/91-nanodroid.sh" || \
+			error " !! failed to install System Mode OTA survival"
+
+		chmod 0755 "/system/addon.d/91-nanodroid.sh"
+		sed -e "s|@MODID@|${MODID}|g" -i "/system/addon.d/91-nanodroid.sh"
+	else
+		ui_print " << ROM does not have addon.d support"
 	fi
 }
 
