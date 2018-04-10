@@ -21,7 +21,7 @@ create_fdroid_package() {
 	cd "${CWD}"
 
 	zip_add CommonInstaller
-
+	zip_add CommonAddon
 
 	zip_add_doc
 	zip_add_config .nanodroid-setup 0
