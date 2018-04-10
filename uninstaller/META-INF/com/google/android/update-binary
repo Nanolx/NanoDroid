@@ -239,7 +239,9 @@ addond_uninstall () {
 	done
 
 	for addonsh in /system/addon.d/75-nanomodpatcher.sh \
-		/system/addon.d/75-nanodroidpatcher.sh; do
+		/system/addon.d/75-nanodroidpatcher.sh \
+		/system/addon.d/999-nanodroidpatcher.sh \
+		/system/addon.d/91-nanodroid.sh; do
 		[ -f ${addonsh} ] && rm -f ${addonsh}
 	done
 
