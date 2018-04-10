@@ -17,7 +17,7 @@
      * install addon.d (CommonAddon)
 * CommonAddon
   * System Mode
-     * Addon for OTA survival (work-in-progress)
+     * Addon for OTA survival
      * shares file list with Uninstaller
 * Full package
   * switch to QKSMS 3

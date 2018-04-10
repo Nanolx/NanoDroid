@@ -503,7 +503,6 @@ Additional helpful information in the microG [> Wiki](https://github.com/microg/
 ## TODO
 
 * better error handling in **on-pc** framework-patcher
-* addon.d for System Mode installation (OTA-Survival)
 * on-device de-odexing of `services.jar` in NanoDroid-Patcher
 
 ## FAQ
