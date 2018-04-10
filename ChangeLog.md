@@ -21,6 +21,7 @@
 * CommonAddon
   * System Mode
      * Addon for OTA survival
+     * restore NanoDroid-Font settings after OTA update
      * shares file list with Uninstaller
 * Full package
   * switch to QKSMS 3

@@ -27,6 +27,14 @@ case "${1}" in
 				echo " + backup: ${FILE}"
 				backup_file "${FILE}"
 			done
+
+			if test -h /system/fonts/Roboto-Regular.ttf; then
+				CUSTOM_FONT="$(basename $(readlink /system/fonts/Roboto-Regular.ttf) .ttf)"
+				ui_print " ${MODID} addon.d: detected NanoDroid-Font (${CUSTOM_FONT})"
+
+				echo CUSTOM_FONT=${CUSTOM_FONT} > /tmp/nanodroid_font
+			fi
+
 			ui_print "${MODID} addon.d: backup done"
 		fi
 	;;
@@ -50,15 +58,18 @@ case "${1}" in
 		# Stub
 	;;
 	post-restore)
-		if test -h /system/fonts/Roboto-Regular.ttf; then
-			CUSTOM_FONT="$(basename $(readlink /system/fonts/Roboto-Regular.ttf) .ttf)"
-			ui_print " << ${MODID} addon.d: detected NanoDroid-Font (${CUSTOM_FONT})"
+		if [ -f /tmp/nanodroid_font ]; then
+			. /tmp/nanodroid_font
+
+			ui_print " ${MODID} addon.d: restoring NanoDroid-Font (${CUSTOM_FONT})"
 
 			if [ -f /system/xbin/nanodroid-font ]; then
 				/system/xbin/nanodroid-font -s "${CUSTOM_FONT}"
 			elif [ -f /system/bin/nanodroid-font ]; then
 				/system/bin/nanodroid-font -s "${CUSTOM_FONT}"
 			fi
+
+			rm /tmp/nanodroid_font
 		fi
 	;;
 esac
