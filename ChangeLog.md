@@ -42,7 +42,7 @@
   * Odyssey (1.1.14)
 
 * manual
-  * Play Store (9.5.09)
+  * Play Store (9.6.11)
 
 ## 16.5.20180402
 
