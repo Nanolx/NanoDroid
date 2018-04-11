@@ -29,7 +29,7 @@ diff -Nupr PS_9611.orig/res/values/public.xml PS_9611/res/values/public.xml
      <public type="string" name="yes" id="0x7f1307cc" />
      <public type="string" name="yes_im_in" id="0x7f1307cd" />
      <public type="string" name="current_locale_sanity_check" id="0x7f1307ce" />
-+    <public type="string" name="fake_signature" id="0x7f1307cd" />
++    <public type="string" name="fake_signature" id="0x7f1307cf" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
