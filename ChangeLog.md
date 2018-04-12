@@ -40,9 +40,12 @@
   * F-Droid (1.2-alpha1)
   * Face Slim (3.3.0)
   * Odyssey (1.1.14)
+  * Simple Gallery (3.7.0)
+  * Yalp Store (0.36)
 
 * manual
   * Play Store (9.6.11)
+  * MPV (20180411+merges)
 
 ## 16.5.20180402
 
