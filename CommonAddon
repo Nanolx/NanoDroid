@@ -14,9 +14,79 @@
 MODID=@MODID@
 OUTFD=$(ps | grep -v grep | grep -oE "update(.*)" | cut -d" " -f3)
 
+GOOGLE_APPS="GoogleFeedback
+GoogleLoginService
+GoogleOneTimeInitializer
+GoogleServicesFramework
+MarketUpdater
+PlayGames
+Velvet
+GmsDroidGuard
+YouTube
+GmsCore_update
+GmsCoreSetupPrebuilt
+PrebuiltGmsCore
+WhisperPush
+BlankStore
+FDroidPriv
+PlayStore
+Vending
+AMAPNetworkLocation
+BaiduNetworkLocation
+LegacyNetworkLocation
+NetworkLocation
+UnifiedNlp
+DejaVuBackend
+DejaVuNlpBackend
+IchnaeaNlpBackend
+MozillaNlpBackend
+NominatimGeocoderBackend
+NominatimNlpBackend
+com.mgoogle.android.gms
+com.google.android.gms
+com.google.android.feedback
+com.google.android.gsf.login
+com.google.android.gsf
+com.android.vending
+org.microg.gms.droidguard
+org.schabi.newpipe
+com.google.android.youtube
+com.qualcomm.location
+com.amap.android.location
+com.baidu.location
+com.google.android.location
+org.microg.nlp
+org.microg.unifiednlp
+com.google.android.maps
+org.fitchfamily.android.dejavu
+org.microg.nlp.backend.ichnaea
+org.microg.nlp.backend.nominatim"
+
 ui_print () {
 	echo -n -e "ui_print ${1}\n" >> /proc/self/fd/${OUTFD}
 	echo -n -e "ui_print\n" >> /proc/self/fd/${OUTFD}
+}
+
+backup_nlpconflicts () {
+	for app in ${GOOGLE_APPS}; do
+		if [ -d "/system/priv-app/${app}" ]; then
+			mkdir -p /sdcard/nanodroid_backups/priv-app/
+			mv /system/priv-app/${app} /sdcard/nanodroid_backups/priv-app/
+
+			ui_print " "
+			ui_print " ++ Moving ${app} to /sdcard/nanodroid_backups/"
+			ui_print " ++ it conflicts with microG/location backends"
+			ui_print " "
+		elif [ -d "/system/app/${app}" ]; then
+			mkdir -p /sdcard/nanodroid_backups/app/
+			mv /system/app/${app} /sdcard/nanodroid_backups/app/
+
+			ui_print " "
+			ui_print " ++ Moving ${app} to /sdcard/nanodroid_backups/"
+			ui_print " ++ it conflicts with microG/location backends"
+			ui_print " "
+		fi
+	done
 }
 
 case "${1}" in
@@ -71,6 +141,8 @@ case "${1}" in
 
 			rm /tmp/nanodroid_font
 		fi
+
+		backup_nlpconflicts
 	;;
 esac
 
