@@ -7,6 +7,7 @@
 * CommonInstaller
   * System Mode
      * fix creating Uninstaller/Addon information
+     * fix auto-debloating conflicting GApps when already done before
 * CommonPatcher
   * System Mode
      * move addon.d from 75 to 999 (should now be executed after Magisk (99))
