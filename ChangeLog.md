@@ -38,11 +38,13 @@
   * QKSMS (3.0.5)
   * NewPipe (0.13.1)
   * Orfox (1.5.2-RC1)
-  * F-Droid (1.2-alpha1)
+  * F-Droid (1.2)
   * Face Slim (3.3.0)
   * Odyssey (1.1.14)
-  * Simple Gallery (3.7.0)
-  * Yalp Store (0.36)
+  * Simple Gallery (3.7.1)
+  * Yalp Store (0.37)
+  * (Simple) Calendar (3.4.2)
+  * OpenLauncher (0.5.12)
 
 * manual
   * Play Store (9.6.11)
