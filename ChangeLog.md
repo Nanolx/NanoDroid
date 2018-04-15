@@ -8,15 +8,17 @@
   * System Mode
      * fix creating Uninstaller/Addon information
      * fix auto-debloating conflicting GApps when already done before
+     * create /data/adb if it does not exist
 * CommonPatcher
+   * move addon.d from 75 to 999 (should now be executed after Magisk (99))
+* Uninstaller
   * System Mode
-     * move addon.d from 75 to 999 (should now be executed after Magisk (99))
+     * fix uninstallation if a previously moved-out GApp exists already in ROM, instead remove the backup
 
 ### General Changes
 
 * CommonInstaller
   * System Mode
-     * create /data/adb if it does not exist
      * improve creation of Uninstaller/Addon information
      * install addon.d (CommonAddon)
 * CommonAddon
