@@ -38,19 +38,20 @@
 ### Updates
 
 * automatic
-  * QKSMS (3.0.5)
-  * NewPipe (0.13.1)
+  * QKSMS (3.0.6)
+  * NewPipe (0.13.2)
   * Orfox (1.5.2-RC1)
   * F-Droid (1.2)
   * Face Slim (3.3.0)
   * Odyssey (1.1.14)
-  * Simple Gallery (3.7.1)
+  * (Simple) Gallery (3.7.3)
   * Yalp Store (0.37)
   * (Simple) Calendar (3.4.2)
   * OpenLauncher (0.5.12)
+  * Substratum (970)
 
 * manual
-  * Play Store (9.6.11)
+  * Play Store (9.7.11)
   * MPV (20180411+merges)
 
 ## 16.5.20180402
