@@ -52,7 +52,7 @@
 
 * manual
   * Play Store (9.7.11)
-  * MPV (20180411+merges)
+  * MPV (20180418+merges)
 
 ## 16.5.20180402
 
