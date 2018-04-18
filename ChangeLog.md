@@ -27,6 +27,9 @@
      * restore NanoDroid-Font settings after OTA update
      * re-remove conflicting GApps after OTA update
      * shares file list with Uninstaller
+* NanoDroid-Overlay
+  * when an app is installed in /system/app **and** /system/priv-app it was only pseudo-debloated from /system/app, now the script does not stop if an requested app was found in /system/app, thus pseudo-debloating both instances
+     * this is a rare corner case
 * Full package
   * switch to QKSMS 3
 * Uninstaller

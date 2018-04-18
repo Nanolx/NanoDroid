@@ -42,6 +42,7 @@ add_override () {
 	echo "  creating overlay: $(basename ${1})"
 	mkdir -p "${OVERLAY_PATH}/system/${1}"
 	touch "${OVERLAY_PATH}/system/${1}/.replace"
+	echo "$(basename ${1})" >> "${config}"
 }
 
 rm_override () {
@@ -185,11 +186,10 @@ case ${1} in
 		if [ ! -z ${2} ]; then
 			if [[ -d /system/app/${2} ]]; then
 				add_override "app/${2}"
-				echo "${2}" >> "${config}"
-			elif [[ -d /system/priv-app/${2} ]]; then
+			fi
+
+			if [[ -d /system/priv-app/${2} ]]; then
 				add_override "priv-app/${2}"
-				echo "${2}" >> "${config}"
-			else	echo "app \"${2}\" is not installed"
 			fi
 		fi
 	;;
@@ -198,9 +198,10 @@ case ${1} in
 		if [ ! -z ${2} ]; then
 			if [[ -f ${OVERLAY_PATH}/system/app/${2}/.replace ]]; then
 				rm_override "app/${2}"
-			elif [[ -f ${OVERLAY_PATH}/system/priv-app/${2}/.replace ]]; then
+			fi
+
+			if [[ -f ${OVERLAY_PATH}/system/priv-app/${2}/.replace ]]; then
 				rm_override "priv-app/${2}"
-			else	echo "No override for \"${2}\" found"
 			fi
 		fi
 	;;
