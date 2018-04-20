@@ -259,42 +259,21 @@ detect_mode () {
 
 backup_nlpconflicts () {
 	for app in ${GOOGLE_APPS}; do
-		case ${MODE} in
-			SYSTEM )
-				if [ -d "/system/priv-app/${app}" ]; then
-					mkdir -p /sdcard/nanodroid_backups/priv-app/
-					rm -rf /sdcard/nanodroid_backups/priv-app/${app}
-					mv /system/priv-app/${app} /sdcard/nanodroid_backups/priv-app/
+		if [ -d "/system/priv-app/${app}" -o -d "/system/app/${app}" ]; then
+			ui_print " "
+			ui_print " ++ Creating overlay for ${app}"
+			ui_print " ++ it conflicts with microG/location backends"
+			ui_print " "
 
-					ui_print " "
-					ui_print " ++ Moving ${app} to /sdcard/nanodroid_backups/"
-					ui_print " ++ it conflicts with microG/location backends"
-					ui_print " "
-				elif [ -d "/system/app/${app}" ]; then
-					mkdir -p /sdcard/nanodroid_backups/app/
-					rm -rf /sdcard/nanodroid_backups/app/${app}
-					mv /system/app/${app} /sdcard/nanodroid_backups/app/
+			if ! grep -q "^${app}" ${cfg_overlay}; then
+				echo ${app} >> ${cfg_overlay}
+			fi
+		fi
 
-					ui_print " "
-					ui_print " ++ Moving ${app} to /sdcard/nanodroid_backups/"
-					ui_print " ++ it conflicts with microG/location backends"
-					ui_print " "
-				fi
-			;;
-
-			MAGISK )
-				if [ -d "/system/priv-app/${app}" -o -d "/system/app/${app}" ]; then
-					ui_print " "
-					ui_print " ++ Creating overlay for ${app}"
-					ui_print " ++ it conflicts with microG/location backends"
-					ui_print " "
-
-					if ! grep -q "^${app}" ${cfg_overlay}; then
-						echo ${app} >> ${cfg_overlay}
-					fi
-				fi
-			;;
-		esac
+		if [ "${ROM_NO_XBIN}" -eq 1 ]; then
+			${MODPATH}/system/bin/nanodroid-overlay --add ${app}
+		else	${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
+		fi
 	done
 }
 
