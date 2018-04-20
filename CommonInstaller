@@ -745,19 +745,19 @@ install_bash () {
 install_nanodroidscripts () {
 	ui_print " << with NanoDroid Scripts"
 
-	for script in npem nupd nutl \
+	for script in npem nupd nutl novl \
 		nanodroid-perm nanodroid-upd \
-		nanodroid-util column.${BIN_ARCH} \
-		aapt.${BIN_ARCH}; do
+		nanodroid-util nanodroid-overlay; do
 		nanodroid_install_file xbin/${script} bin
 	done
 
+	nanodroid_substitute xbin/nanodroid-overlay
+
 	if [ "${MODE}" = "MAGISK" ]; then
-		for script in novl nprp nanodroid-overlay nanodroid-prop; do
+		for script in nprp nanodroid-prop; do
 			nanodroid_install_file xbin/${script} bin
 		done
 
-		nanodroid_substitute xbin/nanodroid-overlay
 		nanodroid_substitute xbin/nanodroid-prop
 	fi
 }
@@ -789,8 +789,8 @@ install_shell_utils () {
 		ui_print " << with Shell Utilities"
 
 		# architecture dependend stuff
-		for binary in col colcrt colrm findfs findmnt hexdump \
-			lessecho lesskey look lsblk lscpu lsipc \
+		for binary in col colcrt colrm column findfs findmnt
+			hexdump lessecho lesskey look lsblk lscpu lsipc \
 			lslocks lsns ncal setterm unzip whereis; do
 			nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
 		done
