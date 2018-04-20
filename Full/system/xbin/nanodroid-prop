@@ -24,7 +24,7 @@ list_props () {
 	if [[ ! -f ${MODPATH}/system.prop ]]; then
 		echo "no properties added by NanoDroid"
 	else	echo "properties added by NanoDroid:"
-		cat ${MODPATH}/system.prop | column -t -s"="
+		cat ${MODPATH}/system.prop
 	fi
 }
 
