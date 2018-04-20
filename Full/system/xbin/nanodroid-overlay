@@ -1,7 +1,6 @@
 #!/system/bin/sh
 
 export NO_MAGISK=0
-export NO_CONFIG=0
 export MODPATH=@MODPATH@
 
 if [[ -d /dev/tmp/magisk_img/$(basename ${MODPATH}) ]]; then
@@ -32,135 +31,135 @@ get_config () {
 	done
 }
 
-show_app_name () {
-	aapt dump badging "${1}" 2>/dev/null | \
-		grep "application: label" | \
-		sed -e "s/.*label='//g;s/' icon.*//g"
+overrides_add_intern () {
+	app=$(basename ${1})
+
+	if [[ ${NO_MAGISK} -eq 0 ]]; then
+		echo "  creating overlay: ${app}"
+		mkdir -p "${OVERLAY_PATH}/system/${1}"
+		touch "${OVERLAY_PATH}/system/${1}/.replace"
+	else
+		echo "  moving to /sdcard/nanodroid_backups: ${app}"
+		rm -rf "/sdcard/nanodroid_backups/${1}"
+		mv "/system/${1}" "/sdcard/nanodroid_backups/${1}"
+	fi
+
+	grep -q "^${app}" "${config}" || echo "${app}" >> "${config}"
 }
 
-add_override () {
-	echo "  creating overlay: $(basename ${1})"
-	mkdir -p "${OVERLAY_PATH}/system/${1}"
-	touch "${OVERLAY_PATH}/system/${1}/.replace"
-	echo "$(basename ${1})" >> "${config}"
+overrides_add () {
+	for app in ${@}; do
+		[[ -d /system/app/${app} ]] && overrides_add_intern app/${app}
+		[[ -d /system/priv-app/${2} ]] && overrides_add_intern priv-app/${app}
+	done
 }
 
-rm_override () {
-	xapp=$(basename ${1})
-	echo "  removing overlay: ${xapp}"
-	rm -rf  "${OVERLAY_PATH}/system/${1}"
-	sed -e "/^${xapp}$/d" -i "${config}"
+overrides_remove_intern () {
+	app=$(basename ${1})
+
+	if [[ ${NO_MAGISK} -eq 0 ]]; then
+		echo "  removing overlay: ${app}"
+		rm -rf "${OVERLAY_PATH}/system/${1}"
+	else
+		if [[ -d /system/${1} ]]; then
+			echo "  removing old backup: ${app}"
+			rm -rf "/sdcard/nanodroid_backups/${1}"
+		else
+			echo "  reinstalling: ${app}"
+			mv "/sdcard/nanodroid_backups/${1}" "/system/${1}"
+		fi
+	fi
+
+	sed -e "/^${app}$/d" -i "${config}"
 }
 
-update_overrides () {
-	clear_overrides
-	gen_overrides
-}
-
-gen_overrides () {
-	OVERLAY_APPS=$(cat "${config}")
-
-	echo "  creating Overlays in ${OVERLAY_PATH}"
-
-	for app in ${OVERLAY_APPS}; do
-		if [ -d /system/app/${app} ]; then
-			add_override "app/${app}" ${OVERLAY_PATH}
-		elif [ -d /system/priv-app/${app} ]; then
-			add_override "priv-app/${app}" ${OVERLAY_PATH}
-		else	echo "  app \"${app}\" is not installed"
+overrides_remove () {
+	for app in ${@}; do
+		if [[ ${NO_MAGISK} -eq 0 ]]; then
+			[[ -f ${OVERLAY_PATH}/system/app/${app}/.replace ]] && overrides_remove_intern app/${app}
+			[[ -f ${OVERLAY_PATH}/system/priv-app/${app}/.replace ]] && overrides_remove_intern priv-app/${app}
+		else
+			[[ -d /sdcard/nanodroid_backups/app/${app} ]] && overrides_remove_intern app/${app}
+			[[ -d /sdcard/nanodroid_backups/priv-app/${app} ]] && overrides_remove_intern priv-app/${app}
 		fi
 	done
 }
 
-list_overrides () {
-	LIST_APPS=($(find "${OVERLAY_PATH}/system/app" -name "*.replace"))
-	for app in "${LIST_APPS[@]}"; do
-		APPS=(${APPS[@]} "$(basename $(dirname "${app}"))")
-	done
+overrides_list () {
+	if [[ ${NO_MAGISK} -eq 0 ]]; then
+		echo "Overrides for /system/app:"
+		for app in "$(find "${OVERLAY_PATH}/system/app" -name "*.replace")"; do
+			echo "  * $(basename $(dirname "${app}"))"
+		done
 
-	LIST_PRIV_APPS=($(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"))
-	for app in "${LIST_PRIV_APPS[@]}"; do
-		PRIV_APPS=(${PRIV_APPS[@]} "$(basename $(dirname "${app}"))")
-	done
+		echo "Overrides for /system/priv-app:"
+		for app in "$(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace")"; do
+			echo "  * $(basename $(dirname "${app}"))"
+		done
+	else
+		echo "Moved-Out apps from /system/app:"
+		for app in "$(find "/sdcard/nanodroid_backups/app" -name "*.replace")"; do
+			echo "  * $(basename $(dirname "${app}"))"
+		done
 
-	echo "Overlays exist for following applications in /system/app:
-
-$(printf '  * %s\n' "${APPS[@]}")
-
-Overlays exist for following applications in /system/priv-app:
-
-$(printf '  * %s\n' "${PRIV_APPS[@]}")
-"
+		echo "Moved-Out apps from /system/priv-app:"
+		for app in "$(find "/sdcard/nanodroid_backups/priv-app" -name "*.replace")"; do
+			echo "  * $(basename $(dirname "${app}"))"
+		done
+	fi
 }
 
-show_nooverrides () {
-	echo " >> processing /system/app"
+overrides_list_non () {
+	if [[ ${NO_MAGISK} -eq 0 ]]; then
+		echo "non-overriden apps from /system/app:"
+		for app in "$(find "/system/app" -mindepth 1 -type d)"; do
+			[[ ! -f ${OVERLAY_PATH}/${app}/.replace ]] && echo "  * $(basename ${app})"
+		done
 
-	for app in /system/app/*/*.apk; do
-		sysname=$(basename "${app}" .apk)
-		if [[ ! -f ${OVERLAY_PATH}/system/app/${sysname}/.replace ]]; then
-			humname=$(show_app_name "${app}")
-			S_APPS="${S_APPS}
-	* ${sysname}		|(${humname})"
-		fi
-	done
+		echo "non-overriden apps from /system/priv-app:"
+		for app in "$(find "/system/priv-app" -mindepth 1 -type d)"; do
+			[[ ! -f ${OVERLAY_PATH}/${app}/.replace ]] && echo "  * $(basename ${app})"
+		done
+	else
+		echo "non-moved-out apps from /system/app:"
+		for app in "$(find "/system/app" -mindepth 1 -type d)"; do
+			echo "  * $(basename ${app})"
+		done
 
-	echo " >> processing /system/priv-app"
-
-	for app in /system/priv-app/*/*.apk; do
-		sysname=$(basename "${app}" .apk)
-		if [[ ! -f ${OVERLAY_PATH}/system/priv-app/${sysname}/.replace ]]; then
-			humname=$(show_app_name "${app}")
-			S_PRIV_APPS="${S_PRIV_APPS}
-	* ${sysname}		|(${humname})"
-		fi
-	done
-
-	echo "Non-Overlayed applications in /system/app:
-
-$(printf '* %s\n' "${S_APPS[@]}" | column -t -s \|)
-
-Non-Overlayed applications in /system/priv-app:
-
-$(printf '* %s\n' "${S_PRIV_APPS[@]}" | column -t -s \|)
-"
-}
-
-clear_overrides () {
-	echo "  removing Overlays from ${OVERLAY_PATH}"
-	RM_APPS=($(find "${OVERLAY_PATH}/system/app" -name "*.replace"))
-	for app in "${RM_APPS[@]}"; do
-		echo "  removing override: $(basename $(dirname ${app}))"
-		rm -rf "$(dirname "${app}")"
-	done
-
-	RM_PRIV_APPS=($(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"))
-	for app in "${RM_PRIV_APPS[@]}"; do
-		echo "  removing override: $(basename $(dirname ${app}))"
-		rm -rf "$(dirname "${app}")"
-	done
-}
-
-genconfig () {
-	[[ ! -f "${config}" ]] && config="/data/.nanodroid-overlay"
-
-	APPS=($(find "${OVERLAY_PATH}/system/app" -name "*.replace"))
-	PRIV_APPS=($(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"))
-
-	if [[ ${APPS[*]} != "" ]]; then
-		for app in "${APPS[@]}"; do
-			xapp=$(basename $(dirname ${app}))
-			echo "  adding ${xapp} to configuration"
-			echo "${xapp}" >> "${config}"
+		echo "non-moved-out apps from /system/priv-app:"
+		for app in "$(find "/system/priv-app" -mindepth 1 -type d)"; do
+			echo "  * $(basename ${app})"
 		done
 	fi
 
-	if [[ ${PRIV_APPS[*]} != "" ]]; then
-		for app in "${PRIV_APPS[@]}"; do
+}
+
+overrides_clear () {
+	if [[ ${NO_MAGISK} -eq 0 ]]; then
+		echo "  removing Overlays from ${OVERLAY_PATH}"
+		for app in "$(find "${OVERLAY_PATH}/system/app" -name "*.replace")" \
+			   "$(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace")"; do
+			echo "  removing override: $(basename $(dirname ${app}))"
+			rm -rf "$(dirname "${app}")"
+		done
+	else
+		echo "  overrides_clear() does nothing in System Mode!"
+	fi
+}
+
+overrides_genconfig () {
+	if [[ ${NO_MAGISK} -eq 0 ]]; then
+		rm -f ${config}
+		export config="/data/.nanodroid-overlay"
+
+		for app in "$(find "${OVERLAY_PATH}/system/app" -name "*.replace")" \
+			   "$(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace")"; do
 			xapp=$(basename $(dirname ${app}))
 			echo "  adding ${xapp} to configuration"
-			echo "${xapp}" >> "${config}"
+			grep -q "^${xapp}$" "${config}" || echo "${xapp}" >> "${config}"
 		done
+	else
+		echo "  overrides_genconfig() does nothing in System Mode!"
 	fi
 }
 
@@ -168,69 +167,34 @@ genconfig () {
 config_locations="/sdcard /external_sd @ZIPDIR@ /data /dev/tmp/install"
 get_config .nanodroid-overlay
 
-if [[ ${NO_MAGISK} -eq 0 ]]; then
-
 if [[ -f ${config} ]]; then
 	export config
-else
-	genconfig
-	export config="/data/.nanodroid-overlay"
+else	overrides_genconfig
 fi
 
-case ${1} in
-	-l | --list )
-		list_overrides
-	;;
+opt=${1}
+shift
 
-	-a | --add )
-		if [ ! -z ${2} ]; then
-			if [[ -d /system/app/${2} ]]; then
-				add_override "app/${2}"
-			fi
-
-			if [[ -d /system/priv-app/${2} ]]; then
-				add_override "priv-app/${2}"
-			fi
-		fi
-	;;
-
-	-r | --remove )
-		if [ ! -z ${2} ]; then
-			if [[ -f ${OVERLAY_PATH}/system/app/${2}/.replace ]]; then
-				rm_override "app/${2}"
-			fi
-
-			if [[ -f ${OVERLAY_PATH}/system/priv-app/${2}/.replace ]]; then
-				rm_override "priv-app/${2}"
-			fi
-		fi
-	;;
+case ${opt} in
+	-l | --list )		overrides_list ;;
+	-a | --add )		overrides_add "${@}" ;;
+	-r | --remove )		remove_overrides "${@}" ;;
+	-s | --show )		overrides_list_non ;;
+	-c | --clear )		overrides_clear ;;
+	-x | --create )		overrides_add "$(cat "${config}")" ;;
+	-g | --genconfig )	overrides_genconfig ;;
 
 	-u | --update )
-		update_overrides
+		overrides_clear
+		overrides_add "$(cat "${config}")"
 	;;
 
-	-s | --show )
-		show_nooverrides
-	;;
-
-	-c | --clear )
-		clear_overrides
-	;;
-
-	-g | --genconfig )
-		rm -f ${config}
-		genconfig
-	;;
-
-	-x | --create )
-		gen_overrides
-	;;
 
 	* )
 		echo "nanodroid-overlay
 
-Manages Overlay (Pseudo Debloat feature)
+Magisk Mode: Manages Overlays (Pseudo Debloat feature)
+System Mode: Manages Moved-Outs (Force Debloat feature)
 
 Options:
 -a | --add		[appname]	add override for app [appname]
@@ -244,7 +208,3 @@ Options:
 "
 	;;
 esac
-
-else
-	error "*** Overlay feature is not available in System Mode! ***"
-fi
