@@ -14,7 +14,9 @@
      * fix that conflicting GApps were not overlayed if nanodroid_overlay=0
          * now this part of CommonInstaller ignores nanodroid_overlay to ensure conflicting GApps are always overlayed
 * CommonPatcher
-   * move addon.d from 75 to 999 (should now be executed after Magisk (99))
+  * move addon.d from 75 to 999 (should now be executed after Magisk (99))
+* Full, microG packages
+  * minor fix in default microG permissions file
 * Uninstaller
   * System Mode
      * fix uninstallation if a previously moved-out GApp exists already in ROM, instead remove the backup
