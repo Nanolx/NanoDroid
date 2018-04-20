@@ -291,6 +291,20 @@ unpack_zip () {
 }
 
 nanodroid_finalize () {
+	case ${MODID} in
+		NanoDroid | NanoDroid_microG )
+			if [ "${nanodroid_overlay}" -eq 1 ]; then
+				ui_print " << with /system applications override"
+
+				if [ "${ROM_NO_XBIN}" -eq 1 ]; then
+					${MODPATH}/system/bin/nanodroid-overlay --create
+				else	${MODPATH}/system/xbin/nanodroid-overlay --create
+				fi
+			else
+				ui_print " << without /system applications override"
+			fi
+	fi
+
 	if [ "${MODE}" = "MAGISK" ]; then
 		magisk_install_finish
 	else
@@ -493,18 +507,6 @@ magisk_install_preinst () {
 }
 
 magisk_install_postinst () {
-	# Setup Overrides
-	if [ "${nanodroid_overlay}" -eq 1 ]; then
-		ui_print " << with /system applications override"
-
-		if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-			${MODPATH}/system/bin/nanodroid-overlay --create
-		else	${MODPATH}/system/xbin/nanodroid-overlay --create
-		fi
-	else
-		ui_print " << without /system applications override"
-	fi
-
 	if [ -f ${TMPDIR}/system.prop ]; then
 		ui_print " << restoring system.prop"
 		cp ${TMPDIR}/system.prop \
