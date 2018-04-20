@@ -342,7 +342,6 @@ are included:
 
 Other shell utilities
 
-* aapt [> eLinux Wiki](http://elinux.org/Android_aapt)
 * less [> Website](http://www.greenwoodsoftware.com/less/)
   * lessecho
   * lesskey
