@@ -80,9 +80,9 @@ backup_nlpconflicts () {
 			fi
 		fi
 
-		if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-			system/bin/nanodroid-overlay --add ${app}
-		else	system/xbin/nanodroid-overlay --add ${app}
+		if [ -f /system/bin/nanodroid-overlay ]; then
+			/system/bin/nanodroid-overlay --add ${app}
+		else	/system/xbin/nanodroid-overlay --add ${app}
 		fi
 	done
 }
