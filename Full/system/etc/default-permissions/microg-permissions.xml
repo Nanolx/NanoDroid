@@ -41,7 +41,7 @@
         <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="false"></permission>
         <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="false"></permission>
         <!-- Fake Signature Spoofing -->
-        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="false"></permission>
+        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="true"></permission>
     </exception>
 
     <exception package="com.google.android.gsf">
@@ -61,7 +61,7 @@
         <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="false"></permission>
         <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="false"></permission>
         <!-- Fake Signature Spoofing -->
-        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="false"></permission>
+        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="true"></permission>
     </exception>
 
     <exception package="org.microg.gms.droidguard">
