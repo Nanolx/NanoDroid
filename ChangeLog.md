@@ -9,6 +9,10 @@
      * fix creating Uninstaller/Addon information
      * fix auto-debloating conflicting GApps when already done before
      * create /data/adb if it does not exist
+     * honour nanodroid_overlay=1 due to new NanoDroid-Overlay
+  * Magisk Mode
+     * fix that conflicting GApps were not overlayed if nanodroid_overlay=0
+         * now this part of CommonInstaller ignores nanodroid_overlay to ensure conflicting GApps are always overlayed
 * CommonPatcher
    * move addon.d from 75 to 999 (should now be executed after Magisk (99))
 * Uninstaller
@@ -21,6 +25,8 @@
   * System Mode
      * improve creation of Uninstaller/Addon information
      * install addon.d (CommonAddon)
+  * System Mode, Magisk Mode
+     * simplify routine to overlay conflicting GApps due to new NanoDroid-Overlay
 * CommonAddon
   * System Mode
      * Addon for OTA survival
@@ -30,8 +36,21 @@
 * NanoDroid-Overlay
   * when an app is installed in /system/app **and** /system/priv-app it was only pseudo-debloated from /system/app, now the script does not stop if an requested app was found in /system/app, thus pseudo-debloating both instances
      * this is a rare corner case
+  * System Mode support
+     * apps will be moved from /system to /sdcard/nanodroid_backups
+     * can be restored
+     * .nanodroid-overlay configuration file is honoured
+  * no longer requires aapt utility
+  * no longer requires column utility
+  * faster, cleaner, better overall code
+* NanoDroid-Prop
+  * no longer requires column utility
 * Full package
   * switch to QKSMS 3
+  * column is now optional (only installed with nanodroid_utils=1)
+* microG package
+  * removed aapt as it's no longer required
+  * removed column as it's no longer required
 * Uninstaller
   * System Mode
      * sync list of GApps with CommonInstaller
@@ -41,17 +60,18 @@
 ### Updates
 
 * automatic
-  * QKSMS (3.0.6)
+  * QKSMS (3.0.7)
   * NewPipe (0.13.2)
   * Orfox (1.5.2-RC1)
-  * F-Droid (1.2)
+  * F-Droid (1.2.1)
   * Face Slim (3.3.0)
   * Odyssey (1.1.14)
   * (Simple) Gallery (3.7.3)
-  * Yalp Store (0.37)
+  * Yalp Store (0.38)
   * (Simple) Calendar (3.4.2)
   * OpenLauncher (0.5.12)
-  * Substratum (970)
+  * Substratum (980)
+  * OpenKeychain (5.0)
 
 * manual
   * Play Store (9.7.11)
