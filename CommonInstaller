@@ -270,10 +270,7 @@ backup_nlpconflicts () {
 			fi
 		fi
 
-		if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-			${MODPATH}/system/bin/nanodroid-overlay --add ${app}
-		else	${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
-		fi
+		${INSTALLER}/system/xbin/nanodroid-overlay --add ${app}
 	done
 }
 
