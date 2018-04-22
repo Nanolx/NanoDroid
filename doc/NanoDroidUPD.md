@@ -4,6 +4,7 @@
 
 The `nanodroid-upd` Script, respectively it's shortcut `nupd` is used by NanoDroid to update NanoDroid's custom apks
 
+  * Bucket (LibreSubstratum)
   * Fake Store
   * Play Store
   * MPV
@@ -24,4 +25,4 @@ or
 
 where **apk** can be
 
-`ps`, `playstore`, `fs`, `fakestore`, `mpv` or `MPV`
+`ps`, `playstore`, `fs`, `fakestore`, `mpv`, `MPV`, `bt` or `Bucket`
