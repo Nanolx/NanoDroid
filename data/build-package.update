@@ -73,6 +73,7 @@ update_apps () {
 	# plain URL
 	#grab_apk_from_url ${nlx_OPENLAUNCHER[@]}
 	grab_apk_from_url ${nlx_MPV[@]}
+	grab_apk_from_url ${nlx_BUCKET{@}]
 
 	# GitHub
 	grab_apk_from_github ${gh_K9MAIL[@]}
@@ -83,7 +84,7 @@ update_apps () {
 	# APK Mirror
 	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
 	grab_apk_from_apkmirror ${am_OPENWEATHER[@]}
-	grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
+	#grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
 	grab_apk_from_apkmirror ${am_YAHOOWEATHER[@]}
 	grab_apk_from_apkmirror ${am_XDALABS[@]}
 }

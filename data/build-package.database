@@ -8,6 +8,7 @@ nlx_FAKESTORE=(https://www.nanolx.org/apk/FakeStore.apk priv-app FakeStore)
 nlx_MPV=(https://www.nanolx.org/apk/MPV.apk app MPV)
 nlx_OPENLAUNCHER=(https://www.nanolx.org/apk/OpenLauncher.apk app OpenLauncher)
 nlx_PHONESKY=(https://www.nanolx.org/apk/Phonesky.apk priv-app Phonesky)
+nlx_BUCKET=(https://www.nanolx.org/apk/Bucket.apk app Bucket)
 
 ###
 # microG
@@ -106,8 +107,10 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/Amaze/Amaze.apk
 	Full/system/app/AnysoftKeyboard/AnysoftKeyboard.apk
 	Full/system/app/BeHeKeyboard/BeHeKeyboard.apk
+	Full/system/app/Bucket/Bucket.apk
 	Full/system/app/FDroid/FDroid.apk
 	Full/system/app/FaceSlim/FaceSlim.apk
+	Full/system/app/GsfProxy/GsfProxy.apk
 	Full/system/app/K9Mail/K9Mail.apk
 	Full/system/app/KeePassDX/KeePassDX.apk
 	Full/system/app/KernelAdiutor/KernelAdiutor.apk
@@ -126,7 +129,6 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/QKSMS/QKSMS.apk
 	Full/system/app/SimpleCalendar/SimpleCalendar.apk
 	Full/system/app/SimpleGallery/SimpleGallery.apk
-	Full/system/app/Substratum/Substratum.apk
 	Full/system/app/Termux/Termux.apk
 	Full/system/app/Twidere/Twidere.apk
 	Full/system/app/XDALabs/XDALabs.apk
@@ -136,5 +138,4 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/priv-app/DroidGuard/DroidGuard.apk
 	Full/system/priv-app/FDroidPrivileged/FDroidPrivileged.apk
 	Full/system/priv-app/FakeStore/FakeStore.apk
-	Full/system/app/GsfProxy/GsfProxy.apk
 	Full/system/priv-app/YalpStore/YalpStore.apk )
