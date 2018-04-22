@@ -88,22 +88,22 @@ overrides_remove () {
 overrides_list () {
 	if [[ ${NO_MAGISK} -eq 0 ]]; then
 		echo "Overrides for /system/app:"
-		for app in "$(find "${OVERLAY_PATH}/system/app" -name "*.replace")"; do
+		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace"); do
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 
 		echo "Overrides for /system/priv-app:"
-		for app in "$(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace")"; do
+		for app in $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"); do
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 	else
 		echo "Moved-Out apps from /system/app:"
-		for app in "$(find "/sdcard/nanodroid_backups/app" -name "*.replace")"; do
+		for app in $(find "/sdcard/nanodroid_backups/app" -name "*.replace"); do
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 
 		echo "Moved-Out apps from /system/priv-app:"
-		for app in "$(find "/sdcard/nanodroid_backups/priv-app" -name "*.replace")"; do
+		for app in $(find "/sdcard/nanodroid_backups/priv-app" -name "*.replace"); do
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 	fi
@@ -112,22 +112,22 @@ overrides_list () {
 overrides_list_non () {
 	if [[ ${NO_MAGISK} -eq 0 ]]; then
 		echo "non-overriden apps from /system/app:"
-		for app in "$(find "/system/app" -mindepth 1 -type d)"; do
+		for app in $(find "/system/app" -mindepth 1 -type d); do
 			[[ ! -f ${OVERLAY_PATH}/${app}/.replace ]] && echo "  * $(basename ${app})"
 		done
 
 		echo "non-overriden apps from /system/priv-app:"
-		for app in "$(find "/system/priv-app" -mindepth 1 -type d)"; do
+		for app in $(find "/system/priv-app" -mindepth 1 -type d); do
 			[[ ! -f ${OVERLAY_PATH}/${app}/.replace ]] && echo "  * $(basename ${app})"
 		done
 	else
 		echo "non-moved-out apps from /system/app:"
-		for app in "$(find "/system/app" -mindepth 1 -type d)"; do
+		for app in $(find "/system/app" -mindepth 1 -type d); do
 			echo "  * $(basename ${app})"
 		done
 
 		echo "non-moved-out apps from /system/priv-app:"
-		for app in "$(find "/system/priv-app" -mindepth 1 -type d)"; do
+		for app in $(find "/system/priv-app" -mindepth 1 -type d); do
 			echo "  * $(basename ${app})"
 		done
 	fi
@@ -137,8 +137,8 @@ overrides_list_non () {
 overrides_clear () {
 	if [[ ${NO_MAGISK} -eq 0 ]]; then
 		echo "  removing Overlays from ${OVERLAY_PATH}"
-		for app in "$(find "${OVERLAY_PATH}/system/app" -name "*.replace")" \
-			   "$(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace")"; do
+		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace") \
+			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"); do
 			echo "  removing override: $(basename $(dirname ${app}))"
 			rm -rf "$(dirname "${app}")"
 		done
@@ -152,8 +152,8 @@ overrides_genconfig () {
 		rm -f ${config}
 		export config="/data/.nanodroid-overlay"
 
-		for app in "$(find "${OVERLAY_PATH}/system/app" -name "*.replace")" \
-			   "$(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace")"; do
+		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace") \
+			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"); do
 			xapp=$(basename $(dirname ${app}))
 			echo "  adding ${xapp} to configuration"
 			grep -q "^${xapp}$" "${config}" || echo "${xapp}" >> "${config}"
