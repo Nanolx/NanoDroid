@@ -151,7 +151,7 @@ apps_add 20 Orfox
 apps_add 21 QKSMS
 apps_add 22 SimpleCalendar
 apps_add 23 SimpleGallery
-apps_add 24 Substratum
+apps_add 24 Bucket
 apps_add 25 Termux
 apps_add 26 Twidere
 apps_add 27 XDALabs
