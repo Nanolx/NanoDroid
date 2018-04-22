@@ -45,10 +45,14 @@
   * no longer requires aapt utility
   * no longer requires column utility
   * faster, cleaner, better overall code
+* NanoDroid-UPD
+  * support updating Bucket (LibreSubstratum) beta
 * NanoDroid-Prop
   * no longer requires column utility
 * Full package
   * switch to QKSMS 3
+  * switch from Substratum (app) to Bucket (beta; former LibreSubstratum)
+     * if the user had Substratum in their .nanodroid-apps it will be auto-migrated
   * column is now optional (only installed with nanodroid_utils=1)
 * microG package
   * removed aapt as it's no longer required
@@ -58,6 +62,8 @@
      * sync list of GApps with CommonInstaller
      * restore System font if altered using NanoDroid-Font upon uninstallation
      * update for new addon.d changes
+* SetupWizard
+  * update for Substratum > Bucket change
 
 ### Updates
 
@@ -72,12 +78,11 @@
   * Yalp Store (0.38)
   * (Simple) Calendar (3.4.2)
   * OpenLauncher (0.5.12)
-  * Substratum (980)
   * OpenKeychain (5.0)
 
 * manual
   * Play Store (9.7.11)
-  * MPV (20180418+merges)
+  * MPV (20180421+merges)
 
 ## 16.5.20180402
 
