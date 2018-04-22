@@ -21,7 +21,7 @@ create_microg_package() {
 
 	for input in "system/xbin/nanodroid*" "system/xbin/novl" \
 		"system/xbin/npem" "system/xbin/nprp" "system/xbin/nupd" \
-		"system/xbin/nutl" "system/xbin/unzip*" "system/framework/"
+		"system/xbin/nutl" "system/xbin/unzip*" "system/framework/" \
 		"gsync/" "system/etc/permissions/" "system/etc/sysconfig/" \
 		"system/etc/default-permissions/" "swipe/"; do
 		zip_add "${input}"
