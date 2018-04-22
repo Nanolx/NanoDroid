@@ -1172,9 +1172,14 @@ check_cfg_apps () {
 		sed -e 's/^INSTALL_APPS=//;s/\"//g' -i "${cfg_apps}"
 	fi
 
-	# 16.3 has KeePass DX instead of KeePassDroid, migrate
+	# <= 16.3 has KeePass DX instead of KeePassDroid, migrate
 	if grep -q KeePassDroid "${cfg_apps}"; then
 		sed -e 's/KeePassDroid/KeePassDX/g' -i "${cfg_apps}"
+	fi
+
+	# <= 17.0~beta1 has Substratum instead of Bucket (LibreSubtratum), migrate
+	if grep -q Substratum "${cfg_apps}"; then
+		sed -e 's/Substratum/Bucket/g' -i "${cfg_apps}"
 	fi
 }
 
