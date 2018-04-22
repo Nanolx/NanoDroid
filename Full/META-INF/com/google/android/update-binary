@@ -35,6 +35,7 @@ get_cfg_overlay
 detect_mode
 set_progress 0.3
 
+install_nanodroidscripts
 install_microg
 install_mapsv1
 install_gsync
@@ -50,7 +51,6 @@ install_initd
 install_swipe
 install_bash
 install_nano
-install_nanodroidscripts
 install_shell_utils
 install_fonts
 set_progress 0.9

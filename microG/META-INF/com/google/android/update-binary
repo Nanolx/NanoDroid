@@ -33,16 +33,16 @@ get_cfg_overlay
 detect_mode
 set_progress 0.2
 
+install_nanodroidscripts
 install_microg
+set_progress 0.6
+
 install_mapsv1
 install_store
-set_progress 0.6
+set_progress 0.75
 
 install_gsync
 install_swipe
-set_progress 0.75
-
-install_nanodroidscripts
 set_progress 0.9
 
 nanodroid_finalize

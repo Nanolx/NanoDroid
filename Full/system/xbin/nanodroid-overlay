@@ -17,6 +17,27 @@ error () {
 	exit 1
 }
 
+show_help () {
+
+	echo "nanodroid-overlay
+
+Magisk Mode: Manages Overlays (Pseudo Debloat feature)
+System Mode: Manages Moved-Outs (Force Debloat feature)
+
+Options:
+-a | --add		[appname]	add override for app [appname]
+-r | --remove		[appname]	remove override for app [appname]
+-s | --show				show non-overriden /system applications
+-l | --list				show all overriden /system applications
+-x | --create				create all overrides
+-u | --update				update all overrides (= clear + create)
+-c | --clear				remove all overrides
+-g | --genconfig			(re-)create configuration from existing overrides
+"
+
+	exit 0
+}
+
 [[ $(whoami) != "root" ]] && error "not running as root"
 
 get_config () {
@@ -50,7 +71,7 @@ overrides_add_intern () {
 overrides_add () {
 	for app in ${@}; do
 		[[ -d /system/app/${app} ]] && overrides_add_intern app/${app}
-		[[ -d /system/priv-app/${2} ]] && overrides_add_intern priv-app/${app}
+		[[ -d /system/priv-app/${app} ]] && overrides_add_intern priv-app/${app}
 	done
 }
 
@@ -98,12 +119,12 @@ overrides_list () {
 		done
 	else
 		echo "Moved-Out apps from /system/app:"
-		for app in $(find "/sdcard/nanodroid_backups/app" -name "*.replace"); do
+		for app in $(find "/sdcard/nanodroid_backups/app" -mindepth 1 -maxdepth 1 -type d); do
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 
 		echo "Moved-Out apps from /system/priv-app:"
-		for app in $(find "/sdcard/nanodroid_backups/priv-app" -name "*.replace"); do
+		for app in $(find "/sdcard/nanodroid_backups/priv-app" -mindepth 1 -maxdepth 1 -type d); do
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 	fi
@@ -112,22 +133,22 @@ overrides_list () {
 overrides_list_non () {
 	if [[ ${NO_MAGISK} -eq 0 ]]; then
 		echo "non-overriden apps from /system/app:"
-		for app in $(find "/system/app" -mindepth 1 -type d); do
+		for app in $(find "/system/app" -mindepth 1 -maxdepth 1 -type d); do
 			[[ ! -f ${OVERLAY_PATH}/${app}/.replace ]] && echo "  * $(basename ${app})"
 		done
 
 		echo "non-overriden apps from /system/priv-app:"
-		for app in $(find "/system/priv-app" -mindepth 1 -type d); do
+		for app in $(find "/system/priv-app" -mindepth 1 -maxdepth 1 -type d); do
 			[[ ! -f ${OVERLAY_PATH}/${app}/.replace ]] && echo "  * $(basename ${app})"
 		done
 	else
 		echo "non-moved-out apps from /system/app:"
-		for app in $(find "/system/app" -mindepth 1 -type d); do
+		for app in $(find "/system/app" -mindepth 1 -maxdepth 1  -type d); do
 			echo "  * $(basename ${app})"
 		done
 
 		echo "non-moved-out apps from /system/priv-app:"
-		for app in $(find "/system/priv-app" -mindepth 1 -type d); do
+		for app in $(find "/system/priv-app" -mindepth 1 -maxdepth 1  -type d); do
 			echo "  * $(basename ${app})"
 		done
 	fi
@@ -173,7 +194,7 @@ else	overrides_genconfig
 fi
 
 opt=${1}
-shift
+[[ -z ${opt} ]] && show_help || shift
 
 case ${opt} in
 	-l | --list )		overrides_list ;;
@@ -190,21 +211,5 @@ case ${opt} in
 	;;
 
 
-	* )
-		echo "nanodroid-overlay
-
-Magisk Mode: Manages Overlays (Pseudo Debloat feature)
-System Mode: Manages Moved-Outs (Force Debloat feature)
-
-Options:
--a | --add		[appname]	add override for app [appname]
--r | --remove		[appname]	remove override for app [appname]
--s | --show				show non-overriden /system applications
--l | --list				show all overriden /system applications
--x | --create				create all overrides
--u | --update				update all overrides (= clear + create)
--c | --clear				remove all overrides
--g | --genconfig			(re-)create configuration from existing overrides
-"
-	;;
+	* ) show_help ;;
 esac
