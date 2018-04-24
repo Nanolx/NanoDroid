@@ -63,7 +63,7 @@ checkbox(
 	"microG",	"Install microG OSS GApps re-implementation",		1,
 	"F-Droid",	"Install F-Droid FOSS App Store",			1,
 	"Apps",		"Install Apps (customized later)",			1,
-	"Overlay",	"[Magisk] Pseudo-Debloat Apps (customized later)",	1,
+	"Overlay",	"Debloat Apps (customized later)",			1,
 	"Zelda Tunes",	"Install The Legend of Zelda rintones and sounds",	1,
 	"Maps API v1",	"Install Google Maps API version 1",			1,
 	"Init Scripts",	"Install init scripts",					1,
@@ -140,12 +140,12 @@ checkbox(
 );
 
 checkbox(
-	"Pseudo-Debloat Setup",
-	"Pseudo-Debloat Setup",
+	"Debloat Setup",
+	"Debloat Setup",
 	"icons/update",
 	"debloat.prop",
 
-	"Select which Apps to Pseudo-Debloat [Magisk] (if enabled)", "", 2, #-- Group 1
+	"Select which Apps to Debloat (if enabled)", "", 2, #-- Group 1
 	"BasicDreams",			"Screensaver",			1,
 	"Browser",			"Standard Browser",		1,
 	"Calendar",			"Standard Calendar",		1,

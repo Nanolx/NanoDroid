@@ -35,7 +35,7 @@ apps_add () {
 
 overlay_add () {
 	if grep -q "item.1.${1}=1" "${debloat_prop}"; then
-		ui_print "  <>> mark for pseudo-debloating: ${2}"
+		ui_print "  <>> mark for debloating: ${2}"
 		echo "${2}" >> "${nanodroid_overlay}"
 	fi
 }
@@ -158,7 +158,7 @@ apps_add 27 XDALabs
 apps_add 28 YahooWeatherProvider
 
 ui_print " "
-ui_print "  < Pseudo-Debloated Applications"
+ui_print "  < Debloated Applications"
 
 overlay_add 1 BasicDreams
 overlay_add 2 Browser
