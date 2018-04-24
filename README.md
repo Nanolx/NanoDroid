@@ -7,7 +7,7 @@ The transistion in Magisk Mode installation between old and new module name is h
 ## Current Release
 
 * Stable: 16.5.20180402
-* Beta: ---
+* Beta: 17.0~beta2 20180423
 
 ## Downloads
 
@@ -137,6 +137,10 @@ NanoDroid includes
   * GNU Bash shell
   * GNU Nano terminal editor
   * several utilities from `util-linux`, `bsdmainutils` and more
+  * Addon.d support for System Mode installation
+     * restores NanoDroid after ROM update
+     * re-debloates GApps, if required
+     * restored NanoDroid-Font setup, if required
 * The Legend of Zelda ringtones and sounds
 * System UI fonts from several Nintendo games
 
