@@ -64,17 +64,22 @@
      * update for new addon.d changes
 * SetupWizard
   * update for Substratum > Bucket change
+  * string changes
+* Documentation
+  * updated Debloat Feature section regarding System Mode support
+  * updated to reflect Addon.d support for System Mode installation
+  * other minor updates
 
 ### Updates
 
 * automatic
-  * QKSMS (3.0.7)
+  * QKSMS (3.0.9)
   * NewPipe (0.13.2)
   * Orfox (1.5.2-RC1)
-  * F-Droid (1.2.1)
+  * F-Droid (1.2.2)
   * Face Slim (3.3.0)
   * Odyssey (1.1.14)
-  * (Simple) Gallery (3.7.3)
+  * (Simple) Gallery (3.8.0)
   * Yalp Store (0.38)
   * (Simple) Calendar (3.4.2)
   * OpenLauncher (0.5.12)
