@@ -115,14 +115,12 @@ NanoDroid includes
   * on-device framework-patcher for microG support (signature spoofing)
   * on-pc framework-patcher for microG support (signature spoofing)
   * GApps are auto-removed during installation
-     * in Magisk Mode using [> Pseudo Debloat](doc/PseudoDebloat.md)
-     * in System Mode they are moved to `/sdcard/nandroid_backups`
-         * the Uninstaller will restore them (or re-flash the ROM)
+     * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
+     * the Uninstaller will restore them in System Mode (or re-flash the ROM)
      * see the [> GApps Removal List](doc/GAppsRemoval.md)
   * location packages conflicting with unified Nlp will are auto-removed during installation
-     * in Magisk Mode using [> Pseudo Debloat](doc/PseudoDebloat.md)
-     * in System Mode they are moved to `/sdcard/nandroid_backups`
-         * the Uninstaller will restore them (or re-flash the ROM)
+     * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
+     * the Uninstaller will restore them (or re-flash the ROM)
      * see the [> GApps Removal List](doc/GAppsRemoval.md)
 * F-Droid and it's privileged extension
 * modified Play Store to allow (in-)app-purchases with microG
@@ -131,7 +129,7 @@ NanoDroid includes
 * custom init scripts
 * pseudo-debloat feature (Magisk-only)
   * disables applications systemless-ly
-  * pre-configured [> default settings](doc/PseudoDebloat.md)
+  * pre-configured [> default settings](doc/NanoDroidOverlay.md)
 * several Open Source applications
   * include replacements for the pseudo-debloated applications
   * full list of [> included applications](doc/Applications.md)
@@ -231,12 +229,14 @@ This lists features unique to NanoDroid.
 
 #### NanoDroid-Overlay
 
-The `nanodroid-overlay` script handles the pseudo-debloat feature (Magisk-only)
+The `nanodroid-overlay` script handles the debloat feature
 
-  * show the list of pseudo-debloated apps
-  * add or remove apps from the list of pseudo-debloated apps
+  * pseudo-debloat applications in Magisk Mode
+  * force-debloat applications in System Mode
+  * show the list of debloated apps
+  * show the lits of non-debloated apps
+  * add or remove apps from the list of debloated apps
 
-  * Full details on the Pseudo Debloat feature [> Details](doc/PseudoDebloat.md)
   * Full details on the NanoDroid-Overlay Script [> Details](doc/NanoDroidOverlay.md)
 
 #### NanoDroid-Prop
@@ -377,10 +377,8 @@ NanoDroid includes microG as follows
      * go to **Yalp Store** > Settings > Installation Method > `Using system permissions`
   * Play Store is modified to allow (in-)app-purchases with microG
 * GApps and several location services conflict with microG and unified Nlp. Thus they are removed during NanoDroid installation
-  * in Magisk Mode using [> Pseudo Debloat](doc/PseudoDebloat.md)
-  * in System Mode they are moved to `/sdcard/nandroid_backups`
+  * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
   * see [> GAppsRemoval](doc/GAppsRemoval.md) for more details
-
 
 ### F-Droid and Applications
 

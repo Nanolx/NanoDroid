@@ -2,8 +2,7 @@
 
 GApps and several location services conflict with microG and unified Nlp. Thus they are removed during NanoDroid installation
 
-  * in Magisk Mode using [> Pseudo Debloat](PseudoDebloat.md)
-  * in System Mode they are moved to `/sdcard/nandroid_backups`
+  * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
 
 the Uninstaller will restore them (or re-flash the ROM)
 
