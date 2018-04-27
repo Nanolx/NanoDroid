@@ -86,7 +86,7 @@
   * OpenKeychain (5.0)
 
 * manual
-  * Play Store (9.7.11)
+  * Play Store (9.8.07)
   * MPV (20180421+merges)
 
 ## 16.5.20180402
