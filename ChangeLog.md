@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 17.0 in-dev
+## 17.0.20180430
 
 ### Bug Fixes
 
@@ -76,14 +76,16 @@
   * QKSMS (3.0.9)
   * NewPipe (0.13.2)
   * Orfox (1.5.2-RC1)
-  * F-Droid (1.2.2)
+  * F-Droid (1.3-alpha0)
   * Face Slim (3.3.0)
   * Odyssey (1.1.14)
-  * (Simple) Gallery (3.8.0)
-  * Yalp Store (0.38)
+  * (Simple) Gallery (3.8.2)
+  * Yalp Store (0.39)
   * (Simple) Calendar (3.4.2)
   * OpenLauncher (0.5.12)
   * OpenKeychain (5.0)
+  * Open Camera (1.43.3)
+  * Bucket (0.2.1-beta-1236)
 
 * manual
   * Play Store (9.8.07)

@@ -6,8 +6,8 @@ The transistion in Magisk Mode installation between old and new module name is h
 
 ## Current Release
 
-* Stable: 16.5.20180402
-* Beta: 17.0~beta2 20180423
+* Stable: 17.0.20180430
+* Beta: ---
 
 ## Downloads
 
@@ -105,7 +105,7 @@ Full, user-readible [> ChangeLog](ChangeLog.md)
 
 ## Summary
 
-**NanoDroid** can be installed as a Magisk Module or directly to /system, though a bit functionality is only available with Magisk.
+**NanoDroid** can be installed as a Magisk Module or directly to /system, most functionality is available, in System Mode, too.
 
 More information about Magisk [> XDA](https://forum.xda-developers.com/apps/magisk)
 
