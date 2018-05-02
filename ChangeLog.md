@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 17.1 in-dev
+
+### Updates
+
+* manual
+  * Play Store (9.9.21)
+
 ## 17.0.20180430
 
 ### Bug Fixes
