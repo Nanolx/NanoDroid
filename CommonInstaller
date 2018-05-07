@@ -912,25 +912,25 @@ nanodroid_install_file () {
 		error " !! file: ${file} not found"
 
 	# if /system/xbin does not exist, use /system/bin
-	[ "${dir}" = "xbin" -a "${ROM_NO_XBIN}" -eq 1 ] && dir="bin"
+	[ "${dir}" = "xbin" -a "${ROM_NO_XBIN}" -eq 1 ] && xdir="bin" || xdir="${dir}"
 
 	# strip off .${BIN_ARCH} from final filename (if any)
 	xfile=$(basename ${file} .${BIN_ARCH})
 
 	echo "    installing file: ${xfile}"
 
-	mkdir -p "${MODPATH}/system/${dir}/"
+	mkdir -p "${MODPATH}/system/${xdir}/"
 	cp "${INSTALLER}/system/${dir}/${file}" \
-		"${MODPATH}/system/${dir}/${xfile}" || \
+		"${MODPATH}/system/${xdir}/${xfile}" || \
 		error " !! failed to install ${xfile}"
 
 	case ${2} in
-		bin ) set_perm_bin "${MODPATH}/system/${dir}/${xfile}" ;;
-		*   ) set_perm_data "${MODPATH}/system/${dir}/${xfile}" ;;
+		bin ) set_perm_bin "${MODPATH}/system/${xdir}/${xfile}" ;;
+		*   ) set_perm_data "${MODPATH}/system/${xdir}/${xfile}" ;;
 	esac
 
 	[ "${MODE}" = "SYSTEM" ] && \
-		echo "/system/${dir}/${xfile}" >> /data/adb/.nanodroid-list
+		echo "/system/${xdir}/${xfile}" >> /data/adb/.nanodroid-list
 }
 
 nanodroid_install_lib () {
