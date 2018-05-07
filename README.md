@@ -6,7 +6,7 @@ The transistion in Magisk Mode installation between old and new module name is h
 
 ## Current Release
 
-* Stable: 17.0.20180430
+* Stable: 17.1.20180507
 * Beta: ---
 
 ## Downloads

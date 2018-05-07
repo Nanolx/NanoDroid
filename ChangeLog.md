@@ -2,7 +2,21 @@
 
 ## 17.1 in-dev
 
+### Bug Fixes
+
+* CommonInstaller
+  * fix installation on ROMs that don't have /system/xbin
+
 ### Updates
+
+* automatic
+  * OpenKeychain (5.0.1)
+  * NewPipe (0.13.3)
+  * KeePassDX (2.5.0.0beta9-libre)
+  * QKSMS (3.1.1)
+  * Yalp Store (0.40)
+  * F-Droid Privileged Extension (0.2.8)
+  * Bucket (0.2.1-beta-1253)
 
 * manual
   * Play Store (9.9.21)
