@@ -1,6 +1,6 @@
-diff -Nupr PS_9921.orig/AndroidManifest.xml PS_9921/AndroidManifest.xml
---- PS_9921.orig/AndroidManifest.xml	2018-05-02 19:27:25.068546721 +0200
-+++ PS_9921/AndroidManifest.xml	2018-05-02 19:28:13.000000000 +0200
+diff -Nupr PS_10007.orig/AndroidManifest.xml PS_10007/AndroidManifest.xml
+--- PS_10007.orig/AndroidManifest.xml	2018-05-10 18:19:23.387853293 +0200
++++ PS_10007/AndroidManifest.xml	2018-05-10 18:15:53.000000000 +0200
 @@ -1,4 +1,5 @@
  <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" android:compileSdkVersion="28" android:compileSdkVersionCodename="9" package="com.android.vending">
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
@@ -22,28 +22,28 @@ diff -Nupr PS_9921.orig/AndroidManifest.xml PS_9921/AndroidManifest.xml
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_9921.orig/res/values/public.xml PS_9921/res/values/public.xml
---- PS_9921.orig/res/values/public.xml	2018-05-02 19:27:24.487547535 +0200
-+++ PS_9921/res/values/public.xml	2018-05-02 19:28:59.939695310 +0200
-@@ -9470,6 +9470,7 @@
-     <public type="string" name="yes" id="0x7f1307ec" />
-     <public type="string" name="yes_im_in" id="0x7f1307ed" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f1307ee" />
-+    <public type="string" name="fake_signature" id="0x7f1307ef" />
+diff -Nupr PS_10007.orig/res/values/public.xml PS_10007/res/values/public.xml
+--- PS_10007.orig/res/values/public.xml	2018-05-10 18:19:23.711880799 +0200
++++ PS_10007/res/values/public.xml	2018-05-10 18:16:14.510593177 +0200
+@@ -9491,6 +9491,7 @@
+     <public type="string" name="yes" id="0x7f1307f4" />
+     <public type="string" name="yes_im_in" id="0x7f1307f5" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f1307f6" />
++    <public type="string" name="fake_signature" id="0x7f1307f7" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -10426,4 +10427,4 @@
+@@ -10458,4 +10459,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002a" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002b" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002c" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_9921.orig/res/values/strings.xml PS_9921/res/values/strings.xml
---- PS_9921.orig/res/values/strings.xml	2018-05-02 19:27:24.486547537 +0200
-+++ PS_9921/res/values/strings.xml	2018-05-02 19:28:27.778203418 +0200
-@@ -1892,4 +1892,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_10007.orig/res/values/strings.xml PS_10007/res/values/strings.xml
+--- PS_10007.orig/res/values/strings.xml	2018-05-10 18:19:23.684878507 +0200
++++ PS_10007/res/values/strings.xml	2018-05-10 18:16:28.329210053 +0200
+@@ -1897,4 +1897,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />
