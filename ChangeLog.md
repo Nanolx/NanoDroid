@@ -1,5 +1,19 @@
 # ChangeLog
 
+## 17.2 in-dev
+
+### Updates
+
+* automatic
+  * Orbot (16.0.2-RC1)
+  * (Simple) Calendar (4.0.3)
+  * (Simple) Gallery (4.0.0)
+  * OpenKeychan (5.0.2)
+  * QKSMS (3.1.3)
+
+* manual
+  * Play Store (10.1.08)
+
 ## 17.1.20180507
 
 ### Bug Fixes
