@@ -1,6 +1,6 @@
 #!/sbin/sh
 
-VERSION=17.1.20180507
+VERSION=17.2.99999999
 
 GOOGLE_APPS="GoogleFeedback
 GoogleLoginService
@@ -1163,9 +1163,9 @@ check_cfg_apps () {
 		sed -e 's/KeePassDroid/KeePassDX/g' -i "${cfg_apps}"
 	fi
 
-	# <= 17.0~beta1 has Substratum instead of Bucket (LibreSubtratum), migrate
-	if grep -q Substratum "${cfg_apps}"; then
-		sed -e 's/Substratum/Bucket/g' -i "${cfg_apps}"
+	# <= 17.0~beta1 && <= 17.2~beta1 has Bucket (LibreSubtratum) instead of Substratum, migrate
+	if grep -q Bucket "${cfg_apps}"; then
+		sed -e 's/Bucket/Substratum/g' -i "${cfg_apps}"
 	fi
 }
 
