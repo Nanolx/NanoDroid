@@ -1,8 +1,8 @@
-diff -Nupr PS_10138.orig/AndroidManifest.xml PS_10138/AndroidManifest.xml
---- PS_10138.orig/AndroidManifest.xml	2018-05-17 17:13:32.936690913 +0200
-+++ PS_10138/AndroidManifest.xml	2018-05-17 17:14:26.825969734 +0200
+diff -Nupr PS_10510.orig/AndroidManifest.xml PS_10510/AndroidManifest.xml
+--- PS_10510.orig/AndroidManifest.xml	2018-06-14 19:27:35.680768618 +0200
++++ PS_10510/AndroidManifest.xml	2018-06-14 19:28:16.548892392 +0200
 @@ -1,4 +1,5 @@
- <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" android:compileSdkVersion="28" android:compileSdkVersionCodename="28" package="com.android.vending">
+ <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" android:compileSdkVersion="28" android:compileSdkVersionCodename="9" package="com.android.vending">
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
      <uses-permission android:name="com.android.vending.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.android.vending.billing.IN_APP_NOTIFY.permission.C2D_MESSAGE"/>
@@ -15,35 +15,35 @@ diff -Nupr PS_10138.orig/AndroidManifest.xml PS_10138/AndroidManifest.xml
          <activity android:configChanges="orientation|screenSize" android:name="com.google.android.wallet.instrumentmanager.ui.redirect.ImPopupRedirectActivity" android:theme="@style/Theme.UiComponents.PopupRedirect"/>
          <activity android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.wallet.instrumentmanager.redirect.ImStartAndroidAppRedirectActivity" android:theme="@style/Theme.UiComponents.Translucent.NoActionBar"/>
          <activity android:exported="true" android:name="com.google.android.wallet.instrumentmanager.redirect.ImFinishAndroidAppRedirectActivity">
-@@ -882,4 +884,4 @@
+@@ -888,4 +890,4 @@
          <screen android:screenDensity="xxhdpi" android:screenSize="large"/>
          <screen android:screenDensity="xxhdpi" android:screenSize="xlarge"/>
      </compatible-screens>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_10138.orig/res/values/public.xml PS_10138/res/values/public.xml
---- PS_10138.orig/res/values/public.xml	2018-05-17 17:13:32.297687604 +0200
-+++ PS_10138/res/values/public.xml	2018-05-17 17:14:51.637097934 +0200
-@@ -9506,6 +9506,7 @@
-     <public type="string" name="yes" id="0x7f1307f6" />
-     <public type="string" name="yes_im_in" id="0x7f1307f7" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f1307f8" />
-+    <public type="string" name="fake_signature" id="0x7f1307f9" />
+diff -Nupr PS_10510.orig/res/values/public.xml PS_10510/res/values/public.xml
+--- PS_10510.orig/res/values/public.xml	2018-06-14 19:27:34.635766324 +0200
++++ PS_10510/res/values/public.xml	2018-06-14 19:28:35.891967904 +0200
+@@ -9647,6 +9647,7 @@
+     <public type="string" name="yes" id="0x7f1307ff" />
+     <public type="string" name="yes_im_in" id="0x7f130800" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f130801" />
++    <public type="string" name="fake_signature" id="0x7f130802" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -10479,4 +10480,4 @@
+@@ -10611,4 +10612,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002a" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002b" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002c" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_10138.orig/res/values/strings.xml PS_10138/res/values/strings.xml
---- PS_10138.orig/res/values/strings.xml	2018-05-17 17:13:32.297687604 +0200
-+++ PS_10138/res/values/strings.xml	2018-05-17 17:15:09.648190933 +0200
-@@ -1889,4 +1889,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_10510.orig/res/values/strings.xml PS_10510/res/values/strings.xml
+--- PS_10510.orig/res/values/strings.xml	2018-06-14 19:27:34.635766324 +0200
++++ PS_10510/res/values/strings.xml	2018-06-14 19:28:50.602030179 +0200
+@@ -1895,4 +1895,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />
