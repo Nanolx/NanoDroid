@@ -107,7 +107,6 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/Amaze/Amaze.apk
 	Full/system/app/AnysoftKeyboard/AnysoftKeyboard.apk
 	Full/system/app/BeHeKeyboard/BeHeKeyboard.apk
-	Full/system/app/Bucket/Bucket.apk
 	Full/system/app/FDroid/FDroid.apk
 	Full/system/app/FaceSlim/FaceSlim.apk
 	Full/system/app/GsfProxy/GsfProxy.apk
@@ -129,6 +128,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/QKSMS/QKSMS.apk
 	Full/system/app/SimpleCalendar/SimpleCalendar.apk
 	Full/system/app/SimpleGallery/SimpleGallery.apk
+	Full/system/app/Substratum/Substratum.apk
 	Full/system/app/Termux/Termux.apk
 	Full/system/app/Twidere/Twidere.apk
 	Full/system/app/XDALabs/XDALabs.apk
