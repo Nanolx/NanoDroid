@@ -1,8 +1,8 @@
 ini_set("rom_name",	"NanoDroid Setup Wizard");
-ini_set("rom_version",	"17.1");
+ini_set("rom_version",	"17.2");
 ini_set("rom_author",	"Nanolx");
 ini_set("rom_device",	"Generic (LOS/AOSP)");
-ini_set("rom_date",	"20180507");
+ini_set("rom_date",	"99999999");
 
 anisplash(
     0, "splash/nanolx.png", 1500
@@ -122,6 +122,7 @@ checkbox(
 	"NewPipe",			"YouTube frontend and downloader",	1,
 	"Oandbackup",			"Backup and Restore Apps",		1,
 	"Odyssey",			"Feature-Rich Music Player",		1,
+	"OmniClock",			"Clock without pre-alerts",		1,
 	"OpenCamera",			"Feature-Rich Camera",			1,
 	"OpenKeyChain",			"Encrypt or Sign E-Mails",		1,
 	"OpenLauncher",			"Customizable Launcher",		1,
@@ -132,7 +133,7 @@ checkbox(
 	"QKSMS",			"Great SMS / MMS messenger",		1,
 	"SimpleCalendar",		"Easy to use Calendar",			1,
 	"SimpleGallery",		"Easy to use Gallery",			1,
-	"Bucket/LibreSubstratum",	"Alternative Substratum App",		1,
+	"Substratum",			"Substratum Theme Engine App",		1,
 	"Termux",			"Powerful Terminal Emulator",		1,
 	"Twidere",			"Customizable Twitter Client",		1,
 	"XDALabs",			"XDA at the palm of your hands",	1,
@@ -151,6 +152,7 @@ checkbox(
 	"Calendar",			"Standard Calendar",		1,
 	"Camera2",			"Standard Camera",		1,
 	"CMFileManager",		"Cyanogen File Manager",	1,
+	"DeskClock",			"Stock Clock app",		1,
 	"Eleven",			"Standard Music Player",	1,
 	"Email",			"Standard Mail Program",	1,
 	"Exchange2",			"Exchange Services (Email)",	1,

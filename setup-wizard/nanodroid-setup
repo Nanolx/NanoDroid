@@ -50,7 +50,7 @@ nlp_prop="${aromapath}/nlp.prop"
 
 ui_print " "
 ui_print "******************************"
-ui_print "     NanoDroid 17.1.20180507    "
+ui_print "     NanoDroid 17.2.99999999    "
 ui_print "      created by @Nanolx      "
 ui_print "         Setup Wizard         "
 ui_print "******************************"
@@ -141,21 +141,22 @@ apps_add 10 MPV
 apps_add 11 NewPipe
 apps_add 12 Oandbackup
 apps_add 13 Odyssey
-apps_add 14 OpenCamera
-apps_add 15 OpenKeyChain
-apps_add 16 OpenLauncher
-apps_add 17 OpenWeatherMapProvider
-apps_add 18 OpenVPN
-apps_add 19 Orbot
-apps_add 20 Orfox
-apps_add 21 QKSMS
-apps_add 22 SimpleCalendar
-apps_add 23 SimpleGallery
-apps_add 24 Bucket
-apps_add 25 Termux
-apps_add 26 Twidere
-apps_add 27 XDALabs
-apps_add 28 YahooWeatherProvider
+apss_add 14 OmniClock
+apps_add 15 OpenCamera
+apps_add 16 OpenKeyChain
+apps_add 17 OpenLauncher
+apps_add 18 OpenWeatherMapProvider
+apps_add 19 OpenVPN
+apps_add 20 Orbot
+apps_add 21 Orfox
+apps_add 22 QKSMS
+apps_add 23 SimpleCalendar
+apps_add 24 SimpleGallery
+apps_add 25 Substratum
+apps_add 26 Termux
+apps_add 27 Twidere
+apps_add 28 XDALabs
+apps_add 29 YahooWeatherProvider
 
 ui_print " "
 ui_print "  < Debloated Applications"
@@ -165,29 +166,30 @@ overlay_add 2 Browser
 overlay_add 3 Calendar
 overlay_add 4 Camera2
 overlay_add 5 CMFileManager
-overlay_add 6 Eleven
-overlay_add 7 Email
-overlay_add 8 Exchange2
-overlay_add 9 FMRadio
-overlay_add 10 Gallery2
-overlay_add 11 Gello
-overlay_add 12 Jelly
-overlay_add 13 messaging
-overlay_add 14 mGerrit
-overlay_add 15 OmniSwitch
-overlay_add 16 Phonograph
-overlay_add 17 PhotoTable
-overlay_add 18 Recorder
-overlay_add 19 ResurrectionStats
-overlay_add 20 Screencast
-overlay_add 21 Slimperience
-overlay_add 22 Snap
-overlay_add 23 SnapdragonCamera
-overlay_add 24 SoundRecorder
-overlay_add 25 Stk
-overlay_add 26 ViaBrowser
-overlay_add 27 Wallpaper
-overlay_add 28 WallpaperBackup
-overlay_add 29 WallpaperPickerGoogle
+overlay_add 6 DeskClock
+overlay_add 7 Eleven
+overlay_add 8 Email
+overlay_add 9 Exchange2
+overlay_add 10 FMRadio
+overlay_add 11 Gallery2
+overlay_add 12 Gello
+overlay_add 13 Jelly
+overlay_add 14 messaging
+overlay_add 15 mGerrit
+overlay_add 16 OmniSwitch
+overlay_add 17 Phonograph
+overlay_add 18 PhotoTable
+overlay_add 19 Recorder
+overlay_add 20 ResurrectionStats
+overlay_add 21 Screencast
+overlay_add 22 Slimperience
+overlay_add 23 Snap
+overlay_add 24 SnapdragonCamera
+overlay_add 25 SoundRecorder
+overlay_add 26 Stk
+overlay_add 27 ViaBrowser
+overlay_add 28 Wallpaper
+overlay_add 29 WallpaperBackup
+overlay_add 30 WallpaperPickerGoogle
 
 exit 0
