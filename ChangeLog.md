@@ -2,17 +2,45 @@
 
 ## 17.2 in-dev
 
+### General Changes
+
+* Full package
+  * switch from Bucket/LibreSubstratum to Substratum App
+     * Bucket was abandoned
+     * if the user had Bucket in the lists of applications to install, NanoDroid will auto-migrate to Substratum
+  * add OmniClock and pseudo/debloat DeskClock by default
+     * OmniClock allows to disable that brain-dead pre-alerts
+* Full, microG packages
+  * custom builds for microG GmsCore, microG DroidGuard Helper and nlpBackendIchnaea
+     * fix Safety Net, Play-Services update-nag, improve Mozilla backend
+     * more information below
+
 ### Updates
 
 * automatic
   * Orbot (16.0.2-RC1)
-  * (Simple) Calendar (4.0.3)
-  * (Simple) Gallery (4.0.0)
-  * OpenKeychan (5.0.2)
-  * QKSMS (3.1.3)
+  * (Simple) Calendar (4.0.4)
+  * (Simple) Gallery (4.1.1)
+  * OpenKeychain (5.1.1)
+  * QKSMS (3.3.2)
+  * Yalp Store (0.42)
+  * AnySoftKeyboard (1.9.1944)
+  * NewPipe (0.13.5)
+  * KeePassDX (2.5.0.0beta11-libre)
+  * Substratum (992)
+  * OmniClock (2.0.14)
+  * K9-Mail (5.503)
 
 * manual
-  * Play Store (10.1.08)
+  * Play Store (10.5.10)
+  * microG GmsCore (0.2.4-114-g33d7e56_custom)
+     * bumped spoofed Play Services version
+     * fixes 'update your Play Services' nag
+  * microG DroidGuard Helper (0.1.0-17-ge726079_custom)
+     * fixes SafetyNet attestation with microG
+     * see [this pull request](https://github.com/microg/android_packages_apps_RemoteDroidGuard/pull/19)
+  * nlpBackendIchnaea (1.4.0_custom)
+     * latest upstream snapshot
 
 ## 17.1.20180507
 
