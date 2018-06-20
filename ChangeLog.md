@@ -32,7 +32,7 @@
   * K9-Mail (5.503)
 
 * manual
-  * Play Store (10.5.10)
+  * Play Store (10.5.33)
   * microG GmsCore (0.2.4-114-g33d7e56_custom)
      * bumped spoofed Play Services version
      * fixes 'update your Play Services' nag
