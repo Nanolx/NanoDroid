@@ -19,10 +19,10 @@
 
 * automatic
   * Orbot (16.0.2-RC1)
-  * (Simple) Calendar (4.0.4)
-  * (Simple) Gallery (4.1.1)
-  * OpenKeychain (5.1.1)
-  * QKSMS (3.3.2)
+  * (Simple) Calendar (4.1.0)
+  * (Simple) Gallery (4.2.1)
+  * OpenKeychain (5.1.3)
+  * QKSMS (3.3.3)
   * Yalp Store (0.42)
   * AnySoftKeyboard (1.9.1944)
   * NewPipe (0.13.5)
@@ -30,13 +30,19 @@
   * Substratum (992)
   * OmniClock (2.0.14)
   * K9-Mail (5.503)
+  * nlpBackend Déjá Vu (1.1.7)
+  * FDroid (1.3-alpha1)
+  * Termux (0.61)
 
 * manual
-  * Play Store (10.5.33)
-  * microG GmsCore (0.2.4-114-g33d7e56_custom)
+  * Play Store (10.6.08)
+  * microG GmsCore (0.2.4-126_custom)
      * bumped spoofed Play Services version
-     * fixes 'update your Play Services' nag
-  * microG DroidGuard Helper (0.1.0-17-ge726079_custom)
+         * fixes 'update your Play Services' nag
+     * built as priviledged module
+     * including 'null check for issue 560', see [this pull request](https://github.com/microg/android_packages_apps_GmsCore/pull/561)
+     * including 'temporarly whitelist app upon high-priority GCM messages', see [this repo](https://github.com/ale5000-git/android_packages_apps_GmsCore/commits/master)
+  * microG DroidGuard Helper (0.1.0-17_custom)
      * fixes SafetyNet attestation with microG
      * see [this pull request](https://github.com/microg/android_packages_apps_RemoteDroidGuard/pull/19)
   * nlpBackendIchnaea (1.4.0_custom)
