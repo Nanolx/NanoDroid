@@ -31,11 +31,11 @@
   * OmniClock (2.0.14)
   * K9-Mail (5.503)
   * nlpBackend Déjá Vu (1.1.7)
-  * FDroid (1.3-alpha1)
-  * Termux (0.61)
+  * FDroid (1.3-alpha2)
+  * Termux (0.62)
 
 * manual
-  * Play Store (10.6.08)
+  * Play Store (10.7.17)
   * microG GmsCore (0.2.4-126_custom)
      * bumped spoofed Play Services version
          * fixes 'update your Play Services' nag
@@ -47,6 +47,8 @@
      * see [this pull request](https://github.com/microg/android_packages_apps_RemoteDroidGuard/pull/19)
   * nlpBackendIchnaea (1.4.0_custom)
      * latest upstream snapshot
+  * MPV (20180627_custom)
+     * latest upstream snapshot (with additional pull requests)
 
 ## 17.1.20180507
 
