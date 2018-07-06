@@ -11,9 +11,10 @@
   * add OmniClock and pseudo/debloat DeskClock by default
      * OmniClock allows to disable that brain-dead pre-alerts
 * Full, microG packages
-  * custom builds for microG GmsCore, microG DroidGuard Helper and nlpBackendIchnaea
-     * fix Safety Net, Play-Services update-nag, improve Mozilla backend
+  * custom builds for microG GmsCore and microG DroidGuard Helper
+     * fix Safety Net attestation, Play-Services update-nag
      * more information below
+  * by default install Déjà Vu and Mozilla nlp Backends
 
 ### Updates
 
@@ -33,9 +34,10 @@
   * nlpBackend Déjá Vu (1.1.7)
   * FDroid (1.3-alpha2)
   * Termux (0.62)
+  * nlpBackendIchnaea (1.4.0)
 
 * manual
-  * Play Store (10.7.17)
+  * Play Store (10.7.19)
   * microG GmsCore (0.2.4-126_custom)
      * bumped spoofed Play Services version
          * fixes 'update your Play Services' nag
@@ -45,8 +47,6 @@
   * microG DroidGuard Helper (0.1.0-17_custom)
      * fixes SafetyNet attestation with microG
      * see [this pull request](https://github.com/microg/android_packages_apps_RemoteDroidGuard/pull/19)
-  * nlpBackendIchnaea (1.4.0_custom)
-     * latest upstream snapshot
   * MPV (20180627_custom)
      * latest upstream snapshot (with additional pull requests)
 

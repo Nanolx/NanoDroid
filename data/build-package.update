@@ -24,7 +24,7 @@ update_microg () {
 	#grab_apk_from_repo ${uG_DROIDGUARD[@]}
 	#grab_apk_from_repo ${uG_FAKESTORE[@]}
 	grab_apk_from_repo ${fd_NLPDEJAVU[@]}
-	#grab_apk_from_repo ${fd_NLPMOZILLA[@]}
+	grab_apk_from_repo ${fd_NLPMOZILLA[@]}
 	grab_apk_from_repo ${fd_NLPNOMINATIM[@]}
 	grab_apk_from_repo ${fd_YALPSTORE[@]}
 
