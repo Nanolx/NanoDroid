@@ -16,6 +16,8 @@
      * more information below
   * by default install Déjà Vu and Mozilla nlp Backends
   * improve GApps uninstallation routine
+* CommonInstaller
+  * improved A/B device support code taken from Magisk 16.6
 
 ### Updates
 
