@@ -10,6 +10,7 @@
      * if the user had Bucket in the lists of applications to install, NanoDroid will auto-migrate to Substratum
   * add OmniClock and pseudo/debloat DeskClock by default
      * OmniClock allows to disable that brain-dead pre-alerts
+  * switch from stable Amaze build to official beta build
 * Full, microG packages
   * custom builds for microG GmsCore and microG DroidGuard Helper
      * fix Safety Net attestation, Play-Services update-nag
@@ -40,7 +41,7 @@
   * nlpBackendIchnaea (1.4.0)
   * Kernel Adiutor (0.9.11.1)
   * AnySoftKeyboard (1.9.2055)
-  * Amaze (3.2.2)
+  * Amaze (3.3.0RC1)
 
 * manual
   * Play Store (10.7.19)

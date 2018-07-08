@@ -49,7 +49,7 @@ update_fdroid () {
 update_apps () {
 	# applications managed in repositories
 	grab_apk_from_repo ${fd_ADAWAY[@]}
-	grab_apk_from_repo ${fd_AMAZE[@]}
+	#grab_apk_from_repo ${fd_AMAZE[@]}
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
 	grab_apk_from_repo ${fd_FACESLIM[@]}
