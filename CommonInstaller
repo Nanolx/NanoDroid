@@ -592,7 +592,7 @@ install_microg () {
 			if ! grep -q 'com.google.android.gms' /data/system/users/*/runtime-permissions.xml; then
 				rm -f /data/system/users/*/runtime-permissions.xml
 			fi
-		if
+		fi
 
 		case ${nanodroid_nlpbackend} in
 			0 ) NLPBACKEND=""
