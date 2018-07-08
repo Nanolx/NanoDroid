@@ -36,7 +36,7 @@
   * K9-Mail (5.503)
   * nlpBackend Déjá Vu (1.1.8)
   * FDroid (1.3-alpha3)
-  * Termux (0.63)
+  * Termux (0.64)
   * nlpBackendIchnaea (1.4.0)
   * Kernel Adiutor (0.9.11.1)
   * AnySoftKeyboard (1.9.2055)
