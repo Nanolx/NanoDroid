@@ -1,6 +1,7 @@
 #!/sbin/sh
 
 VERSION=17.2.99999999
+NANODROID_UPGRADE=1
 
 GOOGLE_APPS="GoogleFeedback
 GoogleLoginService
@@ -29,26 +30,20 @@ DejaVuNlpBackend
 IchnaeaNlpBackend
 MozillaNlpBackend
 NominatimGeocoderBackend
-NominatimNlpBackend
-com.mgoogle.android.gms
-com.google.android.gms
+NominatimNlpBackend"
+
+GOOGLE_DATA="com.mgoogle.android.gms
 com.google.android.feedback
 com.google.android.gsf.login
 com.google.android.gsf
 com.android.vending
-org.microg.gms.droidguard
-org.schabi.newpipe
 com.google.android.youtube
 com.qualcomm.location
 com.amap.android.location
 com.baidu.location
 com.google.android.location
 org.microg.nlp
-org.microg.unifiednlp
-com.google.android.maps
-org.fitchfamily.android.dejavu
-org.microg.nlp.backend.ichnaea
-org.microg.nlp.backend.nominatim"
+org.microg.unifiednlp"
 
 ##########################################################################################
 # Misc. Functions
@@ -238,6 +233,14 @@ detect_mode () {
 	ui_print "${MODE_TEXT}"
 	ui_print " "
 
+	if [ "${MODE}" = "SYSTEM"]; then
+		if test -f /system/etc/default-permissions/microg-permissions.xml; then
+			NANODROID_UPGRADE=1
+		else
+			NANODROID_UPGRADE=0
+		fi
+	fi
+
 	[ "${MODE}" = "MAGISK" ] && magisk_install_setup
 
 	if [ "${nanodroid_fonts}" -eq 1 ]; then
@@ -422,6 +425,8 @@ magisk_install_setup () {
 					rm -rf ${MOUNTPATH}/${dir}
 				fi
 			done
+
+			[ -d ${MODUNTPATH}/NanoDroid ] && NANODROID_UPGRADE=1
 		;;
 
 		NanoDroid_microG )
@@ -435,6 +440,8 @@ magisk_install_setup () {
 				ui_print " !! old version module detected - uninstalling!"
 				rm -rf ${MOUNTPATH}/NanoModmicroG
 			fi
+
+			[ -d ${MODUNTPATH}/NanoDroid_microG ] && NANODROID_UPGRADE=1
 		;;
 
 		NanoDroid_FDroid )
@@ -448,6 +455,8 @@ magisk_install_setup () {
 				ui_print " !! old version module detected - uninstalling!"
 				rm -rf ${MOUNTPATH}/NanoModfdroid
 			fi
+
+			[ -d ${MODUNTPATH}/NanoDroid_FDroid ] && NANODROID_UPGRADE=1
 		;;
 	esac
 }
@@ -551,7 +560,33 @@ install_microg () {
 				${MODPATH}/system/bin/nanodroid-overlay --add ${app}
 			else	${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
 			fi
+
+			rm -rf /data/dalvik-cache/*/system"@priv-app@${app}"[@\.]*@classes.*
+			rm -rf /data/dalvik-cache/*/system"@app@${app}"[@\.]*@classes.*
 		done
+
+		for app in ${GOOGLE_DATA}; do
+			rm -rf /data/data/${app}
+			rm -rf /data/user/*/${app}
+			rm -rf /data/user_de/*/${app}
+			rm -rf /data/app/${app}-*
+		done
+
+		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
+			# this removes original Play Services
+			# only if this is a fresh NanoDroid installation
+			rm -rf /data/dalvik-cache/*/system"@priv-app@GmsCore"[@\.]*@classes.*
+
+			app=com.google.android.gms
+			rm -rf /data/data/${app}
+			rm -rf /data/user/*/${app}
+			rm -rf /data/user_de/*/${app}
+			rm -rf /data/app/${app}-*
+
+			if ! grep -q 'com.google.android.gms' /data/system/users/*/runtime-permissions.xml; then
+				rm -f /data/system/users/*/runtime-permissions.xml
+			fi
+		if
 
 		case ${nanodroid_nlpbackend} in
 			0 ) NLPBACKEND=""

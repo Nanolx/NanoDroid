@@ -41,26 +41,7 @@ DejaVuNlpBackend
 IchnaeaNlpBackend
 MozillaNlpBackend
 NominatimGeocoderBackend
-NominatimNlpBackend
-com.mgoogle.android.gms
-com.google.android.gms
-com.google.android.feedback
-com.google.android.gsf.login
-com.google.android.gsf
-com.android.vending
-org.microg.gms.droidguard
-org.schabi.newpipe
-com.google.android.youtube
-com.qualcomm.location
-com.amap.android.location
-com.baidu.location
-com.google.android.location
-org.microg.nlp
-org.microg.unifiednlp
-com.google.android.maps
-org.fitchfamily.android.dejavu
-org.microg.nlp.backend.ichnaea
-org.microg.nlp.backend.nominatim"
+NominatimNlpBackend"
 
 ui_print () {
 	echo -n -e "ui_print ${1}\n" >> /proc/self/fd/${OUTFD}

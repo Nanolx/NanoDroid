@@ -15,6 +15,7 @@
      * fix Safety Net attestation, Play-Services update-nag
      * more information below
   * by default install Déjà Vu and Mozilla nlp Backends
+  * improve GApps uninstallation routine
 
 ### Updates
 
