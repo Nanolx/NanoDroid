@@ -1072,6 +1072,10 @@ nanodroid_substitute () {
 
 nanodroid_storelogs () {
 
+	curdate=$(date +%Y%m%d_%H.%M.%S)
+	nanodroid_logfile="/data/adb/${MODID}_log_${curdate}"
+	nanodroid_twrplog="/data/adb/${MODID}_twrp_${curdate}"
+
 	echo "\
 ### VALUES ###
 ZIP=${ZIP}
@@ -1094,17 +1098,17 @@ RESTORE_PATH=${RESTORE_PATH}
 NANODROID_UPGRADE=${NANODROID_UPGRADE}
 
 ### SETUP ###
-" > /data/adb/.nanodroid_${MODID}
+" > ${nanodroid_logfile}
 
-cat "${cfg_setup}" >> /data/adb/.nanodroid_${MODID}
+cat "${cfg_setup}" >> ${nanodroid_logfile}
 
 if [ ! -z "${cfg_apps}" ]; then
 
 echo "
 ### APPS ###
-" >> /data/adb/.nanodroid_${MODID}
+" >> ${nanodroid_logfile}
 
-cat "${cfg_apps}" >> /data/adb/.nanodroid_${MODID}
+cat "${cfg_apps}" >> ${nanodroid_logfile}
 
 fi
 
@@ -1112,13 +1116,14 @@ if [ ! -z "${cfg_overlay}" ]; then
 
 echo "
 ### OVERLAY ###
-" >> /data/adb/.nanodroid_${MODID}
+" >> ${nanodroid_logfile}
 
-cat "${cfg_overlay}" >> /data/adb/.nanodroid_${MODID}
+cat "${cfg_overlay}" >> ${nanodroid_logfile}
 
 fi
 
-${BOOTMODE} || cat /tmp/recovery.log > /data/adb/.recovery_${MODID}
+${BOOTMODE} || cat /tmp/recovery.log > ${nanodroid_twrplog}
+
 }
 
 ##########################################################################################

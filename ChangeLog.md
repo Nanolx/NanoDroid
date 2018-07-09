@@ -19,6 +19,11 @@
   * improve GApps uninstallation routine
 * CommonInstaller, CommonPatcher, Uninstaller
   * improved A/B device support code taken from Magisk 16.6
+* CommonInstaller
+  * move installation log destinations
+     * /data/adb/.nanodroid_MODID >> /data/adb/MODID_log_DATE
+     * /data/adb/.recovery_MODID >> /data/adb/MODID_twrp_DATE
+  * where DATE has %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14)
 
 ### Updates
 
