@@ -269,6 +269,15 @@ for path in ${config_locations}; do
 	done
 done
 
+ui_print " << Removing installation logs (if any)"
+
+# old format
+rm -f /data/adb/.nanodroid_*
+rm -f /data/adb/.recovery_*
+
+# new format
+rm -f /data/adb/NanoDroid*
+
 # System Mode uninstallation
 for install_info in /system/.nanomod-list /data/adb/.nanomod-list \
 	/data/adb/.nanodroid-list; do
