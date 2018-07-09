@@ -24,6 +24,9 @@
      * /data/adb/.nanodroid_MODID >> /data/adb/MODID_log_DATE
      * /data/adb/.recovery_MODID >> /data/adb/MODID_twrp_DATE
   * where DATE has %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14)
+  * where MODID is either NanoDroid, NanoDroid_microG or NanoDroid_FDroid
+* Uninstaller
+  * also remove installation logs upon uninstallation
 
 ### Updates
 
