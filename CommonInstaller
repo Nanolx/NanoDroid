@@ -240,7 +240,10 @@ detect_mode () {
 	ui_print " "
 
 	if [ "${MODE}" = "SYSTEM"]; then
-		if test -f /data/adb/.nanodroid-list -o -f /system/addon.d/91-nanodroid.sh; then
+		if test -f /data/adb/.nanodroid-list -o \
+			-f /data/adb/.nanomod-list -o \
+			-f /system/.nanomod-list -o \
+			-f /system/addon.d/91-nanodroid.sh; then
 			NANODROID_UPGRADE=1
 		else
 			NANODROID_UPGRADE=0
