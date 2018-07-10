@@ -17,6 +17,7 @@
      * more information below
   * by default install Déjà Vu and Mozilla nlp Backends
   * improve GApps uninstallation routine
+     * properly remove data for GApps, aswell, but only it's a fresh NanoDroid installation
 * CommonInstaller, CommonPatcher, Uninstaller
   * improved A/B device support code taken from Magisk 16.6
 * CommonInstaller
