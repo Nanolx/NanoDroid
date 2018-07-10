@@ -429,6 +429,7 @@ magisk_install_setup () {
 				if [ -d ${MOUNTPATH}/${dir} ]; then
 					ui_print " !! ${dir} module detected - uninstalling!"
 					rm -rf ${MOUNTPATH}/${dir}
+					NANODROID_UPGRADE=1
 				fi
 			done
 
@@ -445,6 +446,7 @@ magisk_install_setup () {
 			if [ -d ${MOUNTPATH}/NanoModmicroG ]; then
 				ui_print " !! old version module detected - uninstalling!"
 				rm -rf ${MOUNTPATH}/NanoModmicroG
+				NANODROID_UPGRADE=1
 			fi
 
 			[ -d ${MODUNTPATH}/NanoDroid_microG ] && NANODROID_UPGRADE=1
@@ -460,6 +462,7 @@ magisk_install_setup () {
 			if [ -d ${MOUNTPATH}/NanoModfdroid ]; then
 				ui_print " !! old version module detected - uninstalling!"
 				rm -rf ${MOUNTPATH}/NanoModfdroid
+				NANODROID_UPGRADE=1
 			fi
 
 			[ -d ${MODUNTPATH}/NanoDroid_FDroid ] && NANODROID_UPGRADE=1
