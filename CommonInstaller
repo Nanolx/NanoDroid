@@ -240,7 +240,7 @@ detect_mode () {
 	ui_print " "
 
 	if [ "${MODE}" = "SYSTEM"]; then
-		if test -f /system/etc/default-permissions/microg-permissions.xml; then
+		if test -f /data/adb/.nanodroid-list -o -f /system/addon.d/91-nanodroid.sh; then
 			NANODROID_UPGRADE=1
 		else
 			NANODROID_UPGRADE=0
