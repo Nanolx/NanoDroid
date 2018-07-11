@@ -57,6 +57,7 @@
   * Kernel Adiutor (0.9.11.1)
   * AnySoftKeyboard (1.9.2055)
   * Amaze (3.3.0RC1)
+  * GNU Nano (2.9.8)
 
 * manual
   * Play Store (10.8.21)
