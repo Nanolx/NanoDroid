@@ -39,11 +39,11 @@
 
 * automatic
   * Orbot (16.0.2-RC1)
-  * (Simple) Calendar (4.1.0)
-  * (Simple) Gallery (4.3.1)
+  * (Simple) Calendar (4.1.1)
+  * (Simple) Gallery (4.3.3)
   * OpenKeychain (5.1.4)
   * QKSMS (3.3.3)
-  * Yalp Store (0.42)
+  * Yalp Store (0.43)
   * AnySoftKeyboard (1.9.1944)
   * NewPipe (0.13.5)
   * KeePassDX (2.5.0.0beta11-libre)
@@ -58,6 +58,7 @@
   * AnySoftKeyboard (1.9.2055)
   * Amaze (3.3.0RC1)
   * GNU Nano (2.9.8)
+  * Odyssey (1.1.15)
 
 * manual
   * Play Store (10.8.21)
