@@ -713,7 +713,9 @@ install_apps () {
 
 		for app in ${INSTALL_APPS}; do
 			if [[ ${app} = Adaway && -d /system/app/AdAway ]]; then
-				ui_print " <<> app: ${app} already provided by ROM (as AdAway)"
+				ui_print " <<> app: Adaway already provided by ROM (as AdAway)"
+			if [[ ${app} = OmniClock && -d /system/app/OmniClockOSS ]]; then
+				ui_print " <<> app: OmniClock already provided by ROM (as OmniClockOSS)"
 			elif [[ -d /system/app/${app} && ! -d ${RESTORE_PATH}/system/app/${app} ]]; then
 				ui_print " <<> app: ${app} already provided by ROM"
 			elif [[ -d "${INSTALLER}/system/app/${app}" ]]; then
@@ -721,7 +723,6 @@ install_apps () {
 			else	ui_print " <<>> app: ${app} missing"
 			fi
 		done
-
 	else	ui_print " << without applications"
 	fi
 }

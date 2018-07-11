@@ -15,6 +15,7 @@
      * if the user had Bucket in the lists of applications to install, NanoDroid will auto-migrate to Substratum
   * add OmniClock and pseudo/debloat DeskClock by default
      * OmniClock allows to disable that brain-dead pre-alerts
+     * if OmniClockOSS is installed, OmniClock is not installed
   * switch from stable Amaze build to official beta build
 * Full, microG packages
   * custom builds for microG GmsCore and microG DroidGuard Helper
