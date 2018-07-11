@@ -53,7 +53,7 @@
   * Amaze (3.3.0RC1)
 
 * manual
-  * Play Store (10.7.19)
+  * Play Store (10.8.21)
   * microG GmsCore (0.2.4-126_custom)
      * bumped spoofed Play Services version
          * fixes 'update your Play Services' nag
