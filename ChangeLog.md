@@ -2,6 +2,11 @@
 
 ## 17.2 in-dev
 
+### Bug Fixes
+
+* nanodroid-overlay Script
+  * fix `-r` parameter not working
+
 ### General Changes
 
 * Full package

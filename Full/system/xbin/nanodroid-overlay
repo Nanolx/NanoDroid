@@ -199,7 +199,7 @@ opt=${1}
 case ${opt} in
 	-l | --list )		overrides_list ;;
 	-a | --add )		overrides_add "${@}" ;;
-	-r | --remove )		remove_overrides "${@}" ;;
+	-r | --remove )		overrides_remove "${@}" ;;
 	-s | --show )		overrides_list_non ;;
 	-c | --clear )		overrides_clear ;;
 	-x | --create )		overrides_add "$(cat "${config}")" ;;
