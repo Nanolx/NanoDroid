@@ -500,7 +500,7 @@ magisk_install_preinst () {
 		rm -f /data/adb/.nanodroid-patcher
 	fi
 
-	rm -rf "${RESTORE_PATH}"
+	${BOOTMODE} || rm -rf "${MODPATH}"
 
 	for dir in app etc priv-app bin; do
 		mkdir -p "${MODPATH}/system/${dir}"
