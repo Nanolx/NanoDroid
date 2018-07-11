@@ -401,7 +401,7 @@ magisk_install_setup () {
 	ui_print " > setup Magisk environment"
 
 	MAGISKBIN=/data/adb/magisk
-	${BOOTMODE} && MOUNTPATH=${TMPDIR}/magisk_merge_img || MOUNTPATH=${TMPDIR}/magisk_img
+	MOUNTPATH=${TMPDIR}/magisk_img
 
 	[ -d ${MAGISKBIN} -a -f ${MAGISKBIN}/magisk -a -f ${MAGISKBIN}/util_functions.sh ] || \
 		error " !! Magisk version 15.0 or newer is required"

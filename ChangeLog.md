@@ -4,6 +4,8 @@
 
 ### Bug Fixes
 
+* CommonInstaller
+  * fix installation through Magisk Manager
 * nanodroid-overlay Script
   * fix `-r` parameter not working
 

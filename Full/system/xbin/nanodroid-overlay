@@ -5,8 +5,6 @@ export MODPATH=@MODPATH@
 
 if [[ -d /dev/tmp/magisk_img/$(basename ${MODPATH}) ]]; then
 	OVERLAY_PATH=/dev/tmp/magisk_img/$(basename ${MODPATH})
-elif [[ -d /dev/tmp/magisk_merge_img/$(basename ${MODPATH}) ]]; then
-	OVERLAY_PATH=/dev/tmp/magisk_merge_img/$(basename ${MODPATH})
 else
 	OVERLAY_PATH=${MODPATH}
 	[[ "${MODPATH}" != "/sbin/.core/"* ]] && NO_MAGISK=1
