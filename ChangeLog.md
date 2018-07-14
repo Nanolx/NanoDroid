@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 17.2 in-dev
+## 17.2.20180714
 
 ### Bug Fixes
 
@@ -63,7 +63,7 @@
   * Odyssey (1.1.15)
 
 * manual
-  * Play Store (10.8.21)
+  * Play Store (10.8.23)
   * microG GmsCore (0.2.4-126_custom)
      * bumped spoofed Play Services version
          * fixes 'update your Play Services' nag
