@@ -1,5 +1,31 @@
 # ChangeLog
 
+## 17.3.20180730
+
+### Bug Fixes
+
+* CommonInstaller
+  * improve permissions-resetting during GApps removal
+      * now ensured to be only triggered on fresh NanoDroid installations
+* Full, microG packages
+  * fix Google Play crashing and failing to install applications due to android.permission.MANAGE_USERS not being privapp-whitelisted
+
+### Updates
+
+* automatic
+  * Substratum (999)
+  * (Simple) Gallery (4.4.0)
+  * OpenKeychain (5.2)
+  * QKSMS (3.4.1)
+  * NewPipe (0.13.7)
+  * F-Droid (1.3-alpha5)
+  * KeePass DX (2.5.0.0beta15-libre)
+  * (Simple) Calendar (4.1.2)
+  * Face Slim (3.4.0)
+
+* manual
+  * Google Play (10.5.80)
+
 ## 17.2.20180714
 
 ### Bug Fixes
