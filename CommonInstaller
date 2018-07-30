@@ -618,6 +618,7 @@ install_microg () {
 		done
 
 		nanodroid_install_file etc/permissions/features.xml
+		nanodroid_install_file etc/permissions/privapp-permissions-google.xml
 		nanodroid_install_file etc/default-permissions/microg-permissions.xml
 		nanodroid_install_file etc/sysconfig/microg-a5k.xml
 
