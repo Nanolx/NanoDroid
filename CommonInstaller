@@ -1,7 +1,7 @@
 #!/sbin/sh
 
 VERSION=17.3.20180730
-NANODROID_UPGRADE=1
+NANODROID_UPGRADE=0
 
 GOOGLE_APPS="GoogleFeedback
 GoogleLoginService
