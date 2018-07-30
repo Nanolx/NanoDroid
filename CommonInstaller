@@ -595,9 +595,11 @@ install_microg () {
 			rm -rf /data/user_de/*/${app}
 			rm -rf /data/app/${app}-*
 
-			if ! grep -q 'com.google.android.gms' /data/system/users/*/runtime-permissions.xml; then
-				rm -f /data/system/users/*/runtime-permissions.xml
-			fi
+			for file in /data/system/users/*/runtime-permissions.xml; do
+				if grep -q "${app}" "${file}"; then
+					rm -f "${file}"
+				fi
+			done
 		fi
 
 		case ${nanodroid_nlpbackend} in
@@ -619,9 +621,6 @@ install_microg () {
 		nanodroid_install_file etc/default-permissions/microg-permissions.xml
 		nanodroid_install_file etc/sysconfig/microg-a5k.xml
 
-		if ! grep -q 'com.google.android.gms' /data/system/users/*/runtime-permissions.xml; then
-			rm /data/system/users/*/runtime-permissions.xml
-		fi
 	else	ui_print " << without microG"
 	fi
 }
