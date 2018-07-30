@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <permissions>
-    <privapp-permissions package="com.android.vending">
-        <permission name="android.permission.MANAGE_USERS"/>
-    </privapp-permissions>
+	<privapp-permissions package="com.google.android.gms">
+		<permission name="android.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST"/>
+		<permission name="android.permission.INSTALL_LOCATION_PROVIDER"/>
+	</privapp-permissions>
+
+	<privapp-permissions package="com.android.vending">
+		<permission name="android.permission.ALLOCATE_AGGRESSIVE"/>
+		<permission name="android.permission.BACKUP"/>
+		<permission name="android.permission.BATTERY_STATS"/>
+		<permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+		<permission name="android.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST"/>
+		<permission name="android.permission.CLEAR_APP_CACHE"/>
+		<permission name="android.permission.CONNECTIVITY_INTERNAL"/>
+		<permission name="android.permission.DELETE_PACKAGES"/>
+		<permission name="android.permission.DUMP"/>
+		<permission name="android.permission.FORCE_STOP_PACKAGES"/>
+		<permission name="android.permission.GET_ACCOUNTS_PRIVILEGED"/>
+		<permission name="android.permission.GET_APP_OPS_STATS"/>
+		<permission name="android.permission.INSTALL_PACKAGES"/>
+		<permission name="android.permission.INTERACT_ACROSS_USERS"/>
+		<permission name="android.permission.MANAGE_USERS"/>
+		<permission name="android.permission.PACKAGE_USAGE_STATS"/>
+		<permission name="android.permission.PACKAGE_VERIFICATION_AGENT"/>
+		<permission name="android.permission.REAL_GET_TASKS"/>
+		<permission name="android.permission.SEND_SMS_NO_CONFIRMATION"/>
+		<permission name="android.permission.SET_PREFERRED_APPLICATIONS"/>
+		<permission name="android.permission.STATUS_BAR"/>
+		<permission name="android.permission.UPDATE_DEVICE_STATS"/>
+		<permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+	</privapp-permissions>
 </permissions>

@@ -8,7 +8,8 @@
   * improve permissions-resetting during GApps removal
       * now ensured to be only triggered on fresh NanoDroid installations
 * Full, microG packages
-  * fix Google Play crashing and failing to install applications due to android.permission.MANAGE_USERS not being privapp-whitelisted
+  * fix Google Play issues due to missing privapp-whitelisted permissions
+  * likewise for microG GmsCore
 
 ### Updates
 
