@@ -16,7 +16,7 @@
   * Substratum (999)
   * (Simple) Gallery (4.4.0)
   * OpenKeychain (5.2)
-  * QKSMS (3.4.1)
+  * QKSMS (3.4.2)
   * NewPipe (0.13.7)
   * F-Droid (1.3-alpha5)
   * KeePass DX (2.5.0.0beta15-libre)

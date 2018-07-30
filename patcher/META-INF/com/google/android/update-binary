@@ -25,7 +25,7 @@ detect_outfd
 
 ui_print " "
 ui_print "********************************"
-ui_print "      NanoDroid 17.2.20180714     "
+ui_print "      NanoDroid 17.3.20180730     "
 ui_print "       created by @Nanolx       "
 ui_print "       Framework Patcher        "
 ui_print "Powered by DexPatcher (@lanchon)"
