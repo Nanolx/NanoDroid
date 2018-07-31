@@ -166,10 +166,12 @@ The recovery log and installation configuration is stored after installation, re
 
 You'll find the files in
 
-* /data/adb/.recovery_MODID
-* /data/adb/.nanodroid_MODID
+* /data/adb/MODID_log_INSTALLDATE
+* /data/adb/MODID_twrp_INSTALLDATE
 
-where MODID is either NanoDroid, NanoDroid_microG or NanoDroid_FDroid. In case of installation errors, issues or questions provide theese files in your report for easier debugging.
+where MODID is either NanoDroid, NanoDroid_microG or NanoDroid_FDroid. INSTALLDATE is the date of installation in %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14), **Note: when installing through Magisk Manager INSTALLDATE might be in UTC +0000, instead of your local time offset!**
+
+In case of installation errors, issues or questions provide theese files in your report for easier debugging.
 
 #### Parallel Installations
 
@@ -418,10 +420,16 @@ Full [> Details](doc/AlterInstallation.md) on altering installation manually, or
 
 * Use Setup Wizard to create configuration files (if you've got an arm/arm64 device), or create manually (see above)
 * Download pre-built zip or create one from this repository
+
+##### Installing from scratch
+
+This is the recommended way.
+
 * perform full wipe (/system, /data, /cache, Dalvik/ART cache)
   * recommended, but not required
 * install desired ROM
   * make sure it does **not** include GApps if you want to use microG
+         * NanoDroid tries to get rid of GApps on it's own, but it may not always work, try without any warranty
   * either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself (instructions follow)
 * install **Magisk**
   * recommended, but not required
@@ -429,6 +437,17 @@ Full [> Details](doc/AlterInstallation.md) on altering installation manually, or
 * install desired Kernel (if any)
 * install **NanoDroid**
 * reboot into ROM
+
+###### Upgrade / Installing on a clean ROM
+
+When upgrading NanoDroid or installing on a known clean ROM (read: GApps free), you may also just
+
+* install **Magisk**
+  * recommended, but not required
+  * if **Magisk** is installed, NanoDroid will be installed as Magisk-Module, else it will install into `/system` directly
+* install **NanoDroid**
+  * from either Magisk Manager or TWRP, doesn't matter
+* reboot
 
 #### microG
 
