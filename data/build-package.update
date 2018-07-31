@@ -30,6 +30,9 @@ update_microg () {
 
 	grab_apk_from_url ${nlx_PHONESKY[@]}
 	grab_apk_from_url ${nlx_FAKESTORE[@]}
+	grab_apk_from_url ${nlx_DROIDGUARD[@]}
+	grab_apk_from_url ${nlx_GMSCORE[@]}
+
 }
 
 update_gsync () {
@@ -71,9 +74,8 @@ update_apps () {
 
 	# applications not managed in repositories
 	# plain URL
-	#grab_apk_from_url ${nlx_OPENLAUNCHER[@]}
 	grab_apk_from_url ${nlx_MPV[@]}
-	#grab_apk_from_url ${nlx_BUCKET[@]}
+	grab_apk_from_url ${nlx_AMAZE[@]}
 
 	# GitHub
 	grab_apk_from_github ${gh_K9MAIL[@]}

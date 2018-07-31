@@ -5,10 +5,11 @@
 ###
 
 nlx_FAKESTORE=(https://www.nanolx.org/apk/FakeStore.apk priv-app FakeStore)
+nlx_GMSCORE=(https://www.nanolx.org/apk/GmsCore.apk priv-app GmsCore)
+nlx_DROIDGUARD=(https://www.nanolx.org/apk/DroidGuard.apk priv-app DroidGuard)
 nlx_MPV=(https://www.nanolx.org/apk/MPV.apk app MPV)
-nlx_OPENLAUNCHER=(https://www.nanolx.org/apk/OpenLauncher.apk app OpenLauncher)
 nlx_PHONESKY=(https://www.nanolx.org/apk/Phonesky.apk priv-app Phonesky)
-nlx_BUCKET=(https://www.nanolx.org/apk/Bucket.apk app Bucket)
+nlx_AMAZE=(https://www.nanolx.org/apk/Amaze.apk app Amaze)
 
 ###
 # microG
