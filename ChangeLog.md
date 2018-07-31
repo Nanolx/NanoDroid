@@ -1,5 +1,18 @@
 # ChangeLog
 
+## 17.4.20180731
+
+### Bug Fixes
+
+* CommonInstaller
+  * fixed a bug that caused NANODROID_UPGRADE to be wrongly set to 0
+         * causing issues with permissions for Play Store and microG GmsCore
+
+### Updates
+
+* automatic
+  * Google Play (11.0.20)
+
 ## 17.3.20180730
 
 ### Bug Fixes

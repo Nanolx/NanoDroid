@@ -1,7 +1,7 @@
 id=NanoDroid_microG
 name=NanoDroid (microG sub module)
-version=v17.3.20180730
-versionCode=45
+version=v14.7.20180731
+versionCode=46
 author=Nanolx
 description=NanoDroid (microG sub module) for LineageOS/AOSP based ROMs
 minMagisk=1500
