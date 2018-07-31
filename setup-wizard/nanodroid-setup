@@ -50,7 +50,7 @@ nlp_prop="${aromapath}/nlp.prop"
 
 ui_print " "
 ui_print "******************************"
-ui_print "     NanoDroid 14.7.20180731    "
+ui_print "     NanoDroid 17.4.20180731    "
 ui_print "      created by @Nanolx      "
 ui_print "         Setup Wizard         "
 ui_print "******************************"
