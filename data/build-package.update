@@ -76,6 +76,7 @@ update_apps () {
 	# plain URL
 	grab_apk_from_url ${nlx_MPV[@]}
 	grab_apk_from_url ${nlx_AMAZE[@]}
+	grab_apk_from_url ${nlx_OMNICLOCK[@]}
 
 	# GitHub
 	grab_apk_from_github ${gh_K9MAIL[@]}
