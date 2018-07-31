@@ -436,7 +436,7 @@ magisk_install_setup () {
 				fi
 			done
 
-			[ -d ${MODUNTPATH}/NanoDroid ] && NANODROID_UPGRADE=1
+			[ -d ${MOUNTPATH}/NanoDroid ] && NANODROID_UPGRADE=1
 		;;
 
 		NanoDroid_microG )
@@ -452,7 +452,7 @@ magisk_install_setup () {
 				NANODROID_UPGRADE=1
 			fi
 
-			[ -d ${MODUNTPATH}/NanoDroid_microG ] && NANODROID_UPGRADE=1
+			[ -d ${MOUNTPATH}/NanoDroid_microG ] && NANODROID_UPGRADE=1
 		;;
 
 		NanoDroid_FDroid )
@@ -468,7 +468,7 @@ magisk_install_setup () {
 				NANODROID_UPGRADE=1
 			fi
 
-			[ -d ${MODUNTPATH}/NanoDroid_FDroid ] && NANODROID_UPGRADE=1
+			[ -d ${MOUNTPATH}/NanoDroid_FDroid ] && NANODROID_UPGRADE=1
 		;;
 	esac
 }
@@ -598,6 +598,7 @@ install_microg () {
 			for file in /data/system/users/*/runtime-permissions.xml; do
 				if grep -q "${app}" "${file}"; then
 					rm -f "${file}"
+					echo "  upgrade: removing ${file}"
 				fi
 			done
 		fi
