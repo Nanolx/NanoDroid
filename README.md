@@ -64,6 +64,10 @@ The following applications are custom builds:
   * [Download Link](https://www.nanolx.org/apk/Phonesky.apk)
 * Fake Store (reason: built with CHECK_LICENSE permission)
   * [Download Link](https://www.nanolx.org/apk/FakeStore.apk)
+* microG GmsCore (reason: built with more recent spoofed Play Services Version, more)
+  * [Download Link](https://www.nanolx.org/apk/GmsCore.apk)
+* microG DroidGuard Helper (reason: built with fix for non 32bit arm devices failing SafetyNet attestation)
+  * [Download Link](https://www.nanolx.org/apk/DroidGuard.apk)
 * MPV (reason: infrequent updates, merge-requests included)
   * [Download Link](https://www.nanolx.org/apk/MPV.apk)
 
