@@ -5,7 +5,7 @@
 ### Bug Fixes
 
 * CommonInstaller
-  * fixed installation from TWRP with Magisk 16.7 if device was never booted into ROM once
+  * fixed installation from TWRP with Magisk 16.6 (or newer) if device was never booted into ROM once
   * (possibly) fixed support for devices with A/B partition scheme
 
 ### Updates
