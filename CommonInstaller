@@ -227,6 +227,19 @@ detect_mode () {
 		0 | *)
 			if [ -f /data/adb/magisk/magisk ]; then
 				MODE=MAGISK
+				MAGISKBIN=/data/adb/magisk
+				MODE_TEXT=" > Mode   | Magisk            | detected"
+			elif [ -f /data/.magisk/magisk ]; then
+				if [ ! -d /data/adb/ ]; then
+					mkdir -p /data/adb/
+					chown root:root /data/adb
+					chmod 0644 /data/adb
+				fi
+
+				cp -r /data/.magisk /data/adb/magisk
+
+				MODE=MAGISK
+				MAGISKBIN=/data/adb/magisk
 				MODE_TEXT=" > Mode   | Magisk            | detected"
 			elif ! ${BOOTMODE}; then
 				MODE=SYSTEM
@@ -401,10 +414,9 @@ magisk_install_setup () {
 	ui_print " "
 	ui_print " > setup Magisk environment"
 
-	MAGISKBIN=/data/adb/magisk
 	MOUNTPATH=${TMPDIR}/magisk_img
 
-	[ -d ${MAGISKBIN} -a -f ${MAGISKBIN}/magisk -a -f ${MAGISKBIN}/util_functions.sh ] || \
+	[ -f ${MAGISKBIN}/util_functions.sh ] || \
 		error " !! Magisk version 15.0 or newer is required"
 
 	. ${MAGISKBIN}/util_functions.sh
