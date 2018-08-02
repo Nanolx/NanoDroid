@@ -10,6 +10,9 @@
 
 ### Updates
 
+* automatic
+  * (Simple) Gallery (4.4.1)
+
 * manual
   * Google Play (11.0.50)
 
