@@ -1,5 +1,18 @@
 # ChangeLog
 
+## 17.5.20180802
+
+### Bug Fixes
+
+* CommonInstaller
+  * fixed installation from TWRP with Magisk 16.7 if device was never booted into ROM once
+  * (possibly) fixed support for devices with A/B partition scheme
+
+### Updates
+
+* manual
+  * Google Play (11.0.50)
+
 ## 17.4.20180731
 
 ### Bug Fixes
