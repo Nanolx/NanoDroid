@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 17.5.20180802
+## 17.5.20180803
 
 ### Bug Fixes
 
@@ -14,6 +14,10 @@
   * (Simple) Gallery (4.4.1)
 
 * manual
+  * microG GmsCore (0.2.4-127)
+     * bumps spoofed Play Services Version to 12.8.74
+  * mpv (20180802)
+     * new upstream snapshot
   * Google Play (11.0.50)
 
 ## 17.4.20180731
@@ -22,7 +26,7 @@
 
 * CommonInstaller
   * fixed a bug that caused NANODROID_UPGRADE to be wrongly set to 0
-         * causing issues with permissions for Play Store and microG GmsCore
+     * causing issues with permissions for Play Store and microG GmsCore
 
 ### Updates
 
