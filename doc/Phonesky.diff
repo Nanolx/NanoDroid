@@ -1,6 +1,6 @@
-diff -Nupr PS_11020.orig/AndroidManifest.xml PS_11020/AndroidManifest.xml
---- PS_11020.orig/AndroidManifest.xml	2018-07-31 18:40:26.125137114 +0200
-+++ PS_11020/AndroidManifest.xml	2018-07-31 18:41:26.285242062 +0200
+diff -Nupr PS_11115.orig/AndroidManifest.xml PS_11115/AndroidManifest.xml
+--- PS_11115.orig/AndroidManifest.xml	2018-08-03 18:14:33.580875653 +0200
++++ PS_11115/AndroidManifest.xml	2018-08-03 18:15:18.821270006 +0200
 @@ -1,4 +1,5 @@
  <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" android:compileSdkVersion="28" android:compileSdkVersionCodename="9" package="com.android.vending">
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
@@ -15,35 +15,35 @@ diff -Nupr PS_11020.orig/AndroidManifest.xml PS_11020/AndroidManifest.xml
          <activity android:configChanges="orientation|screenSize" android:name="com.google.android.wallet.instrumentmanager.ui.redirect.ImPopupRedirectActivity" android:theme="@style/Theme.UiComponents.PopupRedirect"/>
          <activity android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.wallet.instrumentmanager.redirect.ImStartAndroidAppRedirectActivity" android:theme="@style/Theme.UiComponents.Translucent.NoActionBar"/>
          <activity android:exported="true" android:name="com.google.android.wallet.instrumentmanager.redirect.ImFinishAndroidAppRedirectActivity">
-@@ -891,4 +893,4 @@
+@@ -892,4 +894,4 @@
          <screen android:screenDensity="xxhdpi" android:screenSize="large"/>
          <screen android:screenDensity="xxhdpi" android:screenSize="xlarge"/>
      </compatible-screens>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_11020.orig/res/values/public.xml PS_11020/res/values/public.xml
---- PS_11020.orig/res/values/public.xml	2018-07-31 18:40:22.974131410 +0200
-+++ PS_11020/res/values/public.xml	2018-07-31 18:42:13.492322549 +0200
-@@ -9947,6 +9947,7 @@
-     <public type="string" name="yes" id="0x7f13081d" />
-     <public type="string" name="yes_im_in" id="0x7f13081e" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f13081f" />
-+    <public type="string" name="fake_signature" id="0x7f130820" />
+diff -Nupr PS_11115.orig/res/values/public.xml PS_11115/res/values/public.xml
+--- PS_11115.orig/res/values/public.xml	2018-08-03 18:14:24.728780877 +0200
++++ PS_11115/res/values/public.xml	2018-08-03 18:15:59.177521971 +0200
+@@ -10061,6 +10061,7 @@
+     <public type="string" name="yes" id="0x7f130821" />
+     <public type="string" name="yes_im_in" id="0x7f130822" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f130823" />
++    <public type="string" name="fake_signature" id="0x7f130824" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -10964,4 +10965,4 @@
+@@ -11094,4 +11095,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002d" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002e" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002f" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_11020.orig/res/values/strings.xml PS_11020/res/values/strings.xml
---- PS_11020.orig/res/values/strings.xml	2018-07-31 18:40:22.973131408 +0200
-+++ PS_11020/res/values/strings.xml	2018-07-31 18:42:30.613351648 +0200
-@@ -1902,4 +1902,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_11115.orig/res/values/strings.xml PS_11115/res/values/strings.xml
+--- PS_11115.orig/res/values/strings.xml	2018-08-03 18:14:24.728780877 +0200
++++ PS_11115/res/values/strings.xml	2018-08-03 18:15:38.400402092 +0200
+@@ -1917,4 +1917,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />
