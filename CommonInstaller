@@ -192,18 +192,18 @@ mount_partitions () {
 		[ "${SLOT}" = "_" ] && SLOT=
 	fi
 
-	is_mounted /data || mount /data 2>/dev/null
+	is_mounted /data || mount /data
 
 	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
 
-	! is_mounted /system && mount -o rw /system 2>/dev/null
+	! is_mounted /system && mount -o rw /system
 
 	if [ ! -f /system/build.prop ]; then
 		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
 		mount -t ext4 -o rw ${SYSTEMBLOCK} /system
 	fi
 
-	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system"
+	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system (unsupported A/B device?)"
 
 	if [ -f /system/init ]; then
 		mkdir /system_root 2>/dev/null
