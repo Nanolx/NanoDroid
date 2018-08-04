@@ -686,12 +686,12 @@ install_gsync () {
 				echo "/system/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk" \
 					>> /data/adb/.nanodroid-list
 
-			cp -r "${INSTALLER}/gsync/permissions/" "${MODPATH}/system/etc/"
+			cp -r "${INSTALLER}/gsync/etc/permissions/" "${MODPATH}/system/etc/"
 			set_perm_data -r "${MODPATH}/system/etc/permissions/"
 
 			[ "${MODE}" = "SYSTEM" ] && \
-				find "${INSTALLER}/etc/gsync/permissions/" -type f |
-					sed -e "s,${INSTALLER}/gsync,/system/etc,g" \
+				find "${INSTALLER}/gsync/etc/permissions/" -type f |
+					sed -e "s,${INSTALLER}/gsync/etc,/system/etc,g" \
 					>> /data/adb/.nanodroid-list
 		fi
 	else	ui_print " << without Google Sync Adapters"
