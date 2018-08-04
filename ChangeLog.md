@@ -1,5 +1,13 @@
 # ChangeLog
 
+## 17.6 in-dev
+
+### Bug Fixes
+
+* CommonInstaller
+  * fix creating uninstaller information for GSync adapters (System Mode)
+  * fix permission setting for GSync adapters (System Mode effected)
+
 ## 17.5.20180803
 
 ### Bug Fixes
