@@ -445,15 +445,20 @@ magisk_install_setup () {
 					ui_print " !! ${dir} module detected - uninstalling!"
 					rm -rf ${MOUNTPATH}/${dir}
 					NANODROID_UPGRADE=1
+				elif [ -d ${REALPATH}/${dir} ]; then
+					ui_print " !! ${dir} module detected - uninstalling!"
+					rm -rf ${REALPATH}/${dir}
+					NANODROID_UPGRADE=1
 				fi
 			done
 
-			[ -d ${MOUNTPATH}/NanoDroid ] && NANODROID_UPGRADE=1
+			[ -d ${MOUNTPATH}/NanoDroid -o -d ${REALPATH}/NanoDroid ] && NANODROID_UPGRADE=1
 		;;
 
 		NanoDroid_microG )
 			# check for Full package and abort if found
-			if [ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid ]; then
+			if [ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid \
+				-o -d ${REALPATH}/NanoMod -o -d ${REALPATH}/NanoDroid ]; then
 				error " !! ${MODID} can't be installed along side the Full package"
 			fi
 
@@ -462,14 +467,19 @@ magisk_install_setup () {
 				ui_print " !! old version module detected - uninstalling!"
 				rm -rf ${MOUNTPATH}/NanoModmicroG
 				NANODROID_UPGRADE=1
+			elif [ -d ${REALPATH}/NanoModmicroG ]; then
+				ui_print " !! ${dir} module detected - uninstalling!"
+				rm -rf ${REALPATH}/${dir}
+				NANODROID_UPGRADE=1
 			fi
 
-			[ -d ${MOUNTPATH}/NanoDroid_microG ] && NANODROID_UPGRADE=1
+			[ -d ${MOUNTPATH}/NanoDroid_microG -o -d ${REALPATH}/NanoDroid_microG ] && NANODROID_UPGRADE=1
 		;;
 
 		NanoDroid_FDroid )
 			# check for Full package and abort if found
-			if [ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid ]; then
+			if [ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid \
+				-o -d ${REALPATH}/NanoMod -o -d ${REALPATH}/NanoDroid ]; then
 				error " !! ${MODID} can't be installed along side the Full package"
 			fi
 
@@ -478,9 +488,17 @@ magisk_install_setup () {
 				ui_print " !! old version module detected - uninstalling!"
 				rm -rf ${MOUNTPATH}/NanoModfdroid
 				NANODROID_UPGRADE=1
+			elif [ -d ${REALPATH}/NanoModfdroid ]; then
+				ui_print " !! old version module detected - uninstalling!"
+				rm -rf ${REALPATH}/NanoModfdroid
+				NANODROID_UPGRADE=1
 			fi
 
-			[ -d ${MOUNTPATH}/NanoDroid_FDroid ] && NANODROID_UPGRADE=1
+			[ -d ${MOUNTPATH}/NanoDroid_FDroid -o -d ${REALPATH}/NanoDroid_FDroid ] && NANODROID_UPGRADE=1
+		;;
+
+		* )
+			error "unknown module intended to be installed!?"
 		;;
 	esac
 }
