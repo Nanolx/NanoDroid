@@ -7,6 +7,7 @@
 * CommonInstaller
   * fix creating uninstaller information for GSync adapters (System Mode)
   * fix permission setting for GSync adapters (System Mode effected)
+  * further fixes for A/B partition scheme support
 
 ## 17.5.20180803
 
