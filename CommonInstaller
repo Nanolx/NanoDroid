@@ -188,7 +188,7 @@ error () {
 mount_partitions () {
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
 	if [ -z ${SLOT} ]; then
-		SLOT=$(grep_cmdline androidboot.slot)
+		SLOT=_$(grep_cmdline androidboot.slot)
 		[ "${SLOT}" = "_" ] && SLOT=
 	fi
 
@@ -200,7 +200,7 @@ mount_partitions () {
 
 	if [ ! -f /system/build.prop ]; then
 		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
-		mount -t ext4 -o rw $SYSTEMBLOCK /system
+		mount -t ext4 -o rw ${SYSTEMBLOCK} /system
 	fi
 
 	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system"
