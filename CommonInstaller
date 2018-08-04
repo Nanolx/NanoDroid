@@ -76,7 +76,7 @@ grep_prop() {
 	REGEX="${1}"
 	shift
 	FILES="${@}"
-	[ -z "${@}" ] && FILES='/system/build.prop /system_root/build.prop'
+	[ -z "${@}" ] && FILES='/system/build.prop'
 	sed -n "s/^${REGEX}=//p" ${FILES} | \
 		head -n 1
 }
