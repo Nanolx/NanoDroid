@@ -688,7 +688,7 @@ install_gsync () {
 					>> /data/adb/.nanodroid-list
 
 			cp -r "${INSTALLER}/gsync/permissions/" "${MODPATH}/system/etc/"
-			set_perm_data -r "${MODPATH}/system/etc/"
+			set_perm_data -r "${MODPATH}/system/etc/permissions/"
 
 			[ "${MODE}" = "SYSTEM" ] && \
 				find "${INSTALLER}/etc/gsync/permissions/" -type f |
