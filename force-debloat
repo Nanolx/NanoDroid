@@ -79,11 +79,39 @@ is_mounted() {
 	return $?
 }
 
-debloat_system () {
-	if (is_mounted /system); then
-		mount -orw,remount /system || error "!! failed to remount system read-write"
-	else	mount -orw /system || error "!! failed to mount system read-write"
+# taken from Magisk, with minor modifications for NanoDroid
+mount_partitions () {
+	SLOT=$(grep_cmdline androidboot.slot_suffix)
+	if [ -z ${SLOT} ]; then
+		SLOT=_$(grep_cmdline androidboot.slot)
+		[ "${SLOT}" = "_" ] && SLOT=
 	fi
+
+	is_mounted /data || mount /data
+
+	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
+
+	! is_mounted /system && mount -o rw /system
+
+	if [ ! -f /system/build.prop ]; then
+		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
+		mount -t ext4 -o rw ${SYSTEMBLOCK} /system
+	fi
+
+	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system (unsupported A/B device?)"
+
+	if [ -f /system/init ]; then
+		mkdir /system_root 2>/dev/null
+		mount --move /system /system_root
+		mount -o bind /system_root/system /system
+	fi
+
+	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+}
+
+
+debloat_system () {
+	mount_partitions
 
 	for app in ${APPS}; do
 		if [[ -d /system/app/${app} ]]; then
