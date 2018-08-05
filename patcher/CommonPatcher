@@ -58,38 +58,34 @@ mount_image() {
 	fi
 }
 
-grep_cmdline() {
-	local REGEX="s/^${1}=//p"
-	sed -E 's/ +/\n/g' /proc/cmdline | \
-		sed -n "${REGEX}" 2>/dev/null
-}
-
 # taken from Magisk, with minor modifications for NanoDroid
 mount_partitions () {
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
 	if [ -z ${SLOT} ]; then
-		SLOT=$(grep_cmdline androidboot.slot)
+		SLOT=_$(grep_cmdline androidboot.slot)
 		[ "${SLOT}" = "_" ] && SLOT=
 	fi
 
-	is_mounted /data || mount /data 2>/dev/null
+	is_mounted /data || mount /data
 
 	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
 
-	[ ! -f /system/build.prop ] && mount -o rw /system 2>/dev/null
+	! is_mounted /system && mount -o rw /system
 
 	if [ ! -f /system/build.prop ]; then
 		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
-		mount -t ext4 -o rw $SYSTEMBLOCK /system
+		mount -t ext4 -o rw ${SYSTEMBLOCK} /system
 	fi
 
-	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system (unsupported A/B device?)"
 
 	if [ -f /system/init ]; then
 		mkdir /system_root 2>/dev/null
 		mount --move /system /system_root
 		mount -o bind /system_root/system /system
 	fi
+
+	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 }
 
 error () {
@@ -127,13 +123,18 @@ detect_bootmode () {
 }
 
 grep_prop() {
-	REGEX="s/^$1=//p"
+	REGEX="${1}"
 	shift
-	FILES=$@
-	if [ -z "$FILES" ]; then
-		FILES='/system/build.prop'
-	fi
-	cat $FILES 2>/dev/null | sed -n "$REGEX" | head -n 1
+	FILES="${@}"
+	[ -z "${@}" ] && FILES='/system/build.prop'
+	sed -n "s/^${REGEX}=//p" ${FILES} | \
+		head -n 1
+}
+
+grep_cmdline() {
+	local REGEX="s/^${1}=//p"
+	sed -E 's/ +/\n/g' /proc/cmdline | \
+		sed -n "${REGEX}" 2>/dev/null
 }
 
 detect_odex () {

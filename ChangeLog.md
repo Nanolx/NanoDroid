@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 17.7 in-dev
+
+### Bug Fixes
+
+* CommonPatcher
+  * fix for A/B partition scheme support
+
 ## 17.6.20180805
 
 ### Bug Fixes
