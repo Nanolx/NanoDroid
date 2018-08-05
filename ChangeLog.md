@@ -9,6 +9,13 @@
 * Uninstaller
   * fix for A/B partition scheme support
 
+### General Changes
+
+* force-debloat.sh:
+  * support A/B partition scheme
+* on-pc framework-patcher:
+  * support A/B partition scheme
+
 ## 17.6.20180805
 
 ### Bug Fixes
