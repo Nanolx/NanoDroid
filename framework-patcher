@@ -82,10 +82,17 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	alias cp=gcp
 fi
 
-adb shell "umount /system"
-adb shell "mount -orw /system" || error "Failed to mount /system read-write"
+adb push "${CWD}/framework-patcher-remote" /tmp/ || \
+	error "Failed to push helper script to device"
+
+adb shell "chmod 0755 /tmp/framework-patcher-remote" || \
+	error "Failed to set permissions for helper script"
+
+adb shell "/tmp/framework-patcher-remote --mount" || \
+	error "Failed to install /system"
 
 rm -rf "${CWD}/haystack/mydevice*"
+
 "${CWD}/haystack/pull-fileset" mydevice || error "Failed to pull files from device!"
 
 "${CWD}/haystack/patch-fileset" "${CWD}/haystack/patches/${PATCH_HOOK}" \
@@ -100,13 +107,7 @@ rm -rf "${CWD}/haystack/mydevice*"
 adb push "${CWD}/haystack/mydevice__${PATCH_HOOK}__${PATCH_CORE}/services.jar" \
 	/tmp/services.jar || error "Failed to push services.jar to device"
 
-adb push "${CWD}/framework-patcher-remote" /tmp/ || \
-	error "Failed to push helper script to device"
-
-adb shell "chmod 0755 /tmp/framework-patcher-remote" || \
-	error "Failed to set permissions for helper script"
-
-adb shell "/tmp/framework-patcher-remote" || \
+adb shell "/tmp/framework-patcher-remote --patch" || \
 	error "Failed to install services.jar"
 
 echo -e "\nNow reboot device and enjoy microG!"

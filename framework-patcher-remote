@@ -76,57 +76,98 @@ umount_magisk () {
 	rm /tmp/loopdevice
 }
 
+# taken from Magisk, with minor modifications for NanoDroid
+mount_partitions () {
+	SLOT=$(grep_cmdline androidboot.slot_suffix)
+	if [ -z ${SLOT} ]; then
+		SLOT=_$(grep_cmdline androidboot.slot)
+		[ "${SLOT}" = "_" ] && SLOT=
+	fi
 
-if [[ -f /data/adb/magisk.img ]]; then
-	MAGISK_IMG=/data/adb/magisk.img
-elif [[ -f /data/magisk.img ]]; then
-	MAGISK_IMG=/data/magisk.img
-fi
+	is_mounted /data || mount /data
 
-if [[ -f ${MAGISK_IMG} ]]; then
-	grow_magisk_img
-	echo "magisk found: mount to /magisk"
-	mount_magisk
-fi
+	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
 
-if [[ -f /data/adb/.nanodroid-patcher ]]; then
-	echo " ++ /system/.nanodroid-patcher exists"
-	echo " ++ assuming ROM is already patched"
-	exit 0
-fi
+	! is_mounted /system && mount -o rw /system
 
-install_path=""
+	if [ ! -f /system/build.prop ]; then
+		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
+		mount -t ext4 -o rw ${SYSTEMBLOCK} /system
+	fi
 
-if [[ -d /magisk/NanoDroid ]]; then
-	echo "NanoDroid detected"
-	install_path="/magisk/NanoDroid/system"
-	mkdir -p "${install_path}"
-elif [[ -d /magisk/NanoDroid_microG ]]; then
-	echo "NanoDroid microG detected"
-	install_path="/magisk/NanoDroid_microG/system"
-	mkdir -p "${install_path}"
-else
-	echo "backing up services.jar to /sdcard/nanodroid_backups"
-	mkdir -p /sdcard/nanodroid_backups
-	cp /tmp/services.jar /sdcard/nanodroid_backups
+	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system (unsupported A/B device?)"
 
-	echo "using ROM as destination"
-	install_path="/system"
+	if [ -f /system/init ]; then
+		mkdir /system_root 2>/dev/null
+		mount --move /system /system_root
+		mount -o bind /system_root/system /system
+	fi
 
-	echo /system/framework/services.jar >> \
-		/system/.nanodroid-list
-fi
+	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+}
 
-echo "install to \"${install_path}\""
-cp /tmp/services.jar "${install_path}/framework" || exit 1
+patch_system () {
+	if [[ -f /data/adb/magisk.img ]]; then
+		MAGISK_IMG=/data/adb/magisk.img
+	elif [[ -f /data/magisk.img ]]; then
+		MAGISK_IMG=/data/magisk.img
+	fi
 
-touch /data/adb/.nanodroid-patcher
+	if [[ -f ${MAGISK_IMG} ]]; then
+		grow_magisk_img
+		echo "magisk found: mount to /magisk"
+		mount_magisk
+	fi
 
-if (is_mounted /magisk); then
-	echo "unmount /magisk"
-	umount_magisk
-	shrink_magisk_img
-fi
+	if [[ -f /data/adb/.nanodroid-patcher ]]; then
+		echo " ++ /system/.nanodroid-patcher exists"
+		echo " ++ assuming ROM is already patched"
+		exit 0
+	fi
 
-echo "unmount /system"
-umount /system
+	install_path=""
+
+	if [[ -d /magisk/NanoDroid ]]; then
+		echo "NanoDroid detected"
+		install_path="/magisk/NanoDroid/system"
+		mkdir -p "${install_path}"
+	elif [[ -d /magisk/NanoDroid_microG ]]; then
+		echo "NanoDroid microG detected"
+		install_path="/magisk/NanoDroid_microG/system"
+		mkdir -p "${install_path}"
+	else
+		echo "backing up services.jar to /sdcard/nanodroid_backups"
+		mkdir -p /sdcard/nanodroid_backups
+		cp /tmp/services.jar /sdcard/nanodroid_backups
+
+		echo "using ROM as destination"
+		install_path="/system"
+
+		echo /system/framework/services.jar >> \
+			/system/.nanodroid-list
+	fi
+
+	echo "install to \"${install_path}\""
+	cp /tmp/services.jar "${install_path}/framework" || exit 1
+
+	touch /data/adb/.nanodroid-patcher
+
+	if (is_mounted /magisk); then
+		echo "unmount /magisk"
+		umount_magisk
+		shrink_magisk_img
+	fi
+
+	echo "unmount /system"
+	umount /system
+}
+
+case ${1} in
+	*mount )
+		mount_partitions || exit 1
+	;;
+
+	*patch )
+		patch_system || exit 1
+	;;
+esac
