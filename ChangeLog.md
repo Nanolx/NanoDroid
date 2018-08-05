@@ -6,6 +6,8 @@
 
 * CommonPatcher
   * fix for A/B partition scheme support
+* Uninstaller
+  * fix for A/B partition scheme support
 
 ## 17.6.20180805
 
