@@ -19,6 +19,8 @@
   * support A/B partition scheme
 * on-pc framework-patcher:
   * support A/B partition scheme
+* Full package:
+  * remove Lock/Unlock sounds
 * NanoDroid-Upgrade (nanodroid-upd)
   * add `mg`, `microG` parameter to update microG GmsCore custom build
   * add `dg`, `DroidGuard` parameter to update microG DroidGuard Helper custom build
