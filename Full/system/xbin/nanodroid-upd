@@ -4,7 +4,7 @@ APK_DIR=/sdcard/nanodroid_apks
 nlx="https://www.nanolx.org/apk"
 
 update_apk () {
-	if $(which wget >/dev/null); then
+	if $(busybox wget --help 2>/dev/null); then
 		mkdir -p ${APK_DIR}
 
 		apk=${1}
@@ -15,7 +15,7 @@ update_apk () {
 			echo -e "\nUpdating: ${apk_p}"
 
 			rm -f ${APK_DIR}/${apk_o}
-			wget ${2} -O ${APK_DIR}/${apk_o} || error "failed to download ${apk_p}"
+			busybox wget ${2} -O ${APK_DIR}/${apk_o} || error "failed to download ${apk_p}"
 			pm install -r ${APK_DIR}/${apk_o} || error "failed to install ${apk_p}"
 		fi
 	else
@@ -47,10 +47,6 @@ case ${1} in
 		update_apk priv-app/FakeStore/FakeStore.apk "${nlx}/FakeStore.apk"
 	;;
 
-	bt | bucket )
-		update_apk app/Bucket/Bucket.apk "${nlx}/Bucket.apk"
-	;;
-
 	* )
 		echo "nanodroid-upd
 
@@ -61,7 +57,6 @@ short	| long apk name
 
 ps	| playstore
 fs	| fakestore
-mpv	| MPV
-bt	| Bucket (LibreSubstratum)"
+mpv	| MPV"
 	;;
 esac
