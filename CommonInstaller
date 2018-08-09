@@ -254,7 +254,7 @@ detect_mode () {
 	ui_print "${MODE_TEXT}"
 	ui_print " "
 
-	if [ "${MODE}" = "SYSTEM"]; then
+	if [ "${MODE}" = "SYSTEM" ]; then
 		if test -f /data/adb/.nanodroid-list -o \
 			-f /data/adb/.nanomod-list -o \
 			-f /system/.nanomod-list -o \

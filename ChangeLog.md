@@ -8,6 +8,8 @@
   * fix for A/B partition scheme support
 * Uninstaller
   * fix for A/B partition scheme support
+* CommonInstaller
+  * fix upgrade-detection for System Mode
 * NanoDroid-Upgrade (nanodroid-upd)
   * improve check for proper wget implementation
 
