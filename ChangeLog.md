@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 17.7 in-dev
+## 17.7.20180809
 
 ### Bug Fixes
 
@@ -8,6 +8,8 @@
   * fix for A/B partition scheme support
 * Uninstaller
   * fix for A/B partition scheme support
+* NanoDroid-Upgrade (nanodroid-upd)
+  * improve check for proper wget implementation
 
 ### General Changes
 
@@ -15,6 +17,20 @@
   * support A/B partition scheme
 * on-pc framework-patcher:
   * support A/B partition scheme
+* NanoDroid-Upgrade (nanodroid-upd)
+  * add `mg`, `microG` parameter to update microG GmsCore custom build
+  * add `dg`, `DroidGuard` parameter to update microG DroidGuard Helper custom build
+  * remove `bt`, `Bucket` parameter as it no longer supported
+
+### Updates
+
+* automatic
+  * (Simple) Calendar (4.1.3)
+  * F-Droid (1.3)
+
+* manual
+  * Play Store (11.2.14)
+  * GNU Bash (4.4.23)
 
 ## 17.6.20180805
 
