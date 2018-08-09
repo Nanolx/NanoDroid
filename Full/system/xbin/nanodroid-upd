@@ -47,6 +47,14 @@ case ${1} in
 		update_apk priv-app/FakeStore/FakeStore.apk "${nlx}/FakeStore.apk"
 	;;
 
+	mg | microG )
+		update_apk priv-app/GmsCore/GmsCore.apk "${nlx}/GmsCore.apk"
+	;;
+
+	dg | DroidGuard )
+		update_apk priv-app/DroidGuard/DroidGuard.apk "${nlx}/DroidGuard.apk"
+	;;
+
 	* )
 		echo "nanodroid-upd
 
@@ -57,6 +65,8 @@ short	| long apk name
 
 ps	| playstore
 fs	| fakestore
-mpv	| MPV"
+mpv	| MPV
+mg	| microG
+dg	| DroidGuard"
 	;;
 esac
