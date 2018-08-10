@@ -35,8 +35,6 @@ NominatimNlpBackend"
 GOOGLE_DATA="com.mgoogle.android.gms
 com.google.android.feedback
 com.google.android.gsf.login
-com.google.android.gsf
-com.android.vending
 com.google.android.youtube
 com.qualcomm.location
 com.amap.android.location
@@ -621,14 +619,17 @@ install_microg () {
 			# only if this is a fresh NanoDroid installation
 			rm -rf /data/dalvik-cache/*/system"@priv-app@GmsCore"[@\.]*@classes.*
 
-			app=com.google.android.gms
-			rm -rf /data/data/${app}
-			rm -rf /data/user/*/${app}
-			rm -rf /data/user_de/*/${app}
-			rm -rf /data/app/${app}-*
+			for app in com.google.android.gms \
+					com.google.android.gsf \
+					com.android.vending; do
+				rm -rf /data/data/${app}
+				rm -rf /data/user/*/${app}
+				rm -rf /data/user_de/*/${app}
+				rm -rf /data/app/${app}-*
+			done
 
 			for file in /data/system/users/*/runtime-permissions.xml; do
-				if grep -q "${app}" "${file}"; then
+				if grep -q "com.google.android.gms" "${file}"; then
 					rm -f "${file}"
 					echo "  upgrade: removing ${file}"
 				fi
