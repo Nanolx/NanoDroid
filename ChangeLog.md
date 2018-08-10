@@ -5,9 +5,9 @@
 ### Bug Fixes
 
 * CommonInstaller
-  * improve GApps removal mechanism
+  * improve GApps removal mechanism (most noticable: fix Play Store data loss during upgrade)
 * CommonAddon
-  * improve GApps removal mechanism
+  * improve GApps removal mechanism (most noticable: fix Play Store data loss during upgrade)
 * force-debloat.sh
   * fix support for A/B partition scheme
 * on-pc framework-patcher
@@ -17,6 +17,8 @@
 
 * Full package
   * add `Splatoon` and `SuperMarioOdyssey` fonts
+* README
+  * add weblinks in the Credits section
 
 ## 17.7.20180809
 
