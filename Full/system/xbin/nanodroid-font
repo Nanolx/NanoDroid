@@ -79,9 +79,9 @@ set_font () {
 			error "Font ${1} does not exist"
 		fi
 	else
-		backup_font
-
 		if [ -f /system/fonts/NanoDroid/${1}.ttf ]; then
+			backup_font
+
 			for font in ${FONTFILES}; do
 				ln -sf /system/fonts/NanoDroid/${1}.ttf \
 					/system/fonts/${font} || \

@@ -15,8 +15,9 @@
 
 ### General Changes
 
-* Full package
+* NanoDroid-Font (nanodroid-font)
   * add `Splatoon` and `SuperMarioOdyssey` fonts
+  * in Sytem Mode only backup original font, if the custom font provided actually exists
 * README
   * add weblinks in the Credits section
 
