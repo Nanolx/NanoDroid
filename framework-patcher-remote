@@ -76,6 +76,12 @@ umount_magisk () {
 	rm /tmp/loopdevice
 }
 
+grep_cmdline() {
+	local REGEX="s/^${1}=//p"
+	sed -E 's/ +/\n/g' /proc/cmdline | \
+		sed -n "${REGEX}" 2>/dev/null
+}
+
 # taken from Magisk, with minor modifications for NanoDroid
 mount_partitions () {
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
@@ -95,7 +101,7 @@ mount_partitions () {
 		mount -t ext4 -o rw ${SYSTEMBLOCK} /system
 	fi
 
-	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system (unsupported A/B device?)"
+	[ -f /system/build.prop ] || is_mounted /system || exit 1
 
 	if [ -f /system/init ]; then
 		mkdir /system_root 2>/dev/null
@@ -103,7 +109,7 @@ mount_partitions () {
 		mount -o bind /system_root/system /system
 	fi
 
-	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+	[ ! -f /system/build.prop ] && exit 1
 }
 
 patch_system () {
