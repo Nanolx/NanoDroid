@@ -2,10 +2,16 @@
 
 ## 17.8 in-dev
 
+### Bug Fixes
+
+* CommonInstaller
+  * improve GApps removal mechanism
+* CommonAddon
+  * improve GApps removal mechanism
 * force-debloat.sh
-  * fix support A/B partition scheme
+  * fix support for A/B partition scheme
 * on-pc framework-patcher
-  * fix support A/B partition scheme
+  * fix support for A/B partition scheme
 
 ## 17.7.20180809
 
