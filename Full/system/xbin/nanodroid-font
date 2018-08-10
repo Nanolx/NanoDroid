@@ -120,8 +120,10 @@ where [font] can be:
   FAST				FAST RMX Game Font
   NintendoLabo			NintendoLabo Logo/Packaging Font
   NintendoSwitch		NintendoSwitch OS Font
+  Splatoon			Splatoon Game Font
   Splatoon2			Splatoon2 Game Font
+  SuperMario			Super Mario (World) Game Font
   SuperMarioMaker		Super Mario Maker Game Font
-  SuperMario			Super Mario (World) Game Font"
+  SuperMarioOdyssey		Super Mario Odyssey Game Font"
 	;;
 esac

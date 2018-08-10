@@ -23,10 +23,16 @@ set System UI font to [font], which is one of
   * FAST			FAST RMX Game Font
   * NintendoLabo		NintendoLabo Logo/Packaging Font
   * NintendoSwitch		NintendoSwitch OS Font
+  * Splatoon			Splatoon Game Font
   * Splatoon2			Splatoon2 Game Font
-  * SuperMarioMaker		Super Mario Maker Game Font
   * SuperMario			Super Mario (World) Game Font
+  * SuperMarioMaker		Super Mario Maker Game Font
+  * SuperMarioOdyssey		Super Mario Odyssey Game Font
 
 `r`, `--reset`
 
 reset to original font
+
+## Credits
+
+All fonts taken from http://downloads.paperyoshi.at/

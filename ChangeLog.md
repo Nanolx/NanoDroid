@@ -13,6 +13,11 @@
 * on-pc framework-patcher
   * fix support for A/B partition scheme
 
+### General Changes
+
+* Full package
+  * add `Splatoon` and `SuperMarioOdyssey` fonts
+
 ## 17.7.20180809
 
 ### Bug Fixes
