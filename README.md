@@ -497,12 +497,19 @@ For more details (including authors and license) on every provided application o
 Additional credits go to
 
 * Mar-V-In for microG
+  * https://github.com/microg
 * topjohnwu for Magisk
+  * https://github.com/topjohnwu/Magisk
 * Lanchon for dexpatcher and haystack
+  * https://github.com/dexpatcher
 * osm0sis for GNU Nano build
+  * https://forum.xda-developers.com/showthread.php?t=2239421
 * shadow53 for automatic apk grabbing base code
+  * https://shadow53.com/android/no-gapps/
 * ale5000 for microG system permission files and GApps Removal list
+  * https://github.com/micro5k
 * PaperYoshi for Nintendo Fonts
+  * http://downloads.paperyoshi.at/
 
 Special Thanks to the beta testers
 
