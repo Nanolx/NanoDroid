@@ -43,17 +43,35 @@ MozillaNlpBackend
 NominatimGeocoderBackend
 NominatimNlpBackend"
 
+GOOGLE_DATA="com.mgoogle.android.gms
+com.google.android.feedback
+com.google.android.gsf.login
+com.google.android.youtube
+com.qualcomm.location
+com.amap.android.location
+com.baidu.location
+com.google.android.location
+org.microg.nlp
+org.microg.unifiednlp"
+
 ui_print () {
 	echo -n -e "ui_print ${1}\n" >> /proc/self/fd/${OUTFD}
 	echo -n -e "ui_print\n" >> /proc/self/fd/${OUTFD}
 }
 
-backup_nlpconflicts () {
+solve_gappsconflicts () {
 	for app in ${GOOGLE_APPS}; do
 		if [ -f /system/bin/nanodroid-overlay ]; then
 			/system/bin/nanodroid-overlay --add ${app}
 		else	/system/xbin/nanodroid-overlay --add ${app}
 		fi
+	done
+
+	for app in ${GOOGLE_DATA}; do
+		rm -rf /data/data/${app}
+		rm -rf /data/user/*/${app}
+		rm -rf /data/user_de/*/${app}
+		rm -rf /data/app/${app}-*
 	done
 }
 
@@ -110,7 +128,7 @@ case "${1}" in
 			rm /tmp/nanodroid_font
 		fi
 
-		backup_nlpconflicts
+		solve_gappsconflicts
 	;;
 esac
 
