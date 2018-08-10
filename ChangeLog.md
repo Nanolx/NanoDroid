@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 17.8 in-dev
+
+* force-debloat.sh
+  * fix support A/B partition scheme
+* on-pc framework-patcher
+  * fix support A/B partition scheme
+
 ## 17.7.20180809
 
 ### Bug Fixes
