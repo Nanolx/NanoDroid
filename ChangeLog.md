@@ -17,9 +17,17 @@
 
 * NanoDroid-Font (nanodroid-font)
   * add `Splatoon` and `SuperMarioOdyssey` fonts
-  * in Sytem Mode only backup original font, if the custom font provided actually exists
+  * in Sytem Mode only backup original font, if the requested custom font exists
 * README
   * add weblinks in the Credits section
+
+### Updates
+
+* automatic
+  * F-Droid (1.3.1)
+  * QKSMS (3.4.4)
+  * KeePass DX (2.5.0.0beta17-libre)
+  * (Simple) Gallery (4.5.2)
 
 ## 17.7.20180809
 
