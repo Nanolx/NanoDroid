@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 17.8 in-dev
+## 17.8.20180811
 
 ### Bug Fixes
 
