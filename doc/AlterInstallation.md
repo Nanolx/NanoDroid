@@ -75,8 +75,9 @@ whether to provide included applications [> Details](doc/Applications.md)
 what app store to use:
 * `0` will not provide any app store
 * `1` will provide **Play Store**
-* `2` will provide **Yalp Store** and **Fake Store**
-* `3` will provide **Fake Store** only
+* `2` will provide **Yalp Store**
+* `3` will provide **Fake Store**
+* `4` will provide **Yalp Store** and **Fake Store**
 
 `nanodroid_overlay=[0|1]`
 
