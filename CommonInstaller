@@ -771,17 +771,47 @@ install_store () {
 		1 )
 			ui_print " << with Play Store"
 			nanodroid_install_apk Phonesky
+
+			if [ -d /system/priv-app/FakeStore ]; then
+				echo "   + removing conflicting FakeStore"
+				if [ "${ROM_NO_XBIN}" -eq 1 ]; then
+					${MODPATH}/system/bin/nanodroid-overlay --add FakeStore
+				else	${MODPATH}/system/xbin/nanodroid-overlay --add FakeStore
+				fi
+			fi
 		;;
 
 		2 )
-			ui_print " << with Yalp Store (and Fake Store)"
+			ui_print " << with Yalp Store"
 			nanodroid_install_apk YalpStore
-			nanodroid_install_apk FakeStore
 		;;
 
 		3 )
 			ui_print " << with Fake Store"
 			nanodroid_install_apk FakeStore
+
+			if [ -d /system/priv-app/Phonesky ]; then
+				echo "   + removing conflicting Play Store"
+				if [ "${ROM_NO_XBIN}" -eq 1 ]; then
+					${MODPATH}/system/bin/nanodroid-overlay --add Phonesky
+				else	${MODPATH}/system/xbin/nanodroid-overlay --add Phonesky
+				fi
+			fi
+		;;
+
+		4 )
+			ui_print " << with Yalp Store and Fake Store"
+
+			nanodroid_install_apk YalpStore
+			nanodroid_install_apk FakeStore
+
+			if [ -d /system/priv-app/Phonesky ]; then
+				echo "   + removing conflicting Play Store"
+				if [ "${ROM_NO_XBIN}" -eq 1 ]; then
+					${MODPATH}/system/bin/nanodroid-overlay --add Phonesky
+				else	${MODPATH}/system/xbin/nanodroid-overlay --add Phonesky
+				fi
+			fi
 		;;
 	esac
 }

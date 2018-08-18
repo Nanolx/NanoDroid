@@ -109,6 +109,9 @@ elif grep -q "selected.1=3" "${store_prop}"; then
 elif grep -q "selected.1=4" "${store_prop}"; then
 	ui_print "  <>> setting property: nanodroid_play [Fake Store]"
 	echo "nanodroid_play=3" >> "${nanodroid_setup}"
+elif grep -q "selected.1=5" "${store_prop}"; then
+	ui_print "  <>> setting property: nanodroid_play [Yalp + Fake Store]"
+	echo "nanodroid_play=4" >> "${nanodroid_setup}"
 fi
 
 if grep -q "selected.1=1" "${nlp_prop}"; then

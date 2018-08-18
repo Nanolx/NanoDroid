@@ -1,5 +1,16 @@
 # ChangeLog
 
+## 17.9 in-dev
+
+### General Changes
+
+* CommonInstaller
+  * value `2` for `nanodroid_play` will now only install Yalp Store
+  * value `3` for `nanodroid_play` will now check if Play Store is installed and will get rid of it in favour of Fake Store
+  * value `1` for `nanodroid_play` will now check if Fake Store is installed and will get rid of it in favour of Play Store
+* CommonInstaller, SetupWizard
+  * new value `4` for `nanodroid_play`, will install Yalp Store and Play Store
+
 ## 17.8.20180811
 
 ### Bug Fixes
