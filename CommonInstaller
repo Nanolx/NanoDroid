@@ -802,6 +802,9 @@ install_apps () {
 }
 
 install_store () {
+	NANODROID_APP_STORE=""
+	NANODROID_REM_STORE=""
+
 	# install Yalp Store or Play Store whichever requested
 	case "${nanodroid_play}" in
 		0 )
@@ -810,50 +813,43 @@ install_store () {
 
 		1 )
 			ui_print " << with Play Store"
-			nanodroid_install_apk Phonesky
-
-			if [ -d /system/priv-app/FakeStore ]; then
-				echo "   + removing conflicting FakeStore"
-				if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-					${MODPATH}/system/bin/nanodroid-overlay --add FakeStore
-				else	${MODPATH}/system/xbin/nanodroid-overlay --add FakeStore
-				fi
-			fi
+			NANODROID_APP_STORE="Phonesky"
+			NANODROID_REM_STORE="FakeStore"
 		;;
 
 		2 )
 			ui_print " << with Yalp Store"
-			nanodroid_install_apk YalpStore
+			NANODROID_APP_STORE="YalpStore"
+			NANODROID_REM_STORE=""
 		;;
 
 		3 )
 			ui_print " << with Fake Store"
-			nanodroid_install_apk FakeStore
-
-			if [ -d /system/priv-app/Phonesky ]; then
-				echo "   + removing conflicting Play Store"
-				if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-					${MODPATH}/system/bin/nanodroid-overlay --add Phonesky
-				else	${MODPATH}/system/xbin/nanodroid-overlay --add Phonesky
-				fi
-			fi
+			NANODROID_APP_STORE="FakeStore"
+			NANODROID_REM_STORE="Phonesky"
 		;;
 
 		4 )
 			ui_print " << with Yalp Store and Fake Store"
-
-			nanodroid_install_apk YalpStore
-			nanodroid_install_apk FakeStore
-
-			if [ -d /system/priv-app/Phonesky ]; then
-				echo "   + removing conflicting Play Store"
-				if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-					${MODPATH}/system/bin/nanodroid-overlay --add Phonesky
-				else	${MODPATH}/system/xbin/nanodroid-overlay --add Phonesky
-				fi
-			fi
+			NANODROID_APP_STORE="YalpStore FakeStore"
+			NANODROID_REM_STORE="Phonesky"
 		;;
 	esac
+
+	if [ ! -z "${NANODROID_APP_STORE}" ]; then
+		for app in ${NANODROID_APP_STORE}; do
+			nanodroid_install_apk ${app}
+		done
+	fi
+
+	if [ ! -z "${NANODROID_REM_STORE}" ]; then
+		for app in ${NANODROID_REM_STORE}; do
+			if [ "${ROM_NO_XBIN}" -eq 1 ]; then
+				${MODPATH}/system/bin/nanodroid-overlay --add ${app}
+			else	${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
+			fi
+		done
+	fi
 }
 
 install_zelda () {
