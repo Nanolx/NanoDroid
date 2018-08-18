@@ -32,6 +32,7 @@ nanodroid_bash=1
 nanodroid_nano=1
 nanodroid_utils=1
 nanodroid_fonts=1
+nanodroid_override=0
 ```
 
 the **microG** package supports the following options
@@ -70,7 +71,13 @@ whether to provide **F-Droid**
 
 whether to provide included applications [> Details](doc/Applications.md)
 
-`nanodroid_play=[0|1|2]`
+`nanodroid_override=[0|1]`
+
+whether to override an already existing app.
+
+`0` means that a ROM app is preferred against a NanoDroid app, where `1` means the NanoDroid apps is prefered.
+
+`nanodroid_play=[0|1|2|3|4]`
 
 what app store to use:
 * `0` will not provide any app store

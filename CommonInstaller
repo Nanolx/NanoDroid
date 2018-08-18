@@ -747,11 +747,31 @@ install_apps () {
 
 		for app in ${INSTALL_APPS}; do
 			if [[ ${app} = Adaway && -d /system/app/AdAway ]]; then
-				ui_print " <<> app: Adaway already provided by ROM (as AdAway)"
+				if [ "${nanodroid_override}" -eq 0 ]; then
+					ui_print " <<> app: Adaway already provided by ROM (as AdAway)"
+				else	nanodroid_install_apk Adaway
+					echo "   + removing conflicting AdAway"
+					if [ "${ROM_NO_XBIN}" -eq 1 ]; then
+						${MODPATH}/system/bin/nanodroid-overlay --add AdAway
+					else	${MODPATH}/system/xbin/nanodroid-overlay --add AdAway
+					fi
+				fi
 			elif [[ ${app} = OmniClock && -d /system/app/OmniClockOSS ]]; then
-				ui_print " <<> app: OmniClock already provided by ROM (as OmniClockOSS)"
+				if [ "${nanodroid_override}" -eq 0 ]; then
+					ui_print " <<> app: OmniClock already provided by ROM (as OmniClockOSS)"
+				else
+					nanodroid_install_apk OmniClock
+					echo "   + removing conflicting OmniClockOSS"
+					if [ "${ROM_NO_XBIN}" -eq 1 ]; then
+						${MODPATH}/system/bin/nanodroid-overlay --add OmniClockOSS
+					else	${MODPATH}/system/xbin/nanodroid-overlay --add OmniClockOSS
+					fi
+				fi
 			elif [[ -d /system/app/${app} && ! -d ${RESTORE_PATH}/system/app/${app} ]]; then
-				ui_print " <<> app: ${app} already provided by ROM"
+				if [ "${nanodroid_override}" -eq 0 ]; then
+					ui_print " <<> app: ${app} already provided by ROM"
+				else	nanodroid_install_apk ${app}
+				fi
 			elif [[ -d "${INSTALLER}/system/app/${app}" ]]; then
 				nanodroid_install_apk ${app}
 			else	ui_print " <<>> app: ${app} missing"
@@ -1263,6 +1283,7 @@ check_cfg_setup () {
 	[ -z ${nanodroid_nano} ] && set_prop nanodroid_nano 1
 	[ -z ${nanodroid_utils} ] && set_prop nanodroid_utils 1
 	[ -z ${nanodroid_fonts} ] && set_prop nanodroid_fonts 1
+	[ -z ${nanodroid_override} ] && set_prop nanodroid_override 0
 
 	source ${cfg_setup}
 }
