@@ -261,6 +261,8 @@ detect_mode () {
 		else
 			NANODROID_UPGRADE=0
 		fi
+
+		recovery_actions
 	fi
 
 	[ "${MODE}" = "MAGISK" ] && magisk_install_setup
@@ -315,6 +317,7 @@ nanodroid_finalize () {
 		magisk_install_finish
 	else
 		install_addond
+		recovery_cleanup
 
 		sort /data/adb/.nanodroid-list | uniq > /tmp/nanodroid-list
 		mv /tmp/nanodroid-list /data/adb/.nanodroid-list
@@ -400,6 +403,23 @@ detect_arch () {
 	fi
 
 	[ ! -d /data/adb ] && mkdir /data/adb
+}
+
+# Taken from Magisk, used for System Mode installation
+recovery_actions () {
+	mv /sbin /sbin_tmp
+	OLD_LD_LIB=$LD_LIBRARY_PATH
+	OLD_LD_PRE=$LD_PRELOAD
+	unset LD_LIBRARY_PATH
+	unset LD_PRELOAD
+}
+
+# Taken from Magisk, used for System Mode installation
+recovery_cleanup () {
+	mv /sbin_tmp /sbin 2>/dev/null
+	[ -z $OLD_PATH ] || export PATH=$OLD_PATH
+	[ -z $OLD_LD_LIB ] || export LD_LIBRARY_PATH=$OLD_LD_LIB
+	[ -z $OLD_LD_PRE ] || export LD_PRELOAD=$OLD_LD_PRE
 }
 
 ##########################################################################################
