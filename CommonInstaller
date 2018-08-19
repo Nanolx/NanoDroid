@@ -63,11 +63,11 @@ ui_print() {
 }
 
 show_progress() {
-	echo "progress ${1} ${2}" >> /proc/self/fd/${OUTFD}
+	${BOOTMODE} || echo "progress ${1} ${2}" >> /proc/self/fd/${OUTFD}
 }
 
 set_progress() {
-	echo "set_progress ${1}" >> /proc/self/fd/${OUTFD}
+	${BOOTMODE} || echo "set_progress ${1}" >> /proc/self/fd/${OUTFD}
 }
 
 grep_prop() {

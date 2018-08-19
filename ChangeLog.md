@@ -6,6 +6,7 @@
 
 * CommonInstaller
   * code simplifications
+  * don't set progressbar when flashing from Magisk Manager
 
 ### Updates
 
