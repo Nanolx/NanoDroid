@@ -2,11 +2,18 @@
 
 ## 17.10 in-dev
 
+### Bug Fixes
+
+* CommonInstaller
+  * cleanup TWRP environment when an installation error occurs during System Mode installation
+     * regression from 17.9
+
 ### General Changes
 
 * CommonInstaller
   * code simplifications
   * don't set progressbar when flashing from Magisk Manager
+  * minor string change
 
 ### Updates
 

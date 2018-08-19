@@ -155,6 +155,9 @@ show_banner () {
 	ui_print "   NanoDroid ${VERSION}   "
 	ui_print "      created by Nanolx      "
 	case ${MODID} in
+		NanoDroid )
+			ui_print "       Full package          "
+		;;
 		NanoDroid_microG )
 			ui_print "       microG package        "
 		;;
@@ -174,9 +177,9 @@ error () {
 	if [ "${MODE}" = "MAGISK" ]; then
 		rm -rf "${MODPATH}"
 		unmount_magisk_img
-		${BOOTMODE} || recovery_cleanup
 	fi
 
+	${BOOTMODE} || recovery_cleanup
 	nanodroid_storelogs
 
 	exit 1
