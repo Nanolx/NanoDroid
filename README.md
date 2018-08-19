@@ -95,6 +95,14 @@ NanoDroid officially supports the following Android versions:
 * 8.0 / SDK 26 (Oreo)
 * 8.1 / SDK 27 (Oreo)
 
+Support for the following versions is work-in-progress:
+
+* 9.0 / SDK 28 (Pie)
+  * Google Sync Adapters are not (yet) available
+  * Patchers don't support Pie (yet)
+  * unifiedNlp is untested (yet)
+  * everything else works
+
 earlier versions will never officially be supported (you may still report bugs, though).
 
 Future versions will be officially supported, eventually.
