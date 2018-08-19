@@ -1,5 +1,13 @@
 # ChangeLog
 
+## 17.10 in-dev
+
+### Updates
+
+* automatic
+  * QKSMS (3.4.5)
+  * F-Droid (1.4-alpha0)
+
 ## 17.9.20180818
 
 ### Bug Fixes

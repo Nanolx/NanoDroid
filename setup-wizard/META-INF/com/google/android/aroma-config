@@ -1,8 +1,8 @@
 ini_set("rom_name",	"NanoDroid Setup Wizard");
-ini_set("rom_version",	"17.9");
+ini_set("rom_version",	"17.10");
 ini_set("rom_author",	"Nanolx");
 ini_set("rom_device",	"Generic (LOS/AOSP)");
-ini_set("rom_date",	"20180818");
+ini_set("rom_date",	"99999999");
 
 anisplash(
     0, "splash/nanolx.png", 1500
