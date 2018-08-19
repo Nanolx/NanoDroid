@@ -282,6 +282,11 @@ detect_mode () {
 		esac
 	else	unset MODPATH
 	fi
+
+	if [ "${ROM_NO_XBIN}" -eq 0 ]; then
+		NANODROID_BINDIR="${MODPATH}/system/bin"
+	else	NANODROID_BINDIR="${MODPATH}/system/xbin"
+	fi
 }
 
 unpack_zip () {
@@ -302,11 +307,7 @@ nanodroid_finalize () {
 		NanoDroid | NanoDroid_microG )
 			if [ "${nanodroid_overlay}" -eq 1 ]; then
 				ui_print " << with /system applications override"
-
-				if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-					${MODPATH}/system/bin/nanodroid-overlay --create
-				else	${MODPATH}/system/xbin/nanodroid-overlay --create
-				fi
+				${NANODROID_BINDIR}/nanodroid-overlay --create
 			else
 				ui_print " << without /system applications override"
 			fi
@@ -597,10 +598,7 @@ magisk_install_finish () {
 
 	if [ "${nanodroid_fonts}" -eq 1 -a ! -z ${CUSTOM_FONT} ]; then
 		ui_print " << Restore NanoDroid-Font (${CUSTOM_FONT})"
-		if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-			${MODPATH}/system/bin/nanodroid-font -s "${CUSTOM_FONT}"
-		else	${MODPATH}/system/xbin/nanodroid-font -s "${CUSTOM_FONT}"
-		fi
+		${NANODROID_BINDIR}/nanodroid-font -s "${CUSTOM_FONT}"
 	fi
 
 	unmount_magisk_img
@@ -618,10 +616,7 @@ install_microg () {
 
 		# first get rid of conflicting packages
 		for app in ${GOOGLE_APPS}; do
-			if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-				${MODPATH}/system/bin/nanodroid-overlay --add ${app}
-			else	${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
-			fi
+			${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
 
 			rm -rf /data/dalvik-cache/*/system"@priv-app@${app}"[@\.]*@classes.*
 			rm -rf /data/dalvik-cache/*/system"@app@${app}"[@\.]*@classes.*
@@ -771,10 +766,7 @@ install_apps () {
 					ui_print " <<> app: Adaway already provided by ROM (as AdAway)"
 				else	nanodroid_install_apk Adaway
 					echo "   + removing conflicting AdAway"
-					if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-						${MODPATH}/system/bin/nanodroid-overlay --add AdAway
-					else	${MODPATH}/system/xbin/nanodroid-overlay --add AdAway
-					fi
+					${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
 				fi
 			elif [[ ${app} = OmniClock && -d /system/app/OmniClockOSS ]]; then
 				if [ "${nanodroid_override}" -eq 0 ]; then
@@ -782,10 +774,7 @@ install_apps () {
 				else
 					nanodroid_install_apk OmniClock
 					echo "   + removing conflicting OmniClockOSS"
-					if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-						${MODPATH}/system/bin/nanodroid-overlay --add OmniClockOSS
-					else	${MODPATH}/system/xbin/nanodroid-overlay --add OmniClockOSS
-					fi
+					${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
 				fi
 			elif [[ -d /system/app/${app} && ! -d ${RESTORE_PATH}/system/app/${app} ]]; then
 				if [ "${nanodroid_override}" -eq 0 ]; then
@@ -844,10 +833,7 @@ install_store () {
 
 	if [ ! -z "${NANODROID_REM_STORE}" ]; then
 		for app in ${NANODROID_REM_STORE}; do
-			if [ "${ROM_NO_XBIN}" -eq 1 ]; then
-				${MODPATH}/system/bin/nanodroid-overlay --add ${app}
-			else	${MODPATH}/system/xbin/nanodroid-overlay --add ${app}
-			fi
+			${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
 		done
 	fi
 }
@@ -1203,6 +1189,7 @@ CUSTOM_FONT=${CUSTOM_FONT}
 ROM_NO_XBIN=${ROM_NO_XBIN}
 RESTORE_PATH=${RESTORE_PATH}
 NANODROID_UPGRADE=${NANODROID_UPGRADE}
+NANODROID_BINDIR=${NANODROID_BINDIR}
 
 ### SETUP ###
 " > ${nanodroid_logfile}

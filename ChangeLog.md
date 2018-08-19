@@ -2,6 +2,11 @@
 
 ## 17.10 in-dev
 
+### General Changes
+
+* CommonInstaller
+  * code simplifications
+
 ### Updates
 
 * automatic
