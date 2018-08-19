@@ -28,7 +28,7 @@
   * value `1` for `nanodroid_play` will now check if Fake Store is installed and will get rid of it in favour of Play Store
   * simplify App Store installation routine
 * CommonInstaller, SetupWizard
-  * new value `4` for `nanodroid_play`, will install Yalp Store and Play Store
+  * new value `4` for `nanodroid_play`, will install Yalp Store and Fake Store
   * new setting `nanodroid_override`, whether to override an existing app
      * `0` means that a ROM app is preferred against a NanoDroid app, where `1` means the NanoDroid apps is prefered.
 
