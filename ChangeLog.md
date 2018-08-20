@@ -8,7 +8,7 @@
   * cleanup TWRP environment when an installation error occurs during System Mode installation
      * regression from 17.9
   * add busybox build by osm0sis (used during installation only)
-     * fixes possible installation issues with Stock ROMs
+     * fixes possible installation issues with Stock ROMs from TWRP
 
 ### General Changes
 

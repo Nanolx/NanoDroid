@@ -26,7 +26,7 @@ set_progress 0.1
 mount_partitions
 unpack_zip
 detect_arch
-setup_busybox
+${BOOTMODE} || setup_busybox
 set_progress 0.2
 
 get_cfg_setup
