@@ -15,6 +15,7 @@
 * CommonInstaller
   * code simplifications
   * don't set progressbar when flashing from Magisk Manager
+  * when migrating from Play Store to Fake Store or vice versa and if it's a new installation of NanoDroid, also get rid of all app data related to the removed App Store
   * minor string change
 
 ### Updates

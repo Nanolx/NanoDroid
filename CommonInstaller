@@ -849,6 +849,13 @@ install_store () {
 		for app in ${NANODROID_REM_STORE}; do
 			${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
 		done
+
+		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
+			rm -rf /data/data/com.android.vending
+			rm -rf /data/user/*/com.android.vending
+			rm -rf /data/user_de/*/com.android.vending
+			rm -rf /data/app/com.android.vending-*
+		fi
 	fi
 }
 
