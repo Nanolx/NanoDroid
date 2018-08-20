@@ -510,7 +510,7 @@ Additional credits go to
   * https://github.com/topjohnwu/Magisk
 * Lanchon for dexpatcher and haystack
   * https://github.com/dexpatcher
-* osm0sis for GNU Nano build
+* osm0sis for GNU Nano and Busybox
   * https://forum.xda-developers.com/showthread.php?t=2239421
 * shadow53 for automatic apk grabbing base code
   * https://shadow53.com/android/no-gapps/
