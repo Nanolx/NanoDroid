@@ -287,8 +287,8 @@ detect_mode () {
 	fi
 
 	if [ "${ROM_NO_XBIN}" -eq 0 ]; then
-		NANODROID_BINDIR="${MODPATH}/system/bin"
-	else	NANODROID_BINDIR="${MODPATH}/system/xbin"
+		NANODROID_BINDIR="${MODPATH}/system/xbin"
+	else	NANODROID_BINDIR="${MODPATH}/system/bin"
 	fi
 }
 
