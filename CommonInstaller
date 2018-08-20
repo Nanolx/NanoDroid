@@ -409,6 +409,17 @@ detect_arch () {
 	[ ! -d /data/adb ] && mkdir /data/adb
 }
 
+setup_busybox () {
+	OLD_PATH=${PATH}
+
+	mkdir -p ${INSTALLER}/busybox
+	ln -s ${INSTALLER}/busybox.${BIN_ARCH} ${INSTALLER}/busybox/busybox
+
+	${INSTALLER}/busybox.${BIN_ARCH} --install -s ${INSTALLER}/busybox/
+
+	export PATH="${INSTALLER}/busybox:${PATH}"
+}
+
 # Taken from Magisk, used for System Mode installation
 recovery_actions () {
 	mv /sbin /sbin_tmp

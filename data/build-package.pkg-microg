@@ -33,6 +33,8 @@ create_microg_package() {
 
 	zip_add CommonInstaller
 	zip_add CommonAddon
+	zip_add busybox.arm
+	zip_add busybox.x86
 
 	zip_add_doc
 	zip_add_config .nanodroid-overlay 0

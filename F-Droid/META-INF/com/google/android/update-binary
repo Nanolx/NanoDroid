@@ -26,6 +26,7 @@ set_progress 0.1
 mount_partitions
 unpack_zip
 detect_arch
+setup_busybox
 
 get_cfg_setup
 
