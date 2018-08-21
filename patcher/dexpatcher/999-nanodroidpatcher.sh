@@ -36,6 +36,8 @@ NanoDroidPatcher () {
 
 	[ -f /data/adb/.nanodroid-patcher ] && \
 		rm -f /data/adb/.nanodroid-patcher
+	[ -f /data/adb/NanoDroid_Patched ] && \
+		rm -f /data/adb/NanoDroid_Patched
 
 	rm -rf ${TMPDIR}
 	mkdir -p ${TMPDIR}

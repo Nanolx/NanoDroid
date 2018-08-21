@@ -26,15 +26,15 @@ image_size_check() {
 
 grow_magisk_img () {
 	request_size_check /tmp/services.jar
-	image_size_check ${MAGISK_IMG}
+	image_size_check /data/adb/magisk.img
 	if [ "$reqSizeM" -gt "$curFreeM" ]; then
 		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-		resize2fs ${MAGISK_IMG} ${SIZE}M
+		resize2fs /data/adb/magisk.img ${SIZE}M
 	fi
 }
 
 shrink_magisk_img () {
-	image_size_check ${MAGISK_IMG}
+	image_size_check /data/adb/magisk.img
 	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
 	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
 		resize2fs $IMG ${NEWDATASIZE}M
@@ -45,7 +45,6 @@ mount_image() {
 	if [ ! -d "$2" ]; then
 		mount -o rw,remount rootfs /
 		mkdir -p "$2" 2>/dev/null
-		$BOOTMODE && mount -o ro,remount rootfs /
 		[ ! -d "$2" ] && return 1
 	fi
 
@@ -67,7 +66,7 @@ mount_image() {
 
 mount_magisk () {
 	mount /data &>/dev/null
-	mount_image ${MAGISK_IMG} /magisk
+	mount_image /data/adb/magisk.img /magisk
 }
 
 umount_magisk () {
@@ -92,8 +91,6 @@ mount_partitions () {
 
 	is_mounted /data || mount /data
 
-	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
-
 	! is_mounted /system && mount -o rw /system
 
 	if [ ! -f /system/build.prop ]; then
@@ -114,19 +111,17 @@ mount_partitions () {
 
 patch_system () {
 	if [[ -f /data/adb/magisk.img ]]; then
-		MAGISK_IMG=/data/adb/magisk.img
-	elif [[ -f /data/magisk.img ]]; then
-		MAGISK_IMG=/data/magisk.img
-	fi
-
-	if [[ -f ${MAGISK_IMG} ]]; then
 		grow_magisk_img
 		echo "magisk found: mount to /magisk"
 		mount_magisk
 	fi
 
 	if [[ -f /data/adb/.nanodroid-patcher ]]; then
-		echo " ++ /system/.nanodroid-patcher exists"
+		echo " ++ /data/adb/.nanodroid-patcher exists"
+		echo " ++ assuming ROM is already patched"
+		exit 0
+	elif [[ -f /data/adb/NanoDroid_Patched ]]; then
+		echo " ++ /data/adb/NanoDroid_Patched exists"
 		echo " ++ assuming ROM is already patched"
 		exit 0
 	fi
@@ -150,13 +145,13 @@ patch_system () {
 		install_path="/system"
 
 		echo /system/framework/services.jar >> \
-			/system/.nanodroid-list
+			/data/adb/NanoDroid_FileList
 	fi
 
 	echo "install to \"${install_path}\""
 	cp /tmp/services.jar "${install_path}/framework" || exit 1
 
-	touch /data/adb/.nanodroid-patcher
+	touch /data/adb/NanoDroid_Patched
 
 	if (is_mounted /magisk); then
 		echo "unmount /magisk"
