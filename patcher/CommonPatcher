@@ -349,7 +349,7 @@ install_services () {
 		echo /system/framework/services.jar >> /data/adb/.nanodroid-list
 	fi
 
-	touch /data/adb/.nanodroid-patcher
+	touch /data/adb/.NanoDroid_Patched
 }
 
 ##########################################################################################

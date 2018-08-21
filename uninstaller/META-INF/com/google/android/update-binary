@@ -281,10 +281,6 @@ if [ -f /data/adb/magisk.img ]; then
 	mkdir -p /magisk
 	mount_image /data/adb/magisk.img /magisk || \
 		error " !! failed to mount /magisk"
-elif [ -f /data/magisk.img ]; then
-	mkdir -p /magisk
-	mount_image /data/magisk.img || \
-		error " !! failed to mount /magisk"
 fi
 
 if (is_mounted /magisk); then
