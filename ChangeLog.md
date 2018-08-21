@@ -31,6 +31,7 @@
 
 * Uninstaller
   * display correct version number
+  * code simplifications
   * exit when flashing from Magisk Manager without doing anything
   * remove support for ancient versions (< 12.0)
 
