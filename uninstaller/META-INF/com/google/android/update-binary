@@ -230,8 +230,8 @@ addond_uninstall () {
 	done
 
 	for pfile in /system/.nanomod-patcher /data/adb/.nanomod-patcher \
-		/data/adb/.nanodroid-patcher; do
-		[ -f ${pfile} ] && ${pfile}
+		/data/adb/.nanodroid-patcher /data/adb/NanoDroid_Patched; do
+		[ -f ${pfile} ] && rm -f ${pfile}
 	done
 }
 
@@ -270,11 +270,9 @@ rm -f /data/adb/NanoDroid_log*
 rm -f /data/adb/NanoDroid_twrp*
 
 # System Mode uninstallation
-for install_info in /system/.nanomod-list /data/adb/.nanomod-list /data/adb/NanoDroid_FileList \
-	/data/adb/.nanodroid-list; do
-	if [ -f ${install_info} ]; then
-		system_mode_uninstall ${install_info}
-	fi
+for install_info in /system/.nanomod-list /data/adb/.nanomod-list \
+	/data/adb/.nanodroid-list /data/adb/NanoDroid_FileList; do
+	[ -f ${install_info} ] && system_mode_uninstall ${install_info}
 done
 
 addond_uninstall

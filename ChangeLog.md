@@ -12,6 +12,7 @@
 
 * Uninstaller
   * fix restoring GApps from /system/app in System Mode installations
+  * fix removing NanoDroid-Patcher installfile
 
 ### General Changes
 
