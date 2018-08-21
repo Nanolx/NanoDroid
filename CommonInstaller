@@ -2,6 +2,7 @@
 
 VERSION=17.10.99999999
 NANODROID_UPGRADE=0
+NANODROID_LIST=/data/adb/NanoDroid_FileList
 
 GOOGLE_APPS="GoogleFeedback
 GoogleLoginService
@@ -131,6 +132,14 @@ set_perm_bin () {
 	fi
 }
 
+filelist_add () {
+	if [ "${MODE}" = "SYSTEM" ]; then
+		for file in ${@}; do
+			echo ${file} >> ${NANODROID_LIST}
+		done
+	fi
+}
+
 detect_outfd () {
 	readlink /proc/$$/fd/${OUTFD} 2>/dev/null | grep /tmp >/dev/null
 	if [ "$?" -eq "0" ]; then
@@ -256,13 +265,13 @@ detect_mode () {
 	ui_print " "
 
 	if [ "${MODE}" = "SYSTEM" ]; then
-		if test -f /data/adb/.nanodroid-list -o \
+		if test -f ${NANODROID_LIST} -o \
+			-f /data/adb/.nanodroid-list -o \
 			-f /data/adb/.nanomod-list -o \
 			-f /system/.nanomod-list -o \
 			-f /system/addon.d/91-nanodroid.sh; then
 			NANODROID_UPGRADE=1
-		else
-			NANODROID_UPGRADE=0
+		else	NANODROID_UPGRADE=0
 		fi
 
 		recovery_actions
@@ -323,8 +332,8 @@ nanodroid_finalize () {
 		install_addond
 		recovery_cleanup
 
-		sort /data/adb/.nanodroid-list | uniq > /tmp/nanodroid-list
-		mv /tmp/nanodroid-list /data/adb/.nanodroid-list
+		sort ${NANODROID_LIST} | uniq > /tmp/nanodroid-list
+		mv /tmp/nanodroid-list ${NANODROID_LIST}
 	fi
 
 	rm -rf ${INSTALLER}
@@ -718,9 +727,7 @@ install_gsync () {
 
 				set_perm_data -r "${MODPATH}/system/app/Google${app}"
 
-				[ "${MODE}" = "SYSTEM" ] && \
-					echo "/system/app/Google${app}/Google${app}.apk" \
-						>> /data/adb/.nanodroid-list
+				filelist_add "/system/app/Google${app}/Google${app}.apk"
 			done
 
 			echo "    installing app: GoogleBackupTransport"
@@ -732,17 +739,14 @@ install_gsync () {
 
 			set_perm_data -r "${MODPATH}/system/priv-app/GoogleBackupTransport"
 
-			[ "${MODE}" = "SYSTEM" ] && \
-				echo "/system/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk" \
-					>> /data/adb/.nanodroid-list
+			filelist_add "/system/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk"
 
 			cp -r "${INSTALLER}/gsync/etc/permissions/" "${MODPATH}/system/etc/"
 			set_perm_data -r "${MODPATH}/system/etc/permissions/"
 
-			[ "${MODE}" = "SYSTEM" ] && \
-				find "${INSTALLER}/gsync/etc/permissions/" -type f |
-					sed -e "s,${INSTALLER}/gsync/etc,/system/etc,g" \
-					>> /data/adb/.nanodroid-list
+			LIST=$(find "${INSTALLER}/gsync/etc/permissions/" -type f |
+					sed -e "s,${INSTALLER}/gsync/etc,/system/etc,g")
+			filelist_add "${LIST}"
 		fi
 	else	ui_print " << without Google Sync Adapters"
 	fi
@@ -952,11 +956,9 @@ install_initd () {
 		cp "${INSTALLER}/system/etc/init.d"/* "${INIT_BASE}/"
 		set_perm_bin "${INIT_BASE}"
 
-		[ "${MODE}" = "SYSTEM" ] && \
-			for init in fstrim logcat logscleaner sqlite external_sd; do
-				echo "/system/etc/init.d/${init}" \
-					>> /data/adb/.nanodroid-list
-			done
+		for init in fstrim logcat logscleaner sqlite external_sd; do
+			filelist_add "/system/etc/init.d/${init}"
+		done
 	else	ui_print " << without init scripts"
 	fi
 }
@@ -975,9 +977,7 @@ install_swipe () {
 				error " !! failed to install libjni_${lib}.so"
 			set_perm_data "${MODPATH}${SWIPE_DEST}/libjni_${lib}.so"
 
-			[ "${MODE}" = "SYSTEM" ] && \
-				echo "${SWIPE_DEST}/libjni_${lib}.so" \
-					>> /data/adb/.nanodroid-list
+			filelist_add "${SWIPE_DEST}/libjni_${lib}.so"
 		done
 	else	ui_print " << without swipe libraries"
 	fi
@@ -1019,10 +1019,9 @@ nanodroid_install_dir () {
 		*   ) set_perm_data -r "${MODPATH}${dest}" ;;
 	esac
 
-	[ "${MODE}" = "SYSTEM" ] && \
-		find "${INSTALLER}/system/${dir}" -type f | \
-			sed -e "s,^${INSTALLER},,g" \
-			>> /data/adb/.nanodroid-list
+	LIST=$(find "${INSTALLER}/system/${dir}" -type f | \
+			sed -e "s,^${INSTALLER},,g")
+	filelist_add ${LIST}
 }
 
 nanodroid_install_apk () {
@@ -1053,8 +1052,7 @@ nanodroid_install_apk () {
 
 	set_perm_data -r "${MODPATH}/${dest}"
 
-	[ "${MODE}" = "SYSTEM" ] && \
-		echo "/${dest}/${app}.apk" >> /data/adb/.nanodroid-list
+	filelist_add "/${dest}/${app}.apk"
 
 	nanodroid_install_lib
 }
@@ -1084,8 +1082,7 @@ nanodroid_install_file () {
 		*   ) set_perm_data "${MODPATH}/system/${xdir}/${xfile}" ;;
 	esac
 
-	[ "${MODE}" = "SYSTEM" ] && \
-		echo "/system/${xdir}/${xfile}" >> /data/adb/.nanodroid-list
+	filelist_add "/system/${xdir}/${xfile}"
 }
 
 nanodroid_install_lib () {
@@ -1147,9 +1144,7 @@ nanodroid_install_lib () {
 
 				set_perm_data ${libd}/${lib_arch}/$(basename ${lib})
 
-				[ "${MODE}" = "SYSTEM" ] && \
-					echo /${dir}/${app}/lib/${lib_arch}/$(basename ${lib}) \
-						>> /data/adb/.nanodroid-list
+				filelist_add /${dir}/${app}/lib/${lib_arch}/$(basename ${lib})
 			done
 		fi
 	fi

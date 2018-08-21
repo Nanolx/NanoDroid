@@ -144,6 +144,11 @@ mount_partitions () {
 	fi
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+
+	if [ ! -d /system/xbin ]; then
+		NANODROID_BINDIR=/system/bin
+	else	NANODROID_BINDIR=/system/xbin
+	fi
 }
 
 # check for configuration files
@@ -160,11 +165,7 @@ system_mode_uninstall () {
 		ui_print " << Detected NanoDroid-Font (${CUSTOM_FONT})"
 		ui_print "  < Restoring original Font"
 
-		if [ -f /system/xbin/nanodroid-font ]; then
-			/system/xbin/nanodroid-font -r
-		elif [ -f /system/bin/nanodroid-font ]; then
-			/system/bin/nanodroid-font -r
-		fi
+		${NANODROID_BINDIR}/nanodroid-font -r
 	fi
 
 	# services.jar needs special treament
@@ -277,10 +278,11 @@ rm -f /data/adb/.nanodroid_*
 rm -f /data/adb/.recovery_*
 
 # new format
-rm -f /data/adb/NanoDroid*
+rm -f /data/adb/NanoDroid_log*
+rm -f /data/adb/NanoDroid_twrp*
 
 # System Mode uninstallation
-for install_info in /system/.nanomod-list /data/adb/.nanomod-list \
+for install_info in /system/.nanomod-list /data/adb/.nanomod-list /data/adb/NanoDroid_FileList \
 	/data/adb/.nanodroid-list; do
 	if [ -f ${install_info} ]; then
 		system_mode_uninstall ${install_info}

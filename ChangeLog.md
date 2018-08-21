@@ -17,8 +17,17 @@
   * don't set progressbar when flashing from Magisk Manager
   * when migrating from Play Store to Fake Store or vice versa during new installs get rid of that store's app data, too
   * minor string change
+
 * CommonAddon
   * code simplifcations
+
+* CommonInstaller, CommmonAddon, Uninstaller
+  * move installer information for System Mode from /data/adb/.nanodroid-list to /data/adb/NanoDroid_FileList
+  * CommonAddon and Uninstaller support both
+  * simplify code for the creation of the installer information
+
+* Uninstaller
+  * remove support for ancient versions (< 12.0)
 
 ### Updates
 
