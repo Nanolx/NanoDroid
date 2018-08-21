@@ -14,6 +14,9 @@
   * fix restoring GApps from /system/app in System Mode installations
   * fix removing NanoDroid-Patcher installfile
 
+* On-PC Patcher
+  * fix creating uninstaller information for System Mode
+
 ### General Changes
 
 * CommonInstaller
@@ -29,6 +32,9 @@
   * move installer information for System Mode from /data/adb/.nanodroid-list to /data/adb/NanoDroid_FileList
   * CommonAddon and Uninstaller support both
   * simplify code for the creation of the installer information
+
+* Patcher, CommonInstaller, Uninstaller
+  * move patcher installfile from /data/adb/.nanodroid-patcher to /data/adb/NanoDroid_Patched
 
 * Uninstaller
   * display correct version number
