@@ -17,6 +17,8 @@
   * don't set progressbar when flashing from Magisk Manager
   * when migrating from Play Store to Fake Store or vice versa during new installs get rid of that store's app data, too
   * minor string change
+* CommonAddon
+  * code simplifcations
 
 ### Updates
 

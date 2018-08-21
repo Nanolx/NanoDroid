@@ -54,6 +54,11 @@ com.google.android.location
 org.microg.nlp
 org.microg.unifiednlp"
 
+if [ ! -d /system/xbin ]; then
+	NANODROID_BINDIR=/system/bin
+else	NANODROID_BINDIR=/system/xbin
+fi
+
 ui_print () {
 	echo -n -e "ui_print ${1}\n" >> /proc/self/fd/${OUTFD}
 	echo -n -e "ui_print\n" >> /proc/self/fd/${OUTFD}
@@ -61,10 +66,7 @@ ui_print () {
 
 solve_gappsconflicts () {
 	for app in ${GOOGLE_APPS}; do
-		if [ -f /system/bin/nanodroid-overlay ]; then
-			/system/bin/nanodroid-overlay --add ${app}
-		else	/system/xbin/nanodroid-overlay --add ${app}
-		fi
+		${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
 	done
 
 	for app in ${GOOGLE_DATA}; do
@@ -116,15 +118,9 @@ case "${1}" in
 	post-restore)
 		if [ -f /tmp/nanodroid_font ]; then
 			. /tmp/nanodroid_font
-
 			ui_print " ${MODID} addon.d: restoring NanoDroid-Font (${CUSTOM_FONT})"
 
-			if [ -f /system/xbin/nanodroid-font ]; then
-				/system/xbin/nanodroid-font -s "${CUSTOM_FONT}"
-			elif [ -f /system/bin/nanodroid-font ]; then
-				/system/bin/nanodroid-font -s "${CUSTOM_FONT}"
-			fi
-
+			${NANODROID_BINDIR}/nanodroid-font -s "${CUSTOM_FONT}"
 			rm /tmp/nanodroid_font
 		fi
 
