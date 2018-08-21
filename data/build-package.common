@@ -75,10 +75,11 @@ increase_version_number() {
 			"${CWD}/${module}/module.prop"
 	done
 
-	for module in uninstaller patcher; do
-		sed -e "s/\"      NanoDroid.*/\"      NanoDroid ${2}.${ver}     \"/" -i \
-			"${CWD}/${module}/META-INF/com/google/android/update-binary"
-	done
+	sed -e "s/\"      NanoDroid.*/\"      NanoDroid ${2}.${ver}     \"/" -i \
+		"${CWD}/patcher/META-INF/com/google/android/update-binary"
+
+	sed -e "s/\"   NanoDroid.*/\"   NanoDroid ${2}.${ver}     \"/" -i \
+			"${CWD}/uninstaller/META-INF/com/google/android/update-binary"
 
 	sed -e "s/rom_version\",.*/rom_version\",	\"${2}\")\;/" -i \
 		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"

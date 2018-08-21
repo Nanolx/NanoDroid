@@ -10,6 +10,9 @@
   * add busybox build by osm0sis (used during installation only)
      * fixes possible installation issues with Stock ROMs from TWRP
 
+* Uninstaller
+  * fix restoring GApps from /system/app in System Mode installations
+
 ### General Changes
 
 * CommonInstaller
@@ -27,6 +30,8 @@
   * simplify code for the creation of the installer information
 
 * Uninstaller
+  * display correct version number
+  * exit when flashing from Magisk Manager without doing anything
   * remove support for ancient versions (< 12.0)
 
 ### Updates

@@ -32,6 +32,12 @@ MozillaNlpBackend
 NominatimGeocoderBackend
 NominatimNlpBackend"
 
+detect_bootmode () {
+	ps | grep zygote | grep -v grep >/dev/null && BOOTMODE=true || BOOTMODE=false
+	${BOOTMODE} || ps -A 2>/dev/null | grep zygote | grep -v grep >/dev/null && BOOTMODE=true
+	${BOOTMODE} || id | grep -q 'uid=0' || BOOTMODE=true
+}
+
 ui_print() {
 	echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
 	echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
@@ -97,7 +103,6 @@ mount_image() {
 	if [ ! -d "$2" ]; then
 		mount -o rw,remount rootfs /
 		mkdir -p "$2" 2>/dev/null
-		$BOOTMODE && mount -o ro,remount rootfs /
 		[ ! -d "$2" ] && return 1
 	fi
 
@@ -126,8 +131,6 @@ mount_partitions () {
 
 	is_mounted /data || mount /data
 
-	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
-
 	! is_mounted /system && mount -o rw /system
 
 	if [ ! -f /system/build.prop ]; then
@@ -155,6 +158,27 @@ mount_partitions () {
 config_locations="/sdcard /external_sd /data $(dirname ${ZIP}))"
 config_files=".nanomod-setup .nanomod-apps .nanomod-overlay .nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 
+restore_gapps () {
+	for app in ${GOOGLE_APPS}; do
+		if [ -d /sdcard/nanodroid_backups/priv-app/${app} ]; then
+			appdir=priv-app
+		elif [ -d /sdcard/nanodroid_backups/app/${app} ]; then
+			appdir=app
+		else
+			break
+		fi
+	done
+
+	if [ -d /system/${appdir}/${app} ]; then
+		ui_print " << removing backup: ${appdir} / ${app}"
+		rm -rf /sdcard/nanodroid_backups/${appdir}/${app}
+	else
+		ui_print " << restoring: ${appdir} / ${app}"
+		mv /sdcard/nanodroid_backups/${appdir}/${app} \
+			/system/${appdir}/ || error " !! failed to restore ${app}"
+	fi
+}
+
 system_mode_uninstall () {
 	ui_print " << uninstalling: NanoDroid (System)"
 	ui_print " << using: ${1}"
@@ -174,51 +198,12 @@ system_mode_uninstall () {
 			ui_print " << restoring: unpatched services.jar"
 			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar \
 				|| error " !! failed to restore services.jar"
-		elif [ -f /sdcard/services.jar ]; then
-			ui_print " << restoring: unpatched services.jar"
-			mv /sdcard/services.jar /system/framework/services.jar \
-				|| error " !! failed to restore services.jar"
 		else	ui_print " << can't restore unpatched services.jar"
 		fi
 		sed '/\/system\/framework\/services.jar/d' -i ${system_list}
 	fi
 
-	for sapp in Settings SecSettings SecSettings2; do
-		if grep -q /system/priv-app/${sapp}/${sapp}.apk ${system_list}; then
-			if [ -f /sdcard/${sapp}.apk ]; then
-				ui_print " << restoring: unpatched ${sapp}.apk"
-				mv /sdcard/${sapp}.apk /system/priv-app/${sapp}/${sapp}.apk \
-					|| error " !! failed to restore ${sapp}.apk"
-			else	ui_print " << can't restore unpatched ${sapp}.apk"
-			fi
-			sed "/\/system\/priv-app\/${sapp}\/${sapp}.apk/d" \
-				-i ${system_list}
-			break
-		fi
-	done
-
-	for app in ${GOOGLE_APPS}; do
-		if [ -d /sdcard/nanodroid_backups/priv-app/${app} ]; then
-			if [ -d -/system/priv-app/${app} ]; then
-				ui_print " << removing backup: priv-app / ${app}"
-				rm -rf /sdcard/nanodroid_backups/priv-app/${app}
-			else
-				ui_print " << restoring: priv-app / ${app}"
-				mv /sdcard/nanodroid_backups/priv-app/${app} \
-					/system/priv-app/ || error " !! failed to restore ${app}"
-			fi
-		elif [ -d /sdcard/nanodroid_backups/app/${app} ]; then
-			if [ -d /system/app/${app} ]; then
-				ui_print " << removing backup: app / ${app}"
-				rm -rf /sdcard/nanodroid_backups/app/${app}
-			else
-				ui_print " << restoring: app / ${app}"
-				mv /sdcard/nanodroid_backups/app/${app} \
-					/system/app/ || error " !! failed to restore ${app}"
-			fi
-		fi
-	done
-
+	restore_gapps
 	xargs rm -f < ${system_list} || " !! failed to remove files"
 
 	# remove empty directories
@@ -257,6 +242,9 @@ ui_print "      created by Nanolx      "
 ui_print "        Uninstaller          "
 ui_print "*****************************"
 ui_print " "
+
+detect_bootmode
+${BOOTMODE} && error "NanoDroid Uninstaller needs to be run from TWRP"
 
 mount_partitions
 
