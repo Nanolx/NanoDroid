@@ -36,6 +36,9 @@
 * Patcher, CommonInstaller, Uninstaller
   * move patcher installfile from /data/adb/.nanodroid-patcher to /data/adb/NanoDroid_Patched
 
+* CommonInstaller, Uninstaller
+  * remove support for old NanoMod modules
+
 * Uninstaller
   * display correct version number
   * code simplifications

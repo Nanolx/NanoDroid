@@ -267,8 +267,6 @@ detect_mode () {
 	if [ "${MODE}" = "SYSTEM" ]; then
 		if test -f ${NANODROID_LIST} -o \
 			-f /data/adb/.nanodroid-list -o \
-			-f /data/adb/.nanomod-list -o \
-			-f /system/.nanomod-list -o \
 			-f /system/addon.d/91-nanodroid.sh; then
 			NANODROID_UPGRADE=1
 		else	NANODROID_UPGRADE=0
@@ -481,10 +479,9 @@ magisk_install_setup () {
 
 	case ${MODID} in
 		NanoDroid )
-			# check for old-named module or sub-modules are
-			# not supposed to be installed alongside
-			for dir in NanoMod NanoModmicroG NanoDroid_microG \
-				NanoModfdroid NanoDroid_FDroid; do
+			# check for sub-modules  which are not
+			# supposed to be installed alongside
+			for dir in NanoDroid_microG NanoDroid_FDroid; do
 				if [ -d ${MOUNTPATH}/${dir} ]; then
 					ui_print " !! ${dir} module detected - uninstalling!"
 					rm -rf ${MOUNTPATH}/${dir}
@@ -501,42 +498,16 @@ magisk_install_setup () {
 
 		NanoDroid_microG )
 			# check for Full package and abort if found
-			if [ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid \
-				-o -d ${REALPATH}/NanoMod -o -d ${REALPATH}/NanoDroid ]; then
+			[ -d ${MOUNTPATH}/NanoDroid -o -d ${REALPATH}/NanoDroid ] && \
 				error " !! ${MODID} can't be installed along side the Full package"
-			fi
-
-			# check for old-named module
-			if [ -d ${MOUNTPATH}/NanoModmicroG ]; then
-				ui_print " !! old version module detected - uninstalling!"
-				rm -rf ${MOUNTPATH}/NanoModmicroG
-				NANODROID_UPGRADE=1
-			elif [ -d ${REALPATH}/NanoModmicroG ]; then
-				ui_print " !! ${dir} module detected - uninstalling!"
-				rm -rf ${REALPATH}/${dir}
-				NANODROID_UPGRADE=1
-			fi
 
 			[ -d ${MOUNTPATH}/NanoDroid_microG -o -d ${REALPATH}/NanoDroid_microG ] && NANODROID_UPGRADE=1
 		;;
 
 		NanoDroid_FDroid )
 			# check for Full package and abort if found
-			if [ -d ${MOUNTPATH}/NanoMod -o -d ${MOUNTPATH}/NanoDroid \
-				-o -d ${REALPATH}/NanoMod -o -d ${REALPATH}/NanoDroid ]; then
+			[ -d ${MOUNTPATH}/NanoDroid -o -d ${REALPATH}/NanoDroid ] && \
 				error " !! ${MODID} can't be installed along side the Full package"
-			fi
-
-			# check for old-named module
-			if [ -d ${MOUNTPATH}/NanoModfdroid ]; then
-				ui_print " !! old version module detected - uninstalling!"
-				rm -rf ${MOUNTPATH}/NanoModfdroid
-				NANODROID_UPGRADE=1
-			elif [ -d ${REALPATH}/NanoModfdroid ]; then
-				ui_print " !! old version module detected - uninstalling!"
-				rm -rf ${REALPATH}/NanoModfdroid
-				NANODROID_UPGRADE=1
-			fi
 
 			[ -d ${MOUNTPATH}/NanoDroid_FDroid -o -d ${REALPATH}/NanoDroid_FDroid ] && NANODROID_UPGRADE=1
 		;;
@@ -1245,11 +1216,6 @@ get_config () {
 	config=""
 	config_exists=0
 	for path in ${config_locations}; do
-		# rename config files if required (< 15.1)
-		if test -r "${path}/.nanomod-${1}"; then
-			mv "${path}/.nanomod-${1}" "${path}/.nanodroid-${1}"
-		fi
-
 		if test -r "${path}/.nanodroid-${1}"; then
 			config="${path}/.nanodroid-${1}"
 			config_exists=1
@@ -1265,18 +1231,6 @@ set_prop () {
 # check whether '.nanodroid-setup' has all required entries
 # update format if required
 check_cfg_setup () {
-	# < 12.0
-	if grep -q "nanomod\." "${cfg_setup}"; then
-		ui_print " ++ migrating ${cfg_setup} to new format"
-		sed -e 's/nanomod\./nanomod_/g' -i "${cfg_setup}"
-	fi
-
-	# < 16.0
-	if grep -q "nanomod_" "${cfg_setup}"; then
-		ui_print " ++ migrating ${cfg_setup} to new format"
-		sed -e 's/nanomod_/nanodroid_/g' -i "${cfg_setup}"
-	fi
-
 	source ${cfg_setup}
 
 	[ -z ${nanodroid_fdroid} ] && set_prop nanodroid_fdroid 1
@@ -1308,12 +1262,6 @@ check_cfg_setup () {
 # check whether '.nanodroid-apps' has new format
 # and update if required
 check_cfg_apps () {
-	# < 12.0
-	if grep -q INSTALL_APPS "${cfg_apps}"; then
-		ui_print " ++ migrating ${cfg_apps} to new format"
-		sed -e 's/^INSTALL_APPS=//;s/\"//g' -i "${cfg_apps}"
-	fi
-
 	# <= 16.3 has KeePass DX instead of KeePassDroid, migrate
 	if grep -q KeePassDroid "${cfg_apps}"; then
 		sed -e 's/KeePassDroid/KeePassDX/g' -i "${cfg_apps}"
@@ -1328,11 +1276,7 @@ check_cfg_apps () {
 # check whether '.nanodroid-overlay' has new format
 # and update if required
 check_cfg_overlay () {
-	if grep -q "APPS=(" "${cfg_overlay}"; then
-		ui_print " ++ migrating ${cfg_overlay} to new format"
-		sed -e 's/^.*APPS=//;s/(//g;s/)//g' -i "${cfg_overlay}"
-		sed '/^\s*$/d' -i "${cfg_overlay}"
-	fi
+	return 0
 }
 
 get_cfg_setup () {

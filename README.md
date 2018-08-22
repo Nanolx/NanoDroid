@@ -2,8 +2,6 @@
 
 Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called **NanoDroid**.
 
-The transistion in Magisk Mode installation between old and new module name is handled by the installer.
-
 ## Current Release
 
 * Stable: 17.9.20180818

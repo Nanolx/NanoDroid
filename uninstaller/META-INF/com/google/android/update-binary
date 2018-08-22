@@ -156,7 +156,7 @@ mount_partitions () {
 
 # check for configuration files
 config_locations="/sdcard /external_sd /data $(dirname ${ZIP}))"
-config_files=".nanomod-setup .nanomod-apps .nanomod-overlay .nanodroid-setup .nanodroid-apps .nanodroid-overlay"
+config_files=".nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 
 restore_gapps () {
 	for app in ${GOOGLE_APPS}; do
@@ -217,20 +217,14 @@ system_mode_uninstall () {
 }
 
 addond_uninstall () {
-	for addond in /data/nanomod.patcher /data/adb/nanomod_patcher \
-		/data/adb/nanodroid_patcher; do
-		[ -d ${addond} ] && rm -rf ${addond}
-	done
+	[ -d /data/adb/nanodroid_patcher] && rm -rf ${addond}
 
-	for addonsh in /system/addon.d/75-nanomodpatcher.sh \
-		/system/addon.d/75-nanodroidpatcher.sh \
-		/system/addon.d/999-nanodroidpatcher.sh \
+	for addonsh in /system/addon.d/999-nanodroidpatcher.sh \
 		/system/addon.d/91-nanodroid.sh; do
 		[ -f ${addonsh} ] && rm -f ${addonsh}
 	done
 
-	for pfile in /system/.nanomod-patcher /data/adb/.nanomod-patcher \
-		/data/adb/.nanodroid-patcher /data/adb/NanoDroid_Patched; do
+	for pfile in /data/adb/.nanodroid-patcher /data/adb/NanoDroid_Patched; do
 		[ -f ${pfile} ] && rm -f ${pfile}
 	done
 }
@@ -270,8 +264,7 @@ rm -f /data/adb/NanoDroid_log*
 rm -f /data/adb/NanoDroid_twrp*
 
 # System Mode uninstallation
-for install_info in /system/.nanomod-list /data/adb/.nanomod-list \
-	/data/adb/.nanodroid-list /data/adb/NanoDroid_FileList; do
+for install_info in /data/adb/.nanodroid-list /data/adb/NanoDroid_FileList; do
 	[ -f ${install_info} ] && system_mode_uninstall ${install_info}
 done
 
@@ -284,8 +277,7 @@ if [ -f /data/adb/magisk.img ]; then
 fi
 
 if (is_mounted /magisk); then
-	for module in NanoMod NanoDroid NanoModmicroG NanoDroid_microG \
-		NanoModfdroid NanoDroid_FDroid; do
+	for module in NanoDroid NanoDroid_microG NanoDroid_FDroid; do
 		if [ -d /magisk/${module} ]; then
 			ui_print " << uninstalling: ${module}"
 			rm -rf /magisk/${module}
