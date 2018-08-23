@@ -1,49 +1,49 @@
-diff -Nupr PS_11315.orig/AndroidManifest.xml PS_11315/AndroidManifest.xml
---- PS_11315.orig/AndroidManifest.xml	2018-08-16 09:37:38.463702523 +0200
-+++ PS_11315/AndroidManifest.xml	2018-08-16 09:38:17.654052825 +0200
+diff -Nupr PS_11415.orig/AndroidManifest.xml PS_11415/AndroidManifest.xml
+--- PS_11415.orig/AndroidManifest.xml	2018-08-23 21:08:56.732811743 +0200
++++ PS_11415/AndroidManifest.xml	2018-08-23 21:09:31.377078674 +0200
 @@ -1,4 +1,5 @@
- <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" android:compileSdkVersion="28" android:compileSdkVersionCodename="9" package="com.android.vending" platformBuildVersionCode="81131500" platformBuildVersionName="11.3.15-all [0] [PR] 208109135">
+ <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" android:compileSdkVersion="28" android:compileSdkVersionCodename="9" package="com.android.vending" platformBuildVersionCode="81141500" platformBuildVersionName="11.4.15-all [0] [PR] 209232408">
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
      <uses-permission android:name="com.android.vending.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.android.vending.billing.IN_APP_NOTIFY.permission.C2D_MESSAGE"/>
      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-@@ -111,6 +112,7 @@
-     <permission android:name="com.google.android.finsky.permission.ACCESS_INSTANT_APP_NOTIFICATION_ENFORCEMENT" android:protectionLevel="signature"/>
+@@ -112,6 +113,7 @@
      <permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" android:protectionLevel="normal"/>
+     <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
      <application android:backupAgent="com.android.vending.VendingBackupAgent" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher_play_store" android:killAfterRestore="false" android:label="@LEMON_transformed_from_string/app_long_name" android:name="com.google.android.finsky.application.impl.FinskyApplication" android:requiredForAllUsers="true" android:restoreAnyVersion="true" android:restoreNeedsApplication="true" android:restrictedAccountType="com.google" android:roundIcon="@mipmap/ic_round_launcher_play_store" android:supportsRtl="@bool/is_rtl_enabled">
 +        <meta-data android:name="fake-signature" android:value="@string/fake_signature"/>
          <activity android:configChanges="orientation|screenSize" android:name="com.google.android.wallet.instrumentmanager.ui.redirect.ImPopupRedirectActivity" android:theme="@style/Theme.UiComponents.PopupRedirect"/>
          <activity android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.wallet.instrumentmanager.redirect.ImStartAndroidAppRedirectActivity" android:theme="@style/Theme.UiComponents.Translucent.NoActionBar"/>
          <activity android:exported="true" android:name="com.google.android.wallet.instrumentmanager.redirect.ImFinishAndroidAppRedirectActivity">
-@@ -901,4 +903,4 @@
+@@ -909,4 +911,4 @@
          <screen android:screenDensity="xxhdpi" android:screenSize="large"/>
          <screen android:screenDensity="xxhdpi" android:screenSize="xlarge"/>
      </compatible-screens>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_11315.orig/res/values/public.xml PS_11315/res/values/public.xml
---- PS_11315.orig/res/values/public.xml	2018-08-16 09:37:33.667632866 +0200
-+++ PS_11315/res/values/public.xml	2018-08-16 09:38:37.985524250 +0200
-@@ -10321,6 +10321,7 @@
-     <public type="string" name="yes" id="0x7f130848" />
-     <public type="string" name="yes_im_in" id="0x7f130849" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f13084a" />
-+    <public type="string" name="fake_signature" id="0x7f13084b" />
+diff -Nupr PS_11415.orig/res/values/public.xml PS_11415/res/values/public.xml
+--- PS_11415.orig/res/values/public.xml	2018-08-23 21:08:55.840804829 +0200
++++ PS_11415/res/values/public.xml	2018-08-23 21:10:12.989395305 +0200
+@@ -10487,6 +10487,7 @@
+     <public type="string" name="yes" id="0x7f130861" />
+     <public type="string" name="yes_im_in" id="0x7f130862" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f130863" />
++    <public type="string" name="fake_signature" id="0x7f130864" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -11386,4 +11387,4 @@
+@@ -11561,4 +11562,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002d" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002e" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002f" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_11315.orig/res/values/strings.xml PS_11315/res/values/strings.xml
---- PS_11315.orig/res/values/strings.xml	2018-08-16 09:37:33.667632866 +0200
-+++ PS_11315/res/values/strings.xml	2018-08-16 09:38:53.862184841 +0200
-@@ -1958,4 +1958,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_11415.orig/res/values/strings.xml PS_11415/res/values/strings.xml
+--- PS_11415.orig/res/values/strings.xml	2018-08-23 21:08:55.839804821 +0200
++++ PS_11415/res/values/strings.xml	2018-08-23 21:09:45.780188745 +0200
+@@ -1977,4 +1977,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />

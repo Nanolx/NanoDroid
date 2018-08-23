@@ -50,6 +50,11 @@
 * automatic
   * QKSMS (3.4.5)
   * F-Droid (1.4-alpha0)
+  * (Simple) Gallery (4.6.1)
+
+* manual
+  * microG GmsCore (0.2.4-128-custom)
+  * Play Store (11.4.15)
 
 ## 17.9.20180818
 
