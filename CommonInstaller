@@ -132,7 +132,7 @@ set_perm_bin () {
 	fi
 }
 
-filelist_add () {
+installinfo_add () {
 	if [ "${MODE}" = "SYSTEM" ]; then
 		for file in ${@}; do
 			echo ${file} >> ${NANODROID_LIST}
@@ -696,7 +696,7 @@ install_gsync () {
 
 				set_perm_data -r "${MODPATH}/system/app/Google${app}"
 
-				filelist_add "/system/app/Google${app}/Google${app}.apk"
+				installinfo_add "/system/app/Google${app}/Google${app}.apk"
 			done
 
 			echo "    installing app: GoogleBackupTransport"
@@ -708,14 +708,14 @@ install_gsync () {
 
 			set_perm_data -r "${MODPATH}/system/priv-app/GoogleBackupTransport"
 
-			filelist_add "/system/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk"
+			installinfo_add "/system/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk"
 
 			cp -r "${INSTALLER}/gsync/etc/permissions/" "${MODPATH}/system/etc/"
 			set_perm_data -r "${MODPATH}/system/etc/permissions/"
 
-			LIST=$(find "${INSTALLER}/gsync/etc/permissions/" -type f |
-					sed -e "s,${INSTALLER}/gsync/etc,/system/etc,g")
-			filelist_add "${LIST}"
+			find "${INSTALLER}/gsync/etc/permissions/" -type f | \
+					sed -e "s,${INSTALLER}/gsync/etc,/system/etc,g" | \
+					xargs installinfo_add
 		fi
 	else	ui_print " << without Google Sync Adapters"
 	fi
@@ -926,7 +926,7 @@ install_initd () {
 		set_perm_bin "${INIT_BASE}"
 
 		for init in fstrim logcat logscleaner sqlite external_sd; do
-			filelist_add "/system/etc/init.d/${init}"
+			installinfo_add "/system/etc/init.d/${init}"
 		done
 	else	ui_print " << without init scripts"
 	fi
@@ -946,7 +946,7 @@ install_swipe () {
 				error " !! failed to install libjni_${lib}.so"
 			set_perm_data "${MODPATH}${SWIPE_DEST}/libjni_${lib}.so"
 
-			filelist_add "${SWIPE_DEST}/libjni_${lib}.so"
+			installinfo_add "${SWIPE_DEST}/libjni_${lib}.so"
 		done
 	else	ui_print " << without swipe libraries"
 	fi
@@ -988,9 +988,9 @@ nanodroid_install_dir () {
 		*   ) set_perm_data -r "${MODPATH}${dest}" ;;
 	esac
 
-	LIST=$(find "${INSTALLER}/system/${dir}" -type f | \
-			sed -e "s,^${INSTALLER},,g")
-	filelist_add ${LIST}
+	find "${INSTALLER}/system/${dir}" -type f | \
+			sed -e "s,^${INSTALLER},,g" | \
+			xargs installinfo_add
 }
 
 nanodroid_install_apk () {
@@ -1021,7 +1021,7 @@ nanodroid_install_apk () {
 
 	set_perm_data -r "${MODPATH}/${dest}"
 
-	filelist_add "/${dest}/${app}.apk"
+	installinfo_add "/${dest}/${app}.apk"
 
 	nanodroid_install_lib
 }
@@ -1051,7 +1051,7 @@ nanodroid_install_file () {
 		*   ) set_perm_data "${MODPATH}/system/${xdir}/${xfile}" ;;
 	esac
 
-	filelist_add "/system/${xdir}/${xfile}"
+	installinfo_add "/system/${xdir}/${xfile}"
 }
 
 nanodroid_install_lib () {
@@ -1113,7 +1113,7 @@ nanodroid_install_lib () {
 
 				set_perm_data ${libd}/${lib_arch}/$(basename ${lib})
 
-				filelist_add /${dir}/${app}/lib/${lib_arch}/$(basename ${lib})
+				installinfo_add /${dir}/${app}/lib/${lib_arch}/$(basename ${lib})
 			done
 		fi
 	fi
