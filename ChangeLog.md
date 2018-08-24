@@ -21,6 +21,7 @@
 
 * CommonInstaller
   * code simplifications
+  * extend GApps debloat blacklist to filter out more stuff
   * don't set progressbar when flashing from Magisk Manager
   * when migrating from Play Store to Fake Store or vice versa during new installs get rid of that store's app data, too
   * minor string change
@@ -44,6 +45,13 @@
   * code simplifications
   * exit when flashing from Magisk Manager without doing anything
   * remove support for ancient versions (< 12.0)
+
+* Patcher
+  * don't stop on odexed ROMs, just print a warning
+     * user may have services.jar deodexed
+  * Android 9.0 officially supported
+     * you need to deodex services.jar yourself for now
+  * remove old code
 
 ### Updates
 
