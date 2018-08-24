@@ -18,6 +18,12 @@ GOOGLE_APPS="GoogleFeedback
 GoogleLoginService
 GoogleOneTimeInitializer
 GoogleServicesFramework
+GoogleExtServices
+GooglePartnerSetup
+GoogleServicesFramework
+GoogleExtShared
+GoogleTTS
+MarkupGoogle
 MarketUpdater
 PlayGames
 Velvet
@@ -41,7 +47,8 @@ DejaVuNlpBackend
 IchnaeaNlpBackend
 MozillaNlpBackend
 NominatimGeocoderBackend
-NominatimNlpBackend"
+NominatimNlpBackend
+com.qualcomm.location"
 
 GOOGLE_DATA="com.mgoogle.android.gms
 com.google.android.feedback
