@@ -473,6 +473,8 @@ If your ROM does **not** have signature spoofing support, you can manually patch
   * running the `framework-patcher` script
      * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified `services.jar` on the device.
 
+If you ROM is **odexed** read [here](https://gitlab.com/Nanolx/NanoDroid/issues/9#note_96779340) on how to deodex services.jar manually
+
 Both patchers support installing the patched `services.jar` into the following locations:
   * NanoDroid Magisk Module
   * NanoDroid-microG Magisk Module
