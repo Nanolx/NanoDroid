@@ -143,7 +143,12 @@ detect_odex () {
 		ui_print " !! odexed ROMs are not supported"
 		ui_print " !! patching only works, if you've"
 		ui_print " !! manually deodexed services.jar!"
+#		ui_print " !! odexed ROM detected!"
+#		ui_print " !! Patcher will try to deodexed"
 		ui_Print " !!"
+#
+#		ROM_ODEXED=1
+#	else	ROM_ODEXED=0
 	fi
 }
 
@@ -293,8 +298,44 @@ patch_services () {
 		${BASEDIR}/services.jar || \
 		error " !! failed to copy services.jar"
 
-	[ "${SDK_VERSION}" -gt 21 ] && \
-		mkdir -p "${BASEDIR}/services.jar-mod"
+#
+# XXX deodex stuff
+#
+#	if [ "${ROM_ODEXED}" -eq 1 ]; then
+#		ui_print " >> deodexing services.jar"
+#
+#		mkdir -p "${BASEDIR}/services.jar-mod" \
+#			"${BASEDIR}/services.jar-deodex"
+#		unzip -d "${BASEDIR}/services.jar-mod" "${BASEDIR}/services.jar"
+#
+#		if [ ! -f "${BASEDIR}/services.jar-mod/classes.dex" ]; then
+#			### VDEX STUFF ###
+#		else
+#			LD_LIBRARY_PATH=${C_LD} \
+#				/system/bin/dalvikvm \
+#				-Xbootclasspath:"${BOOTCLASSES}" \
+#				-classpath "${BASEDIR}/baksmali.dex" \
+#				org.jf.baksmali.Main \
+#				x "${BASEDIR}/services.jar-mod/classes.dex" \
+#				-b /system/framework/core-oj.jar \
+#				-o "${BASEDIR}/services.jar-deodex" || \
+#					error " !! failed to deodex services.jar"
+#
+#			LD_LIBRARY_PATH=${C_LD} \
+#				${ZIPB} -d "${BASEDIR}/services.jar" \
+#				'classes*.dex' || \
+#					error " !! zip failed"
+#
+#			LD_LIBRARY_PATH=${C_LD} \
+#				${ZIPB} -j "${BASEDIR}/services.jar" \
+#				"${BASEDIR}/services.jar-deodex"/classes*.dex || \
+#					error " !! zip failed"
+#
+#			rm -rf "${BASEDIR}/services.jar-deodex" \
+#				"${BASEDIR}/services.jar-mod"
+#	fi
+
+	mkdir -p "${BASEDIR}/services.jar-mod"
 
 	PATCHES="${PATCH_HOOK} ${PATCH_CORE}"
 
