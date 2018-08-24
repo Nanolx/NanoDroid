@@ -8,10 +8,8 @@ GOOGLE_APPS="GoogleFeedback
 GoogleLoginService
 GoogleOneTimeInitializer
 GoogleServicesFramework
-GoogleExtServices
 GooglePartnerSetup
 GoogleServicesFramework
-GoogleExtShared
 GoogleTTS
 MarkupGoogle
 MarketUpdater
