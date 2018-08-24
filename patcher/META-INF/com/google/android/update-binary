@@ -4,8 +4,6 @@ umask 022
 OUTFD=${2}
 ZIP=${3}
 
-umount /system &>/dev/null
-
 mkdir /dev/tmp
 unzip -o "${ZIP}" CommonPatcher -d "/dev/tmp"
 if [ ! -f /dev/tmp/CommonPatcher ]; then
