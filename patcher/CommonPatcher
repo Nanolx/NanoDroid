@@ -138,8 +138,13 @@ grep_cmdline() {
 }
 
 detect_odex () {
-	[ -n "$(find '/system/framework/' -name '*.odex')" ] && \
-		error " !! odexed ROMs are not supported"
+	if [ -n "$(find '/system/framework/' -name '*.odex')" ]; then
+		ui_print " !! "
+		ui_print " !! odexed ROMs are not supported"
+		ui_print " !! patching only works, if you've"
+		ui_print " !! manually deodexed services.jar!"
+		ui_Print " !!"
+	fi
 }
 
 detect_arch () {
@@ -181,8 +186,8 @@ detect_arch () {
 detect_sdk () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
-	[ "${SDK_VERSION}" -gt 27 ] && \
-		error " !! Android versions beyond Oreo are not yet supported"
+	[ "${SDK_VERSION}" -gt 28 ] && \
+		error " !! Android versions beyond Pie are not yet supported"
 
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error " !! Android versions before Jelly Bean are not supported"
@@ -192,9 +197,8 @@ detect_sdk () {
 		PATCH_HOOK="${BASEDIR}/hook_4.1-6.0_services.jar.dex"
 		PATCH_UI_SERVICES="${BASEDIR}/ui_4.1-6.0_services.jar.dex"
 	else
-		ui_print " > Android 7.0 - 8.1 (SDK ${SDK_VERSION}) detected"
-		PATCH_HOOK="${BASEDIR}/hook_7.0-8.0_services.jar.dex"
-		PATCH_UI_SERVICES="${BASEDIR}/ui_7.0-8.0_services.jar.dex"
+		ui_print " > Android 7.0 - 9.0 (SDK ${SDK_VERSION}) detected"
+		PATCH_HOOK="${BASEDIR}/hook_7.0-9.0_services.jar.dex"
 	fi
 
 	[ "${SDK_VERSION}" -gt 21 ] && DEX_OPTS="--multi-dex-threaded"
@@ -349,7 +353,7 @@ install_services () {
 		echo /system/framework/services.jar >> /data/adb/.nanodroid-list
 	fi
 
-	touch /data/adb/.NanoDroid_Patched
+	touch /data/adb/NanoDroid_Patched
 }
 
 ##########################################################################################
@@ -368,7 +372,7 @@ install_addond () {
 		/system/addon.d/75-nanodroidpatcher.sh
 
 	for file in core_services.jar.dex dexpatcher.dex file.arm file.x86 \
-		hook_4.1-6.0_services.jar.dex hook_7.0-8.0_services.jar.dex \
+		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
 		zip.arm zip.x86 magic.mgc; do
 		cp "${BASEDIR}/${file}" /data/adb/nanodroid_patcher/
 	done
