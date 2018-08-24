@@ -94,14 +94,9 @@ NanoDroid officially supports the following Android versions:
   * Patchers works, if you've previously manually deodexed services.jar
 * 8.1 / SDK 27 (Oreo)
   * Patchers works, if you've previously manually deodexed services.jar
-
-Support for the following versions is work-in-progress:
-
 * 9.0 / SDK 28 (Pie)
   * Google Sync Adapters are not (yet) available
   * Patchers works, if you've previously manually deodexed services.jar
-  * unifiedNlp is untested (yet)
-  * everything else works
 
 earlier versions will never officially be supported (you may still report bugs, though).
 
