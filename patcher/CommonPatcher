@@ -145,7 +145,7 @@ detect_odex () {
 		ui_print " !! manually deodexed services.jar!"
 #		ui_print " !! odexed ROM detected!"
 #		ui_print " !! Patcher will try to deodexed"
-		ui_Print " !!"
+		ui_print " !!"
 #
 #		ROM_ODEXED=1
 #	else	ROM_ODEXED=0
