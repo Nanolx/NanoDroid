@@ -2,6 +2,8 @@
 
 Here you can find instructions on how to manually deodex `services.jar` as preparation for Signature Spoofing support.
 
+If you want to check beforehand (or afterwards), if your ROM supports Signature Spoofing, use this [tool](https://f-droid.org/de/packages/lanchon.sigspoof.checker/).
+
 ## VDEX
 
 If you can see `/system/framework/oat/[arch]/services.vdex`, where [arch] is the device architecture (arm, arm64, x86 or x86_64), you should follow theese instructions.
@@ -10,6 +12,7 @@ the instructions are basically simple, though plenty commands:
 
 * connect phone with PC while in TWRP, mount `/system` **read-write**
 * get latest `vdexExtractor` (best self-compiled from git)
+  * [vdexExtractor Sources](https://github.com/anestisb/vdexExtractor)
 * zip/unzip utilities for commandline (or some UI tool)
 * common sense on using commandline (or some UI tool instead)
 
@@ -56,6 +59,7 @@ the instructions are basically simple, though plenty commands:
 
 * connect phone with PC while in TWRP, mount `/system` **read-write**
 * get latest `baksmali.jar` and `smali.jar` (2.2.4+, best self-built from git)
+  * [smali Sources](https://github.com/JesusFreke/smali)
 * zip/unzip utilities for commandline (or some UI tool)
 * common sense on using commandline (or some UI tool instead)
 
