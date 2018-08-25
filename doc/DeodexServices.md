@@ -1,8 +1,10 @@
 # Deodex services.jar
 
+Here you can find instructions on how to manually deodex `services.jar` as preparation for Signature Spoofing support.
+
 ## VDEX
 
-If you can see `/system/framework/oat/[arch]/services.vdex` you should follow theese instructions.
+If you can see `/system/framework/oat/[arch]/services.vdex`, where [arch] is the device architecture (arm, arm64, x86 or x86_64), you should follow theese instructions.
 
 the instructions are basically simple, though plenty commands:
 
@@ -16,7 +18,7 @@ adb pull /system/framework framework
 cp framework/services.jar services.jar-backup
 ```
 
-now deodex `boot-core-libart.vdex` and `services.vdex`, where [arch] is the device architecture (arm, arm64, x86 or x86_64):
+now deodex `services.vdex`:
 
 ```
 vdexExtractor -i framework/oat/[arch]/services.vdex --ignore-crc-error
@@ -48,7 +50,7 @@ If something goes wrong you still have the unpatched `services.jar`, as we creat
 
 ## ODEX
 
-If you can see `/system/framework/oat/[arch]/services.odex` you should follow theese instructions.
+If you can see `/system/framework/oat/[arch]/services.odex`, where [arch] is the device architecture (arm, arm64, x86 or x86_64), you should follow theese instructions.
 
 the instructions are basically simple, though plenty commands:
 
