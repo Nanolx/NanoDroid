@@ -12,34 +12,51 @@ List of applications by ale5000
 
 The following GApps are removed during installation:
 
+* AMAPNetworkLocation
+* BaiduNetworkLocation
+* BlankStore
+* com.qualcomm.location
+* DejaVuBackend
+* DejaVuNlpBackend
+* FDroidPriv
+* GmsCoreSetupPrebuilt
+* GmsCore_update
+* GmsDroidGuard
 * GoogleFeedback
 * GoogleLoginService
 * GoogleOneTimeInitializer
+* GooglePartnerSetup
 * GoogleServicesFramework
-* GsfProxy
+* GoogleTTS
+* IchnaeaNlpBackend
+* LegacyNetworkLocation
 * MarketUpdater
+* MarkupGoogle
+* MozillaNlpBackend
+* NetworkLocation
+* NominatimGeocoderBackend
+* NominatimNlpBackend
 * PlayGames
-* Velvet
-* GmsDroidGuard
-* YouTube
-* GmsCore_update
-* GmsCoreSetupPrebuilt
-* PrebuiltGmsCore
-* WhisperPush
-* BlankStore
-* FDroidPriv
 * PlayStore
+* PrebuiltGmsCore
+* UnifiedNlp
+* Velvet
 * Vending
-* com.mgoogle.android.gms
-* com.google.android.gms
+* WhisperPush
+* YouTube
+
+If the installation of NanoDroid is not an upgrade from a previous version, the following **data** will also be cleared:
+
+* com.amap.android.location
+* com.baidu.location
 * com.google.android.feedback
 * com.google.android.gsf.login
-* com.google.android.gsf
-* com.android.vending
-* org.microg.gms.droidguard
-* org.schabi.newpipe
+* com.google.android.location
 * com.google.android.youtube
-* com.google.android.maps
+* com.mgoogle.android.gms
+* com.qualcomm.location
+* org.microg.nlp
+* org.microg.unifiednlp
 
 ## List of removed location services
 

@@ -63,7 +63,7 @@
 
 * manual
   * microG GmsCore (0.2.4-128-custom)
-  * Play Store (11.4.15)
+  * Play Store (11.4.16)
 
 ## 17.9.20180818
 
