@@ -52,6 +52,10 @@
      * user may have services.jar deodexed
   * Android 9.0 officially supported
      * you need to deodex services.jar yourself for now
+  * bundle baksmali and smali
+     * not yet used / working
+  * bundle vdexExtractor
+     * not yet used / working
   * remove old code
 
 ### Updates

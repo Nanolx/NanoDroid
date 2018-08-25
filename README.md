@@ -521,6 +521,8 @@ Additional credits go to
   * https://github.com/micro5k
 * PaperYoshi for Nintendo Fonts
   * http://downloads.paperyoshi.at/
+* anestisb for vdexExtractor
+  * https://github.com/anestisb/vdexExtractor
 
 Special Thanks to the beta testers
 
