@@ -51,11 +51,10 @@
   * don't stop on odexed ROMs, just print a warning
      * user may have services.jar deodexed
   * Android 9.0 officially supported
-     * you need to deodex services.jar yourself for now
-  * bundle baksmali and smali
-     * not yet used / working
-  * if ROM's odex method is VDEX, try to automatically deodex it
-     * if services.jar contains classes.dex, Patcher will skip deodex process
+     * you **may** need to deodex services.jar yourself for now
+  * if ROM's odex method is ODEX, **try** to automatically deodex it
+     * bundle baksmali and smali
+  * if ROM's odex method is VDEX, **try** to automatically deodex it
      * bundle vdexExtractor for arm and x86
   * simplify code
   * remove old code

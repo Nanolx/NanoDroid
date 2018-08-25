@@ -138,29 +138,24 @@ grep_cmdline() {
 }
 
 detect_odex () {
-	SERVICES_JAR_ODEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)
+	SERVICES_JAR_DEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)
 
-	if [ "${SERVICES_JAR_ODEX}" ]; then
-		ROM_DEX_STATUS=NONE
+	if [ -n "$(find '/system/framework/' -name '*.vdex')" ]; then
+		ui_print " "
+		ui_print " ++"
+		ui_print " ++ vdexed ROM detected"
+		ui_print " ++"
+
+		ROM_DEX_STATUS=VDEX
+	elif [ -n "$(find '/system/framework/' -name '*.odex')" ]; then
+		ui_print " "
+		ui_print " ++"
+		ui_print " ++ odexed ROM detected"
+		ui_print " ++"
+
+		ROM_DEX_STATUS=ODEX
 	else
-		if [ -n "$(find '/system/framework/' -name '*.vdex')" ]; then
-			ui_print " "
-			ui_print " ++"
-			ui_print " ++ vdexed ROM detected"
-			ui_print " ++"
-
-			ROM_DEX_STATUS=VDEX
-		elif [ -n "$(find '/system/framework/' -name '*.odex')" ]; then
-			ui_print " "
-			ui_print " !! "
-			ui_print " !! odexed ROMs are not supported"
-			ui_print " !! patching will fail, if you have"
-			ui_print " !! not manually deodexed services.jar"
-	#		ui_print " !! odexed ROM detected!"
-			ui_print " !!"
-
-			ROM_DEX_STATUS=ODEX
-		fi
+		ROM_DEX_STATUS=NONE
 	fi
 }
 
@@ -315,6 +310,19 @@ patch_services () {
 	if [ "${ROM_DEX_STATUS}" = "VDEX" ]; then
 		ui_print " >> deodexing services.jar [VDEX]"
 
+		ui_print "   [1] unquick boot-core-libart.vdex"
+		cp /system/framework/${ARCH}/boot-core-libart.vdex \
+			${BASEDIR}/boot-core-libart.vdex || \
+			error " !! failed to copy services.vdex"
+
+		LD_LIBRARY_PATH=${C_LD} \
+			${V_EX} -i ${BASEDIR}/boot-core-libart.vdex --ignore-crc-error || \
+			error " !! failed to deodex boot-core-libart.vdex"
+
+		mv ${BASEDIR}/boot-core-libart.apk_classes.dex ${BASEDIR}/core.dex || \
+			error " !! failed to deodex boot-core-libart.vdex"
+
+		ui_print "   [2] unquick services.vdex"
 		cp /system/framework/oat/${ARCH}/services.vdex \
 			${BASEDIR}/services.vdex || \
 			error " !! failed to copy services.vdex"
@@ -326,6 +334,30 @@ patch_services () {
 		mv ${BASEDIR}/services.apk_classes.dex ${BASEDIR}/classes.dex || \
 			error " !! failed to deodex services.vdex"
 
+		mkdir -p "${BASEDIR}/services.jar-mod"
+		unzip -d "${BASEDIR}/services.jar-mod" "${BASEDIR}/services.jar"
+
+		cp "${BASEDIR}/classes.dex" "${BASEDIR}/services.jar-mod/"
+
+		ui_print "   [3] baksmali services/classes.dex"
+		LD_LIBRARY_PATH=${C_LD} \
+			/system/bin/dalvikvm \
+			-classpath "${BASEDIR}/baksmali.dex" \
+			org.jf.baksmali.Main \
+			x "${BASEDIR}/services.jar-mod/classes.dex" \
+			-b "${BASEDIR}/core.dex" \
+			-o "${BASEDIR}/services.jar-deodex" || \
+				error " !! failed to deodex services.jar"
+
+		ui_print "   [4] smali services/classes.dex"
+		LD_LIBRARY_PATH=${C_LD} \
+			/system/bin/dalvikvm \
+			-classpath "${BASEDIR}/smali.dex" \
+			org.jf.smali.Main \
+			a "${BASEDIR}/services.jar-deodex" \
+			-o "${BASEDIR}/services.jar-deodex/classes.dex" || \
+				error " !! failed to rebuild classes.dex"
+
 		# just in case | not allowed to call error() !
 		LD_LIBRARY_PATH=${C_LD} \
 			${ZIPB} -d "${BASEDIR}/services.jar" \
@@ -333,43 +365,51 @@ patch_services () {
 
 		LD_LIBRARY_PATH=${C_LD} \
 			${ZIPB} -j "${BASEDIR}/services.jar" \
-			"${BASEDIR}/classes.dex" || \
+			"${BASEDIR}/services.jar-deodex/classes.dex" || \
 				error " !! zip failed"
 
+		rm -rf "${BASEDIR}/services.jar-deodex" \
+			"${BASEDIR}/services.jar-mod"
 #
-# XXX baksmali currently crashes on a real device, thus ODEX is not (yet) supported!
-# XXX though the code itself is fine, so feel free to test
+# XXX odex stuff
 #
-#	elif [ "${ROM_DEX_STATUS}" = "ODEX" ]; then
-#		ui_print " >> deodexing services.jar [ODEX]"
-#
-#		mkdir -p "${BASEDIR}/services.jar-mod" \
-#			"${BASEDIR}/services.jar-deodex"
-#		unzip -d "${BASEDIR}/services.jar-mod" "${BASEDIR}/services.jar"
-#
-#		LD_LIBRARY_PATH=${C_LD} \
-#			/system/bin/dalvikvm \
-#			-Xbootclasspath:"${BOOTCLASSES}" \
-#			-classpath "${BASEDIR}/baksmali.dex" \
-#			org.jf.baksmali.Main \
-#			x "${BASEDIR}/services.jar-mod/classes.dex" \
-#			-b /system/framework/core-oj.jar \
-#			-o "${BASEDIR}/services.jar-deodex" || \
-#				error " !! failed to deodex services.jar"
-#
-#		# just in case | not allowed to call error() !
-#		LD_LIBRARY_PATH=${C_LD} \
-#			${ZIPB} -d "${BASEDIR}/services.jar" \
-#			'classes.dex'
-#
-#		LD_LIBRARY_PATH=${C_LD} \
-#			${ZIPB} -j "${BASEDIR}/services.jar" \
-#			"${BASEDIR}/services.jar-deodex/classes.dex" || \
-#				error " !! zip failed"
-#
-#		rm -rf "${BASEDIR}/services.jar-deodex" \
-#			"${BASEDIR}/services.jar-mod"
+	elif [ "${ROM_DEX_STATUS}" = "ODEX" ]; then
+		ui_print " >> deodexing services.jar [ODEX]"
 
+		mkdir -p "${BASEDIR}/services.jar-mod"
+		unzip -d "${BASEDIR}/services.jar-mod" "${BASEDIR}/services.jar"
+
+		ui_print "   [1] baksmali services/classes.dex"
+		LD_LIBRARY_PATH=${C_LD} \
+			/system/bin/dalvikvm \
+			-classpath "${BASEDIR}/baksmali.dex" \
+			org.jf.baksmali.Main \
+			x "${BASEDIR}/services.jar-mod/classes.dex" \
+			-b /system/framework/core-oj.jar \
+			-o "${BASEDIR}/services.jar-deodex" || \
+				error " !! failed to deodex services.jar"
+
+		ui_print "   [2] smali services/classes.dex"
+		LD_LIBRARY_PATH=${C_LD} \
+			/system/bin/dalvikvm \
+			-classpath "${BASEDIR}/smali.dex" \
+			org.jf.smali.Main \
+			a "${BASEDIR}/services.jar-deodex" \
+			-o "${BASEDIR}/services.jar-deodex/classes.dex" || \
+				error " !! failed to rebuild classes.dex"
+
+		# just in case | not allowed to call error() !
+		LD_LIBRARY_PATH=${C_LD} \
+			${ZIPB} -d "${BASEDIR}/services.jar" \
+			'classes.dex'
+
+		LD_LIBRARY_PATH=${C_LD} \
+			${ZIPB} -j "${BASEDIR}/services.jar" \
+			"${BASEDIR}/services.jar-deodex/classes.dex" || \
+				error " !! zip failed"
+
+		rm -rf "${BASEDIR}/services.jar-deodex" \
+			"${BASEDIR}/services.jar-mod"
 	fi
 
 	mkdir -p "${BASEDIR}/services.jar-mod"
