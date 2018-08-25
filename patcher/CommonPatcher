@@ -314,7 +314,7 @@ patch_services () {
 	if [ "${ROM_DEX_STATUS}" = "VDEX" ]; then
 		ui_print " >> deodexing services.jar [VDEX]"
 
-		cp /system/framework/oat/${arch}/services.vdex \
+		cp /system/framework/oat/${ARCH}/services.vdex \
 			${BASEDIR}/services.vdex || \
 			error " !! failed to copy services.vdex"
 
