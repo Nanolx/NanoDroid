@@ -55,7 +55,9 @@
   * bundle baksmali and smali
      * not yet used / working
   * if ROM's odex method is VDEX, try to automatically deodex it
+     * if services.jar contains classes.dex, Patcher will skip deodex process
      * bundle vdexExtractor for arm and x86
+  * simplify code
   * remove old code
 
 ### Updates

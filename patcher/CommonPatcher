@@ -138,24 +138,29 @@ grep_cmdline() {
 }
 
 detect_odex () {
-	if [ -n "$(find '/system/framework/' -name '*.vdex')" ]; then
-		ui_print " "
-		ui_print " ++"
-		ui_print " ++ vdexed ROM detected"
-		ui_print " ++"
+	SERVICES_JAR_ODEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)
 
-		ROM_DEX_STATUS=VDEX
-	elif [ -n "$(find '/system/framework/' -name '*.odex')" ]; then
-		ui_print " "
-		ui_print " !! "
-		ui_print " !! odexed ROMs are not supported"
-		ui_print " !! patching will fail, if you have"
-		ui_print " !! not manually deodexed services.jar"
-#		ui_print " !! odexed ROM detected!"
-		ui_print " !!"
+	if [ "${SERVICES_JAR_ODEX}" ]; then
+		ROM_DEX_STATUS=NONE
+	else
+		if [ -n "$(find '/system/framework/' -name '*.vdex')" ]; then
+			ui_print " "
+			ui_print " ++"
+			ui_print " ++ vdexed ROM detected"
+			ui_print " ++"
 
-		ROM_DEX_STATUS=ODEX
-	else	ROM_DEX_STATUS=NONE
+			ROM_DEX_STATUS=VDEX
+		elif [ -n "$(find '/system/framework/' -name '*.odex')" ]; then
+			ui_print " "
+			ui_print " !! "
+			ui_print " !! odexed ROMs are not supported"
+			ui_print " !! patching will fail, if you have"
+			ui_print " !! not manually deodexed services.jar"
+	#		ui_print " !! odexed ROM detected!"
+			ui_print " !!"
+
+			ROM_DEX_STATUS=ODEX
+		fi
 	fi
 }
 
@@ -300,10 +305,6 @@ patch_services () {
 	ui_print " > patching signature spoofing support"
 	ui_print " "
 
-	for jar in /system/framework/*.jar ; do
-		BOOTCLASSES=${BOOTCLASSES}:${jar}
-	done
-
 	cp /system/framework/services.jar \
 		${BASEDIR}/services.jar || \
 		error " !! failed to copy services.jar"
@@ -378,7 +379,6 @@ patch_services () {
 	ui_print " >> patching services.jar"
 	LD_LIBRARY_PATH=${C_LD} \
 		/system/bin/dalvikvm \
-		-Xbootclasspath:"${BOOTCLASSES}" \
 		-classpath "${BASEDIR}/dexpatcher.dex" \
 		lanchon.dexpatcher.Main \
 		${DEX_OPTS} --api-level "${SDK_VERSION}" \
