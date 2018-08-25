@@ -54,8 +54,8 @@
      * you need to deodex services.jar yourself for now
   * bundle baksmali and smali
      * not yet used / working
-  * bundle vdexExtractor
-     * not yet used / working
+  * if ROM's odex method is VDEX, try to automatically deodex it
+     * bundle vdexExtractor for arm and x86
   * remove old code
 
 ### Updates

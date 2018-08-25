@@ -138,17 +138,24 @@ grep_cmdline() {
 }
 
 detect_odex () {
-	if [ -n "$(find '/system/framework/' -name '*.odex')" ]; then
+	if [ -n "$(find '/system/framework/' -name '*.vdex')" ]; then
+		ui_print " !!"
+		ui_print " !! vdexed ROM detected"
+		ui_print " !! Patcher will try to deodex"
+		ui_print " !!"
+
+		ROM_DEX_STATUS=VDEX
+	elif [ -n "$(find '/system/framework/' -name '*.odex')" ]; then
 		ui_print " !! "
 		ui_print " !! odexed ROMs are not supported"
 		ui_print " !! patching only works, if you've"
 		ui_print " !! manually deodexed services.jar!"
 #		ui_print " !! odexed ROM detected!"
-#		ui_print " !! Patcher will try to deodexed"
+#		ui_print " !! Patcher will try to deodex"
 		ui_print " !!"
 #
-#		ROM_ODEXED=1
-#	else	ROM_ODEXED=0
+#		ROM_DEX_STATUS=ODEX
+	else	ROM_DEX_STATUS=NONE
 	fi
 }
 
@@ -168,10 +175,12 @@ detect_arch () {
 		arm | arm64 )
 				FILE=${BASEDIR}/file.arm
 				ZIPB=${BASEDIR}/zip.arm
+				V_EX=${BASEDIR}/vdexExtractor.arm
 		;;
 		x86 | x86_64 )
 				FILE=${BASEDIR}/file.x86
 				ZIPB=${BASEDIR}/zip.x86
+				V_EX=${BASEDIR}/vdexExtractor.x86
 		;;
 	esac
 
@@ -279,7 +288,8 @@ setup_patcher () {
 	unzip -o "${ZIP}" -d ${TMPDIR} || \
 		error " !! failed to prepare environment"
 
-	for bin in zip.arm zip.x86 file.arm file.x86; do 
+	for bin in zip.arm zip.x86 file.arm file.x86 \
+		vdexExtractor.arm vdexExtractor.x86; do
 		chmod 0755 "${BASEDIR}/${bin}" || \
 			error " !! failed to prepare environment"
 	done
@@ -301,39 +311,64 @@ patch_services () {
 #
 # XXX deodex stuff
 #
-#	if [ "${ROM_ODEXED}" -eq 1 ]; then
-#		ui_print " >> deodexing services.jar"
+	if [ "${ROM_DEX_STATUS}" = "VDEX" ]; then
+		ui_print " >> deodexing services.jar [VDEX]"
+
+		cp /system/framework/oat/${arch}/services.vdex \
+			${BASEDIR}/services.vdex || \
+			error " !! failed to copy services.vdex"
+
+		${V_EX} -i ${BASEDIR}/services.vdex --ignore-crc-error || \
+			error " !! failed to deodex services.vdex"
+
+		mv ${BASEDIR}/services.apk_classes.dex ${BASEDIR}/classes.dex || \
+			error " !! failed to deodex services.vdex"
+
+		# just in case | not allowed to call error() !
+		LD_LIBRARY_PATH=${C_LD} \
+			${ZIPB} -d "${BASEDIR}/services.jar" \
+			'classes.dex'
+
+		LD_LIBRARY_PATH=${C_LD} \
+			${ZIPB} -j "${BASEDIR}/services.jar" \
+			"${BASEDIR}/classes.dex" || \
+				error " !! zip failed"
+
+#
+# XXX baksmali currently crashes on a real device, thus ODEX is not (yet) supported!
+# XXX though the code itself is fine, so feel free to test
+#
+#	elif [ "${ROM_DEX_STATUS}" = "ODEX" ]; then
+#		ui_print " >> deodexing services.jar [ODEX]"
 #
 #		mkdir -p "${BASEDIR}/services.jar-mod" \
 #			"${BASEDIR}/services.jar-deodex"
 #		unzip -d "${BASEDIR}/services.jar-mod" "${BASEDIR}/services.jar"
 #
-#		if [ ! -f "${BASEDIR}/services.jar-mod/classes.dex" ]; then
-#			### VDEX STUFF ###
-#		else
-#			LD_LIBRARY_PATH=${C_LD} \
-#				/system/bin/dalvikvm \
-#				-Xbootclasspath:"${BOOTCLASSES}" \
-#				-classpath "${BASEDIR}/baksmali.dex" \
-#				org.jf.baksmali.Main \
-#				x "${BASEDIR}/services.jar-mod/classes.dex" \
-#				-b /system/framework/core-oj.jar \
-#				-o "${BASEDIR}/services.jar-deodex" || \
-#					error " !! failed to deodex services.jar"
+#		LD_LIBRARY_PATH=${C_LD} \
+#			/system/bin/dalvikvm \
+#			-Xbootclasspath:"${BOOTCLASSES}" \
+#			-classpath "${BASEDIR}/baksmali.dex" \
+#			org.jf.baksmali.Main \
+#			x "${BASEDIR}/services.jar-mod/classes.dex" \
+#			-b /system/framework/core-oj.jar \
+#			-o "${BASEDIR}/services.jar-deodex" || \
+#				error " !! failed to deodex services.jar"
 #
-#			LD_LIBRARY_PATH=${C_LD} \
-#				${ZIPB} -d "${BASEDIR}/services.jar" \
-#				'classes*.dex' || \
-#					error " !! zip failed"
+#		# just in case | not allowed to call error() !
+#		LD_LIBRARY_PATH=${C_LD} \
+#			${ZIPB} -d "${BASEDIR}/services.jar" \
+#			'classes.dex'
 #
-#			LD_LIBRARY_PATH=${C_LD} \
-#				${ZIPB} -j "${BASEDIR}/services.jar" \
-#				"${BASEDIR}/services.jar-deodex"/classes*.dex || \
-#					error " !! zip failed"
+#		LD_LIBRARY_PATH=${C_LD} \
+#			${ZIPB} -j "${BASEDIR}/services.jar" \
+#			"${BASEDIR}/services.jar-deodex/classes.dex" || \
+#				error " !! zip failed"
 #
-#			rm -rf "${BASEDIR}/services.jar-deodex" \
-#				"${BASEDIR}/services.jar-mod"
-#	fi
+#		rm -rf "${BASEDIR}/services.jar-deodex" \
+#			"${BASEDIR}/services.jar-mod"
+
+	fi
 
 	mkdir -p "${BASEDIR}/services.jar-mod"
 
@@ -352,12 +387,12 @@ patch_services () {
 
 	LD_LIBRARY_PATH=${C_LD} \
 		${ZIPB} -d "${BASEDIR}/services.jar" \
-		'classes*.dex' || \
+		'classes.dex' || \
 			error " !! zip failed"
 
 	LD_LIBRARY_PATH=${C_LD} \
 		${ZIPB} -j "${BASEDIR}/services.jar" \
-		"${BASEDIR}/services.jar-mod"/classes*.dex || \
+		"${BASEDIR}/services.jar-mod/classes.dex" || \
 			error " !! zip failed"
 }
 
