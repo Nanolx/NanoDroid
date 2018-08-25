@@ -318,7 +318,8 @@ patch_services () {
 			${BASEDIR}/services.vdex || \
 			error " !! failed to copy services.vdex"
 
-		${V_EX} -i ${BASEDIR}/services.vdex --ignore-crc-error || \
+		LD_LIBRARY_PATH=${C_LD} \
+			${V_EX} -i ${BASEDIR}/services.vdex --ignore-crc-error || \
 			error " !! failed to deodex services.vdex"
 
 		mv ${BASEDIR}/services.apk_classes.dex ${BASEDIR}/classes.dex || \
