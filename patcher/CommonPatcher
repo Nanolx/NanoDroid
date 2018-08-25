@@ -139,22 +139,22 @@ grep_cmdline() {
 
 detect_odex () {
 	if [ -n "$(find '/system/framework/' -name '*.vdex')" ]; then
-		ui_print " !!"
-		ui_print " !! vdexed ROM detected"
-		ui_print " !! Patcher will try to deodex"
-		ui_print " !!"
+		ui_print " "
+		ui_print " ++"
+		ui_print " ++ vdexed ROM detected"
+		ui_print " ++"
 
 		ROM_DEX_STATUS=VDEX
 	elif [ -n "$(find '/system/framework/' -name '*.odex')" ]; then
+		ui_print " "
 		ui_print " !! "
 		ui_print " !! odexed ROMs are not supported"
-		ui_print " !! patching only works, if you've"
-		ui_print " !! manually deodexed services.jar!"
+		ui_print " !! patching will fail, if you have"
+		ui_print " !! not manually deodexed services.jar"
 #		ui_print " !! odexed ROM detected!"
-#		ui_print " !! Patcher will try to deodex"
 		ui_print " !!"
-#
-#		ROM_DEX_STATUS=ODEX
+
+		ROM_DEX_STATUS=ODEX
 	else	ROM_DEX_STATUS=NONE
 	fi
 }
