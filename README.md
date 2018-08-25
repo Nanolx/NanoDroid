@@ -92,11 +92,14 @@ NanoDroid officially supports the following Android versions:
 * 7.1 / SDK 25 (Nougat)
 * 8.0 / SDK 26 (Oreo)
   * Patchers works, if you've previously manually deodexed services.jar
+     * [> Deodex Instructions](doc/DeodexServices.md)
 * 8.1 / SDK 27 (Oreo)
   * Patchers works, if you've previously manually deodexed services.jar
+     * [> Deodex Instructions](doc/DeodexServices.md)
 * 9.0 / SDK 28 (Pie)
   * Google Sync Adapters are not (yet) available
   * Patchers works, if you've previously manually deodexed services.jar
+     * [> Deodex Instructions](doc/DeodexServices.md)
 
 earlier versions will never officially be supported (you may still report bugs, though).
 
@@ -192,8 +195,9 @@ Extra packages, always flash through TWRP.
 
 * **NanoDroid-patcher**: includes
   * on-device framework-patcher for signature spoofing support
-     * optionally can patch user interface for it into Developer Settings
-  * creates the file `/data/adb/.nanodroid-patcher` after successful patching
+     * requires an deodexed ROM
+         * [> Deodex Instructions](doc/DeodexServices.md)
+  * creates the file `/data/adb/NanoDroid_Patched` after successful patching
   * installs an addon.d script for automatic re-patching after ROM update
      * addon.d support files reside in `/data/adb/nanodroid-patcher/`
 * **NanoDroid-setupwizard**: includes
@@ -217,8 +221,10 @@ Extra packages, always flash through TWRP.
 Misc. Script for use from PC/Notebook, while device is in TWRP, they are found in this repository
 
 * **framework-patcher**
-  * on-pc framework-patcher for signature spoofing support
-  * creates the file `/data/adb/.nanodroid-patcher` after successful patching
+  * on-device framework-patcher for signature spoofing support
+     * requires an deodexed ROM
+         * [> Deodex Instructions](doc/DeodexServices.md)
+  * creates the file `/data/adb/NanoDroid_Patched` after successful patching
   * invoke like `framework-patcher [ver]`
      * where [ver] is your Android version (6.0, 7.1, ...)
   * the original, unpatched `services.jar` is backed up to `/sdcard/nanodroid_backups`
