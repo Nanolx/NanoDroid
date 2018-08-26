@@ -10,6 +10,8 @@ create_patcher_package() {
 	zip_add
 	cd "${CWD}"
 
+	zip_add busybox.arm
+	zip_add busybox.x86
 	zip_add_doc
 }
 
@@ -47,6 +49,8 @@ create_uninstaller_package() {
 	zip_add
 	cd "${CWD}"
 
+	zip_add busybox.arm
+	zip_add busybox.x86
 	zip_add_doc
 }
 

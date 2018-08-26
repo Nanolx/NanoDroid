@@ -72,6 +72,42 @@ is_mounted() {
 	return $?
 }
 
+setup_busybox () {
+	mkdir /dev/tmp
+
+	ABI=$(grep_prop ro.product.cpu.abi | cut -c-3)
+	ABI2=$(grep_prop ro.product.cpu.abi2 | cut -c-3)
+	ABILONG=$(grep_prop ro.product.cpu.abi)
+
+	ARCH=arm
+
+	[ "$ABI" = "x86" ] && ARCH=x86
+	[ "$ABI2" = "x86" ] && ARCH=x86
+	[ "$ABILONG" = "arm64-v8a" ] && ARCH=arm64
+	[ "$ABILONG" = "x86_64" ] && ARCH=x86_64
+
+	case ${ARCH} in
+		arm | arm64 )
+			unzip -o "${ZIP}" busybox.arm -d "/dev/tmp"
+			BUSY=/dev/tmp/busybox.arm
+		;;
+
+		x86 | x86_64 )
+			unzip -o "${ZIP}" busybox.x86 -d "/dev/tmp"
+			BUSY=/dev/tmp/busybox.x86
+		;;
+	esac
+
+	OLD_PATH=${PATH}
+
+	chmod 0755 ${BUSY}
+	mkdir -p /dev/tmp/busybox
+	ln -s ${BUSY} /dev/tmp/busybox/busybox
+	${BUSY} --install -s /dev/tmp/busybox/
+
+	export PATH="/dev/tmp/busybox:${PATH}"
+}
+
 error () {
 	ui_print "${@}"
 	ui_print " "
