@@ -154,8 +154,10 @@ detect_odex () {
 		ui_print " ++"
 
 		ROM_DEX_STATUS=ODEX
-	else
+	elif [ "${SERVICES_JAR_DEX}" ]; then
 		ROM_DEX_STATUS=NONE
+	else
+		ROM_DEX_STATUS=UNKOWN
 	fi
 }
 
@@ -175,14 +177,34 @@ detect_arch () {
 		arm | arm64 )
 				FILE=${BASEDIR}/file.arm
 				ZIPB=${BASEDIR}/zip.arm
+
+				if [ -f ${TMPDIR}/busybox.arm ]; then
+					BUSY=${TMPDIR}/busybox.arm
+				else	BUSY=${BASEDIR}/busybox.arm
+				fi
 		;;
 		x86 | x86_64 )
 				FILE=${BASEDIR}/file.x86
 				ZIPB=${BASEDIR}/zip.x86
+
+				if [ -f ${TMPDIR}/busybox.x86 ]; then
+					BUSY=${TMPDIR}/busybox.x86
+				else	BUSY=${BASEDIR}/busybox.x86
+				fi
 		;;
 	esac
 
 	V_EX=${BASEDIR}/vdexExtractor.${ARCH}
+
+	OLD_PATH=${PATH}
+
+	chmod 0755 ${BUSY}
+	mkdir -p ${BASEDIR}/busybox
+	ln -s ${BUSY} ${BASEDIR}/busybox/busybox
+
+	${BUSY} --install -s ${BASEDIR}/busybox/
+
+	export PATH="${BASEDIR}/busybox:${PATH}"
 
 	case ${ARCH} in
 		arm | x86 )
@@ -290,7 +312,7 @@ setup_patcher () {
 
 	for bin in zip.arm zip.x86 file.arm file.x86 \
 		vdexExtractor.arm vdexExtractor.x86 \
-		vdexExctractor.arm64 vdexExtractor.x86_64; do
+		vdexExtractor.arm64 vdexExtractor.x86_64; do
 		chmod 0755 "${BASEDIR}/${bin}" || \
 			error " !! failed to prepare environment"
 	done
@@ -351,7 +373,7 @@ patch_services () {
 			-classpath "${BASEDIR}/baksmali.dex" \
 			org.jf.baksmali.Main \
 			x "${BASEDIR}/services.jar-mod/classes.dex" \
-			-b /system/framework/core-oj.jar \
+			-b "/system/framework/core-oj.jar" \
 			-o "${BASEDIR}/services.jar-deodex" || \
 				error " !! failed to deodex services.jar"
 
@@ -462,6 +484,9 @@ install_addond () {
 	done
 
 	cp /dev/tmp/CommonPatcher /data/adb/nanodroid_patcher/
+
+	cp ${BUSY} /data/adb/nanodroid_patcher/
+	chmod 0755  /data/adb/nanodroid_patcher/${BUSY}
 
 	cp "${BASEDIR}/999-nanodroidpatcher.sh" /system/addon.d/
 	chmod 0755 /system/addon.d/999-nanodroidpatcher.sh

@@ -39,10 +39,9 @@ NanoDroidPatcher () {
 	[ -f /data/adb/NanoDroid_Patched ] && \
 		rm -f /data/adb/NanoDroid_Patched
 
-	rm -rf ${TMPDIR}
-	mkdir -p ${TMPDIR}
-
-	for bin in zip.arm zip.x86 file.arm file.x86; do 
+	for bin in zip.arm zip.x86 file.arm file.x86 \
+		vdexExtractor.arm vdexExtractor.arm64 \
+		vdexExtractor.x86 vdexExtractor.x86_64; do 
 		chmod 0755 "${BASEDIR}/${bin}" || \
 			error " !! failed to prepare environment"
 	done
