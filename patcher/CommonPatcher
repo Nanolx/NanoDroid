@@ -225,6 +225,13 @@ detect_sdk () {
 	[ "${SDK_VERSION}" -gt 28 ] && \
 		error " !! Android versions beyond Pie are not yet supported"
 
+	if [ "${SDK_VERSION}" -eq 28 ]; then
+		ui_print " "
+		ui_print " ++ Android Pie (9.0) support"
+		ui_print " ++ is currently experimental"
+		ui_print " "
+	fi
+
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error " !! Android versions before Jelly Bean are not supported"
 
