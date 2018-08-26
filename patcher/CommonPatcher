@@ -454,7 +454,8 @@ install_addond () {
 
 	for file in core_services.jar.dex dexpatcher.dex file.arm file.x86 \
 		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
-		zip.arm zip.x86 magic.mgc; do
+		zip.arm zip.x86 magic.mgc vdexExtractor.arm vdexExtractor.x86 \
+		baksmali.dex smali.dex; do
 		cp "${BASEDIR}/${file}" /data/adb/nanodroid_patcher/
 	done
 
