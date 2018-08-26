@@ -328,7 +328,7 @@ patch_services () {
 
 		LD_LIBRARY_PATH=${C_LD} \
 			${ZIPB} -j "${BASEDIR}/services.jar" \
-			"${BASEDIR}/services.jar-deodex/classes.dex" || \
+			"${BASEDIR}/classes.dex" || \
 				error " !! zip failed"
 
 		rm -rf "${BASEDIR}/services.jar-deodex" \
