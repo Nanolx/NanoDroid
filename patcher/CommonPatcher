@@ -137,25 +137,32 @@ grep_cmdline() {
 		sed -n "${REGEX}" 2>/dev/null
 }
 
-detect_odex () {
+detect_classes_dex () {
 	SERVICES_JAR_DEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)
 
+	if [ "${SERVICES_JAR_DEX}" ]; then
+		ROM_DEX_STATUS=DEODEX
+	else	ROM_DEX_STATUS=${1}
+	fi
+}
+
+detect_odex () {
 	if [ -n "$(find '/system/framework/' -name '*.vdex')" ]; then
 		ui_print " "
 		ui_print " ++"
 		ui_print " ++ vdexed ROM detected"
 		ui_print " ++"
 
-		ROM_DEX_STATUS=VDEX
+		detect_classes_dex VDEX
 	elif [ -n "$(find '/system/framework/' -name '*.odex')" ]; then
 		ui_print " "
 		ui_print " ++"
 		ui_print " ++ odexed ROM detected"
 		ui_print " ++"
 
-		ROM_DEX_STATUS=ODEX
+		detect_classes_dex ODEX
 	elif [ "${SERVICES_JAR_DEX}" ]; then
-		ROM_DEX_STATUS=NONE
+		ROM_DEX_STATUS=DEODEX
 	else
 		ROM_DEX_STATUS=UNKOWN
 	fi
