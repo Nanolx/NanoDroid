@@ -334,7 +334,6 @@ patch_services () {
 			${ZIPB} -j "${BASEDIR}/services.jar" \
 			"${BASEDIR}/classes.dex" || \
 				error " !! zip failed"
-
 #
 # XXX odex stuff
 #
@@ -347,7 +346,6 @@ patch_services () {
 		ui_print "   [1] baksmali services/classes.dex"
 		LD_LIBRARY_PATH=${C_LD} \
 			/system/bin/dalvikvm \
-			-Xbootclasspath:"${BOOTCLASSES}" \
 			-classpath "${BASEDIR}/baksmali.dex" \
 			org.jf.baksmali.Main \
 			x "${BASEDIR}/services.jar-mod/classes.dex" \
@@ -358,7 +356,6 @@ patch_services () {
 		ui_print "   [2] smali services/classes.dex"
 		LD_LIBRARY_PATH=${C_LD} \
 			/system/bin/dalvikvm \
-			-Xbootclasspath:"${BOOTCLASSES}" \
 			-classpath "${BASEDIR}/smali.dex" \
 			org.jf.smali.Main \
 			a "${BASEDIR}/services.jar-deodex" \
@@ -386,7 +383,6 @@ patch_services () {
 	ui_print " >> patching services.jar"
 	LD_LIBRARY_PATH=${C_LD} \
 		/system/bin/dalvikvm \
-		-Xbootclasspath:"${BOOTCLASSES}" \
 		-classpath "${BASEDIR}/dexpatcher.dex" \
 		lanchon.dexpatcher.Main \
 		${DEX_OPTS} --api-level "${SDK_VERSION}" \
