@@ -166,6 +166,8 @@ detect_odex () {
 	else
 		ROM_DEX_STATUS=UNKOWN
 	fi
+
+	echo " [++] ROM_DEX_STATUS=${ROM_DEX_STATUS}"
 }
 
 detect_arch () {
