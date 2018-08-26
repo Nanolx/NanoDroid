@@ -523,6 +523,8 @@ Additional credits go to
   * http://downloads.paperyoshi.at/
 * anestisb for vdexExtractor
   * https://github.com/anestisb/vdexExtractor
+* JesusFreke for smali/baksmali
+  * https://github.com/JesusFreke/smali
 
 Special Thanks to the beta testers
 
