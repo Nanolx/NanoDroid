@@ -175,14 +175,14 @@ detect_arch () {
 		arm | arm64 )
 				FILE=${BASEDIR}/file.arm
 				ZIPB=${BASEDIR}/zip.arm
-				V_EX=${BASEDIR}/vdexExtractor.arm
 		;;
 		x86 | x86_64 )
 				FILE=${BASEDIR}/file.x86
 				ZIPB=${BASEDIR}/zip.x86
-				V_EX=${BASEDIR}/vdexExtractor.x86
 		;;
 	esac
+
+	V_EX=${BASEDIR}/vdexExtractor.${ARCH}
 
 	case ${ARCH} in
 		arm | x86 )
@@ -455,7 +455,7 @@ install_addond () {
 	for file in core_services.jar.dex dexpatcher.dex file.arm file.x86 \
 		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
 		zip.arm zip.x86 magic.mgc vdexExtractor.arm vdexExtractor.x86 \
-		baksmali.dex smali.dex; do
+		vdexExtractor.arm64 vdexExctractor.x86_64 baksmali.dex smali.dex; do
 		cp "${BASEDIR}/${file}" /data/adb/nanodroid_patcher/
 	done
 
