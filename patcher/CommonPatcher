@@ -304,6 +304,10 @@ patch_services () {
 		${BASEDIR}/services.jar || \
 		error " !! failed to copy services.jar"
 
+	for jar in /system/framework/*.jar ; do
+		BOOTCLASSES=${BOOTCLASSES}:${jar}
+	done
+
 #
 # XXX vdex stuff
 #
@@ -331,8 +335,6 @@ patch_services () {
 			"${BASEDIR}/classes.dex" || \
 				error " !! zip failed"
 
-		rm -rf "${BASEDIR}/services.jar-deodex" \
-			"${BASEDIR}/services.jar-mod"
 #
 # XXX odex stuff
 #
@@ -345,6 +347,7 @@ patch_services () {
 		ui_print "   [1] baksmali services/classes.dex"
 		LD_LIBRARY_PATH=${C_LD} \
 			/system/bin/dalvikvm \
+			-Xbootclasspath:"${BOOTCLASSES}" \
 			-classpath "${BASEDIR}/baksmali.dex" \
 			org.jf.baksmali.Main \
 			x "${BASEDIR}/services.jar-mod/classes.dex" \
@@ -355,6 +358,7 @@ patch_services () {
 		ui_print "   [2] smali services/classes.dex"
 		LD_LIBRARY_PATH=${C_LD} \
 			/system/bin/dalvikvm \
+			-Xbootclasspath:"${BOOTCLASSES}" \
 			-classpath "${BASEDIR}/smali.dex" \
 			org.jf.smali.Main \
 			a "${BASEDIR}/services.jar-deodex" \
@@ -364,11 +368,11 @@ patch_services () {
 		# just in case | not allowed to call error() !
 		LD_LIBRARY_PATH=${C_LD} \
 			${ZIPB} -d "${BASEDIR}/services.jar" \
-			'classes.dex'
+			'classes*.dex'
 
 		LD_LIBRARY_PATH=${C_LD} \
 			${ZIPB} -j "${BASEDIR}/services.jar" \
-			"${BASEDIR}/services.jar-deodex/classes.dex" || \
+			"${BASEDIR}/services.jar-deodex"/classes*.dex || \
 				error " !! zip failed"
 
 		rm -rf "${BASEDIR}/services.jar-deodex" \
@@ -382,6 +386,7 @@ patch_services () {
 	ui_print " >> patching services.jar"
 	LD_LIBRARY_PATH=${C_LD} \
 		/system/bin/dalvikvm \
+		-Xbootclasspath:"${BOOTCLASSES}" \
 		-classpath "${BASEDIR}/dexpatcher.dex" \
 		lanchon.dexpatcher.Main \
 		${DEX_OPTS} --api-level "${SDK_VERSION}" \
@@ -391,12 +396,12 @@ patch_services () {
 
 	LD_LIBRARY_PATH=${C_LD} \
 		${ZIPB} -d "${BASEDIR}/services.jar" \
-		'classes.dex' || \
+		'classes*.dex' || \
 			error " !! zip failed"
 
 	LD_LIBRARY_PATH=${C_LD} \
 		${ZIPB} -j "${BASEDIR}/services.jar" \
-		"${BASEDIR}/services.jar-mod/classes.dex" || \
+		"${BASEDIR}/services.jar-mod"/classes*.dex || \
 			error " !! zip failed"
 }
 
