@@ -289,7 +289,8 @@ setup_patcher () {
 		error " !! failed to prepare environment"
 
 	for bin in zip.arm zip.x86 file.arm file.x86 \
-		vdexExtractor.arm vdexExtractor.x86; do
+		vdexExtractor.arm vdexExtractor.x86 \
+		vdexExctractor.arm64 vdexExtractor.x86_64; do
 		chmod 0755 "${BASEDIR}/${bin}" || \
 			error " !! failed to prepare environment"
 	done
@@ -319,7 +320,8 @@ patch_services () {
 			error " !! failed to copy services.vdex"
 
 		LD_LIBRARY_PATH=${C_LD} \
-			${V_EX} -i ${BASEDIR}/services.vdex --ignore-crc-error || \
+			${V_EX} -i ${BASEDIR}/services.vdex \
+			--ignore-crc-error --debug=4 || \
 			error " !! failed to deodex services.vdex"
 
 		mv ${BASEDIR}/services.apk_classes.dex ${BASEDIR}/classes.dex || \
@@ -386,7 +388,7 @@ patch_services () {
 		-classpath "${BASEDIR}/dexpatcher.dex" \
 		lanchon.dexpatcher.Main \
 		${DEX_OPTS} --api-level "${SDK_VERSION}" \
-		--verbose --output ${BASEDIR}/services.jar-mod \
+		--verbose --debug --output ${BASEDIR}/services.jar-mod \
 		${BASEDIR}/services.jar ${PATCHES} || \
 			error " !! failed to apply patches"
 
