@@ -67,7 +67,6 @@ mount_partitions () {
 	fi
 
 	is_mounted /data || mount /data
-	is_mounted /vendor || mount /vendor
 
 	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
 
@@ -87,6 +86,15 @@ mount_partitions () {
 	fi
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+
+	if [ -L /system/vendor ]; then
+		is_mounted /vendor || mount -o ro /vendor 2>/dev/null
+		if ! is_mounted /vendor; then
+			VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
+			mount -t ext4 -o ro ${VENDORBLOCK} /vendor
+		fi
+		is_mounted /vendor || error "failed to mount /vendor"
+	fi
 }
 
 error () {
