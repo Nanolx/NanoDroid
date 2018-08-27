@@ -93,6 +93,8 @@ mount_partitions () {
 		mount -t ext4 -o ro ${VENDORBLOCK} /vendor 2>/dev/null
 	fi
 
+	mount
+
 }
 
 error () {
@@ -390,19 +392,21 @@ patch_services () {
 	elif [ "${ROM_DEX_STATUS}" = "ODEX" ]; then
 		ui_print " >> deodexing services.jar [ODEX]"
 
-		ui_print "   [1] baksmali services/classes.dex"
+		cp "/system/framework/oat/${ARCH}/services.odex" "${BASEDIR}"
+
+		ui_print "   [1] baksmali services.odex"
 		LD_LIBRARY_PATH=${C_LD} \
 			/system/bin/dalvikvm \
 			-Xbootclasspath:${BOOTCLASSES} \
 			-classpath "${BAKSMALI}" \
 			org.jf.baksmali.Main \
-			x "/system/framework/oat/${ARCH}/services.odex" \
+			x "${BASEDIR}/services.odex" \
 			-b "/system/framework/${ARCH}/boot.oat" \
-			-d "/system/framework" -d "/system/framework/${ARCH}" \
+			-d "/system/framework/${ARCH}" \
 			-o "${BASEDIR}/services.jar-deodex" || \
 				error " !! failed to deodex services.jar"
 
-		ui_print "   [2] smali services/classes.dex"
+		ui_print "   [2] smali services.odex"
 		LD_LIBRARY_PATH=${C_LD} \
 			-Xbootclasspath:${BOOTCLASSES} \
 			/system/bin/dalvikvm \
