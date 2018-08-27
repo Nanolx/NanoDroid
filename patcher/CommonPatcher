@@ -226,11 +226,11 @@ detect_arch () {
 
 	case ${ARCH} in
 		arm | x86 )
-			C_LD="/system/lib:/system/vendor/lib"
+			C_LD="/system/lib:/system/vendor/lib:/vendor/lib"
 		;;
 
 		arm64 | x86_64 )
-			C_LD="/system/lib64:/system/vendor/lib64"
+			C_LD="/system/lib64:/system/vendor/lib64:/vendor/lib64"
 		;;
 	esac
 
