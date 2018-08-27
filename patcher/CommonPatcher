@@ -240,8 +240,8 @@ detect_arch () {
 detect_sdk () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
-	[ "${SDK_VERSION}" -gt 28 ] && \
-		error " !! Android versions beyond Pie are not yet supported"
+	[ "${SDK_VERSION}" -gt 27 ] && \
+		error " !! Android versions beyond Oreo are not yet supported"
 
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error " !! Android versions before Jelly Bean are not supported"
