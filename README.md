@@ -98,7 +98,9 @@ NanoDroid officially supports the following Android versions:
      * [> Deodex Instructions](doc/DeodexServices.md)
 * 9.0 / SDK 28 (Pie)
   * Google Sync Adapters are not (yet) available
-  * Patchers works, if you've previously manually deodexed services.jar
+  * Patchers works
+     * if your ROM's services.jar already contains classes.dex
+     * and you use baksmali/smali on PC to convert from ODEX 039 format to an older
      * [> Deodex Instructions](doc/DeodexServices.md)
 
 earlier versions will never officially be supported (you may still report bugs, though).
