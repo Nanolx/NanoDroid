@@ -149,14 +149,14 @@ grep_cmdline() {
 detect_odex () {
 	SERVICES_JAR_DEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)
 
-	if [ -n "$(find '/system/framework/' -name '*.vdex')" ]; then
+	if [ -n "$(find '/system/framework/' -name 'services.vdex')" ]; then
 		ui_print " "
 		ui_print " ++"
 		ui_print " ++ vdexed ROM detected"
 		ui_print " ++"
 
 		ROM_DEX_STATUS=VDEX
-	elif [ -n "$(find '/system/framework/' -name '*.odex')" ]; then
+	elif [ -n "$(find '/system/framework/' -name 'services.odex')" ]; then
 		ui_print " "
 		ui_print " ++"
 		ui_print " ++ odexed ROM detected"
