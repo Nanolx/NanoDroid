@@ -68,7 +68,7 @@ adb pull /system/framework framework
 cp framework/services.jar services.jar-backup
 ```
 
-check if `framework/services.jar` contains a `classes.dex` (open as zip file), if not, I can't help you right now, I have **not yet** looked into how to deodexed VDEX files. If it does contain `classes.dex`, continue as follows:
+check if `framework/services.jar` contains a `classes.dex` (open as zip file), if so:
 
 ```
 mkdir services-old
@@ -77,7 +77,14 @@ java -jar baksmali.jar x services-old/classes.dex -b framework/core-oj.jar -o se
 java -jar smali.jar a services-new -o classes.dex
 ```
 
-if a new classes.dex was successfully created in the services-new directory, re-package it into the services.jar we previously pulled:
+if ***not***
+
+```
+java -jar baksmali.jar x framework/oat/[arch]/services.odex -b framework/core-oj.jar -o services-new
+java -jar smali.jar a services-new -o classes.dex
+```
+
+in any case, if a new classes.dex was successfully created in the services-new directory, re-package it into the services.jar we previously pulled:
 
 ```
 zip -d framework/services.jar classes.dex
