@@ -240,8 +240,8 @@ detect_arch () {
 detect_sdk () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
-	[ "${SDK_VERSION}" -gt 27 ] && \
-		error " !! Android versions beyond Ore are not yet supported"
+	[ "${SDK_VERSION}" -gt 28 ] && \
+		error " !! Android versions beyond Pie are not yet supported"
 
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error " !! Android versions before Jelly Bean are not supported"
@@ -392,16 +392,13 @@ patch_services () {
 	elif [ "${ROM_DEX_STATUS}" = "ODEX" ]; then
 		ui_print " >> deodexing services.jar [ODEX]"
 
-		mkdir -p "${BASEDIR}/services.jar-mod"
-		unzip -d "${BASEDIR}/services.jar-mod" "${BASEDIR}/services.jar"
-
 		ui_print "   [1] baksmali services/classes.dex"
 		LD_LIBRARY_PATH=${C_LD} \
 			/system/bin/dalvikvm \
 			-Xbootclasspath:${BOOTCLASSES} \
 			-classpath "${BAKSMALI}" \
 			org.jf.baksmali.Main \
-			x "${BASEDIR}/services.jar-mod/classes.dex" \
+			x "/system/framework/oat/${ARCH}/services.odex" \
 			-b "/system/framework/${ARCH}/boot.oat" \
 			-d "/system/framework" -d "/system/framework/${ARCH}" \
 			-o "${BASEDIR}/services.jar-deodex" || \
@@ -427,8 +424,7 @@ patch_services () {
 			"${BASEDIR}/services.jar-deodex"/classes*.dex || \
 				error " !! zip failed"
 
-		rm -rf "${BASEDIR}/services.jar-deodex" \
-			"${BASEDIR}/services.jar-mod"
+		rm -rf "${BASEDIR}/services.jar-deodex"
 	fi
 
 	mkdir -p "${BASEDIR}/services.jar-mod"
