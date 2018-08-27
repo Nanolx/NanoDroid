@@ -150,26 +150,18 @@ detect_odex () {
 	SERVICES_JAR_DEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)
 
 	if [ -n "$(find '/system/framework/' -name 'services.vdex')" ]; then
-		ui_print " "
-		ui_print " ++"
-		ui_print " ++ vdexed ROM detected"
-		ui_print " ++"
-
 		ROM_DEX_STATUS=VDEX
 	elif [ -n "$(find '/system/framework/' -name 'services.odex')" ]; then
-		ui_print " "
-		ui_print " ++"
-		ui_print " ++ odexed ROM detected"
-		ui_print " ++"
-
 		ROM_DEX_STATUS=ODEX
-	else
-		ROM_DEX_STATUS=UNKOWN
+	else	ROM_DEX_STATUS=UNKOWN
 	fi
 
 	[ "${SERVICES_JAR_DEX}" ] && ROM_DEX_STATUS=DEODEX
 
-	echo " [++] ROM_DEX_STATUS=${ROM_DEX_STATUS}"
+	ui_print "   "
+	ui_print " ++"
+	ui_print " ++ services.jar status: ${ROM_DEX_STATUS}"
+	ui_print " ++"
 }
 
 detect_arch () {
