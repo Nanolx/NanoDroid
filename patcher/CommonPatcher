@@ -401,7 +401,7 @@ patch_services () {
 			org.jf.baksmali.Main \
 			x "${BASEDIR}/services.jar-mod/classes.dex" \
 			-b "/system/framework/${ARCH}/boot.oat" \
-			-d "/system/framework" \
+			-d "/system/framework" -d "/system/framework/${ARCH}" \
 			-o "${BASEDIR}/services.jar-deodex" || \
 				error " !! failed to deodex services.jar"
 
