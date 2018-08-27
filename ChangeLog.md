@@ -7,9 +7,11 @@
 * CommonInstaller
   * cleanup TWRP environment when an installation error occurs during System Mode installation
      * regression from 17.9
+  * remove `GoogleExtServices` from GApps removal list, as it is required for ROMs using `GooglePackageManager`
+
+CommonInstaller, Uninstaller, Patcher
   * add busybox build by osm0sis (used during installation only)
      * fixes possible installation issues with Stock ROMs from TWRP
-  * remove `GoogleExtServices` from GApps removal list, as it is required for ROMs using `GooglePackageManager`
 
 * Uninstaller
   * fix restoring GApps from /system/app in System Mode installations
@@ -17,6 +19,9 @@
 
 * On-PC Patcher
   * fix creating uninstaller information for System Mode
+
+* CommonInstaller, Patcher
+  * mount /vendor partition, increases compatibility with several ROMs
 
 ### General Changes
 
@@ -50,12 +55,10 @@
 * Patcher
   * don't stop on odexed ROMs, just print a warning
      * user may have services.jar deodexed
-  * Android 9.0 officially supported
-     * you **may** need to deodex services.jar yourself for now
   * if ROM's odex method is ODEX, **try** to automatically deodex it
      * bundle baksmali and smali
   * if ROM's odex method is VDEX, **try** to automatically deodex it
-     * bundle vdexExtractor for arm and x86
+     * bundle vdexExtractor
   * simplify code
   * remove old code
 
@@ -65,6 +68,7 @@
   * QKSMS (3.4.5)
   * F-Droid (1.4-alpha0)
   * (Simple) Gallery (4.6.1)
+  * Amaze (3.3RC2)
 
 * manual
   * microG GmsCore (0.2.4-128-custom)
