@@ -207,6 +207,7 @@ mount_partitions () {
 	fi
 
 	is_mounted /data || mount /data
+	is_mounted /vendor || mount /vendor
 
 	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
 
