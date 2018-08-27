@@ -342,6 +342,8 @@ setup_patcher () {
 		chmod 0755 "${BASEDIR}/${bin}" || \
 			error " !! failed to prepare environment"
 	done
+
+	mkdir -p /data/adb/
 }
 
 patch_services () {
