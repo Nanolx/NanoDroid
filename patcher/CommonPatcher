@@ -147,8 +147,6 @@ grep_cmdline() {
 }
 
 detect_classes_dex () {
-	SERVICES_JAR_DEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)
-
 	if [ "${SERVICES_JAR_DEX}" ]; then
 		ROM_DEX_STATUS=DEODEX
 	else	ROM_DEX_STATUS=${1}
@@ -156,6 +154,8 @@ detect_classes_dex () {
 }
 
 detect_odex () {
+	SERVICES_JAR_DEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)
+
 	if [ -n "$(find '/system/framework/' -name '*.vdex')" ]; then
 		ui_print " "
 		ui_print " ++"
@@ -396,6 +396,7 @@ patch_services () {
 		ui_print "   [1] baksmali services/classes.dex"
 		LD_LIBRARY_PATH=${C_LD} \
 			/system/bin/dalvikvm \
+			-Xbootclasspath:${BOOTCLASSES} \
 			-classpath "${BAKSMALI}" \
 			org.jf.baksmali.Main \
 			x "${BASEDIR}/services.jar-mod/classes.dex" \
@@ -406,6 +407,7 @@ patch_services () {
 
 		ui_print "   [2] smali services/classes.dex"
 		LD_LIBRARY_PATH=${C_LD} \
+			-Xbootclasspath:${BOOTCLASSES} \
 			/system/bin/dalvikvm \
 			-classpath "${SMALI}" \
 			org.jf.smali.Main \
@@ -434,6 +436,7 @@ patch_services () {
 	ui_print " >> patching services.jar"
 	LD_LIBRARY_PATH=${C_LD} \
 		/system/bin/dalvikvm \
+		-Xbootclasspath:${BOOTCLASSES} \
 		-classpath "${BASEDIR}/dexpatcher.dex" \
 		lanchon.dexpatcher.Main \
 		${DEX_OPTS} --api-level "${SDK_VERSION}" \
