@@ -87,13 +87,14 @@ mount_partitions () {
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
-	is_mounted /vendor || mount -o ro /vendor 2>/dev/null
+	! is_mounted /vendor && mount /vendor
 	if ! is_mounted /vendor; then
 		VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
-		mount -t ext4 -o ro ${VENDORBLOCK} /vendor 2>/dev/null
+		mount -t ext4 -o ro ${VENDORBLOCK} /vendor
 	fi
 
 	mount
+	echo
 
 }
 
