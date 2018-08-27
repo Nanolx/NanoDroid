@@ -60,6 +60,7 @@ the instructions are basically simple, though plenty commands:
 * connect phone with PC while in TWRP, mount `/system` **read-write**
 * get latest `baksmali.jar` and `smali.jar` (2.2.4+, best self-built from git)
   * [smali Sources](https://github.com/JesusFreke/smali)
+  * my personal builds [baksmali](http://nanolx.org/apk/baksmali-2.2.4-86963ccb-fat.jar) / [smali](http://nanolx.org/apk/baksmali-2.2.4-86963ccb-fat.jar)
 * zip/unzip utilities for commandline (or some UI tool)
 * common sense on using commandline (or some UI tool instead)
 
