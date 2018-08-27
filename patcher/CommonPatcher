@@ -246,6 +246,14 @@ detect_sdk () {
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error " !! Android versions before Jelly Bean are not supported"
 
+	if [ "${SDK_VERSION}" -gt 25 ]; then
+		BAKSMALI="${BASEDIR}/baksmali_26.dex"
+		SMALI="${BASEDIR}/smali_26.dex"
+	else
+		BAKSMALI="${BASEDIR}/baksmali_25.dex"
+		SMALI="${BASEDIR}/smali_25.dex"
+	fi
+
 	if [ "${SDK_VERSION}" -lt 24 ]; then
 		ui_print " > Android 4.1 - 6.0 (SDK ${SDK_VERSION}) detected"
 		PATCH_HOOK="${BASEDIR}/hook_4.1-6.0_services.jar.dex"
@@ -388,7 +396,7 @@ patch_services () {
 		ui_print "   [1] baksmali services/classes.dex"
 		LD_LIBRARY_PATH=${C_LD} \
 			/system/bin/dalvikvm \
-			-classpath "${BASEDIR}/baksmali.dex" \
+			-classpath "${BAKSMALI}" \
 			org.jf.baksmali.Main \
 			x "${BASEDIR}/services.jar-mod/classes.dex" \
 			-b "/system/framework/${ARCH}/boot.oat" \
@@ -399,7 +407,7 @@ patch_services () {
 		ui_print "   [2] smali services/classes.dex"
 		LD_LIBRARY_PATH=${C_LD} \
 			/system/bin/dalvikvm \
-			-classpath "${BASEDIR}/smali.dex" \
+			-classpath "${SMALI}" \
 			org.jf.smali.Main \
 			a "${BASEDIR}/services.jar-deodex" \
 			-o "${BASEDIR}/services.jar-deodex/classes.dex" || \

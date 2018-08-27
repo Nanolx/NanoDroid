@@ -91,11 +91,7 @@ NanoDroid officially supports the following Android versions:
 * 7.0 / SDK 24 (Nougat)
 * 7.1 / SDK 25 (Nougat)
 * 8.0 / SDK 26 (Oreo)
-  * Patchers works, if you've previously manually deodexed services.jar
-     * [> Deodex Instructions](doc/DeodexServices.md)
 * 8.1 / SDK 27 (Oreo)
-  * Patchers works, if you've previously manually deodexed services.jar
-     * [> Deodex Instructions](doc/DeodexServices.md)
 * 9.0 / SDK 28 (Pie)
   * Google Sync Adapters are not (yet) available
   * Patchers works
