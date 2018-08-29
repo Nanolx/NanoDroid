@@ -22,6 +22,7 @@ CommonInstaller, Uninstaller, Patcher
 
 * CommonInstaller, Patcher
   * mount /vendor partition, increases compatibility with several ROMs
+  * if there's no /vendor partition, but /system/vendor exists, create a compatibility link, which is required on some ROMs
 
 ### General Changes
 
@@ -45,6 +46,9 @@ CommonInstaller, Uninstaller, Patcher
 
 * CommonInstaller, Uninstaller
   * remove support for old NanoMod modules
+
+* CommonInstaller, Patcher
+  * log all mounted paritions in the recovery.log
 
 * Uninstaller
   * display correct version number
