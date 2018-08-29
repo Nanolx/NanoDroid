@@ -13,6 +13,7 @@
 setup_environment () {
 	TMPDIR=/dev/tmp/install
 	export ANDROID_DATA="${TMPDIR}"
+	export PATCHER_ADDOND_DATA=/data/adb/nanodroid_patcher
 	PATH="${PATH}:/system/bin:/system/xbin"
 	MAGISK_IMG=/data/adb/magisk.img
 	MAGISK_PATH=/dev/tmp/magisk_img
@@ -87,15 +88,19 @@ mount_partitions () {
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
-	! is_mounted /vendor && mount /vendor
-	if ! is_mounted /vendor; then
-		VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
-		mount -t ext4 -o ro ${VENDORBLOCK} /vendor
+	if [ -L /system/vendor ]; then
+		! is_mounted /vendor && mount /vendor
+		if ! is_mounted /vendor; then
+			VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
+			mount -t ext4 -o ro ${VENDORBLOCK} /vendor
+		fi
+	elif [ -d /system/vendor ]; then
+		### XXX work-around required for some ROMs
+		echo " xxx compat /vendor link created!"
+		ln -sf /system/vendor /vendor
 	fi
 
-	mount
-	echo
-
+	mount | awk '{print $1 " on " $3}'
 }
 
 error () {
@@ -485,7 +490,7 @@ install_addond () {
 	ui_print " "
 	ui_print " Installing addon.d restoration setup"
 
-	mkdir -p /data/adb/nanodroid_patcher
+	mkdir -p ${PATCHER_ADDOND_DATA}
 
 	[ -d /data/nanomod.patcher ] && rm -rf /data/nanomod.patcher
 	[ -d /data/adb/nanomod_patcher ] && rm -rf /data/nanomod_patcher
@@ -495,14 +500,15 @@ install_addond () {
 	for file in core_services.jar.dex dexpatcher.dex file.arm file.x86 \
 		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
 		zip.arm zip.x86 magic.mgc vdexExtractor.arm vdexExtractor.x86 \
-		vdexExtractor.arm64 vdexExctractor.x86_64 baksmali.dex smali.dex; do
-		cp "${BASEDIR}/${file}" /data/adb/nanodroid_patcher/
+		vdexExtractor.arm64 vdexExtractor.x86_64 baksmali_25.dex \
+		smali_25.dex baksmali_26.dex smali_26.dex; do
+		cp "${BASEDIR}/${file}" ${PATCHER_ADDOND_DATA}/
 	done
 
-	cp /dev/tmp/CommonPatcher /data/adb/nanodroid_patcher/
+	cp /dev/tmp/CommonPatcher ${PATCHER_ADDOND_DATA}/
 
-	cp ${BUSY} /data/adb/nanodroid_patcher/
-	chmod 0755  /data/adb/nanodroid_patcher/${BUSY}
+	cp ${BUSY} ${PATCHER_ADDOND_DATA}/
+	chmod 0755  ${PATCHER_ADDOND_DATA}/${BUSY}
 
 	cp "${BASEDIR}/999-nanodroidpatcher.sh" /system/addon.d/
 	chmod 0755 /system/addon.d/999-nanodroidpatcher.sh
