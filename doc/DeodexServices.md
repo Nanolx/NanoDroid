@@ -4,6 +4,10 @@ Here you can find instructions on how to manually deodex `services.jar` as prepa
 
 If you want to check beforehand (or afterwards), if your ROM supports Signature Spoofing, use this [tool](https://f-droid.org/de/packages/lanchon.sigspoof.checker/).
 
+## DEODEX
+
+If your `/system/framework/services.jar` file contains the file `classes.dex`, you can skip deodexing and start patching right-away, else following theese instructions.
+
 ## VDEX
 
 If you can see `/system/framework/oat/[arch]/services.vdex`, where [arch] is the device architecture (arm, arm64, x86 or x86_64), you should follow theese instructions.
@@ -67,8 +71,6 @@ the instructions are basically simple, though plenty commands:
 adb pull /system/framework framework
 cp framework/services.jar services.jar-backup
 ```
-
-check if `framework/services.jar` contains a `classes.dex` (open as zip file), if ***not***:
 
 ```
 java -jar baksmali.jar x framework/oat/[arch]/services.odex -d framework/[arch] -d framework/ -o services-new
