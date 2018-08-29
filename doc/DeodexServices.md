@@ -58,9 +58,8 @@ If you can see `/system/framework/oat/[arch]/services.odex`, where [arch] is the
 the instructions are basically simple, though plenty commands:
 
 * connect phone with PC while in TWRP, mount `/system` **read-write**
-* get latest `baksmali.jar` and `smali.jar` (2.2.4+, best self-built from git)
+* get latest `baksmali.jar` and `smali.jar`
   * [smali Sources](https://github.com/JesusFreke/smali)
-  * my personal builds [baksmali](http://nanolx.org/apk/baksmali-2.2.4-86963ccb-fat.jar) / [smali](http://nanolx.org/apk/baksmali-2.2.4-86963ccb-fat.jar)
 * zip/unzip utilities for commandline (or some UI tool)
 * common sense on using commandline (or some UI tool instead)
 
@@ -69,19 +68,10 @@ adb pull /system/framework framework
 cp framework/services.jar services.jar-backup
 ```
 
-check if `framework/services.jar` contains a `classes.dex` (open as zip file), if so:
+check if `framework/services.jar` contains a `classes.dex` (open as zip file), if ***not***:
 
 ```
-mkdir services-old
-unzip -d services-old framework/services.jar
-java -jar baksmali.jar x services-old/classes.dex -b framework/core-oj.jar -o services-new
-java -jar smali.jar a services-new -o classes.dex
-```
-
-if ***not***
-
-```
-java -jar baksmali.jar x framework/oat/[arch]/services.odex -b framework/core-oj.jar -o services-new
+java -jar baksmali.jar x framework/oat/[arch]/services.odex -d framework/[arch] -d framework/ -o services-new
 java -jar smali.jar a services-new -o classes.dex
 ```
 
