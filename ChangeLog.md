@@ -72,7 +72,7 @@ CommonInstaller, Uninstaller, Patcher
   * Amaze (3.3RC2)
 
 * manual
-  * microG GmsCore (0.2.4-128-custom)
+  * microG GmsCore (0.2.5.12879-141-custom)
   * Play Store (11.4.16)
 
 ## 17.9.20180818
