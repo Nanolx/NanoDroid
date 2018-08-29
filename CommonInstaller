@@ -227,11 +227,19 @@ mount_partitions () {
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
-	is_mounted /vendor || mount -o ro /vendor 2>/dev/null
-	if ! is_mounted /vendor; then
-		VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
-		mount -t ext4 -o ro ${VENDORBLOCK} /vendor 2>/dev/null
+	if [ -L /system/vendor ]; then
+		! is_mounted /vendor && mount /vendor
+		if ! is_mounted /vendor; then
+			VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
+			mount -t ext4 -o ro ${VENDORBLOCK} /vendor
+		fi
+	elif [ -d /system/vendor ]; then
+		### XXX work-around required for some ROMs
+		echo " xxx compat /vendor link created!"
+		ln -sf /system/vendor /vendor
 	fi
+
+	mount | awk '{print $1 " on " $3}'
 }
 
 detect_mode () {
