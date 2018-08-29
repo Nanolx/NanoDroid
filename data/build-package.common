@@ -109,6 +109,7 @@ increase_module_version () {
 dalvikize_jar () {
 	if [[ -f ${1} ]]; then
 		${ANDROID_HOME}/build-tools/27.0.3/dx --dex \
+			--min-sdk-version=26 \
 			--output="$(basename "${1}" .jar).dex" \
 			"${1}"
 	fi
