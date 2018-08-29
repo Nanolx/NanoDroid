@@ -4,7 +4,7 @@ Here you can find instructions on how to manually deodex `services.jar` as prepa
 
 If you want to check beforehand (or afterwards), if your ROM supports Signature Spoofing, use this [tool](https://f-droid.org/de/packages/lanchon.sigspoof.checker/).
 
-## DEODEX
+## Pre-Check
 
 If your `/system/framework/services.jar` file contains the file `classes.dex`, you can skip deodexing and start patching right-away, else following theese instructions.
 
@@ -15,7 +15,7 @@ If you can see `/system/framework/oat/[arch]/services.vdex`, where [arch] is the
 the instructions are basically simple, though plenty commands:
 
 * connect phone with PC while in TWRP, mount `/system` **read-write**
-* get latest `vdexExtractor` (best self-compiled from git)
+* get latest `vdexExtractor`
   * [vdexExtractor Sources](https://github.com/anestisb/vdexExtractor)
 * zip/unzip utilities for commandline (or some UI tool)
 * common sense on using commandline (or some UI tool instead)
@@ -76,6 +76,10 @@ cp framework/services.jar services.jar-backup
 java -jar baksmali.jar x framework/oat/[arch]/services.odex -d framework/[arch] -d framework/ -o services-new
 java -jar smali.jar a services-new -o classes.dex
 ```
+
+somestimes baksmali.jar can't find the bootclasses file itself, in this case pass it manually using `-b`, for example:
+
+`-b framework/[arch]/boot.oat`
 
 in any case, if a new classes.dex was successfully created in the services-new directory, re-package it into the services.jar we previously pulled:
 
