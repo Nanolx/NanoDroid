@@ -62,6 +62,8 @@ magisk_cleanup
 if ! ${BOOTMODE} ; then
 	umount -l /system_root 2>/dev/null
 	umount -l /system 2>/dev/null
+	umount -l /vendor 2>/dev/null
+	umount -l /dev/random 2>/dev/null
 fi
 
 ui_print " "
