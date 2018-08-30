@@ -122,6 +122,9 @@ mount_partitions () {
 error () {
 	ui_print "${@}"
 	magisk_cleanup
+
+	${BOOTMODE} || recovery_cleanup
+
 	exit 1
 }
 
@@ -394,6 +397,7 @@ patch_services () {
 			x "${BASEDIR}/services.odex" \
 			-b "/system/framework/${ARCH}/boot.oat" \
 			-d "/system/framework/${ARCH}" \
+			-d "/system/framework" \
 			-o "${BASEDIR}/services.jar-deodex" || \
 				error " !! failed to deodex services.jar"
 
