@@ -14,9 +14,26 @@ setup_environment () {
 	TMPDIR=/dev/tmp/install
 	export ANDROID_DATA="${TMPDIR}"
 	export PATCHER_ADDOND_DATA=/data/adb/nanodroid_patcher
-	PATH="${PATH}:/system/bin:/system/xbin"
+	PATH="/system/bin:/system/xbin:${PATH}"
 	MAGISK_IMG=/data/adb/magisk.img
 	MAGISK_PATH=/dev/tmp/magisk_img
+}
+
+# Taken from Magisk, used for System Mode installation
+recovery_actions () {
+	mv /sbin /sbin_tmp
+	OLD_LD_LIB=$LD_LIBRARY_PATH
+	OLD_LD_PRE=$LD_PRELOAD
+	unset LD_LIBRARY_PATH
+	unset LD_PRELOAD
+}
+
+# Taken from Magisk, used for System Mode installation
+recovery_cleanup () {
+	mv /sbin_tmp /sbin 2>/dev/null
+	[ -z $OLD_PATH ] || export PATH=$OLD_PATH
+	[ -z $OLD_LD_LIB ] || export LD_LIBRARY_PATH=$OLD_LD_LIB
+	[ -z $OLD_LD_PRE ] || export LD_PRELOAD=$OLD_LD_PRE
 }
 
 ui_print() {
@@ -342,6 +359,8 @@ patch_services () {
 	ui_print " > patching signature spoofing support"
 	ui_print " "
 
+	${BOOTMODE} || recovery_actions
+
 	cp /system/framework/services.jar \
 		${BASEDIR}/services.jar || \
 		error " !! failed to copy services.jar"
@@ -444,6 +463,8 @@ patch_services () {
 		${ZIPB} -j "${BASEDIR}/services.jar" \
 		"${BASEDIR}/services.jar-mod"/classes*.dex || \
 			error " !! zip failed"
+
+	${BOOTMODE} || recovery_cleanup
 }
 
 backup_services_jar () {
