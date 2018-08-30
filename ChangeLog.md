@@ -74,6 +74,7 @@ CommonInstaller, Uninstaller, Patcher
   * F-Droid (1.4-alpha0)
   * (Simple) Gallery (4.6.1)
   * Amaze (3.3RC2)
+  * Substratum (1001)
 
 * manual
   * microG GmsCore (0.2.5.12879-141-custom)
