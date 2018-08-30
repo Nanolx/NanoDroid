@@ -14,7 +14,6 @@ setup_environment () {
 	TMPDIR=/dev/tmp/install
 	export ANDROID_DATA="${TMPDIR}"
 	export PATCHER_ADDOND_DATA=/data/adb/nanodroid_patcher
-	PATH="/system/bin:/system/xbin:${PATH}"
 	MAGISK_IMG=/data/adb/magisk.img
 	MAGISK_PATH=/dev/tmp/magisk_img
 }
@@ -230,17 +229,7 @@ detect_arch () {
 
 	${BUSY} --install -s ${BASEDIR}/busybox/
 
-	export PATH="${BASEDIR}/busybox:${PATH}"
-
-	case ${ARCH} in
-		arm | x86 )
-			C_LD="/system/lib:/system/vendor/lib:/vendor/lib"
-		;;
-
-		arm64 | x86_64 )
-			C_LD="/system/lib64:/system/vendor/lib64:/vendor/lib64"
-		;;
-	esac
+	export PATH="${BASEDIR}/busybox:/system/bin:/system/xbin:${PATH}"
 
 	ui_print " > device architecture: ${ARCH}"
 }
@@ -379,21 +368,14 @@ patch_services () {
 			${BASEDIR}/services.vdex || \
 			error " !! failed to copy services.vdex"
 
-		LD_LIBRARY_PATH=${C_LD} \
-			${V_EX} -i ${BASEDIR}/services.vdex \
+		${V_EX} -i ${BASEDIR}/services.vdex \
 			--ignore-crc-error --debug=4 || \
 			error " !! failed to deodex services.vdex"
 
 		mv ${BASEDIR}/services.apk_classes.dex ${BASEDIR}/classes.dex || \
 			error " !! failed to deodex services.vdex"
 
-		# just in case | not allowed to call error() !
-		LD_LIBRARY_PATH=${C_LD} \
-			${ZIPB} -d "${BASEDIR}/services.jar" \
-			'classes.dex'
-
-		LD_LIBRARY_PATH=${C_LD} \
-			${ZIPB} -j "${BASEDIR}/services.jar" \
+		${ZIPB} -j "${BASEDIR}/services.jar" \
 			"${BASEDIR}/classes.dex" || \
 				error " !! zip failed"
 #
@@ -405,8 +387,7 @@ patch_services () {
 		cp "/system/framework/oat/${ARCH}/services.odex" "${BASEDIR}"
 
 		ui_print "   [1] baksmali services.odex"
-		LD_LIBRARY_PATH=${C_LD} \
-			/system/bin/dalvikvm \
+		/system/bin/dalvikvm \
 			-Xbootclasspath:${BOOTCLASSES} \
 			-classpath "${BAKSMALI}" \
 			org.jf.baksmali.Main \
@@ -417,22 +398,15 @@ patch_services () {
 				error " !! failed to deodex services.jar"
 
 		ui_print "   [2] smali services.odex"
-		LD_LIBRARY_PATH=${C_LD} \
+		/system/bin/dalvikvm \
 			-Xbootclasspath:${BOOTCLASSES} \
-			/system/bin/dalvikvm \
 			-classpath "${SMALI}" \
 			org.jf.smali.Main \
 			a "${BASEDIR}/services.jar-deodex" \
 			-o "${BASEDIR}/services.jar-deodex/classes.dex" || \
 				error " !! failed to rebuild classes.dex"
 
-		# just in case | not allowed to call error() !
-		LD_LIBRARY_PATH=${C_LD} \
-			${ZIPB} -d "${BASEDIR}/services.jar" \
-			'classes*.dex'
-
-		LD_LIBRARY_PATH=${C_LD} \
-			${ZIPB} -j "${BASEDIR}/services.jar" \
+		${ZIPB} -j "${BASEDIR}/services.jar" \
 			"${BASEDIR}/services.jar-deodex"/classes*.dex || \
 				error " !! zip failed"
 
@@ -444,8 +418,7 @@ patch_services () {
 	PATCHES="${PATCH_HOOK} ${PATCH_CORE}"
 
 	ui_print " >> patching services.jar"
-	LD_LIBRARY_PATH=${C_LD} \
-		/system/bin/dalvikvm \
+	/system/bin/dalvikvm \
 		-Xbootclasspath:${BOOTCLASSES} \
 		-classpath "${BASEDIR}/dexpatcher.dex" \
 		lanchon.dexpatcher.Main \
@@ -454,13 +427,11 @@ patch_services () {
 		${BASEDIR}/services.jar ${PATCHES} || \
 			error " !! failed to apply patches"
 
-	LD_LIBRARY_PATH=${C_LD} \
-		${ZIPB} -d "${BASEDIR}/services.jar" \
+	${ZIPB} -d "${BASEDIR}/services.jar" \
 		'classes*.dex' || \
 			error " !! zip failed"
 
-	LD_LIBRARY_PATH=${C_LD} \
-		${ZIPB} -j "${BASEDIR}/services.jar" \
+	${ZIPB} -j "${BASEDIR}/services.jar" \
 		"${BASEDIR}/services.jar-mod"/classes*.dex || \
 			error " !! zip failed"
 
