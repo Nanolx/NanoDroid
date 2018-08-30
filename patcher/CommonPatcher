@@ -357,6 +357,10 @@ patch_services () {
 		${BASEDIR}/services.jar || \
 		error " !! failed to copy services.jar"
 
+	for jar in /system/framework/*.jar ; do
+		BOOTCLASSES=${BOOTCLASSES}:${jar}
+	done
+
 #
 # XXX vdex stuff
 #
@@ -387,6 +391,7 @@ patch_services () {
 
 		ui_print "   [1] baksmali services.odex"
 		/system/bin/dalvikvm \
+			-Xbootclasspath:${BOOTCLASSES} \
 			-classpath "${BAKSMALI}" \
 			org.jf.baksmali.Main \
 			x "${BASEDIR}/services.odex" \
@@ -398,6 +403,7 @@ patch_services () {
 
 		ui_print "   [2] smali services.odex"
 		/system/bin/dalvikvm \
+			-Xbootclasspath:${BOOTCLASSES} \
 			-classpath "${SMALI}" \
 			org.jf.smali.Main \
 			a "${BASEDIR}/services.jar-deodex" \
@@ -417,6 +423,7 @@ patch_services () {
 
 	ui_print " >> patching services.jar"
 	/system/bin/dalvikvm \
+		-Xbootclasspath:${BOOTCLASSES} \
 		-classpath "${BASEDIR}/dexpatcher.dex" \
 		lanchon.dexpatcher.Main \
 		${DEX_OPTS} --api-level "${SDK_VERSION}" \
