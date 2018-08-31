@@ -772,7 +772,7 @@ install_apps () {
 					ui_print " <<> app: Adaway already provided by ROM (as AdAway)"
 				else	nanodroid_install_apk Adaway
 					echo "   + removing conflicting AdAway"
-					${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
+					${NANODROID_BINDIR}/nanodroid-overlay --add AdAway
 				fi
 			elif [[ ${app} = OmniClock && -d /system/app/OmniClockOSS ]]; then
 				if [ "${nanodroid_override}" -eq 0 ]; then
@@ -780,7 +780,7 @@ install_apps () {
 				else
 					nanodroid_install_apk OmniClock
 					echo "   + removing conflicting OmniClockOSS"
-					${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
+					${NANODROID_BINDIR}/nanodroid-overlay --add OmniClockOSS
 				fi
 			elif [[ -d /system/app/${app} && ! -d ${RESTORE_PATH}/system/app/${app} ]]; then
 				if [ "${nanodroid_override}" -eq 0 ]; then
