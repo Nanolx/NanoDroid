@@ -178,6 +178,7 @@ grab_apk_from_ogapps () {
 		23 ) API_LETTER=M ;;
 		24 ) API_LETTER=N ;;
 		26 ) API_LETTER=O ;;
+		28 ) API_LETTER=P ;;
 	esac
 
 	APK_DEST="${CWD}/Full/gsync/${API_LETTER}/${2}/${3}"

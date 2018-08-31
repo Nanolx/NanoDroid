@@ -410,6 +410,7 @@ detect_arch () {
 		23 )		GSYNC_VER=M	;;
 		24 | 25 )	GSYNC_VER=N	;;
 		26 | 27 )	GSYNC_VER=O	;;
+		28 )		GSYNC_VER=P	;;
 		* )	GSYNC_UNSUPPORTED=1	;;
 	esac
 

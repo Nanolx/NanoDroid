@@ -93,7 +93,6 @@ NanoDroid officially supports the following Android versions:
 * 8.0 / SDK 26 (Oreo)
 * 8.1 / SDK 27 (Oreo)
 * 9.0 / SDK 28 (Pie)
-  * Google Sync Adapters are not (yet) available
   * Patchers works
      * if your ROM's services.jar already contains classes.dex
      * and you use baksmali/smali on PC to convert from ODEX 039 format to an older

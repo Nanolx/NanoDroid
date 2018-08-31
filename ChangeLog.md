@@ -29,6 +29,7 @@ CommonInstaller, Uninstaller, Patcher
 * CommonInstaller
   * code simplifications
   * extend GApps debloat blacklist to filter out more stuff
+  * add Google Sync Adapters for Android P
   * don't set progressbar when flashing from Magisk Manager
   * when migrating from Play Store to Fake Store or vice versa during new installs get rid of that store's app data, too
   * minor string change
