@@ -71,7 +71,7 @@ CommonInstaller, Uninstaller, Patcher
 
 * automatic
   * QKSMS (3.4.5)
-  * F-Droid (1.4-alpha0)
+  * F-Droid (1.4-alpha1)
   * (Simple) Gallery (4.6.1)
   * Amaze (3.3RC2)
   * Substratum (1001)
