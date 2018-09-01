@@ -24,6 +24,9 @@ CommonInstaller, Uninstaller, Patcher
   * mount /vendor partition, increases compatibility with several ROMs
   * if there's no /vendor partition, but /system/vendor exists, create a compatibility link, which is required on some ROMs
 
+* NanoDroid-Overlay
+  * fix System Mode support
+
 ### General Changes
 
 * CommonInstaller

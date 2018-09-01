@@ -3,11 +3,14 @@
 export NO_MAGISK=0
 export MODPATH=@MODPATH@
 
-if [[ -d /dev/tmp/magisk_img/$(basename ${MODPATH}) ]]; then
-	OVERLAY_PATH=/dev/tmp/magisk_img/$(basename ${MODPATH})
+if [ -z "${MODPATH}" ]; then
+	OVERLAY_PATH=""
+	NO_MAGISK=1
+elif [ -d "/dev/tmp/magisk_img/$(basename "${MODPATH}")" ]; then
+	OVERLAY_PATH="/dev/tmp/magisk_img/$(basename "${MODPATH}")"
 else
-	OVERLAY_PATH=${MODPATH}
-	[[ "${MODPATH}" != "/sbin/.core/"* ]] && NO_MAGISK=1
+	echo "couldn't find NanoDroid!"
+	exit 1
 fi
 
 error () {
@@ -51,16 +54,18 @@ get_config () {
 }
 
 overrides_add_intern () {
-	app=$(basename ${1})
+	sysdir=${1}
+	app=${2}
 
 	if [[ ${NO_MAGISK} -eq 0 ]]; then
 		echo "  creating overlay: ${app}"
-		mkdir -p "${OVERLAY_PATH}/system/${1}"
-		touch "${OVERLAY_PATH}/system/${1}/.replace"
+		mkdir -p "${OVERLAY_PATH}/system/${sysdir}/${app}"
+		touch "${OVERLAY_PATH}/system/${sysdir}/${app}/.replace"
 	else
+		mkdir -p "/sdcard/nanodroid_backups/${sysdir}"
 		echo "  moving to /sdcard/nanodroid_backups: ${app}"
-		rm -rf "/sdcard/nanodroid_backups/${1}"
-		mv "/system/${1}" "/sdcard/nanodroid_backups/${1}"
+		rm -rf "/sdcard/nanodroid_backups/${sysdir}/${app}"
+		mv "/system/${sysdir}/${app}" "/sdcard/nanodroid_backups/${sysdir}/"
 	fi
 
 	grep -q "^${app}" "${config}" || echo "${app}" >> "${config}"
@@ -68,24 +73,25 @@ overrides_add_intern () {
 
 overrides_add () {
 	for app in ${@}; do
-		[[ -d /system/app/${app} ]] && overrides_add_intern app/${app}
-		[[ -d /system/priv-app/${app} ]] && overrides_add_intern priv-app/${app}
+		[ -d /system/app/${app} ] && overrides_add_intern app ${app}
+		[ -d /system/priv-app/${app} ] && overrides_add_intern priv-app ${app}
 	done
 }
 
 overrides_remove_intern () {
-	app=$(basename ${1})
+	sysdir=${1}
+	app=${2}
 
 	if [[ ${NO_MAGISK} -eq 0 ]]; then
 		echo "  removing overlay: ${app}"
-		rm -rf "${OVERLAY_PATH}/system/${1}"
+		rm -rf "${OVERLAY_PATH}/system/${sysdir}/${app}"
 	else
-		if [[ -d /system/${1} ]]; then
+		if [[ -d /system/${sysdir}/${app} ]]; then
 			echo "  removing old backup: ${app}"
-			rm -rf "/sdcard/nanodroid_backups/${1}"
+			rm -rf "/sdcard/nanodroid_backups/${sysdir}/${app}"
 		else
 			echo "  reinstalling: ${app}"
-			mv "/sdcard/nanodroid_backups/${1}" "/system/${1}"
+			mv "/sdcard/nanodroid_backups/${sysdir}/${app}" "/system/${sysdir}/"
 		fi
 	fi
 
@@ -95,11 +101,11 @@ overrides_remove_intern () {
 overrides_remove () {
 	for app in ${@}; do
 		if [[ ${NO_MAGISK} -eq 0 ]]; then
-			[[ -f ${OVERLAY_PATH}/system/app/${app}/.replace ]] && overrides_remove_intern app/${app}
-			[[ -f ${OVERLAY_PATH}/system/priv-app/${app}/.replace ]] && overrides_remove_intern priv-app/${app}
+			[ -f ${OVERLAY_PATH}/system/app/${app}/.replace ] && overrides_remove_intern app ${app}
+			[ -f ${OVERLAY_PATH}/system/priv-app/${app}/.replace ] && overrides_remove_intern priv-app ${app}
 		else
-			[[ -d /sdcard/nanodroid_backups/app/${app} ]] && overrides_remove_intern app/${app}
-			[[ -d /sdcard/nanodroid_backups/priv-app/${app} ]] && overrides_remove_intern priv-app/${app}
+			[ -d /sdcard/nanodroid_backups/app/${app} ] && overrides_remove_intern app ${app}
+			[ -d /sdcard/nanodroid_backups/priv-app/${app} ] && overrides_remove_intern priv-app ${app}
 		fi
 	done
 }
