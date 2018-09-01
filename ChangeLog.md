@@ -30,11 +30,11 @@ CommonInstaller, Uninstaller, Patcher
 ### General Changes
 
 * CommonInstaller
-  * code simplifications
-  * extend GApps debloat blacklist to filter out more stuff
   * add Google Sync Adapters for Android P
+  * extend GApps debloat blacklist to filter out more stuff
   * don't set progressbar when flashing from Magisk Manager
   * when migrating from Play Store to Fake Store or vice versa during new installs get rid of that store's app data, too
+  * code simplifications
   * minor string change
 
 * CommonAddon
@@ -42,7 +42,7 @@ CommonInstaller, Uninstaller, Patcher
 
 * CommonInstaller, CommmonAddon, Uninstaller
   * move installer information for System Mode from /data/adb/.nanodroid-list to /data/adb/NanoDroid_FileList
-  * CommonAddon and Uninstaller support both
+    * CommonAddon and Uninstaller support both
   * simplify code for the creation of the installer information
 
 * Patcher, CommonInstaller, Uninstaller
@@ -56,17 +56,15 @@ CommonInstaller, Uninstaller, Patcher
 
 * Uninstaller
   * display correct version number
-  * code simplifications
   * exit when flashing from Magisk Manager without doing anything
   * remove support for ancient versions (< 12.0)
+  * code simplifications
 
 * Patcher
-  * don't stop on odexed ROMs, just print a warning
-     * user may have services.jar deodexed
-  * if ROM's odex method is ODEX, **try** to automatically deodex it
-     * bundle baksmali and smali
   * if ROM's odex method is VDEX, **try** to automatically deodex it
      * bundle vdexExtractor
+  * if ROM's odex method is ODEX, **try** to automatically deodex it
+     * bundle baksmali and smali
   * if ROM's services.jar already contains classes.dex, skip deodexing
   * simplify code
   * remove old code
