@@ -53,9 +53,8 @@ org.microg.unifiednlp"
 ##########################################################################################
 
 detect_bootmode () {
-	ps | grep zygote | grep -v grep >/dev/null && BOOTMODE=true || BOOTMODE=false
-	${BOOTMODE} || ps -A 2>/dev/null | grep zygote | grep -v grep >/dev/null && BOOTMODE=true
-	${BOOTMODE} || id | grep -q 'uid=0' || BOOTMODE=true
+	ps | grep zygote | grep -qv grep && BOOTMODE=true || BOOTMODE=false
+	${BOOTMODE} || ps -A | grep zygote | grep -qv grep && BOOTMODE=true
 }
 
 ui_print() {
