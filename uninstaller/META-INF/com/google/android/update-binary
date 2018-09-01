@@ -206,18 +206,18 @@ restore_gapps () {
 		elif [ -d /sdcard/nanodroid_backups/app/${app} ]; then
 			appdir=app
 		else
-			break
+			continue
+		fi
+
+		if [ -d /system/${appdir}/${app} ]; then
+			ui_print " << removing backup: ${appdir} / ${app}"
+			rm -rf /sdcard/nanodroid_backups/${appdir}/${app}
+		else
+			ui_print " << restoring: ${appdir} / ${app}"
+			mv /sdcard/nanodroid_backups/${appdir}/${app} \
+				/system/${appdir}/ || error " !! failed to restore ${app}"
 		fi
 	done
-
-	if [ -d /system/${appdir}/${app} ]; then
-		ui_print " << removing backup: ${appdir} / ${app}"
-		rm -rf /sdcard/nanodroid_backups/${appdir}/${app}
-	else
-		ui_print " << restoring: ${appdir} / ${app}"
-		mv /sdcard/nanodroid_backups/${appdir}/${app} \
-			/system/${appdir}/ || error " !! failed to restore ${app}"
-	fi
 }
 
 system_mode_uninstall () {
