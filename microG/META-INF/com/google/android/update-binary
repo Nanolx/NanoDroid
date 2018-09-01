@@ -7,7 +7,7 @@ ZIP=${3}
 ZIPDIR=$(dirname "${ZIP}")
 MODID=NanoDroid_microG
 
-mkdir /dev/tmp
+mkdir -p /dev/tmp
 unzip -o "${ZIP}" CommonInstaller -d "/dev/tmp"
 if [ ! -f /dev/tmp/CommonInstaller ]; then
 	echo " !! failed to load Common Installer"
@@ -23,8 +23,9 @@ show_progress 1.0 0
 show_banner
 set_progress 0.1
 
-mount_partitions
 unpack_zip
+mount_partitions
+
 detect_arch
 ${BOOTMODE} || setup_busybox
 

@@ -441,6 +441,7 @@ setup_busybox () {
 	mkdir -p ${INSTALLER}/busybox
 	ln -s ${INSTALLER}/busybox.${BIN_ARCH} ${INSTALLER}/busybox/busybox
 
+	chmod 0755 ${INSTALLER}/busybox.${BIN_ARCH}
 	${INSTALLER}/busybox.${BIN_ARCH} --install -s ${INSTALLER}/busybox/
 
 	export PATH="${INSTALLER}/busybox:${PATH}"
