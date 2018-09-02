@@ -45,7 +45,11 @@ com.google.android.youtube
 com.mgoogle.android.gms
 com.qualcomm.location
 org.microg.nlp
-org.microg.unifiednlp"
+org.microg.unifiednlp
+com.android.vending
+com.google.android.gms
+com.google.android.gsf
+org.microg.gms.droidguard"
 
 ##########################################################################################
 # Misc. Functions
