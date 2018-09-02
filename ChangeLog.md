@@ -69,6 +69,10 @@ CommonInstaller, Uninstaller, Patcher
   * simplify code
   * remove old code
 
+* Full, microG packages
+  * improve Google Sync Adapters permission file
+  * update microg-a5k permissions file to latest upstream version
+
 ### Updates
 
 * automatic
