@@ -8,6 +8,7 @@
   * cleanup TWRP environment when an installation error occurs during System Mode installation
      * regression from 17.9
   * remove `GoogleExtServices` from GApps removal list, as it is required for ROMs using `GooglePackageManager`
+  * remove `GooglePartnerSetup` from GApps removal list, as some ROMs require it
 
 CommonInstaller, Uninstaller, Patcher
   * add busybox build by osm0sis (used during installation only)
@@ -30,7 +31,6 @@ CommonInstaller, Uninstaller, Patcher
 ### General Changes
 
 * CommonInstaller
-  * add Google Sync Adapters for Android P
   * extend GApps debloat blacklist to filter out more stuff
   * don't set progressbar when flashing from Magisk Manager
   * when migrating from Play Store to Fake Store or vice versa during new installs get rid of that store's app data, too
@@ -38,6 +38,7 @@ CommonInstaller, Uninstaller, Patcher
   * minor string change
 
 * CommonAddon
+  * declare addon.d version 2 support
   * code simplifcations
 
 * CommonInstaller, CommmonAddon, Uninstaller
@@ -70,6 +71,7 @@ CommonInstaller, Uninstaller, Patcher
   * remove old code
 
 * Full, microG packages
+  * add Google Sync Adapters for Android P
   * improve Google Sync Adapters permission file
   * update microg-a5k permissions file to latest upstream version
 
