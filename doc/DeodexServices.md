@@ -8,6 +8,10 @@ If you want to check beforehand (or afterwards), if your ROM supports Signature 
 
 If your `/system/framework/services.jar` file contains the file `classes.dex`, you can skip deodexing and start patching right-away, else following theese instructions.
 
+## Android 9.0 Pie
+
+Android 9.0 is currently not supported by vdexExtractor or smali/baksmali.
+
 ## VDEX
 
 If you can see `/system/framework/oat/[arch]/services.vdex`, where [arch] is the device architecture (arm, arm64, x86 or x86_64), you should follow theese instructions.
