@@ -503,8 +503,9 @@ install_addond () {
 	cp /dev/tmp/CommonPatcher ${PATCHER_ADDOND_DATA}/
 
 	cp ${BUSY} ${PATCHER_ADDOND_DATA}/
-	chmod 0755  ${PATCHER_ADDOND_DATA}/${BUSY}
+	chmod 0755 ${PATCHER_ADDOND_DATA}/$(basename "${BUSY}")
 
+	mkdir -p /system/addon.d/
 	cp "${BASEDIR}/999-nanodroidpatcher.sh" /system/addon.d/
 	chmod 0755 /system/addon.d/999-nanodroidpatcher.sh
 }
