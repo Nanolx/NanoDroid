@@ -258,7 +258,6 @@ detect_mode () {
 		1 )
 			if ! ${BOOTMODE}; then
 				MODE=SYSTEM
-				MODE_TEXT=" > Mode   | System            | forced"
 			else
 				error " !! Forced System Mode installation requested, but device in BOOTMODE"
 			fi
