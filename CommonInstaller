@@ -256,6 +256,8 @@ migrate_magisk_custom () {
 detect_mode () {
 	case "${nanodroid_forcesystem}" in
 		1 )
+			MODE_DETECT=forced
+
 			if ! ${BOOTMODE}; then
 				MODE=SYSTEM
 			else
@@ -264,7 +266,11 @@ detect_mode () {
 		;;
 
 		0 | *)
-			if [ -f /data/adb/magisk/magisk ]; then
+			MODE_DETECT=detected
+
+			if [ -f "${NANODROID_LIST}" ]; then
+				MODE=SYSTEM
+			elif [ -f /data/adb/magisk/magisk ]; then
 				MODE=MAGISK
 			elif [ -f /data/.magisk/magisk ]; then
 				migrate_magisk_custom /data/.magisk/
@@ -280,10 +286,10 @@ detect_mode () {
 		;;
 	esac
 
-	if [ "${MODE}" = "SYSTEM" ]; then
-		ui_print " > Mode   | System            | detected"
-		ui_print " "
+	ui_print " > Mode   | ${MODE}            | ${MODE_DETECT}"
+	ui_print " "
 
+	if [ "${MODE}" = "SYSTEM" ]; then
 		if test -f ${NANODROID_LIST} -o \
 			-f /data/adb/.nanodroid-list -o \
 			-f /system/addon.d/91-nanodroid.sh; then
@@ -296,10 +302,6 @@ detect_mode () {
 
 	if [ "${MODE}" = "MAGISK" ]; then
 		MAGISKBIN=/data/adb/magisk
-
-		ui_print " > Mode   | Magisk            | detected"
-		ui_print " "
-
 		magisk_install_setup
 	fi
 
