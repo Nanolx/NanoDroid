@@ -258,8 +258,6 @@ detect_mode () {
 		0 | *)
 			if [ -f /data/adb/magisk/magisk ]; then
 				MODE=MAGISK
-				MAGISKBIN=/data/adb/magisk
-				MODE_TEXT=" > Mode   | Magisk            | detected"
 			elif [ -f /data/.magisk/magisk ]; then
 				if [ ! -d /data/adb/ ]; then
 					mkdir -p /data/adb/
@@ -270,8 +268,16 @@ detect_mode () {
 				cp -r /data/.magisk /data/adb/magisk
 
 				MODE=MAGISK
-				MAGISKBIN=/data/adb/magisk
-				MODE_TEXT=" > Mode   | Magisk            | detected"
+			elif [ -f /data/magisk/magisk ]; then
+				if [ ! -d /data/adb/ ]; then
+					mkdir -p /data/adb/
+					chown root:root /data/adb
+					chmod 0644 /data/adb
+				fi
+
+				cp -r /data/magisk /data/adb/magisk
+
+				MODE=MAGISK
 			elif ! ${BOOTMODE}; then
 				MODE=SYSTEM
 				MODE_TEXT=" > Mode   | System            | detected"
@@ -295,7 +301,11 @@ detect_mode () {
 		recovery_actions
 	fi
 
-	[ "${MODE}" = "MAGISK" ] && magisk_install_setup
+	if [ "${MODE}" = "MAGISK" ]; then
+		MAGISKBIN=/data/adb/magisk
+		MODE_TEXT=" > Mode   | Magisk            | detected"
+		magisk_install_setup
+	fi
 
 	if [ "${nanodroid_fonts}" -eq 1 ]; then
 		if test -h ${RESTORE_PATH}/system/fonts/Roboto-Regular.ttf; then
