@@ -10,6 +10,8 @@
   * remove `GoogleExtServices` from GApps removal list, as it is required for ROMs using `GooglePackageManager`
   * remove `GooglePartnerSetup` from GApps removal list, as some ROMs require it
   * on fresh installations, also get rid of possible user-installed version of Play Services
+  * fix installation in Magisk Mode when ROM was never booted
+  * error-out if /data couldn't be mounted
 
 CommonInstaller, Uninstaller, Patcher
   * add busybox build by osm0sis (used during installation only)
