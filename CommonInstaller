@@ -244,6 +244,15 @@ mount_partitions () {
 	mount | awk '{print $1 " on " $3}'
 }
 
+migrate_magisk_custom () {
+	if [ ! -d /data/adb/ ]; then
+		mkdir -p /data/adb/
+		chown root:root /data/adb
+		chmod 0644 /data/adb
+	fi
+	cp -r ${1} /data/adb/magisk
+}
+
 detect_mode () {
 	case "${nanodroid_forcesystem}" in
 		1 )
@@ -259,24 +268,10 @@ detect_mode () {
 			if [ -f /data/adb/magisk/magisk ]; then
 				MODE=MAGISK
 			elif [ -f /data/.magisk/magisk ]; then
-				if [ ! -d /data/adb/ ]; then
-					mkdir -p /data/adb/
-					chown root:root /data/adb
-					chmod 0644 /data/adb
-				fi
-
-				cp -r /data/.magisk /data/adb/magisk
-
+				migrate_magisk_custom /data/.magisk/
 				MODE=MAGISK
 			elif [ -f /data/magisk/magisk ]; then
-				if [ ! -d /data/adb/ ]; then
-					mkdir -p /data/adb/
-					chown root:root /data/adb
-					chmod 0644 /data/adb
-				fi
-
-				cp -r /data/magisk /data/adb/magisk
-
+				migrate_magisk_custom /data/magisk/
 				MODE=MAGISK
 			elif ! ${BOOTMODE}; then
 				MODE=SYSTEM
