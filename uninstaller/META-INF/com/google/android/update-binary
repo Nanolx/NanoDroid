@@ -167,7 +167,7 @@ mount_partitions () {
 		[ "${SLOT}" = "_" ] && SLOT=
 	fi
 
-	is_mounted /data || mount /data
+	is_mounted /data || mount /data || error "failed to mount /data!"
 
 	! is_mounted /system && mount -o rw /system
 

@@ -208,7 +208,7 @@ mount_partitions () {
 		[ "${SLOT}" = "_" ] && SLOT=
 	fi
 
-	is_mounted /data || mount /data
+	is_mounted /data || mount /data || error "failed to mount /data!"
 
 	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
 
