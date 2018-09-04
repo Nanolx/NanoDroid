@@ -280,17 +280,16 @@ detect_mode () {
 				MODE=MAGISK
 			elif ! ${BOOTMODE}; then
 				MODE=SYSTEM
-				MODE_TEXT=" > Mode   | System            | detected"
 			else
 				error " !! Magisk 15.0+ not found and device in BOOTMODE"
 			fi
 		;;
 	esac
 
-	ui_print "${MODE_TEXT}"
-	ui_print " "
-
 	if [ "${MODE}" = "SYSTEM" ]; then
+		ui_print " > Mode   | System            | detected"
+		ui_print " "
+
 		if test -f ${NANODROID_LIST} -o \
 			-f /data/adb/.nanodroid-list -o \
 			-f /system/addon.d/91-nanodroid.sh; then
@@ -303,7 +302,10 @@ detect_mode () {
 
 	if [ "${MODE}" = "MAGISK" ]; then
 		MAGISKBIN=/data/adb/magisk
-		MODE_TEXT=" > Mode   | Magisk            | detected"
+
+		ui_print " > Mode   | Magisk            | detected"
+		ui_print " "
+
 		magisk_install_setup
 	fi
 
