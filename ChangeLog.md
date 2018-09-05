@@ -90,7 +90,7 @@ CommonInstaller, Uninstaller, Patcher
 
 * manual
   * microG GmsCore (0.2.5.12879-141-custom)
-  * Play Store (11.4.16)
+  * Play Store (11.6.15)
 
 ## 17.9.20180818
 
