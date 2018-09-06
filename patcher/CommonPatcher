@@ -165,13 +165,13 @@ detect_odex () {
 
 	[ "${SERVICES_JAR_DEX}" ] && ROM_DEX_STATUS=DEODEX
 
-	[ "${SDK_VERSION}" -gt 27 -a "${ROM_DEX_STATUS}" != "DEODEX" ] && \
-		error "Pie is only supported on de-odexed ROMs currently"
-
 	ui_print "   "
 	ui_print " ++"
 	ui_print " ++ services.jar status: ${ROM_DEX_STATUS}"
 	ui_print " ++"
+
+	[ "${SDK_VERSION}" -gt 27 -a "${ROM_DEX_STATUS}" != "DEODEX" ] && \
+		error "Pie is only supported on de-odexed ROMs currently"
 }
 
 detect_arch () {
