@@ -209,7 +209,7 @@ detect_arch () {
 
 	case ${ARCH} in
 		arm | x86 )
-			export LD_LIBRARY_PATH=C_LD="/system/lib:/vendor/lib:/system/vendor/lib"
+			export LD_LIBRARY_PATH="/system/lib:/vendor/lib:/system/vendor/lib"
 		;;
 
 		arm64 | x86_64 )
