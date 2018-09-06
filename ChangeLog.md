@@ -67,11 +67,13 @@ CommonInstaller, Uninstaller, Patcher
 
 * Patcher
   * if ROM's odex method is VDEX, **try** to automatically deodex it
-     * bundle vdexExtractor 0.5.1
+     * bundle vdexExtractor (0.5.1)
   * if ROM's odex method is ODEX, **try** to automatically deodex it
-     * bundle baksmali and smali 2.2.5
+     * bundle baksmali and smali
+         * SDK <= 25 version 2.2.2
+         * SDK >= 26 version 2.2.5
   * if ROM's services.jar already contains classes.dex, skip deodexing
-  * update dexpatcher 1.6.1
+  * update dexpatcher (1.6.1)
   * simplify code
   * remove old code
 
@@ -88,10 +90,17 @@ CommonInstaller, Uninstaller, Patcher
   * (Simple) Gallery (4.6.1)
   * Amaze (3.3RC2)
   * Substratum (1001)
+  * K9-Mail (5.600)
 
 * manual
   * microG GmsCore (0.2.5.12879-141-custom)
   * Play Store (11.6.15)
+
+* tools
+  * vdexExtractor (0.5.1)
+  * smali/baksmali (2.2.2 [SDK <= 25])
+  * smali/baksmali (2.2.5 [SDK <= 26])
+  * dexpatcher (1.6.1)
 
 ## 17.9.20180818
 
