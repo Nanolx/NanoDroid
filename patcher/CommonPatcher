@@ -103,7 +103,10 @@ mount_partitions () {
 }
 
 error () {
-	ui_print "${@}"
+	ui_print " "
+	ui_print " !! ${@}"
+	ui_print " "
+
 	magisk_cleanup
 	exit 1
 }
