@@ -105,9 +105,6 @@ mount_partitions () {
 error () {
 	ui_print "${@}"
 	magisk_cleanup
-
-	${BOOTMODE} || recovery_cleanup
-
 	exit 1
 }
 
@@ -166,7 +163,7 @@ detect_odex () {
 	[ "${SERVICES_JAR_DEX}" ] && ROM_DEX_STATUS=DEODEX
 
 	[ "${SDK_VERSION}" -gt 27 -a "${ROM_DEX_STATUS}" != "DEODEX" ] && \
-		echo "Pie is only supported on de-odexed ROMs currently"
+		error "Pie is only supported on de-odexed ROMs currently"
 
 	ui_print "   "
 	ui_print " ++"
