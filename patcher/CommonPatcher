@@ -165,6 +165,9 @@ detect_odex () {
 
 	[ "${SERVICES_JAR_DEX}" ] && ROM_DEX_STATUS=DEODEX
 
+	[ "${SDK_VERSION}" -gt 27 -a "${ROM_DEX_STATUS}" != "DEODEX" ] && \
+		echo "Pie is only supported on de-odexed ROMs currently"
+
 	ui_print "   "
 	ui_print " ++"
 	ui_print " ++ services.jar status: ${ROM_DEX_STATUS}"
@@ -230,8 +233,8 @@ detect_arch () {
 detect_sdk () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
-	[ "${SDK_VERSION}" -gt 27 ] && \
-		error " !! Android versions beyond Oreo are not yet supported"
+	[ "${SDK_VERSION}" -gt 28 ] && \
+		error " !! Android versions beyond Pie are not yet supported"
 
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error " !! Android versions before Jelly Bean are not supported"
