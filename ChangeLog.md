@@ -67,10 +67,11 @@ CommonInstaller, Uninstaller, Patcher
 
 * Patcher
   * if ROM's odex method is VDEX, **try** to automatically deodex it
-     * bundle vdexExtractor
+     * bundle vdexExtractor 0.5.1
   * if ROM's odex method is ODEX, **try** to automatically deodex it
-     * bundle baksmali and smali
+     * bundle baksmali and smali 2.2.5
   * if ROM's services.jar already contains classes.dex, skip deodexing
+  * update dexpatcher 1.6.1
   * simplify code
   * remove old code
 
