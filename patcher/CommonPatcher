@@ -234,10 +234,10 @@ detect_sdk () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
 	[ "${SDK_VERSION}" -gt 28 ] && \
-		error " !! Android versions beyond Pie are not yet supported"
+		error "Android versions beyond Pie are not yet supported"
 
 	[ "${SDK_VERSION}" -lt 16 ] && \
-		error " !! Android versions before Jelly Bean are not supported"
+		error "Android versions before Jelly Bean are not supported"
 
 	if [ "${SDK_VERSION}" -gt 25 ]; then
 		BAKSMALI="${BASEDIR}/baksmali_26.dex"
@@ -300,9 +300,9 @@ image_size_check() {
 magisk_setup () {
 	if [ -f ${MAGISK_IMG} ]; then
 		grow_magisk_img || \
-			error " !! failed to grow magisk.img"
+			error "failed to grow magisk.img"
 		mount_image ${MAGISK_IMG} ${MAGISK_PATH} || \
-			error " !! failed to mount ${MAGISK_PATH}"
+			error "failed to mount ${MAGISK_PATH}"
 	fi
 }
 
@@ -312,7 +312,7 @@ magisk_cleanup () {
 		losetup -d $LOOPDEVICE
 		rmdir ${MAGISK_PATH}
 		shrink_magisk_img || \
-			error " !! failed to shrink magisk.img"
+			error "failed to shrink magisk.img"
 	fi
 }
 
@@ -327,13 +327,13 @@ setup_patcher () {
 	mkdir -p ${TMPDIR}
 
 	unzip -o "${ZIP}" -d ${TMPDIR} || \
-		error " !! failed to prepare environment"
+		error "failed to prepare environment"
 
 	for bin in zip.arm zip.x86 file.arm file.x86 \
 		vdexExtractor.arm vdexExtractor.x86 \
 		vdexExtractor.arm64 vdexExtractor.x86_64; do
 		chmod 0755 "${BASEDIR}/${bin}" || \
-			error " !! failed to prepare environment"
+			error "failed to prepare environment"
 	done
 
 	mkdir -p /data/adb/
@@ -361,7 +361,7 @@ patch_services () {
 
 	cp /system/framework/services.jar \
 		${BASEDIR}/services.jar || \
-		error " !! failed to copy services.jar"
+		error "failed to copy services.jar"
 
 #
 # XXX vdex stuff
@@ -371,18 +371,18 @@ patch_services () {
 
 		cp /system/framework/oat/${ARCH}/services.vdex \
 			${BASEDIR}/services.vdex || \
-			error " !! failed to copy services.vdex"
+			error "failed to copy services.vdex"
 
 		${V_EX} -i ${BASEDIR}/services.vdex \
 			--ignore-crc-error --debug=4 || \
-			error " !! failed to deodex services.vdex"
+			error "failed to deodex services.vdex"
 
 		mv ${BASEDIR}/services.apk_classes.dex ${BASEDIR}/classes.dex || \
-			error " !! failed to deodex services.vdex"
+			error "failed to deodex services.vdex"
 
 		${ZIPB} -j "${BASEDIR}/services.jar" \
 			"${BASEDIR}/classes.dex" || \
-				error " !! zip failed"
+				error "zip failed"
 #
 # XXX odex stuff
 #
@@ -400,7 +400,7 @@ patch_services () {
 			-d "/system/framework/${ARCH}" \
 			-d "/system/framework" \
 			-o "${BASEDIR}/services.jar-deodex" || \
-				error " !! failed to deodex services.jar"
+				error "failed to deodex services.jar"
 
 		ui_print "   [2] smali services.odex"
 		call_dalvikvm \
@@ -408,11 +408,11 @@ patch_services () {
 			org.jf.smali.Main \
 			a "${BASEDIR}/services.jar-deodex" \
 			-o "${BASEDIR}/services.jar-deodex/classes.dex" || \
-				error " !! failed to rebuild classes.dex"
+				error "failed to rebuild classes.dex"
 
 		${ZIPB} -j "${BASEDIR}/services.jar" \
 			"${BASEDIR}/services.jar-deodex"/classes*.dex || \
-				error " !! zip failed"
+				error "zip failed"
 
 		rm -rf "${BASEDIR}/services.jar-deodex"
 	fi
@@ -428,22 +428,22 @@ patch_services () {
 		${DEX_OPTS} --api-level "${SDK_VERSION}" \
 		--verbose --debug --output ${BASEDIR}/services.jar-mod \
 		${BASEDIR}/services.jar ${PATCHES} || \
-			error " !! failed to apply patches"
+			error "failed to apply patches"
 
 	${ZIPB} -d "${BASEDIR}/services.jar" \
 		'classes*.dex' || \
-			error " !! zip failed"
+			error "zip failed"
 
 	${ZIPB} -j "${BASEDIR}/services.jar" \
 		"${BASEDIR}/services.jar-mod"/classes*.dex || \
-			error " !! zip failed"
+			error "zip failed"
 }
 
 backup_services_jar () {
 	ui_print " << backing up services.jar to: /sdcard/nanodroid_backups"
 	mkdir -p /sdcard/nanodroid_backups
 	cp /system/framework/services.jar /sdcard/nanodroid_backups || \
-		error " !! failed to backup services.jar"
+		error "failed to backup services.jar"
 }
 
 install_services () {
@@ -458,7 +458,7 @@ install_services () {
 
 	if [ "${install_path}" = "/" ]; then
 		mount -orw,remount /system || \
-			error " !! failed to mount /system read-write"
+			error "failed to mount /system read-write"
 		backup_services_jar
 	fi
 
@@ -466,7 +466,7 @@ install_services () {
 
 	mkdir -p "${install_path}/system/framework"
 	cp ${BASEDIR}/services.jar "${install_path}/system/framework" \
-		|| error " !! failed to install services.jar"
+		|| error "failed to install services.jar"
 
 	if [ "${install_path}" = "/" ]; then
 		echo /system/framework/services.jar >> /data/adb/NanoDroid_FileList
