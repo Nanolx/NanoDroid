@@ -95,7 +95,6 @@ NanoDroid officially supports the following Android versions:
 * 9.0 / SDK 28 (Pie)
   * Patchers works
      * if your ROM's services.jar already contains classes.dex
-     * and you use baksmali/smali on PC to convert from ODEX 039 format to an older
      * [> Deodex Instructions](doc/DeodexServices.md)
 
 earlier versions will never officially be supported (you may still report bugs, though).
