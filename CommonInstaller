@@ -257,12 +257,9 @@ detect_mode () {
 	case "${nanodroid_forcesystem}" in
 		1 )
 			MODE_DETECT=forced
+			MODE=SYSTEM
 
-			if ! ${BOOTMODE}; then
-				MODE=SYSTEM
-			else
-				error "Forced System Mode installation requested, but device in BOOTMODE"
-			fi
+			${BOOTMODE} && error "Forced System Mode installation requested, but device in BOOTMODE"
 		;;
 
 		0 | *)
@@ -270,6 +267,7 @@ detect_mode () {
 
 			if [ -f "${NANODROID_LIST}" ]; then
 				MODE=SYSTEM
+
 				${BOOTMODE} && error "System Mode installation detected, but device in BOOTMODE"
 			elif [ -f /data/adb/magisk/magisk ]; then
 				MODE=MAGISK
