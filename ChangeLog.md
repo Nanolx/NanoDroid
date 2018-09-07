@@ -1,5 +1,19 @@
 # ChangeLog
 
+## 18.0a.20180907
+
+### Bug Fixes
+
+* CommonInstaller
+  * fix microG GmsCore, PlayStore and microG Services Framework Proxy loosing data and permissions after upgrade
+  * if System Mode installation is detected, exit the installer if run from Magisk Manager
+
+### General Changes
+
+* CommonInstaller
+  * minor code improvements
+  * fix doubled "!!" in error strings
+
 ## 18.0.20180907
 
 ### Bug Fixes
