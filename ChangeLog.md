@@ -93,7 +93,7 @@ CommonInstaller, Uninstaller, Patcher
   * K9-Mail (5.600)
 
 * manual
-  * microG GmsCore (0.2.5.12879-141-custom)
+  * microG GmsCore (0.2.5.12879-30-477b244-custom)
   * Play Store (11.6.15)
 
 * tools
