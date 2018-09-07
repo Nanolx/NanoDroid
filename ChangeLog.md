@@ -8,9 +8,6 @@
   * fix microG GmsCore, PlayStore and microG Services Framework Proxy loosing data and permissions after upgrade
   * if System Mode installation is detected, exit the installer if run from Magisk Manager
 
-* Full, microG packages
-  * improve microg-permissions.xml to fix bootloops on some Pie ROMs
-
 ### General Changes
 
 * CommonInstaller
