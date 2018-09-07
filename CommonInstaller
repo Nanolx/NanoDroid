@@ -101,8 +101,8 @@ is_mounted() {
 }
 
 set_perm() {
-	chown ${2}:${3} ${1} || error " !! failed change owner for ${1}"
-	chmod ${4} ${1} || error " !! failed to change mode for ${1}"
+	chown ${2}:${3} ${1} || error "failed change owner for ${1}"
+	chmod ${4} ${1} || error "failed to change mode for ${1}"
 	if [ ! -z "${5}" ]; then
 		chcon ${5} ${1} 2>/dev/null
 	else	chcon 'u:object_r:system_file:s0' ${1} 2>/dev/null
@@ -261,7 +261,7 @@ detect_mode () {
 			if ! ${BOOTMODE}; then
 				MODE=SYSTEM
 			else
-				error " !! Forced System Mode installation requested, but device in BOOTMODE"
+				error "Forced System Mode installation requested, but device in BOOTMODE"
 			fi
 		;;
 
@@ -270,6 +270,7 @@ detect_mode () {
 
 			if [ -f "${NANODROID_LIST}" ]; then
 				MODE=SYSTEM
+				${BOOTMODE} && error "System Mode installation detected, but device in BOOTMODE"
 			elif [ -f /data/adb/magisk/magisk ]; then
 				MODE=MAGISK
 			elif [ -f /data/.magisk/magisk ]; then
@@ -281,7 +282,7 @@ detect_mode () {
 			elif ! ${BOOTMODE}; then
 				MODE=SYSTEM
 			else
-				error " !! Magisk 15.0+ not found and device in BOOTMODE"
+				error "Magisk 15.0+ not found and device in BOOTMODE"
 			fi
 		;;
 	esac
@@ -333,11 +334,11 @@ unpack_zip () {
 	INSTALLER=${TMPDIR}/install
 
 	rm -rf ${INSTALLER}
-	mkdir -p ${INSTALLER} || error " !! failed to prepare environment!"
+	mkdir -p ${INSTALLER} || error "failed to prepare environment!"
 
 	ui_print " > prepare installation"
 	unzip -o "${ZIP}" -d "${INSTALLER}" || \
-		error " !! failed to prepare environment!"
+		error "failed to prepare environment!"
 }
 
 nanodroid_finalize () {
@@ -488,13 +489,13 @@ magisk_install_setup () {
 	MOUNTPATH=${TMPDIR}/magisk_img
 
 	[ -f ${MAGISKBIN}/util_functions.sh ] || \
-		error " !! Magisk version 15.0 or newer is required"
+		error "Magisk version 15.0 or newer is required"
 
 	. ${MAGISKBIN}/util_functions.sh
 
 	MIN_VER=$(grep_prop minMagisk ${INSTALLER}/module.prop)
 	[ ! -z ${MAGISK_VER_CODE} -a ${MAGISK_VER_CODE} -ge ${MIN_VER} ] || \
-		error " !! Magisk 15.0 or newer is required"
+		error "Magisk 15.0 or newer is required"
 
 	${BOOTMODE} && IMG=/data/adb/magisk_merge.img || IMG=/data/adb/magisk.img
 
@@ -529,7 +530,7 @@ magisk_install_setup () {
 		NanoDroid_microG )
 			# check for Full package and abort if found
 			[ -d ${MOUNTPATH}/NanoDroid -o -d ${REALPATH}/NanoDroid ] && \
-				error " !! ${MODID} can't be installed along side the Full package"
+				error "${MODID} can't be installed along side the Full package"
 
 			[ -d ${MOUNTPATH}/NanoDroid_microG -o -d ${REALPATH}/NanoDroid_microG ] && NANODROID_UPGRADE=1
 		;;
@@ -537,7 +538,7 @@ magisk_install_setup () {
 		NanoDroid_FDroid )
 			# check for Full package and abort if found
 			[ -d ${MOUNTPATH}/NanoDroid -o -d ${REALPATH}/NanoDroid ] && \
-				error " !! ${MODID} can't be installed along side the Full package"
+				error "${MODID} can't be installed along side the Full package"
 
 			[ -d ${MOUNTPATH}/NanoDroid_FDroid -o -d ${REALPATH}/NanoDroid_FDroid ] && NANODROID_UPGRADE=1
 		;;
@@ -722,7 +723,7 @@ install_gsync () {
 
 				cp "${GSYNC_BASE}/app/Google${app}/Google${app}.apk" \
 					"${MODPATH}/system/app/Google${app}/"  || \
-					error " !! failed to install Google${app}"
+					error "failed to install Google${app}"
 
 				set_perm_data -r "${MODPATH}/system/app/Google${app}"
 
@@ -734,7 +735,7 @@ install_gsync () {
 
 			cp "${GSYNC_BASE}/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk" \
 				"${MODPATH}/system/priv-app/GoogleBackupTransport/" || \
-				error " !! failed to install GoogleBackupTransport"
+				error "failed to install GoogleBackupTransport"
 
 			set_perm_data -r "${MODPATH}/system/priv-app/GoogleBackupTransport"
 
@@ -973,7 +974,7 @@ install_swipe () {
 
 		for lib in latinimegoogle keyboarddecoder; do
 			cp "${SWIPE_SRC}/libjni_${lib}.so" "${MODPATH}${SWIPE_DEST}" || \
-				error " !! failed to install libjni_${lib}.so"
+				error "failed to install libjni_${lib}.so"
 			set_perm_data "${MODPATH}${SWIPE_DEST}/libjni_${lib}.so"
 
 			installinfo_add "${SWIPE_DEST}/libjni_${lib}.so"
@@ -987,7 +988,7 @@ install_addond () {
 		ui_print " << System Mode OTA survival"
 
 		cp "${INSTALLER}/CommonAddon" "/system/addon.d/91-nanodroid.sh" || \
-			error " !! failed to install System Mode OTA survival"
+			error "failed to install System Mode OTA survival"
 
 		chmod 0755 "/system/addon.d/91-nanodroid.sh"
 		sed -e "s|@MODID@|${MODID}|g" -i "/system/addon.d/91-nanodroid.sh"
@@ -1005,13 +1006,13 @@ nanodroid_install_dir () {
 	dest="/system/${dir}"
 
 	[ ! -d "${INSTALLER}/system/${dir}" ] && \
-		error " !! dir: ${dir} not found"
+		error "dir: ${dir} not found"
 
 	echo "    installing dir: ${dir}"
 
 	mkdir -p "${MODPATH}${dest}"
 	cp -r "${INSTALLER}/system/${dir}"/* "${MODPATH}${dest}/" || \
-		error " !! failed to install ${dir}"
+		error "failed to install ${dir}"
 
 	case ${2} in
 		bin ) set_perm_bin -r "${MODPATH}${dest}" ;;
@@ -1032,7 +1033,7 @@ nanodroid_install_apk () {
 	elif [ -f "${INSTALLER}/system/priv-app/${app}/${app}.apk" ]; then
 		dir=system/priv-app
 	else
-		error " !! app ${app} not found"
+		error "app ${app} not found"
 	fi
 
 	source="${INSTALLER}/${dir}/${app}/${app}.apk"
@@ -1047,7 +1048,7 @@ nanodroid_install_apk () {
 
 	echo "    installing app: ${app}"
 	cp "${source}" "${MODPATH}/${dest}" || \
-		error " !! failed to install ${source} to ${dest}"
+		error "failed to install ${source} to ${dest}"
 
 	set_perm_data -r "${MODPATH}/${dest}"
 
@@ -1061,7 +1062,7 @@ nanodroid_install_file () {
 	file="$(basename "${1}")"
 
 	[ ! -f "${INSTALLER}/system/${dir}/${file}" ] && \
-		error " !! file: ${file} not found"
+		error "file: ${file} not found"
 
 	# if /system/xbin does not exist, use /system/bin
 	[ "${dir}" = "xbin" -a "${ROM_NO_XBIN}" -eq 1 ] && xdir="bin" || xdir="${dir}"
@@ -1074,7 +1075,7 @@ nanodroid_install_file () {
 	mkdir -p "${MODPATH}/system/${xdir}/"
 	cp "${INSTALLER}/system/${dir}/${file}" \
 		"${MODPATH}/system/${xdir}/${xfile}" || \
-		error " !! failed to install ${xfile}"
+		error "failed to install ${xfile}"
 
 	case ${2} in
 		bin ) set_perm_bin "${MODPATH}/system/${xdir}/${xfile}" ;;
@@ -1139,7 +1140,7 @@ nanodroid_install_lib () {
 			for lib in ${srcdir}/*; do
 				echo "        library: $(basename ${lib})"
 				cp ${lib} ${libd}/${lib_arch}/ || \
-					error " !! installing libraries failed"
+					error "installing libraries failed"
 
 				set_perm_data ${libd}/${lib_arch}/$(basename ${lib})
 
@@ -1158,7 +1159,7 @@ nanodroid_substitute () {
 
 	target="${MODPATH}/system/${dir}/${file}"
 
-	[ ! -f "${target}" ] && error " !! file: ${file} not found"
+	[ ! -f "${target}" ] && error "file: ${file} not found"
 
 	if grep -q @ZIPDIR@ "${target}"; then
 		if [[ "${ZIPDIR}" == "/external_sd" ]]; then
