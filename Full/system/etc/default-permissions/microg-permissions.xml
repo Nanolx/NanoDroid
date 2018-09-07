@@ -64,23 +64,14 @@
         <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="true"></permission>
     </exception>
 
-    <exception package="org.microg.gms.droidguard">
-        <permission name="android.permission.INTERNET" fixed="false"></permission>
-    </exception>
-
     <exception package="org.microg.nlp.backend.ichnaea">
         <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="false"></permission>
         <permission name="android.permission.ACCESS_FINE_LOCATION" fixed="false"></permission>
-        <permission name="android.permission.INTERNET" fixed="false"></permission>
         <permission name="android.permission.READ_PHONE_STATE" fixed="false"></permission>
     </exception>
 
     <exception package="org.fitchfamily.android.dejavu">
         <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="false"></permission>
         <permission name="android.permission.ACCESS_FINE_LOCATION" fixed="false"></permission>
-    </exception>
-
-    <exception package="org.microg.nlp.backend.nominatim">
-        <permission name="android.permission.INTERNET" fixed="false"></permission>
     </exception>
 </exceptions>
