@@ -4,8 +4,8 @@ Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called *
 
 ## Current Release
 
-* Stable: 17.9.20180818
-* Beta: 18.0~beta2 (20180901)
+* Stable: 18.0.20180907
+* Beta: --- (---)
 
 ## Downloads
 
