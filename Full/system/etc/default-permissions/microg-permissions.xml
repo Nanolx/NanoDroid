@@ -40,13 +40,6 @@
         <!-- Storage -->
         <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="false"></permission>
         <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="false"></permission>
-        <!-- Fake Signature Spoofing -->
-        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="true"></permission>
-    </exception>
-
-    <exception package="com.google.android.gsf">
-        <permission name="com.google.android.c2dm.permission.RECEIVE" fixed="false"></permission>
-        <permission name="com.google.android.c2dm.permission.SEND" fixed="false"></permission>
     </exception>
 
     <exception package="com.android.vending">
@@ -60,32 +53,16 @@
         <!-- Storage -->
         <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="false"></permission>
         <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="false"></permission>
-        <!-- Fake Signature Spoofing -->
-        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="true"></permission>
-    </exception>
-
-    <exception package="org.microg.gms.droidguard">
-        <permission name="android.permission.INTERNET" fixed="false"></permission>
     </exception>
 
     <exception package="org.microg.nlp.backend.ichnaea">
         <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="false"></permission>
         <permission name="android.permission.ACCESS_FINE_LOCATION" fixed="false"></permission>
-        <permission name="android.permission.ACCESS_NETWORK_STATE" fixed="false"></permission>
-        <permission name="android.permission.ACCESS_WIFI_STATE" fixed="false"></permission>
-        <permission name="android.permission.CHANGE_WIFI_STATE" fixed="false"></permission>
-        <permission name="android.permission.INTERNET" fixed="false"></permission>
         <permission name="android.permission.READ_PHONE_STATE" fixed="false"></permission>
     </exception>
 
     <exception package="org.fitchfamily.android.dejavu">
         <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="false"></permission>
         <permission name="android.permission.ACCESS_FINE_LOCATION" fixed="false"></permission>
-        <permission name="android.permission.ACCESS_WIFI_STATE" fixed="false"></permission>
-        <permission name="android.permission.CHANGE_WIFI_STATE" fixed="false"></permission>
-    </exception>
-
-    <exception package="org.microg.nlp.backend.nominatim">
-        <permission name="android.permission.INTERNET" fixed="false"></permission>
     </exception>
 </exceptions>
