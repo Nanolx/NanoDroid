@@ -16,7 +16,7 @@ update_apk () {
 
 			rm -f ${APK_DIR}/${apk_o}
 			busybox wget ${2} -O ${APK_DIR}/${apk_o} || error "failed to download ${apk_p}"
-			pm install -rd ${APK_DIR}/${apk_o} || error "failed to install ${apk_p}"
+			pm install -r ${APK_DIR}/${apk_o} || error "failed to install ${apk_p}"
 		fi
 	else
 		error "wget is not installed, install Busybox"
