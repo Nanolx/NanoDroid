@@ -12,7 +12,7 @@
 # 
 ##########################################################################################
 
-. /tmp/backuptool.functions
+source /tmp/backuptool.functions
 
 if [ ! -f /data/adb/nanodroid_patcher/CommonPatcher ]; then
 	echo " !! failed to load CommonPatcher"
@@ -22,28 +22,13 @@ else
 fi
 
 setup_environment
-OUTFD=
-
 BASEDIR=/data/adb/nanodroid_patcher
+export ANDROID_DATA=${BASEDIR}
 PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 
-detect_outfd () {
-	if [ -z $OUTFD ] || readlink /proc/$$/fd/$OUTFD | grep -q /tmp; then
-		# We will have to manually find out OUTFD
-		for FD in `ls /proc/$$/fd`; do
-			if readlink /proc/$$/fd/$FD | grep -q pipe; then
-				if ps | grep -v grep | grep -q " 3 $FD "; then
-					OUTFD=$FD
-					break
-				fi
-			fi
-		done
-	fi
-}
-
-detect_outfd
-
 NanoDroidPatcher () {
+	sleep 5
+
 	ui_print " "
 	ui_print "*******************************"
 	ui_print "   NanoDroid Framework Patcher   "
@@ -60,7 +45,8 @@ NanoDroidPatcher () {
 	[ -f /data/adb/NanoDroid_Patched ] && \
 		rm -f /data/adb/NanoDroid_Patched
 
-	for artifact in busybox classes.dex oat services.jar services.jar-mod;
+	for artifact in classes.dex oat dalvik-cache \
+		services.jar services.jar-mod; do
 		rm -rf ${BASEDIR}/${artifact}
 	done
 
@@ -91,7 +77,10 @@ NanoDroidPatcher () {
 # Check environment
 ##########################################################################################
 
-if [ ! -d /data/adb/nanodroid_patcher ]; then
+OUTFD=
+detect_outfd
+
+if ! test -d /data/adb/nanodroid_patcher ; then
 	ui_print " "
 	ui_print " !! NanoDroid-Patcher environment missing"
 	ui_print " !! guessing, you've wiped /data ?"
@@ -121,7 +110,7 @@ case "${1}" in
 		# Stub
 	;;
 	post-restore)
-		NanoDroidPatcher
+		(NanoDroidPatcher) &
 	;;
 esac
 

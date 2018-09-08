@@ -7,6 +7,9 @@
 * CommonAddon, PatcherAddon
   * fix printing messages
 
+* PatcherAddon
+  * fix DalvikVM crash
+
 * Uninstaller
   * fix error in error-printing (sic!)
 
