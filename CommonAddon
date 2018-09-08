@@ -12,7 +12,7 @@
 # 
 ##########################################################################################
 
-. /tmp/backuptool.functions
+source /tmp/backuptool.functions
 
 MODID=@MODID@
 OUTFD=
@@ -108,30 +108,56 @@ detect_outfd () {
 
 detect_outfd
 
+backup_action () {
+	sleep 5
+
+	ui_print "${MODID} addon.d: backup"
+	cat ${NANODROID_LIST} | while read FILE; do
+		echo " + backup: ${FILE}"
+		backup_file "${FILE}"
+	done
+
+	if test -h /system/fonts/Roboto-Regular.ttf; then
+		CUSTOM_FONT="$(basename $(readlink /system/fonts/Roboto-Regular.ttf) .ttf)"
+		ui_print " ${MODID} addon.d: detected NanoDroid-Font (${CUSTOM_FONT})"
+
+		echo CUSTOM_FONT=${CUSTOM_FONT} > /tmp/nanodroid_font
+	fi
+
+	ui_print "${MODID} addon.d: backup done"
+}
+
+restore_action () {
+	sleep 5
+
+	ui_print "${MODID} addon.d: restore"
+	cat ${NANODROID_LIST} | while read FILE; do
+		echo " + restore: ${FILE}"
+		restore_file "${FILE}"
+	done
+	ui_print "${MODID} addon.d: restore done"
+}
+
+postrestore_action () {
+	sleep 5
+
+	if [ -f /tmp/nanodroid_font ]; then
+		source /tmp/nanodroid_font
+		ui_print " ${MODID} addon.d: restoring NanoDroid-Font (${CUSTOM_FONT})"
+
+		${NANODROID_BINDIR}/nanodroid-font -s "${CUSTOM_FONT}"
+		rm /tmp/nanodroid_font
+	fi
+
+	solve_gappsconflicts
+}
+
 case "${1}" in
 	backup)
-		ui_print "${MODID} addon.d: backup"
-		cat ${NANODROID_LIST} | while read FILE; do
-			echo " + backup: ${FILE}"
-			backup_file "${FILE}"
-		done
-
-		if test -h /system/fonts/Roboto-Regular.ttf; then
-			CUSTOM_FONT="$(basename $(readlink /system/fonts/Roboto-Regular.ttf) .ttf)"
-			ui_print " ${MODID} addon.d: detected NanoDroid-Font (${CUSTOM_FONT})"
-
-			echo CUSTOM_FONT=${CUSTOM_FONT} > /tmp/nanodroid_font
-		fi
-
-		ui_print "${MODID} addon.d: backup done"
+		(backup_action) &
 	;;
 	restore)
-		ui_print "${MODID} addon.d: restore"
-		cat ${NANODROID_LIST} | while read FILE; do
-			echo " + restore: ${FILE}"
-			restore_file "${FILE}"
-		done
-		ui_print "${MODID} addon.d: restore done"
+		(restore_action) &
 	;;
 	pre-backup)
 		# Stub
@@ -143,15 +169,7 @@ case "${1}" in
 		# Stub
 	;;
 	post-restore)
-		if [ -f /tmp/nanodroid_font ]; then
-			. /tmp/nanodroid_font
-			ui_print " ${MODID} addon.d: restoring NanoDroid-Font (${CUSTOM_FONT})"
-
-			${NANODROID_BINDIR}/nanodroid-font -s "${CUSTOM_FONT}"
-			rm /tmp/nanodroid_font
-		fi
-
-		solve_gappsconflicts
+		(postrestore_action) &
 	;;
 esac
 
