@@ -19,6 +19,7 @@
   * tell DalvikVM to be more verbose
   * remove ancient, unused files from addon.d
   * for binary files only install the current-arch ones into addon.d
+  * clean-up addon.d environment every time addon.d is fired up
 
 * CommonInstaller, CommonPatcher
   * ROMs with build-type userdebug are treated as Custom ROMs

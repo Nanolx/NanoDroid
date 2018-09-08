@@ -492,6 +492,7 @@ install_addond () {
 	ui_print " "
 	ui_print " Installing addon.d restoration setup"
 
+	rm -rf ${PATCHER_ADDOND_DATA}
 	mkdir -p ${PATCHER_ADDOND_DATA}
 
 	[ -d /data/nanomod.patcher ] && rm -rf /data/nanomod.patcher

@@ -60,11 +60,8 @@ NanoDroidPatcher () {
 	[ -f /data/adb/NanoDroid_Patched ] && \
 		rm -f /data/adb/NanoDroid_Patched
 
-	for bin in zip.arm zip.x86 file.arm file.x86 \
-		vdexExtractor.arm vdexExtractor.arm64 \
-		vdexExtractor.x86 vdexExtractor.x86_64; do 
-		chmod 0755 "${BASEDIR}/${bin}" || \
-			error "failed to prepare environment"
+	for artifact in busybox classes.dex oat services.jar services.jar-mod;
+		rm -rf ${BASEDIR}/${artifact}
 	done
 
 	detect_sdk
