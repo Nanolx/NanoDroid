@@ -250,6 +250,8 @@ migrate_magisk_custom () {
 }
 
 detect_mode () {
+	[ -f /data/adb/.nanodroid-list ] && mv /data/adb/.nanodroid-list "${NANODROID_LIST}"
+
 	case "${nanodroid_forcesystem}" in
 		1 )
 			MODE_DETECT=forced
@@ -285,9 +287,7 @@ detect_mode () {
 	ui_print " "
 
 	if [ "${MODE}" = "SYSTEM" ]; then
-		if test -f ${NANODROID_LIST} -o \
-			-f /data/adb/.nanodroid-list -o \
-			-f /system/addon.d/91-nanodroid.sh; then
+		if [ -f "${NANODROID_LIST}" -a "$(wc -l < "${NANODROID_LIST}")" -gt 1 ]; then
 			NANODROID_UPGRADE=1
 		else	NANODROID_UPGRADE=0
 		fi

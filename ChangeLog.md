@@ -8,6 +8,9 @@
   * don't register services.jar in uninstaller information for System Mode installation
      * fixes logical interferences with CommonInstaller
 
+* CommonInstaller
+  * migrate /data/adb/.nanodroid-list to /data/adb/NanoDroid_FileList
+
 ### General Changes
 
 * CommonInstaller, Uninstaller
