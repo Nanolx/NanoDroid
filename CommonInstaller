@@ -295,10 +295,7 @@ detect_mode () {
 		recovery_actions
 	fi
 
-	if [ "${MODE}" = "MAGISK" ]; then
-		MAGISKBIN=/data/adb/magisk
-		magisk_install_setup
-	fi
+	[ "${MODE}" = "MAGISK" ] && magisk_install_setup
 
 	if [ "${nanodroid_fonts}" -eq 1 ]; then
 		if test -h ${RESTORE_PATH}/system/fonts/Roboto-Regular.ttf; then
@@ -489,6 +486,7 @@ magisk_install_setup () {
 	ui_print " > setup Magisk environment"
 
 	MOUNTPATH=${TMPDIR}/magisk_img
+	MAGISKBIN=/data/adb/magisk
 
 	[ -f ${MAGISKBIN}/util_functions.sh ] || \
 		error "Magisk version 15.0 or newer is required"
@@ -515,40 +513,26 @@ magisk_install_setup () {
 			# check for sub-modules  which are not
 			# supposed to be installed alongside
 			for dir in NanoDroid_microG NanoDroid_FDroid; do
-				if [ -d ${MOUNTPATH}/${dir} ]; then
+				if [ -d ${MOUNTPATH}/${dir} -o -d ${REALPATH}/${dir} ]; then
 					ui_print " !! ${dir} module detected - uninstalling!"
-					rm -rf ${MOUNTPATH}/${dir}
-					NANODROID_UPGRADE=1
-				elif [ -d ${REALPATH}/${dir} ]; then
-					ui_print " !! ${dir} module detected - uninstalling!"
-					rm -rf ${REALPATH}/${dir}
+					rm -rf ${MOUNTPATH}/${dir} ${REALPATH}/${dir}
 					NANODROID_UPGRADE=1
 				fi
 			done
-
-			[ -d ${MOUNTPATH}/NanoDroid -o -d ${REALPATH}/NanoDroid ] && NANODROID_UPGRADE=1
 		;;
 
-		NanoDroid_microG )
+		NanoDroid_microG | NanoDroid_FDroid )
 			# check for Full package and abort if found
 			[ -d ${MOUNTPATH}/NanoDroid -o -d ${REALPATH}/NanoDroid ] && \
 				error "${MODID} can't be installed along side the Full package"
-
-			[ -d ${MOUNTPATH}/NanoDroid_microG -o -d ${REALPATH}/NanoDroid_microG ] && NANODROID_UPGRADE=1
-		;;
-
-		NanoDroid_FDroid )
-			# check for Full package and abort if found
-			[ -d ${MOUNTPATH}/NanoDroid -o -d ${REALPATH}/NanoDroid ] && \
-				error "${MODID} can't be installed along side the Full package"
-
-			[ -d ${MOUNTPATH}/NanoDroid_FDroid -o -d ${REALPATH}/NanoDroid_FDroid ] && NANODROID_UPGRADE=1
 		;;
 
 		* )
 			error "unknown module intended to be installed!?"
 		;;
 	esac
+
+	[ -d ${MOUNTPATH}/${MODID} -o -d ${REALPATH}/${MODID} ] && NANODROID_UPGRADE=1
 }
 
 magisk_install_preinst () {
@@ -566,7 +550,6 @@ magisk_install_preinst () {
 	for dir in app etc priv-app bin; do
 		mkdir -p "${MODPATH}/system/${dir}"
 	done
-
 }
 
 magisk_install_postinst () {
