@@ -380,6 +380,7 @@ nanodroid_finalize () {
 
 detect_arch () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
+	CUSTOM_ROM=0
 
 	ABI=$(grep_prop ro.product.cpu.abi | cut -c-3)
 	ABI2=$(grep_prop ro.product.cpu.abi2 | cut -c-3)
@@ -436,6 +437,13 @@ detect_arch () {
 		echo " ++ ROM has no /system/xbin, using /system/bin instead"
 	else	ROM_NO_XBIN=0
 	fi
+
+	grep -q dev-keys /system/build.prop && CUSTOM_ROM=1
+	grep -q test-keys /system/build.prop && CUSTOM_ROM=1
+
+	[ "${CUSTOM_ROM}" -eq 1 ] && \
+		ui_print " > Custom ROM detected" \
+		|| ui_print " > Stock ROM detected"
 
 	[ ! -d /data/adb ] && mkdir /data/adb
 }
@@ -1200,6 +1208,7 @@ ROM_NO_XBIN=${ROM_NO_XBIN}
 RESTORE_PATH=${RESTORE_PATH}
 NANODROID_UPGRADE=${NANODROID_UPGRADE}
 NANODROID_BINDIR=${NANODROID_BINDIR}
+CUSTOM_ROM=${CUSTOM_ROM}
 
 ### SETUP ###
 " > ${nanodroid_logfile}

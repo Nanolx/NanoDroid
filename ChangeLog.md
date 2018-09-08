@@ -1,5 +1,21 @@
 # ChangeLog
 
+## 18.0.2.20180908
+
+### Bug Fixes
+
+* Full, microG packages
+  * improve microg-permissions.xml to fix bootloops on some Pie ROMs
+
+* CommonPatcher
+  * try to detect whether we are on a Custom or Stock ROM
+     * should fix linking issues on Stock ROMs
+
+### Updates
+
+* manual
+  * Play Store (11.6.18)
+
 ## 18.0.1.20180907
 
 ### Bug Fixes
@@ -7,9 +23,6 @@
 * CommonInstaller
   * fix microG GmsCore, PlayStore and microG Services Framework Proxy loosing data and permissions after upgrade
   * if System Mode installation is detected, exit the installer if run from Magisk Manager
-
-* Full, microG packages
-  * improve microg-permissions.xml to fix bootloops on some Pie ROMs
 
 ### General Changes
 
