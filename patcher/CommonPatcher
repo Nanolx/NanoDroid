@@ -12,8 +12,12 @@
 
 setup_environment () {
 	TMPDIR=/dev/tmp/install
-	export ANDROID_DATA="${TMPDIR}"
+
+	export ANDROID_DATA=/data
+	mkdir -p ${ANDROID_DATA}/dalvik-cache
+
 	export PATCHER_ADDOND_DATA=/data/adb/nanodroid_patcher
+
 	MAGISK_IMG=/data/adb/magisk.img
 	MAGISK_PATH=/dev/tmp/magisk_img
 }
@@ -229,7 +233,7 @@ detect_arch () {
 	chmod 0755 ${BUSY}
 	mkdir -p ${BASEDIR}/busybox
 
-	ln -s ${BUSY} ${BASEDIR}/busybox/busybox
+	ln -sf ${BUSY} ${BASEDIR}/busybox/busybox
 	${BUSY} --install -s ${BASEDIR}/busybox/
 
 	ui_print " > device architecture: ${ARCH}"

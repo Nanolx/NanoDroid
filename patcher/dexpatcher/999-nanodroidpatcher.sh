@@ -1,4 +1,7 @@
 #!/sbin/sh
+#
+# ADDOND_VERSION=2
+#
 ##########################################################################################
 # 
 # NanoDroid Patcher survival script
@@ -19,6 +22,8 @@ else
 fi
 
 setup_environment
+detect_outfd
+
 BASEDIR=/data/adb/nanodroid_patcher
 PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 
@@ -43,7 +48,7 @@ NanoDroidPatcher () {
 		vdexExtractor.arm vdexExtractor.arm64 \
 		vdexExtractor.x86 vdexExtractor.x86_64; do 
 		chmod 0755 "${BASEDIR}/${bin}" || \
-			error " !! failed to prepare environment"
+			error "failed to prepare environment"
 	done
 
 	detect_sdk
@@ -103,7 +108,6 @@ case "${1}" in
 		# Stub
 	;;
 	post-restore)
-		OUTFD=$(ps | grep -v grep | grep -oE "update(.*)" | cut -d" " -f3)
 		NanoDroidPatcher
 	;;
 esac
