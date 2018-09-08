@@ -481,10 +481,6 @@ install_services () {
 	cp ${BASEDIR}/services.jar "${install_path}/system/framework" \
 		|| error "failed to install services.jar"
 
-	if [ "${install_path}" = "/" ]; then
-		echo /system/framework/services.jar >> /data/adb/NanoDroid_FileList
-	fi
-
 	touch /data/adb/NanoDroid_Patched
 }
 
