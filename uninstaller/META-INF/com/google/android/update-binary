@@ -106,11 +106,9 @@ setup_busybox () {
 }
 
 error () {
-	ui_print "${@}"
-	ui_print " "
-	ui_print " ** post your /tmp/recovery.log"
-	ui_print " ** in the XDA support thread"
-	ui_print " "
+	ui_print " !!"
+	ui_print " !! ${@}"
+	ui_print " !!"
 	exit 1
 }
 
@@ -212,7 +210,7 @@ restore_gapps () {
 		else
 			ui_print " << restoring: ${appdir} / ${app}"
 			mv /sdcard/nanodroid_backups/${appdir}/${app} \
-				/system/${appdir}/ || error " !! failed to restore ${app}"
+				/system/${appdir}/ || error " failed to restore ${app}"
 		fi
 	done
 }
@@ -248,7 +246,7 @@ patcher_uninstall () {
 		if [ -f /sdcard/nanodroid_backups/services.jar ]; then
 			ui_print " << restoring: unpatched services.jar"
 			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar \
-				|| error " !! failed to restore services.jar"
+				|| error " failed to restore services.jar"
 		else	ui_print " << can't restore unpatched services.jar"
 		fi
 	fi
@@ -309,7 +307,7 @@ patcher_uninstall
 if [ -f /data/adb/magisk.img ]; then
 	mkdir -p /magisk
 	mount_image /data/adb/magisk.img /magisk || \
-		error " !! failed to mount /magisk"
+		error " failed to mount /magisk"
 fi
 
 if (is_mounted /magisk); then
@@ -328,7 +326,7 @@ if (is_mounted /magisk); then
 	losetup -d $LOOPDEVICE
 	rmdir /magisk
 	shrink_magisk_img || \
-		error " !! failed to shrink magisk.img"
+		error " failed to shrink magisk.img"
 fi
 
 umount /system
