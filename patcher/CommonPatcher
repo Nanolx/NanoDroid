@@ -13,9 +13,6 @@
 setup_environment () {
 	TMPDIR=/dev/tmp/install
 
-	export ANDROID_DATA=${TMPDIR}
-	mkdir -p ${ANDROID_DATA}/dalvik-cache
-
 	export PATCHER_ADDOND_DATA=/data/adb/nanodroid_patcher
 
 	MAGISK_IMG=/data/adb/magisk.img
@@ -120,15 +117,11 @@ error () {
 ##########################################################################################
 
 detect_outfd () {
-	readlink /proc/$$/fd/$OUTFD 2>/dev/null | grep /tmp >/dev/null
-	if [ "$?" -eq "0" ]; then
-		OUTFD=0
-
+	if [ -z $OUTFD ] || readlink /proc/$$/fd/$OUTFD | grep -q /tmp; then
+		# We will have to manually find out OUTFD
 		for FD in `ls /proc/$$/fd`; do
-			readlink /proc/$$/fd/$FD 2>/dev/null | grep pipe >/dev/null
-			if [ "$?" -eq "0" ]; then
-				ps | grep " 3 $FD " | grep -v grep >/dev/null
-				if [ "$?" -eq "0" ]; then
+			if readlink /proc/$$/fd/$FD | grep -q pipe; then
+				if ps | grep -v grep | grep -q " 3 $FD "; then
 					OUTFD=$FD
 					break
 				fi
