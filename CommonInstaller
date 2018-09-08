@@ -435,8 +435,9 @@ detect_arch () {
 	else	ROM_NO_XBIN=0
 	fi
 
-	grep -q dev-keys /system/build.prop && CUSTOM_ROM=1
-	grep -q test-keys /system/build.prop && CUSTOM_ROM=1
+	for pattern in dev-keys test-keys type=userdebug; do
+		grep -q "${pattern}" /system/build.prop && CUSTOM_ROM=1
+	done
 
 	[ "${CUSTOM_ROM}" -eq 1 ] && \
 		ui_print " > Custom ROM detected" \
