@@ -26,7 +26,7 @@ NanoDroidPatcher () {
 	ui_print " "
 	ui_print "*******************************"
 	ui_print "   NanoDroid Framework Patcher   "
-	ui_print "     addon.d 18.0.1.20180907     "
+	ui_print "     addon.d 18.0.2.20180908     "
 	ui_print "       created by @Nanolx      "
 	ui_print " Utilizing DexPatcher @lanchon "
 	ui_print "*******************************"
