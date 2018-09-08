@@ -22,10 +22,26 @@ else
 fi
 
 setup_environment
-detect_outfd
+OUTFD=
 
 BASEDIR=/data/adb/nanodroid_patcher
 PATCH_CORE="${BASEDIR}/core_services.jar.dex"
+
+detect_outfd () {
+	if [ -z $OUTFD ] || readlink /proc/$$/fd/$OUTFD | grep -q /tmp; then
+		# We will have to manually find out OUTFD
+		for FD in `ls /proc/$$/fd`; do
+			if readlink /proc/$$/fd/$FD | grep -q pipe; then
+				if ps | grep -v grep | grep -q " 3 $FD "; then
+					OUTFD=$FD
+					break
+				fi
+			fi
+		done
+	fi
+}
+
+detect_outfd
 
 NanoDroidPatcher () {
 	ui_print " "
@@ -78,7 +94,7 @@ NanoDroidPatcher () {
 # Check environment
 ##########################################################################################
 
-if [[ ! -d /data/adb/nanodroid_patcher ]]; then
+if [ ! -d /data/adb/nanodroid_patcher ]; then
 	ui_print " "
 	ui_print " !! NanoDroid-Patcher environment missing"
 	ui_print " !! guessing, you've wiped /data ?"
