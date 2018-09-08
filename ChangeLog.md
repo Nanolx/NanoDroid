@@ -1,5 +1,29 @@
 # ChangeLog
 
+## 18.1 in-dev
+
+### Bug Fixes
+
+* CommonAddon, PatcherAddon
+  * fix printing messages
+
+* Uninstaller
+  * fix error in error-printing (sic!)
+
+### General Changes
+
+* CommonInstaller
+  * code simplifications
+
+* CommonPatcher
+  * tell DalvikVM to be more verbose
+
+* CommonInstaller, CommonPatcher
+  * ROMs with build-type userdebug are treated as Custom ROMs
+
+* Uninstaller, Patcher
+  * remove duplicated '!!' in error messages
+
 ## 18.0.3.20180908
 
 ### Bug Fixes
