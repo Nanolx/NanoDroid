@@ -13,7 +13,7 @@
 setup_environment () {
 	TMPDIR=/dev/tmp/install
 
-	export ANDROID_DATA=/data
+	export ANDROID_DATA=${TMPDIR}
 	mkdir -p ${ANDROID_DATA}/dalvik-cache
 
 	export PATCHER_ADDOND_DATA=/data/adb/nanodroid_patcher
