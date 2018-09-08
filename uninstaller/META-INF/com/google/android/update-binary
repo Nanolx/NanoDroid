@@ -230,17 +230,6 @@ system_mode_uninstall () {
 		${NANODROID_BINDIR}/nanodroid-font -r
 	fi
 
-	# services.jar needs special treament
-	if grep -q /system/framework/services.jar ${system_list}; then
-		if [ -f /sdcard/nanodroid_backups/services.jar ]; then
-			ui_print " << restoring: unpatched services.jar"
-			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar \
-				|| error " !! failed to restore services.jar"
-		else	ui_print " << can't restore unpatched services.jar"
-		fi
-		sed '/\/system\/framework\/services.jar/d' -i ${system_list}
-	fi
-
 	restore_gapps
 	xargs rm -f < ${system_list} || " !! failed to remove files"
 
@@ -254,7 +243,16 @@ system_mode_uninstall () {
 	rm -f "${system_list}"
 }
 
-addond_uninstall () {
+patcher_uninstall () {
+	if [ -f /data/adb/.nanodroid-patcher -o -f /data/adb/NanoDroid_patched ]; then
+		if [ -f /sdcard/nanodroid_backups/services.jar ]; then
+			ui_print " << restoring: unpatched services.jar"
+			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar \
+				|| error " !! failed to restore services.jar"
+		else	ui_print " << can't restore unpatched services.jar"
+		fi
+	fi
+
 	[ -d /data/adb/nanodroid_patcher] && rm -rf ${addond}
 
 	for addonsh in /system/addon.d/999-nanodroidpatcher.sh \
@@ -306,7 +304,7 @@ for install_info in /data/adb/.nanodroid-list /data/adb/NanoDroid_FileList; do
 	[ -f ${install_info} ] && system_mode_uninstall ${install_info}
 done
 
-addond_uninstall
+patcher_uninstall
 
 if [ -f /data/adb/magisk.img ]; then
 	mkdir -p /magisk
