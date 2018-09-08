@@ -185,7 +185,6 @@ detect_arch () {
 
 	case ${ARCH} in
 		arm | arm64 )
-				FILE=${BASEDIR}/file.arm
 				ZIPB=${BASEDIR}/zip.arm
 
 				if [ -f ${TMPDIR}/busybox.arm ]; then
@@ -194,7 +193,6 @@ detect_arch () {
 				fi
 		;;
 		x86 | x86_64 )
-				FILE=${BASEDIR}/file.x86
 				ZIPB=${BASEDIR}/zip.x86
 
 				if [ -f ${TMPDIR}/busybox.x86 ]; then
@@ -340,7 +338,7 @@ setup_patcher () {
 	unzip -o "${ZIP}" -d ${TMPDIR} || \
 		error "failed to prepare environment"
 
-	for bin in zip.arm zip.x86 file.arm file.x86 \
+	for bin in zip.arm zip.x86 \
 		vdexExtractor.arm vdexExtractor.x86 \
 		vdexExtractor.arm64 vdexExtractor.x86_64; do
 		chmod 0755 "${BASEDIR}/${bin}" || \
@@ -501,18 +499,18 @@ install_addond () {
 	rm -f /system/addon.d/75-nanomodpatcher.sh \
 		/system/addon.d/75-nanodroidpatcher.sh
 
-	for file in core_services.jar.dex dexpatcher.dex file.arm file.x86 \
+	for file in core_services.jar.dex dexpatcher.dex \
 		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
-		zip.arm zip.x86 magic.mgc vdexExtractor.arm vdexExtractor.x86 \
-		vdexExtractor.arm64 vdexExtractor.x86_64 baksmali_25.dex \
-		smali_25.dex baksmali_26.dex smali_26.dex; do
+		baksmali_25.dex smali_25.dex baksmali_26.dex smali_26.dex; do
 		cp "${BASEDIR}/${file}" ${PATCHER_ADDOND_DATA}/
 	done
 
 	cp /dev/tmp/CommonPatcher ${PATCHER_ADDOND_DATA}/
 
-	cp ${BUSY} ${PATCHER_ADDOND_DATA}/
-	chmod 0755 ${PATCHER_ADDOND_DATA}/$(basename "${BUSY}")
+	for file in ${ZIPB} ${V_EX} ${BUSY}; do
+		cp ${file} ${PATCHER_ADDOND_DATA}/
+		chmod 0755 ${PATCHER_ADDOND_DATA}/$(basename "${file}")
+	done
 
 	mkdir -p /system/addon.d/
 	cp "${BASEDIR}/999-nanodroidpatcher.sh" /system/addon.d/
