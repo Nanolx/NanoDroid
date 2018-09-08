@@ -361,12 +361,16 @@ call_dalvikvm () {
 		BOOTCLASSES=${BOOTCLASSES}:${jar}
 	done
 
+	DALVIKVM_OPTS="-verbose:gc -verbose:jit -verbose:jni -verbose:class"
+
 	if [ "${ROM_DEX_STATUS}" = "DEODEX" ]; then
 		/system/bin/dalvikvm \
 			-Xbootclasspath:${BOOTCLASSES} \
+			${DALVIKVM_OPTS} \
 			"${@}"
 	else
 		/system/bin/dalvikvm \
+			${DALVIKVM_OPTS} \
 			"${@}"
 	fi
 }
