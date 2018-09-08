@@ -229,7 +229,7 @@ system_mode_uninstall () {
 	fi
 
 	restore_gapps
-	xargs rm -f < ${system_list} || " !! failed to remove files"
+	xargs rm -f < ${system_list} || error "failed to remove files"
 
 	# remove empty directories
 	# (find -empty not available on Android)
