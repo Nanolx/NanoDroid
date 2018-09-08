@@ -1,5 +1,18 @@
 # ChangeLog
 
+## 18.0.3.20180908
+
+### Bug Fixes
+
+* CommonPatcher
+  * don't register services.jar in uninstaller information for System Mode installation
+     * fixes logical interferences with CommonInstaller
+
+### General Changes
+
+* Uninstaller
+  * update for CommonPatcher changes
+
 ## 18.0.2.20180908
 
 ### Bug Fixes
