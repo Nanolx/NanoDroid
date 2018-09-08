@@ -558,24 +558,7 @@ magisk_install_preinst () {
 	fi
 
 	if [ -f ${RESTORE_PATH}/system/framework/services.jar ]; then
-		if [ -f /data/adb/.nanodroid-patcher -o -f /data/adb/NanoDroid_Patched ]; then
-			ui_print " << backing up patched services.jar"
-			cp ${RESTORE_PATH}/system/framework/services.jar \
-				${TMPDIR}/services.jar
-		else	ui_print " "
-			ui_print " ++ /data/adb/NanoDroid_Patched is missing, assuming"
-			ui_print " ++ ROM was updated, please re-run NanoDroid-Patcher"
-			ui_print " "
-			rm -f ${RESTORE_PATH}/system/framework/services.jar
-		fi
-	elif [ -f /data/adb/.nanodroid-patcher -o -f /data/adb/NanoDroid_Patched ]; then
-		ui_print " "
-		ui_print " ++ /data/adb/NanoDroid_Patched exists, but"
-		ui_print " ++ ${RESTORE_PATH}/system/framework/services.jar"
-		ui_print " ++ doesn't, assuming Magisk was uninstalled"
-		ui_print " ++ re-run NanoDroid-Patcher if required"
-		ui_print " "
-		rm -f /data/adb/.nanodroid-patcher /data/adb/NanoDroid_Patched
+		cp ${RESTORE_PATH}/system/framework/services.jar ${TMPDIR}/services.jar
 	fi
 
 	${BOOTMODE} || rm -rf "${MODPATH}"

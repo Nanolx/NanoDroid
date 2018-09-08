@@ -10,7 +10,7 @@
 
 ### General Changes
 
-* Uninstaller
+* CommonInstaller, Uninstaller
   * update for CommonPatcher changes
 
 ## 18.0.2.20180908
