@@ -268,8 +268,9 @@ detect_sdk () {
 
 	[ "${SDK_VERSION}" -gt 21 ] && DEX_OPTS="--multi-dex-threaded"
 
-	grep -q dev-keys /system/build.prop && CUSTOM_ROM=1
-	grep -q test-keys /system/build.prop && CUSTOM_ROM=1
+	for pattern in dev-keys test-keys type=userdebug; do
+		grep -q "${pattern}" /system/build.prop && CUSTOM_ROM=1
+	done
 
 	[ "${CUSTOM_ROM}" -eq 1 ] && \
 		ui_print " > Custom ROM detected" \
