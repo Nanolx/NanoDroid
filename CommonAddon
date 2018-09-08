@@ -154,10 +154,10 @@ postrestore_action () {
 
 case "${1}" in
 	backup)
-		(backup_action) &
+		backup_action
 	;;
 	restore)
-		(restore_action) &
+		restore_action
 	;;
 	pre-backup)
 		# Stub
@@ -169,7 +169,7 @@ case "${1}" in
 		# Stub
 	;;
 	post-restore)
-		(postrestore_action) &
+		postrestore_action
 	;;
 esac
 

@@ -110,7 +110,7 @@ case "${1}" in
 		# Stub
 	;;
 	post-restore)
-		(NanoDroidPatcher) &
+		NanoDroidPatcher
 	;;
 esac
 
