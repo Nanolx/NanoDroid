@@ -30,6 +30,11 @@
 * Uninstaller, Patcher
   * remove duplicated '!!' in error messages
 
+### Updates
+
+* manual
+  * microG GmsCore (0.2.5.12879-152-custom)
+
 ## 18.0.3.20180908
 
 ### Bug Fixes
