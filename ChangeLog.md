@@ -10,6 +10,9 @@
 * CommonAddon, PatcherAddon
   * fix printing messages
 
+* CommonAddon
+  * fix crashes during addon.d post-restore action
+
 * PatcherAddon
   * fix DalvikVM crash
 
@@ -23,6 +26,9 @@
 
 * CommonInstaller
   * code simplifications
+
+* CommonAddon
+  * during post-restore action create NanoDroid-Overlay
 
 * CommonPatcher
   * tell DalvikVM to be more verbose
