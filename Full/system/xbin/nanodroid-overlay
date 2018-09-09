@@ -41,7 +41,7 @@ Options:
 	exit 0
 }
 
-test "${whoami}" != "root" && error "not running as root"
+test "$(whoami)" != "root" && error "not running as root"
 
 get_config () {
 	config=""
