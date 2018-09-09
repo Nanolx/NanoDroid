@@ -1,20 +1,19 @@
 # ChangeLog
 
-## 18.1 in-dev
+## 18.1.20180909
 
 ### Bug Fixes
 
 * CommonInstaller
   * fix installer not detecting upgrade when flashing through Magisk Manager
 
-* CommonAddon, PatcherAddon
-  * fix printing messages
-
 * CommonAddon
   * fix crashes during addon.d post-restore action
+  * fix printing messages
 
 * PatcherAddon
   * fix DalvikVM crash
+  * fix printing messages
 
 * NanoDroid-Overlay
   * fix (re-)creating overlays when flashing through Magisk Manager
@@ -26,6 +25,7 @@
 
 * CommonInstaller
   * code simplifications
+  * ROMs with build-type userdebug are treated as Custom ROMs
 
 * CommonAddon
   * during post-restore action create NanoDroid-Overlay
@@ -34,12 +34,13 @@
   * tell DalvikVM to be more verbose
   * remove ancient, unused files from addon.d
   * for binary files only install the current-arch ones into addon.d
-  * clean-up addon.d environment every time addon.d is fired up
-
-* CommonInstaller, CommonPatcher
   * ROMs with build-type userdebug are treated as Custom ROMs
+  * remove duplicated '!!' in error messages
 
-* Uninstaller, Patcher
+* PatcherAddon
+ * clean-up addon.d environment every time addon.d is fired up
+
+* Uninstaller
   * remove duplicated '!!' in error messages
 
 ### Updates
