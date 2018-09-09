@@ -4,6 +4,9 @@
 
 ### Bug Fixes
 
+* CommonInstaller
+  * fix installer not detecting upgrade when flashing through Magisk Manager
+
 * CommonAddon, PatcherAddon
   * fix printing messages
 
