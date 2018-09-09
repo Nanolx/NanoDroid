@@ -13,6 +13,9 @@
 * PatcherAddon
   * fix DalvikVM crash
 
+* NanoDroid-Overlay
+  * fix (re-)creating overlays when flashing through Magisk Manager
+
 * Uninstaller
   * fix error in error-printing (sic!)
 
@@ -34,6 +37,10 @@
   * remove duplicated '!!' in error messages
 
 ### Updates
+
+* automatic
+  * New Pipe (0.14.0)
+  * QKSMS (3.5.1)
 
 * manual
   * microG GmsCore (0.2.5.12879-152-custom)
