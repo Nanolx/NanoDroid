@@ -93,8 +93,7 @@ NanoDroid officially supports the following Android versions:
 * 8.0 / SDK 26 (Oreo)
 * 8.1 / SDK 27 (Oreo)
 * 9.0 / SDK 28 (Pie)
-  * Patchers works
-     * if your ROM's services.jar already contains classes.dex
+  * Patchers works if your ROM's services.jar already contains classes.dex
      * [> Deodex Instructions](doc/DeodexServices.md)
 
 earlier versions will never officially be supported (you may still report bugs, though).
@@ -119,6 +118,7 @@ NanoDroid includes
 
 * microG and it's companions
   * on-device framework-patcher for microG support (signature spoofing)
+     * with automatic de-odexing up to Android 8.1
   * on-pc framework-patcher for microG support (signature spoofing)
   * GApps are auto-removed during installation
      * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
@@ -438,11 +438,12 @@ This is the recommended way.
   * recommended, but not required
 * install desired ROM
   * make sure it does **not** include GApps if you want to use microG
-         * NanoDroid tries to get rid of GApps on it's own, but it may not always work, try without any warranty
-  * either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself (instructions follow)
+     * NanoDroid tries to get rid of GApps on it's own, but it may not always work, try without any warranty
 * install **Magisk**
   * recommended, but not required
   * if **Magisk** is installed, NanoDroid will be installed as Magisk-Module, else it will install into `/system` directly
+  * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](doc/DeodexServices.md)
+     * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 9.0)
 * install desired Kernel (if any)
 * install **NanoDroid**
 * reboot into ROM
