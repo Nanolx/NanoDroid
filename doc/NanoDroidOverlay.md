@@ -5,7 +5,7 @@
 The `nanodroid-overlay` Script, respectively it's shortcut `novl` is used by NanoDroid to handle the
 
   * Pseudo Debloat Feature (Magisk Mode)
-  * Foce Debloat Feature (System Mode)
+  * Force Debloat Feature (System Mode)
 
 ### Pseudo Debloat Feature
 
