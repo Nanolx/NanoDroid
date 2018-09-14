@@ -1,9 +1,6 @@
 #!/bin/bash
 
 create_microg_package() {
-	[[ ! -f "${CWD}/.nanodroid-pull" ]] && \
-		error "run \"build-package pull\" first!"
-
 	ZIP="${CWD}/NanoDroid-microG-${VERSION}".zip
 	rm -f "${ZIP}"
 

@@ -24,14 +24,17 @@ fi
 for opt in ${@}; do
 	case ${opt} in
 		full)
+			check_nanodroid || error "run nanodroid-pull first!"
 			mk_pkg_full
 		;;
 
 		microg )
+			check_nanodroid || error "run nanodroid-pull first!"
 			mk_pkg_microg
 		;;
 
 		fdroid )
+			check_nanodroid || error "run nanodroid-pull first!"
 			mk_pkg_fdroid
 		;;
 
@@ -48,6 +51,7 @@ for opt in ${@}; do
 		;;
 
 		all )
+			check_nanodroid || error "run nanodroid-pull first!"
 			mk_pkg_full
 			mk_pkg_microg
 			mk_pkg_fdroid

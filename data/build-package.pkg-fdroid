@@ -1,9 +1,6 @@
 #!/bin/bash
 
 create_fdroid_package() {
-	[[ ! -f "${CWD}/.nanodroid-pull" ]] && \
-		error "run \"build-package pull\" first!"
-
 	ZIP="${CWD}/NanoDroid-fdroid-${VERSION}".zip
 	rm -f "${ZIP}"
 
