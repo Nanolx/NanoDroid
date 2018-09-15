@@ -1,12 +1,14 @@
-diff -Nupr PS_11615.orig/AndroidManifest.xml PS_11615/AndroidManifest.xml
---- PS_11615.orig/AndroidManifest.xml	2018-09-05 20:23:39.311806556 +0200
-+++ PS_11615/AndroidManifest.xml	2018-09-05 20:25:06.686105414 +0200
-@@ -1,4 +1,5 @@
- <?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:finsky="http://schemas.android.com/apk/res-auto" android:compileSdkVersion="28" android:compileSdkVersionCodename="9" package="com.android.vending" platformBuildVersionCode="81161500" platformBuildVersionName="11.6.15-all [0] [PR] 211277169">
+diff -Nupr PS_11711.orig/AndroidManifest.xml PS_11711/AndroidManifest.xml
+--- PS_11711.orig/AndroidManifest.xml	2018-09-15 19:08:19.491858635 +0200
++++ PS_11711/AndroidManifest.xml	2018-09-15 19:12:55.960686575 +0200
+@@ -94,6 +94,7 @@
+     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+     <uses-permission android:name="android.permission.READ_SMS"/>
+     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
-     <uses-permission android:name="com.android.vending.permission.C2D_MESSAGE"/>
-     <uses-permission android:name="com.android.vending.billing.IN_APP_NOTIFY.permission.C2D_MESSAGE"/>
-     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+     <uses-feature android:name="android.hardware.nfc" android:required="false"/>
+     <permission android:description="@LEMON_transformed_from_string/perm_access_app_discovery_service_desc" android:label="@LEMON_transformed_from_string/perm_access_app_discovery_service_label" android:name="com.android.vending.appdiscoveryservice.permission.ACCESS_APP_DISCOVERY_SERVICE" android:permissionGroup="android.permission-group.NETWORK" android:protectionLevel="normal"/>
+     <permission android:description="@LEMON_transformed_from_string/perm_check_license_desc" android:label="@LEMON_transformed_from_string/perm_check_license_label" android:name="com.android.vending.CHECK_LICENSE" android:permissionGroup="android.permission-group.NETWORK" android:protectionLevel="instant"/>
 @@ -112,6 +113,7 @@
      <permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" android:protectionLevel="normal"/>
      <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
@@ -15,35 +17,35 @@ diff -Nupr PS_11615.orig/AndroidManifest.xml PS_11615/AndroidManifest.xml
          <activity android:configChanges="orientation|screenSize" android:name="com.google.android.wallet.instrumentmanager.ui.redirect.ImPopupRedirectActivity" android:theme="@style/Theme.UiComponents.PopupRedirect"/>
          <activity android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.wallet.instrumentmanager.redirect.ImStartAndroidAppRedirectActivity" android:theme="@style/Theme.UiComponents.Translucent.NoActionBar"/>
          <activity android:exported="true" android:name="com.google.android.wallet.instrumentmanager.redirect.ImFinishAndroidAppRedirectActivity">
-@@ -911,4 +913,4 @@
+@@ -909,4 +911,4 @@
          <screen android:screenDensity="xxhdpi" android:screenSize="large"/>
          <screen android:screenDensity="xxhdpi" android:screenSize="xlarge"/>
      </compatible-screens>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_11615.orig/res/values/public.xml PS_11615/res/values/public.xml
---- PS_11615.orig/res/values/public.xml	2018-09-05 20:23:38.240805482 +0200
-+++ PS_11615/res/values/public.xml	2018-09-05 20:25:38.889223264 +0200
-@@ -10711,6 +10711,7 @@
-     <public type="string" name="yes" id="0x7f130887" />
-     <public type="string" name="yes_im_in" id="0x7f130888" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f130889" />
-+    <public type="string" name="fake_signature" id="0x7f13088a" />
+diff -Nupr PS_11711.orig/res/values/public.xml PS_11711/res/values/public.xml
+--- PS_11711.orig/res/values/public.xml	2018-09-15 19:08:16.789846443 +0200
++++ PS_11711/res/values/public.xml	2018-09-15 19:13:58.408133787 +0200
+@@ -10748,6 +10748,7 @@
+     <public type="string" name="yes" id="0x7f13088d" />
+     <public type="string" name="yes_im_in" id="0x7f13088e" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f13088f" />
++    <public type="string" name="fake_signature" id="0x7f130890" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -11850,4 +11851,4 @@
+@@ -11891,4 +11892,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002d" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002e" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002f" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_11615.orig/res/values/strings.xml PS_11615/res/values/strings.xml
---- PS_11615.orig/res/values/strings.xml	2018-09-05 20:23:38.239805481 +0200
-+++ PS_11615/res/values/strings.xml	2018-09-05 20:25:19.960158489 +0200
-@@ -2012,4 +2012,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_11711.orig/res/values/strings.xml PS_11711/res/values/strings.xml
+--- PS_11711.orig/res/values/strings.xml	2018-09-15 19:08:16.788846439 +0200
++++ PS_11711/res/values/strings.xml	2018-09-15 19:13:30.418935237 +0200
+@@ -2018,4 +2018,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />
