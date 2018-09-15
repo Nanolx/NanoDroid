@@ -513,7 +513,7 @@ install_addond () {
 	done
 
 	mkdir -p /system/addon.d/
-	cp "${BASEDIR}/999-nanodroidpatcher.sh" /system/addon.d/
-	chmod 0755 /system/addon.d/999-nanodroidpatcher.sh
+	cp "${BASEDIR}/70-nanodroidpatcher.sh" /system/addon.d/
+	chmod 0755 /system/addon.d/70-nanodroidpatcher.sh
 }
 
