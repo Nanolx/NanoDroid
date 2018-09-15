@@ -152,7 +152,7 @@ apps_add 17 OpenLauncher
 apps_add 18 OpenWeatherMapProvider
 apps_add 19 OpenVPN
 apps_add 20 Orbot
-apps_add 21 Orfox
+apps_add 21 TorBrowser
 apps_add 22 QKSMS
 apps_add 23 SimpleCalendar
 apps_add 24 SimpleGallery

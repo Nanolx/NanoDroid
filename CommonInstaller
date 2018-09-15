@@ -1223,42 +1223,40 @@ get_config () {
 }
 
 set_prop () {
-	echo "${1}=${2}" >> ${cfg_setup}
+	echo "${1}=${2}" >> "${cfg_setup}"
 }
 
 # check whether '.nanodroid-setup' has all required entries
-# update format if required
 check_cfg_setup () {
-	source ${cfg_setup}
+	source "${cfg_setup}"
 
-	[ -z ${nanodroid_fdroid} ] && set_prop nanodroid_fdroid 1
-	[ -z ${nanodroid_microg} ] && set_prop nanodroid_microg 1
-	[ -z ${nanodroid_apps} ] && set_prop nanodroid_apps 1
-	[ -z ${nanodroid_play} ] && set_prop nanodroid_play 1
+	[ -z "${nanodroid_fdroid}" ] && set_prop nanodroid_fdroid 1
+	[ -z "${nanodroid_microg}" ] && set_prop nanodroid_microg 1
+	[ -z "${nanodroid_apps}" ] && set_prop nanodroid_apps 1
+	[ -z "${nanodroid_play}" ] && set_prop nanodroid_play 1
 
 	if [ "${MODID}" = "NanoDroid" ]; then
-		[ -z ${nanodroid_overlay} ] && set_prop nanodroid_overlay 1
-	else	[ -z ${nanodroid_overlay} ] && set_prop nanodroid_overlay 0
+		[ -z "${nanodroid_overlay}" ] && set_prop nanodroid_overlay 1
+	else	[ -z "${nanodroid_overlay}" ] && set_prop nanodroid_overlay 0
 	fi
 
-	[ -z ${nanodroid_zelda} ] && set_prop nanodroid_zelda 1
-	[ -z ${nanodroid_mapsv1} ] && set_prop nanodroid_mapsv1 1
-	[ -z ${nanodroid_init} ] && set_prop nanodroid_init 1
-	[ -z ${nanodroid_gsync} ] && set_prop nanodroid_gsync 0
-	[ -z ${nanodroid_forcesystem} ] && set_prop nanodroid_forcesystem 0
-	[ -z ${nanodroid_swipe} ] && set_prop nanodroid_swipe 0
-	[ -z ${nanodroid_nlpbackend} ] && set_prop nanodroid_nlpbackend 1
-	[ -z ${nanodroid_bash} ] && set_prop nanodroid_bash 1
-	[ -z ${nanodroid_nano} ] && set_prop nanodroid_nano 1
-	[ -z ${nanodroid_utils} ] && set_prop nanodroid_utils 1
-	[ -z ${nanodroid_fonts} ] && set_prop nanodroid_fonts 1
-	[ -z ${nanodroid_override} ] && set_prop nanodroid_override 0
+	[ -z "${nanodroid_zelda}" ] && set_prop nanodroid_zelda 1
+	[ -z "${nanodroid_mapsv1}" ] && set_prop nanodroid_mapsv1 1
+	[ -z "${nanodroid_init}" ] && set_prop nanodroid_init 1
+	[ -z "${nanodroid_gsync}" ] && set_prop nanodroid_gsync 0
+	[ -z "${nanodroid_forcesystem}" ] && set_prop nanodroid_forcesystem 0
+	[ -z "${nanodroid_swipe}" ] && set_prop nanodroid_swipe 0
+	[ -z "${nanodroid_nlpbackend}" ] && set_prop nanodroid_nlpbackend 1
+	[ -z "${nanodroid_bash}" ] && set_prop nanodroid_bash 1
+	[ -z "${nanodroid_nano}" ] && set_prop nanodroid_nano 1
+	[ -z "${nanodroid_utils}" ] && set_prop nanodroid_utils 1
+	[ -z "${nanodroid_fonts}" ] && set_prop nanodroid_fonts 1
+	[ -z "${nanodroid_override}" ] && set_prop nanodroid_override 0
 
-	source ${cfg_setup}
+	source "${cfg_setup}"
 }
 
-# check whether '.nanodroid-apps' has new format
-# and update if required
+# check whether '.nanodroid-apps' is up to date
 check_cfg_apps () {
 	# <= 16.3 has KeePass DX instead of KeePassDroid, migrate
 	if grep -q KeePassDroid "${cfg_apps}"; then
@@ -1269,10 +1267,14 @@ check_cfg_apps () {
 	if grep -q Bucket "${cfg_apps}"; then
 		sed -e 's/Bucket/Substratum/g' -i "${cfg_apps}"
 	fi
+
+	# <= 18.1 has Orfox instead of TorBrowser, migrate
+	if grep -q Orfox "${cfg_apps}"; then
+		sed -e 's/Orfox/TorBrowser/g' -i "${cfg_apps}"
+	fi
 }
 
-# check whether '.nanodroid-overlay' has new format
-# and update if required
+# check whether '.nanodroid-overlay' is up to date
 check_cfg_overlay () {
 	return 0
 }
