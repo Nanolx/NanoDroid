@@ -13,6 +13,13 @@
   * switch from Orfox to TorBrowser
      * if user opted-in to install Orfox CommonInstaller will auto-migrate setup to TorBrowser
 
+* Patcher
+  * move addon.d from 999 to 70 (fixes conflicts with Magisk addon.d)
+
+* CommonInstaller
+  * improve custom Magisk migration code
+  * install microG DroidGard Helper as user app, aswell
+
 * build-package
   * dynamically check whether NanoDroid is correctly populated with APKs prior building packages
   * when downloading APKs only updated the indices once per session instead for each individual APK
