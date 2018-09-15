@@ -37,8 +37,11 @@
   * Substratum (1002)
 
 * manual
-  * microG GmsCore (0.2.5.12879-192-custom)
+  * microG GmsCore (0.2.5.12879-194-custom)
   * Play Store (11.7.11)
+
+* tools
+  * Dexpatcher (1.6.2)
 
 ## 18.1.20180909
 
