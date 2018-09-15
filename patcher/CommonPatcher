@@ -91,10 +91,10 @@ mount_partitions () {
 			VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
 			mount -t ext4 -o ro ${VENDORBLOCK} /vendor
 		fi
-	elif [ ! ${BOOTMODE} -a -d /system/vendor -a ! -e /vendor ]; then
+	elif [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
 		echo " xxx compat /vendor link created!"
-		ln -sf /system/vendor /vendor
+		ln -sf /system/vendor /vendor >/dev/null
 	fi
 
 	mount | awk '{print $1 " on " $3}'
