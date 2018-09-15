@@ -1,5 +1,33 @@
 # ChangeLog
 
+## 18.2 in-dev
+
+### General Changes
+
+* Full package, SetupWizard, CommonInstaller
+  * switch from Orfox to TorBrowser
+     * if user opted-in to install Orfox CommonInstaller will auto-migrate setup to TorBrowser
+
+* build-package
+  * dynamically check whether NanoDroid is correctly populated with APKs prior building packages
+  * when downloading APKs only updated the indices once per session instead for each individual APK
+     * drastically reduces time and bandwith required to populate NanoDroid with APKs
+
+### Updates
+
+* automatic
+  * F-Droid (1.4)
+  * (Simple) Calendar (4.2.0)
+  * (Simple) Gallery (4.6.2)
+  * NewPipe (0.14.1)
+  * nlpBackend Déjà Vu (1.1.9)
+  * QKSMS (3.5.3)
+  * Substratum (1002)
+
+* manual
+  * microG GmsCore (0.2.5.12879-192-custom)
+  * Play Store (11.7.11)
+
 ## 18.1.20180909
 
 ### Bug Fixes
