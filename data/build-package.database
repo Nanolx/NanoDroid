@@ -58,6 +58,12 @@ fd_TERMUX=(fdroid com.termux app Termux)
 gd_ORBOT=(guardian org.torproject.android app Orbot)
 gd_ORFOX=(guardian info.guardianproject.orfox app Orfox)
 
+
+TORBROWSER_APK=$(wget -O- https://www.torproject.org/projects/torbrowser.html.en 2>/dev/null | \
+	gawk -F\" '/apk.*Android/{print $2}' | \
+	sed 's|..|https://www.torproject.org|')
+tp_TORBROWSER=(${TORBROWSER_APK} app TorBrowser)
+
 gh_AMAZE=(TeamAmaze/AmazeFileManager app Amaze)
 gh_K9MAIL=(k9mail/k-9 app K9Mail)
 gh_MPV=(mpv-android/mpv-android app MPV)
@@ -134,12 +140,12 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/OpenVPN/OpenVPN.apk
 	Full/system/app/OpenWeatherMapProvider/OpenWeatherMapProvider.apk
 	Full/system/app/Orbot/Orbot.apk
-	Full/system/app/Orfox/Orfox.apk
 	Full/system/app/QKSMS/QKSMS.apk
 	Full/system/app/SimpleCalendar/SimpleCalendar.apk
 	Full/system/app/SimpleGallery/SimpleGallery.apk
 	Full/system/app/Substratum/Substratum.apk
 	Full/system/app/Termux/Termux.apk
+	Full/system/app/TorBrowser/TorBrowser.apk
 	Full/system/app/Twidere/Twidere.apk
 	Full/system/app/XDALabs/XDALabs.apk
 	Full/system/app/YahooWeatherProvider/YahooWeatherProvider.apk

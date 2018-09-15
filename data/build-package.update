@@ -68,7 +68,8 @@ update_apps () {
 	grab_apk_from_repo ${fd_SIMPLEGALLERY[@]}
 	grab_apk_from_repo ${fd_TERMUX[@]}
 	grab_apk_from_repo ${gd_ORBOT[@]}
-	grab_apk_from_repo ${gd_ORFOX[@]}
+	#grab_apk_from_repo ${gd_ORFOX[@]}
+	grab_apk_from_url ${tp_TORBROWSER[@]}
 
 	# applications not managed in repositories
 	# plain URL

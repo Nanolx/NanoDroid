@@ -73,28 +73,37 @@ for opt in ${@}; do
 		;;
 
 		pull )
+			update_indices
 			nanodroid_pull
 			check_nanodroid
 		;;
 
 		u-microg )
+			update_indices
 			update_microg
+			check_nanodroid
 		;;
 
 		u-fdroid )
+			update_indices
 			update_fdroid
+			check_nanodroid
 		;;
 
 		u-apps )
+			update_indices
 			update_apps
+			check_nanodroid
 		;;
 
 		u-swipe )
 			update_swipe
+			check_nanodroid
 		;;
 
 		u-gsync )
 			update_gsync
+			check_nanodroid
 		;;
 
 		check )
