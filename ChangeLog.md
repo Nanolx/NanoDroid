@@ -2,6 +2,11 @@
 
 ## 18.2 in-dev
 
+### Bug Fixes
+
+* NanoDroid-Overlay
+  * fixed a bug that caused GApps Removal and Overlay Creation to fail
+
 ### General Changes
 
 * Full package, SetupWizard, CommonInstaller
