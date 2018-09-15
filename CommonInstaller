@@ -247,7 +247,7 @@ migrate_magisk_custom () {
 
 	mkdir -p /data/app/com.topjohnwu.magisk-1
 	cp ${1}/magisk.apk /data/app/com.topjohnwu.magisk-1/base.apk
-	set_perm_data /data/app/com.topjohnwu.magisk-1
+	set_perm_data -r /data/app/com.topjohnwu.magisk-1
 }
 
 detect_mode () {
@@ -664,7 +664,7 @@ install_microg () {
 			cp -r "${INSTALLER}/system/priv-app/DroidGuard/" \
 				/data/app/org.microg.gms.droidguard-1
 
-			set_perm_data /data/app/org.microg.gms.droidguard-1
+			set_perm_data -r /data/app/org.microg.gms.droidguard-1
 		fi
 
 		nanodroid_install_file etc/permissions/features.xml
