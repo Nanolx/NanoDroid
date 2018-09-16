@@ -660,7 +660,7 @@ install_microg () {
 			nanodroid_install_apk ${app}
 		done
 
-		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
+		if [ -z "$(find /data/app -type d -name 'org.microg.gms.droidguard*')" ]; then
 			cp -r "${INSTALLER}/system/priv-app/DroidGuard/" \
 				/data/app/org.microg.gms.droidguard-1
 
