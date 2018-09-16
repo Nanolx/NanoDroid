@@ -244,12 +244,6 @@ migrate_magisk_custom () {
 	fi
 
 	cp -r ${1} /data/adb/magisk
-
-	if [ -z "$(find /data/app -type d -name 'com.topjohnwu.magisk*')" ]; then
-		mkdir -p /data/app/com.topjohnwu.magisk-1
-		cp ${1}/magisk.apk /data/app/com.topjohnwu.magisk-1/base.apk
-		set_perm_data -r /data/app/com.topjohnwu.magisk-1
-	fi
 }
 
 detect_mode () {
@@ -547,6 +541,7 @@ magisk_install_preinst () {
 	fi
 
 	if [ -f ${RESTORE_PATH}/system/framework/services.jar ]; then
+		ui_print " << backing up patched services.jar"
 		cp ${RESTORE_PATH}/system/framework/services.jar ${TMPDIR}/services.jar
 	fi
 
