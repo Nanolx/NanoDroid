@@ -245,9 +245,11 @@ migrate_magisk_custom () {
 
 	cp -r ${1} /data/adb/magisk
 
-	mkdir -p /data/app/com.topjohnwu.magisk-1
-	cp ${1}/magisk.apk /data/app/com.topjohnwu.magisk-1/base.apk
-	set_perm_data -r /data/app/com.topjohnwu.magisk-1
+	if [ -z "$(find /data/app -type d -name 'com.topjohnwu.magisk*')" ]; then
+		mkdir -p /data/app/com.topjohnwu.magisk-1
+		cp ${1}/magisk.apk /data/app/com.topjohnwu.magisk-1/base.apk
+		set_perm_data -r /data/app/com.topjohnwu.magisk-1
+	fi
 }
 
 detect_mode () {
