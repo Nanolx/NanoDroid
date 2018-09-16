@@ -254,6 +254,7 @@ patcher_uninstall () {
 	[ -d /data/adb/nanodroid_patcher] && rm -rf ${addond}
 
 	for addonsh in /system/addon.d/999-nanodroidpatcher.sh \
+		/system/addon.d/70-nanodroidpatcher.sh \
 		/system/addon.d/91-nanodroid.sh; do
 		[ -f ${addonsh} ] && rm -f ${addonsh}
 	done

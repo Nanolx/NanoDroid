@@ -92,7 +92,7 @@ increase_version_number() {
 	sed -e "s/\"     NanoDroid.*/\"     NanoDroid ${2}.${ver}    \"/" -i \
 		"${CWD}/setup-wizard/nanodroid-setup"
 	sed -e "s/\"     addon.d.*/\"     addon.d ${2}.${ver}     \"/" -i \
-		"${CWD}"/patcher/dexpatcher/999-nanodroidpatcher.sh
+		"${CWD}"/patcher/dexpatcher/70-nanodroidpatcher.sh
 
 	exit 0
 }
