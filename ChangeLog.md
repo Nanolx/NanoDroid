@@ -34,7 +34,7 @@
   * NewPipe (0.14.1)
   * nlpBackend Déjà Vu (1.1.9)
   * QKSMS (3.5.3)
-  * Substratum (1002)
+  * Substratum (1004)
 
 * manual
   * microG GmsCore (0.2.5.12879-194-custom)
