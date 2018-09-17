@@ -216,14 +216,6 @@ Extra packages, always flash through TWRP.
 
 Misc. Script for use from PC/Notebook, while device is in TWRP, they are found in this repository
 
-* **framework-patcher**
-  * on-device framework-patcher for signature spoofing support
-     * requires an deodexed ROM
-         * [> Deodex Instructions](doc/DeodexServices.md)
-  * creates the file `/data/adb/NanoDroid_Patched` after successful patching
-  * invoke like `framework-patcher [ver]`
-     * where [ver] is your Android version (6.0, 7.1, ...)
-  * the original, unpatched `services.jar` is backed up to `/sdcard/nanodroid_backups`
 * **force-debloat**
   * system debloater
   * the list of applications resides in the script itself
