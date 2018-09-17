@@ -260,11 +260,7 @@ detect_mode () {
 		0 | *)
 			MODE_DETECT=detected
 
-			if [ -f "${NANODROID_LIST}" ]; then
-				MODE=SYSTEM
-
-				${BOOTMODE} && error "System Mode installation detected, but device in BOOTMODE"
-			elif [ -f /data/adb/magisk/magisk ]; then
+			if [ -f /data/adb/magisk/magisk ]; then
 				MODE=MAGISK
 			elif [ -f /data/.magisk/magisk ]; then
 				migrate_magisk_custom /data/.magisk/
@@ -284,7 +280,7 @@ detect_mode () {
 	ui_print " "
 
 	if [ "${MODE}" = "SYSTEM" ]; then
-		if [ -f "${NANODROID_LIST}" -a "$(wc -l < "${NANODROID_LIST}")" -gt 1 ]; then
+		if [ -f "${NANODROID_LIST}" ]; then
 			NANODROID_UPGRADE=1
 		else	NANODROID_UPGRADE=0
 		fi
