@@ -1,5 +1,15 @@
 # ChangeLog
 
+## 18.2.1 in-dev
+
+### Bug Fixes
+
+* Patcher
+  * during installation get rid of old addon.d
+
+* CommonInstaller
+  * switch back mode detection to 17.x behaviour
+
 ## 18.2.20180916
 
 ### Bug Fixes
