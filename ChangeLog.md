@@ -10,6 +10,15 @@
 * CommonInstaller
   * switch back mode detection to 17.x behaviour
 
+### General Changes
+
+* On-PC framework-patcher
+  * removed for now, broken beyond Oreo and does not work on odexed ROMs
+  * a better implemenation will follow
+
+* Force-Debloat script
+  * removed as NanoDroid-Overlay works in System Mode, aswell now
+
 ## 18.2.20180916
 
 ### Bug Fixes
