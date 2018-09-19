@@ -19,6 +19,14 @@
 * Force-Debloat script
   * removed as NanoDroid-Overlay works in System Mode, aswell now
 
+* Patcher
+  * add unifiednlp patch [by Tom Vincent](https://github.com/tlvince/haystack/commit/3194226568901ac6c2111e6d1cd6be91a5d96254)
+
+### Updates
+
+* automatic
+  * Substratum (1006)
+
 ## 18.2.20180916
 
 ### Bug Fixes

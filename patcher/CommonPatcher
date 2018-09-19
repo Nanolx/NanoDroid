@@ -247,10 +247,12 @@ detect_sdk () {
 		SMALI="${BASEDIR}/smali_25.dex"
 	fi
 
+	PATCH_CORE="${BASEDIR}/core_services.jar.dex"
+	PATCH_UNLP="${BASEDIR}/unifiednlp_services.jar.dex"
+
 	if [ "${SDK_VERSION}" -lt 24 ]; then
 		ui_print " > Android 4.1 - 6.0 (SDK ${SDK_VERSION}) detected"
 		PATCH_HOOK="${BASEDIR}/hook_4.1-6.0_services.jar.dex"
-		PATCH_UI_SERVICES="${BASEDIR}/ui_4.1-6.0_services.jar.dex"
 	else
 		ui_print " > Android 7.0 - 9.0 (SDK ${SDK_VERSION}) detected"
 		PATCH_HOOK="${BASEDIR}/hook_7.0-9.0_services.jar.dex"
@@ -431,7 +433,7 @@ patch_services () {
 
 	mkdir -p "${BASEDIR}/services.jar-mod"
 
-	PATCHES="${PATCH_HOOK} ${PATCH_CORE}"
+	PATCHES="${PATCH_HOOK} ${PATCH_CORE} ${PATCH_UNLP}"
 
 	ui_print " >> patching services.jar"
 	call_dalvikvm \
@@ -500,7 +502,7 @@ install_addond () {
 		/system/addon.d/75-nanodroidpatcher.sh \
 		/system/addon.d/999-nanodroidpatcher.sh
 
-	for file in core_services.jar.dex dexpatcher.dex \
+	for file in core_services.jar.dex unifiednlp_services.jar.dex dexpatcher.dex \
 		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
 		baksmali_25.dex smali_25.dex baksmali_26.dex smali_26.dex; do
 		cp "${BASEDIR}/${file}" ${PATCHER_ADDOND_DATA}/

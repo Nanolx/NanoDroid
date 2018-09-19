@@ -24,7 +24,6 @@ fi
 setup_environment
 BASEDIR=/data/adb/nanodroid_patcher
 export ANDROID_DATA=${BASEDIR}
-PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 
 NanoDroidPatcher () {
 	sleep 5

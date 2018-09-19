@@ -17,7 +17,6 @@ detect_bootmode
 
 setup_environment
 BASEDIR="${TMPDIR}/dexpatcher"
-PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 
 detect_outfd
 
