@@ -44,8 +44,7 @@ if it's properly been created rename it to classes.dex and add it to `services.j
 
 ```
 mv framework/oat/[arch]/services.apk_classes.dex classes.dex
-zip -d framework/services.jar classes.dex
-zip -j framework/services.jar classes.dex
+zip -j framework/services.jar classes*.dex
 ```
 
 next install the new `services.jar` to device:
@@ -90,8 +89,7 @@ somestimes baksmali.jar can't find the bootclasses file itself, in this case pas
 in any case, if a new classes.dex was successfully created in the services-new directory, re-package it into the services.jar we previously pulled:
 
 ```
-zip -d framework/services.jar classes.dex
-zip -j framework/services.jar classes.dex
+zip -j framework/services.jar classes*.dex
 ```
 
 next install the new `services.jar` to device:
