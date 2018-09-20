@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 18.3 in-dev
+## 18.3.20180920
 
 ### Bug Fixes
 
