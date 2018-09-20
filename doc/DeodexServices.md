@@ -40,10 +40,11 @@ vdexExtractor -i framework/oat/[arch]/services.vdex --ignore-crc-error
 this will create the following file:
 * framework/oat/[arch]/services.apk_classes.dex
 
-if it's properly been created rename it to classes.dex and add it to `services.jar`
+if it's properly been created rename it to classes.dex and add it to `services.jar`, if there are additional files like services.apk_classes2.dex, rename them to classes2.dex and so on and add them to services.jar like:
 
 ```
 mv framework/oat/[arch]/services.apk_classes.dex classes.dex
+... mv for other dex files ...
 zip -j framework/services.jar classes*.dex
 ```
 
