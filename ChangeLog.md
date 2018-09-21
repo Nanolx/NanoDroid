@@ -14,7 +14,7 @@
   * Amaze (3.3RC5)
 
 * manual
-  * microG GmsCore (0.2.5.12879-201-custom)
+  * microG GmsCore (0.2.5.13280-dirty)
   * Play Store (11.8.09)
 
 ## 18.3.20180920
