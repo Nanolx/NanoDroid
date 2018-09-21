@@ -266,7 +266,7 @@ patcher_uninstall () {
 
 ui_print " "
 ui_print "*****************************"
-ui_print "   NanoDroid 18.3.20180920     "
+ui_print "   NanoDroid 18.3.1.20180921     "
 ui_print "      created by Nanolx      "
 ui_print "        Uninstaller          "
 ui_print "*****************************"
