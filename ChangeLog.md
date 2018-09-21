@@ -1,5 +1,22 @@
 # ChangeLog
 
+## 18.3.1 in-dev
+
+### General Changes
+
+* Full, microG package
+  * move GsfProxy from /system/app to /system/priv-app
+
+### Updates
+
+* automatic
+  * QKSMS (3.5.4)
+  * Amaze (3.3RC5)
+
+* manual
+  * microG GmsCore (0.2.5.12879-201-custom)
+  * Play Store (11.8.09)
+
 ## 18.3.20180920
 
 ### Bug Fixes
