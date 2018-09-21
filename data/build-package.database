@@ -17,7 +17,7 @@ nlx_OMNICLOCK=(https://www.nanolx.org/apk/OmniClock.apk app OmniClock)
 ###
 
 uG_GMSCORE=(microg com.google.android.gms priv-app GmsCore)
-uG_GSFPROXY=(microg com.google.android.gsf app GsfProxy)
+uG_GSFPROXY=(microg com.google.android.gsf priv-app GsfProxy)
 uG_DROIDGUARD=(microg org.microg.gms.droidguard priv-app DroidGuard)
 uG_FAKESTORE=(microg com.android.vending priv-app FakeStore)
 fd_NLPDEJAVU=(fdroid org.fitchfamily.android.dejavu app nlpBackendDejavu)
@@ -124,7 +124,6 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/BeHeKeyboard/BeHeKeyboard.apk
 	Full/system/app/FDroid/FDroid.apk
 	Full/system/app/FaceSlim/FaceSlim.apk
-	Full/system/app/GsfProxy/GsfProxy.apk
 	Full/system/app/K9Mail/K9Mail.apk
 	Full/system/app/KeePassDX/KeePassDX.apk
 	Full/system/app/KernelAdiutor/KernelAdiutor.apk
@@ -154,4 +153,5 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/priv-app/DroidGuard/DroidGuard.apk
 	Full/system/priv-app/FDroidPrivileged/FDroidPrivileged.apk
 	Full/system/priv-app/FakeStore/FakeStore.apk
-	Full/system/priv-app/YalpStore/YalpStore.apk )
+	Full/system/priv-app/YalpStore/YalpStore.apk
+	Full/system/priv-app/GsfProxy/GsfProxy.apk )
