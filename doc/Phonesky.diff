@@ -1,6 +1,6 @@
-diff -Nupr PS_11711.orig/AndroidManifest.xml PS_11711/AndroidManifest.xml
---- PS_11711.orig/AndroidManifest.xml	2018-09-15 19:08:19.491858635 +0200
-+++ PS_11711/AndroidManifest.xml	2018-09-15 19:12:55.960686575 +0200
+diff -Nupr PS_11809.orig/AndroidManifest.xml PS_11809/AndroidManifest.xml
+--- PS_11809.orig/AndroidManifest.xml	2018-09-21 19:51:41.035118907 +0200
++++ PS_11809/AndroidManifest.xml	2018-09-21 19:53:35.842963662 +0200
 @@ -94,6 +94,7 @@
      <uses-permission android:name="android.permission.RECEIVE_SMS"/>
      <uses-permission android:name="android.permission.READ_SMS"/>
@@ -17,35 +17,35 @@ diff -Nupr PS_11711.orig/AndroidManifest.xml PS_11711/AndroidManifest.xml
          <activity android:configChanges="orientation|screenSize" android:name="com.google.android.wallet.instrumentmanager.ui.redirect.ImPopupRedirectActivity" android:theme="@style/Theme.UiComponents.PopupRedirect"/>
          <activity android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.wallet.instrumentmanager.redirect.ImStartAndroidAppRedirectActivity" android:theme="@style/Theme.UiComponents.Translucent.NoActionBar"/>
          <activity android:exported="true" android:name="com.google.android.wallet.instrumentmanager.redirect.ImFinishAndroidAppRedirectActivity">
-@@ -909,4 +911,4 @@
+@@ -914,4 +916,4 @@
          <screen android:screenDensity="xxhdpi" android:screenSize="large"/>
          <screen android:screenDensity="xxhdpi" android:screenSize="xlarge"/>
      </compatible-screens>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_11711.orig/res/values/public.xml PS_11711/res/values/public.xml
---- PS_11711.orig/res/values/public.xml	2018-09-15 19:08:16.789846443 +0200
-+++ PS_11711/res/values/public.xml	2018-09-15 19:13:58.408133787 +0200
-@@ -10748,6 +10748,7 @@
-     <public type="string" name="yes" id="0x7f13088d" />
-     <public type="string" name="yes_im_in" id="0x7f13088e" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f13088f" />
-+    <public type="string" name="fake_signature" id="0x7f130890" />
+diff -Nupr PS_11809.orig/res/values/public.xml PS_11809/res/values/public.xml
+--- PS_11809.orig/res/values/public.xml	2018-09-21 19:51:31.877043818 +0200
++++ PS_11809/res/values/public.xml	2018-09-21 19:54:30.450309536 +0200
+@@ -10824,6 +10824,7 @@
+     <public type="string" name="yes" id="0x7f1308a1" />
+     <public type="string" name="yes_im_in" id="0x7f1308a2" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f1308a3" />
++    <public type="string" name="fake_signature" id="0x7f1308a4" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -11891,4 +11892,4 @@
+@@ -11967,4 +11968,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002d" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002e" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002f" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_11711.orig/res/values/strings.xml PS_11711/res/values/strings.xml
---- PS_11711.orig/res/values/strings.xml	2018-09-15 19:08:16.788846439 +0200
-+++ PS_11711/res/values/strings.xml	2018-09-15 19:13:30.418935237 +0200
-@@ -2018,4 +2018,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_11809.orig/res/values/strings.xml PS_11809/res/values/strings.xml
+--- PS_11809.orig/res/values/strings.xml	2018-09-21 19:51:31.876043810 +0200
++++ PS_11809/res/values/strings.xml	2018-09-21 19:53:35.845963682 +0200
+@@ -2035,4 +2035,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />
