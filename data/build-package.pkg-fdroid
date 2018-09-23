@@ -24,6 +24,8 @@ create_fdroid_package() {
 
 	zip_add_doc
 	zip_add_config .nanodroid-setup 0
+
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_fdroid () {

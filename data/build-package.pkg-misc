@@ -13,6 +13,8 @@ create_patcher_package() {
 	zip_add busybox.arm
 	zip_add busybox.x86
 	zip_add_doc
+
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_patcher () {
@@ -32,6 +34,8 @@ create_setupwizard_package() {
 	cd "${CWD}"
 
 	zip_add_doc
+
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_setupwizard () {
@@ -52,6 +56,8 @@ create_uninstaller_package() {
 	zip_add busybox.arm
 	zip_add busybox.x86
 	zip_add_doc
+
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_uninstaller () {

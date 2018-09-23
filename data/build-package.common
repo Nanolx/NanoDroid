@@ -171,3 +171,8 @@ error () {
 	echo -e "${@}"
 	exit 1
 }
+
+sum_sign_package () {
+	sha256sum "${1}" > "${1}.sha256"
+	gpg --sign --detach-sign "${1}.sha256"
+}
