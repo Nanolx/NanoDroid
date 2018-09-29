@@ -10,6 +10,7 @@ nlx_MPV=(nanolx is.xyz.mpv app MPV)
 nlx_PHONESKY=(nanolx com.android.vending priv-app Phonesky)
 
 nlx_OMNICLOCK=(https://www.nanolx.org/apk/OmniClock.apk app OmniClock)
+nlx_AMAZE=(https://www.nanolx.org/apk/Amaze.apk app Amaze)
 
 ###
 # microG
@@ -63,8 +64,6 @@ TORBROWSER_APK=$(wget -O- https://www.torproject.org/projects/torbrowser.html.en
 	gawk -F\" '/apk.*Android/{print $2}' | \
 	sed 's|..|https://www.torproject.org|')
 tp_TORBROWSER=(${TORBROWSER_APK} app TorBrowser)
-
-gh_AMAZE=(TeamAmaze/AmazeFileManager app Amaze)
 
 ###
 # Google Sync Adapters

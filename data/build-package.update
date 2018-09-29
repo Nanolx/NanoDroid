@@ -70,9 +70,7 @@ update_apps () {
 	# generic URL
 	grab_apk_from_url ${tp_TORBROWSER[@]}
 	grab_apk_from_url ${nlx_OMNICLOCK[@]}
-
-	# GitHub
-	grab_apk_from_github ${gh_AMAZE[@]}
+	grab_apk_from_url ${nlx_AMAZE[@]}
 
 	# APK Mirror
 	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
