@@ -7,10 +7,10 @@ The applications provided by NanoDroid will be
 * directly installed as system applications when installed in System Mode
 
 Full list of provided applications
-* Adaway [> F-Droid](https://f-droid.org/packages/org.adaway)
 * Amaze (File Manager) [> F-Droid](https://f-droid.org/packages/com.amaze.filemanager)
 * AnySoftKeyboard [> F-Droid](https://f-droid.org//packages/com.menny.android.anysoftkeyboard)
-* BeHe Keybarod [> F-Droid](https://f-droid.org/packages/com.vlath.keyboard/)
+* BeHe Keyboard [> F-Droid](https://f-droid.org/packages/com.vlath.keyboard/)
+* Blockada [> F-Droid](https://f-droid.org/en/packages/org.blokada.alarm/)
 * (Simple) Calendar [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.calendar)
 * Face Slim (Facebook client) [> F-Droid](https://f-droid.org/packages/org.indywidualni.fblite)
 * (Simple) Gallery [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.gallery)

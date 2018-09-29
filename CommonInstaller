@@ -750,14 +750,7 @@ install_apps () {
 		ui_print "${APP_STRING}"
 
 		for app in ${INSTALL_APPS}; do
-			if [[ ${app} = Adaway && -d /system/app/AdAway ]]; then
-				if [ "${nanodroid_override}" -eq 0 ]; then
-					ui_print " <<> app: Adaway already provided by ROM (as AdAway)"
-				else	nanodroid_install_apk Adaway
-					echo "   + removing conflicting AdAway"
-					${NANODROID_BINDIR}/nanodroid-overlay --add AdAway
-				fi
-			elif [[ ${app} = OmniClock && -d /system/app/OmniClockOSS ]]; then
+			if [[ ${app} = OmniClock && -d /system/app/OmniClockOSS ]]; then
 				if [ "${nanodroid_override}" -eq 0 ]; then
 					ui_print " <<> app: OmniClock already provided by ROM (as OmniClockOSS)"
 				else
@@ -1276,6 +1269,11 @@ check_cfg_apps () {
 	# <= 18.1 has Orfox instead of TorBrowser, migrate
 	if grep -q Orfox "${cfg_apps}"; then
 		sed -e 's/Orfox/TorBrowser/g' -i "${cfg_apps}"
+	fi
+
+	# <= 18.4 has Adaway instead of Blockada, migrate
+	if grep -q Adaway "${Blockada}"; then
+		sed -e 's/Adaway/Blockada/g' -i "${cfg_apps}"
 	fi
 }
 

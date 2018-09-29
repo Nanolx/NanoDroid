@@ -17,19 +17,17 @@ update_swipe () {
 }
 
 update_microg () {
+	grab_apk_from_repo ${nlx_GMSCORE[@]}
 	#grab_apk_from_repo ${uG_GMSCORE[@]}
 	grab_apk_from_repo ${uG_GSFPROXY[@]}
+	grab_apk_from_repo ${nlx_DROIDGUARD[@]}
 	#grab_apk_from_repo ${uG_DROIDGUARD[@]}
 	grab_apk_from_repo ${uG_FAKESTORE[@]}
 	grab_apk_from_repo ${fd_NLPDEJAVU[@]}
 	grab_apk_from_repo ${fd_NLPMOZILLA[@]}
 	grab_apk_from_repo ${fd_NLPNOMINATIM[@]}
 	grab_apk_from_repo ${fd_YALPSTORE[@]}
-
 	grab_apk_from_repo ${nlx_PHONESKY[@]}
-	grab_apk_from_repo ${nlx_DROIDGUARD[@]}
-	grab_apk_from_repo ${nlx_GMSCORE[@]}
-
 }
 
 update_gsync () {
@@ -48,10 +46,10 @@ update_fdroid () {
 
 update_apps () {
 	# applications managed in repositories
-	grab_apk_from_repo ${fd_ADAWAY[@]}
 	#grab_apk_from_repo ${fd_AMAZE[@]}
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
+	grab_apk_from_repo ${fd_BLOCKADA[@]}
 	grab_apk_from_repo ${fd_FACESLIM[@]}
 	grab_apk_from_repo ${fd_KEEPASSDX[@]}
 	grab_apk_from_repo ${fd_LIGHTNING[@]}
@@ -70,9 +68,6 @@ update_apps () {
 	#grab_apk_from_repo ${gd_ORFOX[@]}
 	grab_apk_from_url ${tp_TORBROWSER[@]}
 
-	# applications not managed in repositories
-	# plain URL
-	grab_apk_from_url ${nlx_MPV[@]}
 	#grab_apk_from_url ${nlx_AMAZE[@]}
 	grab_apk_from_url ${nlx_OMNICLOCK[@]}
 
