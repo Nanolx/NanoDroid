@@ -18,10 +18,8 @@ update_swipe () {
 
 update_microg () {
 	grab_apk_from_repo ${nlx_GMSCORE[@]}
-	#grab_apk_from_repo ${uG_GMSCORE[@]}
 	grab_apk_from_repo ${uG_GSFPROXY[@]}
 	grab_apk_from_repo ${nlx_DROIDGUARD[@]}
-	#grab_apk_from_repo ${uG_DROIDGUARD[@]}
 	grab_apk_from_repo ${uG_FAKESTORE[@]}
 	grab_apk_from_repo ${fd_NLPDEJAVU[@]}
 	grab_apk_from_repo ${fd_NLPMOZILLA[@]}
@@ -58,7 +56,7 @@ update_apps () {
 	grab_apk_from_repo ${fd_ODYSSEY[@]}
 	grab_apk_from_repo ${fd_OPENCAMERA[@]}
 	grab_apk_from_repo ${fd_OPENKEYCHAIN[@]}
-	grab_apk_from_repo ${fd_OPENLAUNCHER[@]}
+	grab_apk_from_repo ${nlx_OPENLAUNCHER[@]}
 	grab_apk_from_repo ${fd_OPENVPN[@]}
 	grab_apk_from_repo ${fd_QKSMS[@]}
 	grab_apk_from_repo ${fd_SIMPLECALENDAR[@]}
