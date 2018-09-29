@@ -127,7 +127,7 @@ ${1}/${2}/${2}-${VERSION}-release/\
 ${5}-${VERSION}-android-apk-download"
 
 	URL_WP=$(curl -s "${URL_STRING}/download/" | \
-		gawk -F\" '/If not, please click/{print $16}')
+		gawk -F\" '/If not, please click/{print $18}')
 
 	SHA_SUM=$(curl -s "${URL_STRING}/" | \
 		grep "SHA-256.*[^>]</span>" | \
