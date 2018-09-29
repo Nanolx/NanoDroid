@@ -41,6 +41,7 @@ fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
 fd_BLOCKADA=(fdroid org.blokada.alarm app Blockada)
 fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
 fd_KEEPASSDX=(fdroid com.kunzisoft.keepass.libre app KeePassDX)
+fd_K9MAIL=(fdroid com.fsck.k9 app K9Mail)
 fd_LIGHTNING=(fdroid acr.browser.lightning app Lightning)
 fd_NEWPIPE=(fdroid org.schabi.newpipe app NewPipe)
 fd_OANDBACKUP=(fdroid dk.jens.backup app Oandbackup)
@@ -53,10 +54,10 @@ fd_QKSMS=(fdroid com.moez.QKSMS app QKSMS)
 fd_SIMPLECALENDAR=(fdroid com.simplemobiletools.calendar app SimpleCalendar)
 fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery app SimpleGallery)
 fd_TERMUX=(fdroid com.termux app Termux)
+fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 
 gd_ORBOT=(guardian org.torproject.android app Orbot)
 gd_ORFOX=(guardian info.guardianproject.orfox app Orfox)
-
 
 TORBROWSER_APK=$(wget -O- https://www.torproject.org/projects/torbrowser.html.en 2>/dev/null | \
 	gawk -F\" '/apk.*Android/{print $2}' | \
@@ -64,10 +65,6 @@ TORBROWSER_APK=$(wget -O- https://www.torproject.org/projects/torbrowser.html.en
 tp_TORBROWSER=(${TORBROWSER_APK} app TorBrowser)
 
 gh_AMAZE=(TeamAmaze/AmazeFileManager app Amaze)
-gh_K9MAIL=(k9mail/k-9 app K9Mail)
-gh_MPV=(mpv-android/mpv-android app MPV)
-gh_TWIDERE=(TwidereProject/Twidere-Android app Twidere)
-gh_QKSMS=(moezbhatti/qksms app QKSMS)
 
 ###
 # Google Sync Adapters

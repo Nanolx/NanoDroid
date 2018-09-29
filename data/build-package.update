@@ -46,12 +46,12 @@ update_fdroid () {
 
 update_apps () {
 	# applications managed in repositories
-	#grab_apk_from_repo ${fd_AMAZE[@]}
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BLOCKADA[@]}
 	grab_apk_from_repo ${fd_FACESLIM[@]}
 	grab_apk_from_repo ${fd_KEEPASSDX[@]}
+	grab_apk_from_repo ${fd_K9MAIL[@]}
 	grab_apk_from_repo ${fd_LIGHTNING[@]}
 	grab_apk_from_repo ${fd_NEWPIPE[@]}
 	grab_apk_from_repo ${fd_OANDBACKUP[@]}
@@ -64,19 +64,15 @@ update_apps () {
 	grab_apk_from_repo ${fd_SIMPLECALENDAR[@]}
 	grab_apk_from_repo ${fd_SIMPLEGALLERY[@]}
 	grab_apk_from_repo ${fd_TERMUX[@]}
+	grab_apk_from_repo ${fd_TWIDERE[@]}
 	grab_apk_from_repo ${gd_ORBOT[@]}
-	#grab_apk_from_repo ${gd_ORFOX[@]}
-	grab_apk_from_url ${tp_TORBROWSER[@]}
 
-	#grab_apk_from_url ${nlx_AMAZE[@]}
+	# generic URL
+	grab_apk_from_url ${tp_TORBROWSER[@]}
 	grab_apk_from_url ${nlx_OMNICLOCK[@]}
 
 	# GitHub
 	grab_apk_from_github ${gh_AMAZE[@]}
-	grab_apk_from_github ${gh_K9MAIL[@]}
-	#grab_apk_from_github ${gh_MPV[@]}
-	grab_apk_from_github ${gh_TWIDERE[@]}
-	#grab_apk_from_github ${gh_QKSMS[@]}
 
 	# APK Mirror
 	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
