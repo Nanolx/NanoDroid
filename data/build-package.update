@@ -20,16 +20,15 @@ update_microg () {
 	#grab_apk_from_repo ${uG_GMSCORE[@]}
 	grab_apk_from_repo ${uG_GSFPROXY[@]}
 	#grab_apk_from_repo ${uG_DROIDGUARD[@]}
-	#grab_apk_from_repo ${uG_FAKESTORE[@]}
+	grab_apk_from_repo ${uG_FAKESTORE[@]}
 	grab_apk_from_repo ${fd_NLPDEJAVU[@]}
 	grab_apk_from_repo ${fd_NLPMOZILLA[@]}
 	grab_apk_from_repo ${fd_NLPNOMINATIM[@]}
 	grab_apk_from_repo ${fd_YALPSTORE[@]}
 
-	grab_apk_from_url ${nlx_PHONESKY[@]}
-	grab_apk_from_url ${nlx_FAKESTORE[@]}
-	grab_apk_from_url ${nlx_DROIDGUARD[@]}
-	grab_apk_from_url ${nlx_GMSCORE[@]}
+	grab_apk_from_repo ${nlx_PHONESKY[@]}
+	grab_apk_from_repo ${nlx_DROIDGUARD[@]}
+	grab_apk_from_repo ${nlx_GMSCORE[@]}
 
 }
 

@@ -4,12 +4,11 @@
 # NanoDroid self-provided apks
 ###
 
-nlx_FAKESTORE=(https://www.nanolx.org/apk/FakeStore.apk priv-app FakeStore)
-nlx_GMSCORE=(https://www.nanolx.org/apk/GmsCore.apk priv-app GmsCore)
-nlx_DROIDGUARD=(https://www.nanolx.org/apk/DroidGuard.apk priv-app DroidGuard)
-nlx_MPV=(https://www.nanolx.org/apk/MPV.apk app MPV)
-nlx_PHONESKY=(https://www.nanolx.org/apk/Phonesky.apk priv-app Phonesky)
-nlx_AMAZE=(https://www.nanolx.org/apk/Amaze.apk app Amaze)
+nlx_GMSCORE=(nanolx com.google.android.gms priv-app GmsCore)
+nlx_DROIDGUARD=(nanolx org.microg.gms.droidguard priv-app DroidGuard)
+nlx_MPV=(nanolx is.xyz.mpv app MPV)
+nlx_PHONESKY=(nanolx com.android.vending priv-app Phonesky)
+
 nlx_OMNICLOCK=(https://www.nanolx.org/apk/OmniClock.apk app OmniClock)
 
 ###
