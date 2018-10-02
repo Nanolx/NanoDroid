@@ -199,20 +199,16 @@ detect_arch () {
 		;;
 	esac
 
-	if [ "${CUSTOM_ROM}" -eq 1 ]; then
-		case ${ARCH} in
-			arm | x86 )
-				export LD_LIBRARY_PATH="/system/lib:/vendor/lib:/system/vendor/lib"
-			;;
+	DALVIKVM_BIN=$(ls -l /system/bin/dalvikvm | awk '{print $NF}')
+	case ${DALVIKVM_BIN} in
+		dalvikvm | dalvikvm32 )
+			export LD_LIBRARY_PATH="/system/lib:/vendor/lib:/system/vendor/lib"
+		;;
 
-			arm64 | x86_64 )
-				export LD_LIBRARY_PATH="/system/lib64:/vendor/lib64:/system/vendor/lib64"
-			;;
-		esac
-	else
-		unset LD_LIBRARY_PATH
-		unset LD_PRELOAD
-	fi
+		dalvikvm64 )
+			export LD_LIBRARY_PATH="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+		;;
+	esac
 
 	export PATH="${BASEDIR}/busybox:/system/bin:/system/xbin"
 
@@ -231,7 +227,6 @@ detect_arch () {
 
 detect_sdk () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
-	CUSTOM_ROM=0
 
 	[ "${SDK_VERSION}" -gt 28 ] && \
 		error "Android versions beyond Pie are not yet supported"
@@ -259,14 +254,6 @@ detect_sdk () {
 	fi
 
 	[ "${SDK_VERSION}" -gt 21 ] && DEX_OPTS="--multi-dex-threaded"
-
-	for pattern in dev-keys test-keys type=userdebug; do
-		grep -q "${pattern}" /system/build.prop && CUSTOM_ROM=1
-	done
-
-	[ "${CUSTOM_ROM}" -eq 1 ] && \
-		ui_print " > Custom ROM detected" \
-		|| ui_print " > Stock ROM detected"
 }
 
 ##########################################################################################
