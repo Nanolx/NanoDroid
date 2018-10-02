@@ -1,6 +1,47 @@
 # ChangeLog
 
-## 18.3.1 in-dev
+## 19.0 in-dev
+
+### Bug Fixes
+
+* build-package script
+  * fix downloading APKs from apkmirror.com
+    * NanoDroid packages can now be created from scratch again
+
+### General Changes
+
+* build-package script
+  * packages will now be created with SHA256 checksum and GPG signature
+  * download repo indices once per session, speeds up download and package creation time
+  * check whether all files are in place is now dynamic
+  * minor internal changes
+
+* Full package
+  * migrate from Adaway to Blockada
+    * users that had Adaway installed, will be auto-migrated to Blockada
+    * VPN users can't use Blockada, but can still install Adaway from F-Droid
+
+* NanoDroid-UPD script
+  * removed
+
+* NanoDroid F-Droid Repository
+  * added, contains custom NanoDroid snapshot builds for
+    * microG GmsCore
+    * microG DroidGuard Helper
+    * Google Play Store
+    * MPV
+    * OpenLauncher
+  * see http://nanolx.org/fdroid/repo/
+
+### Updates
+
+* manual
+  * microG GmsCore (0.2.6.13280-dirty-92)
+  * MPV (20180929-nightly)
+  * OpenLauncher (20181002-nightly)
+  * Play Store (11.9.14)
+
+## 18.3.1.20180921
 
 ### General Changes
 
