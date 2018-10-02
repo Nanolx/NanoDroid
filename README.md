@@ -56,7 +56,7 @@ The `build-package` script additionally supports the following parameters:
 * `ver [version] [date]` change project version
 * `bump` increment Magisk module version by 1
 
-The following applications are custom builds (F-Droid Repository below):
+The following applications are custom builds (see [F-Droid Repository](#f-droid-repository) below):
 
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
 * microG GmsCore (reason: built with additions)
@@ -210,8 +210,6 @@ Extra packages, always flash through TWRP.
 ### F-Droid Repository
 
 In order to ease updating NanoDroid's custom application builds you can use it's companion [F-Droid Repository](https://www.nanolx.org/fdroid/repo)
-
-* `https://nanolx.org/fdroid/repo?fingerprint=862ED9F13A3981432BF86FE93D14596B381D75BE83A1D616E2D44A12654AD015`
 
 ### Scripts
 
@@ -420,6 +418,7 @@ This is the recommended way.
 * install desired Kernel (if any)
 * install **NanoDroid**
 * reboot into ROM
+* optional, but recommended, setup the [F-Droid repository](#f-droid-repository)
 
 ###### Upgrade / Installing on a clean ROM
 
@@ -505,10 +504,13 @@ Special Thanks to the beta testers
 
 List of known issues
 
-* SafetyNet check fails with `Google Play Services not available`
-  * you did not setup microG (or did not reboot afterwards)
+* Applications/SafetyNet check complain with `Google Play Services are missing`
+  * you did not
+    * setup microG (or did not reboot afterwards)
+    * grant signature spoofing permission to Play Store
+    * install either Fake Store or Play Store
 * Battery Drain
-  * microG fails to register applications  to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
+  * microG fails to register applications to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
      * do a clean flash of your ROM (, Magisk) and NanoDroid and install your apps after microG setup
      * uninstall and re-install all your applications (backup application data if required)
 * microG lacks features
@@ -517,9 +519,6 @@ List of known issues
 Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
 
 ## TODO
-
-* better error handling in **on-pc** framework-patcher
-* on-device de-odexing of `services.jar` in NanoDroid-Patcher
 
 ## FAQ
 
