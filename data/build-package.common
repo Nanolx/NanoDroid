@@ -135,7 +135,6 @@ update contents:
 	u-apps			| update applications
 	u-swipe			| update swipe libraries
 	u-gsync			| update Google Sync Adapters
-				|| except: Android Oreo / SDK 26
 
 create zip files:
 	full			| create full package zip from repo
