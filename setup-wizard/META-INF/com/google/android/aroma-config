@@ -112,7 +112,7 @@ checkbox(
 	"apps.prop",
 
 	"Select which Apps to install (if enabled)", "", 2, #-- Group 1
-	"AdAway",			"Powerful ad blocker (requires root)",	1,
+	"Blockada",			"Powerful ad blocker (rootless)",	1,
 	"Amaze",			"Amazing File Manager",			1,
 	"AnysoftKeyboard",		"Powerful Keyboard",			1,
 	"FaceSlim",			"Facebook client",			1,
