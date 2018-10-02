@@ -211,7 +211,7 @@ Extra packages, always flash through TWRP.
 
 In order to ease updating NanoDroid's custom application builds you can use it's companion [F-Droid Repository](https://www.nanolx.org/fdroid/repo)
 
-* `https://www.nanolx.org/fdroid/repo?fingerprint=862ED9F13A3981432BF86FE93D14596B381D75BE83A1D616E2D44A12654AD015`
+* `https://nanolx.org/fdroid/repo?fingerprint=862ED9F13A3981432BF86FE93D14596B381D75BE83A1D616E2D44A12654AD015`
 
 ### Scripts
 
