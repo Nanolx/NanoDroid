@@ -1,6 +1,62 @@
 # NanoDroid
 
+NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, with or without A/B partition scheme support, aswell as Magisk Mode installation. It also includes several tools (eg. GNU Bash, GNU Nano, more), scripts, fonts, sounds and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
+
+Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them.
+
+In order for full microG experience NanoDroid contains a modified Play Store which allows (in-)app-purchases with microG, which would normally not be possible. It also tries to remove all previously installed GApps on it's own. For ROMs without builtin signature spoofing support NanoDroid includes an on-device Patcher which tries to patch your ROM from TWRP.
+
 Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called **NanoDroid**.
+
+Table of Contents
+=================
+
+   * [NanoDroid](#nanodroid)
+      * [Current Release](#current-release)
+      * [Downloads](#downloads)
+         * [Primary Mirror](#primary-mirror)
+         * [Secondary Mirror](#secondary-mirror)
+         * [Snapshots](#snapshots)
+      * [Supported Android Versions](#supported-android-versions)
+      * [Support](#support)
+      * [ChangeLog](#changelog)
+      * [Summary](#summary)
+      * [Packages](#packages)
+         * [Modules](#modules)
+            * [Installation Logfiles](#installation-logfiles)
+            * [Parallel Installations](#parallel-installations)
+         * [Extras](#extras)
+         * [F-Droid Repository](#f-droid-repository)
+         * [Scripts](#scripts)
+      * [Details](#details)
+         * [NanoDroid](#nanodroid-1)
+            * [NanoDroid-Overlay](#nanodroid-overlay)
+            * [NanoDroid-Prop](#nanodroid-prop)
+            * [NanoDroid-Perm](#nanodroid-perm)
+            * [NanoDroid-Util](#nanodroid-util)
+            * [NanoDroid-Font](#nanodroid-font)
+            * [init scripts](#init-scripts)
+            * [Shell Utilities](#shell-utilities)
+            * [GNU Bash and GNU Nano](#gnu-bash-and-gnu-nano)
+         * [microG](#microg)
+         * [F-Droid and Applications](#f-droid-and-applications)
+         * [The Legend of Zelda ringtones and sounds](#the-legend-of-zelda-ringtones-and-sounds)
+         * [Nintendo Fonts](#nintendo-fonts)
+      * [Installation](#installation)
+         * [Alter Installation](#alter-installation)
+         * [Installation Process](#installation-process)
+            * [NanoDroid](#nanodroid-2)
+               * [Installing from scratch](#installing-from-scratch)
+                  * [Upgrade / Installing on a clean ROM](#upgrade--installing-on-a-clean-rom)
+            * [microG](#microg-1)
+               * [Signature Spoofing Support](#signature-spoofing-support)
+               * [microG Setup](#microg-setup)
+      * [License &amp; Credits](#license--credits)
+      * [Issues](#issues)
+      * [TODO](#todo)
+      * [FAQ](#faq)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
@@ -114,7 +170,6 @@ NanoDroid includes
 * microG and it's companions
   * on-device framework-patcher for microG support (signature spoofing)
      * with automatic de-odexing up to Android 8.1
-  * on-pc framework-patcher for microG support (signature spoofing)
   * GApps are auto-removed during installation
      * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
      * the Uninstaller will restore them in System Mode (or re-flash the ROM)
