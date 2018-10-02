@@ -56,19 +56,13 @@ The `build-package` script additionally supports the following parameters:
 * `ver [version] [date]` change project version
 * `bump` increment Magisk module version by 1
 
-The following applications are custom builds:
+The following applications are custom builds (F-Droid Repository below):
 
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
-  * [Download Link](https://www.nanolx.org/apk/Phonesky.apk)
-* Fake Store (reason: built with CHECK_LICENSE permission)
-  * [Download Link](https://www.nanolx.org/apk/FakeStore.apk)
-* microG GmsCore (reason: built with more recent spoofed Play Services Version, more)
-  * [Download Link](https://www.nanolx.org/apk/GmsCore.apk)
-  * [source](https://github.com/Nanolx/android_packages_apps_GmsCore)
+* microG GmsCore (reason: built with additions)
 * microG DroidGuard Helper (reason: built with fix for non 32bit arm devices failing SafetyNet attestation)
-  * [Download Link](https://www.nanolx.org/apk/DroidGuard.apk)
-* MPV (reason: infrequent updates, merge-requests included)
-  * [Download Link](https://www.nanolx.org/apk/MPV.apk)
+* MPV (reason: infrequent updates)
+* OpenLauncher (reason: infrequent updates)
 
 Also `build-package` looks if the configuration files
 
@@ -213,6 +207,12 @@ Extra packages, always flash through TWRP.
   * restores GApps and location services auto-removed during installation (System Mode)
   * restores `services.jar` patched by NanoDroid-Patcher (System Mode)
 
+### F-Droid Repository
+
+In order to ease updating NanoDroid's custom application builds you can use it's companion [F-Droid Repository](https://www.nanolx.org/fdroid/repo)
+
+* `https://www.nanolx.org/fdroid/repo?fingerprint=862ED9F13A3981432BF86FE93D14596B381D75BE83A1D616E2D44A12654AD015`
+
 ### Scripts
 
 Misc. Scripts for use from PC/Notebook, while device is in TWRP, they are found in this repository:
@@ -254,18 +254,6 @@ Full details on the NanoDroid-Prop Script [> Details](doc/NanoDroidProp.md)
 The `nanodroid-perm` script grants microG and Co. required permissions, if lacking
 
 Full details on the NanoDroid-Perm Script [> Details](doc/NanoDroidPerm.md)
-
-#### NanoDroid-UPD
-
-The `nanodroid-upd` script allows to update NanoDroid's custom apks
-
-  * Play Store
-  * Fake Store
-  * MPV
-
-which can't be updated through Play/Yalp Store or F-Droid otherwise
-
-Full details on the NanoDroid-UPD Script [> Details](doc/NanoDroidUPD.md)
 
 #### NanoDroid-Util
 

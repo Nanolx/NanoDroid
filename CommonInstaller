@@ -854,9 +854,9 @@ install_bash () {
 install_nanodroidscripts () {
 	ui_print " << with NanoDroid Scripts"
 
-	for script in npem nupd nutl novl \
-		nanodroid-perm nanodroid-upd \
-		nanodroid-util nanodroid-overlay; do
+	for script in npem nutl novl \
+		nanodroid-perm nanodroid-util \
+		nanodroid-overlay; do
 		nanodroid_install_file xbin/${script} bin
 	done
 
