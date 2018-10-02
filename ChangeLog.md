@@ -8,6 +8,14 @@
   * fix downloading APKs from apkmirror.com
     * NanoDroid packages can now be created from scratch again
 
+* CommonPatcher
+  * improve dalvikvm arch detection
+    * should improve ROM compatibility
+
+* Full, microG packages
+  * switch to official Fake Store build
+    * fixes F-Droid repository conflict with custom Play Store
+
 ### General Changes
 
 * build-package script
