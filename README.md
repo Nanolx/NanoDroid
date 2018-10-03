@@ -183,8 +183,11 @@ NanoDroid includes
   * this required the Play Store to be modified, see the [> patch](doc/Phonesky.diff)
   * alternatively Yalp Store can be installed instead
 * custom init scripts
-* pseudo-debloat feature (Magisk-only)
+* pseudo-debloat feature (Magisk Mode)
   * disables applications systemless-ly
+  * pre-configured [> default settings](doc/NanoDroidOverlay.md)
+* force-debloat feature (Sytem Mode)
+  * moves applications out of the way to /sdcard/nanodroid_backup/
   * pre-configured [> default settings](doc/NanoDroidOverlay.md)
 * several Open Source applications
   * include replacements for the pseudo-debloated applications
@@ -210,7 +213,7 @@ Module packages, flashing through TWRP recommended, though flashing through Magi
   * everything mentioned in the Summary
 * **NanoDroid-microG**: includes (only)
   * microG and it's companions
-  * pseudo-debloat feature
+  * pseudo/force-debloat feature
   * app store(s)
   * GApps and location packages auto-removal
 * **NanoDroid-fdroid**: includes (only)
