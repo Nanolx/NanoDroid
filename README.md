@@ -317,10 +317,10 @@ The `nanodroid-util` script contains the following features
 
   * show boot count
   * fix OTA update issues (like non-working navbar)
-  * handle Audio Focus permission
+  * handle `Audio Focus` permission
      * prevent apps from stealing audio output, for example listen to Music while playing Pokémon Go
-  * handle Read Clipboard permission
-  * modify Airplane Mode settings
+  * handle `Read Clipboard` permission
+  * modify `Airplane Mode` settings
      * choose which radios are on or off in Airplane mode
 
 Full details on the NanoDroid-Util Script [> Details](doc/NanoDroidUtil.md)
