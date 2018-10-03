@@ -174,10 +174,10 @@ NanoDroid includes
      * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
      * the Uninstaller will restore them in System Mode (or re-flash the ROM)
      * see the [> GApps Removal List](doc/GAppsRemoval.md)
-  * location packages conflicting with unified Nlp will are auto-removed during installation
+  * location packages conflicting with unified Nlp will be auto-removed during installation
      * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
      * the Uninstaller will restore them (or re-flash the ROM)
-     * see the [> GApps Removal List](doc/GAppsRemoval.md)
+     * see the [> GApps Removal List](doc/GAppsRemoval.md#list-of-removed-location-providers)
 * F-Droid and it's privileged extension
 * modified Play Store to allow (in-)app-purchases with microG
   * this required the Play Store to be modified, see the [> patch](doc/Phonesky.diff)
@@ -495,10 +495,8 @@ For **microG** to work, your ROM needs to have signature spoofing enabled (or a 
 If your ROM does **not** have signature spoofing support, you can manually patch it either
   * flashing the on-device Patcher zip
      * it also installs an addon.d script that auto re-patches the ROM upon update
-  * running the `framework-patcher` script
-     * use from your PC or laptop while your device is in TWRP. This shell script for GNU Bash (and compatible shells) works on unixoid operating systems like GNU/Linux, BSD or MacOS. It automizes the process of downloading Haystack [> GitHub](https://github.com/Lanchon/haystack), pulling files from phone, patching and installing the modified `services.jar` on the device.
 
-If you ROM is **odexed** read [here](https://gitlab.com/Nanolx/NanoDroid/issues/9#note_96779340) on how to deodex services.jar manually
+If you ROM is **odexed** read [this instructions](doc/DeodexServices.md) on how to deodex services.jar manually
 
 Both patchers support installing the patched `services.jar` into the following locations:
   * NanoDroid Magisk Module

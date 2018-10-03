@@ -12,12 +12,7 @@ List of applications by ale5000
 
 The following GApps are removed during installation:
 
-* AMAPNetworkLocation
-* BaiduNetworkLocation
 * BlankStore
-* com.qualcomm.location
-* DejaVuBackend
-* DejaVuNlpBackend
 * FDroidPriv
 * GmsCoreSetupPrebuilt
 * GmsCore_update
@@ -28,18 +23,11 @@ The following GApps are removed during installation:
 * GooglePartnerSetup
 * GoogleServicesFramework
 * GoogleTTS
-* IchnaeaNlpBackend
-* LegacyNetworkLocation
 * MarketUpdater
 * MarkupGoogle
-* MozillaNlpBackend
-* NetworkLocation
-* NominatimGeocoderBackend
-* NominatimNlpBackend
 * PlayGames
 * PlayStore
 * PrebuiltGmsCore
-* UnifiedNlp
 * Velvet
 * Vending
 * WhisperPush
@@ -47,16 +35,11 @@ The following GApps are removed during installation:
 
 If the installation of NanoDroid is not an upgrade from a previous version, the following **data** will also be cleared:
 
-* com.amap.android.location
-* com.baidu.location
 * com.google.android.feedback
 * com.google.android.gsf.login
 * com.google.android.location
 * com.google.android.youtube
 * com.mgoogle.android.gms
-* com.qualcomm.location
-* org.microg.nlp
-* org.microg.unifiednlp
 
 ## List of removed location services
 
@@ -73,6 +56,10 @@ The following location services are removed during installation:
 * MozillaNlpBackend
 * NominatimGeocoderBackend
 * NominatimNlpBackend
+* com.qualcomm.location
+
+If the installation of NanoDroid is not an upgrade from a previous version, the following **data** will also be cleared:
+
 * com.qualcomm.location
 * com.amap.android.location
 * com.baidu.location
