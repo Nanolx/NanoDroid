@@ -29,6 +29,9 @@
     * users that had Adaway installed, will be auto-migrated to Blockada
     * VPN users can't use Blockada, but can still install Adaway from F-Droid
 
+* Full, microG packages
+  * switch to official Fake Store build
+
 * NanoDroid-UPD script
   * removed
 
@@ -43,8 +46,14 @@
 
 ### Updates
 
+* automatic
+  * (Simple) Calendar (4.2.1)
+  * (Simple) Gallery (4.6.4)
+  * Oandbackup (0.3.0)
+  * Amaze (3.3RC7)
+
 * manual
-  * microG GmsCore (0.2.6.13280-dirty-92)
+  * microG GmsCore (0.2.6.13280-dirty-96)
   * MPV (20180929-nightly)
   * OpenLauncher (20181002-nightly)
   * Play Store (11.9.14)
