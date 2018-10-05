@@ -712,10 +712,10 @@ install_gsync () {
 
 			installinfo_add "/system/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk"
 
-			cp -r "${INSTALLER}/gsync/etc/permissions/" "${MODPATH}/system/etc/"
-			set_perm_data -r "${MODPATH}/system/etc/permissions/"
+			cp -r "${INSTALLER}/gsync/etc/default-permissions/" "${MODPATH}/system/etc/"
+			set_perm_data -r "${MODPATH}/system/etc/default-permissions/"
 
-			find "${INSTALLER}/gsync/etc/permissions/" -type f | \
+			find "${INSTALLER}/gsync/etc/default-permissions/" -type f | \
 					sed -e "s,${INSTALLER}/gsync/etc,/system/etc,g" | \
 					installinfo_add
 		fi

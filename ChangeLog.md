@@ -15,6 +15,7 @@
 * Full, microG packages
   * switch to official Fake Store build
     * fixes F-Droid repository conflict with custom Play Store
+  * fix Google Sync Adapters permissions file being installed in the wrong directory
 
 ### General Changes
 
