@@ -1,6 +1,6 @@
 # NanoDroid
 
-NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, with or without A/B partition scheme support, aswell as Magisk Mode installation. It also includes several tools (eg. GNU Bash, GNU Nano, more), scripts, fonts, sounds and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
+NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, both devices with or without A/B partition scheme are supported, aswell as Magisk Mode (module) installation. It also includes several tools (eg. GNU Bash, GNU Nano, more), scripts, fonts, sounds and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
 
 Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them.
 
@@ -102,7 +102,7 @@ You can create snapshots from this repository.
      * `build-package u-gsync` to update Google Sync Adapters
      * `build-package pull` to update/re-download everything
 
-for apks downloaded from F-Droid or microG repository or from APK Mirror, `build-package` checks the SHA256 hash.
+for apks downloaded from F-Droid repositories or from APK Mirror, `build-package` checks the SHA256 hash.
 
 The `build-package` script additionally supports the following parameters:
 
