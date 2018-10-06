@@ -12,6 +12,9 @@
   * improve dalvikvm arch detection
     * should improve ROM compatibility
 
+* CommonAddon
+  * addon.d now properly honours `nanodroid_overlay` setup variable
+
 * Full, microG packages
   * switch to official Fake Store build
     * fixes F-Droid repository conflict with custom Play Store
