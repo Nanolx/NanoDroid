@@ -33,11 +33,8 @@
     * users that had Adaway installed, will be auto-migrated to Blockada
     * VPN users can't use Blockada, but can still install Adaway from F-Droid
 
-* Full, microG packages
-  * switch to official Fake Store build
-
 * NanoDroid-UPD script
-  * removed
+  * removed in favour of NanoDroid F-Droid Repository
 
 * NanoDroid F-Droid Repository
   * added, contains custom NanoDroid snapshot builds for
