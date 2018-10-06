@@ -47,7 +47,7 @@ Table of Contents
          * [Installation Process](#installation-process)
             * [NanoDroid](#nanodroid-2)
                * [Installing from scratch](#installing-from-scratch)
-                  * [Upgrade / Installing on a clean ROM](#upgrade--installing-on-a-clean-rom)
+               * [Upgrade / Installing on a clean ROM](#upgrade--installing-on-a-clean-rom)
             * [microG](#microg-1)
                * [Signature Spoofing Support](#signature-spoofing-support)
                * [microG Setup](#microg-setup)
