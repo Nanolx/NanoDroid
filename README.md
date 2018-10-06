@@ -478,7 +478,7 @@ This is the recommended way.
 * reboot into ROM
 * optional, but recommended, setup the [F-Droid repository](#f-droid-repository)
 
-###### Upgrade / Installing on a clean ROM
+##### Upgrade / Installing on a clean ROM
 
 When upgrading NanoDroid or installing on a known clean ROM (read: GApps free), you may also just
 
