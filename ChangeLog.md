@@ -57,7 +57,7 @@
   * microG GmsCore (0.2.6.13280-dirty-96)
   * MPV (20180929-nightly)
   * OpenLauncher (20181002-nightly)
-  * Play Store (11.9.14)
+  * Play Store (12.0.19)
 
 ## 18.3.1.20180921
 
