@@ -49,15 +49,16 @@
 
 * automatic
   * (Simple) Calendar (4.2.1)
-  * (Simple) Gallery (4.6.4)
+  * (Simple) Gallery (4.6.5)
   * Oandbackup (0.3.0)
-  * Amaze (3.3RC7)
+  * Amaze (3.3RC8)
+  * Open Camera (1.44.1)
 
 * manual
-  * microG GmsCore (0.2.6.13280-dirty-96)
-  * MPV (20180929-nightly)
-  * OpenLauncher (20181002-nightly)
-  * Play Store (12.0.19)
+  * microG GmsCore (0.2.6.13280-dirty-101)
+  * MPV (20181009-nightly)
+  * OpenLauncher (20181009-nightly)
+  * Play Store (12.0.20)
 
 ## 18.3.1.20180921
 
