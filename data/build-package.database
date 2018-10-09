@@ -11,7 +11,6 @@ nlx_PHONESKY=(nanolx com.android.vending priv-app Phonesky)
 nlx_OPENLAUNCHER=(nanolx com.benny.openlauncher app OpenLauncher)
 
 nlx_OMNICLOCK=(https://www.nanolx.org/apk/OmniClock.apk app OmniClock)
-nlx_AMAZE=(https://www.nanolx.org/apk/Amaze.apk app Amaze)
 
 ###
 # microG
@@ -37,7 +36,6 @@ fd_FDROID_PE=(fdroid org.fdroid.fdroid.privileged priv-app FDroidPrivileged)
 # Apps
 ###
 
-fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
 fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
 fd_BLOCKADA=(fdroid org.blokada.alarm app Blockada)
@@ -58,7 +56,6 @@ fd_TERMUX=(fdroid com.termux app Termux)
 fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 
 gd_ORBOT=(guardian org.torproject.android app Orbot)
-gd_ORFOX=(guardian info.guardianproject.orfox app Orfox)
 
 TORBROWSER_APK=$(wget -O- https://www.torproject.org/projects/torbrowser.html.en 2>/dev/null | \
 	gawk -F\" '/apk.*Android/{print $2}' | \
@@ -82,6 +79,12 @@ am_SUBSTRATUM=(projekt substratum-theme-engine app Substratum substratum-theme-e
 am_OPENWEATHER=(lineageos openweathermap app OpenWeatherMapProvider openweathermap)
 am_YAHOOWEATHER=(lineageos yahoo-weather-2 app YahooWeatherProvider yahoo-weather)
 am_XDALABS=(xda xda-labs app XDALabs xda-labs)
+
+###
+# GitHub
+###
+
+gh_AMAZE=(TeamAmaze/AmazeFileManager app Amaze)
 
 ###
 # Files Database (for consistency check)
