@@ -1,6 +1,6 @@
-diff -Nupr PS_11914.orig/AndroidManifest.xml PS_11914/AndroidManifest.xml
---- PS_11914.orig/AndroidManifest.xml	2018-09-29 18:43:53.673525267 +0200
-+++ PS_11914/AndroidManifest.xml	2018-09-29 18:44:08.225609014 +0200
+diff -Nupr PS_12020.orig/AndroidManifest.xml PS_12020/AndroidManifest.xml
+--- PS_12020.orig/AndroidManifest.xml	2018-10-09 19:27:40.178161011 +0200
++++ PS_12020/AndroidManifest.xml	2018-10-09 19:29:27.260429974 +0200
 @@ -94,6 +94,7 @@
      <uses-permission android:name="android.permission.RECEIVE_SMS"/>
      <uses-permission android:name="android.permission.READ_SMS"/>
@@ -14,38 +14,61 @@ diff -Nupr PS_11914.orig/AndroidManifest.xml PS_11914/AndroidManifest.xml
      <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
      <application android:backupAgent="com.android.vending.VendingBackupAgent" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher_play_store" android:killAfterRestore="false" android:label="@LEMON_transformed_from_string/app_long_name" android:name="com.google.android.finsky.application.impl.FinskyApplication" android:requiredForAllUsers="true" android:restoreAnyVersion="true" android:restoreNeedsApplication="true" android:restrictedAccountType="com.google" android:roundIcon="@mipmap/ic_round_launcher_play_store" android:supportsRtl="@bool/is_rtl_enabled">
 +        <meta-data android:name="fake-signature" android:value="@string/fake_signature"/>
+         <provider android:authorities="com.google.android.finsky.instantapps.dna.ApkDnaContentProvider" android:enabled="@bool/instant_apps_supported" android:exported="true" android:name="com.google.android.finsky.instantapps.dna.ApkDnaContentProvider" android:process=":instant_app_installer"/>
+         <activity android:label="@LEMON_transformed_from_string/review_acquisition_write_review" android:name="com.google.android.finsky.writereview.WriteReviewActivity" android:theme="@style/FinskyOverlayTheme"/>
          <activity android:configChanges="orientation|screenSize" android:name="com.google.android.wallet.instrumentmanager.ui.redirect.ImPopupRedirectActivity" android:theme="@style/Theme.UiComponents.PopupRedirect"/>
-         <activity android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.wallet.instrumentmanager.redirect.ImStartAndroidAppRedirectActivity" android:theme="@style/Theme.UiComponents.Translucent.NoActionBar"/>
-         <activity android:exported="true" android:name="com.google.android.wallet.instrumentmanager.redirect.ImFinishAndroidAppRedirectActivity">
-@@ -915,4 +917,4 @@
+@@ -923,4 +925,4 @@
          <screen android:screenDensity="xxhdpi" android:screenSize="large"/>
          <screen android:screenDensity="xxhdpi" android:screenSize="xlarge"/>
      </compatible-screens>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_11914.orig/res/values/public.xml PS_11914/res/values/public.xml
---- PS_11914.orig/res/values/public.xml	2018-09-29 18:43:47.827491272 +0200
-+++ PS_11914/res/values/public.xml	2018-09-29 18:45:17.357990784 +0200
-@@ -10860,6 +10860,7 @@
-     <public type="string" name="yes" id="0x7f1308a7" />
-     <public type="string" name="yes_im_in" id="0x7f1308a8" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f1308a9" />
-+    <public type="string" name="fake_signature" id="0x7f1308aa" />
+diff -Nupr PS_12020.orig/res/values/arrays.xml PS_12020/res/values/arrays.xml
+--- PS_12020.orig/res/values/arrays.xml	2018-10-09 19:25:50.135298594 +0200
++++ PS_12020/res/values/arrays.xml	2018-10-09 19:28:48.155043031 +0200
+@@ -1,7 +1,15 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <style name="com_google_android_gms_fonts_certs" />
+-    <style name="com_google_android_gms_fonts_certs_dev" />
+-    <style name="com_google_android_gms_fonts_certs_prod" />
+-    <style name="debug_available_network_types" />
++    <array name="com_google_android_gms_fonts_certs">
++        <item>@array/com_google_android_gms_fonts_certs_prod</item>
++    </array>
++    <string-array name="com_google_android_gms_fonts_certs_dev">
++        <item>MIIEqDCCA5CgAwIBAgIJANWFuGx90071MA0GCSqGSIb3DQEBBAUAMIGUMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEQMA4GA1UEChMHQW5kcm9pZDEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDEiMCAGCSqGSIb3DQEJARYTYW5kcm9pZEBhbmRyb2lkLmNvbTAeFw0wODA0MTUyMzM2NTZaFw0zNTA5MDEyMzM2NTZaMIGUMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEQMA4GA1UEChMHQW5kcm9pZDEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDEiMCAGCSqGSIb3DQEJARYTYW5kcm9pZEBhbmRyb2lkLmNvbTCCASAwDQYJKoZIhvcNAQEBBQADggENADCCAQgCggEBANbOLggKv+IxTdGNs8/TGFy0PTP6DHThvbbR24kT9ixcOd9W+EaBPWW+wPPKQmsHxajtWjmQwWfna8mZuSeJS48LIgAZlKkpFeVyxW0qMBujb8X8ETrWy550NaFtI6t9+u7hZeTfHwqNvacKhp1RbE6dBRGWynwMVX8XW8N1+UjFaq6GCJukT4qmpN2afb8sCjUigq0GuMwYXrFVee74bQgLHWGJwPmvmLHC69EH6kWr22ijx4OKXlSIx2xT1AsSHee70w5iDBiK4aph27yH3TxkXy9V89TDdexAcKk/cVHYNnDBapcavl7y0RiQ4biu8ymM8Ga/nmzhRKya6G0cGw8CAQOjgfwwgfkwHQYDVR0OBBYEFI0cxb6VTEM8YYY6FbBMvAPyT+CyMIHJBgNVHSMEgcEwgb6AFI0cxb6VTEM8YYY6FbBMvAPyT+CyoYGapIGXMIGUMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEQMA4GA1UEChMHQW5kcm9pZDEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDEiMCAGCSqGSIb3DQEJARYTYW5kcm9pZEBhbmRyb2lkLmNvbYIJANWFuGx90071MAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEEBQADggEBABnTDPEF+3iSP0wNfdIjIz1AlnrPzgAIHVvXxunW7SBrDhEglQZBbKJEk5kT0mtKoOD1JMrSu1xuTKEBahWRbqHsXclaXjoBADb0kkjVEJu/Lh5hgYZnOjvlba8Ld7HCKePCVePoTJBdI4fvugnL8TsgK05aIskyY0hKI9L8KfqfGTl1lzOv2KoWD0KWwtAWPoGChZxmQ+nBli+gwYMzM1vAkP+aayLe0a1EQimlOalO762r0GXO0ks+UeXde2Z4e+8S/pf7pITEI/tP+MxJTALw9QUWEv9lKTk+jkbqxbsh8nfBUapfKqYn0eidpwq2AzVp3juYl7//fKnaPhJD9gs=</item>
++    </string-array>
++    <string-array name="com_google_android_gms_fonts_certs_prod">
++        <item>MIIEQzCCAyugAwIBAgIJAMLgh0ZkSjCNMA0GCSqGSIb3DQEBBAUAMHQxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtHb29nbGUgSW5jLjEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDAeFw0wODA4MjEyMzEzMzRaFw0zNjAxMDcyMzEzMzRaMHQxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtHb29nbGUgSW5jLjEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDCCASAwDQYJKoZIhvcNAQEBBQADggENADCCAQgCggEBAKtWLgDYO6IIrgqWbxJOKdoR8qtW0I9Y4sypEwPpt1TTcvZApxsdyxMJZ2JORland2qSGT2y5b+3JKkedxiLDmpHpDsz2WCbdxgxRczfey5YZnTJ4VZbH0xqWVW/8lGmPav5xVwnIiJS6HXk+BVKZF+JcWjAsb/GEuq/eFdpuzSqeYTcfi6idkyugwfYwXFU1+5fZKUaRKYCwkkFQVfcAs1fXA5V+++FGfvjJ/CxURaSxaBvGdGDhfXE28LWuT9ozCl5xw4Yq5OGazvV24mZVSoOO0yZ31j7kYvtwYK6NeADwbSxDdJEqO4k//0zOHKrUiGYXtqw/A0LFFtqoZKFjnkCAQOjgdkwgdYwHQYDVR0OBBYEFMd9jMIhF1Ylmn/Tgt9r45jk14alMIGmBgNVHSMEgZ4wgZuAFMd9jMIhF1Ylmn/Tgt9r45jk14aloXikdjB0MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLR29vZ2xlIEluYy4xEDAOBgNVBAsTB0FuZHJvaWQxEDAOBgNVBAMTB0FuZHJvaWSCCQDC4IdGZEowjTAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBAUAA4IBAQBt0lLO74UwLDYKqs6Tm8/yzKkEu116FmH4rkaymUIE0P9KaMftGlMexFlaYjzmB2OxZyl6euNXEsQH8gjwyxCUKRJNexBiGcCEyj6z+a1fuHHvkiaai+KL8W1EyNmgjmyy8AW7P+LLlkR+ho5zEHatRbM/YAnqGcFh5iZBqpknHf1SKMXFh4dd239FJ1jWYfbMDMy3NS5CTMQ2XFI1MvcyUTdZPErjQfTbQe3aDQsQcafEQPD+nqActifKZ0Np0IS9L9kR/wbNvyz6ENwPiTrjV2KRkEjH78ZMcUQXg0L3BYHJ3lc69Vs5Ddf9uUGGMYldX3WfMBEmh/9iFBDAaTCK</item>
++    </string-array>
++    <string-array name="debug_available_network_types">
++        <item>Disable Network Type Override</item>
++    </string-array>
+ </resources>
+diff -Nupr PS_12020.orig/res/values/public.xml PS_12020/res/values/public.xml
+--- PS_12020.orig/res/values/public.xml	2018-10-09 19:25:50.174298941 +0200
++++ PS_12020/res/values/public.xml	2018-10-09 19:30:15.489885980 +0200
+@@ -10944,6 +10944,7 @@
+     <public type="string" name="yes" id="0x7f1308b3" />
+     <public type="string" name="yes_im_in" id="0x7f1308b4" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f1308b5" />
++    <public type="string" name="fake_signature" id="0x7f1308b6" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -11996,4 +11997,4 @@
-     <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002d" />
-     <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002e" />
-     <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002f" />
+@@ -12082,4 +12083,4 @@
+     <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002e" />
+     <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002f" />
+     <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f190030" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_11914.orig/res/values/strings.xml PS_11914/res/values/strings.xml
---- PS_11914.orig/res/values/strings.xml	2018-09-29 18:43:47.826491266 +0200
-+++ PS_11914/res/values/strings.xml	2018-09-29 18:44:08.231609048 +0200
-@@ -2057,4 +2057,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_12020.orig/res/values/strings.xml PS_12020/res/values/strings.xml
+--- PS_12020.orig/res/values/strings.xml	2018-10-09 19:25:50.027297634 +0200
++++ PS_12020/res/values/strings.xml	2018-10-09 19:29:47.483622548 +0200
+@@ -2067,4 +2067,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />
