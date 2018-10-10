@@ -1,6 +1,6 @@
-diff -Nupr PS_12020.orig/AndroidManifest.xml PS_12020/AndroidManifest.xml
---- PS_12020.orig/AndroidManifest.xml	2018-10-09 19:27:40.178161011 +0200
-+++ PS_12020/AndroidManifest.xml	2018-10-09 19:29:27.260429974 +0200
+diff -Nupr PS_12118.orig/AndroidManifest.xml PS_12118/AndroidManifest.xml
+--- PS_12118.orig/AndroidManifest.xml	2018-10-10 18:57:24.303299618 +0200
++++ PS_12118/AndroidManifest.xml	2018-10-10 19:01:55.558726298 +0200
 @@ -94,6 +94,7 @@
      <uses-permission android:name="android.permission.RECEIVE_SMS"/>
      <uses-permission android:name="android.permission.READ_SMS"/>
@@ -15,18 +15,18 @@ diff -Nupr PS_12020.orig/AndroidManifest.xml PS_12020/AndroidManifest.xml
      <application android:backupAgent="com.android.vending.VendingBackupAgent" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher_play_store" android:killAfterRestore="false" android:label="@LEMON_transformed_from_string/app_long_name" android:name="com.google.android.finsky.application.impl.FinskyApplication" android:requiredForAllUsers="true" android:restoreAnyVersion="true" android:restoreNeedsApplication="true" android:restrictedAccountType="com.google" android:roundIcon="@mipmap/ic_round_launcher_play_store" android:supportsRtl="@bool/is_rtl_enabled">
 +        <meta-data android:name="fake-signature" android:value="@string/fake_signature"/>
          <provider android:authorities="com.google.android.finsky.instantapps.dna.ApkDnaContentProvider" android:enabled="@bool/instant_apps_supported" android:exported="true" android:name="com.google.android.finsky.instantapps.dna.ApkDnaContentProvider" android:process=":instant_app_installer"/>
+         <provider android:authorities="com.google.android.finsky.instantapps.HintApiContentProvider" android:enabled="@bool/instant_apps_supported" android:exported="true" android:name="com.google.android.finsky.instantapps.HintApiContentProvider" android:process=":instant_app_installer"/>
          <activity android:label="@LEMON_transformed_from_string/review_acquisition_write_review" android:name="com.google.android.finsky.writereview.WriteReviewActivity" android:theme="@style/FinskyOverlayTheme"/>
-         <activity android:configChanges="orientation|screenSize" android:name="com.google.android.wallet.instrumentmanager.ui.redirect.ImPopupRedirectActivity" android:theme="@style/Theme.UiComponents.PopupRedirect"/>
-@@ -923,4 +925,4 @@
+@@ -934,4 +936,4 @@
          <screen android:screenDensity="xxhdpi" android:screenSize="large"/>
          <screen android:screenDensity="xxhdpi" android:screenSize="xlarge"/>
      </compatible-screens>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_12020.orig/res/values/arrays.xml PS_12020/res/values/arrays.xml
---- PS_12020.orig/res/values/arrays.xml	2018-10-09 19:25:50.135298594 +0200
-+++ PS_12020/res/values/arrays.xml	2018-10-09 19:28:48.155043031 +0200
+diff -Nupr PS_12118.orig/res/values/arrays.xml PS_12118/res/values/arrays.xml
+--- PS_12118.orig/res/values/arrays.xml	2018-10-10 18:57:24.733301714 +0200
++++ PS_12118/res/values/arrays.xml	2018-10-10 19:01:55.560726309 +0200
 @@ -1,7 +1,15 @@
  <?xml version="1.0" encoding="utf-8"?>
  <resources>
@@ -47,28 +47,47 @@ diff -Nupr PS_12020.orig/res/values/arrays.xml PS_12020/res/values/arrays.xml
 +        <item>Disable Network Type Override</item>
 +    </string-array>
  </resources>
-diff -Nupr PS_12020.orig/res/values/public.xml PS_12020/res/values/public.xml
---- PS_12020.orig/res/values/public.xml	2018-10-09 19:25:50.174298941 +0200
-+++ PS_12020/res/values/public.xml	2018-10-09 19:30:15.489885980 +0200
-@@ -10944,6 +10944,7 @@
-     <public type="string" name="yes" id="0x7f1308b3" />
-     <public type="string" name="yes_im_in" id="0x7f1308b4" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f1308b5" />
-+    <public type="string" name="fake_signature" id="0x7f1308b6" />
+diff -Nupr PS_12118.orig/res/values/layouts.xml PS_12118/res/values/layouts.xml
+--- PS_12118.orig/res/values/layouts.xml	2018-10-10 18:57:24.759301841 +0200
++++ PS_12118/res/values/layouts.xml	2018-10-10 19:04:12.481507675 +0200
+@@ -8,7 +8,6 @@
+     <item type="layout" name="light_purchase_app_permissions">@layout/main_light_purchase_app_permissions</item>
+     <item type="layout" name="permission_row">@layout/main_permission_row</item>
+     <item type="layout" name="suw_glif_template">@layout/suw_glif_template_compact</item>
+-    <item type="layout" name="tv_season_selector_item">false</item>
+     <item type="layout" name="update_all_activity">@layout/main_update_all_activity</item>
+     <item type="layout" name="video_collection_card_view">@layout/card_view_video_collection</item>
+ </resources>
+diff -Nupr PS_12118.orig/res/values/public.xml PS_12118/res/values/public.xml
+--- PS_12118.orig/res/values/public.xml	2018-10-10 18:57:24.784301963 +0200
++++ PS_12118/res/values/public.xml	2018-10-10 19:05:59.433138254 +0200
+@@ -8816,7 +8816,6 @@
+     <public type="layout" name="top_charts_spinner_item" id="0x7f0e050a" />
+     <public type="layout" name="top_charts_spinner_selected_item" id="0x7f0e050b" />
+     <public type="layout" name="top_review_header" id="0x7f0e050c" />
+-    <public type="layout" name="tv_season_selector_item" id="0x7f0e050e" />
+     <public type="layout" name="tv_season_spinner_item" id="0x7f0e050f" />
+     <public type="layout" name="tv_season_spinner_selected_item" id="0x7f0e0510" />
+     <public type="layout" name="two_icon_messages_success_step" id="0x7f0e0511" />
+@@ -11251,6 +11250,7 @@
+     <public type="string" name="yes" id="0x7f1308ca" />
+     <public type="string" name="yes_im_in" id="0x7f1308cb" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f1308cc" />
++    <public type="string" name="fake_signature" id="0x7f1308cd" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -12082,4 +12083,4 @@
+@@ -12545,4 +12545,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002e" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002f" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f190030" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_12020.orig/res/values/strings.xml PS_12020/res/values/strings.xml
---- PS_12020.orig/res/values/strings.xml	2018-10-09 19:25:50.027297634 +0200
-+++ PS_12020/res/values/strings.xml	2018-10-09 19:29:47.483622548 +0200
-@@ -2067,4 +2067,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_12118.orig/res/values/strings.xml PS_12118/res/values/strings.xml
+--- PS_12118.orig/res/values/strings.xml	2018-10-10 18:57:24.740301748 +0200
++++ PS_12118/res/values/strings.xml	2018-10-10 19:01:55.565726337 +0200
+@@ -2082,4 +2082,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />
