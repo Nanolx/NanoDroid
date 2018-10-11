@@ -38,7 +38,7 @@ fd_FDROID_PE=(fdroid org.fdroid.fdroid.privileged priv-app FDroidPrivileged)
 
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
 fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
-fd_BLOCKADA=(fdroid org.blokada.alarm app Blockada)
+fd_BLOCKADA=(fdroid org.blokada.alarm app Blokada)
 fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
 fd_KEEPASSDX=(fdroid com.kunzisoft.keepass.libre app KeePassDX)
 fd_K9MAIL=(fdroid com.fsck.k9 app K9Mail)
@@ -119,7 +119,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/Amaze/Amaze.apk
 	Full/system/app/AnysoftKeyboard/AnysoftKeyboard.apk
 	Full/system/app/BeHeKeyboard/BeHeKeyboard.apk
-	Full/system/app/Blockada/Blockada.apk
+	Full/system/app/Blokada/Blokada.apk
 	Full/system/app/FDroid/FDroid.apk
 	Full/system/app/FaceSlim/FaceSlim.apk
 	Full/system/app/K9Mail/K9Mail.apk

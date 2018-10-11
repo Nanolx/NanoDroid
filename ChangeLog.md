@@ -29,9 +29,9 @@
   * minor internal changes
 
 * Full package
-  * migrate from Adaway to Blockada
-    * users that had Adaway installed, will be auto-migrated to Blockada
-    * VPN users can't use Blockada, but can still install Adaway from F-Droid
+  * migrate from Adaway to Blokada
+    * users that had Adaway installed, will be auto-migrated to Blokada
+    * VPN users can't use Blokada, but can still install Adaway from F-Droid
 
 * NanoDroid-UPD script
   * removed in favour of NanoDroid F-Droid Repository

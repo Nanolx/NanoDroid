@@ -10,7 +10,7 @@ Full list of provided applications
 * Amaze (File Manager) [> F-Droid](https://f-droid.org/packages/com.amaze.filemanager)
 * AnySoftKeyboard [> F-Droid](https://f-droid.org//packages/com.menny.android.anysoftkeyboard)
 * BeHe Keyboard [> F-Droid](https://f-droid.org/packages/com.vlath.keyboard/)
-* Blockada [> F-Droid](https://f-droid.org/en/packages/org.blokada.alarm/)
+* Blokada [> F-Droid](https://f-droid.org/en/packages/org.blokada.alarm/)
 * (Simple) Calendar [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.calendar)
 * Face Slim (Facebook client) [> F-Droid](https://f-droid.org/packages/org.indywidualni.fblite)
 * (Simple) Gallery [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.gallery)

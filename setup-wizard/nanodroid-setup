@@ -132,7 +132,7 @@ fi
 ui_print " "
 ui_print "  < Installed Applications"
 
-apps_add 1 Blockada
+apps_add 1 Blokada
 apps_add 2 Amaze
 apps_add 3 AnysoftKeyboard
 apps_add 4 FaceSlim
