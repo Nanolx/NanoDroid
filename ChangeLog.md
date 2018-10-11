@@ -33,6 +33,9 @@
     * users that had Adaway installed, will be auto-migrated to Blokada
     * VPN users can't use Blokada, but can still install Adaway from F-Droid
 
+* Full, microG packages
+  * improve GApps removal mechanism
+
 * NanoDroid-UPD script
   * removed in favour of NanoDroid F-Droid Repository
 
