@@ -610,6 +610,7 @@ install_microg () {
 			rm -rf /data/user_de/*/${app}
 			rm -rf /data/app/${app}-*
 			rm -rf /mnt/asec/${app}-*
+			rm -rf /data/media/Android/data/${app}
 		done
 
 		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
@@ -623,6 +624,7 @@ install_microg () {
 				rm -rf /data/user_de/*/${app}
 				rm -rf /data/app/${app}-*
 				rm -rf /mnt/asec/${app}-*
+				rm -rf /data/media/Android/data/${app}
 			done
 
 			for file in /data/system/users/*/runtime-permissions.xml; do
