@@ -118,7 +118,7 @@ set_ldlibrarypath () {
 	[ "$ABI" = "x86" ] && ARCH=x86
 	[ "$ABI2" = "x86" ] && ARCH=x86
 	[ "$ABILONG" = "arm64-v8a" ] && ARCH=arm64
-	[ "$ABILONG" = "x86_64" ] && ARCH=x64
+	[ "$ABILONG" = "x86_64" ] && ARCH=x86_64
 
 	case ${ARCH} in
 		arm | x86 )
