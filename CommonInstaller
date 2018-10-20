@@ -728,6 +728,7 @@ install_fdroid () {
 		nanodroid_install_apk FDroid
 		nanodroid_install_apk FDroidPrivileged
 		nanodroid_install_file etc/permissions/org.fdroid.fdroid.privileged.xml
+		nanodroid_install_file etc/org.fdroid.fdroid/additional_repos.xml
 	else	ui_print " << without F-Droid"
 	fi
 }

@@ -8,12 +8,16 @@
   * fix downloading APKs from apkmirror.com
     * NanoDroid packages can now be created from scratch again
 
+* CommonInstaller
+  * fix x86_64 support [Gia90]
+
 * CommonPatcher
   * improve dalvikvm arch detection
     * should improve ROM compatibility
 
 * CommonAddon
   * addon.d now properly honours `nanodroid_overlay` setup variable
+  * fix 86_64 support [Gia90]
 
 * Full, microG packages
   * switch to official Fake Store build
