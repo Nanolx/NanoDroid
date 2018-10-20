@@ -17,7 +17,7 @@
 
 * CommonAddon
   * addon.d now properly honours `nanodroid_overlay` setup variable
-  * fix 86_64 support [Gia90]
+  * fix x86_64 support [Gia90]
 
 * Full, microG packages
   * switch to official Fake Store build
@@ -71,7 +71,7 @@
   * AnySoftKeyboard (1.9.2445)
 
 * manual
-  * microG GmsCore (0.2.6.13280-dirty-102)
+  * microG GmsCore (0.2.6.14366-dirty-102)
   * MPV (20181009-nightly)
   * OpenLauncher (20181009-nightly)
   * Play Store (12.2.12)
