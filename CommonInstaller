@@ -640,10 +640,11 @@ install_microg () {
 				for app in ${GOOGLE_DATA_DIRTY}; do
 					awk -v RS='</package>' "!/${app}/"'{print $0 RS}' \
 						/tmp/packages.xml > /tmp/_packages.xml
+
 					mv /tmp/_packages.xml /tmp/packages.xml
+					sed -e '$ d' -i /tmp/packages.xml
 				done
 
-				sed -e '$ d' -i /tmp/packages.xml
 				cp /tmp/packages.xml /data/system/packages.xml
 			fi
 
