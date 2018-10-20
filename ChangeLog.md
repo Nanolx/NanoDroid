@@ -41,7 +41,7 @@
 
 * Full, F-Droid packages
   * automatically add NanoDroid F-Droid repository on fresh installations
-    * needs to be manually added no updates (see below)
+    * needs to be manually added on updated installations (see below)
 
 * Full, microG packages
   * improve GApps removal mechanism
@@ -61,7 +61,7 @@
     * OpenLauncher
   * see http://nanolx.org/fdroid/repo/
   * automatically added on fresh installations
-    * needs to be manually added no updates
+    * needs to be manually added on updated installations
 
 ### Updates
 
