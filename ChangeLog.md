@@ -69,12 +69,16 @@
   * F-Droid (1.5-alpha0)
   * Blokada (3.6.101401)
   * AnySoftKeyboard (1.9.2445)
+  * GNU Nano (3.1)
 
 * manual
   * microG GmsCore (0.2.6.14366-dirty-102)
   * MPV (20181009-nightly)
   * OpenLauncher (20181009-nightly)
   * Play Store (12.2.12)
+  * update utils from `bsdmainutils` to version 11.1.2
+  * update utils from `util-linux` to version 2.32.1
+  * update less to version 487
 
 ## 18.3.1.20180921
 
