@@ -14,6 +14,8 @@
 * CommonPatcher
   * improve dalvikvm arch detection
     * should improve ROM compatibility
+  * provide static `zip` binary for x86 [Gia90]
+  * use `smali`/`baksmali` version 2.1.3 below Nougat [Gia90]
 
 * CommonAddon
   * addon.d now properly honours `nanodroid_overlay` setup variable
@@ -43,6 +45,9 @@
 
 * Full, microG packages
   * improve GApps removal mechanism
+
+* CommonPatcher
+  * code improvements [Gia90]
 
 * NanoDroid-UPD script
   * removed in favour of NanoDroid F-Droid Repository
