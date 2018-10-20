@@ -61,7 +61,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 ## Current Release
 
 * Stable: 18.3.1.20180921
-* Beta: --- (---)
+* Beta: 18.91.20181020
 
 ## Downloads
 
