@@ -360,27 +360,27 @@ or you can use **Kernel Adiutor's** init.d emulation.
 
 #### Shell Utilities
 
-Several utilities from `bsdmainutils` and `util-linux`
+Several utilities from `bsdmainutils` and `util-linux` are included:
 
 * [> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils)
-* [> util-linux GitHub](https://github.com/karelzak/util-linux)
-
-are included:
 
 * col
 * colcrt
 * colrm
 * column
+* hexdump
+* ncal
+
+* [> util-linux GitHub](https://github.com/karelzak/util-linux)
+
 * findfs
 * findmnt
-* hexdump
 * look
 * lsblk
 * lscpu
 * lsipc
 * lslocks
 * lsns
-* ncal
 * setterm
 * whereis
 
