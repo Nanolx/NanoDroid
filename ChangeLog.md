@@ -67,6 +67,8 @@
   * Amaze (3.3RC8)
   * Open Camera (1.44.1)
   * F-Droid (1.5-alpha0)
+  * Blokada (3.6.101401)
+  * AnySoftKeyboard (1.9.2445)
 
 * manual
   * microG GmsCore (0.2.6.13280-dirty-102)
