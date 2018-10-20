@@ -70,6 +70,8 @@
   * Blokada (3.6.101401)
   * AnySoftKeyboard (1.9.2445)
   * GNU Nano (3.1)
+  * Busybox (1.29.3)
+    * internal busybox only used by the installer!
 
 * manual
   * microG GmsCore (0.2.6.14366-dirty-102)
