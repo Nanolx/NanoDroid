@@ -234,13 +234,16 @@ detect_sdk () {
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error "Android versions before Jelly Bean are not supported"
 
-	if [ "${SDK_VERSION}" -gt 25 ]; then
-		BAKSMALI="${BASEDIR}/baksmali_26.dex"
-		SMALI="${BASEDIR}/smali_26.dex"
-	else
-		BAKSMALI="${BASEDIR}/baksmali_25.dex"
-		SMALI="${BASEDIR}/smali_25.dex"
-	fi
+       if [ "${SDK_VERSION}" -gt 25 ]; then
+              BAKSMALI="${BASEDIR}/baksmali_26.dex"
+              SMALI="${BASEDIR}/smali_26.dex"
+       elif [ "${SDK_VERSION}" -gt 23 ]; then
+              BAKSMALI="${BASEDIR}/baksmali_25.dex"
+              SMALI="${BASEDIR}/smali_25.dex"
+       else
+              BAKSMALI="${BASEDIR}/baksmali_23.dex"
+              SMALI="${BASEDIR}/smali_23.dex"
+       fi
 
 	PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 	PATCH_UNLP="${BASEDIR}/unifiednlp_services.jar.dex"
@@ -355,6 +358,74 @@ call_dalvikvm () {
 	fi
 }
 
+deodex_vdex () {
+	ui_print " >> deodexing services.jar [VDEX]"
+
+       cp /system/framework/oat/${ARCH}/services.vdex \
+              ${BASEDIR}/services.vdex || \
+                error "failed to copy services.vdex"
+       
+       ${V_EX} -i ${BASEDIR}/services.vdex \
+              --ignore-crc-error --debug=4 || \
+                error "failed to deodex services.vdex"
+       
+       mv ${BASEDIR}/services.apk_classes.dex ${BASEDIR}/classes.dex || \
+                error "failed to deodex services.vdex"
+
+       ${ZIPB} -j "${BASEDIR}/services.jar" \
+              "${BASEDIR}/classes.dex" || \
+                error "zip failed"
+}
+
+deodex_odex () {
+	ui_print " >> deodexing services.jar [ODEX]"
+
+	cp "/system/framework/oat/${ARCH}/services.odex" "${BASEDIR}"
+	
+	# baksmali/smali options switches (version dependent)
+	MAIN=Main
+	DEODEX="x"
+	ASSEMBLE="a"
+	BOOTCLASSPATH="-b"
+	CLASSPATHDIR="-d"
+	
+	if [ "${SDK_VERSION}" -lt 24 ]; then
+		MAIN=main
+		DEODEX="-x"
+		ASSEMBLE=
+		BOOTCLASSPATH="-c"
+	fi
+
+	ui_print "   [1] baksmali services.odex"
+
+	call_dalvikvm \
+		-classpath "${BAKSMALI}" \
+		org.jf.baksmali.${MAIN} \
+		${DEODEX} \
+		${BOOTCLASSPATH} "/system/framework/${ARCH}/boot.oat" \
+		${CLASSPATHDIR} "/system/framework/${ARCH}" \
+		${CLASSPATHDIR} "/system/framework" \
+		-o "${BASEDIR}/services.jar-deodex" \
+		"${BASEDIR}/services.odex" || \
+		  error "failed to deodex services.jar"
+
+	ui_print "   [2] smali services.odex"
+	
+	call_dalvikvm \
+		-classpath "${SMALI}" \
+		org.jf.smali.${MAIN} \
+		${ASSEMBLE} \
+		-o "${BASEDIR}/services.jar-deodex/classes.dex" \
+		"${BASEDIR}/services.jar-deodex" || \
+		  error "failed to rebuild classes.dex"
+  
+	${ZIPB} -j "${BASEDIR}/services.jar" \
+		"${BASEDIR}/services.jar-deodex"/classes*.dex || \
+			error "zip failed"
+
+	rm -rf "${BASEDIR}/services.jar-deodex"
+}
+
 patch_services () {
 	ui_print " "
 	ui_print " > patching signature spoofing support"
@@ -364,58 +435,11 @@ patch_services () {
 		${BASEDIR}/services.jar || \
 		error "failed to copy services.jar"
 
-#
-# XXX vdex stuff
-#
 	if [ "${ROM_DEX_STATUS}" = "VDEX" ]; then
-		ui_print " >> deodexing services.jar [VDEX]"
-
-		cp /system/framework/oat/${ARCH}/services.vdex \
-			${BASEDIR}/services.vdex || \
-			error "failed to copy services.vdex"
-
-		${V_EX} -i ${BASEDIR}/services.vdex \
-			--ignore-crc-error --debug=4 || \
-			error "failed to deodex services.vdex"
-
-		mv ${BASEDIR}/services.apk_classes.dex ${BASEDIR}/classes.dex || \
-			error "failed to deodex services.vdex"
-
-		${ZIPB} -j "${BASEDIR}/services.jar" \
-			"${BASEDIR}/classes.dex" || \
-				error "zip failed"
-#
-# XXX odex stuff
-#
+		deodex_vdex
+	
 	elif [ "${ROM_DEX_STATUS}" = "ODEX" ]; then
-		ui_print " >> deodexing services.jar [ODEX]"
-
-		cp "/system/framework/oat/${ARCH}/services.odex" "${BASEDIR}"
-
-		ui_print "   [1] baksmali services.odex"
-		call_dalvikvm \
-			-classpath "${BAKSMALI}" \
-			org.jf.baksmali.Main \
-			x "${BASEDIR}/services.odex" \
-			-b "/system/framework/${ARCH}/boot.oat" \
-			-d "/system/framework/${ARCH}" \
-			-d "/system/framework" \
-			-o "${BASEDIR}/services.jar-deodex" || \
-				error "failed to deodex services.jar"
-
-		ui_print "   [2] smali services.odex"
-		call_dalvikvm \
-			-classpath "${SMALI}" \
-			org.jf.smali.Main \
-			a "${BASEDIR}/services.jar-deodex" \
-			-o "${BASEDIR}/services.jar-deodex/classes.dex" || \
-				error "failed to rebuild classes.dex"
-
-		${ZIPB} -j "${BASEDIR}/services.jar" \
-			"${BASEDIR}/services.jar-deodex"/classes*.dex || \
-				error "zip failed"
-
-		rm -rf "${BASEDIR}/services.jar-deodex"
+		deodex_odex
 	fi
 
 	mkdir -p "${BASEDIR}/services.jar-mod"
@@ -423,6 +447,7 @@ patch_services () {
 	PATCHES="${PATCH_HOOK} ${PATCH_CORE} ${PATCH_UNLP}"
 
 	ui_print " >> patching services.jar"
+
 	call_dalvikvm \
 		-classpath "${BASEDIR}/dexpatcher.dex" \
 		lanchon.dexpatcher.Main \
