@@ -633,6 +633,25 @@ install_microg () {
 					echo "  upgrade: removing ${file}"
 				fi
 			done
+
+			if [ -f /data/system/packages.xml ]; then
+				cp /data/system/packages.xml /tmp/packages.xml
+
+				for app in ${GOOGLE_DATA_DIRTY}; do
+					awk -v RS='</package>' "!/${app}/"'{print $0 RS}' \
+						/tmp/packages.xml > /tmp/_packages.xml
+					mv /tmp/_packages.xml /tmp/packages.xml
+				done
+
+				sed -e '$ d' -i /tmp/packages.xml
+				cp /tmp/packages.xml /data/system/packages.xml
+			fi
+
+			if [ -f /data/system/packages.list ]; then
+				for app in ${GOOGLE_DATA_DIRTY}; do
+					sed -e "/${app}/d" -i /data/system/packages.list
+				done
+			fi
 		fi
 
 		case ${nanodroid_nlpbackend} in
