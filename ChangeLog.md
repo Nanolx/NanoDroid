@@ -37,6 +37,10 @@
     * users that had Adaway installed, will be auto-migrated to Blokada
     * VPN users can't use Blokada, but can still install Adaway from F-Droid
 
+* Full, F-Droid packages
+  * automatically add NanoDroid F-Droid repository on fresh installations
+    * needs to be manually added no updates (see below)
+
 * Full, microG packages
   * improve GApps removal mechanism
 
@@ -51,6 +55,8 @@
     * MPV
     * OpenLauncher
   * see http://nanolx.org/fdroid/repo/
+  * automatically added on fresh installations
+    * needs to be manually added no updates
 
 ### Updates
 
@@ -60,9 +66,10 @@
   * Oandbackup (0.3.0)
   * Amaze (3.3RC8)
   * Open Camera (1.44.1)
+  * F-Droid (1.5-alpha0)
 
 * manual
-  * microG GmsCore (0.2.6.13280-dirty-101)
+  * microG GmsCore (0.2.6.13280-dirty-102)
   * MPV (20181009-nightly)
   * OpenLauncher (20181009-nightly)
   * Play Store (12.2.12)
