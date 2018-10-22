@@ -81,8 +81,8 @@
 * manual
   * microG GmsCore (0.2.6.14366-dirty-102)
   * MPV (20181009-nightly)
-  * OpenLauncher (20181009-nightly)
-  * Play Store (12.2.12)
+  * OpenLauncher (20181022-nightly)
+  * Play Store (12.2.13)
   * update utils from `bsdmainutils` to version 11.1.2
   * update utils from `util-linux` to version 2.32.1
   * update less to version 487
