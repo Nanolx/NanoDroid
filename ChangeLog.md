@@ -74,18 +74,26 @@
   * F-Droid (1.5-alpha0)
   * Blokada (3.6.101401)
   * AnySoftKeyboard (1.9.2445)
-  * GNU Nano (3.1)
-  * Busybox (1.29.3)
-    * internal busybox only used by the installer!
 
 * manual
   * microG GmsCore (0.2.6.14366-dirty-102)
   * MPV (20181009-nightly)
   * OpenLauncher (20181022-nightly)
   * Play Store (12.2.13)
-  * update utils from `bsdmainutils` to version 11.1.2
-  * update utils from `util-linux` to version 2.32.1
-  * update less to version 487
+
+* shell utilities
+  * bsdmainutils (11.1.2)
+  * util-linux (2.32.1)
+  * less (487)
+  * GNU Nano (3.1)
+
+* tools
+  * Busybox (1.29.3)
+    * internal busybox only used by the installer!
+  * zip (x86)
+    * static build for x86/x86_64
+  * smali/baksmali (2.1.3)
+    * used by Patcher on pre-Nougat ROMs
 
 ## 18.3.1.20180921
 
