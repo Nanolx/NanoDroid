@@ -126,6 +126,7 @@ checkbox(
 	"Oandbackup",			"Backup and Restore Apps",		1,
 	"Odyssey",			"Feature-Rich Music Player",		1,
 	"OmniClock",			"Clock without pre-alerts",		1,
+	"OmniJAWS",			"Weather service and widget",		1,
 	"OpenCamera",			"Feature-Rich Camera",			1,
 	"OpenKeyChain",			"Encrypt or Sign E-Mails",		1,
 	"OpenLauncher",			"Customizable Launcher",		1,

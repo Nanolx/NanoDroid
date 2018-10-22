@@ -26,6 +26,9 @@
     * fixes F-Droid repository conflict with custom Play Store
   * fix Google Sync Adapters permissions file being installed in the wrong directory
 
+* SetupWizard
+  * fix selecting OmniClock doesn't work
+
 ### General Changes
 
 * build-package script
