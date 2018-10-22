@@ -38,6 +38,9 @@
   * migrate from Adaway to Blokada
     * users that had Adaway installed, will be auto-migrated to Blokada
     * VPN users can't use Blokada, but can still install Adaway from F-Droid
+  * add a standalone build for OmniJAWS
+    * Weather Service and Widget from OmniROM
+    * OpenWeatherMap is currently not supported, use Yahoo!-Backend for now
 
 * Full, F-Droid packages
   * automatically add NanoDroid F-Droid repository on fresh installations
@@ -80,6 +83,7 @@
   * MPV (20181009-nightly)
   * OpenLauncher (20181022-nightly)
   * Play Store (12.2.13)
+  * OmniJAWS (1.0-standalone)
 
 * shell utilities
   * bsdmainutils (11.1.2)

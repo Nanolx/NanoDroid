@@ -9,6 +9,7 @@ nlx_DROIDGUARD=(nanolx org.microg.gms.droidguard priv-app DroidGuard)
 nlx_MPV=(nanolx is.xyz.mpv app MPV)
 nlx_PHONESKY=(nanolx com.android.vending priv-app Phonesky)
 nlx_OPENLAUNCHER=(nanolx com.benny.openlauncher app OpenLauncher)
+nlx_OMNIJAWS=(nanolx org.omnirom.omnijaws OmniJAWS)
 
 nlx_OMNICLOCK=(https://www.nanolx.org/apk/OmniClock.apk app OmniClock)
 
@@ -131,6 +132,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/Oandbackup/Oandbackup.apk
 	Full/system/app/Odyssey/Odyssey.apk
 	Full/system/app/OmniClock/OmniClock.apk
+	Full/system/app/OmniJAWS/OmniJAWS.apk
 	Full/system/app/OpenCamera/OpenCamera.apk
 	Full/system/app/OpenKeyChain/OpenKeyChain.apk
 	Full/system/app/OpenLauncher/OpenLauncher.apk
