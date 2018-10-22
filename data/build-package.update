@@ -51,6 +51,7 @@ update_apps () {
 	grab_apk_from_repo ${fd_KEEPASSDX[@]}
 	grab_apk_from_repo ${fd_K9MAIL[@]}
 	grab_apk_from_repo ${fd_LIGHTNING[@]}
+	grab_apk_from_repo ${nlx_MPV[@]}
 	grab_apk_from_repo ${fd_NEWPIPE[@]}
 	grab_apk_from_repo ${fd_OANDBACKUP[@]}
 	grab_apk_from_repo ${fd_ODYSSEY[@]}
