@@ -75,7 +75,7 @@
   * (Simple) Calendar (4.2.1)
   * (Simple) Gallery (4.6.5)
   * Oandbackup (0.3.0)
-  * Amaze (3.3RC8)
+  * Amaze (3.3RC10)
   * Open Camera (1.44.1)
   * F-Droid (1.5-alpha0)
   * Blokada (3.6.101401)
@@ -84,9 +84,9 @@
 * manual
   * microG GmsCore (0.2.6.14366-dirty-102)
   * MPV (20181009-nightly)
-  * OpenLauncher (20181022-nightly)
-  * Play Store (12.2.13)
-  * OmniJAWS (1.0-standalone)
+  * OpenLauncher (20181024-nightly)
+  * Play Store (12.3.19)
+  * OmniJAWS (1.1-standalone)
 
 * shell utilities
   * bsdmainutils (11.1.2)
