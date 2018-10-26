@@ -58,7 +58,7 @@ fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 
 gd_ORBOT=(guardian org.torproject.android app Orbot)
 
-TORBROWSER_APK=$(wget -O- https://www.torproject.org/projects/torbrowser.html.en 2>/dev/null | \
+TORBROWSER_APK=$(curl -s https://www.torproject.org/projects/torbrowser.html.en | \
 	gawk -F\" '/apk.*Android/{print $2}' | \
 	sed 's|..|https://www.torproject.org|')
 tp_TORBROWSER=(${TORBROWSER_APK} app TorBrowser)
