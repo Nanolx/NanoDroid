@@ -72,14 +72,15 @@
 ### Updates
 
 * automatic
-  * (Simple) Calendar (4.2.1)
-  * (Simple) Gallery (4.6.5)
-  * Oandbackup (0.3.0)
+  * (Simple) Calendar (5.1.1)
+  * (Simple) Gallery (5.1.1)
+  * Oandbackup (0.3.2)
   * Amaze (3.3RC10)
   * Open Camera (1.44.1)
   * F-Droid (1.5-alpha0)
   * Blokada (3.6.101401)
   * AnySoftKeyboard (1.9.2445)
+  * TorBrowser (1.0a2)
 
 * manual
   * microG GmsCore (0.2.6.14366-dirty-102)
