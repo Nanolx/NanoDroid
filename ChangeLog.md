@@ -64,9 +64,10 @@
     * microG DroidGuard Helper
     * Google Play Store
     * MPV
+    * OmniJAWS
     * OpenLauncher
   * see http://nanolx.org/fdroid/repo/
-  * automatically added on fresh installations
+  * automatically added to F-Droid on fresh installations
     * needs to be manually added on updated installations
 
 ### Updates

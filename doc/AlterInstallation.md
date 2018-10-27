@@ -75,7 +75,7 @@ whether to provide included applications [> Details](doc/Applications.md)
 
 whether to override an already existing app.
 
-`0` means that a ROM app is preferred against a NanoDroid app, where `1` means the NanoDroid apps is prefered.
+`0` means that a ROM app is preferred against a NanoDroid app, where `1` means the NanoDroid app is prefered. This applies to included applications [> Details](doc/Applications.md)
 
 `nanodroid_play=[0|1|2|3|4]`
 
