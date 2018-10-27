@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 19.0 in-dev
+## 19.0.20181027 "Crossfield"
 
 ### Bug Fixes
 

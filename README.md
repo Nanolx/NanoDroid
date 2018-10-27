@@ -60,8 +60,8 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 18.3.1.20180921
-* Beta: 18.91.20181020
+* Stable: 19.0.20181027 (Codename: Crossfield)
+* Beta: ---
 
 ## Downloads
 
