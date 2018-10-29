@@ -29,5 +29,6 @@
 		<permission name="android.permission.STATUS_BAR"/>
 		<permission name="android.permission.UPDATE_DEVICE_STATS"/>
 		<permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+		<permission name="android.permission.READ_RUNTIME_PROFILES"/>
 	</privapp-permissions>
 </permissions>
