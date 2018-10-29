@@ -1,5 +1,22 @@
 # ChangeLog
 
+## 19.1 in-dev
+
+### Bug Fixes
+
+* Full, microG packages
+  * add READ_RUNTIME_PROFILES to Play Store priv-app permissions
+  * improve microG DroidGuard Helper installation
+
+### Updates
+
+* automatic
+  * New Pipe (0.14.2)
+
+* manual
+  * MPV (20181029-nightly)
+  * OpenLauncher (20181029-nightly)
+
 ## 19.0.20181027 "Crossfield"
 
 ### Bug Fixes
