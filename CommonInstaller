@@ -674,7 +674,7 @@ install_microg () {
 			cp -r "${INSTALLER}/system/priv-app/DroidGuard/" \
 				/data/app/org.microg.gms.droidguard-1
 
-			set_perm_data -r /data/app/org.microg.gms.droidguard-1
+			set_perm_recursive /data/app/org.microg.gms.droidguard-1 1000 1000 0755 0644
 		fi
 
 		nanodroid_install_file etc/permissions/features.xml
