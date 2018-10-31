@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <permissions>
-	<privapp-permissions package="com.google.android.gms">
-		<permission name="android.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST"/>
-		<permission name="android.permission.INSTALL_LOCATION_PROVIDER"/>
-	</privapp-permissions>
-
-	<privapp-permissions package="com.google.android.backuptransport">
-		<permission name="android.permission.BACKUP"/>
-		<permission name="android.permission.UPDATE_DEVICE_STATS"/>
-	</privapp-permissions>
-
 	<privapp-permissions package="com.android.vending">
 		<permission name="android.permission.ALLOCATE_AGGRESSIVE"/>
 		<permission name="android.permission.BACKUP"/>

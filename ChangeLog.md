@@ -14,10 +14,13 @@
 ### General Changes
 
 * Full, microG packages
-  * add privapp-permissions for BackupTransport
+  * split privapp-permissions-google.xml into
+     * privapp-permissions-microg.xml for microG GmsCore permissions
+     * privapp-permissions-phonesky.xml for Play Store permissions
   * split microg-permissions.xml into
      * microg-permissions.xml for microG GmsCore and uNlp permissions
      * phonesky-permissions.xml for Play Store permissions
+  * add privapp-permissions-gsync.xml for BackupTransport permissions
 
 ### Updates
 
