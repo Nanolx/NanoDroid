@@ -6,16 +6,23 @@
 
 * Full, microG packages
   * add READ_RUNTIME_PROFILES to Play Store priv-app permissions
+
+* Commoninstaller
   * improve microG DroidGuard Helper installation
+  * fix swipe feature by providing SDK-specific libraries
 
 ### Updates
 
 * automatic
   * New Pipe (0.14.2)
+  * Blokada (3.6.101900)
+  * OpenVPN (0.7.6)
 
 * manual
   * MPV (20181029-nightly)
   * OpenLauncher (20181029-nightly)
+  * Play Store (12.4.14)
+  * microG GmsCore (0.2.6.14369-dirty-103)
 
 ## 19.0.20181027 "Crossfield"
 
