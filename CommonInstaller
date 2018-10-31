@@ -418,10 +418,10 @@ detect_arch () {
 		arm )
 			case ${SDK_VERSION} in
 				19 | 21 | 22 | 23 | 27 | 28 )
-					LIBJNI_IME=lib_latinimegoogle.so_${SDK_VERSION}
+					LIBJNI_IME=libjni_latinimegoogle.so_${SDK_VERSION}
 				;;
 				24 | 25 | 26 )
-					LIBJNI_IME=lib_latinimegoogle.so_23
+					LIBJNI_IME=libjni_latinimegoogle.so_23
 				;;
 				* )
 					SWIPE_UNSUPPORTED=1
@@ -432,10 +432,10 @@ detect_arch () {
 		arm64 )
 			case ${SDK_VERSION} in
 				21 | 22 | 23 | 27 | 28 )
-					LIBJNI_IME=lib_latinimegoogle.so_${SDK_VERSION}
+					LIBJNI_IME=libjni_latinimegoogle.so_${SDK_VERSION}
 				;;
 				24 | 25 | 26 )
-					LIBJNI_IME=lib_latinimegoogle.so_23
+					LIBJNI_IME=libjni_latinimegoogle.so_23
 				;;
 				* )
 					SWIPE_UNSUPPORTED=1
@@ -449,7 +449,7 @@ detect_arch () {
 					SWIPE_UNSUPPORTED=1
 				;;
 				23 | 24 | 25 | 26 | 27 | 28 )
-					LIBJNI_IME=lib_latinimegoogle.so
+					LIBJNI_IME=libjni_latinimegoogle.so
 				;;
 				* )
 					SWIPE_UNSUPPORTED=1
@@ -745,7 +745,7 @@ install_gsync () {
 	# install GSync if requested
 	if [ "${nanodroid_gsync}" -eq 1 ]; then
 		if [ "${GSYNC_UNSUPPORTED}" -eq 1 ]; then
-			ui_print " << Google Sync Adapters are unsupported on pre-KitKat ROMs"
+			ui_print " << Google Sync Adapters are unsupported on SDK ${SDK_VERSION}"
 		else
 			GSYNC_BASE="${INSTALLER}/gsync/${GSYNC_VER}"
 			ui_print " << with Google Sync Adapters (${GSYNC_VER})"
@@ -999,7 +999,7 @@ install_initd () {
 install_swipe () {
 	if [ "${nanodroid_swipe}" ]; then
 		if [ "${SWIPE_UNSUPPORTED}" -eq 1 ]; then
-			ui_print " << Swipe Libraries are unsupported on pre-KitKat ROMs"
+			ui_print " << Swipe Libraries are unsupported on SDK ${SDK_VERSION}"
 		else
 			ui_print " << with swipe libraries"
 
