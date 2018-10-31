@@ -224,17 +224,22 @@ grab_lib_from_ogapps () {
 		arm64 | x86_64 ) LIBD=lib64 ;;
 	esac
 
-	APK_URL="https://github.com/opengapps/${3}/blob/master/${LIBD}/${2}/${1}?raw=true"
-	APK_DEST="${CWD}/Full/swipe/${3}"
+	LIB_URL="https://github.com/opengapps/${3}/blob/master/${LIBD}/${2}/${1}?raw=true"
+	SWP_DEST="${CWD}/Full/swipe/${3}"
 
-	if [[ -f "${APK_DEST}/${1}" ]]; then
-		echo -e "\nUpdating from OpenGApps   : ${1} [${3}]"
-	else	echo -e "\nDownloading from OpenGApps: ${1} [${3}]"
-		mkdir -p "${APK_DEST}"
+	if [[ "${4}" == "true" ]]; then
+		LIB_DEST="${SWP_DEST}/${1}_${2}"
+	else	LIB_DEST="${SWP_DEST}/${1}"
+	fi
+
+	if [[ -f "${LIB_DEST}" ]]; then
+		echo -e "\nUpdating from OpenGApps   : ${1} [${2}:${3}]"
+	else	echo -e "\nDownloading from OpenGApps: ${1} [${2}:${3}]"
+		mkdir -p "${SWP_DEST}"
 	fi
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -q -O "${APK_DEST}/${1}" "${APK_URL}" || \
-		rm -f "${APK_DEST}/${1}"
+	wget -q -O "${LIB_DEST}" "${LIB_URL}" || \
+		rm -f "${LIB_DEST}"
 }
