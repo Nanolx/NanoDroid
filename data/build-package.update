@@ -9,10 +9,18 @@ nanodroid_pull () {
 }
 
 update_swipe () {
-	for LIB in libjni_keyboarddecoder.so libjni_latinimegoogle.so; do
-		for ARCH in arm arm64 x86 x86_64; do
-			grab_lib_from_ogapps ${LIB} 23 ${ARCH}
+	for ARCH in arm arm64 x86 x86_64; do
+		grab_lib_from_ogapps libjni_keyboarddecoder.so 23 ${ARCH} false
+	done
+
+	for ARCH in arm arm64; do
+		for SDK in 19 21 22 23 27 28; do
+			grab_lib_from_ogapps libjni_latinimegoogle.so ${SDK} ${ARCH} true
 		done
+	done
+
+	for ARCH in x86 x86_64; do
+		grab_lib_from_ogapps libjni_latinimegoogle.so 23 ${ARCH} false
 	done
 }
 
