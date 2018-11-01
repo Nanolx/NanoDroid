@@ -535,15 +535,15 @@ Once your ROM supports signature spoofing, you need to setup microG like this
   * go into **microG settings** and set up everything like:
      * check results in **Self-Check**, grant missing permissions (by tapping on them)
          * especially the **Battery Optimization** item
+         * if Phonesky (= Fake Store or Play Store) lacks signature spoofing permissions head to Settings / Apps / Permissions / Signature Spoofing and grant it
      * enable **Google device registration**
      * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
      * enable **Google SafetyNet** (required for applications that utilize SafetyNet, for example Pokémon GO, ...)
-         * '...' menu > set to use the **Official Server**
      * in **UnifiedNlp Settings** choose
          * **Déjà Vu** and/or **Mozilla** as Geolocation backend
          * **Nominatim** as Address lockup backend
      * after everything is done, reboot
-     * go to **Play Store**, setup account and install your apps
+     * if you installed **Play Store** open it, setup account and install your apps
 
 ## License & Credits
 
@@ -583,9 +583,21 @@ List of known issues
 
 * Applications/SafetyNet check complain with `Google Play Services are missing`
   * you did not
-    * setup microG (or did not reboot afterwards)
-    * grant signature spoofing permission to Play Store
-    * install either Fake Store or Play Store
+      * [setup microG](#microg-setup) (or did not reboot afterwards)
+      * grant signature spoofing permission to Fake Store or Play Store
+         * go to Settings / Apps / Permissions / Signature Spoofing and grant it
+      * install either Fake Store or Play Store
+* Play Store giving error RH-01
+  * ensure you rebooted after [microG setup](#microg-setup)
+  * ensure Play Store has signature spoofing permission
+      * go to Settings / Apps / Permissions / Signature Spoofing and grant it
+  * force close Play Store and open it again
+* Apps are not receiving Push messages
+  * go to microG Settings / Google Cloud Messaging and check if it is connected
+  * ensure you don't have an adblocker blocking the domain `mtalk.google.com` it is required for GCM to work
+  * when using Titanium Backup first install the app only (without data) and start it, this will register the app, after that you can restore the data using Titanium Backup
+  * if an app is not shown as registered in microG Settings / Google Cloud Messaging, try uninstalling and re-installing it
+  * when restoring the ROM from a TWRP backup GCM is often broken, no workaround currently known
 * Battery Drain
   * microG fails to register applications to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
      * do a clean flash of your ROM (, Magisk) and NanoDroid and install your apps after microG setup
