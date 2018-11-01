@@ -16,6 +16,7 @@ Table of Contents
       * [Downloads](#downloads)
          * [Primary Mirror](#primary-mirror)
          * [Secondary Mirror](#secondary-mirror)
+         * [SHA256 Checksum and GPG Signature](#sha256-checksum-and-gpg-signature)
          * [Snapshots](#snapshots)
       * [Supported Android Versions](#supported-android-versions)
       * [Support](#support)
