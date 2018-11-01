@@ -76,8 +76,28 @@ On AndroidFileHost **all** stable and beta releases are available.
 
 On Nanolx the latest stable and beta releases are available, no previous releases.
 
-* Stable Downloads [> Nanolx](https://androidfilehost.com/?w=files&flid=198483)
-* Beta Downloads [> Nanolx](https://androidfilehost.com/?w=files&flid=183250)
+* Stable Downloads [> Nanolx](https://download.nanolx.org/NanoDroid/Stable)
+* Beta Downloads [> Nanolx](https://download.nanolx.org/NanoDroid/Beta)
+
+### SHA256 Checksum and GPG Signature
+
+Since version 18.3.1 all releases hosted on nanolx.org contain a SHA256 checksum and GPG signature to check their validity. AFH does provide the SHA256 checksum on the downloads summary page, but does not allow to upload a GPG signature.
+
+You can obtain the public part of my GPG key from:
+
+* download the public key from [photonic.asc](https://download.nanolx.org/NanoDroid/Stable/photonic.asc)
+  * import it using `gpg --import photonic.asc`
+* download and import using `gpg` from pgp.mit.edu:
+  * `gpg --keyserver pgp.mit.edu --recv B0ABCE622A077B584B81339E340FD70EFFC52B26`
+
+You can verify the checksum and signature like:
+
+```
+gpg --verify NanoDroid-19.0.20181027.zip.sha256.sig
+sha256sum -c NanoDroid-19.0.20181027.zip.sha256
+```
+
+Additionally you may want to ensure the signing date is close to the release date.
 
 ### Snapshots
 

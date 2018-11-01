@@ -22,12 +22,16 @@
      * phonesky-permissions.xml for Play Store permissions
   * add privapp-permissions-gsync.xml for BackupTransport permissions
 
+* CommonInstaller
+  * make GApps removal mechanism less brutal
+
 ### Updates
 
 * automatic
   * New Pipe (0.14.2)
   * Blokada (3.6.101900)
   * OpenVPN (0.7.6)
+  * (Simple) Gallery (5.1.2)
 
 * manual
   * MPV (20181029-nightly)
