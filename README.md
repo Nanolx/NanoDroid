@@ -597,7 +597,7 @@ List of known issues
   * ensure you don't have an adblocker blocking the domain `mtalk.google.com` it is required for GCM to work
   * when using Titanium Backup first install the app only (without data) and start it, this will register the app, after that you can restore the data using Titanium Backup
   * if an app is not shown as registered in microG Settings / Google Cloud Messaging, try uninstalling and re-installing it
-  * when restoring the ROM from a TWRP backup GCM is often broken, no workaround currently known
+  * when restoring the ROM from a TWRP backup GCM is often broken, no workaround currently known, except uninstalling and re-installing the apps
 * Battery Drain
   * microG fails to register applications to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
      * do a clean flash of your ROM (, Magisk) and NanoDroid and install your apps after microG setup
