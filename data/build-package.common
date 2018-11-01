@@ -126,11 +126,9 @@ usage:	build-package [opt] [arg]
 
 setup NanoDroid [! do this first !]:
 	pull			| download all required apks for NanoDroid
-				|| required for: Full, F-Droid, microG packages
 
 update contents:
 	u-microg		| update microG and companions
-				|| except: microG GmsCore, Play Store
 	u-fdroid		| update F-Droid and Extension
 	u-apps			| update applications
 	u-swipe			| update swipe libraries
