@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 19.1 in-dev
+## 19.1.20181102 "Bonaventure"
 
 ### Bug Fixes
 
@@ -34,7 +34,7 @@
   * (Simple) Gallery (5.1.2)
 
 * manual
-  * MPV (20181029-nightly)
+  * MPV (20181102-nightly)
   * OpenLauncher (20181029-nightly)
   * Play Store (12.4.14)
   * microG GmsCore (0.2.6.14369-dirty-103)

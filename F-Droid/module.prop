@@ -1,7 +1,7 @@
 id=NanoDroid_FDroid
 name=NanoDroid (F-Droid sub module)
-version=v19.1.99999999
-versionCode=56
+version=v19.1.20181102
+versionCode=57
 author=Nanolx
 description=NanoDroid (F-Droid sub module) for LineageOS/AOSP based ROMs
 minMagisk=1500

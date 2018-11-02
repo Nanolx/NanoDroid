@@ -61,7 +61,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 19.0.20181027 (Codename: Crossfield)
+* Stable: 19.1.20181102 (Codename: Bonaventure)
 * Beta: ---
 
 ## Downloads
