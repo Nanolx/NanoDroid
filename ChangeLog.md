@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 19.1.1.20181103 "Bonaventure Refit"
+
+### Bug Fixes
+
+* Full, microG packages
+  * unify privapp permission handling since Android ROMs behave differently
+
 ## 19.1.20181102 "Bonaventure"
 
 ### Bug Fixes
@@ -14,10 +21,13 @@
 ### General Changes
 
 * Full, microG packages
-  * add privapp-permissions for BackupTransport
+  * split privapp-permissions-google.xml into
+     * privapp-permissions-microg.xml for microG GmsCore permissions
+     * privapp-permissions-phonesky.xml for Play Store permissions
   * split microg-permissions.xml into
      * microg-permissions.xml for microG GmsCore and uNlp permissions
      * phonesky-permissions.xml for Play Store permissions
+  * add privapp-permissions-gsync.xml for BackupTransport permissions
 
 * CommonInstaller
   * make GApps removal mechanism less brutal
