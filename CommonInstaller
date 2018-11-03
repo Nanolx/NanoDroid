@@ -709,7 +709,7 @@ install_microg () {
 		fi
 
 		nanodroid_install_file etc/permissions/features.xml
-		nanodroid_install_file etc/permissions/privapp-permissions-microg.xml
+		nanodroid_install_file etc/permissions/privapp-permissions-google.xml
 		nanodroid_install_file etc/default-permissions/microg-permissions.xml
 		nanodroid_install_file etc/sysconfig/microg-a5k.xml
 
@@ -762,9 +762,6 @@ install_gsync () {
 
 			cp -r "${INSTALLER}/gsync/etc/default-permissions/" "${MODPATH}/system/etc/"
 			set_perm_data -r "${MODPATH}/system/etc/default-permissions/"
-
-			cp -r "${INSTALLER}/gsync/etc/permissions/" "${MODPATH}/system/etc/"
-			set_perm_data -r "${MODPATH}/system/etc/permissions/"
 
 			find "${INSTALLER}/gsync/etc/default-permissions/" -type f | \
 					sed -e "s,${INSTALLER}/gsync/etc,/system/etc,g" | \
@@ -839,7 +836,6 @@ install_store () {
 			NANODROID_APP_STORE="Phonesky"
 			NANODROID_REM_STORE="FakeStore"
 
-			nanodroid_install_file etc/permissions/privapp-permissions-phonesky.xml
 			nanodroid_install_file etc/default-permissions/phonesky-permissions.xml
 		;;
 
