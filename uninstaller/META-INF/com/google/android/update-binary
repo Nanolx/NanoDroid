@@ -32,8 +32,7 @@ PrebuiltGmsCore
 UnifiedNlp
 Velvet
 Vending
-WhisperPush
-YouTube"
+WhisperPush"
 
 detect_bootmode () {
 	ps | grep zygote | grep -qv grep && BOOTMODE=true || BOOTMODE=false

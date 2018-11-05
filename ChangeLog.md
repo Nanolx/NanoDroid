@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 19.2 in-dev
+
+### General Changes
+
+* CommonInstaller, CommonAddon
+  * drop YouTube from list of applications to get rid as part of GApps removal
+
 ## 19.1.1.20181103 "Bonaventure Refit"
 
 ### Bug Fixes

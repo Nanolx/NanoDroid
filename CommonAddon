@@ -46,8 +46,7 @@ PrebuiltGmsCore
 UnifiedNlp
 Velvet
 Vending
-WhisperPush
-YouTube"
+WhisperPush"
 
 GOOGLE_DATA="com.amap.android.location
 com.baidu.location

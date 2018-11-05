@@ -31,7 +31,6 @@ The following GApps are removed during installation:
 * Velvet
 * Vending
 * WhisperPush
-* YouTube
 
 If the installation of NanoDroid is not an upgrade from a previous version, the following **data** will also be cleared:
 
