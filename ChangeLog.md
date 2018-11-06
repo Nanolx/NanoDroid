@@ -6,6 +6,7 @@
 
 * CommonInstaller, CommonAddon
   * drop YouTube from list of applications to get rid as part of GApps removal
+  * improve and unify GSync installation code
 
 ## 19.1.1.20181103 "Bonaventure Refit"
 
