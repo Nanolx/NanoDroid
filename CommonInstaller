@@ -739,7 +739,7 @@ install_gsync () {
 				nanodroid_install_apk ${app}
 			done
 
-			nanodroid_install_file Full/gsync/etc/default-permissions/contacts-calendar-sync.xml
+			nanodroid_install_file etc/default-permissions/contacts-calendar-sync.xml
 		fi
 	else	ui_print " << without Google Sync Adapters"
 	fi
