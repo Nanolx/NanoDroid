@@ -732,7 +732,6 @@ install_gsync () {
 		if [ "${GSYNC_UNSUPPORTED}" -eq 1 ]; then
 			ui_print " << Google Sync Adapters are unsupported on SDK ${SDK_VERSION}"
 		else
-			GSYNC_BASE="${INSTALLER}/gsync/${GSYNC_VER}"
 			ui_print " << with Google Sync Adapters (${GSYNC_VER})"
 
 			for app in CalendarSync ContactsSync GoogleBackupTransport; do
