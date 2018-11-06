@@ -721,7 +721,7 @@ install_mapsv1 () {
 	if [ "${nanodroid_mapsv1}" -eq 1 ]; then
 		ui_print " << with Maps API version 1"
 		nanodroid_install_file etc/permissions/com.google.android.maps.xml
-		nanodroid_install_dir framework
+		nanodroid_install_file framework/com.google.android.maps.jar
 	else	ui_print " << without Maps API version 1"
 	fi
 }
