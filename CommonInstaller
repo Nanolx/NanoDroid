@@ -739,12 +739,7 @@ install_gsync () {
 				nanodroid_install_apk ${app}
 			done
 
-			cp -r "${INSTALLER}/gsync/etc/default-permissions/" "${MODPATH}/system/etc/"
-			set_perm_data -r "${MODPATH}/system/etc/default-permissions/"
-
-			find "${INSTALLER}/gsync/etc/default-permissions/" -type f | \
-					sed -e "s,${INSTALLER}/gsync/etc,/system/etc,g" | \
-					installinfo_add
+			nanodroid_install_file Full/gsync/etc/default-permissions/contacts-calendar-sync.xml
 		fi
 	else	ui_print " << without Google Sync Adapters"
 	fi
@@ -782,7 +777,7 @@ install_apps () {
 				if [ "${nanodroid_override}" -eq 0 ]; then
 					ui_print " <<> app: OmniClock already provided by ROM (as OmniClockOSS)"
 				else
-					nanodroid_install_apk OmniClock
+					nanodroid_install_apk ${app}
 					echo "   + removing conflicting OmniClockOSS"
 					${NANODROID_BINDIR}/nanodroid-overlay --add OmniClockOSS
 				fi
@@ -1062,9 +1057,16 @@ nanodroid_install_apk () {
 nanodroid_install_file () {
 	dir="$(dirname "${1}")"
 	file="$(basename "${1}")"
+	unset source
 
-	[ ! -f "${INSTALLER}/system/${dir}/${file}" ] && \
-		error "file: ${file} not found"
+	for sdir in system gsync; do
+		if [ -f "${INSTALLER}/${sdir}/${dir}/${file}" ]; then
+			source="${INSTALLER}/${sdir}/${dir}/${file}"
+			break
+		fi
+	done
+
+	[ -z "${source}" ] && error "file: ${file} not found"
 
 	# if /system/xbin does not exist, use /system/bin
 	[ "${dir}" = "xbin" -a "${ROM_NO_XBIN}" -eq 1 ] && xdir="bin" || xdir="${dir}"
@@ -1075,8 +1077,7 @@ nanodroid_install_file () {
 	echo "    installing file: ${xfile}"
 
 	mkdir -p "${MODPATH}/system/${xdir}/"
-	cp "${INSTALLER}/system/${dir}/${file}" \
-		"${MODPATH}/system/${xdir}/${xfile}" || \
+	cp "${source}" "${MODPATH}/system/${xdir}/${xfile}" || \
 		error "failed to install ${xfile}"
 
 	case ${2} in
