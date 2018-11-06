@@ -735,29 +735,9 @@ install_gsync () {
 			GSYNC_BASE="${INSTALLER}/gsync/${GSYNC_VER}"
 			ui_print " << with Google Sync Adapters (${GSYNC_VER})"
 
-			for app in CalendarSync ContactsSync; do
-				echo "    installing app: Google${app}"
-				mkdir -p "${MODPATH}/system/app/Google${app}"
-
-				cp "${GSYNC_BASE}/app/Google${app}/Google${app}.apk" \
-					"${MODPATH}/system/app/Google${app}/"  || \
-					error "failed to install Google${app}"
-
-				set_perm_data -r "${MODPATH}/system/app/Google${app}"
-
-				installinfo_add "/system/app/Google${app}/Google${app}.apk"
+			for app in CalendarSync ContactsSync GoogleBackupTransport; do
+				nanodroid_install_apk ${app}
 			done
-
-			echo "    installing app: GoogleBackupTransport"
-			mkdir -p "${MODPATH}/system/priv-app/GoogleBackupTransport"
-
-			cp "${GSYNC_BASE}/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk" \
-				"${MODPATH}/system/priv-app/GoogleBackupTransport/" || \
-				error "failed to install GoogleBackupTransport"
-
-			set_perm_data -r "${MODPATH}/system/priv-app/GoogleBackupTransport"
-
-			installinfo_add "/system/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk"
 
 			cp -r "${INSTALLER}/gsync/etc/default-permissions/" "${MODPATH}/system/etc/"
 			set_perm_data -r "${MODPATH}/system/etc/default-permissions/"
@@ -1048,16 +1028,17 @@ nanodroid_install_dir () {
 nanodroid_install_apk () {
 	app=${1}
 	unset prefix
+	unset source
 
-	if [ -f "${INSTALLER}/system/app/${app}/${app}.apk" ]; then
-		dir=system/app
-	elif [ -f "${INSTALLER}/system/priv-app/${app}/${app}.apk" ]; then
-		dir=system/priv-app
-	else
-		error "app ${app} not found"
-	fi
+	for sdir in system/app system/priv-app gsync/${GSYNC_VER}/app gsync/${GSYNC_VER}/priv-app; do
+		if [ -f "${INSTALLER}/${sdir}/${app}/${app}.apk" ]; then
+			source="${INSTALLER}/${sdir}/${app}/${app}.apk"
+			dir=system/$(basename ${sdir})
+			break
+		fi
+	done
 
-	source="${INSTALLER}/${dir}/${app}/${app}.apk"
+	[ -z "${source}" ] && error "app ${app} not found"
 
 	if [ "${UNFOLD_APP_DIR}" -eq 1 ]; then
 		dest="${dir}"
