@@ -171,4 +171,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/priv-app/FDroidPrivileged/FDroidPrivileged.apk
 	Full/system/priv-app/FakeStore/FakeStore.apk
 	Full/system/priv-app/YalpStore/YalpStore.apk
-	Full/system/priv-app/GsfProxy/GsfProxy.apk )
+	Full/system/priv-app/GsfProxy/GsfProxy.apk
+	Bromite/system/app/BromiteWebView_arm/BromiteWebView_arm.apk
+	Bromite/system/app/BromiteWebView_arm64/BromiteWebView_arm64.apk
+	Bromite/system/app/BromiteWebView_x86/BromiteWebView_x86.apk )
