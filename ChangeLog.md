@@ -8,6 +8,12 @@
   * drop YouTube from list of applications to get rid as part of GApps removal
   * improve and unify GSync installation code
 
+* Full, microG packages
+  * `nanodroid_microg` setting is now a triplette
+     * 0 = don't install microG at all (like before)
+     * 1 = install microG GmsCore, GsfProxy and DroidGuard Helper and Nominatim Geocoder Backend (like before)
+     * 2 = install microG GmsCore and Nominatim Geocoder Backend (new)
+
 ## 19.1.1.20181103 "Bonaventure Refit"
 
 ### Bug Fixes

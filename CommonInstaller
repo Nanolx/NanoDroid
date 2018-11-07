@@ -638,7 +638,7 @@ magisk_install_finish () {
 install_microg () {
 	# install microG if requested
 	# respectively force if it's the microG package
-	if [ "${nanodroid_microg}" -eq 1 -o "${MODID}" = "NanoDroid_microG" ]; then
+	if [ "${nanodroid_microg}" -ne 0 -o "${MODID}" = "NanoDroid_microG" ]; then
 
 		# first get rid of conflicting packages
 		for app in ${GOOGLE_APPS}; do
@@ -696,15 +696,21 @@ install_microg () {
 			    ui_print " << with microG [Déjà Vu, Ichnaea, Nominatim]" ;;
 		esac
 
-		for app in ${NLPBACKEND} nlpBackendNominatim GmsCore GsfProxy DroidGuard; do
+		for app in ${NLPBACKEND} nlpBackendNominatim GmsCore; do
 			nanodroid_install_apk ${app}
 		done
 
-		if [ -z "$(find /data/app -type d -name 'org.microg.gms.droidguard*')" ]; then
-			cp -r "${INSTALLER}/system/priv-app/DroidGuard/" \
-				/data/app/org.microg.gms.droidguard-1
+		if [ "${nanodroid_microg}" -ne 2 ]; then
+			for app in GsfProxy DroidGuard; do
+				nanodroid_install_apk ${app}
+			done
 
-			set_perm_recursive /data/app/org.microg.gms.droidguard-1 1000 1000 0755 0644
+			if [ -z "$(find /data/app -type d -name 'org.microg.gms.droidguard*')" ]; then
+				cp -r "${INSTALLER}/system/priv-app/DroidGuard/" \
+					/data/app/org.microg.gms.droidguard-1
+
+				set_perm_recursive /data/app/org.microg.gms.droidguard-1 1000 1000 0755 0644
+			fi
 		fi
 
 		nanodroid_install_file etc/permissions/features.xml

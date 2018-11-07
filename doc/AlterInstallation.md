@@ -59,9 +59,13 @@ Alternatively you can also use the NanoDroid-SetupWizard package instead of manu
 
 ## Detailed Description
 
-`nanodroid_microg=[0|1]`
+`nanodroid_microg=[0|1|2]`
 
 whether to provide **microG**
+
+* 0 = don't install microG at all
+* 1 = install microG GmsCore, GsfProxy and DroidGuard Helper and Nominatim Geocoder Backend
+* 2 = install microG GmsCore and Nominatim Geocoder Backend only
 
 `nanodroid_fdroid=[0|1]`
 
