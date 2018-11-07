@@ -14,6 +14,10 @@
      * 1 = install microG GmsCore, GsfProxy and DroidGuard Helper and Nominatim Geocoder Backend (like before)
      * 2 = install microG GmsCore and Nominatim Geocoder Backend (new)
 
+* SetupWizard
+  * update for `nanodroid_microg` change
+  * move selection of uNlp backend before selection of Play Store
+
 ## 19.1.1.20181103 "Bonaventure Refit"
 
 ### Bug Fixes

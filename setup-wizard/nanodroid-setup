@@ -47,6 +47,7 @@ apps_prop="${aromapath}/apps.prop"
 debloat_prop="${aromapath}/debloat.prop"
 location_prop="${aromapath}/location.prop"
 nlp_prop="${aromapath}/nlp.prop"
+ug_prop="${aromapath}/ug.prop"
 
 ui_print " "
 ui_print "******************************"
@@ -82,21 +83,20 @@ done
 ui_print " "
 ui_print "  < Installer Configuration"
 
-setup_add 1 nanodroid_microg
-setup_add 2 nanodroid_fdroid
-setup_add 3 nanodroid_apps
-setup_add 4 nanodroid_overlay
-setup_add 5 nanodroid_zelda
-setup_add 6 nanodroid_mapsv1
-setup_add 7 nanodroid_init
-setup_add 8 nanodroid_gsync
-setup_add 9 nanodroid_swipe
-setup_add 10 nanodroid_forcesystem
-setup_add 11 nanodroid_bash
-setup_add 12 nanodroid_nano
-setup_add 13 nanodroid_utils
-setup_add 14 nanodroid_fonts
-setup_add 15 nanodroid_override
+setup_add 1 nanodroid_fdroid
+setup_add 2 nanodroid_apps
+setup_add 3 nanodroid_overlay
+setup_add 4 nanodroid_zelda
+setup_add 5 nanodroid_mapsv1
+setup_add 6 nanodroid_init
+setup_add 7 nanodroid_gsync
+setup_add 8 nanodroid_swipe
+setup_add 9 nanodroid_forcesystem
+setup_add 10 nanodroid_bash
+setup_add 11 nanodroid_nano
+setup_add 12 nanodroid_utils
+setup_add 13 nanodroid_fonts
+setup_add 14 nanodroid_override
 
 if grep -q "selected.1=1" "${store_prop}"; then
 	ui_print "  <>> setting property: nanodroid_play [None]"
@@ -127,6 +127,17 @@ elif grep -q "selected.1=3" "${nlp_prop}"; then
 elif grep -q "selected.1=4" "${nlp_prop}"; then
 	ui_print "  <>> setting property: nanodroid_nlpbackend [Déjà Vu + Ichnaea]"
 	echo "nanodroid_nlpbackend=3" >> "${nanodroid_setup}"
+fi
+
+if grep -q "selected.1=1" "${ug_prop}"; then
+	ui_print "  <>> setting property: nanodroid_microg [None]"
+	echo "nanodroid_microg=0" >> "${nanodroid_setup}"
+elif grep -q "selected.1=2" "${ug_prop}"; then
+	ui_print "  <>> setting property: nanodroid_microg [Full]"
+	echo "nanodroid_microg=1" >> "${nanodroid_setup}"
+elif grep -q "selected.1=3" "${ug_prop}"; then
+	ui_print "  <>> setting property: nanodroid_microg [Minimal]"
+	echo "nanodroid_microg=2" >> "${nanodroid_setup}"
 fi
 
 ui_print " "
