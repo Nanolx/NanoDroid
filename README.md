@@ -40,7 +40,8 @@ Table of Contents
             * [Shell Utilities](#shell-utilities)
             * [GNU Bash and GNU Nano](#gnu-bash-and-gnu-nano)
          * [microG](#microg)
-         * [F-Droid and Applications](#f-droid-and-applications)
+         * [F-Droid](#f-droid)
+         * [Applications](#applications)
          * [The Legend of Zelda ringtones and sounds](#the-legend-of-zelda-ringtones-and-sounds)
          * [Nintendo Fonts](#nintendo-fonts)
       * [Installation](#installation)
@@ -105,17 +106,17 @@ Additionally you may want to ensure the signing date is close to the release dat
 You can create snapshots from this repository.
 
 * on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
-  * first step:
-     * `build-package pull` to download all required apks for Full, microG and F-Droid package
-  * second step:
-     * `build-package full` to create the full package
+  * download required files:
+     * `build-package pull` to download all required apks and libraries for the Full, microG and F-Droid packages
+  * build packages:
+     * `build-package full` to create the Full package
      * `build-package microg` to create the microG only package
      * `build-package fdroid` to create the F-Droid only package
      * `build-package patcher` to create the on-device framework-patcher package
      * `build-package uninstaller` to create the uninstaller package
      * `build-package setupwizard` to create the Setup Wizard package
      * `build-package all` to create all packages at once
-  * third step:
+  * update required files:
      * `build-package u-microg` to update microG
      * `build-package u-fdroid` to update F-Droid
      * `build-package u-apps` to update (most) applications
@@ -129,7 +130,7 @@ The `build-package` script additionally supports the following parameters:
 
 * `check` check if all files were properly downloaded
 * `clean` remove any untracked files from the repo (e. g. from `build-package pull`)
-* `dalvik [.jar]` prepare a jar file for use with DalvikVM
+* `dalvik [.jar]` prepare a jar file for use with DalvikVM (requires Android SDK)
 * `ver [version] [date]` change project version
 * `bump` increment Magisk module version by 1
 
@@ -138,6 +139,7 @@ The following applications are custom builds (see [F-Droid Repository](#f-droid-
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
 * microG GmsCore (reason: built with additions)
 * microG DroidGuard Helper (reason: built with fix for non 32bit arm devices failing SafetyNet attestation)
+* OmniJAWS (reason: no binary built outside of OmniROM available)
 * MPV (reason: infrequent updates)
 * OpenLauncher (reason: infrequent updates)
 
@@ -189,8 +191,6 @@ More information about Magisk [> XDA](https://forum.xda-developers.com/apps/magi
 NanoDroid includes
 
 * microG and it's companions
-  * on-device framework-patcher for microG support (signature spoofing)
-     * with automatic de-odexing up to Android 8.1
   * GApps are auto-removed during installation
      * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
      * the Uninstaller will restore them in System Mode (or re-flash the ROM)
@@ -213,6 +213,8 @@ NanoDroid includes
 * several Open Source applications
   * include replacements for the pseudo-debloated applications
   * full list of [> included applications](doc/Applications.md)
+* on-device framework-patcher for microG support (signature spoofing)
+  * with automatic de-odexing up to Android 8.1
 * additional components
   * GNU Bash shell
   * GNU Nano terminal editor
@@ -265,8 +267,9 @@ Extra packages, always flash through TWRP.
 
 * **NanoDroid-patcher**: includes
   * on-device framework-patcher for signature spoofing support
-     * requires an deodexed ROM
-         * [> Deodex Instructions](doc/DeodexServices.md)
+     * on Android up to 8.1 the Patcher will automatically deodex your services.jar
+     * on Android 9 you need to manually deodex your services.jar
+         * see [> Deodex Instructions](doc/DeodexServices.md)
   * creates the file `/data/adb/NanoDroid_Patched` after successful patching
   * installs an addon.d script for automatic re-patching after ROM update
      * addon.d support files reside in `/data/adb/nanodroid-patcher/`
@@ -308,21 +311,21 @@ This lists features unique to NanoDroid.
 
 The `nanodroid-overlay` script handles the debloat feature
 
-  * pseudo-debloat applications in Magisk Mode
-  * force-debloat applications in System Mode
-  * show the list of debloated apps
-  * show the lits of non-debloated apps
-  * add or remove apps from the list of debloated apps
+* pseudo-debloat applications in Magisk Mode
+* force-debloat applications in System Mode
+* show the list of debloated apps
+* show the list of non-debloated apps
+* add or remove apps from the list of debloated apps
 
-  * Full details on the NanoDroid-Overlay Script [> Details](doc/NanoDroidOverlay.md)
+Full details on the NanoDroid-Overlay Script [> Details](doc/NanoDroidOverlay.md)
 
 #### NanoDroid-Prop
 
 The `nanodroid-prop` script utilizes Magisk's resetprop to alter system properties
 
-  * add system properties (Magisk-only)
-     * both on-the-fly and permanently
-  * properties set by this script survive NanoDroid updates
+* add system properties (Magisk-only)
+  * both on-the-fly and permanently
+* properties set by this script survive NanoDroid updates
 
 Full details on the NanoDroid-Prop Script [> Details](doc/NanoDroidProp.md)
 
@@ -336,13 +339,13 @@ Full details on the NanoDroid-Perm Script [> Details](doc/NanoDroidPerm.md)
 
 The `nanodroid-util` script contains the following features
 
-  * show boot count
-  * fix OTA update issues (like non-working navbar)
-  * handle `Audio Focus` permission
-     * prevent apps from stealing audio output, for example listen to Music while playing Pokémon Go
-  * handle `Read Clipboard` permission
-  * modify `Airplane Mode` settings
-     * choose which radios are on or off in Airplane mode
+* show boot count
+* fix OTA update issues (like non-working navbar)
+* handle `Audio Focus` permission
+  * prevent apps from stealing audio output, for example listen to Music while playing Pokémon Go
+* handle `Read Clipboard` permission
+* modify `Airplane Mode` settings
+  * choose which radios are on or off in Airplane mode
 
 Full details on the NanoDroid-Util Script [> Details](doc/NanoDroidUtil.md)
 
@@ -383,7 +386,7 @@ or you can use **Kernel Adiutor's** init.d emulation.
 
 Several utilities from `bsdmainutils` and `util-linux` are included:
 
-* [> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils)
+[> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils)
 
 * col
 * colcrt
@@ -392,7 +395,7 @@ Several utilities from `bsdmainutils` and `util-linux` are included:
 * hexdump
 * ncal
 
-* [> util-linux GitHub](https://github.com/karelzak/util-linux)
+[> util-linux GitHub](https://github.com/karelzak/util-linux)
 
 * findfs
 * findmnt
@@ -437,7 +440,7 @@ NanoDroid includes microG as follows
   * disabled by default
 * optional Swipe libraries
   * disabled by default
-* choose between official **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/) or unofficial **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
+* choose between modified **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/) or **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
      * go to **Yalp Store** > Settings > Installation Method > `Using system permissions`
   * Play Store is modified to allow (in-)app-purchases with microG
@@ -445,13 +448,15 @@ NanoDroid includes microG as follows
   * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
   * see [> GAppsRemoval](doc/GAppsRemoval.md) for more details
 
-### F-Droid and Applications
+### F-Droid
 
-F-Droid [> Website](http://www.fdroid.org) is an app store for Open Source applications.
+F-Droid [> Website](http://www.fdroid.org) is an app store for OpenSource applications.
 
 NanoDroid includes both F-Droid and it's Privileged Extension [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged), so you don't need to enable `Unknown Sources`.
 
-Additionally NanoDroid includes a variety of applications, check full details [> GitHub](doc/Applications.md)
+### Applications
+
+NanoDroid includes a variety of OpenSource applications, check full [> list](doc/Applications.md)
 
 ### The Legend of Zelda ringtones and sounds
 
@@ -520,14 +525,14 @@ If your ROM does **not** have signature spoofing support, you can manually patch
   * flashing the on-device Patcher zip
      * it also installs an addon.d script that auto re-patches the ROM upon update
 
-If you ROM is **odexed** read [this instructions](doc/DeodexServices.md) on how to deodex services.jar manually
+If your ROM is **odexed** read [this instructions](doc/DeodexServices.md) on how to deodex services.jar manually
 
-Both patchers support installing the patched `services.jar` into the following locations:
+The Patcher supports installing the patched `services.jar` into the following locations:
   * NanoDroid Magisk Module
   * NanoDroid-microG Magisk Module
   * directly into `/system`
 
-So you can use them regardless whether you're using NanoDroid or not.
+So you can use it regardless whether you're using NanoDroid or not.
 
 ##### microG Setup
 
