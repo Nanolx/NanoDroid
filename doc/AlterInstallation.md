@@ -66,6 +66,9 @@ whether to provide **microG**
 * 0 = don't install microG at all
 * 1 = install microG GmsCore, GsfProxy and DroidGuard Helper and Nominatim Geocoder Backend
 * 2 = install microG GmsCore and Nominatim Geocoder Backend only
+  * note: OpenSource purists setting; this will leave you
+      * without Push Messaging support through GCM
+      * without the ability to pass SafetyNet attestation
 
 `nanodroid_fdroid=[0|1]`
 
