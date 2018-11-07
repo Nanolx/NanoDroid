@@ -22,6 +22,12 @@
   * don't forcefully create configuration when none exists
      * the user should do it manually using `nanodroid-overlay -g` if desired
 
+### Updates
+
+* automatic
+  * KeePass DX (2.5.0.0beta18)
+  * Amaze (3.3.0RC12)
+
 ## 19.1.1.20181103 "Bonaventure Refit"
 
 ### Bug Fixes
