@@ -7,7 +7,8 @@
 REPO_FDROID="https://f-droid.org/repo"
 REPO_GUARDIAN="https://guardianproject.info/fdroid/repo"
 REPO_MICROG="https://microg.org/fdroid/repo"
-REPO_NANOLX="https://www.nanolx.org/fdroid/repo"
+REPO_NANOLX="https://nanolx.org/fdroid/repo"
+REPO_BROMITE="https://fdroid-bromite.a3c1.starter-us-west-1.openshiftapps.com/fdroid/repo"
 
 # check dependencies
 for dep in xmllint gawk wget curl sha256sum; do
@@ -34,6 +35,10 @@ update_indices () {
 	echo " ++ Nanolx"
 	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_NANOLX}).index.xml"
 	wget -q -O "${INDEX_FILE}" "${REPO_NANOLX}/index.xml" || error " failed to update Nanolx repo index"
+
+	echo " ++ Bromite"
+	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_BROMITE}).index.xml"
+	wget -q -O "${INDEX_FILE}" "${REPO_BROMITE}/index.xml" || error " failed to update Bromite repo index"
 }
 
 grab_apk_from_repo () {
@@ -57,14 +62,25 @@ grab_apk_from_repo () {
 			REPO=${REPO_NANOLX}
 			REPO_P="Nanolx"
 		;;
+
+		bromite )
+			REPO=${REPO_BROMITE}
+			REPO_P="Bromite"
+		;;
 	esac
 
 	DOMAIN="$(awk -F/ '{print $3}' <<< ${REPO})"
 	INDEX_FILE="${CWD}/data/${DOMAIN}.index.xml"
 
 	PKG_NAME="${2}"
-	APK_NAME="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/apkname/text()" ${INDEX_FILE})"
-	SHA_SUM="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/hash/text()" ${INDEX_FILE})"
+
+	if [ -z "${5}" ]; then
+		APK_NAME="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/apkname/text()" ${INDEX_FILE})"
+		SHA_SUM="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/hash/text()" ${INDEX_FILE})"
+	else
+		APK_NAME="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[nativecode=\"${5}\"][1]/apkname/text()" ${INDEX_FILE})"
+		SHA_SUM="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[nativecode=\"${5}\"][1]/hash/text()" ${INDEX_FILE})"
+	fi
 
 	APK_URL="${REPO}/${APK_NAME}"
 	APK_DEST="${CWD}/Full/system/${3}/${4}"

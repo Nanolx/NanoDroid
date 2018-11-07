@@ -88,6 +88,14 @@ am_XDALABS=(xda xda-labs app XDALabs xda-labs)
 gh_AMAZE=(TeamAmaze/AmazeFileManager app Amaze)
 
 ###
+# Bromite WebView
+###
+
+bm_WEBVIEW_arm64=(bromite com.android.webview app BromiteWebView_arm64 arm64-v8a)
+bm_WEBVIEW_arm=(bromite com.android.webview app BromiteWebView_arm armeabi-v7a)
+bm_WEBVIEW_x86=(bromite com.android.webview app BromiteWebView_x86 x86)
+
+###
 # Files Database (for consistency check)
 ###
 

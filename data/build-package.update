@@ -89,3 +89,9 @@ update_apps () {
 	grab_apk_from_apkmirror ${am_YAHOOWEATHER[@]}
 	grab_apk_from_apkmirror ${am_XDALABS[@]}
 }
+
+update_bromite () {
+	grab_apk_from_repo ${bm_WEBVIEW_arm64[@]}
+	grab_apk_from_repo ${bm_WEBVIEW_arm[@]}
+	grab_apk_from_repo ${bm_WEBVIEW_x86[@]}
+}
