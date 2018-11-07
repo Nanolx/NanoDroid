@@ -10,9 +10,9 @@ If your `/system/framework/services.jar` file contains the file `classes.dex`, y
 
 ## Android 9.0 Pie
 
-Android 9.0 is currently not supported by smali/baksmali (more precisly O/DEX format 039 and OAT format changes are not yet implemented).
+Android 9.0 is currently not supported by smali/baksmali (more precisely O/DEX format 039 and OAT format changes are not yet implemented).
 
-VdexExtractor will create CompatDex for Android 9.0 (more precisely VDEX 019 files) instead of DEX. Theese CDEX files can only be manually converted to DEX on a GNU/Linux or MacOS PC, see [vdexExtractor: Strategy to convert CompactDex back to StandardDex](https://github.com/anestisb/vdexExtractor/issues/23)
+VdexExtractor will create CompatDex for Android 9.0 (more precisely VDEX 019 files) instead of DEX. Theese CDEX files can only be manually converted to DEX on a GNU/Linux or MacOS PC, see [this instructions](https://github.com/anestisb/vdexExtractor#compact-dex-converter).
 
 ## VDEX
 
