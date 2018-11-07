@@ -83,7 +83,12 @@ grab_apk_from_repo () {
 	fi
 
 	APK_URL="${REPO}/${APK_NAME}"
-	APK_DEST="${CWD}/Full/system/${3}/${4}"
+
+	if [ "${1}" = "bromite" ]; then
+		APK_DEST="${CWD}/Bromite/system/${3}/${4}"
+	else
+		APK_DEST="${CWD}/Full/system/${3}/${4}"
+	fi
 
 	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
 		TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
