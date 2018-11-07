@@ -194,10 +194,7 @@ overrides_genconfig () {
 config_locations="/sdcard /external_sd @ZIPDIR@ /data /dev/tmp/install"
 get_config .nanodroid-overlay
 
-if [[ -f ${config} ]]; then
-	export config
-else	overrides_genconfig
-fi
+[[ -f ${config} ]] && export config
 
 opt=${1}
 [[ -z ${opt} ]] && show_help || shift
@@ -215,7 +212,6 @@ case ${opt} in
 		overrides_clear
 		overrides_add "$(cat "${config}")"
 	;;
-
 
 	* ) show_help ;;
 esac

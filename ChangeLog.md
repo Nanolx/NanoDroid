@@ -18,6 +18,10 @@
   * update for `nanodroid_microg` change
   * move selection of uNlp backend before selection of Play Store
 
+* NanoDroid-Overlay
+  * don't forcefully create configuration when none exists
+     * the user should do it manually using `nanodroid-overlay -g` if desired
+
 ## 19.1.1.20181103 "Bonaventure Refit"
 
 ### Bug Fixes
