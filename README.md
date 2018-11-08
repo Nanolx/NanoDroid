@@ -115,6 +115,7 @@ You can create snapshots from this repository.
      * `build-package patcher` to create the on-device framework-patcher package
      * `build-package uninstaller` to create the uninstaller package
      * `build-package setupwizard` to create the Setup Wizard package
+     * `build-package bromitewebview` to create the Bromite WebView package
      * `build-package all` to create all packages at once
   * update required files:
      * `build-package u-microg` to update microG
@@ -122,6 +123,7 @@ You can create snapshots from this repository.
      * `build-package u-apps` to update (most) applications
      * `build-package u-swipe` to update swipe libraries
      * `build-package u-gsync` to update Google Sync Adapters
+     * `build-package u-bromite` to update Bromite WebView
      * `build-package pull` to update/re-download everything
 
 for apks downloaded from F-Droid repositories or from APK Mirror, `build-package` checks the SHA256 hash.
@@ -241,6 +243,8 @@ Module packages, flashing through TWRP recommended, though flashing through Magi
   * GApps and location packages auto-removal
 * **NanoDroid-fdroid**: includes (only)
   * F-Droid and it's privileged extension
+* **NanoDroid-BromiteWebView**: includes (only)
+  * [Bromite WebView](https://www.bromite.org/system_web_view)
 
 #### Installation Logfiles
 
