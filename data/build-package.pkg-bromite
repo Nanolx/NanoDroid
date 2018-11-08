@@ -8,6 +8,8 @@ create_bromite_webview_package () {
 
 	cd "${CWD}/BromiteWebView"
 	zip_add
+	cd "${CWD}/Full"
+	zip_add "system/xbin/unzip*"
 	cd "${CWD}"
 
 	zip_add CommonInstaller
