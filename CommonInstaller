@@ -1087,7 +1087,7 @@ nanodroid_install_apk () {
 
 	installinfo_add "/${dest}/${app}.apk"
 
-	nanodroid_install_lib
+	nanodroid_install_lib "${2}"
 }
 
 nanodroid_install_file () {
@@ -1126,6 +1126,7 @@ nanodroid_install_file () {
 
 nanodroid_install_lib () {
 	apk="${MODPATH}/${dest}/${app}.apk"
+	multilib="${1}"
 
 	if [ "${UNFOLD_APP_DIR}" -eq 1 ]; then
 		case ${ARCH} in
@@ -1156,36 +1157,36 @@ nanodroid_install_lib () {
 		for ARCHLIB in ${LIB_ARCHES}; do
 			if [ -d ${TMP_LIBDIR}/lib/${ARCHLIB} ]; then
 				srcdir=${TMP_LIBDIR}/lib/${ARCHLIB}
-				break
+				[ -z "${multilib}" ] && break
+			fi
+
+			if [ -d "${srcdir}" ]; then
+				case ${srcdir} in
+					*arm64*  ) echo "      ${app}: installing arm64 libs"
+						   lib_arch=arm64 ;;
+					*arm*	 ) echo "      ${app}: installing arm libs"
+						   lib_arch=arm ;;
+					*x86_64* ) echo "      ${app}: installing x86_64 libs"
+						   lib_arch=x86_64 ;;
+					*x86*	 ) echo "      ${app}: installing x86 libs"
+						   lib_arch=x86 ;;
+				esac
+
+				echo "        from: ${srcdir}"
+				echo "        into: ${libd}/${lib_arch}"
+				mkdir -p ${libd}/${lib_arch}
+
+				for lib in ${srcdir}/*; do
+					echo "        library: $(basename ${lib})"
+					cp ${lib} ${libd}/${lib_arch}/ || \
+						error "installing libraries failed"
+
+					set_perm_data ${libd}/${lib_arch}/$(basename ${lib})
+
+					installinfo_add /${dir}/${app}/lib/${lib_arch}/$(basename ${lib})
+				done
 			fi
 		done
-
-		if [ -d "${srcdir}" ]; then
-			case ${srcdir} in
-				*arm64*  ) echo "      ${app}: installing arm64 libs"
-					   lib_arch=arm64 ;;
-				*arm*	 ) echo "      ${app}: installing arm libs"
-					   lib_arch=arm ;;
-				*x86_64* ) echo "      ${app}: installing x86_64 libs"
-					   lib_arch=x86_64 ;;
-				*x86*	 ) echo "      ${app}: installing x86 libs"
-					   lib_arch=x86 ;;
-			esac
-
-			echo "        from: ${srcdir}"
-			echo "        into: ${libd}/${lib_arch}"
-			mkdir -p ${libd}/${lib_arch}
-
-			for lib in ${srcdir}/*; do
-				echo "        library: $(basename ${lib})"
-				cp ${lib} ${libd}/${lib_arch}/ || \
-					error "installing libraries failed"
-
-				set_perm_data ${libd}/${lib_arch}/$(basename ${lib})
-
-				installinfo_add /${dir}/${app}/lib/${lib_arch}/$(basename ${lib})
-			done
-		fi
 	fi
 }
 
