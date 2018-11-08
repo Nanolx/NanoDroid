@@ -14,6 +14,14 @@
      * 1 = install microG GmsCore, GsfProxy and DroidGuard Helper and Nominatim Geocoder Backend (like before)
      * 2 = install microG GmsCore and Nominatim Geocoder Backend (new)
 
+* Bromite WebView package
+  * new module which replaces Android System WebView with [Bromite WebView](https://www.bromite.org/system_web_view)
+
+* Full, F-Droid packages
+  * add Bromite F-Droid repository to default repositories
+     * only applied on fresh installations
+     * see [Bromite F-Droid Repo](https://www.bromite.org/fdroid)
+
 * SetupWizard
   * update for `nanodroid_microg` change
   * move selection of uNlp backend before selection of Play Store
