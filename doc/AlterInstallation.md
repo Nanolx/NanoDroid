@@ -47,7 +47,7 @@ nanodroid_forcesystem=0
 nanodroid_nlpbackend=1
 ```
 
-the **F-Droid** package supports the following options
+the **F-Droid** and **Bromite WebView** pckage supports the following options
 
 ```
 nanodroid_forcesystem=0
