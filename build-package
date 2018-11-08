@@ -5,7 +5,8 @@ CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
 for funcfile in  pkg-full pkg-microg pkg-fdroid \
-	pkg-misc update common download database; do
+	pkg-misc update common download database \
+	pkg-bromite; do
 	source "${CWD}/data/build-package.${funcfile}" || exit 1
 done
 
@@ -51,7 +52,7 @@ for opt in ${@}; do
 		;;
 
 		bromitewebview )
-			mkg_pkg_bromite_webview
+			mk_pkg_bromite_webview
 		;;
 
 		all )
