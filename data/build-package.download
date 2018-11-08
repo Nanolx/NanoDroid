@@ -85,7 +85,7 @@ grab_apk_from_repo () {
 	APK_URL="${REPO}/${APK_NAME}"
 
 	if [ "${1}" = "bromite" ]; then
-		APK_DEST="${CWD}/Bromite/system/${3}/${4}"
+		APK_DEST="${CWD}/BromiteWebView/system/${3}/${4}"
 	else
 		APK_DEST="${CWD}/Full/system/${3}/${4}"
 	fi

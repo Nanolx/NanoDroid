@@ -5,7 +5,7 @@ OUTFD=${2}
 ZIP=${3}
 
 ZIPDIR=$(dirname "${ZIP}")
-MODID=NanoDroid_Bromite
+MODID=NanoDroid_BromiteWebView
 
 mkdir -p /dev/tmp
 unzip -o "${ZIP}" CommonInstaller -d "/dev/tmp"

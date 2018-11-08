@@ -957,6 +957,28 @@ install_initd () {
 	fi
 }
 
+install_bromite_webview () {
+	if [ "${MODID}" = "NanoDroid_BromiteWebView" ]; then
+		case ${ARCH} in
+			arm | arm64 | x86 ) BROMITE_ARCH=${ARCH} ;;
+			x86_64 ) BROMITE_ARCH=x86 ;;
+		esac
+
+		if [ -d /system/app/webview ]; then
+			if [ "${MODE}" = "MAGISK" ]; then
+				mkdir -p "${MODPATH}/system/app/webview"
+				touch "${MODPATH}/system/app/webview/.replace"
+			else
+				mkdir -p /sdcard/nanodroid_backups/app
+				rm -rf /sdcard/nanodroid_backups/app/webview
+				mv /system/app/webview /sdcard/nanodroid_backups/app/
+			fi
+		fi
+
+		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH}
+	fi
+}
+
 install_swipe () {
 	if [ "${nanodroid_swipe}" ]; then
 		if [ "${SWIPE_UNSUPPORTED}" -eq 1 ]; then
