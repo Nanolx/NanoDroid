@@ -590,6 +590,8 @@ Special Thanks to the beta testers
 
 List of known issues
 
+### General
+
 * Applications/SafetyNet check complain with `Google Play Services are missing`
   * you did not
       * [setup microG](#microg-setup) (or did not reboot afterwards)
@@ -613,6 +615,15 @@ List of known issues
      * uninstall and re-install all your applications (backup application data if required)
 * microG lacks features
   * if you use AppOps, PrivacyGuard or the like you have to grant microG GmsCore **all** permissions, if you prevent some permissions, some apps or features might not work as expected or not at all. Note: some APIs/features are stubs in microG GmsCore, meaning they exist that apps don't complain, but they do nothing - thus blocking microG GmsCore is pretty much of no benefit.
+
+### System Mode installation only
+
+* Applications crash during SafetyNet check
+  * install microG DroidGuard Helper as user-app (required on some ROMs), as root, on-device, issue:
+      * `pm install -r /system/priv-app/DroidGuard/DroidGuard.apk`
+* Applications crash when using WebView
+  * install Bromite WebView as user-app, as root, on-device, issue:
+      * `pm install -r /system/app/webview/webview.apk`
 
 Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
 
