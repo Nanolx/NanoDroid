@@ -7,6 +7,7 @@
 * CommonInstaller, CommonAddon
   * drop YouTube from list of applications to get rid as part of GApps removal
   * improve and unify GSync installation code
+  * several internal changes and improvements
 
 * Full, microG packages
   * `nanodroid_microg` setting is now a triplette
@@ -14,8 +15,16 @@
      * 1 = install microG GmsCore, GsfProxy and DroidGuard Helper and Nominatim Geocoder Backend (like before)
      * 2 = install microG GmsCore and Nominatim Geocoder Backend (new)
 
+* Full, microG, F-Droid, Bromite WebView packages
+  * if custom Magisk migration was done, ensure Magisk Manager is installed, aswell
+     * if you clean flash Magisk and NanoDroid in one go, without booting into ROM in-between, this code is triggered
+
 * Bromite WebView package
   * new module which replaces Android System WebView with [Bromite WebView](https://www.bromite.org/system_web_view)
+  * Bromite WebView needs to be installed both as system app and user app, else several apps won't work
+     * the module handles system app installation in all cases
+     * in Magisk Mode it is auto-installed as user-app 30 seconds after Magisk initialized after boot
+     * in System Mode run `pm install -r /system/app/webview/webview.apk` as root to do so manually
 
 * Full, F-Droid packages
   * add Bromite F-Droid repository to default repositories
