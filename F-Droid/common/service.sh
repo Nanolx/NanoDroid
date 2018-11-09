@@ -3,10 +3,6 @@
 # This will make your scripts compatible even if Magisk change its mount point in the future
 MODDIR=${0%/*}
 
-# in Magisk Mode microG DroidGuard Helper needs to be installed as user app
-sleep 30 && pm list packages -f | grep -q /data.*org.microg.gms.droidguard || \
-	pm install -r "${MODDIR}/system/priv-app/DroidGuard/DroidGuard.apk" &
-
 # install Magisk Manager if NanoDroid migration was run
 sleep 30 && [ -f /data/adb/magisk.apk ] && \
 	pm install -r /data/adb/magisk.apk ; \
