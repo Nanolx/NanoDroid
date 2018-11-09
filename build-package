@@ -52,6 +52,7 @@ for opt in ${@}; do
 		;;
 
 		bromitewebview )
+			check_nanodroid || error "run nanodroid-pull first!"
 			mk_pkg_bromite_webview
 		;;
 
