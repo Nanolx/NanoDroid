@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 19.2 in-dev
+## 20.0 in-dev
 
 ### General Changes
 
@@ -44,6 +44,7 @@
 * automatic
   * KeePass DX (2.5.0.0beta18)
   * Amaze (3.3.0RC12)
+  * Substratum (1010)
 
 ## 19.1.1.20181103 "Bonaventure Refit"
 
