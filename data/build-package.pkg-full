@@ -2,7 +2,7 @@
 
 create_full_package () {
 	ZIP="${CWD}/NanoDroid-${VERSION}".zip
-	rm -f "${ZIP}"
+	rm -f "${ZIP}*"
 
 	print_package "Full"
 
