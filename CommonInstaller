@@ -55,7 +55,8 @@ com.android.vending"
 ##########################################################################################
 
 detect_bootmode () {
-	ps | grep zygote | grep -qv grep && BOOTMODE=true || BOOTMODE=false
+	[ -z ${BOOTMODE} ] && BOOTMODE=false
+	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
 	${BOOTMODE} || ps -A | grep zygote | grep -qv grep && BOOTMODE=true
 }
 
@@ -99,9 +100,10 @@ is_mounted() {
 	return $?
 }
 
-set_perm() {
+set_perm () {
 	chown ${2}:${3} ${1} || error "failed change owner for ${1}"
 	chmod ${4} ${1} || error "failed to change mode for ${1}"
+
 	if [ ! -z "${5}" ]; then
 		chcon ${5} ${1} 2>/dev/null
 	else	chcon 'u:object_r:system_file:s0' ${1} 2>/dev/null
@@ -166,7 +168,7 @@ show_banner () {
 	ui_print "      created by Nanolx      "
 	case ${MODID} in
 		NanoDroid )
-			ui_print "       Full package          "
+			ui_print "        Full package         "
 		;;
 		NanoDroid_microG )
 			ui_print "       microG package        "
@@ -175,7 +177,7 @@ show_banner () {
 			ui_print "       F-Droid package       "
 		;;
 		NanoDroid_BromiteWebView )
-			ui_print "       Bromite WebView package"
+			ui_print "   Bromite WebView package   "
 		;;
 	esac
 	ui_print "*****************************"
@@ -249,7 +251,8 @@ migrate_magisk_custom () {
 		chmod 0644 /data/adb
 	fi
 
-	cp -r ${1} /data/adb/magisk
+	mv ${1} /data/adb/magisk
+	cp /data/adb/magisk/magisk.apk /data/adb/magisk.apk
 }
 
 detect_mode () {
@@ -309,6 +312,8 @@ detect_mode () {
 				magisk_install_preinst
 			;;
 		esac
+
+		${BOOTMODE} || rm -rf "${MODPATH}"
 	else	unset MODPATH
 	fi
 
@@ -543,6 +548,8 @@ magisk_install_setup () {
 	${BOOTMODE} && RESTORE_PATH=${REALPATH} || RESTORE_PATH=${MODPATH}
 
 	request_size_check "${INSTALLER}"
+	reqSizeM=$((reqSizeM + 100))
+
 	mount_magisk_img
 
 	case ${MODID} in
@@ -586,12 +593,6 @@ magisk_install_preinst () {
 		ui_print " << backing up patched services.jar"
 		cp ${RESTORE_PATH}/system/framework/services.jar ${TMPDIR}/services.jar
 	fi
-
-	${BOOTMODE} || rm -rf "${MODPATH}"
-
-	for dir in app etc priv-app bin; do
-		mkdir -p "${MODPATH}/system/${dir}"
-	done
 }
 
 magisk_install_postinst () {
@@ -711,13 +712,6 @@ install_microg () {
 			for app in GsfProxy DroidGuard; do
 				nanodroid_install_apk ${app}
 			done
-
-			if [ -z "$(find /data/app -type d -name 'org.microg.gms.droidguard*')" ]; then
-				cp -r "${INSTALLER}/system/priv-app/DroidGuard/" \
-					/data/app/org.microg.gms.droidguard-1
-
-				set_perm_recursive /data/app/org.microg.gms.droidguard-1 1000 1000 0755 0644
-			fi
 		fi
 
 		nanodroid_install_file etc/permissions/features.xml
@@ -973,18 +967,14 @@ install_bromite_webview () {
 			x86_64 ) BROMITE_ARCH=x86 ;;
 		esac
 
-		if [ -d /system/app/webview ]; then
-			if [ "${MODE}" = "MAGISK" ]; then
-				mkdir -p "${MODPATH}/system/app/webview"
-				touch "${MODPATH}/system/app/webview/.replace"
-			else
-				mkdir -p /sdcard/nanodroid_backups/app
-				rm -rf /sdcard/nanodroid_backups/app/webview
-				mv /system/app/webview /sdcard/nanodroid_backups/app/
-			fi
+		if [ -d /system/app/webview -a "${MODE}" = "SYSTEM" ]; then
+			echo "    backing up webview to /sdcard/nanodroid_backups/app/webview"
+			mkdir -p /sdcard/nanodroid_backups/app
+			rm -rf /sdcard/nanodroid_backups/app/webview
+			mv /system/app/webview /sdcard/nanodroid_backups/app/
 		fi
 
-		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib
+		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib webview
 	fi
 }
 
@@ -1058,6 +1048,9 @@ nanodroid_install_dir () {
 
 nanodroid_install_apk () {
 	app=${1}
+	multilib=${2}
+	alias=${3}
+
 	unset prefix
 	unset source
 
@@ -1072,22 +1065,31 @@ nanodroid_install_apk () {
 	[ -z "${source}" ] && error "app ${app} not found"
 
 	if [ "${UNFOLD_APP_DIR}" -eq 1 ]; then
-		dest="${dir}"
-		mkdir -p "${MODPATH}/${dir}"
+		dest="${MODPATH}/${dir}"
 	else
-		dest="${dir}/${app}"
-		mkdir -p "${MODPATH}/${dir}/${app}"
+		if [ -z "${alias}" ]; then
+			dest="${MODPATH}/${dir}/${app}"
+		else	dest="${MODPATH}/${dir}/${alias}"
+		fi
 	fi
 
+	if [ ! -z "${alias}" ]; then
+		dest_apk=${alias}.apk
+	else
+		dest_apk=${app}.apk
+	fi
+
+	mkdir -p "${dest}"
+
 	echo "    installing app: ${app}"
-	cp "${source}" "${MODPATH}/${dest}" || \
+	cp "${source}" "${dest}/${dest_apk}" || \
 		error "failed to install ${source} to ${dest}"
 
-	set_perm_data -r "${MODPATH}/${dest}"
+	installinfo_add "${dest}/${dest_apk}"
 
-	installinfo_add "/${dest}/${app}.apk"
+	nanodroid_install_lib "${dest}/${dest_apk}" "${2}"
 
-	nanodroid_install_lib "${2}"
+	set_perm_data -r "${dest}"
 }
 
 nanodroid_install_file () {
@@ -1125,8 +1127,11 @@ nanodroid_install_file () {
 }
 
 nanodroid_install_lib () {
-	apk="${MODPATH}/${dest}/${app}.apk"
-	multilib="${1}"
+	apk="${1}"
+	dest="$(dirname ${1})"
+	multilib="${2}"
+
+	unset libd
 
 	if [ "${UNFOLD_APP_DIR}" -eq 1 ]; then
 		case ${ARCH} in
@@ -1134,7 +1139,7 @@ nanodroid_install_lib () {
 			arm64 | x86_64 ) libd=${MODPATH}/system/lib64 ;;
 		esac
 	else
-		libd=${MODPATH}/${dir}/${app}/lib
+		libd=${dest}/lib
 	fi
 
 	rm -rf ${TMP_LIBDIR}
@@ -1143,7 +1148,7 @@ nanodroid_install_lib () {
 	unset srcdir
 
 	"${INSTALLER}/system/xbin/unzip.${BIN_ARCH}" \
-		-oq ${apk} "lib/*" -d "${TMP_LIBDIR}" \
+		-oq "${apk}" "lib/*" -d "${TMP_LIBDIR}" \
 		2>/dev/null
 	unzip_return=$?
 
@@ -1174,16 +1179,14 @@ nanodroid_install_lib () {
 
 				echo "        from: ${srcdir}"
 				echo "        into: ${libd}/${lib_arch}"
-				mkdir -p ${libd}/${lib_arch}
+				mkdir -p "${libd}/${lib_arch}"
 
 				for lib in ${srcdir}/*; do
 					echo "        library: $(basename ${lib})"
-					cp ${lib} ${libd}/${lib_arch}/ || \
+					cp ${lib} "${libd}/${lib_arch}/" || \
 						error "installing libraries failed"
 
-					set_perm_data ${libd}/${lib_arch}/$(basename ${lib})
-
-					installinfo_add /${dir}/${app}/lib/${lib_arch}/$(basename ${lib})
+					installinfo_add "/${dir}/${app}/lib/${lib_arch}/$(basename ${lib})"
 				done
 			fi
 		done
