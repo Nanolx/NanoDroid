@@ -2,7 +2,7 @@
 
 create_fdroid_package() {
 	ZIP="${CWD}/NanoDroid-fdroid-${VERSION}".zip
-	rm -f "${ZIP}*"
+	rm -f "${ZIP}"*
 
 	print_package "F-Droid"
 

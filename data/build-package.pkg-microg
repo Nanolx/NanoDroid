@@ -2,7 +2,7 @@
 
 create_microg_package() {
 	ZIP="${CWD}/NanoDroid-microG-${VERSION}".zip
-	rm -f "${ZIP}*"
+	rm -f "${ZIP}"*
 
 	print_package "microG"
 

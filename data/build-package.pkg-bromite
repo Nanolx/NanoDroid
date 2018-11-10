@@ -2,7 +2,7 @@
 
 create_bromite_webview_package () {
 	ZIP="${CWD}/NanoDroid-BromiteWebView-${VERSION}".zip
-	rm -f "${ZIP}*"
+	rm -f "${ZIP}"*
 
 	print_package "BromiteWebView"
 

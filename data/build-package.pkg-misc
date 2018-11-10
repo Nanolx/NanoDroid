@@ -2,7 +2,7 @@
 
 create_patcher_package() {
 	ZIP="${CWD}/NanoDroid-patcher-${VERSION}".zip
-	rm -f "${ZIP}*"
+	rm -f "${ZIP}"*
 
 	print_package "Framework Patcher"
 
