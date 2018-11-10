@@ -27,7 +27,7 @@ unpack_zip
 mount_partitions
 
 detect_arch
-${BOOTMODE} || setup_busybox
+setup_busybox
 
 get_cfg_setup
 

@@ -58,6 +58,8 @@ detect_bootmode () {
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
 	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
 	${BOOTMODE} || ps -A | grep zygote | grep -qv grep && BOOTMODE=true
+
+	${BOOTMODE} && error "${MODID} can't be installed from Magisk Manager!"
 }
 
 ui_print() {
@@ -70,11 +72,11 @@ ui_print() {
 }
 
 show_progress() {
-	${BOOTMODE} || echo "progress ${1} ${2}" >> /proc/self/fd/${OUTFD}
+	echo "progress ${1} ${2}" >> /proc/self/fd/${OUTFD}
 }
 
 set_progress() {
-	${BOOTMODE} || echo "set_progress ${1}" >> /proc/self/fd/${OUTFD}
+	echo "set_progress ${1}" >> /proc/self/fd/${OUTFD}
 }
 
 grep_prop() {
@@ -194,7 +196,7 @@ error () {
 		unmount_magisk_img
 	fi
 
-	${BOOTMODE} || recovery_cleanup
+	recovery_cleanup
 	nanodroid_storelogs
 
 	exit 1
@@ -210,7 +212,7 @@ mount_partitions () {
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
-	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
+	mount -o bind /dev/urandom /dev/random
 
 	! is_mounted /system && mount -o rw /system
 
@@ -262,8 +264,6 @@ detect_mode () {
 		1 )
 			MODE_DETECT=forced
 			MODE=SYSTEM
-
-			${BOOTMODE} && error "Forced System Mode installation requested, but device in BOOTMODE"
 		;;
 
 		0 | *)
@@ -277,10 +277,8 @@ detect_mode () {
 			elif [ -f /data/magisk/magisk ]; then
 				migrate_magisk_custom /data/magisk/
 				MODE=MAGISK
-			elif ! ${BOOTMODE}; then
-				MODE=SYSTEM
 			else
-				error "Magisk 15.0+ not found and device in BOOTMODE"
+				MODE=SYSTEM
 			fi
 		;;
 	esac
@@ -300,8 +298,8 @@ detect_mode () {
 	[ "${MODE}" = "MAGISK" ] && magisk_install_setup
 
 	if [ "${nanodroid_fonts}" -eq 1 ]; then
-		if test -h ${RESTORE_PATH}/system/fonts/Roboto-Regular.ttf; then
-			CUSTOM_FONT="$(basename $(readlink ${RESTORE_PATH}/system/fonts/Roboto-Regular.ttf) .ttf)"
+		if test -h ${MODPATH}/system/fonts/Roboto-Regular.ttf; then
+			CUSTOM_FONT="$(basename $(readlink ${MODPATH}/system/fonts/Roboto-Regular.ttf) .ttf)"
 			ui_print " << Detected NanoDroid-Font (${CUSTOM_FONT})"
 		fi
 	fi
@@ -313,7 +311,7 @@ detect_mode () {
 			;;
 		esac
 
-		${BOOTMODE} || rm -rf "${MODPATH}"
+		rm -rf "${MODPATH}"
 	else	unset MODPATH
 	fi
 
@@ -367,12 +365,10 @@ nanodroid_finalize () {
 	sync
 	nanodroid_storelogs
 
-	if ! ${BOOTMODE} ; then
-		umount -l /system_root 2>/dev/null
-		umount -l /system 2>/dev/null
-		umount -l /vendor 2>/dev/null
-		umount -l /dev/random 2>/dev/null
-	fi
+	umount -l /system_root 2>/dev/null
+	umount -l /system 2>/dev/null
+	umount -l /vendor 2>/dev/null
+	umount -l /dev/random 2>/dev/null
 }
 
 ##########################################################################################
@@ -538,14 +534,13 @@ magisk_install_setup () {
 	[ ! -z ${MAGISK_VER_CODE} -a ${MAGISK_VER_CODE} -ge ${MIN_VER} ] || \
 		error "Magisk 15.0 or newer is required"
 
-	${BOOTMODE} && IMG=/data/adb/magisk_merge.img || IMG=/data/adb/magisk.img
+	IMG=/data/adb/magisk.img
 
 	MODPATH=${MOUNTPATH}/${MODID}
 	MAGISKPATH=/sbin/.core/img
 	REALPATH=${MAGISKPATH}/${MODID}
 
-	${BOOTMODE} && boot_actions || recovery_actions
-	${BOOTMODE} && RESTORE_PATH=${REALPATH} || RESTORE_PATH=${MODPATH}
+	recovery_actions
 
 	request_size_check "${INSTALLER}"
 	reqSizeM=$((reqSizeM + 100))
@@ -584,14 +579,14 @@ magisk_install_setup () {
 }
 
 magisk_install_preinst () {
-	if [ -f ${RESTORE_PATH}/system.prop ]; then
+	if [ -f ${MODPATH}/system.prop ]; then
 		ui_print " << backing up module's system.prop"
-		cp ${RESTORE_PATH}/system.prop ${TMPDIR}/system.prop
+		cp ${MODPATH}/system.prop ${TMPDIR}/system.prop
 	fi
 
-	if [ -f ${RESTORE_PATH}/system/framework/services.jar ]; then
+	if [ -f ${MODPATH}/system/framework/services.jar ]; then
 		ui_print " << backing up patched services.jar"
-		cp ${RESTORE_PATH}/system/framework/services.jar ${TMPDIR}/services.jar
+		cp ${MODPATH}/system/framework/services.jar ${TMPDIR}/services.jar
 	fi
 }
 
@@ -618,12 +613,6 @@ magisk_install_finish () {
 		chmod +x ${MODPATH}/service.sh
 	fi
 
-	if ${BOOTMODE}; then
-		# Update info for Magisk Manager
-		mktouch /sbin/.core/img/${MODID}/update
-		cp -af ${INSTALLER}/module.prop /sbin/.core/img/${MODID}/module.prop
-	fi
-
 	case ${MODID} in
 		NanoDroid | NanoDroid_microG )
 			magisk_install_postinst
@@ -636,7 +625,7 @@ magisk_install_finish () {
 	fi
 
 	unmount_magisk_img
-	${BOOTMODE} || recovery_cleanup
+	recovery_cleanup
 }
 
 ##########################################################################################
@@ -787,7 +776,7 @@ install_apps () {
 					echo "   + removing conflicting OmniClockOSS"
 					${NANODROID_BINDIR}/nanodroid-overlay --add OmniClockOSS
 				fi
-			elif [[ -d /system/app/${app} && ! -d ${RESTORE_PATH}/system/app/${app} ]]; then
+			elif [[ -d /system/app/${app} && ! -d ${MODPATH}/system/app/${app} ]]; then
 				if [ "${nanodroid_override}" -eq 0 ]; then
 					ui_print " <<> app: ${app} already provided by ROM"
 				else	nanodroid_install_apk ${app}
@@ -1246,7 +1235,6 @@ MODE=${MODE}
 MAGISK_VER_CODE=${MAGISK_VER_CODE}
 CUSTOM_FONT=${CUSTOM_FONT}
 ROM_NO_XBIN=${ROM_NO_XBIN}
-RESTORE_PATH=${RESTORE_PATH}
 NANODROID_UPGRADE=${NANODROID_UPGRADE}
 NANODROID_BINDIR=${NANODROID_BINDIR}
 
@@ -1275,7 +1263,7 @@ cat "${cfg_overlay}" >> ${nanodroid_logfile}
 
 fi
 
-${BOOTMODE} || cat /tmp/recovery.log > ${nanodroid_twrplog}
+cat /tmp/recovery.log > ${nanodroid_twrplog}
 
 }
 

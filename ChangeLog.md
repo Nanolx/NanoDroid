@@ -2,6 +2,29 @@
 
 ## 20.0 in-dev
 
+### Important Notes
+
+```
+NanoDroid can no longer be flashed through Magisk Manager!
+
+While flashing through Magisk Manager worked for most users
+in most cases, it did not always, if it failed it caused
+major headache, thus the change.
+
+The following packages now require flashing through TWRP:
+- NanoDroid (Full)
+- NanoDroid-microG
+- NanoDroid-FDroid
+- NanoDroid-BromiteWebView
+
+The following packages always required flashing through TRWP:
+- NanoDroid-Uninstaller
+- NanoDroid-SetupWizard
+
+The followin package can still be flashed trough Magisk Manager:
+- NanoDroid-Patcher
+```
+
 ### General Changes
 
 * CommonInstaller, CommonAddon

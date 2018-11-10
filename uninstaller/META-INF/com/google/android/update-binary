@@ -38,6 +38,8 @@ detect_bootmode () {
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
 	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
 	${BOOTMODE} || ps -A | grep zygote | grep -qv grep && BOOTMODE=true
+
+	${BOOTMODE} && error "NanoDroid Uninstaller can't be run from Magisk Manager!"
 }
 
 ui_print() {
@@ -273,8 +275,6 @@ ui_print "*****************************"
 ui_print " "
 
 detect_bootmode
-${BOOTMODE} && error "NanoDroid Uninstaller needs to be run from TWRP"
-
 mount_partitions
 
 ui_print " << Removing configuration files (if any)"
