@@ -74,9 +74,9 @@ update_apps () {
 	grab_apk_from_repo ${fd_TERMUX[@]}
 	grab_apk_from_repo ${fd_TWIDERE[@]}
 	grab_apk_from_repo ${gd_ORBOT[@]}
+	grab_apk_from_repo ${gd_TORBROWSER[@]}
 
 	# generic URL
-	grab_apk_from_url ${tp_TORBROWSER[@]}
 	grab_apk_from_url ${nlx_OMNICLOCK[@]}
 
 	# GitHub
