@@ -41,6 +41,7 @@
 
 * build-package Script
   * download TorBrowser from Guardian Project Repository
+  * remove pre-existing zips when creating a new one
 
 ### Updates
 
