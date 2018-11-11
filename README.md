@@ -232,7 +232,7 @@ NanoDroid includes
 
 ### Modules
 
-Module packages, flashing through TWRP recommended, though flashing through Magisk Manager works aswell.
+Module packages, flashing through TWRP required (flashing through Magisk Manager is not supported).
 
 * **NanoDroid**: includes
   * everything mentioned in the Summary
@@ -255,7 +255,7 @@ You'll find the files in
 * /data/adb/MODID_log_INSTALLDATE
 * /data/adb/MODID_twrp_INSTALLDATE
 
-where MODID is either NanoDroid, NanoDroid_microG or NanoDroid_FDroid. INSTALLDATE is the date of installation in %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14), **Note: when installing through Magisk Manager INSTALLDATE might be in UTC +0000, instead of your local time offset!**
+where MODID is either NanoDroid, NanoDroid_microG or NanoDroid_FDroid. INSTALLDATE is the date of installation in %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14).
 
 In case of installation errors, issues or questions provide theese files in your report for easier debugging.
 
@@ -267,16 +267,8 @@ The microG and F-Droid packages however can be installed in parallel, as they co
 
 ### Extras
 
-Extra packages, always flash through TWRP.
+Extra packages, flashing through TWRP required (flashing through Magisk Manager is not supported).
 
-* **NanoDroid-patcher**: includes
-  * on-device framework-patcher for signature spoofing support
-     * on Android up to 8.1 the Patcher will automatically deodex your services.jar
-     * on Android 9 you need to manually deodex your services.jar
-         * see [> Deodex Instructions](doc/DeodexServices.md)
-  * creates the file `/data/adb/NanoDroid_Patched` after successful patching
-  * installs an addon.d script for automatic re-patching after ROM update
-     * addon.d support files reside in `/data/adb/nanodroid-patcher/`
 * **NanoDroid-setupwizard**: includes
   * **AROMA** based Setup Wizard to create the configuration files
   * user can choose where to store the configuration files
@@ -292,6 +284,17 @@ Extra packages, always flash through TWRP.
   * uninstalls NanoDroid-Patcher addon.d environment
   * restores GApps and location services auto-removed during installation (System Mode)
   * restores `services.jar` patched by NanoDroid-Patcher (System Mode)
+
+Extra packages, flashing trough TWRP recommended, flashing through Magisk Manager is supported.
+
+* **NanoDroid-patcher**: includes
+  * on-device framework-patcher for signature spoofing support
+     * on Android up to 8.1 the Patcher will automatically deodex your services.jar
+     * on Android 9 you need to manually deodex your services.jar
+         * see [> Deodex Instructions](doc/DeodexServices.md)
+  * creates the file `/data/adb/NanoDroid_Patched` after successful patching
+  * installs an addon.d script for automatic re-patching after ROM update
+     * addon.d support files reside in `/data/adb/nanodroid-patcher/`
 
 ### F-Droid Repository
 
@@ -516,7 +519,6 @@ When upgrading NanoDroid or installing on a known clean ROM (read: GApps free), 
   * recommended, but not required
   * if **Magisk** is installed, NanoDroid will be installed as Magisk-Module, else it will install into `/system` directly
 * install **NanoDroid**
-  * from either Magisk Manager or TWRP, doesn't matter
 * reboot
 
 #### microG
