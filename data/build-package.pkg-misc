@@ -25,7 +25,7 @@ mk_pkg_patcher () {
 
 create_setupwizard_package() {
 	ZIP="${CWD}/NanoDroid-setupwizard-${VERSION}".zip
-	rm -f "${ZIP}*"
+	rm -f "${ZIP}"*
 
 	print_package "Setup Wizard"
 
@@ -45,7 +45,7 @@ mk_pkg_setupwizard () {
 
 create_uninstaller_package() {
 	ZIP="${CWD}/NanoDroid-uninstaller-${VERSION}".zip
-	rm -f "${ZIP}*"
+	rm -f "${ZIP}"*
 
 	print_package "Uninstaller"
 
