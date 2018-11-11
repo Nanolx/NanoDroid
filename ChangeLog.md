@@ -21,8 +21,10 @@ The following packages always required flashing through TRWP:
 - NanoDroid-Uninstaller
 - NanoDroid-SetupWizard
 
-The followin package can still be flashed trough Magisk Manager:
+The following package can still be flashed trough Magisk Manager:
 - NanoDroid-Patcher
+
+Of course installation as Magisk Module is not effected.
 ```
 
 ### General Changes
@@ -73,6 +75,9 @@ The followin package can still be flashed trough Magisk Manager:
   * Amaze (3.3.0RC12)
   * Substratum (1010)
   * TorBrowser (60.3.0)
+
+* manual
+  * Play Store (12.5.15)
 
 ## 19.1.1.20181103 "Bonaventure Refit"
 
