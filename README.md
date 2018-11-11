@@ -62,8 +62,8 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 19.1.1.20181103 (Codename: Bonaventure Refit)
-* Beta: 19.90.20181110 (20.0-beta1)
+* Stable: 20.0.20181111 (Nimitz)
+* Beta: --- (---)
 
 ## Downloads
 

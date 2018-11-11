@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 20.0 in-dev
+## 20.0.20181111 "Nimitz"
 
 ### Important Notes
 
