@@ -12,7 +12,7 @@
 * Bromite WebView package
   * change apk path from /system/app/webview to /system/app/BromiteWebView
   * disable /system/app/webviewstub (some ROMs use that instead of /system/app/webview)
-  * get rid of webview in /data/app if it's a fresh NanoDroid installation
+  * get rid of webview updates, aswell, if it's a fresh NanoDroid installation
 
 ## 20.0.20181111 "Nimitz"
 
