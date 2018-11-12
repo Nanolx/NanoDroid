@@ -971,7 +971,7 @@ install_bromite_webview () {
 			fi
 		done
 
-		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib webview
+		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib BromiteWebView
 	fi
 }
 
