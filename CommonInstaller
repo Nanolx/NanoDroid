@@ -537,8 +537,7 @@ magisk_install_setup () {
 	IMG=/data/adb/magisk.img
 
 	MODPATH=${MOUNTPATH}/${MODID}
-	MAGISKPATH=/sbin/.core/img
-	REALPATH=${MAGISKPATH}/${MODID}
+	REALPATH=/sbin/.core/img/${MODID}
 
 	recovery_actions
 
@@ -552,9 +551,9 @@ magisk_install_setup () {
 			# check for sub-modules  which are not
 			# supposed to be installed alongside
 			for dir in NanoDroid_microG NanoDroid_FDroid; do
-				if [ -d ${MOUNTPATH}/${dir} -o -d ${MAGISKPATH}/${dir} ]; then
+				if [ -d ${MOUNTPATH}/${dir} ]; then
 					ui_print " !! ${dir} module detected - uninstalling!"
-					rm -rf ${MOUNTPATH}/${dir} ${MAGISKPATH}/${dir}
+					rm -rf ${MOUNTPATH}/${dir}
 					NANODROID_UPGRADE=1
 				fi
 			done
@@ -562,7 +561,7 @@ magisk_install_setup () {
 
 		NanoDroid_microG | NanoDroid_FDroid )
 			# check for Full package and abort if found
-			[ -d ${MOUNTPATH}/NanoDroid -o -d ${MAGISKPATH}/NanoDroid ] && \
+			[ -d ${MOUNTPATH}/NanoDroid ] && \
 				error "${MODID} can't be installed along side the Full package"
 		;;
 
@@ -575,7 +574,7 @@ magisk_install_setup () {
 		;;
 	esac
 
-	[ -d ${MOUNTPATH}/${MODID} -o -d ${MAGISKPATH}/${MODID} ] && NANODROID_UPGRADE=1
+	[ -d ${MODPATH} ] && NANODROID_UPGRADE=1
 }
 
 magisk_install_preinst () {
