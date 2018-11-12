@@ -730,7 +730,7 @@ install_gsync () {
 		else
 			ui_print " << with Google Sync Adapters (${GSYNC_VER})"
 
-			for app in CalendarSync ContactsSync GoogleBackupTransport; do
+			for app in GoogleCalendarSync GoogleContactsSync GoogleBackupTransport; do
 				nanodroid_install_apk ${app}
 			done
 
