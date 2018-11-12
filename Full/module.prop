@@ -1,7 +1,7 @@
 id=NanoDroid
 name=NanoDroid
-version=v20.0.20181111
-versionCode=63
+version=v20.1.20181112
+versionCode=64
 author=Nanolx
 description=NanoDroid: microG, FOSS apps, pseudo-debloat, Zelda ringtones, Shell utilities and more.
 minMagisk=1500
