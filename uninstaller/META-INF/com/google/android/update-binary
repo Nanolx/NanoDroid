@@ -3,37 +3,6 @@
 OUTFD=$2
 ZIP=$3
 
-GOOGLE_APPS="AMAPNetworkLocation
-BaiduNetworkLocation
-BlankStore
-com.qualcomm.location
-DejaVuBackend
-DejaVuNlpBackend
-FDroidPriv
-GmsCoreSetupPrebuilt
-GmsCore_update
-GmsDroidGuard
-GoogleFeedback
-GoogleLoginService
-GoogleOneTimeInitializer
-GoogleServicesFramework
-GoogleTTS
-IchnaeaNlpBackend
-LegacyNetworkLocation
-MarketUpdater
-MarkupGoogle
-MozillaNlpBackend
-NetworkLocation
-NominatimGeocoderBackend
-NominatimNlpBackend
-PlayGames
-PlayStore
-PrebuiltGmsCore
-UnifiedNlp
-Velvet
-Vending
-WhisperPush"
-
 detect_bootmode () {
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
 	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
@@ -196,23 +165,26 @@ mount_partitions () {
 config_locations="/sdcard /external_sd /data $(dirname ${ZIP}))"
 config_files=".nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 
-restore_gapps () {
-	for app in ${GOOGLE_APPS}; do
-		if [ -d /sdcard/nanodroid_backups/priv-app/${app} ]; then
-			appdir=priv-app
-		elif [ -d /sdcard/nanodroid_backups/app/${app} ]; then
-			appdir=app
+restore_apps () {
+	for app in /sdcard/nanodroid_backups/app/*; do
+		if [ -d /system/app/${app} ]; then
+			ui_print " << removing backup: app:${app}"
+			rm -rf /sdcard/nanodroid_backups/app/${app}
 		else
-			continue
+			ui_print " << restoring: app:${app}"
+			mv /sdcard/nanodroid_backups/app/${app} \
+				/system/app/ || error " failed to restore ${app}"
 		fi
+	done
 
-		if [ -d /system/${appdir}/${app} ]; then
-			ui_print " << removing backup: ${appdir} / ${app}"
-			rm -rf /sdcard/nanodroid_backups/${appdir}/${app}
+	for app in /sdcard/nanodroid_backups/priv-app/*; do
+		if [ -d /system/priv-app/${app} ]; then
+			ui_print " << removing backup: priv-app:${app}"
+			rm -rf /sdcard/nanodroid_backups/priv-app/${app}
 		else
-			ui_print " << restoring: ${appdir} / ${app}"
-			mv /sdcard/nanodroid_backups/${appdir}/${app} \
-				/system/${appdir}/ || error " failed to restore ${app}"
+			ui_print " << restoring: priv-app:${app}"
+			mv /sdcard/nanodroid_backups/priv-app/${app} \
+				/system/priv-app/ || error " failed to restore ${app}"
 		fi
 	done
 }
@@ -230,7 +202,7 @@ system_mode_uninstall () {
 		${NANODROID_BINDIR}/nanodroid-font -r
 	fi
 
-	restore_gapps
+	restore_apps
 	xargs rm -f < ${system_list} || error "failed to remove files"
 
 	# remove empty directories
