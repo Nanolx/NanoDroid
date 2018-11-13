@@ -1,5 +1,21 @@
 # ChangeLog
 
+## 20.2 in-dev "Cardenas"
+
+### Bug Fixes
+
+* Uninstaller
+  * fixed Uninstaller failing if no overlayed apps from System Mode exist
+
+### Updates
+
+* automatic
+  * Bromite WebView (70.0.3538.102)
+  * Odyssey (1.1.16)
+
+* manual
+  * microG GmsCore (0.2.6.14792-dirty-105)
+
 ## 20.1.20181112 "Miranda"
 
 ### Bug Fixes
