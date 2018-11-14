@@ -15,6 +15,7 @@
 
 * manual
   * microG GmsCore (0.2.6.14792-dirty-105)
+  * Play Store (12.6.11)
 
 ## 20.1.20181112 "Miranda"
 
