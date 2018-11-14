@@ -184,6 +184,7 @@ detect_arch () {
 	case ${ARCH} in
 		arm | arm64 )
 				ZIPB=${BASEDIR}/zip.arm
+				FILE=${BASEDIR}/file.arm
 
 				if [ -f ${TMPDIR}/busybox.arm ]; then
 					BUSY=${TMPDIR}/busybox.arm
@@ -192,6 +193,7 @@ detect_arch () {
 		;;
 		x86 | x86_64 )
 				ZIPB=${BASEDIR}/zip.x86
+				FILE=${BASEDIR}/file.x86
 
 				if [ -f ${TMPDIR}/busybox.x86 ]; then
 					BUSY=${TMPDIR}/busybox.x86
@@ -201,13 +203,27 @@ detect_arch () {
 	esac
 
 	DALVIKVM_BIN=$(ls -l /system/bin/dalvikvm | awk '{print $NF}')
+	DALVIKVM_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
+
 	case ${DALVIKVM_BIN} in
-		dalvikvm | dalvikvm32 )
+		dalvikvm32 )
 			export LD_LIBRARY_PATH="/system/lib:/vendor/lib:/system/vendor/lib"
 		;;
 
 		dalvikvm64 )
 			export LD_LIBRARY_PATH="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+		;;
+
+		dalvikvm )
+			case ${DALVIKVM_ARCH} in
+				*32-bit* )
+					export LD_LIBRARY_PATH="/system/lib:/vendor/lib:/system/vendor/lib"
+				;;
+
+				*64-bit* )
+					export LD_LIBRARY_PATH="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+				;;
+			esac
 		;;
 	esac
 
@@ -332,7 +348,8 @@ setup_patcher () {
 
 	for bin in zip.arm zip.x86 \
 		vdexExtractor.arm vdexExtractor.x86 \
-		vdexExtractor.arm64 vdexExtractor.x86_64; do
+		vdexExtractor.arm64 vdexExtractor.x86_64
+		file.arm file.x86; do
 		chmod 0755 "${BASEDIR}/${bin}" || \
 			error "failed to prepare environment"
 	done
@@ -517,13 +534,13 @@ install_addond () {
 
 	for file in core_services.jar.dex unifiednlp_services.jar.dex dexpatcher.dex \
 		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
-		baksmali_25.dex smali_25.dex baksmali_26.dex smali_26.dex; do
+		baksmali_25.dex smali_25.dex baksmali_26.dex smali_26.dex magic.mgc; do
 		cp "${BASEDIR}/${file}" ${PATCHER_ADDOND_DATA}/
 	done
 
 	cp /dev/tmp/CommonPatcher ${PATCHER_ADDOND_DATA}/
 
-	for file in ${ZIPB} ${V_EX} ${BUSY}; do
+	for file in ${ZIPB} ${V_EX} ${BUSY} ${FILE}; do
 		cp ${file} ${PATCHER_ADDOND_DATA}/
 		chmod 0755 ${PATCHER_ADDOND_DATA}/$(basename "${file}")
 	done
