@@ -263,7 +263,6 @@ detect_sdk () {
        fi
 
 	PATCH_CORE="${BASEDIR}/core_services.jar.dex"
-	PATCH_UNLP="${BASEDIR}/unifiednlp_services.jar.dex"
 
 	if [ "${SDK_VERSION}" -lt 24 ]; then
 		ui_print " > Android 4.1 - 6.0 (SDK ${SDK_VERSION}) detected"
@@ -462,7 +461,7 @@ patch_services () {
 
 	mkdir -p "${BASEDIR}/services.jar-mod"
 
-	PATCHES="${PATCH_HOOK} ${PATCH_CORE} ${PATCH_UNLP}"
+	PATCHES="${PATCH_HOOK} ${PATCH_CORE}"
 
 	ui_print " >> patching services.jar"
 
@@ -532,7 +531,7 @@ install_addond () {
 		/system/addon.d/75-nanodroidpatcher.sh \
 		/system/addon.d/999-nanodroidpatcher.sh
 
-	for file in core_services.jar.dex unifiednlp_services.jar.dex dexpatcher.dex \
+	for file in core_services.jar.dex dexpatcher.dex \
 		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
 		baksmali_25.dex smali_25.dex baksmali_26.dex smali_26.dex magic.mgc; do
 		cp "${BASEDIR}/${file}" ${PATCHER_ADDOND_DATA}/
