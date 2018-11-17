@@ -52,7 +52,7 @@ fd_OPENKEYCHAIN=(fdroid org.sufficientlysecure.keychain app OpenKeyChain)
 fd_OPENVPN=(fdroid de.blinkt.openvpn app OpenVPN)
 fd_QKSMS=(fdroid com.moez.QKSMS app QKSMS)
 fd_SIMPLECALENDAR=(fdroid com.simplemobiletools.calendar app SimpleCalendar)
-fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery app SimpleGallery)
+fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery.pro app SimpleGallery)
 fd_TERMUX=(fdroid com.termux app Termux)
 fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 

@@ -10,8 +10,10 @@
 ### Updates
 
 * automatic
-  * Bromite WebView (70.0.3538.102)
+  * Bromite WebView (70.0.3538.107)
   * Odyssey (1.1.16)
+  * Amaze (3.3.0)
+  * Simple Gallery Pro (6.0.0)
 
 * manual
   * microG GmsCore (0.2.6.14792-dirty-105)
