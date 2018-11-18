@@ -7,6 +7,18 @@
 * Uninstaller
   * fixed Uninstaller failing if no overlayed apps from System Mode exist
 
+### General Changes
+
+* SysTest package
+  * new package for providing several ROM informations
+     * device profile (ROM, manufacturer, device, ABI, builddate, security patch date)
+     * pre-set and detected LD_LIBRARY_PATH
+     * DalvikVM binary and it's architecture
+     * mounted partitions, whether device is A/B
+     * list of installed GApps
+     * file list of /system/app and /system/priv-app
+  * log is created in /sdcard/NanoDroid-SysTest.log
+
 ### Updates
 
 * automatic
