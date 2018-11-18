@@ -19,6 +19,9 @@
      * file list of /system/app and /system/priv-app
   * log is created in /sdcard/NanoDroid-SysTest.log
 
+* Patcher package
+  * drop unlp patch, not required on most ROMs and is suspected to cause issues on some ROMs
+
 ### Updates
 
 * automatic
@@ -28,7 +31,7 @@
   * Simple Gallery Pro (6.0.0)
 
 * manual
-  * microG GmsCore (0.2.6.14792-dirty-105)
+  * microG GmsCore (0.2.6.14796-dirty-112)
   * Play Store (12.6.11)
 
 ## 20.1.20181112 "Miranda"
