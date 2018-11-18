@@ -2,6 +2,10 @@
 
 ## 20.2 in-dev "Cardenas"
 
+### Notes
+
+* (Simple) Gallery is now replaced by Simple Gallery Pro. While the app is still Open Source, code available on github and free on F-Droid, the Play Store release is now paid ([see this post by the developer](https://medium.com/@tibbi/some-simple-mobile-tools-apps-are-becoming-paid-d053268f0fb2)), thus the change. NanoDroid-wise the transistion is done in-place, but you will have to re-setup the application.
+
 ### Bug Fixes
 
 * Uninstaller
@@ -21,6 +25,12 @@
 
 * Patcher package
   * drop unlp patch, not required on most ROMs and is suspected to cause issues on some ROMs
+
+* build-package Script
+  * move to stable Amaze build
+
+* Documentation
+  * more detailed information about custom APKs
 
 ### Updates
 
