@@ -71,6 +71,7 @@ og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
 # APK Mirror
 ###
 
+am_AMAZE=(team-amaze amaze-file-manager app Amaze amaze-file-manager)
 am_KERNELADIUTOR=(willi-ye kernel-adiutor app KernelAdiutor kernel-adiutor-root)
 am_SUBSTRATUM=(projekt substratum-theme-engine app Substratum substratum-theme-engine)
 am_OPENWEATHER=(lineageos openweathermap app OpenWeatherMapProvider openweathermap)
@@ -81,7 +82,7 @@ am_XDALABS=(xda xda-labs app XDALabs xda-labs)
 # GitHub
 ###
 
-gh_AMAZE=(TeamAmaze/AmazeFileManager app Amaze)
+# gh_NAME=(ORG/REPO DIR APP)
 
 ###
 # Bromite WebView

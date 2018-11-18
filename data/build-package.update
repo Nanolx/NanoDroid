@@ -79,10 +79,8 @@ update_apps () {
 	# generic URL
 	grab_apk_from_url ${nlx_OMNICLOCK[@]}
 
-	# GitHub
-	grab_apk_from_github ${gh_AMAZE[@]}
-
 	# APK Mirror
+	grab_apk_from_apkmirror ${am_AMAZE[@]}
 	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
 	grab_apk_from_apkmirror ${am_OPENWEATHER[@]}
 	grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
