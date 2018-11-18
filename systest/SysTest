@@ -1,0 +1,232 @@
+#!/sbin/sh
+##########################################################################################
+# 
+# NanoDroid System Testing Script
+# by Nanolx
+#
+##########################################################################################
+
+LOGFILE=/sdcard/NanoDroid-SysTest.log
+rm -f ${LOGFILE}
+
+##########################################################################################
+# Generic Functions
+##########################################################################################
+
+ui_print() {
+	echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
+	echo -n -e "ui_print\n" >> /proc/self/fd/$OUTFD
+}
+
+is_mounted () {
+	if [ ! -z "$2" ]; then
+		cat /proc/mounts | grep $1 | grep $2, >/dev/null
+	else
+		cat /proc/mounts | grep $1 >/dev/null
+	fi
+	return $?
+}
+
+mount_image() {
+	if [ ! -d "$2" ]; then
+		mount -o rw,remount rootfs /
+		mkdir -p "$2" 2>/dev/null
+		[ ! -d "$2" ] && return 1
+	fi
+
+	if ! is_mounted "$2"; then
+		LOOPDEVICE=
+		for LOOP in 0 1 2 3 4 5 6 7; do
+			if ! is_mounted "$2"; then
+				LOOPDEVICE=/dev/block/loop$LOOP
+				[ -e $LOOPDEVICE ] || mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
+				losetup $LOOPDEVICE "$1" && mount -t ext4 -o loop $LOOPDEVICE "$2"
+				if is_mounted "$2"; then
+					break;
+				fi
+			fi
+		done
+	fi
+}
+
+# taken from Magisk, with minor modifications for NanoDroid
+mount_partitions () {
+	SLOT=$(grep_cmdline androidboot.slot_suffix)
+	if [ -z ${SLOT} ]; then
+		SLOT=_$(grep_cmdline androidboot.slot)
+		[ "${SLOT}" = "_" ] && SLOT=
+	fi
+
+	DEVICE_AB=FALSE
+
+	is_mounted /data || mount /data || error "failed to mount /data!"
+
+	mount -o bind /dev/urandom /dev/random
+
+	! is_mounted /system && mount -o rw /system
+
+	if [ ! -f /system/build.prop ]; then
+		DEVICE_AB=TRUE
+		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
+		mount -t ext4 -o rw ${SYSTEMBLOCK} /system
+	fi
+
+	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system (unsupported A/B device?)"
+
+	if [ -f /system/init ]; then
+		mkdir /system_root 2>/dev/null
+		mount --move /system /system_root
+		mount -o bind /system_root/system /system
+	fi
+
+	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+
+	if [ -L /system/vendor ]; then
+		! is_mounted /vendor && mount /vendor
+		if ! is_mounted /vendor; then
+			VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
+			mount -t ext4 -o ro ${VENDORBLOCK} /vendor
+		fi
+	elif [ -d /system/vendor ]; then
+		### XXX work-around required for some ROMs
+		echo " xxx compat /vendor link created!" >> ${LOGFILE}
+		ln -sf /system/vendor /vendor >/dev/null
+	fi
+
+	mount | awk '{print $1 " on " $3}' >> ${LOGFILE}
+}
+
+error () {
+	ui_print " "
+	ui_print " !! ${@}"
+	ui_print " "
+	exit 1
+}
+
+##########################################################################################
+# Device Functions
+##########################################################################################
+
+detect_outfd () {
+	if [ -z $OUTFD ] || readlink /proc/$$/fd/$OUTFD | grep -q /tmp; then
+		# We will have to manually find out OUTFD
+		for FD in `ls /proc/$$/fd`; do
+			if readlink /proc/$$/fd/$FD | grep -q pipe; then
+				if ps | grep -v grep | grep -q " 3 $FD "; then
+					OUTFD=$FD
+					break
+				fi
+			fi
+		done
+	fi
+}
+
+detect_bootmode () {
+	[ -z ${BOOTMODE} ] && BOOTMODE=false
+	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
+	${BOOTMODE} || ps -A | grep zygote | grep -qv grep && BOOTMODE=true
+
+	${BOOTMODE} && error " Run from TWRP!"
+}
+
+grep_prop() {
+	REGEX="${1}"
+	shift
+	FILES="${@}"
+	[ -z "${@}" ] && FILES='/system/build.prop'
+	sed -n "s/^${REGEX}=//p" ${FILES} | \
+		head -n 1
+}
+
+grep_cmdline() {
+	local REGEX="s/^${1}=//p"
+	sed -E 's/ +/\n/g' /proc/cmdline | \
+		sed -n "${REGEX}" 2>/dev/null
+}
+
+system_test () {
+	ABI=$(grep_prop ro.product.cpu.abi | cut -c-3)
+	ABI2=$(grep_prop ro.product.cpu.abi2 | cut -c-3)
+	ABILONG=$(grep_prop ro.product.cpu.abi)
+
+	ARCH=arm
+
+	[ "$ABI" = "x86" ] && ARCH=x86
+	[ "$ABI2" = "x86" ] && ARCH=x86
+	[ "$ABILONG" = "arm64-v8a" ] && ARCH=arm64
+	[ "$ABILONG" = "x86_64" ] && ARCH=x86_64
+
+	case ${ARCH} in
+		arm | arm64 )
+				FILE=/dev/tmp/file.arm
+		;;
+		x86 | x86_64 )
+				FILE=/dev/tmp/file.x86
+		;;
+	esac
+
+	chmod 0755 "${FILE}"
+
+	DALVIKVM_BIN=$(ls -l /system/bin/dalvikvm | awk '{print $NF}')
+	DALVIKVM_ARCH=$("${FILE}" -m "/dev/tmp/magic.mgc" -L /system/bin/dalvikvm)
+
+	case ${DALVIKVM_BIN} in
+		dalvikvm )
+			case ${DALVIKVM_ARCH} in
+				*32-bit* )
+					LD="/system/lib:/vendor/lib:/system/vendor/lib"
+				;;
+
+				*64-bit* )
+					LD="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+				;;
+			esac
+		;;
+
+		dalvikvm32 )
+			LD="/system/lib:/vendor/lib:/system/vendor/lib"
+		;;
+
+		dalvikvm64 )
+			LD="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+		;;
+	esac
+
+	SERVICES_JAR_DEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)
+
+	if [ -n "$(find '/system/framework/' -name 'services.vdex')" ]; then
+		ROM_DEX_STATUS=VDEX
+	elif [ -n "$(find '/system/framework/' -name 'services.odex')" ]; then
+		ROM_DEX_STATUS=ODEX
+	else	ROM_DEX_STATUS=UNKOWN
+	fi
+
+	[ "${SERVICES_JAR_DEX}" ] && ROM_DEX_STATUS=DEODEX
+
+	echo "DEVICE_AB=${DEVICE_AB}" >> ${LOGFILE}
+	echo "ABI=${ABI}"  >> ${LOGFILE}
+	echo "ABI2=${ABI2}"  >> ${LOGFILE}
+	echo "ABILONG=${ABILONG}"  >> ${LOGFILE}
+	echo "ARCH=${ARCH}"  >> ${LOGFILE}
+	echo "DALVIKVM_BIN=${DALVIKVM_BIN}" >> ${LOGFILE}
+	echo "DALVIKVM_ARCH=${DALVIKVM_ARCH}" >> ${LOGFILE}
+	echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}" >> ${LOGFILE}
+	echo "DETECTED_LD_PATH=${LD}" >> ${LOGFILE}
+	echo "ROM_DEX_STATUS=${ROM_DEX_STATUS}" >> ${LOGFILE}
+
+	for prop in ro.build.description ro.build.display.id ro.build.flavor ro.build.product \
+		ro.build.tags ro.build.type ro.build.version.sdk ro.build.version.security_patch \
+		ro.product.cpu.abi ro.product.cpu.abilist ro.product.cpu.abilist32 \
+		ro.product.cpu.abilist64 ro.product.model ro.product.vendor.device; do
+		echo "${prop}=$(grep_prop ${prop})" >> ${LOGFILE}
+	done
+
+	[ -f /data/adb/magisk.img ] && echo "MAGISK=TRUE" >> ${LOGFILE} || echo "MAGISK=FALSE" >> ${LOGFILE}
+
+	grep google /data/system/packages.list >> ${LOGFILE}
+	grep 'package .*google' /data/system/packages.xml >> ${LOGFILE}
+
+	find /system/app >> ${LOGFILE}
+	find /system/priv-app >> ${LOGFILE}
+}
+

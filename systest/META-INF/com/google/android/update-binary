@@ -1,0 +1,46 @@
+#!/sbin/sh
+
+umask 022
+OUTFD=${2}
+ZIP=${3}
+
+mkdir /dev/tmp
+unzip -o "${ZIP}" -d "/dev/tmp"
+if [ ! -f /dev/tmp/SysTest ]; then
+	echo " !! failed to load SysTest"
+	exit 1
+else
+	source "/dev/tmp/SysTest"
+fi
+
+detect_bootmode
+detect_environment
+detect_outfd
+
+ui_print " "
+ui_print "******************************"
+ui_print "      NanoDroid SysTest       "
+ui_print "          20181118            "
+ui_print "******************************"
+ui_print " "
+
+ui_print " || performing tests"
+
+ui_print " "
+ui_print " || storing results in: ${LOGFILE}"
+ui_print " "
+
+mount_partitions
+system_test
+
+if ! ${BOOTMODE} ; then
+	umount -l /system_root 2>/dev/null
+	umount -l /system 2>/dev/null
+	umount -l /vendor 2>/dev/null
+	umount -l /dev/random 2>/dev/null
+fi
+
+ui_print " > Done!"
+ui_print " "
+
+exit 0
