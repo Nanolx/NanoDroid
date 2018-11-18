@@ -1290,7 +1290,7 @@ cat /tmp/recovery.log > ${nanodroid_twrplog}
 ui_print " "
 ui_print " | storing installation logs in /data/adb/"
 ui_print " | TWRP log:      $(basename ${nanodroid_twrplog})"
-ui_print " | NanoDroid log: $(basename ${nanoroid_logfile})"
+ui_print " | NanoDroid log: $(basename ${nanodroid_logfile})"
 ui_print " "
 
 }
