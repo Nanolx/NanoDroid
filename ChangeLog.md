@@ -23,6 +23,10 @@
      * file list of /system/app and /system/priv-app
   * log is created in /sdcard/NanoDroid-SysTest.log
 
+* CommonInstaller
+  * NanoDroid installation log now contains whether install was successful or not
+  * Installer now prints a message where it stored the logs
+
 * Patcher package
   * drop unlp patch, not required on most ROMs and is suspected to cause issues on some ROMs
 

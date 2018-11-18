@@ -2,6 +2,7 @@
 
 VERSION=20.2.99999999
 NANODROID_UPGRADE=0
+INSTALL_SUCCESS=TRUE
 NANODROID_LIST=/data/adb/NanoDroid_FileList
 
 GOOGLE_APPS="AMAPNetworkLocation
@@ -197,6 +198,8 @@ error () {
 	fi
 
 	recovery_cleanup
+
+	INSTALL_SUCCESS=FALSE
 	nanodroid_storelogs
 
 	exit 1
@@ -1234,6 +1237,9 @@ nanodroid_storelogs () {
 	nanodroid_twrplog="/data/adb/${MODID}_twrp_${curdate}"
 
 	echo "\
+
+Installation successful: ${INSTALL_SUCCESS}
+
 ### VALUES ###
 ZIP=${ZIP}
 ZIPDIR=${ZIPDIR}
@@ -1280,6 +1286,12 @@ cat "${cfg_overlay}" >> ${nanodroid_logfile}
 fi
 
 cat /tmp/recovery.log > ${nanodroid_twrplog}
+
+ui_print " "
+ui_print " | storing installation logs in /data/adb/"
+ui_print " | TWRP log:      $(basename ${nanodroid_twrplog})"
+ui_print " | NanoDroid log: $(basename ${nanoroid_logfile})"
+ui_print " "
 
 }
 
