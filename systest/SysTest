@@ -232,8 +232,7 @@ store_results () {
 	add_log ""
 	add_log "DALVIKVM_BIN=${DALVIKVM_BIN}"
 	add_log "DALVIKVM_ARCH=${DALVIKVM_ARCH}"
-	add_log "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}"
-	add_log "DETECTED_LD_PATH=${LD}"
+	add_log "LD_LIBRARY_PATH=${LD}"
 	add_log "ROM_DEX_STATUS=${ROM_DEX_STATUS}"
 
 	add_log ""
@@ -268,12 +267,12 @@ store_results () {
 	add_log "Content of /system/app"
 	add_log "======================"
 	add_log ""
-	find /system/app >> ${LOGFILE}
+	find -f -name '*.apk' /system/app >> ${LOGFILE}
 
 	add_log ""
 	add_log "Content of /system/priv-app"
 	add_log "======================"
 	add_log ""
-	find /system/priv-app >> ${LOGFILE}
+	find -f -name '*.apk' /system/priv-app >> ${LOGFILE}
 }
 
