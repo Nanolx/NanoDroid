@@ -347,7 +347,7 @@ setup_patcher () {
 
 	for bin in zip.arm zip.x86 \
 		vdexExtractor.arm vdexExtractor.x86 \
-		vdexExtractor.arm64 vdexExtractor.x86_64
+		vdexExtractor.arm64 vdexExtractor.x86_64 \
 		file.arm file.x86; do
 		chmod 0755 "${BASEDIR}/${bin}" || \
 			error "failed to prepare environment"
