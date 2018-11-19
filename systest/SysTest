@@ -169,6 +169,14 @@ system_test () {
 	DALVIKVM_ARCH=$("${FILE}" -m "/dev/tmp/magic.mgc" -L /system/bin/dalvikvm)
 
 	case ${DALVIKVM_BIN} in
+		dalvikvm32 )
+			LD="/system/lib:/vendor/lib:/system/vendor/lib"
+		;;
+
+		dalvikvm64 )
+			LD="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+		;;
+
 		dalvikvm )
 			case ${DALVIKVM_ARCH} in
 				*32-bit* )
@@ -179,14 +187,6 @@ system_test () {
 					LD="/system/lib64:/vendor/lib64:/system/vendor/lib64"
 				;;
 			esac
-		;;
-
-		dalvikvm32 )
-			LD="/system/lib:/vendor/lib:/system/vendor/lib"
-		;;
-
-		dalvikvm64 )
-			LD="/system/lib64:/vendor/lib64:/system/vendor/lib64"
 		;;
 	esac
 

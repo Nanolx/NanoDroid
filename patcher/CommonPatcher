@@ -206,6 +206,14 @@ detect_arch () {
 	DALVIKVM_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
 
 	case ${DALVIKVM_BIN} in
+		dalvikvm32 )
+			export LD_LIBRARY_PATH="/system/lib:/vendor/lib:/system/vendor/lib"
+		;;
+
+		dalvikvm64 )
+			export LD_LIBRARY_PATH="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+		;;
+
 		dalvikvm )
 			case ${DALVIKVM_ARCH} in
 				*32-bit* )
@@ -216,14 +224,6 @@ detect_arch () {
 					export LD_LIBRARY_PATH="/system/lib64:/vendor/lib64:/system/vendor/lib64"
 				;;
 			esac
-		;;
-
-		dalvikvm32 )
-			export LD_LIBRARY_PATH="/system/lib:/vendor/lib:/system/vendor/lib"
-		;;
-
-		dalvikvm64 )
-			export LD_LIBRARY_PATH="/system/lib64:/vendor/lib64:/system/vendor/lib64"
 		;;
 	esac
 
