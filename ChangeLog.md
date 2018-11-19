@@ -29,6 +29,9 @@
 
 * Patcher package
   * drop unlp patch, not required on most ROMs and is suspected to cause issues on some ROMs
+  * improve DalvikVM architecture detection
+  * improve calling DalvikVM to prevent using patch2oat
+    * (which may have a different bitness (32 vs. 64 bit) as DalvikVM itself)
 
 * build-package Script
   * move to stable Amaze build
