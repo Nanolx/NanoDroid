@@ -361,7 +361,8 @@ call_dalvikvm () {
 		BOOTCLASSES=${BOOTCLASSES}:${jar}
 	done
 
-	DALVIKVM_OPTS="-verbose:gc -verbose:jit -verbose:jni -verbose:class"
+	DALVIKVM_OPTS="-verbose:gc -verbose:jit -verbose:jni \
+		-verbose:class -Xnodex2oat -Xnoimage-dex2oat"
 
 	if [ "${ROM_DEX_STATUS}" = "DEODEX" ]; then
 		/system/bin/dalvikvm \
