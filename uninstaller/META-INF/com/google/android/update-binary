@@ -177,7 +177,9 @@ restore_apps () {
 					/system/app/ || error " failed to restore ${app}"
 			fi
 		done
-	else
+
+		rm -rf /sdcard/nanodroid_backups/app/
+	fi
 
 	if [ -d /sdcard/nanodroid_backups/priv-app/ ]; then
 		for app in /sdcard/nanodroid_backups/priv-app/*; do
@@ -190,6 +192,8 @@ restore_apps () {
 					/system/priv-app/ || error " failed to restore ${app}"
 			fi
 		done
+
+		rm -rf /sdcard/nanodroid_backups/priv-app/
 	fi
 }
 
