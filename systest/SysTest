@@ -92,8 +92,6 @@ mount_partitions () {
 		echo " xxx compat /vendor link created!" >> ${LOGFILE}
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
-
-	mount | awk '{print $1 " on " $3}' >> ${LOGFILE}
 }
 
 error () {
@@ -202,31 +200,80 @@ system_test () {
 	fi
 
 	[ "${SERVICES_JAR_DEX}" ] && ROM_DEX_STATUS=DEODEX
+}
 
-	echo "DEVICE_AB=${DEVICE_AB}" >> ${LOGFILE}
-	echo "ABI=${ABI}"  >> ${LOGFILE}
-	echo "ABI2=${ABI2}"  >> ${LOGFILE}
-	echo "ABILONG=${ABILONG}"  >> ${LOGFILE}
-	echo "ARCH=${ARCH}"  >> ${LOGFILE}
-	echo "DALVIKVM_BIN=${DALVIKVM_BIN}" >> ${LOGFILE}
-	echo "DALVIKVM_ARCH=${DALVIKVM_ARCH}" >> ${LOGFILE}
-	echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}" >> ${LOGFILE}
-	echo "DETECTED_LD_PATH=${LD}" >> ${LOGFILE}
-	echo "ROM_DEX_STATUS=${ROM_DEX_STATUS}" >> ${LOGFILE}
+add_log () {
+	echo "${@}"  >> ${LOGFILE}
+}
 
+store_results () {
+	add_log "NanoDroid System Test Results"
+	add_log "============================="
+	add_log ""
+
+	add_log "CPU and ABI details"
+	add_log "==================="
+	add_log ""
+	add_log "ARCH=${ARCH}"
+	add_log "ABI=${ABI}"
+	add_log "ABI2=${ABI2}"
+	add_log "ABILONG=${ABILONG}"
+
+	add_log ""
+	add_log "Mounted Partitions"
+	add_log "=================="
+	add_log ""
+	mount | awk '{print $1 " on " $3}' >> ${LOGFILE}
+	add_log "DEVICE_AB=${DEVICE_AB}"
+
+	add_log ""
+	add_log "DalvikVM, LD_LIBRARY_PATH and DEX status"
+	add_log "========================================"
+	add_log ""
+	add_log "DALVIKVM_BIN=${DALVIKVM_BIN}"
+	add_log "DALVIKVM_ARCH=${DALVIKVM_ARCH}"
+	add_log "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}"
+	add_log "DETECTED_LD_PATH=${LD}"
+	add_log "ROM_DEX_STATUS=${ROM_DEX_STATUS}"
+
+	add_log ""
+	add_log "Generic System Properties"
+	add_log "========================="
+	add_log ""
 	for prop in ro.build.description ro.build.display.id ro.build.flavor ro.build.product \
 		ro.build.tags ro.build.type ro.build.version.sdk ro.build.version.security_patch \
 		ro.product.cpu.abi ro.product.cpu.abilist ro.product.cpu.abilist32 \
 		ro.product.cpu.abilist64 ro.product.model ro.product.vendor.device; do
-		echo "${prop}=$(grep_prop ${prop})" >> ${LOGFILE}
+		add_log "${prop}=$(grep_prop ${prop})"
 	done
 
-	[ -f /data/adb/magisk.img ] && echo "MAGISK=TRUE" >> ${LOGFILE} || echo "MAGISK=FALSE" >> ${LOGFILE}
+	add_log ""
+	add_log "Magisk installed?"
+	add_log "================="
+	add_log ""
+	[ -f /data/adb/magisk.img ] && add_log "MAGISK=TRUE" || add_log "MAGISK=FALSE"
 
+	add_log ""
+	add_log "Installed Google packages"
+	add_log "=== packages.list ======="
+	add_log
 	grep google /data/system/packages.list >> ${LOGFILE}
+
+	add_log ""
+	add_log "=== packages.xml ========"
+	add_log ""
 	grep 'package .*google' /data/system/packages.xml >> ${LOGFILE}
 
+	add_log ""
+	add_log "Content of /system/app"
+	add_log "======================"
+	add_log ""
 	find /system/app >> ${LOGFILE}
+
+	add_log ""
+	add_log "Content of /system/priv-app"
+	add_log "======================"
+	add_log ""
 	find /system/priv-app >> ${LOGFILE}
 }
 

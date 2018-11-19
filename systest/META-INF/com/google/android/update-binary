@@ -27,11 +27,13 @@ ui_print " "
 ui_print " || performing tests"
 
 ui_print " "
-ui_print " || storing results in: ${LOGFILE}"
+ui_print " || storing results in:"
+ui_print " || ${LOGFILE}"
 ui_print " "
 
 mount_partitions
 system_test
+store_results
 
 if ! ${BOOTMODE} ; then
 	umount -l /system_root 2>/dev/null
