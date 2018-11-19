@@ -224,7 +224,7 @@ system_mode_uninstall () {
 }
 
 patcher_uninstall () {
-	if [ -f /data/adb/.nanodroid-patcher -o -f /data/adb/NanoDroid_patched ]; then
+	if [ -f /data/adb/.nanodroid-patcher -o -f /data/adb/NanoDroid_Patched ]; then
 		if [ -f /sdcard/nanodroid_backups/services.jar ]; then
 			ui_print " << restoring: unpatched services.jar"
 			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar \
@@ -233,7 +233,7 @@ patcher_uninstall () {
 		fi
 	fi
 
-	[ -d /data/adb/nanodroid_patcher] && rm -rf ${addond}
+	[ -d /data/adb/nanodroid_patcher ] && rm -rf /data/adb/nanodroid_patcher
 
 	for addonsh in /system/addon.d/999-nanodroidpatcher.sh \
 		/system/addon.d/70-nanodroidpatcher.sh \
