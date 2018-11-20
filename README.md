@@ -286,12 +286,21 @@ Extra packages, flashing through TWRP required (flashing through Magisk Manager 
   * **NOTE:** AROMA only works on `arm` and `arm64`, if your device is `x86` or `x86_64`, it won't work
 * **NanoDroid-uninstaller**: includes
   * uninstalls *all* NanoDroid Magisk Modules
-     * also old NanoMod Magisk Modules
   * uninstalls NanoDroid installed in System Mode
   * uninstalls NanoDroid configuration files
   * uninstalls NanoDroid-Patcher addon.d environment
   * restores GApps and location services auto-removed during installation (System Mode)
   * restores `services.jar` patched by NanoDroid-Patcher (System Mode)
+* **NanoDroid-systest**: includes
+  * system testing script which will create the logfile `/sdcard/NanoDroid-SysTest.log`
+  * the following data is collected:
+     * device profile (ROM, manufacturer, device, ABI, builddate, security patch date)
+     * pre-set and detected LD_LIBRARY_PATH
+     * DalvikVM binary and it's architecture
+     * mounted partitions, whether device is A/B
+     * list of installed GApps
+     * file list of /system/app and /system/priv-app
+  * use this to provide additional informations when posting issues
 
 Extra packages, flashing trough TWRP recommended, flashing through Magisk Manager is supported.
 
