@@ -28,7 +28,6 @@
   * new setup variable `nanodroid_gmscore`, selects which microG GmsCore to install
      * 0 = install NanoDroid's [custom microG GmsCore](https://github.com/Nanolx/android_packages_apps_GmsCore)
      * 1 = install [official microG GmsCore](https://github.com/microg/android_packages_apps_GmsCore)
-  
 
 * CommonInstaller
   * NanoDroid installation log now contains whether install was successful or not
@@ -42,6 +41,9 @@
 
 * Uninstaller
   * now also uninstalls the BromiteWebView package
+
+* SetupWizard
+  * add new `nanodroid_gmscore` variable
 
 * build-package Script
   * move to stable Amaze build

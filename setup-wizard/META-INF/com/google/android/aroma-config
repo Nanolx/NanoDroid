@@ -89,6 +89,17 @@ selectbox(
 );
 
 selectbox(
+	"microG GmsCore",
+	"microG GmsCore",
+	"icons/update",
+	"gmscore.prop",
+
+	"Select which microG GmsCore to install (if any)", "", 2, #-- Group 1. key = "selected.1"
+	"NanoDroid",	"custom NanoDroid microG GmsCore with beta state code merged",	1,	#-- selected.1 = 1
+	"Official",	"official microG GmsCore",					0	#-- selected.1 = 2
+);
+
+selectbox(
 	"nlpBackends",
 	"nlpBackends",
 	"icons/update",

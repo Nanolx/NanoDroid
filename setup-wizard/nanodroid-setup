@@ -48,6 +48,7 @@ debloat_prop="${aromapath}/debloat.prop"
 location_prop="${aromapath}/location.prop"
 nlp_prop="${aromapath}/nlp.prop"
 ug_prop="${aromapath}/ug.prop"
+gmscore_prop="${aromapath}/gmscore.prop"
 
 ui_print " "
 ui_print "******************************"
@@ -138,6 +139,14 @@ elif grep -q "selected.1=2" "${ug_prop}"; then
 elif grep -q "selected.1=3" "${ug_prop}"; then
 	ui_print "  <>> setting property: nanodroid_microg [Minimal]"
 	echo "nanodroid_microg=2" >> "${nanodroid_setup}"
+fi
+
+if grep -q "selected.1=1" "${gmscore_prop}"; then
+	ui_print "  <>> setting property: nanodroid_gmscore [custom]"
+	echo "nanodroid_gmscore=0" >> "${nanodroid_setup}"
+elif grep -q "selected.1=2" "${gmscore_prop}"; then
+	ui_print "  <>> setting property: nanodroid_gmscore [official]"
+	echo "nanodroid_gmscore=1" >> "${nanodroid_setup}"
 fi
 
 ui_print " "
