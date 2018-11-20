@@ -116,6 +116,7 @@ You can create snapshots from this repository.
      * `build-package uninstaller` to create the uninstaller package
      * `build-package setupwizard` to create the Setup Wizard package
      * `build-package bromitewebview` to create the Bromite WebView package
+     * `build-package systest` to create the SysTest package
      * `build-package all` to create all packages at once
   * update required files:
      * `build-package u-microg` to update microG
