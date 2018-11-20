@@ -10,6 +10,7 @@
 
 * Uninstaller
   * fixed Uninstaller failing if no overlayed apps from System Mode exist
+  * fixed Uninstaller failing to remove Patcher artifacts and restore original services.jar
 
 ### General Changes
 
@@ -32,6 +33,9 @@
   * improve DalvikVM architecture detection
   * improve calling DalvikVM to prevent using patch2oat
     * (which may have a different bitness (32 vs. 64 bit) as DalvikVM itself)
+
+* Uninstaller
+  * now also uninstalls the BromiteWebView package
 
 * build-package Script
   * move to stable Amaze build
