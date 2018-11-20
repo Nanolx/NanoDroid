@@ -56,6 +56,10 @@ for opt in ${@}; do
 			mk_pkg_bromite_webview
 		;;
 
+		systest )
+			mk_pkg_systest
+		;;
+
 		all )
 			check_nanodroid || error "run nanodroid-pull first!"
 			mk_pkg_full
@@ -65,6 +69,7 @@ for opt in ${@}; do
 			mk_pkg_uninstaller
 			mk_pkg_setupwizard
 			mk_pkg_bromite_webview
+			mk_pkg_systest
 		;;
 
 		ver )

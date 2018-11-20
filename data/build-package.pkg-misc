@@ -64,3 +64,23 @@ mk_pkg_uninstaller () {
 	create_uninstaller_package &
 	progress $!
 }
+
+create_systest_package() {
+	ZIP="${CWD}/NanoDroid-systest-${VERSION}".zip
+	rm -f "${ZIP}"*
+
+	print_package "SysTest"
+
+	cd "${CWD}/systest"
+	zip_add
+	cd "${CWD}"
+
+	zip_add_doc
+
+	sum_sign_package "${ZIP}"
+}
+
+mk_pkg_systest () {
+	create_systest_package &
+	progress $!
+}
