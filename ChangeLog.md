@@ -24,6 +24,12 @@
      * file list of /system/app and /system/priv-app
   * log is created in /sdcard/NanoDroid-SysTest.log
 
+* Full, microG packages
+  * new setup variable `nanodroid_gmscore`, selects which microG GmsCore to install
+     * 0 = install NanoDroid's [custom microG GmsCore](https://github.com/Nanolx/android_packages_apps_GmsCore)
+     * 1 = install [official microG GmsCore](https://github.com/microg/android_packages_apps_GmsCore)
+  
+
 * CommonInstaller
   * NanoDroid installation log now contains whether install was successful or not
   * Installer now prints a message where it stored the logs

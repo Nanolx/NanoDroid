@@ -4,7 +4,7 @@
 # NanoDroid self-provided apks
 ###
 
-nlx_GMSCORE=(nanolx com.google.android.gms priv-app GmsCore)
+nlx_GMSCORE=(nanolx com.google.android.gms priv-app GmsCore_NanoDroid)
 nlx_DROIDGUARD=(nanolx org.microg.gms.droidguard priv-app DroidGuard)
 nlx_MPV=(nanolx is.xyz.mpv app MPV)
 nlx_PHONESKY=(nanolx com.android.vending priv-app Phonesky)
@@ -17,7 +17,7 @@ nlx_OMNICLOCK=(https://www.nanolx.org/apk/OmniClock.apk app OmniClock)
 # microG
 ###
 
-uG_GMSCORE=(microg com.google.android.gms priv-app GmsCore)
+uG_GMSCORE=(microg com.google.android.gms priv-app GmsCore_Official)
 uG_GSFPROXY=(microg com.google.android.gsf priv-app GsfProxy)
 uG_DROIDGUARD=(microg org.microg.gms.droidguard priv-app DroidGuard)
 uG_FAKESTORE=(microg com.android.vending priv-app FakeStore)
@@ -169,6 +169,8 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/priv-app/FakeStore/FakeStore.apk
 	Full/system/priv-app/YalpStore/YalpStore.apk
 	Full/system/priv-app/GsfProxy/GsfProxy.apk
+	Full/system/priv-app/GmsCore_NanoDroid/GmsCore_NanoDroid.apk
+	Full/system/priv-app/GmsCore_Official/GmsCore_Official.apk
 	BromiteWebView/system/app/BromiteWebView_arm/BromiteWebView_arm.apk
 	BromiteWebView/system/app/BromiteWebView_arm64/BromiteWebView_arm64.apk
 	BromiteWebView/system/app/BromiteWebView_x86/BromiteWebView_x86.apk )

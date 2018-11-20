@@ -695,9 +695,14 @@ install_microg () {
 			    ui_print " << with microG [Déjà Vu, Ichnaea, Nominatim]" ;;
 		esac
 
-		for app in ${NLPBACKEND} nlpBackendNominatim GmsCore; do
+		for app in ${NLPBACKEND} nlpBackendNominatim; do
 			nanodroid_install_apk ${app}
 		done
+
+		if [ "${nanodroid_gmscore}" -eq 0 ]; then
+			nanodroid_install_apk GmsCore_NanoDroid "" GmsCore
+		else	nanodroid_install_apk GmsCore_Official "" GmsCore
+		fi
 
 		if [ "${nanodroid_microg}" -ne 2 ]; then
 			for app in GsfProxy DroidGuard; do
@@ -1324,6 +1329,7 @@ check_cfg_setup () {
 
 	[ -z "${nanodroid_fdroid}" ] && set_prop nanodroid_fdroid 1
 	[ -z "${nanodroid_microg}" ] && set_prop nanodroid_microg 1
+	[ -z "${nanodroid_gmscore}" ] && set_prop nanodroid_gmscore 0
 	[ -z "${nanodroid_apps}" ] && set_prop nanodroid_apps 1
 	[ -z "${nanodroid_play}" ] && set_prop nanodroid_play 1
 
