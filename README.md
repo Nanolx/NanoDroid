@@ -295,7 +295,7 @@ Extra packages, flashing through TWRP required (flashing through Magisk Manager 
   * system testing script which will create the logfile `/sdcard/NanoDroid-SysTest.log`
   * the following data is collected:
      * device profile (ROM, manufacturer, device, ABI, builddate, security patch date)
-     * pre-set and detected LD_LIBRARY_PATH
+     * detected LD_LIBRARY_PATH
      * DalvikVM binary and it's architecture
      * mounted partitions, whether device is A/B
      * list of installed GApps

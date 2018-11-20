@@ -17,7 +17,7 @@
 * SysTest package
   * new package for providing several ROM informations
      * device profile (ROM, manufacturer, device, ABI, builddate, security patch date)
-     * pre-set and detected LD_LIBRARY_PATH
+     * detected LD_LIBRARY_PATH
      * DalvikVM binary and it's architecture
      * mounted partitions, whether device is A/B
      * list of installed GApps
