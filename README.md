@@ -643,7 +643,7 @@ List of known issues
       * `pm install -r /system/priv-app/DroidGuard/DroidGuard.apk`
 * Applications crash when using WebView
   * install Bromite WebView as user-app, as root, on-device, issue:
-      * `pm install -r /system/app/webview/webview.apk`
+      * `pm install -r /system/app/BromiteWebView/BromiteWebView.apk`
 
 Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
 
