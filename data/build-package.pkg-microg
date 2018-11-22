@@ -12,7 +12,8 @@ create_microg_package() {
 		zip_add "system/app/${app}/"
 	done
 
-	for app in DroidGuard FakeStore GmsCore Phonesky GsfProxy YalpStore; do
+	for app in DroidGuard FakeStore GmsCore_Official GmsCore_NanoDroid \
+		Phonesky GsfProxy YalpStore; do
 		zip_add "system/priv-app/${app}/"
 	done
 
