@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 20.2 in-dev "Cardenas"
+## 20.2.20181122 "Cardenas"
 
 ### Notes
 
