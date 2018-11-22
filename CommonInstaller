@@ -1175,10 +1175,7 @@ nanodroid_install_lib () {
 		for ARCHLIB in ${LIB_ARCHES}; do
 			if [ -d ${TMP_LIBDIR}/lib/${ARCHLIB} ]; then
 				srcdir=${TMP_LIBDIR}/lib/${ARCHLIB}
-				[ -z "${multilib}" ] && break
-			fi
 
-			if [ -d "${srcdir}" ]; then
 				case ${srcdir} in
 					*arm64*  ) echo "      ${app}: installing arm64 libs"
 						   lib_arch=arm64 ;;
@@ -1201,6 +1198,8 @@ nanodroid_install_lib () {
 
 					installinfo_add "/${dir}/${app}/lib/${lib_arch}/$(basename ${lib})"
 				done
+
+				[ -z "${multilib}" ] && break
 			fi
 		done
 	fi

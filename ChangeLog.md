@@ -8,6 +8,9 @@
 
 ### Bug Fixes
 
+* CommonInstaller
+  * fix installing APK libraries for non-multilib APKs
+
 * Uninstaller
   * fixed Uninstaller failing if no overlayed apps from System Mode exist
   * fixed Uninstaller failing to remove Patcher artifacts and restore original services.jar
