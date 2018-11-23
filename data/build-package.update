@@ -7,6 +7,7 @@ nanodroid_pull () {
 	update_swipe
 	update_gsync
 	update_bromite
+	update_osmand
 }
 
 update_swipe () {
