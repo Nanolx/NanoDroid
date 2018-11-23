@@ -601,6 +601,14 @@ Additional credits go to
 * JesusFreke for smali/baksmali
   * https://github.com/JesusFreke/smali
 
+Special Thanks to the contributors
+
+* Gia90
+  * Android 6.0 support for Patcher
+  * fixes for x86_64 support
+* Vavun
+  * OsmAnd package
+
 Special Thanks to the beta testers
 
 * xenithorb
