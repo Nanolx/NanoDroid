@@ -1,5 +1,15 @@
 # ChangeLog
 
+## 20.3 in-dev
+
+### Bug Fixes
+
+### General Changes
+
+* Full, F-Droid packages
+  * improve F-Droid vendor repository settings
+  * add official microG Repository to vendor repositories
+
 ## 20.2.20181122 "Cardenas"
 
 ### Notes
