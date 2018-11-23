@@ -7,7 +7,6 @@ create_osmand_package() {
 	print_package "OsmAnd"
 
 	cd "${CWD}/Full"
-	zip_add "system/app/OsmAnd/"
 	zip_add "system/xbin/unzip*"
 	cd "${CWD}"
 

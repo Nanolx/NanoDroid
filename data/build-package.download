@@ -84,11 +84,19 @@ grab_apk_from_repo () {
 
 	APK_URL="${REPO}/${APK_NAME}"
 
-	if [ "${1}" = "bromite" ]; then
-		APK_DEST="${CWD}/BromiteWebView/system/${3}/${4}"
-	else
-		APK_DEST="${CWD}/Full/system/${3}/${4}"
-	fi
+	case "${PKG_NAME}" in
+		com.android.webview )
+			APK_DEST="${CWD}/BromiteWebView/system/${3}/${4}"
+		;;
+
+		net.osmand.plus | net.osmand.srtmPlugin.paid )
+			APK_DEST="${CWD}/OsmAnd/system/${3}/${4}"
+		;;
+
+		* )
+			APK_DEST="${CWD}/Full/system/${3}/${4}"
+		;;
+	esac
 
 	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
 		TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"

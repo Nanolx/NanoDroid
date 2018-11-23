@@ -127,6 +127,7 @@ for opt in ${@}; do
 		u-bromite )
 			update_indices
 			update_bromite
+			check_nanodroid
 		;;
 
 		u-osmand )

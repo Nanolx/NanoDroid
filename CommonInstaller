@@ -571,7 +571,7 @@ magisk_install_setup () {
 				error "${MODID} can't be installed along side the Full package"
 		;;
 
-		NanoDroid_BromiteWebView )
+		NanoDroid_BromiteWebView | NanoDroid_OsmAnd )
 			true
 		;;
 
@@ -995,10 +995,10 @@ install_bromite_webview () {
 }
 
 install_osmand () {
-	if [ "${nanodroid_osmand}" -eq 1 -o "${MODID}" = "NanoDroid_OsmAnd" ]; then
+	if [ "${MODID}" = "NanoDroid_OsmAnd" ]; then
 		ui_print " << with OsmAnd"
 		nanodroid_install_apk OsmAnd
-	else	ui_print " << without OsmAnd"
+		nanodroid_install_apk OsmAnd_ContourLines
 	fi
 }
 

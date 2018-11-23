@@ -51,6 +51,7 @@ fd_OPENCAMERA=(fdroid net.sourceforge.opencamera app OpenCamera)
 fd_OPENKEYCHAIN=(fdroid org.sufficientlysecure.keychain app OpenKeyChain)
 fd_OPENVPN=(fdroid de.blinkt.openvpn app OpenVPN)
 fd_OSMAND=(fdroid net.osmand.plus app OsmAnd)
+fd_OSMAND_CONTOURLINES=(fdroid net.osmand.srtmPlugin.paid app OsmAnd_ContourLines)
 fd_QKSMS=(fdroid com.moez.QKSMS app QKSMS)
 fd_SIMPLECALENDAR=(fdroid com.simplemobiletools.calendar app SimpleCalendar)
 fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery.pro app SimpleGallery)
@@ -154,7 +155,6 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/OpenVPN/OpenVPN.apk
 	Full/system/app/OpenWeatherMapProvider/OpenWeatherMapProvider.apk
 	Full/system/app/Orbot/Orbot.apk
-	Full/system/app/OsmAnd/OsmAnd.apk
 	Full/system/app/QKSMS/QKSMS.apk
 	Full/system/app/SimpleCalendar/SimpleCalendar.apk
 	Full/system/app/SimpleGallery/SimpleGallery.apk
@@ -175,4 +175,6 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/priv-app/GmsCore_Official/GmsCore_Official.apk
 	BromiteWebView/system/app/BromiteWebView_arm/BromiteWebView_arm.apk
 	BromiteWebView/system/app/BromiteWebView_arm64/BromiteWebView_arm64.apk
-	BromiteWebView/system/app/BromiteWebView_x86/BromiteWebView_x86.apk )
+	BromiteWebView/system/app/BromiteWebView_x86/BromiteWebView_x86.apk
+	OsmAnd/system/app/OsmAnd/OsmAnd.apk
+	OsmAnd/system/app/OsmAnd_ContourLines/OsmAnd_ContourLines.apk )
