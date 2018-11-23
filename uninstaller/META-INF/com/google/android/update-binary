@@ -292,7 +292,7 @@ if [ -f /data/adb/magisk.img ]; then
 fi
 
 if (is_mounted /magisk); then
-	for module in NanoDroid NanoDroid_microG NanoDroid_FDroid NanoDroid_BromiteWebView; do
+	for module in NanoDroid NanoDroid_microG NanoDroid_FDroid NanoDroid_BromiteWebView NanoDroid_OsmAnd; do
 		if [ -d /magisk/${module} ]; then
 			ui_print " << uninstalling: ${module}"
 			rm -rf /magisk/${module}

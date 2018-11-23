@@ -8,6 +8,7 @@ nanodroid_zelda=1
 nanodroid_mapsv1=1
 nanodroid_init=1
 nanodroid_gsync=0
+nanodroid_osmand=1
 nanodroid_swipe=0
 nanodroid_forcesystem=0
 nanodroid_nlpbackend=3

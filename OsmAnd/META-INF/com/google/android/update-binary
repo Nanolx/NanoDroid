@@ -1,0 +1,44 @@
+#!/sbin/sh
+
+umask 022
+OUTFD=${2}
+ZIP=${3}
+
+ZIPDIR=$(dirname "${ZIP}")
+MODID=NanoDroid_OsmAnd
+
+mkdir -p /dev/tmp
+unzip -o "${ZIP}" CommonInstaller -d "/dev/tmp"
+if [ ! -f /dev/tmp/CommonInstaller ]; then
+	echo " !! failed to load Common Installer"
+	exit 1
+else
+	source "/dev/tmp/CommonInstaller"
+fi
+
+detect_bootmode
+detect_outfd
+show_progress 1.0 0
+
+show_banner
+set_progress 0.1
+
+unpack_zip
+mount_partitions
+
+detect_arch
+setup_busybox
+
+get_cfg_setup
+get_cfg_overlay
+
+detect_mode
+set_progress 0.2
+
+install_osmand
+set_progress 0.75
+
+nanodroid_finalize
+set_progress 1.0
+
+exit 0

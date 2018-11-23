@@ -182,6 +182,9 @@ show_banner () {
 		NanoDroid_BromiteWebView )
 			ui_print "   Bromite WebView package   "
 		;;
+		NanoDroid_OsmAnd )
+			ui_print "   OsmAnd package   "
+		;;
 	esac
 	ui_print "*****************************"
 	ui_print " "
@@ -988,6 +991,14 @@ install_bromite_webview () {
 		fi
 
 		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib BromiteWebView
+	fi
+}
+
+install_osmand () {
+	if [ "${nanodroid_osmand}" -eq 1 -o "${MODID}" = "NanoDroid_OsmAnd" ]; then
+		ui_print " << with OsmAnd"
+		nanodroid_install_apk OsmAnd
+	else	ui_print " << without OsmAnd"
 	fi
 }
 

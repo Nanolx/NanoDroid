@@ -6,7 +6,7 @@ CWD=$(dirname "${CWD}")
 
 for funcfile in  pkg-full pkg-microg pkg-fdroid \
 	pkg-misc update common download database \
-	pkg-bromite; do
+	pkg-bromite pkg-osmand; do
 	source "${CWD}/data/build-package.${funcfile}" || exit 1
 done
 
@@ -56,6 +56,11 @@ for opt in ${@}; do
 			mk_pkg_bromite_webview
 		;;
 
+		osmand )
+			check_nanodroid || error "run nanodroid-pull first!"
+			mk_pkg_osmand
+		;;
+
 		systest )
 			mk_pkg_systest
 		;;
@@ -69,6 +74,7 @@ for opt in ${@}; do
 			mk_pkg_uninstaller
 			mk_pkg_setupwizard
 			mk_pkg_bromite_webview
+			mk_pkg_osmand
 			mk_pkg_systest
 		;;
 
@@ -121,6 +127,12 @@ for opt in ${@}; do
 		u-bromite )
 			update_indices
 			update_bromite
+		;;
+
+		u-osmand )
+			update_indices
+			update_osmand
+			check_nanodroid
 		;;
 
 		check )
