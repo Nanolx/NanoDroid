@@ -116,6 +116,7 @@ You can create snapshots from this repository.
      * `build-package uninstaller` to create the uninstaller package
      * `build-package setupwizard` to create the Setup Wizard package
      * `build-package bromitewebview` to create the Bromite WebView package
+     * `build-package osmand` for the OpenStreetMap (OsmAnd) package
      * `build-package systest` to create the SysTest package
      * `build-package all` to create all packages at once
   * update required files:
@@ -125,6 +126,7 @@ You can create snapshots from this repository.
      * `build-package u-swipe` to update swipe libraries
      * `build-package u-gsync` to update Google Sync Adapters
      * `build-package u-bromite` to update Bromite WebView
+     * `build-package u-osmand` to update OpenStreetMap (OsmAnd)
      * `build-package pull` to update/re-download everything
 
 for apks downloaded from F-Droid repositories or from APK Mirror, `build-package` checks the SHA256 hash.
@@ -254,6 +256,9 @@ Module packages, flashing through TWRP required (flashing through Magisk Manager
   * F-Droid and it's privileged extension
 * **NanoDroid-BromiteWebView**: includes (only)
   * [Bromite WebView](https://www.bromite.org/system_web_view)
+* **NanoDroid-OsmAnd**: includes (only)
+  * [OsmAnd](https://f-droid.org/de/packages/net.osmand.plus/)
+  * [OsmAnd Contour Lines plugin](https://f-droid.org/de/packages/net.osmand.srtmPlugin.paid/)
 
 #### Installation Logfiles
 
