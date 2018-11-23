@@ -10,6 +10,10 @@
   * improve F-Droid vendor repository settings
   * add official microG Repository to vendor repositories
 
+* OsmAnd package
+  * new package including OsmAnd+ (OpenStreetMap) and the ContourLines plugin
+  * thanks to @Vavun for most of the work
+
 ## 20.2.20181122 "Cardenas"
 
 ### Notes
