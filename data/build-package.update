@@ -70,6 +70,7 @@ update_apps () {
 	grab_apk_from_repo ${fd_OPENKEYCHAIN[@]}
 	grab_apk_from_repo ${nlx_OPENLAUNCHER[@]}
 	grab_apk_from_repo ${fd_OPENVPN[@]}
+	grab_apk_from_repo ${fd_OSMAND[@]}
 	grab_apk_from_repo ${fd_QKSMS[@]}
 	grab_apk_from_repo ${fd_SIMPLECALENDAR[@]}
 	grab_apk_from_repo ${fd_SIMPLEGALLERY[@]}
@@ -94,4 +95,8 @@ update_bromite () {
 	grab_apk_from_repo ${bm_WEBVIEW_arm64[@]}
 	grab_apk_from_repo ${bm_WEBVIEW_arm[@]}
 	grab_apk_from_repo ${bm_WEBVIEW_x86[@]}
+}
+
+update_osmand () {
+	grab_apk_from_repo ${fd_OSMAND[@]}
 }

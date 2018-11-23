@@ -50,6 +50,7 @@ fd_ODYSSEY=(fdroid org.gateshipone.odyssey app Odyssey)
 fd_OPENCAMERA=(fdroid net.sourceforge.opencamera app OpenCamera)
 fd_OPENKEYCHAIN=(fdroid org.sufficientlysecure.keychain app OpenKeyChain)
 fd_OPENVPN=(fdroid de.blinkt.openvpn app OpenVPN)
+fd_OSMAND=(fdroid net.osmand.plus app OsmAnd)
 fd_QKSMS=(fdroid com.moez.QKSMS app QKSMS)
 fd_SIMPLECALENDAR=(fdroid com.simplemobiletools.calendar app SimpleCalendar)
 fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery.pro app SimpleGallery)
@@ -153,6 +154,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/OpenVPN/OpenVPN.apk
 	Full/system/app/OpenWeatherMapProvider/OpenWeatherMapProvider.apk
 	Full/system/app/Orbot/Orbot.apk
+	Full/system/app/OsmAnd/OsmAnd.apk
 	Full/system/app/QKSMS/QKSMS.apk
 	Full/system/app/SimpleCalendar/SimpleCalendar.apk
 	Full/system/app/SimpleGallery/SimpleGallery.apk
