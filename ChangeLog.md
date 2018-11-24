@@ -4,6 +4,9 @@
 
 ### Bug Fixes
 
+* build-package Script
+  * Prevent error `(23) Failed writing body` while piping cURL's output in some cases @Vavun
+
 ### General Changes
 
 * Full, F-Droid packages
@@ -14,11 +17,16 @@
   * move microG DroidGuard Helper from /system/priv-app to /system/app
 
 * OsmAnd package
-  * new package including OsmAnd+ (OpenStreetMap) and the ContourLines plugin
+  * new package including OsmAnd+ (OpenStreetMap) and the Contour Lines plugin
   * thanks to @Vavun for most of the work
 
 * Uninstaller
   * don't remove configuration files
+
+### Updates
+
+* manual
+  * Play Store (12.6.13)
 
 ## 20.2.20181122 "Cardenas"
 
