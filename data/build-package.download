@@ -147,7 +147,7 @@ grab_apk_from_url () {
 
 USER_AGENT="Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0"
 grab_apk_from_apkmirror () {
-	VERSION=$(curl -s https://www.apkmirror.com/apk/${1}/${2}/ | \
+	VERSION=$(curl -s -N https://www.apkmirror.com/apk/${1}/${2}/ | \
 		gawk -F\" '/apk.*release/{print $4 ; exit}' | \
 		sed -e "s,.*${2}-,,g;s,-release/,,g")
 
@@ -155,10 +155,10 @@ grab_apk_from_apkmirror () {
 ${1}/${2}/${2}-${VERSION}-release/\
 ${5}-${VERSION}-android-apk-download"
 
-	URL_WP=$(curl -s "${URL_STRING}/download/" | \
+	URL_WP=$(curl -s -N "${URL_STRING}/download/" | \
 		gawk -F\" '/If not, please click/{print $18}')
 
-	SHA_SUM=$(curl -s "${URL_STRING}/" | \
+	SHA_SUM=$(curl -s -N "${URL_STRING}/" | \
 		grep "SHA-256.*[^>]</span>" | \
 		sed -e 's,.*\">,,;s,</span>,,')
 
@@ -195,8 +195,8 @@ ${5}-${VERSION}-android-apk-download"
 
 
 grab_apk_from_github () {
-	TAG_NAME="$(curl -s https://api.github.com/repos/${1}/releases | gawk -F\" '/tag_name/{print $4; exit}')"
-	APK_NAME="$(curl -s https://api.github.com/repos/${1}/releases | gawk -F\" '/name.*.apk/{print $4; exit}')"
+	TAG_NAME="$(curl -s -N https://api.github.com/repos/${1}/releases | gawk -F\" '/tag_name/{print $4; exit}')"
+	APK_NAME="$(curl -s -N https://api.github.com/repos/${1}/releases | gawk -F\" '/name.*.apk/{print $4; exit}')"
 
 	APK_URL="https://github.com/${1}/releases/download/${TAG_NAME}/${APK_NAME}"
 	APK_DEST="${CWD}/Full/system/${2}/${3}"

@@ -130,6 +130,7 @@ setup NanoDroid [! do this first !]:
 update contents:
 	u-microg		| update microG and companions
 	u-fdroid		| update F-Droid and Extension
+	u-osmand		| update OsmAnd and Plugins
 	u-apps			| update applications
 	u-swipe			| update swipe libraries
 	u-gsync			| update Google Sync Adapters
@@ -142,6 +143,7 @@ create zip files:
 	uninstaller		| create uninstaller zip from repo
 	setupwizard		| create setup-wizard zip from repo
 	bromitewebview		| create Bromite WebView zip from repo
+	osmand		| create OsmAnd package zip from repo
 	all			| create all zips from repo
 
 misc. stuff:
