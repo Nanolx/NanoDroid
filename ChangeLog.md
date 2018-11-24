@@ -10,6 +10,9 @@
   * improve F-Droid vendor repository settings
   * add official microG Repository to vendor repositories
 
+* Full, microG packages
+  * move microG DroidGuard Helper from /system/priv-app to /system/app
+
 * OsmAnd package
   * new package including OsmAnd+ (OpenStreetMap) and the ContourLines plugin
   * thanks to @Vavun for most of the work
