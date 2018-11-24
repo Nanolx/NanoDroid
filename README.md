@@ -2,7 +2,9 @@
 
 NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, both devices with or without A/B partition scheme are supported, aswell as Magisk Mode (module) installation. It also includes several tools (eg. GNU Bash, GNU Nano, more), scripts, fonts, sounds and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
 
-Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them.
+Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them, see [Alter Installation](#alter-installation) below. 
+
+NanoDroid allows you to choose between the official microG GmsCore and a custom microG GmsCore (default), [list of changes](https://github.com/Nanolx/android_packages_apps_GmsCore#changes).
 
 In order for full microG experience NanoDroid contains a modified Play Store which allows (in-)app-purchases with microG, which would normally not be possible. It also tries to remove all previously installed GApps on it's own. For ROMs without builtin signature spoofing support NanoDroid includes an on-device Patcher which tries to patch your ROM from TWRP.
 
@@ -293,7 +295,6 @@ Extra packages, flashing through TWRP required (flashing through Magisk Manager 
 * **NanoDroid-uninstaller**: includes
   * uninstalls *all* NanoDroid Magisk Modules
   * uninstalls NanoDroid installed in System Mode
-  * uninstalls NanoDroid configuration files
   * uninstalls NanoDroid-Patcher addon.d environment
   * restores GApps and location services auto-removed during installation (System Mode)
   * restores `services.jar` patched by NanoDroid-Patcher (System Mode)
