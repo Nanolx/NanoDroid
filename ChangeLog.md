@@ -14,6 +14,9 @@
   * new package including OsmAnd+ (OpenStreetMap) and the ContourLines plugin
   * thanks to @Vavun for most of the work
 
+* Uninstaller
+  * don't remove configuration files
+
 ## 20.2.20181122 "Cardenas"
 
 ### Notes

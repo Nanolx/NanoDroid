@@ -257,17 +257,6 @@ ui_print " "
 detect_bootmode
 mount_partitions
 
-ui_print " << Removing configuration files (if any)"
-
-for path in ${config_locations}; do
-	for file in ${config_files}; do
-		if [ -f "${path}/${file}" ]; then
-			rm -f "${path}/${file}"
-			ui_print " <<> removing ${path}/${file}"
-		fi
-	done
-done
-
 ui_print " << Removing installation logs (if any)"
 
 # old format
