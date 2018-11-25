@@ -2,6 +2,10 @@
 
 ## 20.3 in-dev
 
+### Notes
+
+* (Simple) Calendar is now replaced by Simple Calendar Pro. While the app is still Open Source, code available on github and free on F-Droid, the Play Store release is now paid ([see this post by the developer](https://medium.com/@tibbi/some-simple-mobile-tools-apps-are-becoming-paid-d053268f0fb2)), thus the change. NanoDroid-wise the transistion is done in-place, but you will have to re-setup the application.
+
 ### Bug Fixes
 
 * build-package Script
@@ -24,6 +28,10 @@
   * don't remove configuration files
 
 ### Updates
+
+* automatic
+  * Simple Gallery Pro (6.0.2)
+  * Simple Calendar Pro (6.0.1)
 
 * manual
   * Play Store (12.6.13)
