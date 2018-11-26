@@ -170,6 +170,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/DroidGuard/DroidGuard.apk
 	Full/system/priv-app/FDroidPrivileged/FDroidPrivileged.apk
 	Full/system/priv-app/FakeStore/FakeStore.apk
+	Full/system/priv-app/Phonesky/Phonesky.apk
 	Full/system/priv-app/YalpStore/YalpStore.apk
 	Full/system/priv-app/GsfProxy/GsfProxy.apk
 	Full/system/priv-app/GmsCore_NanoDroid/GmsCore_NanoDroid.apk
