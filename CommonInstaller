@@ -1003,7 +1003,7 @@ install_osmand () {
 }
 
 install_swipe () {
-	if [ "${nanodroid_swipe}" ]; then
+	if [ "${nanodroid_swipe}" -eq 1 ]; then
 		if [ "${SWIPE_UNSUPPORTED}" -eq 1 ]; then
 			ui_print " << Swipe Libraries are unsupported on SDK ${SDK_VERSION}"
 		else
