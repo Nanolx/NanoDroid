@@ -165,6 +165,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/XDALabs/XDALabs.apk
 	Full/system/app/YahooWeatherProvider/YahooWeatherProvider.apk
 	Full/system/app/nlpBackendIchnaea/nlpBackendIchnaea.apk
+	Full/system/app/nlpBackendDejavu/nlpBackendDejavu.apk
 	Full/system/app/nlpBackendNominatim/nlpBackendNominatim.apk
 	Full/system/app/DroidGuard/DroidGuard.apk
 	Full/system/priv-app/FDroidPrivileged/FDroidPrivileged.apk
