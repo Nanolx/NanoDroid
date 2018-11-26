@@ -52,4 +52,9 @@
         <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="false"></permission>
         <permission name="android.permission.ACCESS_FINE_LOCATION" fixed="false"></permission>
     </exception>
+
+    <exception package="org.microg.nlp.backend.apple">
+        <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="false"></permission>
+        <permission name="android.permission.ACCESS_FINE_LOCATION" fixed="false"></permission>
+    </exception>
 </exceptions>

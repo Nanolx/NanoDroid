@@ -694,8 +694,16 @@ install_microg () {
 			    ui_print " << with microG [Déjà Vu, Nominatim]" ;;
 			2 ) NLPBACKEND="nlpBackendIchnaea"
 			    ui_print " << with microG [Ichnaea, Nominatim]" ;;
-			3 ) NLPBACKEND="nlpBackendDejavu nlpBackendIchnaea"
+			3 ) NLPBACKEND="nlpBackendApple"
+			    ui_print " << with microG [Apple, Nominatim]" ;;
+			4 ) NLPBACKEND="nlpBackendDejavu nlpBackendIchnaea"
 			    ui_print " << with microG [Déjà Vu, Ichnaea, Nominatim]" ;;
+			5 ) NLPBACKEND="nlpBackendDejavu nlpBackendApple"
+			    ui_print " << with microG [Déjà Vu, Apple, Nominatim]" ;;
+			6 ) NLPBACKEND="nlpBackendIchnaea nlpBackendApple"
+			    ui_print " << with microG [Ichnaea, Apple, Nominatim]" ;;
+			7 ) NLPBACKEND="nlpBackendDejavu nlpBackendIchnaea nlpBackendApple"
+			    ui_print " << with microG [Déjà Vu, Ichnaea, Apple, Nominatim]" ;;
 		esac
 
 		for app in ${NLPBACKEND} nlpBackendNominatim; do
@@ -825,14 +833,26 @@ install_store () {
 		;;
 
 		3 )
+			ui_print " << with Aurora Store"
+			NANODROID_APP_STORE="AuroraStore"
+			NANODROID_REM_STORE=""
+		;;
+
+		4 )
 			ui_print " << with Fake Store"
 			NANODROID_APP_STORE="FakeStore"
 			NANODROID_REM_STORE="Phonesky"
 		;;
 
-		4 )
+		5 )
 			ui_print " << with Yalp Store and Fake Store"
 			NANODROID_APP_STORE="YalpStore FakeStore"
+			NANODROID_REM_STORE="Phonesky"
+		;;
+
+		6 )
+			ui_print " << with Aurora Store and Fake Store"
+			NANODROID_APP_STORE="AuroraStore FakeStore"
 			NANODROID_REM_STORE="Phonesky"
 		;;
 	esac
