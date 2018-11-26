@@ -38,6 +38,7 @@
 
 * manual
   * Play Store (12.6.13)
+  * microG GmsCore (0.2.6.14797-dirty-113)
 
 ## 20.2.20181122 "Cardenas"
 
