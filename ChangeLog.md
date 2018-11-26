@@ -11,6 +11,9 @@
 * build-package Script
   * Prevent error `(23) Failed writing body` while piping cURL's output in some cases @Vavun
 
+* CommonInstaller
+  * fix `nanodroid_swipe` not being properly honoured @Vavun
+
 ### General Changes
 
 * Full, F-Droid packages
