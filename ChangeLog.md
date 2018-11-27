@@ -35,10 +35,13 @@
 * automatic
   * Simple Gallery Pro (6.0.2)
   * Simple Calendar Pro (6.0.1)
+  * Oandbackup (0.3.4-universal)
+  * Bromite WebView (71.0.3578.72)
 
 * manual
-  * Play Store (12.6.13)
+  * Play Store (12.7.23)
   * microG GmsCore (0.2.6.14797-dirty-113)
+  * OpenLauncher (0.6.1-nightly-181127)
 
 ## 20.2.20181122 "Cardenas"
 
