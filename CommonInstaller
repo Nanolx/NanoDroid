@@ -690,17 +690,17 @@ install_microg () {
 		NLPBACKEND="nlpBackendNominatim"
 		NLPSTRING="Nominatim"
 
-		if [ "${nanodroid_nlpbackend[0]}" -eq 1 ]; then
+		if [ "${nanodroid_nlpbackend:0:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendDejavu"
 			NLPSTRING="${NLPSTRING}, Déjà Vu"
 		fi
 
-		if [ "${nanodroid_nlpbackend[1]}" -eq 1 ]; then
+		if [ "${nanodroid_nlpbackend:1:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendIchnaea"
 			NLPSTRING="${NLPSTRING}, Ichnaea"
 		fi
 
-		if [ "${nanodroid_nlpbackend[2]}" -eq 1 ]; then
+		if [ "${nanodroid_nlpbackend:2:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendApple"
 			NLPSTRING="${NLPSTRING}, Apple"
 		fi
@@ -812,8 +812,8 @@ install_apps () {
 install_store () {
 	STORE_APPNAME=""
 
-	STORE_CHOICE=${nanodroid_play[0]}
-	FAKE_STORE=${nanodroid_play[1]}
+	STORE_CHOICE=${nanodroid_play:0:1}
+	FAKE_STORE=${nanodroid_play:1:1}
 
 	[ "${FAKE_STORE}" -eq 1 ] && STORE_CONFLICT="Phonesky" || STORE_CONFLICT=""
 
@@ -1350,18 +1350,17 @@ check_cfg_setup () {
 	[ -z "${nanodroid_gmscore}" ] && set_prop nanodroid_gmscore 0
 	[ -z "${nanodroid_apps}" ] && set_prop nanodroid_apps 1
 
-	[ -z "${nanodroid_play}" ] && set_prop nanodroid_play "(1 0)"
+	[ -z "${nanodroid_play}" ] && set_prop nanodroid_play 10
 
-	# in NanoDroid <= 20.2 nanodroid_play is an integer
-	# starting with 20.3 it's an array, migrate the value
-	if [ "${#nanodroid_play[@]}" -eq 1 ]; then
+	# in NanoDroid <= 20.2 nanodroid_play has changed
+	if [ "${#nanodroid_play}" -lt 2 ]; then
 		case "${nanodroid_play}" in
-			0 ) tmp_prop="(0 0)" ;;
-			1 ) tmp_prop="(1 0)" ;;
-			2 ) tmp_prop="(2 0)" ;;
-			3 ) tmp_prop="(0 1)" ;;
-			4 ) tmp_prop="(2 1)" ;;
-			* ) tmp_prop="(1 0)" ;;
+			0 ) tmp_prop="00" ;;
+			1 ) tmp_prop="10" ;;
+			2 ) tmp_prop="20" ;;
+			3 ) tmp_prop="01" ;;
+			4 ) tmp_prop="21" ;;
+			* ) tmp_prop="10" ;;
 		esac
 
 		sed -e '/^nanodroid_play/d' -i "${cfg_setup}"
@@ -1380,17 +1379,16 @@ check_cfg_setup () {
 	[ -z "${nanodroid_forcesystem}" ] && set_prop nanodroid_forcesystem 0
 	[ -z "${nanodroid_swipe}" ] && set_prop nanodroid_swipe 0
 
-	[ -z "${nanodroid_nlpbackend}" ] && set_prop nanodroid_nlpbackend "(1 0 0)"
+	[ -z "${nanodroid_nlpbackend}" ] && set_prop nanodroid_nlpbackend 100
 
-	# in NanoDroid <= 20.2 nanodroid_nlpbackend is an integer
-	# starting with 20.3 it's an array, migrate the value
-	if [ "${#nanodroid_nlpbackend[@]}" -eq 1 ]; then
+	# in NanoDroid <= 20.2 nanodroid_nlpbackend has changed
+	if [ "${#nanodroid_nlpbackend}" -eq 1 ]; then
 		case "${nanodroid_nlpbackend}" in
-			0 ) tmp_prop="(0 0 0)" ;;
-			1 ) tmp_prop="(1 0 0)" ;;
-			2 ) tmp_prop="(0 1 0)" ;;
-			3 ) tmp_prop="(1 1 0)" ;;
-			* ) tmp_prop="(1 0 0)" ;;
+			0 ) tmp_prop="000" ;;
+			1 ) tmp_prop="100" ;;
+			2 ) tmp_prop="010" ;;
+			3 ) tmp_prop="001" ;;
+			* ) tmp_prop="100" ;;
 		esac
 
 		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"

@@ -20,7 +20,7 @@ nanodroid_microg=1
 nanodroid_gmscore=0
 nanodroid_fdroid=1
 nanodroid_apps=1
-nanodroid_play=(1 0)
+nanodroid_play=10
 nanodroid_overlay=1
 nanodroid_zelda=1
 nanodroid_mapsv1=1
@@ -28,7 +28,7 @@ nanodroid_init=1
 nanodroid_gsync=0
 nanodroid_swipe=0
 nanodroid_forcesystem=0
-nanodroid_nlpbackend=(1 0 0)
+nanodroid_nlpbackend=100
 nanodroid_bash=1
 nanodroid_nano=1
 nanodroid_utils=1
@@ -93,7 +93,7 @@ whether to override an already existing app.
 
 `0` means that a ROM app is preferred against a NanoDroid app, where `1` means the NanoDroid app is prefered. This applies to included applications [> Details](doc/Applications.md)
 
-`nanodroid_play=([0|1|2|3] [0|1])`
+`nanodroid_play=[0|1|2|3][0|1]`
 
 what app store to use:
 * 1st item
@@ -133,7 +133,7 @@ whether to provide Swipe libraries
 
 whether to force system mode installation, regardless whether Magisk is installed
 
-`nanodroid_nlpbackend=([0|1] [0|1] [0|1])`
+`nanodroid_nlpbackend=[0|1][0|1][0|1]`
 
 what location backends for microG to install
 * 1st element 0|1 = Déjà Vu location backend

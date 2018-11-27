@@ -7,8 +7,8 @@
 * (Simple) Calendar is now replaced by Simple Calendar Pro. While the app is still Open Source, code available on github and free on F-Droid, the Play Store release is now paid ([see this post by the developer](https://medium.com/@tibbi/some-simple-mobile-tools-apps-are-becoming-paid-d053268f0fb2)), thus the change. NanoDroid-wise the transistion is done in-place, but you will have to re-setup the application.
 
 * nanodroid_play setup variable has changed
-  * old: nanodroid_play=[0|1]
-  * new: nanodroid_play=([0|1|2|3] [0|1])
+  * old: nanodroid_play=[0|1] (default: nanodroid_play=1)
+  * new: nanodroid_play=[0|1|2|3][0|1] (default: nanodroid_play=10)
     * 1st element
          * 0 = no App Store
          * 1 = Play Store
@@ -20,8 +20,8 @@
   * your existing .nanodroid-setup file will be migrated
 
 * nanodroid_nlpbackend setup variable has changed
-  * old: nanodroid_nlpbackend=[0|1|2|3]
-  * new: nanodroid_nlpbackend=([0|1] [0|1] [0|1])
+  * old: nanodroid_nlpbackend=[0|1|2|3] (default: nanodroid_nlpbackend=1)
+  * new: nanodroid_nlpbackend=[0|1][0|1][0|1] (default: nanodroid_nlpbackend=100)
     * 1st element = whether to install Déjà Vu location backend
     * 2nd element = whether to install Ichnaea (Mozilla) location backend
     * 3rd element = whether to install Apple location backend
