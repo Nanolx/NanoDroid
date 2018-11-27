@@ -1356,11 +1356,12 @@ check_cfg_setup () {
 	# starting with 20.3 it's an array, migrate the value
 	if [ "${#nanodroid_play[@]}" -eq 1 ]; then
 		case "${nanodroid_play}" in
-			0 ) tmp_prop="(0 0)"
-			1 ) tmp_prop="(1 0)"
-			2 ) tmp_prop="(2 0)"
-			3 ) tmp_prop="(0 1)"
-			4 ) tmp_prop="(2 1)"
+			0 ) tmp_prop="(0 0)" ;;
+			1 ) tmp_prop="(1 0)" ;;
+			2 ) tmp_prop="(2 0)" ;;
+			3 ) tmp_prop="(0 1)" ;;
+			4 ) tmp_prop="(2 1)" ;;
+			* ) tmp_prop="(1 0)" ;;
 		esac
 
 		sed -e '/^nanodroid_play/d' -i "${cfg_setup}"
@@ -1385,10 +1386,11 @@ check_cfg_setup () {
 	# starting with 20.3 it's an array, migrate the value
 	if [ "${#nanodroid_nlpbackend[@]}" -eq 1 ]; then
 		case "${nanodroid_nlpbackend}" in
-			0 ) tmp_prop="(0 0 0)"
-			1 ) tmp_prop="(1 0 0)"
-			2 ) tmp_prop="(0 1 0)"
-			3 ) tmp_prop="(1 1 0)"
+			0 ) tmp_prop="(0 0 0)" ;;
+			1 ) tmp_prop="(1 0 0)" ;;
+			2 ) tmp_prop="(0 1 0)" ;;
+			3 ) tmp_prop="(1 1 0)" ;;
+			* ) tmp_prop="(1 0 0)" ;;
 		esac
 
 		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"
