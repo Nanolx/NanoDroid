@@ -1387,7 +1387,7 @@ check_cfg_setup () {
 			0 ) tmp_prop="000" ;;
 			1 ) tmp_prop="100" ;;
 			2 ) tmp_prop="010" ;;
-			3 ) tmp_prop="001" ;;
+			3 ) tmp_prop="110" ;;
 			* ) tmp_prop="100" ;;
 		esac
 
