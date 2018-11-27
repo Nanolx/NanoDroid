@@ -1,6 +1,6 @@
-diff -Nupr PS_12611.orig/AndroidManifest.xml PS_12611/AndroidManifest.xml
---- PS_12611.orig/AndroidManifest.xml	2018-11-14 22:05:35.007402882 +0100
-+++ PS_12611/AndroidManifest.xml	2018-11-14 22:06:45.779446593 +0100
+diff -Nupr PS_12723.orig/AndroidManifest.xml PS_12723/AndroidManifest.xml
+--- PS_12723.orig/AndroidManifest.xml	2018-11-27 18:23:48.937032156 +0100
++++ PS_12723/AndroidManifest.xml	2018-11-27 18:26:03.929479000 +0100
 @@ -82,6 +82,7 @@
      <uses-permission android:name="android.Manifest.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
      <uses-permission android:name="android.permission.READ_RUNTIME_PROFILES"/>
@@ -17,16 +17,16 @@ diff -Nupr PS_12611.orig/AndroidManifest.xml PS_12611/AndroidManifest.xml
          <activity android:name="com.google.android.finsky.expandeddescriptionactivity.ExpandedDescriptionActivity" android:theme="@style/FinskyOverlayTheme"/>
          <provider android:authorities="com.google.android.finsky.instantapps.dna.PhoneskyArchiveProvider" android:enabled="@bool/instant_apps_supported" android:exported="true" android:name="com.google.android.finsky.instantapps.dna.PhoneskyArchiveProvider" android:process=":instant_app_installer"/>
          <provider android:authorities="com.google.android.finsky.instantapps.HintApiContentProvider" android:enabled="@bool/instant_apps_supported" android:exported="true" android:name="com.google.android.finsky.instantapps.HintApiContentProvider" android:process=":instant_app_installer"/>
-@@ -926,4 +928,4 @@
+@@ -927,4 +929,4 @@
          </activity>
          <activity android:enabled="false" android:excludeFromRecents="true" android:icon="@mipmap/leak_canary_icon" android:label="@LEMON_transformed_from_string/leak_canary_storage_permission_activity_label" android:name="com.squareup.leakcanary.internal.RequestStoragePermissionActivity" android:process=":leakcanary" android:roundIcon="@mipmap/leak_canary_icon" android:taskAffinity="com.squareup.leakcanary.com.squareup.leakcanary" android:theme="@style/leak_canary_Theme.Transparent"/>
      </application>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_12611.orig/res/values/arrays.xml PS_12611/res/values/arrays.xml
---- PS_12611.orig/res/values/arrays.xml	2018-11-14 22:05:32.899401428 +0100
-+++ PS_12611/res/values/arrays.xml	2018-11-14 22:05:47.647411375 +0100
+diff -Nupr PS_12723.orig/res/values/arrays.xml PS_12723/res/values/arrays.xml
+--- PS_12723.orig/res/values/arrays.xml	2018-11-27 18:23:38.016981895 +0100
++++ PS_12723/res/values/arrays.xml	2018-11-27 18:24:05.121100205 +0100
 @@ -1,7 +1,15 @@
  <?xml version="1.0" encoding="utf-8"?>
  <resources>
@@ -47,9 +47,9 @@ diff -Nupr PS_12611.orig/res/values/arrays.xml PS_12611/res/values/arrays.xml
 +        <item>Disable Network Type Override</item>
 +    </string-array>
  </resources>
-diff -Nupr PS_12611.orig/res/values/layouts.xml PS_12611/res/values/layouts.xml
---- PS_12611.orig/res/values/layouts.xml	2018-11-14 22:05:32.899401428 +0100
-+++ PS_12611/res/values/layouts.xml	2018-11-14 22:06:13.499427750 +0100
+diff -Nupr PS_12723.orig/res/values/layouts.xml PS_12723/res/values/layouts.xml
+--- PS_12723.orig/res/values/layouts.xml	2018-11-27 18:23:38.016981895 +0100
++++ PS_12723/res/values/layouts.xml	2018-11-27 18:24:22.913167991 +0100
 @@ -8,7 +8,6 @@
      <item type="layout" name="light_purchase_app_permissions">@layout/main_light_purchase_app_permissions</item>
      <item type="layout" name="permission_row">@layout/main_permission_row</item>
@@ -58,36 +58,36 @@ diff -Nupr PS_12611.orig/res/values/layouts.xml PS_12611/res/values/layouts.xml
      <item type="layout" name="update_all_activity">@layout/main_update_all_activity</item>
      <item type="layout" name="video_collection_card_view">@layout/card_view_video_collection</item>
  </resources>
-diff -Nupr PS_12611.orig/res/values/public.xml PS_12611/res/values/public.xml
---- PS_12611.orig/res/values/public.xml	2018-11-14 22:05:32.899401428 +0100
-+++ PS_12611/res/values/public.xml	2018-11-14 22:07:39.787475156 +0100
-@@ -9038,7 +9038,6 @@
-     <public type="layout" name="top_charts_spinner_item" id="0x7f0e0523" />
-     <public type="layout" name="top_charts_spinner_selected_item" id="0x7f0e0524" />
-     <public type="layout" name="top_review_header" id="0x7f0e0525" />
--    <public type="layout" name="tv_season_selector_item" id="0x7f0e0527" />
-     <public type="layout" name="tv_season_spinner_item" id="0x7f0e0528" />
-     <public type="layout" name="tv_season_spinner_selected_item" id="0x7f0e0529" />
-     <public type="layout" name="two_icon_messages_success_step" id="0x7f0e052a" />
-@@ -11530,6 +11529,7 @@
-     <public type="string" name="yes" id="0x7f1308f3" />
-     <public type="string" name="yes_im_in" id="0x7f1308f4" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f1308f5" />
-+    <public type="string" name="fake_signature" id="0x7f1308f6" />
+diff -Nupr PS_12723.orig/res/values/public.xml PS_12723/res/values/public.xml
+--- PS_12723.orig/res/values/public.xml	2018-11-27 18:23:38.016981895 +0100
++++ PS_12723/res/values/public.xml	2018-11-27 18:25:13.293333807 +0100
+@@ -9068,7 +9068,6 @@
+     <public type="layout" name="top_charts_spinner_item" id="0x7f0e0525" />
+     <public type="layout" name="top_charts_spinner_selected_item" id="0x7f0e0526" />
+     <public type="layout" name="top_review_header" id="0x7f0e0527" />
+-    <public type="layout" name="tv_season_selector_item" id="0x7f0e0529" />
+     <public type="layout" name="tv_season_spinner_item" id="0x7f0e052a" />
+     <public type="layout" name="tv_season_spinner_selected_item" id="0x7f0e052b" />
+     <public type="layout" name="two_icon_messages_success_step" id="0x7f0e052c" />
+@@ -11564,6 +11563,7 @@
+     <public type="string" name="yes" id="0x7f1308fe" />
+     <public type="string" name="yes_im_in" id="0x7f1308ff" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f130900" />
++    <public type="string" name="fake_signature" id="0x7f130901" />
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -12885,4 +12885,4 @@
+@@ -12930,4 +12930,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002d" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002e" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002f" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_12611.orig/res/values/strings.xml PS_12611/res/values/strings.xml
---- PS_12611.orig/res/values/strings.xml	2018-11-14 22:05:32.899401428 +0100
-+++ PS_12611/res/values/strings.xml	2018-11-14 22:07:07.311458361 +0100
-@@ -2121,4 +2121,5 @@ First turn on NFC in your settings, then
+diff -Nupr PS_12723.orig/res/values/strings.xml PS_12723/res/values/strings.xml
+--- PS_12723.orig/res/values/strings.xml	2018-11-27 18:23:38.016981895 +0100
++++ PS_12723/res/values/strings.xml	2018-11-27 18:24:38.481222648 +0100
+@@ -2123,4 +2123,5 @@ First turn on NFC in your settings, then
      <string name="yes">Yes</string>
      <string name="yes_im_in">"Yes, I'm In"</string>
      <string name="current_locale_sanity_check" />
