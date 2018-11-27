@@ -6,6 +6,28 @@
 
 * (Simple) Calendar is now replaced by Simple Calendar Pro. While the app is still Open Source, code available on github and free on F-Droid, the Play Store release is now paid ([see this post by the developer](https://medium.com/@tibbi/some-simple-mobile-tools-apps-are-becoming-paid-d053268f0fb2)), thus the change. NanoDroid-wise the transistion is done in-place, but you will have to re-setup the application.
 
+* nanodroid_play setup variable has changed
+  * old: nanodroid_play=[0|1]
+  * new: nanodroid_play=([0|1|2|3] [0|1])
+    * 1st element
+         * 0 = no App Store
+         * 1 = Play Store
+         * 2 = Yalp Store
+         * 3 = Aurora Store
+    * 2nd element
+         * 0 = without Fake Store
+         * 1 = with Fake Store
+  * your existing .nanodroid-setup file will be migrated
+
+* nanodroid_nlpbackend setup variable has changed
+  * old: nanodroid_nlpbackend=[0|1|2|3]
+  * new: nanodroid_nlpbackend=([0|1] [0|1] [0|1])
+    * 1st element = whether to install Déjà Vu location backend
+    * 2nd element = whether to install Ichnaea (Mozilla) location backend
+    * 3rd element = whether to install Apple location backend
+         * reportedly better coverage in eastern europe than Ichnaea
+  * your existing .nanodroid-setup file will be migrated
+
 ### Bug Fixes
 
 * build-package Script
@@ -22,10 +44,15 @@
 
 * Full, microG packages
   * move microG DroidGuard Helper from /system/priv-app to /system/app
+  * add Apple location backend optionally @Vavun
+  * add Aurora Store optionally @Vavun
 
 * OsmAnd package
   * new package including OsmAnd+ (OpenStreetMap) and the Contour Lines plugin
   * thanks to @Vavun for most of the work
+
+* SetupWizard
+  * update for updated variables as noted above
 
 * Uninstaller
   * don't remove configuration files
