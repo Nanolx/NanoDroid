@@ -11,6 +11,9 @@
 * build-package Script
   * Prevent error `(23) Failed writing body` while piping cURL's output in some cases @Vavun
 
+* CommonInstaller
+  * fix `nanodroid_swipe` not being properly honoured @Vavun
+
 ### General Changes
 
 * Full, F-Droid packages
@@ -35,6 +38,7 @@
 
 * manual
   * Play Store (12.6.13)
+  * microG GmsCore (0.2.6.14797-dirty-113)
 
 ## 20.2.20181122 "Cardenas"
 

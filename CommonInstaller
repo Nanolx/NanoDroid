@@ -548,7 +548,7 @@ magisk_install_setup () {
 	recovery_actions
 
 	request_size_check "${INSTALLER}"
-	reqSizeM=$((reqSizeM + 100))
+	reqSizeM=$((reqSizeM + 200))
 
 	mount_magisk_img
 
