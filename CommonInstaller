@@ -1363,8 +1363,8 @@ check_cfg_setup () {
 			4 ) tmp_prop="(2 1)"
 		esac
 
-		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"
-		set_prop nanodroid_nlpbackend "${tmp_prop}"
+		sed -e '/^nanodroid_play/d' -i "${cfg_setup}"
+		set_prop nanodroid_play "${tmp_prop}"
 	fi
 
 	if [ "${MODID}" = "NanoDroid" ]; then
