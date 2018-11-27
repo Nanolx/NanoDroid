@@ -122,31 +122,22 @@ elif grep -q "selected.1=7" "${store_prop}"; then
 	echo "nanodroid_play=6" >> "${nanodroid_setup}"
 fi
 
-if grep -q "selected.1=1" "${nlp_prop}"; then
-	ui_print "  <>> setting property: nanodroid_nlpbackend [None]"
-	echo "nanodroid_nlpbackend=0" >> "${nanodroid_setup}"
-elif grep -q "selected.1=2" "${nlp_prop}"; then
-	ui_print "  <>> setting property: nanodroid_nlpbackend [Déjà Vu]"
-	echo "nanodroid_nlpbackend=1" >> "${nanodroid_setup}"
-elif grep -q "selected.1=3" "${nlp_prop}"; then
-	ui_print "  <>> setting property: nanodroid_nlpbackend [Ichnaea]"
-	echo "nanodroid_nlpbackend=2" >> "${nanodroid_setup}"
-elif grep -q "selected.1=4" "${nlp_prop}"; then
-	ui_print "  <>> setting property: nanodroid_nlpbackend [Apple]"
-	echo "nanodroid_nlpbackend=3" >> "${nanodroid_setup}"
-elif grep -q "selected.1=5" "${nlp_prop}"; then
-	ui_print "  <>> setting property: nanodroid_nlpbackend [Déjà Vu + Ichnaea]"
-	echo "nanodroid_nlpbackend=4" >> "${nanodroid_setup}"
-elif grep -q "selected.1=6" "${nlp_prop}"; then
-	ui_print "  <>> setting property: nanodroid_nlpbackend [Déjà Vu + Apple]"
-	echo "nanodroid_nlpbackend=5" >> "${nanodroid_setup}"
-elif grep -q "selected.1=7" "${nlp_prop}"; then
-	ui_print "  <>> setting property: nanodroid_nlpbackend [Ichnaea + Apple]"
-	echo "nanodroid_nlpbackend=6" >> "${nanodroid_setup}"
-elif grep -q "selected.1=8" "${nlp_prop}"; then
-	ui_print "  <>> setting property: nanodroid_nlpbackend [Déjà Vu + Ichnaea + Apple]"
-	echo "nanodroid_nlpbackend=7" >> "${nanodroid_setup}"
+if grep -q "item.1.1=1" "${nlp_prop}"; then
+	nlp_Dejavu=1
+else	nlp_Dejavu=0
 fi
+
+if grep -q "item.1.2=1" "${nlp_prop}"; then
+	nlp_Ichnaea=1
+else	nlp_Ichnaea=0
+fi
+
+if grep -q "item.1.3=1" "${nlp_prop}"; then
+	nlp_Apple=1
+else	nlp_Apple=0
+fi
+
+echo "nanodroid_nlpabckend=(${nlp_Dejavu} ${nlp_Ichnaea} ${nlp_Apple})" >> "${nanodroid_setup}"
 
 if grep -q "selected.1=1" "${ug_prop}"; then
 	ui_print "  <>> setting property: nanodroid_microg [None]"
