@@ -64,6 +64,8 @@
   * Simple Calendar Pro (6.0.1)
   * Oandbackup (0.3.4-universal)
   * Bromite WebView (71.0.3578.72)
+  * Aurora Store (2.0.5-beta)
+  * nlpBackend Apple (1.2.3)
 
 * manual
   * Play Store (12.7.23)

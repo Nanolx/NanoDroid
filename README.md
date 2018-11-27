@@ -460,8 +460,9 @@ microG is an Open Source replacement for Google Services, full details can be fo
 NanoDroid includes microG as follows
 
 * microG GmsCore [> GitHub](https://github.com/microg/android_packages_apps_GmsCore)
-* with **Déjà Vu** location provider backend [> F-Droid](https://f-droid.org/de/packages/org.fitchfamily.android.dejavu/)
-* with **Mozilla** location provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
+* with optional **Déjà Vu** location provider backend [> F-Droid](https://f-droid.org/de/packages/org.fitchfamily.android.dejavu/)
+* with optional **Mozilla** location provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
+* with optional **Apple** location provider backend backend [> F-Droid](https://f-droid.org/de/packages/org.microg.nlp.backend.apple/)
 * with **Nominatim** adress provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
 * with **microG** GsfProxy [> GitHub](https://github.com/microg/android_packages_apps_GsfProxy)
 * with **microG** DroidGuard Helper [> GitHub](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
@@ -471,7 +472,7 @@ NanoDroid includes microG as follows
   * disabled by default
 * optional Swipe libraries
   * disabled by default
-* choose between modified **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/) or **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore)
+* choose between modified **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/), **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore) or Aurora Store [> F-Droid](https://f-droid.org/de/packages/com.dragons.aurora/)
   * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
      * go to **Yalp Store** > Settings > Installation Method > `Using system permissions`
   * Play Store is modified to allow (in-)app-purchases with microG
