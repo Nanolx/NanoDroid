@@ -111,10 +111,15 @@ selectbox(
 	"nlp.prop",
 
 	"Select the location backends for microG", "", 2, #-- Group 1. key = "selected.1"
-	"None",		"Install no nlp backend",	0,	#-- selected.1 = 1
-	"Déjà Vu",	"Install Déjà Vu backend",	1,	#-- selected.1 = 2
-	"Ichnaea",	"Install Mozilla backend",	0,	#-- selected.1 = 3
-	"Both",		"Install both backends",	0	#-- selected.1 = 4
+	"None",				"Install no nlp backend",		0,	#-- selected.1 = 1
+	"Déjà Vu",			"Install Déjà Vu backend",		1,	#-- selected.1 = 2
+	"Ichnaea",			"Install Mozilla backend",		0,	#-- selected.1 = 3
+	"Apple",			"Install Apple backend",		0,	#-- selected.1 = 4
+	"Déjà Vu, Ichnaea",		"Install Déjà Vu and Mozilla backend",	0,	#-- selected.1 = 5
+	"Déjà Vu, Apple",		"Install Déjà Vu and Apple backend",	0,	#-- selected.1 = 6
+	"Ichnaea, Apple",		"Install Mozilla and Apple backends",	0,	#-- selected.1 = 7
+	"Déjà Vu, Ichnaea, Apple",	"Install all backends",			0	#-- selected.1 = 8
+
 );
 
 selectbox(
@@ -124,11 +129,13 @@ selectbox(
 	"store.prop",
 
 	"Select the Google App Store you want", "", 2, #-- Group 1. key = "selected.1"
-	"None",				"Install no Google App Store",		0,	#-- selected.1 = 1
-	"Play Store",		"Install official Play Store",			1,	#-- selected.1 = 2
-	"Yalp Store",		"Install unofficial Yalp Store",		0,	#-- selected.1 = 3
-	"Fake Store",		"Install Fake Store only",			0,	#-- selected.1 = 4
-	"Yalp + Fake Store",	"Install unofficial Yalp Store (+ Fake Store)",	0	#-- selected.1 = 5
+	"None",				"Install no Google App Store",			0,	#-- selected.1 = 1
+	"Play Store",		"Install official Play Store",				1,	#-- selected.1 = 2
+	"Yalp Store",		"Install unofficial Yalp Store",			0,	#-- selected.1 = 3
+	"Aurora Store",		"Install unofficial Aurora Store",			0,	#-- selected.1 = 4
+	"Fake Store",		"Install Fake Store only",				0,	#-- selected.1 = 5
+	"Yalp + Fake Store",	"Install unofficial Yalp Store (+ Fake Store)",		0,	#-- selected.1 = 6
+	"Aurora + Fake Store",	"Install unofficial Aurora Store (+ Fake Store)",	0	#-- selected.1 = 7
 
 );
 
