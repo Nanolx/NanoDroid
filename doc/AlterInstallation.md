@@ -20,7 +20,7 @@ nanodroid_microg=1
 nanodroid_gmscore=0
 nanodroid_fdroid=1
 nanodroid_apps=1
-nanodroid_play=1
+nanodroid_play=(1 0)
 nanodroid_overlay=1
 nanodroid_zelda=1
 nanodroid_mapsv1=1
@@ -40,7 +40,7 @@ the **microG** package supports the following options (nanodroid_microg is alway
 
 ```
 nanodroid_gmscore=0
-nanodroid_play=1
+nanodroid_play=(1 0)
 nanodroid_overlay=0
 nanodroid_mapsv1=1
 nanodroid_gsync=0
@@ -93,14 +93,17 @@ whether to override an already existing app.
 
 `0` means that a ROM app is preferred against a NanoDroid app, where `1` means the NanoDroid app is prefered. This applies to included applications [> Details](doc/Applications.md)
 
-`nanodroid_play=[0|1|2|3|4]`
+`nanodroid_play=([0|1|2|3] [0|1])`
 
 what app store to use:
-* `0` will not provide any app store
-* `1` will provide **Play Store**
-* `2` will provide **Yalp Store**
-* `3` will provide **Fake Store**
-* `4` will provide **Yalp Store** and **Fake Store**
+* 1st item
+  * 0 = No App Store
+  * 1 = Play Store
+  * 2 = Yalp Store
+  * 3 = Aurora Store
+* 2nd item
+  * 0 = without Fake Store
+  * 1 = with Fake Store
 
 `nanodroid_overlay=[0|1]`
 

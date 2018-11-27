@@ -810,64 +810,50 @@ install_apps () {
 }
 
 install_store () {
-	NANODROID_APP_STORE=""
-	NANODROID_REM_STORE=""
+	STORE_APPNAME=""
+
+	STORE_CHOICE=${nanodroid_play[0]}
+	FAKE_STORE=${nanodroid_play[1]}
+
+	[ "${FAKE_STORE}" -eq 1 ] && STORE_CONFLICT="Phonesky" || STORE_CONFLICT=""
 
 	# install Yalp Store or Play Store whichever requested
-	case "${nanodroid_play}" in
-		0 )
-			ui_print " << without App Store"
-		;;
-
+	case "${STORE_CHOICE}" in
 		1 )
 			ui_print " << with Play Store"
-			NANODROID_APP_STORE="Phonesky"
-			NANODROID_REM_STORE="FakeStore"
+			STORE_APPNAME="Phonesky"
+
+			# force unselect Fake Store when user has choosen Play Store
+			STORE_CONFLICT="FakeStore"
+			FAKE_STORE=0
 
 			nanodroid_install_file etc/default-permissions/phonesky-permissions.xml
 		;;
 
 		2 )
-			ui_print " << with Yalp Store"
-			NANODROID_APP_STORE="YalpStore"
-			NANODROID_REM_STORE=""
+			STORE_APPNAME="YalpStore"
 		;;
 
 		3 )
-			ui_print " << with Aurora Store"
-			NANODROID_APP_STORE="AuroraStore"
-			NANODROID_REM_STORE=""
-		;;
-
-		4 )
-			ui_print " << with Fake Store"
-			NANODROID_APP_STORE="FakeStore"
-			NANODROID_REM_STORE="Phonesky"
-		;;
-
-		5 )
-			ui_print " << with Yalp Store and Fake Store"
-			NANODROID_APP_STORE="YalpStore FakeStore"
-			NANODROID_REM_STORE="Phonesky"
-		;;
-
-		6 )
-			ui_print " << with Aurora Store and Fake Store"
-			NANODROID_APP_STORE="AuroraStore FakeStore"
-			NANODROID_REM_STORE="Phonesky"
+			STORE_APPNAME="AuroraStore"
 		;;
 	esac
 
-	if [ ! -z "${NANODROID_APP_STORE}" ]; then
-		for app in ${NANODROID_APP_STORE}; do
-			nanodroid_install_apk ${app}
-		done
+	if [ ! -z "${STORE_APPNAME}" ]; then
+		ui_print " << with ${STORE_APPNAME}"
+		nanodroid_install_apk "${STORE_APPNAME}"
+	else
+		ui_print " << without App Store"
 	fi
 
-	if [ ! -z "${NANODROID_REM_STORE}" ]; then
-		for app in ${NANODROID_REM_STORE}; do
-			${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
-		done
+	if [ "${FAKE_STORE}" -eq 1 ]; then
+		ui_print " << with Fake Store"
+		nanodroid_install_apk FakeStore
+	else 	ui_print " << without Fake Store"
+	fi
+
+	if [ ! -z "${STORE_CONFLICT}" ]; then
+		${NANODROID_BINDIR}/nanodroid-overlay --add ${STORE_CONFLICT}
 
 		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
 			rm -rf /data/data/com.android.vending
@@ -1363,7 +1349,23 @@ check_cfg_setup () {
 	[ -z "${nanodroid_microg}" ] && set_prop nanodroid_microg 1
 	[ -z "${nanodroid_gmscore}" ] && set_prop nanodroid_gmscore 0
 	[ -z "${nanodroid_apps}" ] && set_prop nanodroid_apps 1
-	[ -z "${nanodroid_play}" ] && set_prop nanodroid_play 1
+
+	[ -z "${nanodroid_play}" ] && set_prop nanodroid_play "(1 0)"
+
+	# in NanoDroid <= 20.2 nanodroid_play is an integer
+	# starting with 20.3 it's an array, migrate the value
+	if [ "${#nanodroid_play[@]}" -eq 1 ]; then
+		case "${nanodroid_play}" in
+			0 ) tmp_prop="(0 0)"
+			1 ) tmp_prop="(1 0)"
+			2 ) tmp_prop="(2 0)"
+			3 ) tmp_prop="(0 1)"
+			4 ) tmp_prop="(2 1)"
+		esac
+
+		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"
+		set_prop nanodroid_nlpbackend "${tmp_prop}"
+	fi
 
 	if [ "${MODID}" = "NanoDroid" ]; then
 		[ -z "${nanodroid_overlay}" ] && set_prop nanodroid_overlay 1
@@ -1381,7 +1383,7 @@ check_cfg_setup () {
 
 	# in NanoDroid <= 20.2 nanodroid_nlpbackend is an integer
 	# starting with 20.3 it's an array, migrate the value
-	if [ "${#nanodroid_nlpbackend[0]}" -eq 1 ]; then
+	if [ "${#nanodroid_nlpbackend[@]}" -eq 1 ]; then
 		case "${nanodroid_nlpbackend}" in
 			0 ) tmp_prop="(0 0 0)"
 			1 ) tmp_prop="(1 0 0)"
