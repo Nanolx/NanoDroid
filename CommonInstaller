@@ -687,26 +687,27 @@ install_microg () {
 			fi
 		fi
 
-		case ${nanodroid_nlpbackend} in
-			0 ) NLPBACKEND=""
-			    ui_print " << with microG [Nominatim]" ;;
-			1 ) NLPBACKEND="nlpBackendDejavu"
-			    ui_print " << with microG [Déjà Vu, Nominatim]" ;;
-			2 ) NLPBACKEND="nlpBackendIchnaea"
-			    ui_print " << with microG [Ichnaea, Nominatim]" ;;
-			3 ) NLPBACKEND="nlpBackendApple"
-			    ui_print " << with microG [Apple, Nominatim]" ;;
-			4 ) NLPBACKEND="nlpBackendDejavu nlpBackendIchnaea"
-			    ui_print " << with microG [Déjà Vu, Ichnaea, Nominatim]" ;;
-			5 ) NLPBACKEND="nlpBackendDejavu nlpBackendApple"
-			    ui_print " << with microG [Déjà Vu, Apple, Nominatim]" ;;
-			6 ) NLPBACKEND="nlpBackendIchnaea nlpBackendApple"
-			    ui_print " << with microG [Ichnaea, Apple, Nominatim]" ;;
-			7 ) NLPBACKEND="nlpBackendDejavu nlpBackendIchnaea nlpBackendApple"
-			    ui_print " << with microG [Déjà Vu, Ichnaea, Apple, Nominatim]" ;;
-		esac
+		NLPBACKEND="nlpBackendNominatim"
+		NLPSTRING="Nominatim"
 
-		for app in ${NLPBACKEND} nlpBackendNominatim; do
+		if [ "${nanodroid_nlpbackend[0]}" -eq 1 ]; then
+			NLPBACKEND="${NLPBACKEND} nlpBackendDejavu"
+			NLPSTRING="${NLPSTRING}, Déjà Vu"
+		fi
+
+		if [ "${nanodroid_nlpbackend[1]}" -eq 1 ]; then
+			NLPBACKEND="${NLPBACKEND} nlpBackendIchnaea"
+			NLPSTRING="${NLPSTRING}, Ichnaea"
+		fi
+
+		if [ "${nanodroid_nlpbackend[2]}" -eq 1 ]; then
+			NLPBACKEND="${NLPBACKEND} nlpBackendApple"
+			NLPSTRING="${NLPSTRING}, Apple"
+		fi
+
+		ui_print " << with microg [${NLPSTRING}]"
+
+		for app in ${NLPBACKEND}; do
 			nanodroid_install_apk ${app}
 		done
 
@@ -1375,7 +1376,23 @@ check_cfg_setup () {
 	[ -z "${nanodroid_gsync}" ] && set_prop nanodroid_gsync 0
 	[ -z "${nanodroid_forcesystem}" ] && set_prop nanodroid_forcesystem 0
 	[ -z "${nanodroid_swipe}" ] && set_prop nanodroid_swipe 0
-	[ -z "${nanodroid_nlpbackend}" ] && set_prop nanodroid_nlpbackend 1
+
+	[ -z "${nanodroid_nlpbackend}" ] && set_prop nanodroid_nlpbackend "(1 0 0)"
+
+	# in NanoDroid <= 20.2 nanodroid_nlpbackend is an integer
+	# starting with 20.3 it's an array, migrate the value
+	if [ "${#nanodroid_nlpbackend[0]}" -eq 1 ]; then
+		case "${nanodroid_nlpbackend}" in
+			0 ) tmp_prop="(0 0 0)"
+			1 ) tmp_prop="(1 0 0)"
+			2 ) tmp_prop="(0 1 0)"
+			3 ) tmp_prop="(1 1 0)"
+		esac
+
+		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"
+		set_prop nanodroid_nlpbackend "${tmp_prop}"
+	fi
+
 	[ -z "${nanodroid_bash}" ] && set_prop nanodroid_bash 1
 	[ -z "${nanodroid_nano}" ] && set_prop nanodroid_nano 1
 	[ -z "${nanodroid_utils}" ] && set_prop nanodroid_utils 1
