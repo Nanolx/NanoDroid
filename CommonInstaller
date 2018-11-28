@@ -705,15 +705,14 @@ install_microg () {
 			NLPSTRING="${NLPSTRING}, Apple"
 		fi
 
-		ui_print " << with microg [${NLPSTRING}]"
-
-		for app in ${NLPBACKEND}; do
-			nanodroid_install_apk ${app}
-		done
+		ui_print " << with NanoDroid microg [${NLPSTRING}]"
 
 		if [ "${nanodroid_gmscore}" -eq 1 ]; then
+			ui_print "   ++ Official microG GmsCore"
 			nanodroid_install_apk GmsCore_Official "" GmsCore
-		else	nanodroid_install_apk GmsCore_NanoDroid "" GmsCore
+		else
+			ui_print "   ++ NanoDroid microG GmsCore"
+			nanodroid_install_apk GmsCore_NanoDroid "" GmsCore
 		fi
 
 		if [ "${nanodroid_microg}" -ne 2 ]; then
@@ -721,6 +720,10 @@ install_microg () {
 				nanodroid_install_apk ${app}
 			done
 		fi
+
+		for app in ${NLPBACKEND}; do
+			nanodroid_install_apk ${app}
+		done
 
 		nanodroid_install_file etc/permissions/features.xml
 		nanodroid_install_file etc/permissions/privapp-permissions-google.xml
