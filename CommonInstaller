@@ -989,12 +989,14 @@ install_bromite_webview () {
 		done
 
 		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
-			rm -rf /data/data/com.android.webview
-			rm -rf /data/user/*/com.android.webview
-			rm -rf /data/user_de/*/com.android.webview
-			rm -rf /data/app/com.android.webview-*
-			rm -rf /mnt/asec/com.android.webview-*
-			rm -rf /data/media/0/Android/data/com.android.webview
+			for app in com.android.webview com.google.android.webview; do
+				rm -rf /data/data/${app}
+				rm -rf /data/user/*/${app}
+				rm -rf /data/user_de/*/${app}
+				rm -rf /data/app/${app}-*
+				rm -rf /mnt/asec/${app}-*
+				rm -rf /data/media/0/Android/data/${app}
+			fi
 		fi
 
 		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib BromiteWebView
