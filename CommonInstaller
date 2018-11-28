@@ -705,7 +705,7 @@ install_microg () {
 			NLPSTRING="${NLPSTRING}, Apple"
 		fi
 
-		ui_print " << with NanoDroid microg [${NLPSTRING}]"
+		ui_print " << with microg [${NLPSTRING}]"
 
 		if [ "${nanodroid_gmscore}" -eq 1 ]; then
 			ui_print "   ++ Official microG GmsCore"
