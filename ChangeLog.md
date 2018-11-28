@@ -47,6 +47,9 @@
   * add Apple location backend optionally @Vavun
   * add Aurora Store optionally @Vavun
 
+* Bromite WebView package
+  * also check for Webview and WebViewGoogle when trying to get rid of stock WebView
+
 * OsmAnd package
   * new package including OsmAnd+ (OpenStreetMap) and the Contour Lines plugin
   * thanks to @Vavun for most of the work
