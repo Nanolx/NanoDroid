@@ -28,6 +28,7 @@ The following GApps are removed during installation:
 * PlayGames
 * PlayStore
 * PrebuiltGmsCore
+* PrebuiltGmsCorePix
 * Velvet
 * Vending
 * WhisperPush
