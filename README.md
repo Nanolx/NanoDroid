@@ -472,9 +472,9 @@ NanoDroid includes microG as follows
   * disabled by default
 * optional Swipe libraries
   * disabled by default
-* choose between modified **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/), **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore) or Aurora Store [> F-Droid](https://f-droid.org/de/packages/com.dragons.aurora/)
-  * **Yalp Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
-     * go to **Yalp Store** > Settings > Installation Method > `Using system permissions`
+* choose between modified **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/), **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore) or **Aurora Store** [> F-Droid](https://f-droid.org/de/packages/com.dragons.aurora/)
+  * **Yalp Store** and **Aurora Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
+     * go to **Yalp Store** or **Aurora Store** Settings > Installation Method > `Using system permissions`
   * Play Store is modified to allow (in-)app-purchases with microG
 * GApps and several location services conflict with microG and unified Nlp. Thus they are removed during NanoDroid installation
   * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
