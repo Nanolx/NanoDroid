@@ -40,13 +40,13 @@ the **microG** package supports the following options (nanodroid_microg is alway
 
 ```
 nanodroid_gmscore=0
-nanodroid_play=(1 0)
+nanodroid_play=10
 nanodroid_overlay=0
 nanodroid_mapsv1=1
 nanodroid_gsync=0
 nanodroid_swipe=0
 nanodroid_forcesystem=0
-nanodroid_nlpbackend=(1 0 0)
+nanodroid_nlpbackend=100
 ```
 
 the **F-Droid** (nanodroid_fdroid is always 1) and **Bromite WebView** pckage supports the following options
