@@ -7,7 +7,7 @@ check_nanodroid () {
 	for file in ${files_database[@]}; do
 		if [[ ! -f ${CWD}/${file} ]]; then
 			NANODROID_MISSING_FILES=1
-			missing_database=(${missing_databse[@]} ${file})
+			missing_database=(${missing_database[@]} ${file})
 		fi
 	done
 
