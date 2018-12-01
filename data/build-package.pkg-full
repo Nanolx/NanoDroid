@@ -10,15 +10,14 @@ create_full_package () {
 	zip_add
 	cd "${CWD}"
 
-	zip_add CommonInstaller
-	zip_add CommonAddon
-	zip_add busybox.arm
-	zip_add busybox.x86
+	for file in Common{Installer,Addon} busybox.* sqlite3.*; do
+		zip_add ${file}
+	done
 
 	zip_add_doc
-	zip_add_config .nanodroid-overlay 0
+	zip_add_config .nanodroid-overlay
 	zip_add_config .nanodroid-setup 0
-	zip_add_config .nanodroid-apps 0
+	zip_add_config .nanodroid-apps
 
 	sum_sign_package "${ZIP}"
 }
