@@ -46,7 +46,12 @@
   * move microG DroidGuard Helper from /system/priv-app to /system/app
   * add Apple location backend optionally @Vavun
   * add Aurora Store optionally @Vavun
-  * GApps removal mechanism now also checks for PrebuiltGmsCorePix @Vavun
+
+* CommonInstaller
+  * GApps removal mechanism improvements
+     * also check for PrebuiltGmsCorePix @Vavun
+     * remove pre-existing Google Accounts @Vavun
+     * expand check for runtime-permissions to all users, not just user 0
 
 * Bromite WebView package
   * also check for Webview and WebViewGoogle when trying to get rid of stock WebView
