@@ -498,6 +498,8 @@ setup_busybox () {
 	chmod 0755 ${INSTALLER}/busybox.${BIN_ARCH}
 	${INSTALLER}/busybox.${BIN_ARCH} --install -s ${INSTALLER}/busybox/
 
+	chmod 0755 ${INSTALLER}/sqlite3.${BIN_ARCH}
+
 	export PATH="${INSTALLER}/busybox:${PATH}"
 }
 
@@ -634,6 +636,60 @@ magisk_install_finish () {
 	recovery_cleanup
 }
 
+gapps_solve_conflicts () {
+	# first get rid of conflicting packages
+	for app in ${GOOGLE_APPS}; do
+		${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
+
+		rm -rf /data/dalvik-cache/*/system"@priv-app@${app}"[@\.]*@classes.*
+		rm -rf /data/dalvik-cache/*/system"@app@${app}"[@\.]*@classes.*
+	done
+
+	for app in ${GOOGLE_DATA}; do
+		rm -rf /data/data/${app}
+		rm -rf /data/user/*/${app}
+		rm -rf /data/user_de/*/${app}
+		rm -rf /data/app/${app}-*
+		rm -rf /mnt/asec/${app}-*
+		rm -rf /data/media/0/Android/data/${app}
+	done
+}
+
+gapps_destroy_artifacts () {
+	# this removes original Play Services
+	# only if this is a fresh NanoDroid installation
+	if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
+		rm -rf /data/dalvik-cache/*/system"@priv-app@GmsCore"[@\.]*@classes.*
+
+		for app in ${GOOGLE_DATA_DIRTY}; do
+			rm -rf /data/data/${app}
+			rm -rf /data/user/*/${app}
+			rm -rf /data/user_de/*/${app}
+			rm -rf /data/app/${app}-*
+			rm -rf /mnt/asec/${app}-*
+			rm -rf /data/media/0/Android/data/${app}
+		done
+
+		find /data/system* -type f -name 'accounts*db' | while read database; do
+			${INSTALLER}/sqlite3.${BIN_ARCH} ${database} \
+				"DELETE FROM accounts WHERE type='com.google';"
+		done
+
+		find /data/system/users -type f -name 'runtime-permissions.xml' | while read file; do
+			if grep -q "com.google.android" "${file}"; then
+				rm -f "${file}"
+				echo "  upgrade: removing ${file}"
+			fi
+		done
+
+		if [ -f /data/system/packages.list ]; then
+			for app in ${GOOGLE_DATA_DIRTY}; do
+				sed -e "/${app}/d" -i /data/system/packages.list
+			done
+		fi
+	fi
+}
+
 ##########################################################################################
 # Generic Installation
 ##########################################################################################
@@ -643,50 +699,8 @@ install_microg () {
 	# respectively force if it's the microG package
 	if [ "${nanodroid_microg}" -ne 0 -o "${MODID}" = "NanoDroid_microG" ]; then
 
-		# first get rid of conflicting packages
-		for app in ${GOOGLE_APPS}; do
-			${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
-
-			rm -rf /data/dalvik-cache/*/system"@priv-app@${app}"[@\.]*@classes.*
-			rm -rf /data/dalvik-cache/*/system"@app@${app}"[@\.]*@classes.*
-		done
-
-		for app in ${GOOGLE_DATA}; do
-			rm -rf /data/data/${app}
-			rm -rf /data/user/*/${app}
-			rm -rf /data/user_de/*/${app}
-			rm -rf /data/app/${app}-*
-			rm -rf /mnt/asec/${app}-*
-			rm -rf /data/media/0/Android/data/${app}
-		done
-
-		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
-			# this removes original Play Services
-			# only if this is a fresh NanoDroid installation
-			rm -rf /data/dalvik-cache/*/system"@priv-app@GmsCore"[@\.]*@classes.*
-
-			for app in ${GOOGLE_DATA_DIRTY}; do
-				rm -rf /data/data/${app}
-				rm -rf /data/user/*/${app}
-				rm -rf /data/user_de/*/${app}
-				rm -rf /data/app/${app}-*
-				rm -rf /mnt/asec/${app}-*
-				rm -rf /data/media/0/Android/data/${app}
-			done
-
-			for file in /data/system/users/*/runtime-permissions.xml; do
-				if grep -q "com.google.android" "${file}"; then
-					rm -f "${file}"
-					echo "  upgrade: removing ${file}"
-				fi
-			done
-
-			if [ -f /data/system/packages.list ]; then
-				for app in ${GOOGLE_DATA_DIRTY}; do
-					sed -e "/${app}/d" -i /data/system/packages.list
-				done
-			fi
-		fi
+		gapps_solve_conflicts
+		gapps_destroy_artifacts
 
 		NLPBACKEND="nlpBackendNominatim"
 		NLPSTRING="Nominatim"
