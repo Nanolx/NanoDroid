@@ -47,7 +47,7 @@ zip_add_config () {
 	else	cd "${CWD}/doc"
 	fi
 
-	if [ "${2}" -eq 1 ]; then
+	if [[ -n "${2}" && "${2}" -eq 1 ]]; then
 		sed -e 's/nanodroid_overlay=1/nanodroid_overlay=0/' -i "${1}"
 		zip_add "${1}"
 		sed -e 's/nanodroid_overlay=0/nanodroid_overlay=1/' -i "${1}"
