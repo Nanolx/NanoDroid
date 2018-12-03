@@ -673,13 +673,13 @@ gapps_destroy_artifacts () {
 			rm -rf /data/media/0/Android/data/${app}
 		done
 
-		find /data/system* -type f -name 'accounts*db' | while read database; do
+		find /data/system* -type f -name 'accounts*db' 2>/dev/null | while read database; do
 			echo "  ++ deleting Google Accounts from ${database} (if any)"
 			${INSTALLER}/sqlite3.${BIN_ARCH} ${database} \
 				"DELETE FROM accounts WHERE type='com.google';"
 		done
 
-		find /data/system/users -type f -name 'runtime-permissions.xml' | while read file; do
+		find /data/system/users -type f -name 'runtime-permissions.xml' 2>/dev/null | while read file; do
 			if grep -q "com.google.android" "${file}"; then
 				rm -f "${file}"
 				echo "  ++ resetting permissions: ${file}"
