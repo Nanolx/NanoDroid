@@ -12,6 +12,7 @@ com.qualcomm.location
 DejaVuBackend
 DejaVuNlpBackend
 FDroidPriv
+GCS
 GmsCoreSetupPrebuilt
 GmsCore_update
 GmsDroidGuard
@@ -19,6 +20,7 @@ GoogleFeedback
 GoogleLoginService
 GoogleOneTimeInitializer
 GoogleServicesFramework
+GoogleConnectivityServices
 GoogleTTS
 IchnaeaNlpBackend
 LegacyNetworkLocation
@@ -31,6 +33,7 @@ NominatimNlpBackend
 PlayGames
 PlayStore
 PrebuiltGmsCore
+PrebuiltGmsCorePi
 PrebuiltGmsCorePix
 UnifiedNlp
 Velvet
