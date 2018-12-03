@@ -671,6 +671,7 @@ gapps_destroy_artifacts () {
 		done
 
 		find /data/system* -type f -name 'accounts*db' | while read database; do
+			echo "  ++ deleting Google Accounts from ${database} (if any)"
 			${INSTALLER}/sqlite3.${BIN_ARCH} ${database} \
 				"DELETE FROM accounts WHERE type='com.google';"
 		done
@@ -678,12 +679,13 @@ gapps_destroy_artifacts () {
 		find /data/system/users -type f -name 'runtime-permissions.xml' | while read file; do
 			if grep -q "com.google.android" "${file}"; then
 				rm -f "${file}"
-				echo "  upgrade: removing ${file}"
+				echo "  ++ resetting permissions: ${file}"
 			fi
 		done
 
 		if [ -f /data/system/packages.list ]; then
 			for app in ${GOOGLE_DATA_DIRTY}; do
+				echo "  ++ de-registering app: ${GOOGLE_DATA_DIRTY} (if installed)"
 				sed -e "/${app}/d" -i /data/system/packages.list
 			done
 		fi
