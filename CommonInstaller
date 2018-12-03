@@ -363,14 +363,14 @@ nanodroid_finalize () {
 		mv /tmp/nanodroid-list ${NANODROID_LIST}
 	fi
 
-	rm -rf ${INSTALLER}
-
 	ui_print " "
 	ui_print " Thanks for using NanoDroid "
 	ui_print " "
 
 	sync
 	nanodroid_storelogs
+
+	rm -rf ${INSTALLER}
 
 	umount -l /system_root 2>/dev/null
 	umount -l /system 2>/dev/null
