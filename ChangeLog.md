@@ -79,7 +79,7 @@
   * OsmAnd+ (3.2.6)
 
 * manual
-  * Play Store (12.7.23)
+  * Play Store (12.8.22)
   * microG GmsCore (0.2.6.14797-dirty-113)
   * OpenLauncher (0.6.1-nightly-181203)
 
