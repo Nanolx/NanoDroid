@@ -2,7 +2,7 @@
 <resources>
     <string-array name="additional_repos">
         <!-- name -->
-        <item>NanoDroid F-Droid Repo</item>
+        <item>Nanolx F-Droid Repo</item>
         <!-- address -->
         <item>https://www.nanolx.org/fdroid/repo</item>
         <!-- description -->
