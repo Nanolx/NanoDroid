@@ -98,7 +98,7 @@ increase_version_number() {
 }
 
 increase_module_version () {
-	for module in Full microG F-Droid; do
+	for module in Full microG F-Droid BromiteWebView OsmAnd; do
 		eval $(grep versionCode "${PWD}"/"${module}"/module.prop)
 		versionCode=$((versionCode+1))
 		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
