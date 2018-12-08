@@ -69,19 +69,20 @@
 ### Updates
 
 * automatic
-  * Simple Gallery Pro (6.0.2)
+  * Simple Gallery Pro (6.0.4)
   * Simple Calendar Pro (6.0.1)
   * Oandbackup (0.3.4-universal)
-  * Bromite WebView (71.0.3578.76)
+  * Bromite WebView (71.0.3578.85)
   * Aurora Store (2.0.5-beta)
   * nlpBackend Apple (1.2.3)
   * Amaze (3.3.1)
   * OsmAnd+ (3.2.6)
+  * Orbot (16.0.5-RC-1-tor-0.3.4.9)
 
 * manual
-  * Play Store (12.8.22)
+  * Play Store (12.8.23)
   * microG GmsCore (0.2.6.14797-dirty-113)
-  * OpenLauncher (0.6.1-nightly-181203)
+  * OpenLauncher (0.6.1-nightly-181208)
 
 ## 20.2.20181122 "Cardenas"
 
