@@ -651,11 +651,16 @@ List of known issues
 * microG lacks features
   * if you use AppOps, PrivacyGuard or the like you have to grant microG GmsCore **all** permissions, if you prevent some permissions, some apps or features might not work as expected or not at all. Note: some APIs/features are stubs in microG GmsCore, meaning they exist that apps don't complain, but they do nothing - thus blocking microG GmsCore is pretty much of no benefit.
 
+### Magisk Mode installation only
+
+* SafetyNet check fails after upgrading Magisk to version 18.0
+  * go to Magisk Manager > Magisk Hide and activate it for `microG DroidGuard Helper`
+
 ### System Mode installation only
 
 * Applications crash during SafetyNet check
   * install microG DroidGuard Helper as user-app (required on some ROMs), as root, on-device, issue:
-      * `pm install -r /system/priv-app/DroidGuard/DroidGuard.apk`
+      * `pm install -r /system/app/DroidGuard/DroidGuard.apk`
 * Applications crash when using WebView
   * install Bromite WebView as user-app, as root, on-device, issue:
       * `pm install -r /system/app/BromiteWebView/BromiteWebView.apk`
