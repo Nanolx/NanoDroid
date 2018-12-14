@@ -1,6 +1,6 @@
-diff -Nupr PS_12822.orig/AndroidManifest.xml PS_12822/AndroidManifest.xml
---- PS_12822.orig/AndroidManifest.xml	2018-12-05 20:39:18.564051294 +0100
-+++ PS_12822/AndroidManifest.xml	2018-12-05 20:42:41.116572446 +0100
+diff -Nupr PS_12912.orig/AndroidManifest.xml PS_12912/AndroidManifest.xml
+--- PS_12912.orig/AndroidManifest.xml	2018-12-14 19:07:29.947613811 +0100
++++ PS_12912/AndroidManifest.xml	2018-12-14 19:13:22.094870041 +0100
 @@ -82,6 +82,7 @@
      <uses-permission android:name="android.Manifest.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
      <uses-permission android:name="android.permission.READ_RUNTIME_PROFILES"/>
@@ -24,9 +24,9 @@ diff -Nupr PS_12822.orig/AndroidManifest.xml PS_12822/AndroidManifest.xml
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_12822.orig/res/values/arrays.xml PS_12822/res/values/arrays.xml
---- PS_12822.orig/res/values/arrays.xml	2018-12-05 20:39:12.000030995 +0100
-+++ PS_12822/res/values/arrays.xml	2018-12-05 20:42:52.912600656 +0100
+diff -Nupr PS_12912.orig/res/values/arrays.xml PS_12912/res/values/arrays.xml
+--- PS_12912.orig/res/values/arrays.xml	2018-12-14 19:07:19.547630839 +0100
++++ PS_12912/res/values/arrays.xml	2018-12-14 19:11:45.075102156 +0100
 @@ -1,7 +1,15 @@
  <?xml version="1.0" encoding="utf-8"?>
  <resources>
@@ -47,9 +47,9 @@ diff -Nupr PS_12822.orig/res/values/arrays.xml PS_12822/res/values/arrays.xml
 +        <item>Disable Network Type Override</item>
 +    </string-array>
  </resources>
-diff -Nupr PS_12822.orig/res/values/layouts.xml PS_12822/res/values/layouts.xml
---- PS_12822.orig/res/values/layouts.xml	2018-12-05 20:39:12.000030995 +0100
-+++ PS_12822/res/values/layouts.xml	2018-12-05 20:43:01.732621714 +0100
+diff -Nupr PS_12912.orig/res/values/layouts.xml PS_12912/res/values/layouts.xml
+--- PS_12912.orig/res/values/layouts.xml	2018-12-14 19:07:19.547630839 +0100
++++ PS_12912/res/values/layouts.xml	2018-12-14 19:11:56.783075059 +0100
 @@ -9,7 +9,6 @@
      <item type="layout" name="liveops_card_full_view">@layout/liveops_card_full</item>
      <item type="layout" name="permission_row">@layout/main_permission_row</item>
@@ -58,18 +58,18 @@ diff -Nupr PS_12822.orig/res/values/layouts.xml PS_12822/res/values/layouts.xml
      <item type="layout" name="update_all_activity">@layout/main_update_all_activity</item>
      <item type="layout" name="video_collection_card_view">@layout/card_view_video_collection</item>
  </resources>
-diff -Nupr PS_12822.orig/res/values/public.xml PS_12822/res/values/public.xml
---- PS_12822.orig/res/values/public.xml	2018-12-05 20:39:12.000030995 +0100
-+++ PS_12822/res/values/public.xml	2018-12-05 20:43:41.728716932 +0100
-@@ -9092,7 +9092,6 @@
-     <public type="layout" name="top_charts_spinner_item" id="0x7f0e0524" />
-     <public type="layout" name="top_charts_spinner_selected_item" id="0x7f0e0525" />
-     <public type="layout" name="top_review_header" id="0x7f0e0526" />
--    <public type="layout" name="tv_season_selector_item" id="0x7f0e0528" />
-     <public type="layout" name="tv_season_spinner_item" id="0x7f0e0529" />
-     <public type="layout" name="tv_season_spinner_selected_item" id="0x7f0e052a" />
-     <public type="layout" name="two_icon_messages_success_step" id="0x7f0e052b" />
-@@ -11609,6 +11608,7 @@
+diff -Nupr PS_12912.orig/res/values/public.xml PS_12912/res/values/public.xml
+--- PS_12912.orig/res/values/public.xml	2018-12-14 19:07:19.547630839 +0100
++++ PS_12912/res/values/public.xml	2018-12-14 19:12:42.830965990 +0100
+@@ -9116,7 +9116,6 @@
+     <public type="layout" name="top_charts_spinner_item" id="0x7f0e0525" />
+     <public type="layout" name="top_charts_spinner_selected_item" id="0x7f0e0526" />
+     <public type="layout" name="top_review_header" id="0x7f0e0527" />
+-    <public type="layout" name="tv_season_selector_item" id="0x7f0e0529" />
+     <public type="layout" name="tv_season_spinner_item" id="0x7f0e052a" />
+     <public type="layout" name="tv_season_spinner_selected_item" id="0x7f0e052b" />
+     <public type="layout" name="two_icon_messages_success_step" id="0x7f0e052c" />
+@@ -11632,6 +11631,7 @@
      <public type="string" name="zero_rating_watch_video_dialog_message" id="0x7f130913" />
      <public type="string" name="zero_rating_watch_video_dialog_title" id="0x7f130914" />
      <public type="string" name="current_locale_sanity_check" id="0x7f130915" />
@@ -77,17 +77,17 @@ diff -Nupr PS_12822.orig/res/values/public.xml PS_12822/res/values/public.xml
      <public type="style" name="AccountDfeListDetails" id="0x7f140000" />
      <public type="style" name="AccountDfeListPrice" id="0x7f140001" />
      <public type="style" name="AccountDfeListStatus" id="0x7f140002" />
-@@ -12978,4 +12978,4 @@
+@@ -13008,4 +13008,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002d" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002e" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002f" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_12822.orig/res/values/strings.xml PS_12822/res/values/strings.xml
---- PS_12822.orig/res/values/strings.xml	2018-12-05 20:39:12.000030995 +0100
-+++ PS_12822/res/values/strings.xml	2018-12-05 20:43:10.784643299 +0100
-@@ -2147,4 +2147,5 @@ Data charges will still apply if you str
+diff -Nupr PS_12912.orig/res/values/strings.xml PS_12912/res/values/strings.xml
+--- PS_12912.orig/res/values/strings.xml	2018-12-14 19:07:19.547630839 +0100
++++ PS_12912/res/values/strings.xml	2018-12-14 19:12:08.467047756 +0100
+@@ -2146,4 +2146,5 @@ Data charges will still apply if you str
      <string name="zero_rating_watch_video_dialog_message">"Video streaming isn't included in free data for Play. Data charges will apply when you watch this video."</string>
      <string name="zero_rating_watch_video_dialog_title">Watch video on mobile data?</string>
      <string name="current_locale_sanity_check" />
