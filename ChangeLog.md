@@ -1,5 +1,22 @@
 # ChangeLog
 
+## 20.4 in-dev
+
+### Bug Fixes
+
+* SetupWizard
+  * fix selection for unified Nlp backends not properly created
+
+### Updates
+
+* automatic
+  * Simple Calendar Pro (6.1.0)
+  * Bromite WebView (71.0.3578.88)
+
+* manual
+  * Play Store (12.9.12)
+  * microG GmsCore (0.2.6.14799-dirty-115)
+
 ## 20.3.20181208 "Shenzhou"
 
 ### Notes
