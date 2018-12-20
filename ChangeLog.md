@@ -11,13 +11,16 @@
 
 * automatic
   * Simple Calendar Pro (6.1.0)
-  * Bromite WebView (71.0.3578.88)
+  * Bromite WebView (71.0.3578.101)
   * Amaze (3.3.2)
   * Orbot (16.0.5-RC-2-tor-0.3.4.9)
+  * F-Droid (1.5-alpha1)
+  * Substratum (1015)
 
 * manual
   * Play Store (12.9.12)
-  * microG GmsCore (0.2.6.14799-dirty-118)
+  * microG GmsCore (0.2.6.14799-dirty-123)
+  * Open Launcher (0.6.1-nightly-181020)
 
 ## 20.3.20181208 "Shenzhou"
 
