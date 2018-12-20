@@ -9,6 +9,7 @@ GOOGLE_APPS="AMAPNetworkLocation
 BaiduNetworkLocation
 BlankStore
 com.qualcomm.location
+ConfigUpdater
 DejaVuBackend
 DejaVuNlpBackend
 FDroidPriv
