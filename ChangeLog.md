@@ -2,20 +2,37 @@
 
 ## 20.4 in-dev
 
+### Notes
+
+* Starting with build 0.2.6.14799-dirty-123 the custom microG build of NanoDroid will no longer show an icon in the app launcher on Android 6 and newer, instead it will be shown in the System Settings.
+
 ### Bug Fixes
 
 * SetupWizard
   * fix selection for unified Nlp backends not properly created
 
+### General Changes
+
+* CommonInstaller, CommonAddon
+  * add ConfigUpdater to GApps removal list
+
+* CommonAddon
+  * sync GApps removal list with CommonInstaller
+
+* Full, microG packages
+  * improve microG permission files
+
 ### Updates
 
 * automatic
-  * Simple Calendar Pro (6.1.0)
-  * Bromite WebView (71.0.3578.101)
+  * Simple Calendar Pro (6.1.1)
+  * Simple Gallery Pro (6.1.1)
+  * Bromite WebView (71.0.3578.104)
   * Amaze (3.3.2)
   * Orbot (16.0.5-RC-2-tor-0.3.4.9)
-  * F-Droid (1.5-alpha1)
+  * F-Droid (1.5-alpha2)
   * Substratum (1015)
+  * nlpBackend Déjà Vu (1.1.10)
 
 * manual
   * Play Store (12.9.12)
