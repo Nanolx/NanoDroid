@@ -16,7 +16,13 @@ setup_environment () {
 	export ANDROID_DATA=${TMPDIR}
 	export PATCHER_ADDOND_DATA=/data/adb/nanodroid_patcher
 
-	MAGISK_IMG=/data/adb/magisk.img
+	if [ -f /data/adb/magisk/util_functions.sh ]; then
+		NVBASE=/data/adb
+	elif [ -f /data/magisk/util_functions.sh ]; then
+		NVBASE=/data
+	fi
+
+	MAGISK_IMG=${NVBASE}/magisk.img
 	MAGISK_PATH=/dev/tmp/magisk_img
 }
 
@@ -493,7 +499,7 @@ backup_services_jar () {
 install_services () {
 	ui_print " "
 	for destination in /dev/tmp/magisk_img/NanoDroid /dev/tmp/magisk_img/NanoDroid_microG \
-		/sbin/.core/img/NanoDroid /sbin/.core/img/NanoDroid_microG /; do
+		/sbin/.magisk/img/NanoDroid /sbin/.magisk/img/NanoDroid_microG /; do
 		if [ -d ${destination} ]; then
 			install_path="${destination}"
 			break

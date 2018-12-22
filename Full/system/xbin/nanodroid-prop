@@ -3,7 +3,7 @@
 export NO_MAGISK=0
 export MODPATH=@MODPATH@
 
-[[ "${MODPATH}" != "/sbin/.core/"* ]] && NO_MAGISK=1
+[ -z "${MODPATH}" ] && NO_MAGISK=1
 
 add_prop () {
 	[[ ! -f ${MODPATH}/system.prop ]] && \

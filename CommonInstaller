@@ -536,21 +536,21 @@ magisk_install_setup () {
 	ui_print " > setup Magisk environment"
 
 	MOUNTPATH=${TMPDIR}/magisk_img
-	MAGISKBIN=/data/adb/magisk
 
-	[ -f ${MAGISKBIN}/util_functions.sh ] || \
+	if [ -f /data/adb/magisk/util_functions.sh ]; then
+		NVBASE=/data/adb
+		. /data/adb/magisk/util_functions.sh
+	elif [ -f /data/magisk/util_functions.sh ]; then
+		NVBASE=/data
+		. /data/magisk/util_functions.sh
+	else
 		error "Magisk version 15.0 or newer is required"
+	fi
 
-	. ${MAGISKBIN}/util_functions.sh
-
-	MIN_VER=$(grep_prop minMagisk ${INSTALLER}/module.prop)
-	[ ! -z ${MAGISK_VER_CODE} -a ${MAGISK_VER_CODE} -ge ${MIN_VER} ] || \
-		error "Magisk 15.0 or newer is required"
-
-	IMG=/data/adb/magisk.img
+	IMG=${NVBASE}/magisk.img
 
 	MODPATH=${MOUNTPATH}/${MODID}
-	REALPATH=/sbin/.core/img/${MODID}
+	REALPATH=/sbin/.magisk/img/${MODID}
 
 	recovery_actions
 

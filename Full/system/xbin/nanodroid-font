@@ -3,13 +3,16 @@
 export NO_MAGISK=0
 export MODPATH=@MODPATH@
 
-if [[ -d /dev/tmp/magisk_img/$(basename ${MODPATH}) ]]; then
-	OVERLAY_PATH=/dev/tmp/magisk_img/$(basename ${MODPATH})/system/fonts
-elif [[ -d /dev/tmp/magisk_merge_img/$(basename ${MODPATH}) ]]; then
-	OVERLAY_PATH=/dev/tmp/magisk_merge_img/$(basename ${MODPATH})/system/fonts
+if [ -z "${MODPATH}" ]; then
+	OVERLAY_PATH=""
+	NO_MAGISK=1
+elif [ -d "/dev/tmp/magisk_img/$(basename "${MODPATH}")" ]; then
+	OVERLAY_PATH="/dev/tmp/magisk_img/$(basename "${MODPATH}")"
+elif [ -d "${MODPATH}" ]; then
+	OVERLAY_PATH="${MODPATH}"
 else
-	OVERLAY_PATH=${MODPATH}/system/fonts
-	[[ "${MODPATH}" != "/sbin/.core/"* ]] && NO_MAGISK=1
+	echo "couldn't find NanoDroid!"
+	exit 1
 fi
 
 FONTPATH=${MODPATH}/system/fonts
