@@ -43,8 +43,6 @@
         <!-- Storage -->
         <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="false"></permission>
         <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="false"></permission>
-        <!-- Signature spoofing -->
-        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="true"/>
     </exception>
 
     <exception package="org.microg.nlp.backend.ichnaea">
