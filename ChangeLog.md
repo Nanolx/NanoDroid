@@ -4,7 +4,7 @@
 
 ### Notes
 
-* Starting with build 0.2.6.14799-dirty-123 the custom microG build of NanoDroid will no longer show an icon in the app launcher on Android 6 and newer, instead it will be shown in the System Settings.
+* Starting with build 0.2.6.14799-dirty-134 the custom microG build of NanoDroid will show an icon in the app launcher AND on Android 6 and newer, instead it will also be shown in the System Settings.
 
 ### Bug Fixes
 
@@ -21,6 +21,16 @@
 
 * Full, microG packages
   * improve microG permission files
+
+* Full package
+  * improved version of the `external_sd` init script @Vavun
+
+* CommonInstaller, CommonPatcher
+  * support both /data/adb/magisk and /data/magisk
+  * remove old code regarding Magisk
+
+* NanoDroid-Prop, NanoDroid-Font
+  * improve check whether Magisk is installed or not
 
 ### Updates
 
