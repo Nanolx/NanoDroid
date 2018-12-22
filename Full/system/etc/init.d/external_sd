@@ -2,18 +2,8 @@
 
 echo "external_sd init script"
 
-# retry 6 times, wait 5 seconds between each try
-count=0
-
-while [[ -z $(grep "^/dev/block.*/mnt/media_rw" /proc/mounts) ]]; do
-	count=$((count+1))
-	if [ "${count}" -lt 7 ]; then
-		sleep 5
-	else
-		echo ">> no SD Card found"
-		exit 1
-	fi
-done
+# nothing to wait
+until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
 media_rw=$(grep "^/dev/block.*/mnt/media_rw" /proc/mounts \
 	| cut -d " " -f 2 \
