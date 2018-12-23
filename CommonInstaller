@@ -747,11 +747,9 @@ install_microg () {
 		done
 
 		if [[ "$(grep_prop ro.lineage.releasetype)" == "microG" ]]; then
-			sed -i '/com.android.vending/a <permission name="android.permission.FAKE_PACKAGE_SIGNATURE"/>' \
-				${INSTALLER}/system/etc/permissions/privapp-permissions-google.xml
-
-			sed -i '/com.google.android.gms/a <permission name="android.permission.FAKE_PACKAGE_SIGNATURE"/>' \
-				${INSTALLER}/system/etc/permissions/privapp-permissions-google.xml
+			for pkgname in com.android.vending com.google.android.gms; do
+				sed -i "/${pkgname}/a \\t\t<permission name=\"android.permission.FAKE_PACKAGE_SIGNATURE\"/>" ${INSTALLER}/system/etc/permissions/privapp-permissions-google.xml
+			done
 		fi
 
 		nanodroid_install_file etc/permissions/features.xml
