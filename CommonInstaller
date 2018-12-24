@@ -850,7 +850,6 @@ install_store () {
 	# install Yalp Store or Play Store whichever requested
 	case "${STORE_CHOICE}" in
 		1 )
-			ui_print " << with Play Store"
 			STORE_APPNAME="Phonesky"
 
 			# force unselect Fake Store when user has choosen Play Store
