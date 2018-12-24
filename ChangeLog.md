@@ -4,7 +4,10 @@
 
 ### Notes
 
-* Starting with build 0.2.6.14799-dirty-134 the custom microG build of NanoDroid will show an icon in the app launcher AND on Android 6 and newer, instead it will also be shown in the System Settings.
+* Starting with build 0.2.6.14799-dirty-134 the custom microG build of NanoDroid will show an icon
+  * in the app launcher (any Android version)
+  * in the System Settings (on Android 6 or newer)
+  * in the App Overview (Settings > App > microG Services Core ; on Android 7 or newer)
 
 ### Bug Fixes
 
@@ -21,6 +24,7 @@
 
 * Full, microG packages
   * improve microG permission files
+  * fix permission setting on LineageOS for microG
 
 * Full package
   * improved version of the `external_sd` init script @Vavun
@@ -46,8 +50,8 @@
 
 * manual
   * Play Store (12.9.12)
-  * microG GmsCore (0.2.6.14799-dirty-123)
-  * Open Launcher (0.6.1-nightly-181020)
+  * microG GmsCore (0.2.6.14799-dirty-145)
+  * Open Launcher (0.6.1-nightly-181023)
 
 ## 20.3.20181208 "Shenzhou"
 
