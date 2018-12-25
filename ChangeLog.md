@@ -35,6 +35,7 @@
 
 * CommonPatcher
   * when creating a backup of `services.jar` append `ro.build.flavor` and `ro.build.id`
+  * re-add UnifiedNlp patch by Tom Vincent
 
 * Uninstaller
   * when restoring a backup of `services.jar` look for new-style named backup
