@@ -225,9 +225,15 @@ system_mode_uninstall () {
 
 patcher_uninstall () {
 	if [ -f /data/adb/.nanodroid-patcher -o -f /data/adb/NanoDroid_Patched ]; then
+		services_name="services.jar_$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
+
 		if [ -f /sdcard/nanodroid_backups/services.jar ]; then
 			ui_print " << restoring: unpatched services.jar"
 			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar \
+				|| error " failed to restore services.jar"
+		elif [ -f /sdcard/nanodroid_backups/${services_name} ]; then
+			ui_print " << restoring: unpatched services.jar"
+			mv "/sdcard/nanodroid_backups/${services_name}" /system/framework/services.jar \
 				|| error " failed to restore services.jar"
 		else	ui_print " << can't restore unpatched services.jar"
 		fi

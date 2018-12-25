@@ -491,8 +491,10 @@ patch_services () {
 
 backup_services_jar () {
 	ui_print " << backing up services.jar to: /sdcard/nanodroid_backups"
+	services_name="services.jar_$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
+
 	mkdir -p /sdcard/nanodroid_backups
-	cp /system/framework/services.jar /sdcard/nanodroid_backups || \
+	cp /system/framework/services.jar "/sdcard/nanodroid_backups/${services_name}" || \
 		error "failed to backup services.jar"
 }
 

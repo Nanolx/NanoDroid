@@ -33,6 +33,12 @@
   * support both /data/adb/magisk and /data/magisk
   * remove old code regarding Magisk
 
+* CommonPatcher
+  * when creating a backup of `services.jar` append `ro.build.flavor` and `ro.build.id`
+
+* Uninstaller
+  * when restoring a backup of `services.jar` look for new-style named backup
+
 * NanoDroid-Prop, NanoDroid-Font
   * improve check whether Magisk is installed or not
 
