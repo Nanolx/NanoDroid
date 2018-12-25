@@ -667,12 +667,18 @@ List of known issues
   * install Bromite WebView as user-app, as root, on-device, issue:
       * `pm install -r /system/app/BromiteWebView/BromiteWebView.apk`
 
+### F-Droid only
+
+* On some ROMs (most noticeably MIUI ROMs) F-Droid can't install applications
+  * this is because F-Droid's Priviledged Extension is not compatible with those ROMs, disable it from
+      * F-Droid > Settings > Expert Settings > Privileged Extension
+
 ### Stock ROM only
 
-* ROM does not properly work after first boot due to ROM's Setup Wizard not working with microG
+* Some stock ROMs do not properly work after first boot since their SetupWizard is disabled by NanoDroid (because it's incompatible with microG)
   * check `/system/build.prop` or `/vendor/build.prop` if they contain the property `ro.setupwizard.mode` and change it to (you can do this from TWRP via ADB, with the builtin `vi` editor)
       * `ro.setupwizard.mode=DISABLED`
-      * reboot and everything should work as expected
+  * in Magisk Mode NanoDroid will do this on it's own using Magisk's `resetprop`
 
 ### KitKat only
 
