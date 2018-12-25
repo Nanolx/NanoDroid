@@ -667,6 +667,19 @@ List of known issues
   * install Bromite WebView as user-app, as root, on-device, issue:
       * `pm install -r /system/app/BromiteWebView/BromiteWebView.apk`
 
+### Stock ROM only
+
+* ROM does not properly work after first boot due to ROM's Setup Wizard not working with microG
+  * check `/system/build.prop` or `/vendor/build.prop` if they contain the property `ro.setupwizard.mode` and change it to (you can do this from TWRP via ADB, with the builtin `vi` editor)
+      * `ro.setupwizard.mode=DISABLED`
+      * reboot and everything should work as expected
+
+### KitKat only
+
+* You can't get past the first page of the microG login wizard on KitKat
+  * either connect a Keyboard and use it to skip the first page (will work normally then)
+  * use the custom NanoDroid microG GmsCore build, which has this issue fixed starting with version 0.2.6.14799-dirty-145
+
 Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
 
 ## TODO
