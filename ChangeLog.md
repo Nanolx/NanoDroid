@@ -25,6 +25,9 @@
 * Full, microG packages
   * improve microG permission files
   * fix permission setting on LineageOS for microG
+  * set `ro.setupwizard.mode` to `DISABLED` using `resetprop`
+     * fixes issue on some Stock ROMs since their SetupWizard is not compatible with microG
+     * fix found by @DoR3M3
 
 * Full package
   * improved version of the `external_sd` init script @Vavun

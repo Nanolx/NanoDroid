@@ -608,6 +608,12 @@ magisk_install_postinst () {
 		cp ${TMPDIR}/system.prop ${MODPATH}/system.prop
 	fi
 
+	if [ "${nanodroid_microg}" -ne 0 -o "${MODID}" = "NanoDroid_microG" ]; then
+		if ! grep -q ro.build.setupwizard ${MODPATH}/system.prop 2>/dev/null; then
+			echo "ro.build.setupwizard=DISABLED" >> ${MODPATH}/system.prop
+		fi
+	fi
+
 	if [ -f ${TMPDIR}/services.jar ]; then
 		ui_print " << restoring patched services.jar"
 		mkdir -p ${MODPATH}/system/framework
