@@ -678,7 +678,9 @@ List of known issues
 * Some stock ROMs do not properly work after first boot since their SetupWizard is disabled by NanoDroid (because it's incompatible with microG)
   * check `/system/build.prop` or `/vendor/build.prop` if they contain the property `ro.setupwizard.mode` and change it to (you can do this from TWRP via ADB, with the builtin `vi` editor)
       * `ro.setupwizard.mode=DISABLED`
-  * in Magisk Mode NanoDroid will do this on it's own using Magisk's `resetprop`
+      * in Magisk Mode NanoDroid will do this on it's own using Magisk's `resetprop`
+  * if you can access your device via ADB, you can also issue the following command as root, on-device:
+      * `nanodroid-util --fix-update`
 
 ### KitKat only
 
