@@ -16,9 +16,6 @@
 
 ### General Changes
 
-* CommonInstaller
-  * when detecting system properties also look if /vendor/build.prop exists
-
 * CommonAddon
   * sync GApps removal list with CommonInstaller
 
@@ -28,6 +25,7 @@
 * Full, microG packages
   * if the ROM is pre-patched with FAKE_PACKAGE_SIGNATURE include that permission from the default permission files
      * solves incompatibility with LineageOS for microG @Vavun
+     * function to detect whether ROM is pre-patched @ale5000
   * if the ROM includes a SetupWizard (mostly on stock), properly disable it (in Magisk Mode)
      * solves incompatibility with stock ROM SetupWizard and microg @DoR3M3
      * for System Mode installation, check the Issues section of the README on how to solve this
@@ -36,11 +34,14 @@
   * improved version of the `external_sd` init script @Vavun
 
 * CommonInstaller, CommonPatcher
+  * when detecting system properties also look if /vendor/build.prop exists
   * support both /data/adb/magisk and /data/magisk
   * remove old code regarding Magisk
 
 * CommonPatcher
   * when creating a backup of `services.jar` append `ro.build.flavor` and `ro.build.id`
+  * if the ROM is pre-patched with FAKE_PACKAGE_SIGNATURE don't do anything
+     * function to detect whether ROM is pre-patched @ale5000 
   * re-add UnifiedNlp patch by Tom Vincent
 
 * Uninstaller
