@@ -86,12 +86,11 @@ set_progress() {
 }
 
 grep_prop() {
-	REGEX="${1}"
-	shift
-	FILES="${@}"
-	[ -z "${@}" ] && FILES='/system/build.prop'
-	sed -n "s/^${REGEX}=//p" ${FILES} | \
-		head -n 1
+	[ -f /vendor/build.prop ] && \
+		FILES="/system/build.prop /vendor/build.prop" || \
+		FILES="/system/build.prop"
+
+	sed -n "s/^${1}=//p" ${FILES} | head -n 1
 }
 
 grep_cmdline() {
@@ -609,8 +608,8 @@ magisk_install_postinst () {
 	fi
 
 	if [ "${nanodroid_microg}" -ne 0 -o "${MODID}" = "NanoDroid_microG" ]; then
-		if ! grep -q ro.build.setupwizard ${MODPATH}/system.prop 2>/dev/null; then
-			echo "ro.build.setupwizard=DISABLED" >> ${MODPATH}/system.prop
+		if [ ! -z $(grep_prop ro.setupwizard.mode) ]; then
+			echo "ro.setupwizard.mode=DISABLED" >> ${MODPATH}/system.prop
 		fi
 	fi
 
@@ -645,6 +644,10 @@ magisk_install_finish () {
 	unmount_magisk_img
 	recovery_cleanup
 }
+
+##########################################################################################
+# Destroy all GApps!
+##########################################################################################
 
 gapps_solve_conflicts () {
 	# first get rid of conflicting packages
@@ -703,6 +706,25 @@ gapps_destroy_artifacts () {
 }
 
 ##########################################################################################
+# Magisk Mode Installation
+##########################################################################################
+
+search_fake_package_signature () {
+	PERMISSION=android.permission.FAKE_PACKAGE_SIGNATURE
+	PERMISSION_OD=$(echo -n "${PERMISSION}" | od -A n -t x1 | tr -d '\n' | sed -e 's/^ //g;s/ /00/g')
+	HAS_FAKESIGN=false
+
+	FW_RES_DIR="${TMPDIR}/framework-res"
+	mkdir -p "${FW_RES_DIR}"
+	unzip -o /system/framework/framework-res.apk -d "${FW_RES_DIR}"
+
+	grep -qF "${PERMISSION}" "${FW_RES_DIR}/AndroidManifest.xml" && HAS_FAKESIGN=true
+	od -A n -t x1 "${FW_RES_DIR}/AndroidManifest.xml" | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true
+
+	${HAS_FAKESIGN} && return 0 || return 1
+}
+
+##########################################################################################
 # Generic Installation
 ##########################################################################################
 
@@ -752,11 +774,11 @@ install_microg () {
 			nanodroid_install_apk ${app}
 		done
 
-		if [[ "$(grep_prop ro.lineage.releasetype)" == "microG" ]]; then
-			for pkgname in com.android.vending com.google.android.gms; do
-				sed -i "/${pkgname}/a \\t\t<permission name=\"android.permission.FAKE_PACKAGE_SIGNATURE\"/>" ${INSTALLER}/system/etc/permissions/privapp-permissions-google.xml
-			done
-		fi
+		# if android.permission.FAKE_PACKAGE_SIGNATURE is not a runtime-permission
+		# (read: ROM is not pre-patched), remove that permission from pre-sets
+		search_fake_package_signature && \
+			sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' \
+				-i ${INSTALLER}/system/etc/permissions/privapp-permissions-google.xml
 
 		nanodroid_install_file etc/permissions/features.xml
 		nanodroid_install_file etc/permissions/privapp-permissions-google.xml
