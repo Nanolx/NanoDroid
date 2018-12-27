@@ -16,18 +16,21 @@
 
 ### General Changes
 
-* CommonInstaller, CommonAddon
-  * add ConfigUpdater to GApps removal list
+* CommonInstaller
+  * when detecting system properties also look if /vendor/build.prop exists
 
 * CommonAddon
   * sync GApps removal list with CommonInstaller
 
+* CommonInstaller, CommonAddon
+  * add ConfigUpdater to GApps removal list
+
 * Full, microG packages
-  * improve microG permission files
-  * fix permission setting on LineageOS for microG
-  * set `ro.setupwizard.mode` to `DISABLED` using `resetprop`
-     * fixes issue on some Stock ROMs since their SetupWizard is not compatible with microG
-     * fix found by @DoR3M3
+  * if the ROM is pre-patched with FAKE_PACKAGE_SIGNATURE include that permission from the default permission files
+     * solves incompatibility with LineageOS for microG @Vavun
+  * if the ROM includes a SetupWizard (mostly on stock), properly disable it (in Magisk Mode)
+     * solves incompatibility with stock ROM SetupWizard and microg @DoR3M3
+     * for System Mode installation, check the Issues section of the README on how to solve this
 
 * Full package
   * improved version of the `external_sd` init script @Vavun
@@ -49,12 +52,12 @@
 ### Updates
 
 * automatic
-  * Simple Calendar Pro (6.1.1)
+  * Simple Calendar Pro (6.1.2)
   * Simple Gallery Pro (6.1.1)
   * Bromite WebView (71.0.3578.104)
   * Amaze (3.3.2)
   * Orbot (16.0.5-RC-2-tor-0.3.4.9)
-  * F-Droid (1.5-alpha2)
+  * F-Droid (1.5)
   * Substratum (1015)
   * nlpBackend Déjà Vu (1.1.10)
 
