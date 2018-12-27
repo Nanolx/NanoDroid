@@ -44,6 +44,10 @@
      * function to detect whether ROM is pre-patched @ale5000 
   * re-add UnifiedNlp patch by Tom Vincent
 
+* Patcher Addon
+  * if the ROM is pre-patched with FAKE_PACKAGE_SIGNATURE don't do anything
+     * function to detect whether ROM is pre-patched @ale5000
+
 * Uninstaller
   * when restoring a backup of `services.jar` look for new-style named backup
 
