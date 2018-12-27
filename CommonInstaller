@@ -776,7 +776,7 @@ install_microg () {
 
 		# if android.permission.FAKE_PACKAGE_SIGNATURE is not a runtime-permission
 		# (read: ROM is not pre-patched), remove that permission from pre-sets
-		search_fake_package_signature && \
+		search_fake_package_signature || \
 			sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' \
 				-i ${INSTALLER}/system/etc/permissions/privapp-permissions-google.xml
 
