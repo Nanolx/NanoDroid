@@ -56,6 +56,9 @@
 * SysTest
   * test ROM for native signature spoofing support
     * function to detect whether ROM is pre-patched @ale5000
+  * when detecting system properties also look if /vendor/build.prop exists
+  * support both /data/adb/magisk and /data/magisk
+  * use busybox for tests
 
 * Uninstaller
   * when restoring a backup of `services.jar` look for new-style named backup

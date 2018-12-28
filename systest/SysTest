@@ -6,6 +6,7 @@
 #
 ##########################################################################################
 
+TMPDIR=/dev/tmp
 LOGFILE=/sdcard/NanoDroid-SysTest.log
 rm -f ${LOGFILE}
 
@@ -110,7 +111,7 @@ search_fake_package_signature () {
 	PERMISSION_OD=$(echo -n "${PERMISSION}" | od -A n -t x1 | tr -d '\n' | sed -e 's/^ //g;s/ /00/g')
 	HAS_FAKESIGN=false
 
-	FW_RES_DIR="/dev/tmp/framework-res"
+	FW_RES_DIR="${TMPDIR}/framework-res"
 	mkdir -p "${FW_RES_DIR}"
 	unzip -o /system/framework/framework-res.apk -d "${FW_RES_DIR}"
 
@@ -147,12 +148,11 @@ detect_bootmode () {
 }
 
 grep_prop() {
-	REGEX="${1}"
-	shift
-	FILES="${@}"
-	[ -z "${@}" ] && FILES='/system/build.prop'
-	sed -n "s/^${REGEX}=//p" ${FILES} | \
-		head -n 1
+	[ -f /vendor/build.prop ] && \
+		FILES="/system/build.prop /vendor/build.prop" || \
+		FILES="/system/build.prop"
+
+	sed -n "s/^${1}=//p" ${FILES} | head -n 1
 }
 
 grep_cmdline() {
@@ -175,17 +175,29 @@ system_test () {
 
 	case ${ARCH} in
 		arm | arm64 )
-				FILE=/dev/tmp/file.arm
+				BB=${TMPDIR}/busybox.arm
+				FILE=${TMPDIR}/file.arm
 		;;
 		x86 | x86_64 )
-				FILE=/dev/tmp/file.x86
+				BB=${TMPDIR}/busybox.x86
+				FILE=${TMPDIR}/file.x86
 		;;
 	esac
+
+	OLD_PATH=${PATH}
+
+	mkdir -p ${TMPDIR}/busybox
+	ln -s ${TMPDIR}/${BB} ${TMPDIR}/busybox/busybox
+
+	chmod 0755 ${TMPDIR}/${BB}
+	${TMPDIR}/${BB} --install -s ${TMPDIR}/busybox/
+
+	export PATH="${TMPDIR}/busybox:${PATH}"
 
 	chmod 0755 "${FILE}"
 
 	DALVIKVM_BIN=$(ls -l /system/bin/dalvikvm | awk '{print $NF}')
-	DALVIKVM_ARCH=$("${FILE}" -m "/dev/tmp/magic.mgc" -L /system/bin/dalvikvm)
+	DALVIKVM_ARCH=$("${FILE}" -m "${TMPDIR}/magic.mgc" -L /system/bin/dalvikvm)
 
 	case ${DALVIKVM_BIN} in
 		dalvikvm32 )
@@ -275,7 +287,7 @@ store_results () {
 	add_log "Magisk installed?"
 	add_log "================="
 	add_log ""
-	[ -f /data/adb/magisk.img ] && add_log "MAGISK=TRUE" || add_log "MAGISK=FALSE"
+	[ -f /data/adb/magisk.img -o -f /data/magisk.img ] && add_log "MAGISK=TRUE" || add_log "MAGISK=FALSE"
 
 	add_log ""
 	add_log "Installed Google packages"
