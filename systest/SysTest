@@ -102,6 +102,25 @@ error () {
 }
 
 ##########################################################################################
+# by @ale5000
+##########################################################################################
+
+search_fake_package_signature () {
+	PERMISSION=android.permission.FAKE_PACKAGE_SIGNATURE
+	PERMISSION_OD=$(echo -n "${PERMISSION}" | od -A n -t x1 | tr -d '\n' | sed -e 's/^ //g;s/ /00/g')
+	HAS_FAKESIGN=false
+
+	FW_RES_DIR="/dev/tmp/framework-res"
+	mkdir -p "${FW_RES_DIR}"
+	unzip -o /system/framework/framework-res.apk -d "${FW_RES_DIR}"
+
+	grep -qF "${PERMISSION}" "${FW_RES_DIR}/AndroidManifest.xml" && HAS_FAKESIGN=true
+	od -A n -t x1 "${FW_RES_DIR}/AndroidManifest.xml" | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true
+
+	${HAS_FAKESIGN} && return 0 || return 1
+}
+
+##########################################################################################
 # Device Functions
 ##########################################################################################
 
@@ -247,6 +266,12 @@ store_results () {
 	done
 
 	add_log ""
+	add_log "Native SigSpoof?"
+	add_log "================"
+	add_log ""
+	search_fake_package_signature && add_log "NATIVE_SIGSPOOF=TRUE" || add_log "NATIVE_SIGSPOOF=FALSE"
+
+	add_log ""
 	add_log "Magisk installed?"
 	add_log "================="
 	add_log ""
@@ -255,7 +280,7 @@ store_results () {
 	add_log ""
 	add_log "Installed Google packages"
 	add_log "=== packages.list ======="
-	add_log
+	add_log ""
 	grep google /data/system/packages.list >> ${LOGFILE}
 
 	add_log ""

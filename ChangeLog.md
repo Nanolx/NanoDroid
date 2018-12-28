@@ -17,7 +17,7 @@
 ### General Changes
 
 * Installer
-  * if the ROM is pre-patched with FAKE_PACKAGE_SIGNATURE include that permission from the default permission files
+  * if the ROM has native signature spoofing support include that permission in the default permission files
      * solves incompatibility with LineageOS for microG @Vavun
      * function to detect whether ROM is pre-patched @ale5000
          * applies to: Full, microG packages
@@ -45,13 +45,17 @@
   * support both /data/adb/magisk and /data/magisk
   * remove old code regarding Magisk
   * when creating a backup of `services.jar` append `ro.build.flavor` and `ro.build.id`
-  * if the ROM is pre-patched with FAKE_PACKAGE_SIGNATURE don't do anything
+  * if the ROM has native signature spoofing support don't do anything
      * function to detect whether ROM is pre-patched @ale5000 
   * re-add UnifiedNlp patch by Tom Vincent
 
 * Patcher addon.d
-  * if the ROM is pre-patched with FAKE_PACKAGE_SIGNATURE don't do anything
+  * if the ROM has native signature spoofing support don't do anything
      * function to detect whether ROM is pre-patched @ale5000
+
+* SysTest
+  * test ROM for native signature spoofing support
+    * function to detect whether ROM is pre-patched @ale5000
 
 * Uninstaller
   * when restoring a backup of `services.jar` look for new-style named backup
