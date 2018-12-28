@@ -59,6 +59,7 @@ mount_partitions () {
 	fi
 
 	DEVICE_AB=FALSE
+	VENDOR_COMPAT=FALSE
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
@@ -90,7 +91,7 @@ mount_partitions () {
 		fi
 	elif [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
-		echo " xxx compat /vendor link created!" >> ${LOGFILE}
+		VENDOR_COMPAT=TRUE
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
 }
@@ -256,6 +257,7 @@ store_results () {
 	add_log ""
 	mount | awk '{print $1 " on " $3}' >> ${LOGFILE}
 	add_log "DEVICE_AB=${DEVICE_AB}"
+	add_log "VENDOR_COMPAT=${VENDOR_COMPAT}"
 
 	add_log ""
 	add_log "DalvikVM, LD_LIBRARY_PATH and DEX status"
