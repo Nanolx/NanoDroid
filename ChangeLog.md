@@ -26,19 +26,19 @@
      * for System Mode installation, check the Issues section of the README on how to solve this
          * applies to: Full, microG packages
   * add ConfigUpdater to GApps removal list
-         * applies to: Full, microG packages
+     * applies to: Full, microG packages
   * improved version of the `external_sd` init script @Vavun
-         * applies to: Full package
+     * applies to: Full package
   * when detecting system properties also look if /vendor/build.prop exists
-         * applies to: all packages
+     * applies to: all packages
   * support both /data/adb/magisk and /data/magisk
-         * applies to: all packages
+     * applies to: all packages
   * remove old code regarding Magisk
-         * applies to: all packages
+     * applies to: all packages
 
 * addon.d
   * sync GApps removal list with Installer
-         * applies to: Full, microG packages
+     * applies to: Full, microG packages
 
 * Patcher
   * when detecting system properties also look if /vendor/build.prop exists
@@ -58,7 +58,7 @@
 
 * Scripts
   * improve check whether Magisk is installed or not
-         applies to: nanodroid-font, nanodroid-prop
+     * applies to: nanodroid-font, nanodroid-prop
 
 ### Updates
 
