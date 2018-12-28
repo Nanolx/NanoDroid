@@ -188,10 +188,10 @@ system_test () {
 	OLD_PATH=${PATH}
 
 	mkdir -p ${TMPDIR}/busybox
-	ln -s ${TMPDIR}/${BB} ${TMPDIR}/busybox/busybox
+	ln -s ${BB} ${TMPDIR}/busybox/busybox
 
-	chmod 0755 ${TMPDIR}/${BB}
-	${TMPDIR}/${BB} --install -s ${TMPDIR}/busybox/
+	chmod 0755 ${BB}
+	${BB} --install -s ${TMPDIR}/busybox/
 
 	export PATH="${TMPDIR}/busybox:${PATH}"
 
