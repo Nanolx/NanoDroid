@@ -7,7 +7,7 @@
 * Starting with build 0.2.6.14799-dirty-134 the custom microG build of NanoDroid will show an icon
   * in the app launcher (any Android version)
   * in the System Settings (on Android 6 or newer)
-  * in the App Overview (Settings > App > microG Services Core ; on Android 7 or newer)
+  * in the App overview (Settings > App > microG Services Core (on Android 7 or newer))
 
 ### Bug Fixes
 
@@ -16,43 +16,49 @@
 
 ### General Changes
 
-* CommonAddon
-  * sync GApps removal list with CommonInstaller
-
-* CommonInstaller, CommonAddon
-  * add ConfigUpdater to GApps removal list
-
-* Full, microG packages
+* Installer
   * if the ROM is pre-patched with FAKE_PACKAGE_SIGNATURE include that permission from the default permission files
      * solves incompatibility with LineageOS for microG @Vavun
      * function to detect whether ROM is pre-patched @ale5000
+         * applies to: Full, microG packages
   * if the ROM includes a SetupWizard (mostly on stock), properly disable it (in Magisk Mode)
      * solves incompatibility with stock ROM SetupWizard and microg @DoR3M3
      * for System Mode installation, check the Issues section of the README on how to solve this
-
-* Full package
+         * applies to: Full, microG packages
+  * add ConfigUpdater to GApps removal list
+         * applies to: Full, microG packages
   * improved version of the `external_sd` init script @Vavun
+         * applies to: Full package
+  * when detecting system properties also look if /vendor/build.prop exists
+         * applies to: all packages
+  * support both /data/adb/magisk and /data/magisk
+         * applies to: all packages
+  * remove old code regarding Magisk
+         * applies to: all packages
 
-* CommonInstaller, CommonPatcher
+* addon.d
+  * sync GApps removal list with Installer
+         * applies to: Full, microG packages
+
+* Patcher
   * when detecting system properties also look if /vendor/build.prop exists
   * support both /data/adb/magisk and /data/magisk
   * remove old code regarding Magisk
-
-* CommonPatcher
   * when creating a backup of `services.jar` append `ro.build.flavor` and `ro.build.id`
   * if the ROM is pre-patched with FAKE_PACKAGE_SIGNATURE don't do anything
      * function to detect whether ROM is pre-patched @ale5000 
   * re-add UnifiedNlp patch by Tom Vincent
 
-* Patcher Addon
+* Patcher addon.d
   * if the ROM is pre-patched with FAKE_PACKAGE_SIGNATURE don't do anything
      * function to detect whether ROM is pre-patched @ale5000
 
 * Uninstaller
   * when restoring a backup of `services.jar` look for new-style named backup
 
-* NanoDroid-Prop, NanoDroid-Font
+* Scripts
   * improve check whether Magisk is installed or not
+         applies to: nanodroid-font, nanodroid-prop
 
 ### Updates
 
