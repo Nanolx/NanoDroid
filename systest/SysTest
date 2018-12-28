@@ -314,5 +314,7 @@ store_results () {
 	add_log "======================"
 	add_log ""
 	find /system/priv-app -type f -name '*.apk' >> ${LOGFILE}
+
+	export PATH=${OLD_PATH}
 }
 
