@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 20.4 in-dev
+## 20.4.20181230 "Constitution"
 
 ### Notes
 
@@ -71,13 +71,14 @@
 
 * automatic
   * Simple Calendar Pro (6.1.2)
-  * Simple Gallery Pro (6.1.1)
-  * Bromite WebView (71.0.3578.104)
+  * Simple Gallery Pro (6.1.3)
+  * Bromite WebView (71.0.3578.110)
   * Amaze (3.3.2)
   * Orbot (16.0.5-RC-2-tor-0.3.4.9)
   * F-Droid (1.5)
   * Substratum (1015)
   * nlpBackend Déjà Vu (1.1.10)
+  * QKSMS (3.6.0)
 
 * manual
   * Play Store (12.9.12)

@@ -64,7 +64,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 20.3.20181208 (Shenzhou)
+* Stable: 20.4.20181230 (Constitution)
 * Beta: --- (---)
 
 ## Downloads
