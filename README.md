@@ -1,6 +1,6 @@
 # NanoDroid
 
-NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, both devices with or without A/B partition scheme are supported, aswell as Magisk Mode (module) installation. It also includes several tools (eg. GNU Bash, GNU Nano, more), scripts, fonts, sounds and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
+NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, both devices with or without A/B partition scheme, aswell as Magisk Mode (module) installation. It also includes several tools (eg. GNU Bash, GNU Nano, more), scripts, fonts, sounds and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
 
 Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them, see [Alter Installation](#alter-installation) below. 
 
@@ -307,6 +307,7 @@ Extra packages, flashing through TWRP required (flashing through Magisk Manager 
      * mounted partitions, whether device is A/B
      * list of installed GApps
      * file list of /system/app and /system/priv-app
+     * whether the ROM has native signature spoofing support 
   * use this to provide additional informations when posting issues
 
 Extra packages, flashing trough TWRP recommended, flashing through Magisk Manager is supported.
@@ -599,7 +600,7 @@ Additional credits go to
   * https://forum.xda-developers.com/showthread.php?t=2239421
 * shadow53 for automatic apk grabbing base code
   * https://shadow53.com/android/no-gapps/
-* ale5000 for microG system permission files and GApps Removal list
+* ale5000 for microG system permission files, GApps Removal list and native signature spoofing detection
   * https://github.com/micro5k
 * PaperYoshi for Nintendo Fonts
   * http://downloads.paperyoshi.at/
@@ -615,6 +616,7 @@ Special Thanks to the contributors
   * fixes for x86_64 support
 * Vavun
   * OsmAnd package
+  * several contributions to NanoDroid and it's microG GmsCore fork
 
 Special Thanks to the beta testers
 
