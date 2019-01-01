@@ -65,7 +65,7 @@ detect_bootmode () {
 	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
 	${BOOTMODE} || ps -A | grep zygote | grep -qv grep && BOOTMODE=true
 
-	${BOOTMODE} && error "${MODID} can't be installed from Magisk Manager!"
+	${BOOTMODE} && error "${MODID} must be flashed from TWRP!"
 }
 
 ui_print() {
