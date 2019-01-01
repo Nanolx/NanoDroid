@@ -1,5 +1,19 @@
 # ChangeLog
 
+## 20.5 in-dev
+
+### General Changes
+
+* Installer
+  * improve GApps removal list
+     * applies to: Full, microG packages
+
+### Updates
+
+* automatic
+  * BromiteWebView (71.0.3578.115)
+  * QKSMS (3.6.1)
+
 ## 20.4.20181230 "Constitution"
 
 ### Notes
