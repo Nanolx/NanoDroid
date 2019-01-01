@@ -13,14 +13,15 @@ List of applications by ale5000
 The following GApps are removed during installation:
 
 * BlankStore
+* ConfigUpdater
 * FDroidPriv
+* GCS
 * GmsCoreSetupPrebuilt
 * GmsCore_update
 * GmsDroidGuard
 * GoogleFeedback
 * GoogleLoginService
 * GoogleOneTimeInitializer
-* GooglePartnerSetup
 * GoogleServicesFramework
 * GoogleTTS
 * MarketUpdater
@@ -28,6 +29,7 @@ The following GApps are removed during installation:
 * PlayGames
 * PlayStore
 * PrebuiltGmsCore
+* PrebuiltGmsCorePi
 * PrebuiltGmsCorePix
 * Velvet
 * Vending
@@ -35,10 +37,11 @@ The following GApps are removed during installation:
 
 If the installation of NanoDroid is not an upgrade from a previous version, the following **data** will also be cleared:
 
-* com.google.android.feedback
+* com.android.vending
+* com.google.android.gms
+* com.google.android.gsf
 * com.google.android.gsf.login
-* com.google.android.location
-* com.google.android.youtube
+* com.google.android.feedback
 * com.mgoogle.android.gms
 
 ## List of removed location services
@@ -60,13 +63,9 @@ The following location services are removed during installation:
 
 If the installation of NanoDroid is not an upgrade from a previous version, the following **data** will also be cleared:
 
-* com.qualcomm.location
 * com.amap.android.location
 * com.baidu.location
 * com.google.android.location
+* com.qualcomm.location
 * org.microg.nlp
 * org.microg.unifiednlp
-* com.google.android.maps
-* org.fitchfamily.android.dejavu
-* org.microg.nlp.backend.ichnaea
-* org.microg.nlp.backend.nominatim
