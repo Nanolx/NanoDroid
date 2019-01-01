@@ -52,7 +52,7 @@ gmscore_prop="${aromapath}/gmscore.prop"
 
 ui_print " "
 ui_print "******************************"
-ui_print "     NanoDroid 20.4.20181230    "
+ui_print "     NanoDroid 20.5.99999999    "
 ui_print "      created by @Nanolx      "
 ui_print "         Setup Wizard         "
 ui_print "******************************"

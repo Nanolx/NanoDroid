@@ -1,8 +1,8 @@
 ini_set("rom_name",	"NanoDroid Setup Wizard");
-ini_set("rom_version",	"20.4");
+ini_set("rom_version",	"20.5");
 ini_set("rom_author",	"Nanolx");
 ini_set("rom_device",	"Generic (LOS/AOSP)");
-ini_set("rom_date",	"20181230");
+ini_set("rom_date",	"99999999");
 
 # This option should prevent incorrect 
 # and inverted theme and icon colors in some TWRP
