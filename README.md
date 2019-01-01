@@ -460,7 +460,7 @@ microG is an Open Source replacement for Google Services, full details can be fo
 
 NanoDroid includes microG as follows
 
-* microG GmsCore [> GitHub](https://github.com/microg/android_packages_apps_GmsCore)
+* microG GmsCore, choose from offical build [> GitHub](https://github.com/microg/android_packages_apps_GmsCore) and custom build [> GitHub](https://github.com/Nanolx/android_packages_apps_GmsCore)
 * with optional **Déjà Vu** location provider backend [> F-Droid](https://f-droid.org/de/packages/org.fitchfamily.android.dejavu/)
 * with optional **Mozilla** location provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
 * with optional **Apple** location provider backend backend [> F-Droid](https://f-droid.org/de/packages/org.microg.nlp.backend.apple/)
@@ -486,6 +486,12 @@ NanoDroid includes microG as follows
 F-Droid [> Website](http://www.fdroid.org) is an app store for OpenSource applications.
 
 NanoDroid includes both F-Droid and it's Privileged Extension [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged), so you don't need to enable `Unknown Sources`.
+
+Furthermore NanoDroid tells F-Droid to activate the following additional repositories by default:
+
+* NanoDroid companion F-Droid repository [> Link](https://www.nanolx.org/fdroid/repo)
+* BromiteWebView F-Droid repository [> Link](https://www.bromite.org/fdroid)
+* official microG F-Droid repository [> Link](https://microg.org/fdroid.html)
 
 ### Applications
 
