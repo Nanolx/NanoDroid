@@ -43,18 +43,17 @@ WhisperPush"
 
 GOOGLE_DATA="com.amap.android.location
 com.baidu.location
-com.google.android.feedback
-com.google.android.gsf.login
 com.google.android.location
-com.google.android.youtube
-com.mgoogle.android.gms
 com.qualcomm.location
 org.microg.nlp
 org.microg.unifiednlp"
 
-GOOGLE_DATA_DIRTY="com.google.android.gms
+GOOGLE_DATA_DIRTY="com.android.vending
+com.google.android.gms
 com.google.android.gsf
-com.android.vending"
+com.google.android.gsf.login
+com.google.android.feedback
+com.mgoogle.android.gms"
 
 ##########################################################################################
 # Misc. Functions
