@@ -713,8 +713,8 @@ Q: will there be a GApps version, instead of microG?
 A: no. but you can choose not to populate microG.
 
 Q: what devices is this tested on?
-A: One Plus 3T, Nexus 6, Moto G (3rd Gen)
+A: OnePlus 3T, Nexus 6
 
 Q: what ROMs was this tested on?
-A: OmniROM, AOSP Extended; should work on any LineageOS / AOSP based ROM that is working with Magisk.
+A: OmniROM, NitrogenOS; should work on any LineageOS / AOSP based ROM and outermost Stock ROMs.
 ```
