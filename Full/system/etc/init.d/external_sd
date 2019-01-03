@@ -2,7 +2,7 @@
 
 echo "external_sd init script"
 
-# nothing to wait
+# wait until boot completed
 until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
 media_rw=$(grep "^/dev/block.*/mnt/media_rw" /proc/mounts \
