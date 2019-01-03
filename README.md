@@ -271,7 +271,15 @@ You'll find the files in
 * /data/adb/MODID_log_INSTALLDATE
 * /data/adb/MODID_twrp_INSTALLDATE
 
-where MODID is either NanoDroid, NanoDroid_microG or NanoDroid_FDroid. INSTALLDATE is the date of installation in %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14).
+where MODID is either
+
+* NanoDroid
+* NanoDroid_microG
+* NanoDroid_FDroid
+* NanoDroid_BromiteWebView
+* NanoDroid_OsmAnd
+
+and INSTALLDATE is the date of installation in %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14).
 
 In case of installation errors, issues or questions provide theese files in your report for easier debugging.
 
