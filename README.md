@@ -582,8 +582,8 @@ Once your ROM supports signature spoofing, you need to setup microG like this
      * enable **Google device registration**
      * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
      * enable **Google SafetyNet** (required for applications that utilize SafetyNet, for example Pokémon GO, ...)
-     * in **UnifiedNlp Settings** choose
-         * **Déjà Vu** and/or **Mozilla** as Geolocation backend
+     * in **UnifiedNlp Settings** choose either any or all of
+         * **Déjà Vu**, **Mozilla**, **Apple** as Geolocation backend
          * **Nominatim** as Address lockup backend
      * after everything is done, reboot
      * if you installed **Play Store** open it, setup account and install your apps
