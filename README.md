@@ -631,7 +631,7 @@ Special Thanks to the beta testers
 
 ## Issues
 
-List of known issues
+List of known issues and their respective fixes or workarounds.
 
 ### General
 
@@ -695,6 +695,12 @@ List of known issues
 * You can't get past the first page of the microG login wizard on KitKat
   * either connect a Keyboard and use it to skip the first page (will work normally then)
   * use the custom NanoDroid microG GmsCore build, which has this issue fixed starting with version 0.2.6.14799-dirty-145
+
+### G-Crap
+
+* Hangouts isn't properly working
+  * as root, on-device, run the following command:
+     * `pm disable com.google.android.talk/com.google.android.apps.hangouts.service.NetworkConnectionCheckingService`
 
 Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
 
