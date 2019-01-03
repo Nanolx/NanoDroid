@@ -8,6 +8,10 @@
   * improve GApps removal list
      * applies to: Full, microG packages
 
+* Magisk Modules
+  * improve post-boot tasks by waiting for `sys.boot_completed`
+     * applies to: Full, microG, F-Droid, Bromite WebView, OsmAnd packages
+
 ### Updates
 
 * automatic
