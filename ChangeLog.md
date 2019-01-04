@@ -7,10 +7,17 @@
 * Installer
   * improve GApps removal list
      * applies to: Full, microG packages
+  * when searching for System WebView, also look for `WebViewStub`
+     * applies to: BromiteWebView package
 
 * Magisk Modules
   * improve post-boot tasks by waiting for `sys.boot_completed`
      * applies to: Full, microG, F-Droid, Bromite WebView, OsmAnd packages
+
+* Scripts
+  * nanodroid-overlay
+     * various minor improvements
+     * support debloating applications from `/system/reserve`
 
 ### Updates
 
