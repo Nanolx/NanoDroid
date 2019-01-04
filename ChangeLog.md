@@ -2,6 +2,12 @@
 
 ## 20.5 in-dev
 
+### Bug Fixes
+
+* Magisk Modules
+  * fix installing DroidGuard helper as user app
+     * applies to: Full, microG packages
+
 ### General Changes
 
 * Installer
@@ -24,6 +30,9 @@
 * automatic
   * BromiteWebView (71.0.3578.115)
   * QKSMS (3.6.1)
+
+* manual
+  * Play Store (12.9.30)
 
 ## 20.4.20181230 "Constitution"
 
