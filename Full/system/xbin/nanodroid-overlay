@@ -70,7 +70,7 @@ overrides_add_intern () {
 		mv "/system/${sysdir}/${app}" "/sdcard/nanodroid_backups/${sysdir}/"
 	fi
 
-	grep -q "^${app}" "${config}" || echo "${app}" >> "${config}"
+	grep -q "^${app}" "${config}" 2>/dev/null || echo "${app}" >> "${config}"
 }
 
 overrides_add () {
@@ -178,12 +178,13 @@ overrides_genconfig () {
 	if [[ ${NO_MAGISK} -eq 0 ]]; then
 		rm -f ${config}
 		export config="/data/.nanodroid-overlay"
+		touch ${config}
 
 		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace") \
 			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"); do
 			xapp=$(basename $(dirname ${app}))
 			echo "  adding ${xapp} to configuration"
-			grep -q "^${xapp}$" "${config}" || echo "${xapp}" >> "${config}"
+			grep -q "^${xapp}$" "${config}" 2>/dev/null || echo "${xapp}" >> "${config}"
 		done
 	else
 		echo "  overrides_genconfig() does nothing in System Mode!"
@@ -194,7 +195,7 @@ overrides_genconfig () {
 config_locations="/sdcard /external_sd @ZIPDIR@ /data /dev/tmp/install"
 get_config .nanodroid-overlay
 
-[[ -f ${config} ]] && export config
+[[ -f ${config} ]] && export config || config=/data/.nanodroid-overlay
 
 opt=${1}
 [[ -z ${opt} ]] && show_help || shift
