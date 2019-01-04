@@ -1029,7 +1029,7 @@ install_bromite_webview () {
 			x86_64 ) BROMITE_ARCH=x86 ;;
 		esac
 
-		for app in webview webviewstub Webview WebViewGoogle; do
+		for app in webview webviewstub WebViewStub Webview WebViewGoogle; do
 			if [ -d /system/app/${app} ]; then
 				if [ "${MODE}" = "SYSTEM" ]; then
 					echo "    backing up ${app} to /sdcard/nanodroid_backups/app/${app}"
