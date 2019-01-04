@@ -217,10 +217,10 @@ overrides_genconfig () {
 }
 
 # check for configuration files
-config_locations="/sdcard /external_sd @ZIPDIR@ /data /dev/tmp/install"
+config_locations="/sdcard /external_sd /data @ZIPDIR@ /dev/tmp/install"
 get_config .nanodroid-overlay
 
-[[ -f ${config} ]] && export config || config=/data/.nanodroid-overlay
+[[ -f ${config} ]] && export config || config=/sdcard/.nanodroid-overlay
 
 opt=${1}
 [[ -z ${opt} ]] && show_help || shift
