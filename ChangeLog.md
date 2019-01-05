@@ -9,6 +9,8 @@
      * applies to: Full, microG packages
   * fix installing Bromite WebView as user app
      * applies to: BromiteWebView package
+  * don't try to start `permissions` init script, removed since ages
+     * applies to: Full package
 
 ### General Changes
 
