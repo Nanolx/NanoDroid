@@ -36,6 +36,7 @@ update_microg () {
 	grab_apk_from_repo ${fd_NLPMOZILLA[@]}
 	grab_apk_from_repo ${fd_NLPNOMINATIM[@]}
 	grab_apk_from_repo ${fd_NLPAPPLE[@]}
+	grab_apk_from_repo ${fd_NLPRADIOCELL[@]}
 	grab_apk_from_repo ${fd_YALPSTORE[@]}
 	grab_apk_from_repo ${fd_AURORASTORE[@]}
 	grab_apk_from_repo ${nlx_PHONESKY[@]}
