@@ -55,8 +55,8 @@ Table of Contents
             * [microG](#microg-1)
                * [Signature Spoofing Support](#signature-spoofing-support)
                * [microG Setup](#microg-setup)
-      * [License &amp; Credits](#license--credits)
       * [Issues](#issues)
+      * [License &amp; Credits](#license--credits)
       * [TODO](#todo)
       * [FAQ](#faq)
 
@@ -626,47 +626,6 @@ Once your ROM supports signature spoofing, you need to setup microG like this
      * after everything is done, reboot
      * if you installed **Play Store** open it, setup account and install your apps
 
-## License & Credits
-
-My own work (NanoDroid itself) is licensed under the GNU General Public License version 3 or newer [> GNU](https://www.gnu.org/licenses/gpl-3.0.txt)
-
-For more details (including authors and license) on every provided application or Software press the link next to it.
-
-Additional credits go to
-
-* Mar-V-In for microG
-  * https://github.com/microg
-* topjohnwu for Magisk
-  * https://github.com/topjohnwu/Magisk
-* Lanchon for dexpatcher and haystack
-  * https://github.com/dexpatcher
-* osm0sis for GNU Nano and Busybox
-  * https://forum.xda-developers.com/showthread.php?t=2239421
-* shadow53 for automatic apk grabbing base code
-  * https://shadow53.com/android/no-gapps/
-* ale5000 for microG system permission files, GApps Removal list and native signature spoofing detection
-  * https://github.com/micro5k
-* PaperYoshi for Nintendo Fonts
-  * http://downloads.paperyoshi.at/
-* anestisb for vdexExtractor
-  * https://github.com/anestisb/vdexExtractor
-* JesusFreke for smali/baksmali
-  * https://github.com/JesusFreke/smali
-
-Special Thanks to the contributors
-
-* Gia90
-  * Android 6.0 support for Patcher
-  * fixes for x86_64 support
-* Vavun
-  * OsmAnd package
-  * several contributions to NanoDroid and it's microG GmsCore fork
-
-Special Thanks to the beta testers
-
-* xenithorb
-* ShapeShifter499
-
 ## Issues
 
 List of known issues and their respective fixes or workarounds.
@@ -731,7 +690,7 @@ List of known issues and their respective fixes or workarounds.
   * this is because F-Droid's Priviledged Extension is not compatible with those ROMs, disable it from
       * F-Droid > Settings > Expert Settings > Privileged Extension
 
-### Stock ROM only
+### Other
 
 * Some Stock ROMs do not properly work after first boot since their SetupWizard is disabled by NanoDroid (because it's incompatible with microG)
   * check `/system/build.prop` or `/vendor/build.prop` if they contain the property `ro.setupwizard.mode` and change it to (you can do this from TWRP via ADB, with the builtin `vi` editor)
@@ -739,12 +698,10 @@ List of known issues and their respective fixes or workarounds.
       * in Magisk Mode NanoDroid will do this on it's own using Magisk's `resetprop`
   * if you can access your device via ADB, you can also issue the following command as root, on-device:
       * `nanodroid-util --fix-update`
-
-### Other
-
-* Applications crash when using WebView
+* Applications crash when using WebView (BromiteWebView package)
   * install Bromite WebView as user-app, as root, on-device, issue:
       * `pm install -r /system/app/BromiteWebView/BromiteWebView.apk`
+      * this is done automatically in Magisk Mode (as of version 20.5)
 * ROM lags after applying signature spoofing patch
   * some ROMs already have the patch built-in, if you patch those ROMs (again), it results in heavy lags
 
@@ -756,6 +713,47 @@ List of known issues and their respective fixes or workarounds.
 
 Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
 
+## License & Credits
+
+My own work (NanoDroid itself) is licensed under the GNU General Public License version 3 or newer [> GNU](https://www.gnu.org/licenses/gpl-3.0.txt)
+
+For more details (including authors and license) on every provided application or Software press the link next to it.
+
+Additional credits go to
+
+* Mar-V-In for microG
+  * https://github.com/microg
+* topjohnwu for Magisk
+  * https://github.com/topjohnwu/Magisk
+* Lanchon for dexpatcher and haystack
+  * https://github.com/dexpatcher
+* osm0sis for GNU Nano and Busybox
+  * https://forum.xda-developers.com/showthread.php?t=2239421
+* shadow53 for automatic apk grabbing base code
+  * https://shadow53.com/android/no-gapps/
+* ale5000 for microG system permission files, GApps Removal list and native signature spoofing detection
+  * https://github.com/micro5k
+* PaperYoshi for Nintendo Fonts
+  * http://downloads.paperyoshi.at/
+* anestisb for vdexExtractor
+  * https://github.com/anestisb/vdexExtractor
+* JesusFreke for smali/baksmali
+  * https://github.com/JesusFreke/smali
+
+Special Thanks to the contributors
+
+* Gia90
+  * Android 6.0 support for Patcher
+  * fixes for x86_64 support
+* Vavun
+  * OsmAnd package
+  * several contributions to NanoDroid and it's microG GmsCore fork
+
+Special Thanks to the beta testers
+
+* xenithorb
+* ShapeShifter499
+
 ## TODO
 
 ## FAQ
@@ -765,8 +763,8 @@ Q: will there be a GApps version, instead of microG?
 A: no. but you can choose not to populate microG.
 
 Q: what devices is this tested on?
-A: OnePlus 3T, Nexus 6
+A: OnePlus 5T, OnePlus 3T, Nexus 6
 
 Q: what ROMs was this tested on?
-A: OmniROM, NitrogenOS; should work on any LineageOS / AOSP based ROM and outermost Stock ROMs.
+A: OxygenOS Pie, OmniROM, NitrogenOS; should work on any LineageOS / AOSP based ROM and most Stock ROMs.
 ```
