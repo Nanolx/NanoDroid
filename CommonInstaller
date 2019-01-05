@@ -736,29 +736,29 @@ install_microg () {
 		gapps_destroy_artifacts
 
 		NLPBACKEND="nlpBackendNominatim"
-		NLPSTRING="Nominatim"
+
+		ui_print " << with microg"
+		ui_print "   ++ Nominatim geocoder backend"
 
 		if [ "${nanodroid_nlpbackend:0:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendDejavu"
-			NLPSTRING="${NLPSTRING}, Déjà Vu"
+			ui_print "   ++ Déjà Vu location backend"
 		fi
 
 		if [ "${nanodroid_nlpbackend:1:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendIchnaea"
-			NLPSTRING="${NLPSTRING}, Ichnaea"
+			ui_print "   ++ Ichnaea location backend"
 		fi
 
 		if [ "${nanodroid_nlpbackend:2:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendApple"
-			NLPSTRING="${NLPSTRING}, Apple"
+			ui_print "   ++ Apple location backend"
 		fi
 
 		if [ "${nanodroid_nlpbackend:3:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendRadiocell"
-			NLPSTRING="${NLPSTRING}, Radiocell"
+			ui_print "   ++ Radiocell location backend"
 		fi
-
-		ui_print " << with microg [${NLPSTRING}]"
 
 		if [ "${nanodroid_gmscore}" -eq 1 ]; then
 			ui_print "   ++ Official microG GmsCore"
