@@ -536,6 +536,28 @@ Full [> Details](doc/AlterInstallation.md) on altering installation manually, or
 
 This is the recommended way.
 
+### Stock ROM without GApps, custom ROM with/without OpenGApps
+
+OpenGApps and GApps-less ROMs don't need further measurements, the Installer takes care of required steps.
+
+* perform full wipe (/system, /data, /cache, Dalvik/ART cache)
+  * recommended, but not required
+* install desired ROM
+  * make sure it does **not** include GApps if you want to use microG
+     * NanoDroid tries to get rid of GApps on it's own, but it may not always work, try without any warranty
+* install **Magisk**
+  * recommended, but not required
+  * if **Magisk** is installed, NanoDroid will be installed as Magisk-Module, else it will install into `/system` directly
+* install desired Kernel (if any)
+* install **NanoDroid**
+  * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](doc/DeodexServices.md)
+     * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 9.0)
+* reboot into ROM
+
+### Stock ROM with GApps
+
+Stock ROMs with GApps may not allow to switch from Google GmsCore to microG GmsCore in-place, thus the installation is slightly different.
+
 * perform full wipe (/system, /data, /cache, Dalvik/ART cache)
   * recommended, but not required
 * install desired ROM
@@ -547,9 +569,17 @@ This is the recommended way.
   * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](doc/DeodexServices.md)
      * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 9.0)
 * install desired Kernel (if any)
+* mount `/system` read-write and remove the following folders
+  * `/system/priv-app/GmsCore`
+  * `/system/priv-app/GsfProxy`
+  * `/system/priv-app/Phonesky`
+* boot into ROM (ignore all those complaints that Play Services are missing)
+  * this is step is required!
+* reboot to TWRP
 * install **NanoDroid**
+  * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](doc/DeodexServices.md)
+     * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 9.0)
 * reboot into ROM
-* optional, but recommended, setup the [F-Droid repository](#f-droid-repository)
 
 ##### Upgrade / Installing on a clean ROM
 
@@ -641,7 +671,19 @@ Special Thanks to the beta testers
 
 List of known issues and their respective fixes or workarounds.
 
-### General
+### microG
+
+* Battery Drain
+  * microG fails to register applications to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
+     * do a clean flash of your ROM (, Magisk) and NanoDroid and install your apps after microG setup
+     * uninstall and re-install all your applications (backup application data if required)
+* microG lacks features
+  * if you use AppOps, PrivacyGuard or the like you have to grant microG GmsCore **all** permissions, if you prevent some permissions, some apps or features might not work as expected or not at all. Note: some APIs/features are stubs in microG GmsCore, meaning they exist that apps don't complain, but they do nothing - thus blocking microG GmsCore is pretty much of no benefit.
+* You can't get past the first page of the microG login wizard on KitKat
+  * either connect a Keyboard and use it to skip the first page (will work normally then)
+  * use the custom NanoDroid microG GmsCore build, which has this issue fixed starting with version 0.2.6.14799-dirty-145
+
+### SafetyNet
 
 * Applications/SafetyNet check complain with `Google Play Services are missing`
   * you did not
@@ -649,41 +691,41 @@ List of known issues and their respective fixes or workarounds.
       * grant signature spoofing permission to Fake Store or Play Store
          * go to Settings / Apps / Permissions / Signature Spoofing and grant it
       * install either Fake Store or Play Store
+* SafetyNet check fails after upgrading Magisk to version 18.0
+  * go to Magisk Manager > Magisk Hide and activate it for `microG DroidGuard Helper`
+* Applications crash during SafetyNet check
+  * install microG DroidGuard Helper as user-app (required on some ROMs), as root, on-device, issue:
+      * `pm install -r /system/app/DroidGuard/DroidGuard.apk`
+      * this is done automatically in Magisk Mode (as of version 20.5)
+
+### Play Store
+
 * Play Store giving error RH-01
   * ensure you rebooted after [microG setup](#microg-setup)
   * ensure Play Store has signature spoofing permission
       * go to Settings / Apps / Permissions / Signature Spoofing and grant it
   * force close Play Store and open it again
+
+### Push Messages
+
 * Apps are not receiving Push messages
   * go to microG Settings / Google Cloud Messaging and check if it is connected
   * ensure you don't have an adblocker blocking the domain `mtalk.google.com` it is required for GCM to work
   * when using Titanium Backup first install the app only (without data) and start it, this will register the app, after that you can restore the data using Titanium Backup
   * if an app is not shown as registered in microG Settings / Google Cloud Messaging, try uninstalling and re-installing it
   * when restoring the ROM from a TWRP backup GCM is often broken, no workaround currently known, except uninstalling and re-installing the apps
-* Battery Drain
-  * microG fails to register applications to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
-     * do a clean flash of your ROM (, Magisk) and NanoDroid and install your apps after microG setup
-     * uninstall and re-install all your applications (backup application data if required)
-* microG lacks features
-  * if you use AppOps, PrivacyGuard or the like you have to grant microG GmsCore **all** permissions, if you prevent some permissions, some apps or features might not work as expected or not at all. Note: some APIs/features are stubs in microG GmsCore, meaning they exist that apps don't complain, but they do nothing - thus blocking microG GmsCore is pretty much of no benefit.
-* ROM lags after applying signature spoofing patch
-  * some ROMs already have the patch built-in, if you patch those ROMs (again), it results in heavy lags
 
-### Magisk Mode installation only
+### Unified Nlp
 
-* SafetyNet check fails after upgrading Magisk to version 18.0
-  * go to Magisk Manager > Magisk Hide and activate it for `microG DroidGuard Helper`
+* unified Nlp is not registered in the system
+  * some ROMs with native signature spoofing don't look for `com.google.android.gms` as location provider
+  * tell the developer (or maintainer) of the ROM to fix this
+* unified Nlp is registered in the system, but fails to get location
+  * issue the following commands as root, on-device:
+     * `pm grant com.google.android.gms android.permission.ACCESS_FINE_LOCATION`
+     * `pm grant com.google.android.gms android.permission.ACCESS_COARSE_LOCATION`
 
-### System Mode installation only
-
-* Applications crash during SafetyNet check
-  * install microG DroidGuard Helper as user-app (required on some ROMs), as root, on-device, issue:
-      * `pm install -r /system/app/DroidGuard/DroidGuard.apk`
-* Applications crash when using WebView
-  * install Bromite WebView as user-app, as root, on-device, issue:
-      * `pm install -r /system/app/BromiteWebView/BromiteWebView.apk`
-
-### F-Droid only
+### F-Droid
 
 * On some ROMs (most noticeably MIUI ROMs) F-Droid can't install applications
   * this is because F-Droid's Priviledged Extension is not compatible with those ROMs, disable it from
@@ -691,20 +733,22 @@ List of known issues and their respective fixes or workarounds.
 
 ### Stock ROM only
 
-* Some stock ROMs do not properly work after first boot since their SetupWizard is disabled by NanoDroid (because it's incompatible with microG)
+* Some Stock ROMs do not properly work after first boot since their SetupWizard is disabled by NanoDroid (because it's incompatible with microG)
   * check `/system/build.prop` or `/vendor/build.prop` if they contain the property `ro.setupwizard.mode` and change it to (you can do this from TWRP via ADB, with the builtin `vi` editor)
       * `ro.setupwizard.mode=DISABLED`
       * in Magisk Mode NanoDroid will do this on it's own using Magisk's `resetprop`
   * if you can access your device via ADB, you can also issue the following command as root, on-device:
       * `nanodroid-util --fix-update`
 
-### KitKat only
+### Other
 
-* You can't get past the first page of the microG login wizard on KitKat
-  * either connect a Keyboard and use it to skip the first page (will work normally then)
-  * use the custom NanoDroid microG GmsCore build, which has this issue fixed starting with version 0.2.6.14799-dirty-145
+* Applications crash when using WebView
+  * install Bromite WebView as user-app, as root, on-device, issue:
+      * `pm install -r /system/app/BromiteWebView/BromiteWebView.apk`
+* ROM lags after applying signature spoofing patch
+  * some ROMs already have the patch built-in, if you patch those ROMs (again), it results in heavy lags
 
-### G-Crap
+### Google Software
 
 * Hangouts isn't properly working
   * as root, on-device, run the following command:
