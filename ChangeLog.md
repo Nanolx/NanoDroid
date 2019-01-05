@@ -24,6 +24,16 @@
   * improve post-boot tasks by waiting for `sys.boot_completed`
      * applies to: Full, microG, F-Droid, Bromite WebView, OsmAnd packages
 
+* Unified Nlp backends
+  * add Radiocell location backend
+     * can be used online and offline (by downloading the database for your country)
+     * by default not installed
+     * changed setting nanodroid_nlpbackend
+         * before: nanodroid_nlpbackend=ABC (A: Déjà Vu, B: Ichnaea, C: Apple)
+         * now: nanodroid_nlpbackend=ABCD (A: Déjà Vu, B: Ichnaea, C: Apple, D: Radiocell)
+     * your setup file will be auto-migrated
+     * applies to: Full, microG packages
+
 * Play Store
   * the Play Store is now also patched to (hopefuly) prevent self-updates @Vavun
 
@@ -40,6 +50,7 @@
 * automatic
   * BromiteWebView (71.0.3578.115)
   * QKSMS (3.6.1)
+  * nlpBackend Radiocell (0.2.9)
 
 * manual
   * Play Store (13.0.22)
