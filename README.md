@@ -471,7 +471,8 @@ NanoDroid includes microG as follows
 * microG GmsCore, choose from offical build [> GitHub](https://github.com/microg/android_packages_apps_GmsCore) and custom build [> GitHub](https://github.com/Nanolx/android_packages_apps_GmsCore)
 * with optional **Déjà Vu** location provider backend [> F-Droid](https://f-droid.org/de/packages/org.fitchfamily.android.dejavu/)
 * with optional **Mozilla** location provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
-* with optional **Apple** location provider backend backend [> F-Droid](https://f-droid.org/de/packages/org.microg.nlp.backend.apple/)
+* with optional **Apple** location provider backend [> F-Droid](https://f-droid.org/de/packages/org.microg.nlp.backend.apple/)
+* with optional **Radiocells** location provider backend [> F-Droid](https://f-droid.org/en/packages/org.openbmap.unifiedNlp/)
 * with **Nominatim** adress provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
 * with **microG** GsfProxy [> GitHub](https://github.com/microg/android_packages_apps_GsfProxy)
 * with **microG** DroidGuard Helper [> GitHub](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
@@ -620,8 +621,8 @@ Once your ROM supports signature spoofing, you need to setup microG like this
      * enable **Google device registration**
      * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
      * enable **Google SafetyNet** (required for applications that utilize SafetyNet, for example Pokémon GO, ...)
-     * in **UnifiedNlp Settings** choose either any or all of
-         * **Déjà Vu**, **Mozilla**, **Apple** as Geolocation backend
+     * in **UnifiedNlp Settings** choose either any or all of (whichever you've choosen to be installed)
+         * **Déjà Vu**, **Mozilla**, **Apple**, **Radiocell** as Geolocation backend
          * **Nominatim** as Address lockup backend
      * after everything is done, reboot
      * if you installed **Play Store** open it, setup account and install your apps

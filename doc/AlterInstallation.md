@@ -28,7 +28,7 @@ nanodroid_init=1
 nanodroid_gsync=0
 nanodroid_swipe=0
 nanodroid_forcesystem=0
-nanodroid_nlpbackend=100
+nanodroid_nlpbackend=1000
 nanodroid_bash=1
 nanodroid_nano=1
 nanodroid_utils=1
@@ -46,7 +46,7 @@ nanodroid_mapsv1=1
 nanodroid_gsync=0
 nanodroid_swipe=0
 nanodroid_forcesystem=0
-nanodroid_nlpbackend=100
+nanodroid_nlpbackend=1000
 ```
 
 the **F-Droid** (nanodroid_fdroid is always 1) and **Bromite WebView** pckage supports the following options
@@ -133,12 +133,13 @@ whether to provide Swipe libraries
 
 whether to force system mode installation, regardless whether Magisk is installed
 
-`nanodroid_nlpbackend=[0|1][0|1][0|1]`
+`nanodroid_nlpbackend=[0|1][0|1][0|1][0|1]`
 
 what location backends for microG to install
 * 1st element 0|1 = Déjà Vu location backend
 * 2nd element 0|1 = Ichnaea (Mozilla) location backend
 * 3rd element 0|1 = Apple location backend
+* 4th element 0|1 = Radiocells.org location backend
 
 `nanodroid_bash=[0|1]`
 
