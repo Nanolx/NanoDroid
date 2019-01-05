@@ -7,6 +7,8 @@
 * Magisk Modules
   * fix installing DroidGuard helper as user app
      * applies to: Full, microG packages
+  * fix installing Bromite WebView as user app
+     * applies to: BromiteWebView package
 
 ### General Changes
 
@@ -20,13 +22,16 @@
   * improve post-boot tasks by waiting for `sys.boot_completed`
      * applies to: Full, microG, F-Droid, Bromite WebView, OsmAnd packages
 
+* Play Store
+  * the Play Store is now also patched to (hopefuly) prevent self-updates @Vavun
+
 * Scripts
   * nanodroid-overlay
      * various minor improvements
      * support debloating applications from `/system/reserve`
   * nanodroid-util
      * add `-m`, `--fix-microg` switch
-         * fixes microG installation issue on GApps-infected Stock ROMs
+         * may fix microG installation issues on some GApps-infected Stock ROMs
 
 ### Updates
 
@@ -35,7 +40,8 @@
   * QKSMS (3.6.1)
 
 * manual
-  * Play Store (12.9.30)
+  * Play Store (13.0.22)
+  * microG GmsCore (0.2.6.14799-dirty-148)
 
 ## 20.4.20181230 "Constitution"
 
