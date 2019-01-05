@@ -50,7 +50,7 @@ read_clipboard () {
 }
 
 fix_microg () {
-	for app in GsfProxy GmsCore Phonesyk; do
+	for app in GsfProxy GmsCore Phonesky; do
 		pm install -r /system/priv-app/${app}/${app}.apk
 	done
 
