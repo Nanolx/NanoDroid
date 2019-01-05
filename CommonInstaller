@@ -753,6 +753,11 @@ install_microg () {
 			NLPSTRING="${NLPSTRING}, Apple"
 		fi
 
+		if "${nanodroid_nlpbackend:3:1}" -eq 1 ]; then
+			NLPBACKEND="${NLPBACKEND} nlpBackendRadiocell"
+			NLPSTRING="${NLPSTRING}, Radiocell"
+		fi
+
 		ui_print " << with microg [${NLPSTRING}]"
 
 		if [ "${nanodroid_gmscore}" -eq 1 ]; then
@@ -1448,6 +1453,14 @@ check_cfg_setup () {
 			3 ) tmp_prop="110" ;;
 			* ) tmp_prop="100" ;;
 		esac
+
+		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"
+		set_prop nanodroid_nlpbackend "${tmp_prop}"
+	fi
+
+	# in NanoDroid 20.5 nanodroid_nlpbackend has changed
+	if [ "${#nanodroid_nlpbackend}" -eq 3 ]; then
+		tmp_prop="${nanodroid_nlpbackend}0"
 
 		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"
 		set_prop nanodroid_nlpbackend "${tmp_prop}"
