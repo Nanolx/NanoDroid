@@ -25,6 +25,7 @@ fd_NLPDEJAVU=(fdroid org.fitchfamily.android.dejavu app nlpBackendDejavu)
 fd_NLPMOZILLA=(fdroid org.microg.nlp.backend.ichnaea app nlpBackendIchnaea)
 fd_NLPNOMINATIM=(fdroid org.microg.nlp.backend.nominatim app nlpBackendNominatim)
 fd_NLPAPPLE=(fdroid org.microg.nlp.backend.apple app nlpBackendApple)
+fd_NLPRADIOCELLS=(fdroid org.openbmap.unifiedNlp app nlpBackendRadiocell)
 fd_YALPSTORE=(fdroid com.github.yeriomin.yalpstore priv-app YalpStore)
 fd_AURORASTORE=(fdroid com.dragons.aurora priv-app AuroraStore)
 
@@ -169,6 +170,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/nlpBackendApple/nlpBackendApple.apk
 	Full/system/app/nlpBackendIchnaea/nlpBackendIchnaea.apk
 	Full/system/app/nlpBackendDejavu/nlpBackendDejavu.apk
+	Full/system/app/nlpBackendRadiocell/nlpBackendRadiocell.apk
 	Full/system/app/nlpBackendNominatim/nlpBackendNominatim.apk
 	Full/system/app/DroidGuard/DroidGuard.apk
 	Full/system/priv-app/FDroidPrivileged/FDroidPrivileged.apk
