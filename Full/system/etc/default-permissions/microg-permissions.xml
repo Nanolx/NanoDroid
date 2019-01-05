@@ -60,4 +60,11 @@
         <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="false"></permission>
         <permission name="android.permission.ACCESS_FINE_LOCATION" fixed="false"></permission>
     </exception>
+
+    <exception package="org.openbmap.unifiedNlp">
+        <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="false"></permission>
+        <!-- Storage -->
+        <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="false"></permission>
+        <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="false"></permission>
+    </exception>
 </exceptions>
