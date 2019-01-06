@@ -1034,23 +1034,24 @@ install_bromite_webview () {
 			x86_64 ) BROMITE_ARCH=x86 ;;
 		esac
 
-		for app in webview webviewstub WebViewStub Webview WebViewGoogle; do
+		WEBVIEW_REPLACE=BromiteWebView
+
+		for app in webview webviewstub WebViewStub Webview; do
 			if [ -d /system/app/${app} ]; then
 				if [ "${MODE}" = "SYSTEM" ]; then
 					echo "    backing up ${app} to /sdcard/nanodroid_backups/app/${app}"
 					mkdir -p /sdcard/nanodroid_backups/app
 					rm -rf /sdcard/nanodroid_backups/app/${app}
 					mv /system/app/${app} /sdcard/nanodroid_backups/app/
-				elif [ "${MODE}" = "MAGISK" ]; then
-					echo "    creating overlay for ${app}"
-					mkdir -p ${MODPATH}/system/app/${app}
-					touch ${MODPATH}/system/app/${app}/.replace
 				fi
+
+				WEBVIEW_REPLACE=${app}
+				break
 			fi
 		done
 
 		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
-			for app in com.android.webview com.google.android.webview; do
+			for app in com.android.webview; do
 				rm -rf /data/data/${app}
 				rm -rf /data/user/*/${app}
 				rm -rf /data/user_de/*/${app}
@@ -1060,7 +1061,7 @@ install_bromite_webview () {
 			done
 		fi
 
-		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib BromiteWebView
+		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib ${WEBVIEW_REPLACE}
 	fi
 }
 
