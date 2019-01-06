@@ -686,7 +686,7 @@ List of known issues and their respective fixes or workarounds.
      * `pm grant com.google.android.gms android.permission.ACCESS_COARSE_LOCATION`
 * Ichnaea (Mozilla) location backend doesn't provide location
   * if you use Blockada, add the location backend to the whitelist
-  * for any other backend, whitelist the following domain:
+  * for any other ad-blocker, whitelist the following domain:
      * `https://location.services.mozilla.com`
 
 ### F-Droid
