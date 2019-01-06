@@ -48,13 +48,15 @@
 ### Updates
 
 * automatic
-  * BromiteWebView (71.0.3578.115)
+  * BromiteWebView (71.0.3578.120)
   * QKSMS (3.6.1)
   * nlpBackend Radiocell (0.2.9)
 
 * manual
   * Play Store (13.0.22)
   * microG GmsCore (0.2.6.14799-dirty-148)
+  * OpenLauncher (0.6.1-nightly-190106)
+    * this is the last custom build of OpenLauncher, official builds will be used in the future.
 
 ## 20.4.20181230 "Constitution"
 
