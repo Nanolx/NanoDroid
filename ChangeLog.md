@@ -25,7 +25,6 @@
 * Magisk Modules
   * improve post-boot tasks by waiting for `sys.boot_completed`
      * applies to: Full, microG, F-Droid, Bromite WebView, OsmAnd packages
-  * 
 
 * Unified Nlp backends
   * add Radiocell location backend
