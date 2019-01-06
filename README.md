@@ -684,6 +684,10 @@ List of known issues and their respective fixes or workarounds.
   * issue the following commands as root, on-device:
      * `pm grant com.google.android.gms android.permission.ACCESS_FINE_LOCATION`
      * `pm grant com.google.android.gms android.permission.ACCESS_COARSE_LOCATION`
+* Ichnaea (Mozilla) location backend doesn't provide location
+  * if you use Blockada, add the location backend to the whitelist
+  * for any other backend, whitelist the following domain:
+     * `https://location.services.mozilla.com`
 
 ### F-Droid
 
