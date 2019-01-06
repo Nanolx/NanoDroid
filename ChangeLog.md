@@ -47,6 +47,11 @@
      * add `-m`, `--fix-microg` switch
          * may fix microG installation issues on some GApps-infected Stock ROMs
 
+* Documentation
+  * added additional instructions for Stock ROMs
+  * re-structured Issues section
+  * added several more issues (and their fixes / workarounds)
+
 ### Updates
 
 * automatic
