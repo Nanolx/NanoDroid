@@ -49,13 +49,14 @@ NanoDroidPatcher () {
 		rm -rf ${BASEDIR}/${artifact}
 	done
 
+	detect_sdk
+	detect_arch
+
 	if search_fake_package_signature; then
 		ui_print " ROM has native signature spoofing already!"
 		exit 0
 	fi
 
-	detect_sdk
-	detect_arch
 	detect_odex
 
 	[ -f ${MAGISK_IMG} ] && magisk_setup
