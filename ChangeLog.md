@@ -12,6 +12,9 @@
   * don't try to start `permissions` init script, removed since ages
      * applies to: Full package
 
+* Patcher
+  * fix detection whether ROM has native signature spoofing
+
 ### General Changes
 
 * Installer

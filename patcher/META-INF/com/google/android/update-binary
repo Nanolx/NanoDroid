@@ -39,14 +39,17 @@ elif [ -f /data/adb/NanoDroid_Patched ]; then
 	ui_print " !! /data/adb/NanoDroid_Patched exists"
 	ui_print " !! if you want to force patching, then"
 	error    " remove this file and try again"
-elif search_fake_package_signature; then
-	error    " ROM has native signature spoofing already!"
 fi
 
 setup_patcher
 
 detect_sdk
 detect_arch
+
+if search_fake_package_signature; then
+	error    " ROM has native signature spoofing already!"
+fi
+
 detect_odex
 
 [ -f ${MAGISK_IMG} ] && magisk_setup
