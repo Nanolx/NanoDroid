@@ -21,12 +21,12 @@ viewbox(
 );
 
 agreebox(
-   "\nTerms Of Use",
-   "<@center>\nPlease read the ElementalX terms of use\n\n</@>",
-   "@license",
-   "" + readfile_aroma("agreement.txt"),
-   "I agree with these terms of use",
-   "<@center>\nYou must accept the terms</@>"
+	"\nTerms Of Use",
+	"<@center>\nPlease read the NanoDroid terms of use\n\n</@>",
+	"@license",
+	"" + readfile_aroma("license.txt"),
+	"I agree with these terms of use",
+	"<@center>\nYou must accept the terms</@>"
 );
 
 selectbox(
