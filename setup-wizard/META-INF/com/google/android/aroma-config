@@ -211,9 +211,9 @@ endif;
 
 setvar("retstatus",
   install(
-	"Please Wait...",
+	"Creating Configuration...",
 	"<@center><b>"+ini_get("rom_name")+"</b></@>",
-	"")
+	"");
 );
 
 ini_set("text_next", "Finish");
@@ -222,10 +222,10 @@ if getvar("retstatus")=="0" then
 	viewbox(
 	"Installation Completed",
 	"<@center>\nCongratulations!\n\n"+
-	"NanoDroid setup successfully created.</@>",
+	"NanoDroid Configuration successfully created.</@>",
 	"");
 else
 	viewbox("Installation Failed",
-	"\n\nInstaller Status: "+ getvar("retstatus"),
+	"\n\SetupWizard Status: "+ getvar("retstatus"),
 	"@alert");
 endif;
