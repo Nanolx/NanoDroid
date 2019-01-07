@@ -680,10 +680,14 @@ List of known issues and their respective fixes or workarounds.
 * unified Nlp is not registered in the system
   * some ROMs with native signature spoofing don't look for `com.google.android.gms` as location provider
   * tell the developer (or maintainer) of the ROM to fix this
+  * some versions of `com.qualcomm.location` conflict with uNlp, if it's installed and unified Nlp doesn't work, try the following command to get rid of it, as root, on-device:
+     * `novl -a com.qualcomm.location`
 * unified Nlp is registered in the system, but fails to get location
   * issue the following commands as root, on-device:
      * `pm grant com.google.android.gms android.permission.ACCESS_FINE_LOCATION`
      * `pm grant com.google.android.gms android.permission.ACCESS_COARSE_LOCATION`
+  * some versions of `com.qualcomm.location` conflict with uNlp, if it's installed and unified Nlp doesn't work, try the following command to get rid of it, as root, on-device:
+     * `novl -a com.qualcomm.location`
 * Ichnaea (Mozilla) location backend doesn't provide location
   * if you use Blockada, add the location backend to the whitelist
   * for any other ad-blocker, whitelist the following domain:
