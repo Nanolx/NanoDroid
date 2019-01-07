@@ -15,6 +15,9 @@
 * Patcher, Patcher addon.d
   * fix detection whether ROM has native signature spoofing
 
+* SetupWizard
+  * if user has choosen to store configuration `/external_sd`, but it doesn't exist, fallback to `/sdcard`
+
 ### General Changes
 
 * Installer
@@ -38,6 +41,11 @@
          * now: nanodroid_nlpbackend=ABCD (A: Déjà Vu, B: Ichnaea, C: Apple, D: Radiocell)
      * your setup file will be auto-migrated
      * applies to: Full, microG packages
+
+* SetupWizard
+  * update AROMA (taken from ElementalX by @flar2)
+  * various changes, improvements, cosmetic changes
+  * update to include Radiocell uNlp backend
 
 * Play Store
   * the Play Store is now also patched to (hopefuly) prevent self-updates @Vavun
