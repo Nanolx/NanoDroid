@@ -12,11 +12,20 @@
   * don't try to start `permissions` init script, removed since ages
      * applies to: Full package
 
+* Unified Nlp
+  * some (old) versions of `com.qualcomm.location` conflict with unified Nlp, but recent versions reportedly don't, thus it no longer gets auto-removed
+  * use `nanodroid-overlay -a com.qualcomm.location` to remove it, if it's installed and unified Nlp doesn't work
+     * applies to: Full, microG packages
+
 * Patcher, Patcher addon.d
   * fix detection whether ROM has native signature spoofing
 
 * SetupWizard
   * if user has choosen to store configuration `/external_sd`, but it doesn't exist, fallback to `/sdcard`
+
+* Scripts
+  * nanodroid-overlay
+     * mount `/system` read-write on System Mode installations
 
 ### General Changes
 
