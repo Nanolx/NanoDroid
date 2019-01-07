@@ -59,13 +59,11 @@ The following location services are removed during installation:
 * MozillaNlpBackend
 * NominatimGeocoderBackend
 * NominatimNlpBackend
-* com.qualcomm.location
 
 If the installation of NanoDroid is not an upgrade from a previous version, the following **data** will also be cleared:
 
 * com.amap.android.location
 * com.baidu.location
 * com.google.android.location
-* com.qualcomm.location
 * org.microg.nlp
 * org.microg.unifiednlp
