@@ -1,4 +1,4 @@
-<@center><b><#selectbg_g>Terms of Service</#></b>
+<@center><b><#selectbg_g>Terms of Use</#></b>
 
 By using this package, you take full responsibility of it's use, I (setialpha/Nanolx) am not responsible of any damage this package may cause to your device.
 

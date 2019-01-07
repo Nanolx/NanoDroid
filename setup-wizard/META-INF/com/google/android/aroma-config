@@ -4,16 +4,10 @@ ini_set("rom_author",	"Nanolx");
 ini_set("rom_device",	"Generic (LOS/AOSP)");
 ini_set("rom_date",	"99999999");
 
-# This option should prevent incorrect 
-# and inverted theme and icon colors in some TWRP
-# Need more tests
-# ini_set("force_colorspace","rgba");
-
-anisplash(
-    0, "splash/nanolx.png", 1500
-);
-
-fontresload( "0", "ttf/DroidSans.ttf;", "12" );
+ini_set("force_colorspace","rgba");
+splash(2000, "nanolx");
+fontresload( "0", "ttf/Roboto-Regular.ttf", "12" );
+fontresload( "1", "ttf/Roboto-Regular.ttf", "18" );
 theme("touchwiz");
 
 viewbox(
@@ -27,23 +21,12 @@ viewbox(
 );
 
 agreebox(
-  #-- Title
-    "READ THIS",
-  
-  #-- Subtitle / Description
-    "Please read before going further",
-  
-  #-- Icon
-    "@license",
-  
-  #-- Text Content ( Read from <AROMA Resource Dir>/license.txt )
-    resread("license.txt"),
-  
-  #-- Checkbox Text
-    "I Agree with this",
-  
-  #-- Unchecked Alert Message
-    "Please check the Agree box first"
+   "\nTerms Of Use",
+   "<@center>\nPlease read the ElementalX terms of use\n\n</@>",
+   "@license",
+   "" + readfile_aroma("agreement.txt"),
+   "I agree with these terms of use",
+   "<@center>\nYou must accept the terms</@>"
 );
 
 selectbox(
@@ -212,31 +195,34 @@ checkbox(
 );
 
 viewbox(
-    "Ready",
-    "The wizard is ready to begin the process.\n\n"+
+	"Ready",
+	"The wizard is ready to begin the process.\n\n"+
 	"Press <b>Next</b> to begin the process.\n\n"+
 	"If you want to review or change any of your selection, press <b>Back</b>.",
-    "@install"
+	"@install"
 );
 
 setvar("retstatus",
   install(
-	#-- Title
-      "Please Wait...",
-	
-	#-- Installation Process message
-	  "<b>"+ini_get("rom_name")+"</b>\n\n"+
-      "Please wait while processing your selection.",
-	
-	#-- Installation Icon
-      "@install",
-	
-	#-- Installation Finish Message
-      "The process has successfully ended.
-	   Press Next to continue."
+	"Please Wait...",
+	"<b>"+ini_get("rom_name")+"</b>\n\n"+
+	"Please wait while processing your selection.",
+	"@install",
+	""
   )
 );
 
 ini_set("text_next", "Finish");
 
-#---- FINISH
+if getvar("retstatus")=="0" then
+	viewbox(
+	"Installation Completed",
+	"<@center>\nCongratulations!\n"+
+	"NanoDroid setup successfully created\n\n\n</@>",
+	""
+	);
+else
+	viewbox("Installation Failed",
+	"\n\nInstaller Status: "+ getvar("retstatus"),
+	"@alert");
+endif;
