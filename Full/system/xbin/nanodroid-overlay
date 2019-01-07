@@ -225,6 +225,8 @@ get_config .nanodroid-overlay
 opt=${1}
 [[ -z ${opt} ]] && show_help || shift
 
+[[ ${NO_MAGISK} -eq 1 ]] && mount -orw,remount /system
+
 case ${opt} in
 	-l | --list )		overrides_list ;;
 	-a | --add )		overrides_add "${@}" ;;
@@ -241,3 +243,5 @@ case ${opt} in
 
 	* ) show_help ;;
 esac
+
+[[ ${NO_MAGISK} -eq 1 ]] && mount -oro,remount /system
