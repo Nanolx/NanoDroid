@@ -1,4 +1,4 @@
-ini_set("rom_name",	"NanoDroid Setup Wizard");
+ini_set("rom_name",	"NanoDroid SetupWizard");
 ini_set("rom_version",	"20.5");
 ini_set("rom_author",	"Nanolx");
 ini_set("rom_device",	"Generic (LOS/AOSP)");
@@ -14,25 +14,25 @@ viewbox(
 	"Welcome",
 	"Relevant information of the Package:\n\n"+
 	"	Rom\t		<b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
-	"	Version\t		<b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
+	"	Version\t	<b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
 	"	Date\t		<b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n\n"+
-	"<b><#f00>"+ini_get("rom_device")+"</#></b>\n\n\n",
+	"	Device\t	<b><#f00>"+ini_get("rom_device")+"</#></b>\n\n\n",
 	"@welcome"
 );
 
 agreebox(
-	"\nTerms Of Use",
-	"<@center>\nPlease read the NanoDroid terms of use\n\n</@>",
+	"Terms Of Use",
+	"<@center>Please read the NanoDroid terms of use</@>",
 	"@license",
-	"" + readfile_aroma("license.txt"),
+	"<@center>" + readfile_aroma("license.txt") + "</@>",
 	"I agree with these terms of use",
-	"<@center>\nYou must accept the terms</@>"
+	"<@center>You must accept the terms</@>"
 );
 
 selectbox(
 	"Configuration Location",
 	"Configuration Location",
-	"icons/update",
+	"@customize",
 	"location.prop",
 
 	"Where to store configuration", "", 2, #-- Group 1. key = "selected.1"
@@ -44,7 +44,7 @@ selectbox(
 checkbox(
 	"Generic Setup",
 	"Generic Setup",
-	"icons/update",
+	"@customize",
 	"setup.prop",
 
 	"Adjust the basic settings", "", 2, #-- Group 1
@@ -67,7 +67,7 @@ checkbox(
 selectbox(
 	"microG",
 	"microG",
-	"icons/update",
+	"@customize",
 	"ug.prop",
 
 	"Select whether to install microG", "", 2, #-- Group 1. key = "selected.1"
@@ -79,7 +79,7 @@ selectbox(
 selectbox(
 	"microG GmsCore",
 	"microG GmsCore",
-	"icons/update",
+	"@customize",
 	"gmscore.prop",
 
 	"Select which microG GmsCore to install (if any)", "", 2, #-- Group 1. key = "selected.1"
@@ -90,23 +90,24 @@ selectbox(
 checkbox(
 	"nlpBackends",
 	"nlpBackends",
-	"icons/update",
+	"@customize",
 	"nlp.prop",
 
 	"Select the location backends for microG", "", 2, #-- Group 1
 	"Déjà Vu",	"Install Déjà Vu backend",		1,
 	"Ichnaea",	"Install Mozilla backend",		0,
-	"Apple",	"Install Apple backend",		0
+	"Apple",	"Install Apple backend",		0,
+	"Radiocell",	"Install Radiocells.org backend",	0
 );
 
 selectbox(
 	"Google App Store",
 	"Google App Store",
-	"icons/update",
+	"@customize",
 	"store.prop",
 
 	"Select the Google App Store you want", "", 2, #-- Group 1. key = "selected.1"
-	"None",				"Install no Google App Store",			0,	#-- selected.1 = 1
+	"None",			"Install no Google App Store",				0,	#-- selected.1 = 1
 	"Play Store",		"Install official Play Store",				1,	#-- selected.1 = 2
 	"Yalp Store",		"Install unofficial Yalp Store",			0,	#-- selected.1 = 3
 	"Aurora Store",		"Install unofficial Aurora Store",			0,	#-- selected.1 = 4
@@ -119,7 +120,7 @@ selectbox(
 checkbox(
 	"App Setup",
 	"App Setup",
-	"icons/update",
+	"@customize",
 	"apps.prop",
 
 	"Select which Apps to install (if enabled)", "", 2, #-- Group 1
@@ -158,7 +159,7 @@ checkbox(
 checkbox(
 	"Debloat Setup",
 	"Debloat Setup",
-	"icons/update",
+	"@customize",
 	"debloat.prop",
 
 	"Select which Apps to Debloat (if enabled)", "", 2, #-- Group 1
@@ -194,22 +195,25 @@ checkbox(
 	"WallpaperPickerGoogle",	"Wallpaper App (Google)",	1
 );
 
-viewbox(
-	"Ready",
-	"The wizard is ready to begin the process.\n\n"+
-	"Press <b>Next</b> to begin the process.\n\n"+
-	"If you want to review or change any of your selection, press <b>Back</b>.",
-	"@install"
+menubox(
+	"NanoDroid SetupWizard",
+	"<@center>Ready to create configuration.</@>",
+	"@update",
+	"menu.prop",
+	"Create Configuration", "", "@install",
+	"Abort SetupWizard", "", "@exit"
 );
+
+if prop("menu.prop","selected")=="2"
+then
+  exit("");
+endif;
 
 setvar("retstatus",
   install(
 	"Please Wait...",
-	"<b>"+ini_get("rom_name")+"</b>\n\n"+
-	"Please wait while processing your selection.",
-	"@install",
-	""
-  )
+	"<@center><b>"+ini_get("rom_name")+"</b></@>",
+	"")
 );
 
 ini_set("text_next", "Finish");
@@ -217,10 +221,9 @@ ini_set("text_next", "Finish");
 if getvar("retstatus")=="0" then
 	viewbox(
 	"Installation Completed",
-	"<@center>\nCongratulations!\n"+
-	"NanoDroid setup successfully created\n\n\n</@>",
-	""
-	);
+	"<@center>\nCongratulations!\n\n"+
+	"NanoDroid setup successfully created.</@>",
+	"");
 else
 	viewbox("Installation Failed",
 	"\n\nInstaller Status: "+ getvar("retstatus"),

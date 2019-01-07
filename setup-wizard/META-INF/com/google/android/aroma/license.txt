@@ -1,13 +1,11 @@
-<@center><b><#selectbg_g>Terms of Use</#></b>
+<@center><b><#selectbg_g>Terms of Use</#></b></@>
 
-By using this package, you take full responsibility of it's use, I (setialpha/Nanolx) am not responsible of any damage this package may cause to your device.
+<@left>By using this package, you take full responsibility of it's use, I (Nanolx) am not responsible of any damage this package may cause to your device.</@>
 
-<@center><b><#selectbg_g>Read before installation</#>
-<@left>
-Welcome to the NanoDroid Setup Wizard.
+<@center><b><#selectbg_g>Read before installation</#></b></@>
+
+<@left>Welcome to the NanoDroid Setup Wizard.
 
 With this AROMA installer you will create NanoDroid configuration files.
 
-You need to flash any of the modules afterwards!
-
-Check "I Agree with this" and press Next.
+You need to flash any of the modules afterwards!</@>

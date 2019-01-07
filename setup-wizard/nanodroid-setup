@@ -62,8 +62,13 @@ if grep -q "selected.1=1" "${location_prop}"; then
 	ui_print " > saving configuration in: /sdcard"
 	configpath="/sdcard"
 elif grep -q "selected.1=2" "${location_prop}"; then
-	ui_print " > saving configuration in: /external_sd"
-	configpath="/external_sd"
+	if -d /external_sd; then
+		ui_print " > saving configuration in: /external_sd"
+		configpath="/external_sd"
+	else
+		ui_print " > saving configuration in: /sdcard"
+		configpath="/sdcard"
+	fi
 elif grep -q "selected.1=3" "${location_prop}"; then
 	ui_print " > saving configuration in: /data"
 	configpath="/data"
@@ -137,7 +142,12 @@ if grep -q "item.1.3=1" "${nlp_prop}"; then
 else	nlp_Apple=0
 fi
 
-echo "nanodroid_nlpbackend=${nlp_Dejavu}${nlp_Ichnaea}${nlp_Apple}" >> "${nanodroid_setup}"
+if grep -q "item.1.4=1" "${nlp_prop}"; then
+	nlp_Radiocell=1
+else	nlp_Radiocell=0
+fi
+
+echo "nanodroid_nlpbackend=${nlp_Dejavu}${nlp_Ichnaea}${nlp_Apple}${nlp_Radiocell}" >> "${nanodroid_setup}"
 
 if grep -q "selected.1=1" "${ug_prop}"; then
 	ui_print "  <>> setting property: nanodroid_microg [None]"
@@ -225,5 +235,3 @@ overlay_add 27 ViaBrowser
 overlay_add 28 Wallpaper
 overlay_add 29 WallpaperBackup
 overlay_add 30 WallpaperPickerGoogle
-
-exit 0
