@@ -20,7 +20,6 @@ OUTFD=
 GOOGLE_APPS="AMAPNetworkLocation
 BaiduNetworkLocation
 BlankStore
-com.qualcomm.location
 ConfigUpdater
 DejaVuBackend
 DejaVuNlpBackend
@@ -56,7 +55,6 @@ WhisperPush"
 GOOGLE_DATA="com.amap.android.location
 com.baidu.location
 com.google.android.location
-com.qualcomm.location
 org.microg.nlp
 org.microg.unifiednlp"
 
