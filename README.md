@@ -571,7 +571,12 @@ Stock ROMs with GApps may not allow to switch from Google GmsCore to microG GmsC
      * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 9.0)
 * install desired Kernel (if any)
 * mount `/system` read-write and remove the following folders
-  * `/system/priv-app/GmsCore`
+  * GApps GmsCore (which can have multiple paths, depending on the ROM):
+     * `/system/priv-app/GmsCore`
+     * `/system/priv-app/GmsCore_update`
+     * `/system/priv-app/PrebuiltGmsCore`
+     * `/system/priv-app/PrebuiltGmsCorePi`
+     * `/system/priv-app/PrebuiltGmsCorePix`
   * `/system/priv-app/GoogleServicesFramework`
   * `/system/priv-app/Phonesky`
 * boot into ROM (ignore all those complaints that Play Services are missing)
