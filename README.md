@@ -572,7 +572,7 @@ Stock ROMs with GApps may not allow to switch from Google GmsCore to microG GmsC
 * install desired Kernel (if any)
 * mount `/system` read-write and remove the following folders
   * `/system/priv-app/GmsCore`
-  * `/system/priv-app/GsfProxy`
+  * `/system/priv-app/GoogleServicesFramework`
   * `/system/priv-app/Phonesky`
 * boot into ROM (ignore all those complaints that Play Services are missing)
   * this is step is required!
