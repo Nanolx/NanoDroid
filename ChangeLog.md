@@ -75,8 +75,12 @@
 ### Updates
 
 * automatic
-  * BromiteWebView (71.0.3578.120)
+  * BromiteWebView (71.0.3578.123)
   * QKSMS (3.6.1)
+  * Tor Browser (60.4.0)
+  * Simple Calendar Pro (6.2.0)
+  * Simple Gallery Pro (6.2.0)
+  * F-Droid (1.5.1)
   * nlpBackend Radiocell (0.2.9)
 
 * manual
