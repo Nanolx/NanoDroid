@@ -84,8 +84,8 @@
   * nlpBackend Radiocell (0.2.9)
 
 * manual
-  * Play Store (13.0.22)
-  * microG GmsCore (0.2.6.14799-dirty-148)
+  * Play Store (13.1.32)
+  * microG GmsCore (0.2.6.14799-dirty-153)
   * OpenLauncher (0.6.1-nightly-190106)
     * this is the last custom build of OpenLauncher, official builds will be used in the future.
 
