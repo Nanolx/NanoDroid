@@ -763,7 +763,7 @@ install_microg () {
 			nanodroid_install_apk GmsCore_Official "" GmsCore
 		else
 			ui_print "   ++ NanoDroid microG GmsCore"
-			nanodroid_install_apk GmsCore_NanoDroid "" GmsCore
+			nanodroid_install_apk GmsCore_NanoDroid multilib GmsCore
 		fi
 
 		if [ "${nanodroid_microg}" -ne 2 ]; then
