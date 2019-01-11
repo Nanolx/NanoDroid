@@ -220,8 +220,7 @@ mount_partitions () {
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
 	mount -o bind /dev/urandom /dev/random
-
-	! is_mounted /system && mount -o rw /system
+	! is_mounted /system && mount -o rw /system || mount -o rw,remount /system
 
 	if [ ! -f /system/build.prop ]; then
 		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
@@ -250,7 +249,7 @@ mount_partitions () {
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
 
-	mount | awk '{print $1 " on " $3}'
+	mount | awk '{print $1 " on " $3 " params: " $6}'
 }
 
 migrate_magisk_custom () {
