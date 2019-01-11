@@ -7,7 +7,7 @@
 * Installer
   * fix migration from AdAway to Blockada (for old versions)
      * applies to: Full package
-  * `/system` was not always mounted read-write, causing System Mode installation to fail
+  * ensure `/system` is always mounted read-write
      * applies to: Full, microG, F-Droid, BromiteWebView, OsmAnd packages
 
 * Magisk Modules
@@ -27,7 +27,7 @@
   * fix detection whether ROM has native signature spoofing
 
 * SetupWizard
-  * if user has choosen to store configuration `/external_sd`, but it doesn't exist, fallback to `/sdcard`
+  * if user has choosen to store configuration on `/external_sd`, but it doesn't exist, fallback to `/sdcard`
 
 * Scripts
   * nanodroid-overlay
