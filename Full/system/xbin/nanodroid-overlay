@@ -1,11 +1,13 @@
 #!/system/bin/sh
 
 export NO_MAGISK=0
+export SYS_REMOUNT=0
 export MODPATH=@MODPATH@
 
 if [ -z "${MODPATH}" ]; then
 	OVERLAY_PATH=""
 	NO_MAGISK=1
+	[ ! -d /twres ] && SYS_REMOUNT=1
 elif [ -d "/dev/tmp/magisk_img/$(basename "${MODPATH}")" ]; then
 	OVERLAY_PATH="/dev/tmp/magisk_img/$(basename "${MODPATH}")"
 elif [ -d "${MODPATH}" ]; then
@@ -74,11 +76,15 @@ overrides_add_intern () {
 }
 
 overrides_add () {
+	[[ ${SYS_REMOUNT} -eq 1 ]] && mount -orw,remount /system
+
 	for app in ${@}; do
 		[ -d /system/app/${app} ] && overrides_add_intern app ${app}
 		[ -d /system/priv-app/${app} ] && overrides_add_intern priv-app ${app}
 		[ -d /system/reserve/${app} ] && overrides_add_intern reserve ${app}
 	done
+
+	[[ ${SYS_REMOUNT} -eq 1 ]] && mount -oro,remount /system
 }
 
 overrides_remove_intern () {
@@ -102,6 +108,8 @@ overrides_remove_intern () {
 }
 
 overrides_remove () {
+	[[ ${SYS_REMOUNT} -eq 1 ]] && mount -orw,remount /system
+
 	for app in ${@}; do
 		if [[ ${NO_MAGISK} -eq 0 ]]; then
 			[ -f ${OVERLAY_PATH}/system/app/${app}/.replace ] && overrides_remove_intern app ${app}
@@ -113,6 +121,8 @@ overrides_remove () {
 			[ -d /sdcard/nanodroid_backups/reserve/${app} ] && overrides_remove_intern reserve ${app}
 		fi
 	done
+
+	[[ ${SYS_REMOUNT} -eq 1 ]] && mount -oro,remount /system
 }
 
 overrides_list () {
@@ -225,8 +235,6 @@ get_config .nanodroid-overlay
 opt=${1}
 [[ -z ${opt} ]] && show_help || shift
 
-[[ ${NO_MAGISK} -eq 1 ]] && mount -orw,remount /system
-
 case ${opt} in
 	-l | --list )		overrides_list ;;
 	-a | --add )		overrides_add "${@}" ;;
@@ -244,4 +252,3 @@ case ${opt} in
 	* ) show_help ;;
 esac
 
-[[ ${NO_MAGISK} -eq 1 ]] && mount -oro,remount /system
