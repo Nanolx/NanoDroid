@@ -4,6 +4,12 @@
 
 ### Bug Fixes
 
+* Installer
+  * fix migration from AdAway to Blockada (for old versions)
+     * applies to: Full package
+  * `/system` was not always mounted read-write, causing System Mode installation to fail
+     * applies to: Full, microG, F-Droid, BromiteWebView, OsmAnd packages
+
 * Magisk Modules
   * fix installing DroidGuard helper as user app
      * applies to: Full, microG packages
