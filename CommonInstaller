@@ -1491,8 +1491,8 @@ check_cfg_apps () {
 	fi
 
 	# <= 18.4 has Adaway instead of Blockada, migrate
-	if grep -q Adaway "${Blockada}"; then
-		sed -e 's/Adaway/Blockada/g' -i "${cfg_apps}"
+	if grep -q Adaway "${cfg_apps}"; then
+		sed -e 's/Adaway/Blokada/g' -i "${cfg_apps}"
 	fi
 }
 
