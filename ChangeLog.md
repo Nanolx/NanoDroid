@@ -69,9 +69,6 @@
   * nanodroid-overlay
      * various minor improvements
      * support debloating applications from `/system/reserve`
-  * nanodroid-util
-     * add `-m`, `--fix-microg` switch
-         * may fix microG installation issues on some GApps-infected Stock ROMs
 
 * Documentation
   * added additional instructions for Stock ROMs

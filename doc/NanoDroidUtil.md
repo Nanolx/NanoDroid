@@ -10,7 +10,6 @@ The `nanodroid-util` Script, respectively it's shortcut `nutl` is used by NanoDr
 * prevent applications from reading the clipboard
 * display device's boot count
   * requires Android 7.0 or newer
-* fix microG installation issue on GApps-infected Stock ROMs
 
 ## Invocation
 
@@ -55,9 +54,3 @@ many apps have the permission to read the clipboard for no reason, with this you
 `-b`, `--boot-count`
 
 show how often the device was booted; requires Android 7.0 or newer
-
-### Fix microG installation on GApps-infected Stock ROMs
-
-`-m`, `--fix-microg`
-
-fixes microG not being installed after flashing NanoDroid due to clashing permissions between GApps GsfProxy and microG GsfProxy, which prevents microG GmsCore installation. Likewise for GApps Play Store and NanoDroid Play Store.

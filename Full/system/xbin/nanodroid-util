@@ -49,14 +49,6 @@ read_clipboard () {
 	cmd appops set ${1} READ_CLIPBOARD ignore
 }
 
-fix_microg () {
-	for app in GsfProxy GmsCore Phonesky; do
-		pm install -r /system/priv-app/${app}/${app}.apk
-	done
-
-	pm install -r /system/app/DroidGuard/DroidGuard.apk
-}
-
 error () {
 	echo "!! ${@}"
 	exit 1
@@ -97,7 +89,6 @@ Misc. Functions
 -P | --airplane-mode			change airplane mode settings
 -F | --audio-focus			prevent an app from stealing audio focus
 -b | --boot-count			read boot counts (Android 7+)
--B | --read-clipboard			prevent an app from reading the clipboard
--m | --fix-microg			fix microG installation issue on GApps-infected Stock ROMs"
+-B | --read-clipboard			prevent an app from reading the clipboard"
 	;;
 esac
