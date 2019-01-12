@@ -173,8 +173,7 @@ restore_apps () {
 				rm -rf /sdcard/nanodroid_backups/app/${app}
 			else
 				ui_print " << restoring: app:${app}"
-				mv /sdcard/nanodroid_backups/app/${app} \
-					/system/app/ || error " failed to restore ${app}"
+				mv /sdcard/nanodroid_backups/app/${app} /system/app/
 			fi
 		done
 
@@ -188,8 +187,7 @@ restore_apps () {
 				rm -rf /sdcard/nanodroid_backups/priv-app/${app}
 			else
 				ui_print " << restoring: priv-app:${app}"
-				mv /sdcard/nanodroid_backups/priv-app/${app} \
-					/system/priv-app/ || error " failed to restore ${app}"
+				mv /sdcard/nanodroid_backups/priv-app/${app} /system/priv-app/
 			fi
 		done
 
@@ -227,14 +225,12 @@ patcher_uninstall () {
 	if [ -f /data/adb/.nanodroid-patcher -o -f /data/adb/NanoDroid_Patched ]; then
 		services_name="services.jar_$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
-		if [ -f /sdcard/nanodroid_backups/services.jar ]; then
+		if [ -f /sdcard/nanodroid_backups/${services_name} ]; then
 			ui_print " << restoring: unpatched services.jar"
-			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar \
-				|| error " failed to restore services.jar"
-		elif [ -f /sdcard/nanodroid_backups/${services_name} ]; then
+			mv "/sdcard/nanodroid_backups/${services_name}" /system/framework/services.jar
+		elif [ -f /sdcard/nanodroid_backups/services.jar ]; then
 			ui_print " << restoring: unpatched services.jar"
-			mv "/sdcard/nanodroid_backups/${services_name}" /system/framework/services.jar \
-				|| error " failed to restore services.jar"
+			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar
 		else	ui_print " << can't restore unpatched services.jar"
 		fi
 	fi
