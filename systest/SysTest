@@ -258,7 +258,7 @@ store_results () {
 	add_log "DEVICE_AB=${DEVICE_AB}"
 	add_log "VENDOR_COMPAT=${VENDOR_COMPAT}"
 	add_log ""
-	mount | awk '{print $1 " on " $3}' >> ${LOGFILE}
+	mount | awk '{print $1 " on " $3 " params: " $6}' >> ${LOGFILE}
 
 	add_log ""
 	add_log "DalvikVM, LD_LIBRARY_PATH and DEX status"

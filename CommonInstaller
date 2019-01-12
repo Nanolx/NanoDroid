@@ -1343,6 +1343,13 @@ ROM_NO_XBIN=${ROM_NO_XBIN}
 NANODROID_UPGRADE=${NANODROID_UPGRADE}
 NANODROID_BINDIR=${NANODROID_BINDIR}
 
+### MOUNTED PARTITIONS ###
+" >> ${nanodroid_logfile}
+
+mount | awk '{print $1 " on " $3 " params: " $6}' \
+	>> ${nanodroid_logfile}
+
+echo "
 ### SETUP ###
 " > ${nanodroid_logfile}
 
