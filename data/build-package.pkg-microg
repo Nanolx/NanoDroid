@@ -8,7 +8,8 @@ create_microg_package() {
 
 	cd "${CWD}/Full"
 
-	for app in DroidGuard nlpBackendApple nlpBackendDejavu nlpBackendIchnaea nlpBackendNominatim; do
+	for app in DroidGuard nlpBackendApple nlpBackendDejavu \
+		nlpBackendIchnaea nlpBackendNominatim nlpBackendRadiocell; do
 		zip_add "system/app/${app}/"
 	done
 
