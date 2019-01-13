@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 20.5 in-dev
+## 20.5.20190113 "T'Plana-Hath"
 
 ### Bug Fixes
 
@@ -46,6 +46,8 @@
 * Magisk Modules
   * improve post-boot tasks by waiting for `sys.boot_completed`
      * applies to: Full, microG, F-Droid, Bromite WebView, OsmAnd packages
+  * define additonal priv-app permissions by default
+     * applies to: Full, microG packages
 
 * Unified Nlp backends
   * add Radiocell location backend

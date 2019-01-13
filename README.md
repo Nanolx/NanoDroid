@@ -64,7 +64,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 20.4.20181230 (Constitution)
+* Stable: 20.5.20190113 (T'Plana-Hath)
 * Beta: --- (---)
 
 ## Downloads
