@@ -63,12 +63,16 @@
   * update to include Radiocell uNlp backend
 
 * Play Store
-  * the Play Store is now also patched to (hopefuly) prevent self-updates @Vavun
+  * the Play Store is now also patched to prevent self-updates @Vavun
 
 * Scripts
   * nanodroid-overlay
      * various minor improvements
      * support debloating applications from `/system/reserve`
+
+* Uninstaller
+  * update A/B partition scheme mount code
+  * minor improvements
 
 * Documentation
   * added additional instructions for Stock ROMs
@@ -87,8 +91,8 @@
   * nlpBackend Radiocell (0.2.9)
 
 * manual
-  * Play Store (13.1.32)
-  * microG GmsCore (0.2.6.14799-dirty-153)
+  * Play Store (13.1.33)
+  * microG GmsCore (0.2.6.14847-dirty-155)
   * OpenLauncher (0.6.1-nightly-190106)
     * this is the last custom build of OpenLauncher, official builds will be used in the future.
 
