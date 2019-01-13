@@ -98,6 +98,7 @@
 
 * tools
   * GNU Bash (5.0-0)
+  * GNU Nano (3.2)
   
 ## 20.4.20181230 "Constitution"
 
