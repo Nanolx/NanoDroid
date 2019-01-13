@@ -38,5 +38,12 @@
 		<permission name="android.permission.WRITE_SECURE_SETTINGS"/>
 		<permission name="android.permission.READ_RUNTIME_PROFILES"/>
 		<permission name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
+		<permission name="android.permission.INSTALL_GRANT_RUNTIME_PERMISSIONS"/>
+		<permission name="android.permission.GRANT_RUNTIME_PERMISSIONS"/>
+		<permission name="android.permission.REVOKE_RUNTIME_PERMISSIONS"/>
+		<permission name="android.permission.SET_PREFERRED_APPLICATIONS"/>
+		<permission name="android.permission.ACCESS_INSTANT_APPS"/>
+		<permission name="android.permission.MANAGE_APP_OPS_MODES"/>
+		<permission name="android.permission.SET_HARMFUL_APP_WARNINGS"/>
 	</privapp-permissions>
 </permissions>
