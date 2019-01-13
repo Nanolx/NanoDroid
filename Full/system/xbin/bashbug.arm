@@ -29,9 +29,9 @@
 MACHINE="arm"
 OS="linux-gnueabi"
 CC="arm-linux-gnueabi-gcc"
-CFLAGS=" -DPROGRAM='bash' -DCONF_HOSTTYPE='arm' -DCONF_OSTYPE='linux-gnueabi' -DCONF_MACHTYPE='arm-unknown-linux-gnueabi' -DCONF_VENDOR='unknown' -DLOCALEDIR='/usr/local/share/locale' -DPACKAGE='bash' -DSHELL -DHAVE_CONFIG_H   -I.  -I. -I./include -I./lib   -g -O2 -Wno-parentheses -Wno-format-security"
-RELEASE="4.4"
-PATCHLEVEL="23"
+CFLAGS="-g -O2 -Wno-parentheses -Wno-format-security"
+RELEASE="5.0"
+PATCHLEVEL="0"
 RELSTATUS="release"
 MACHTYPE="arm-unknown-linux-gnueabi"
 
@@ -117,7 +117,6 @@ alpha*|beta*|devel*|rc*)
 		esac ;;
 esac
 
-BUGBASH="${BUGBASH},bash@packages.debian.org"
 BUGADDR="${1-$BUGBASH}"
 
 if [ -z "$DEFEDITOR" ] && [ -z "$EDITOR" ]; then

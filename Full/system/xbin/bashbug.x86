@@ -29,9 +29,9 @@
 MACHINE="i686"
 OS="linux-gnu"
 CC="gcc"
-CFLAGS=" -DPROGRAM='bash' -DCONF_HOSTTYPE='i686' -DCONF_OSTYPE='linux-gnu' -DCONF_MACHTYPE='i686-pc-linux-gnu' -DCONF_VENDOR='pc' -DLOCALEDIR='/usr/local/share/locale' -DPACKAGE='bash' -DSHELL -DHAVE_CONFIG_H   -I.  -I. -I./include -I./lib   -g -O2 -Wno-parentheses -Wno-format-security"
-RELEASE="4.4"
-PATCHLEVEL="23"
+CFLAGS="-g -O2 -Wno-parentheses -Wno-format-security"
+RELEASE="5.0"
+PATCHLEVEL="0"
 RELSTATUS="release"
 MACHTYPE="i686-pc-linux-gnu"
 

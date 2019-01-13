@@ -96,6 +96,9 @@
   * OpenLauncher (0.6.1-nightly-190106)
     * this is the last custom build of OpenLauncher, official builds will be used in the future.
 
+* tools
+  * GNU Bash (5.0-0)
+  
 ## 20.4.20181230 "Constitution"
 
 ### Notes
