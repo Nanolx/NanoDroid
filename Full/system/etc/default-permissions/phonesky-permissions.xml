@@ -40,5 +40,7 @@
         <!-- Storage -->
         <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="false"></permission>
         <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="false"></permission>
+        <!-- Signature Spoofing -->
+        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="false"></permission>
     </exception>
 </exceptions>

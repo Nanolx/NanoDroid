@@ -777,9 +777,13 @@ install_microg () {
 
 		# if android.permission.FAKE_PACKAGE_SIGNATURE is not a runtime-permission
 		# (read: ROM is not pre-patched), remove that permission from pre-sets
-		search_fake_package_signature || \
+		if ! search_fake_package_signature; then
 			sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' \
 				-i ${INSTALLER}/system/etc/permissions/privapp-permissions-google.xml
+
+			sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' \
+				-i ${INSTALLER}/system/etc/default-permissions/microg-permissions.xml
+		fi
 
 		nanodroid_install_file etc/permissions/features.xml
 		nanodroid_install_file etc/permissions/privapp-permissions-google.xml
@@ -884,6 +888,13 @@ install_store () {
 			# force unselect Fake Store when user has choosen Play Store
 			STORE_CONFLICT="FakeStore"
 			FAKE_STORE=0
+
+			# if android.permission.FAKE_PACKAGE_SIGNATURE is not a runtime-permission
+			# (read: ROM is not pre-patched), remove that permission from pre-sets
+			if ! search_fake_package_signature; then
+				sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' \
+					-i ${INSTALLER}/system/etc/default-permissions/phonesky-permissions.xml
+			fi
 
 			nanodroid_install_file etc/default-permissions/phonesky-permissions.xml
 		;;
