@@ -1,5 +1,14 @@
 # ChangeLog
 
+## 20.6 in-dev
+
+### General Changes
+
+* Installer
+  * improve App Store installation
+  * add privapp-permission files for Fake Store, Yalp Store and Aurora Store
+     * applies to: Full, microG packages
+
 ## 20.5.20190113 "T'Plana-Hath"
 
 ### Bug Fixes

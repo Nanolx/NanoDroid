@@ -1,6 +1,6 @@
 id=NanoDroid_FDroid
 name=NanoDroid (F-Droid sub module)
-version=v20.5.20190113
+version=v20.6.99999999
 versionCode=64
 author=Nanolx
 description=NanoDroid (F-Droid sub module) for LineageOS/AOSP based ROMs
