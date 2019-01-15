@@ -1,13 +1,25 @@
 # ChangeLog
 
-## 20.6 in-dev
+## 20.5.1.20190115 "USS T'Plana-Hath"
+
+### Bug fixes
+
+* Installer
+  * add privapp-permission files for Fake Store, Yalp Store and Aurora Store
+     * fixes bootloops on some Android Pie ROMs
+     * applies to: Full, microG packages
 
 ### General Changes
 
 * Installer
-  * improve App Store installation
-  * add privapp-permission files for Fake Store, Yalp Store and Aurora Store
-     * applies to: Full, microG packages
+  * improve App Store installation routine
+
+### Updates
+
+* automatic
+  * F-Droid Priviledged Extension (0.2.9)
+  * Simple Gallery Pro (6.2.2)
+  * Simple Calendar Pro (6.2.1)
 
 ## 20.5.20190113 "T'Plana-Hath"
 
