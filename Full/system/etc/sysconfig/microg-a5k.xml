@@ -18,8 +18,33 @@
 <config>
     <!-- microG GmsCore must always have network access for GCM. -->
     <allow-in-power-save package="com.google.android.gms" />
+    <allow-in-power-save package="com.android.location.fused" />
     <allow-in-data-usage-save package="com.google.android.gms" />
-
     <allow-unthrottled-location package="com.google.android.gms" />
+    <allow-unthrottled-location package="com.android.location.fused" />
+    <allow-unthrottled-location package="com.google.android.maps.jar" />
+
+    <allow-in-power-save-except-idle package="com.google.android.gms" />
+    <allow-in-power-save-except-idle package="com.google.android.maps.jar" />
+    <allow-in-power-save-except-idle package="com.android.location.fused" />
+
+    <app-link package="org.fdroid.fdroid" />
+    <app-link package="com.android.vending" />
+
+    <system-user-whitelisted-app package="com.android.location.fused" />
+    <system-user-whitelisted-app package="org.openbmap.unifiedNlp" />
+    <system-user-whitelisted-app package="com.google.android.maps.jar" />
+    <system-user-whitelisted-app package="org.microg.nlp.backend.nominatim" />
+    <system-user-whitelisted-app package="org.fitchfamily.android.dejavu" />
+    <system-user-whitelisted-app package="org.microg.nlp.backend.ichnaea" />
+    <system-user-whitelisted-app package="com.google.android.gms" />
+    <system-user-whitelisted-app package="org.fdroid.fdroid" />
+    <system-user-whitelisted-app package="com.google.android.gsf" />
+    <system-user-whitelisted-app package="org.microg.gms.droidguard" />
+    <system-user-whitelisted-app package="com.android.vending" />
+
+    <hidden-api-whitelisted-app package="com.google.android.gsf" />
+    <hidden-api-whitelisted-app package="com.google.android.maps.jar" />
+    <hidden-api-whitelisted-app package="org.microg.gms.droidguard" />
     <hidden-api-whitelisted-app package="com.google.android.gms" />
 </config>
