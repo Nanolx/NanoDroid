@@ -1,35 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2017  ale5000
-     This file was created by ale5000 (ale5000-git on GitHub).
-
-     This program is free software: you can redistribute it and/or modify
-     it under the terms of the GNU General Public License as published by
-     the Free Software Foundation, either version 3 of the License, or
-     (at your option) any later version, w/ zip exception.
-
-     This program is distributed in the hope that it will be useful,
-     but WITHOUT ANY WARRANTY; without even the implied warranty of
-     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     GNU General Public License for more details.
-
-     You should have received a copy of the GNU General Public License
-     along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
-
-<!-- This file contains permissions to be granted by default.
-     Default permissions are granted to special platform components and to apps
-     that are approved to get default grants.
-     The special components are apps that are expected to work out-of-the-box
-     as they provide core use cases. These grants are managed by the platform.
-     Fixed permissions cannot be controlled by the user and need a special
-     approval. Typically these are to ensure either legally mandated functions
-     or the app is considered a part of the OS.
-
-     Granting these permissions could prevent issues on some ROMs or
-     on non-clean installations.
--->
 <permissions>
-    <privapp-permissions package="org.fdroid.fdroid.privileged">
+    <privapp-permissions package="com.android.vending">
         <!-- Signature Spoofing -->
         <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="false"/>
     </privapp-permissions>
