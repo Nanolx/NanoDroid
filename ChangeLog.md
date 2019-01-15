@@ -9,6 +9,11 @@
      * fixes bootloops on some Android Pie ROMs
      * applies to: Full, microG packages
 
+* Unified Nlp
+  * improve default sysconfig whitelists by @oF2pks
+     * fixes unified Nlp not registering on some Pie ROMs
+     * applies to: Full, microG packages
+
 ### General Changes
 
 * Installer
