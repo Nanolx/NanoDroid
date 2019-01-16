@@ -2,6 +2,6 @@
 <permissions>
     <privapp-permissions package="com.android.vending">
         <!-- Signature Spoofing -->
-        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="false"/>
+        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" />
     </privapp-permissions>
 </permissions>
