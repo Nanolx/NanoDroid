@@ -19,7 +19,7 @@
         <!-- name -->
         <item>Bromite official F-Droid Repository</item>
         <!-- address -->
-        <item>https://fdroid-bromite.a3c1.starter-us-west-1.openshiftapps.com/fdroid/repo</item>
+        <item>https://fdroid.bromite.org/fdroid/repo</item>
         <!-- description -->
         <item>This is a repository of apps to be used with F-Droid. Applications in this repository are official binaries built by the original application developers.</item>
         <!-- version -->

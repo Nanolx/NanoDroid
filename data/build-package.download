@@ -8,7 +8,7 @@ REPO_FDROID="https://f-droid.org/repo"
 REPO_GUARDIAN="https://guardianproject.info/fdroid/repo"
 REPO_MICROG="https://microg.org/fdroid/repo"
 REPO_NANOLX="https://nanolx.org/fdroid/repo"
-REPO_BROMITE="https://fdroid-bromite.a3c1.starter-us-west-1.openshiftapps.com/fdroid/repo"
+REPO_BROMITE="https://fdroid.bromite.org/fdroid/repo"
 
 # check dependencies
 for dep in xmllint gawk wget curl sha256sum; do

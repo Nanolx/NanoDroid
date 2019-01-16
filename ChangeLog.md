@@ -19,6 +19,10 @@
 * Installer
   * improve App Store installation routine
 
+* Signature Spoofing Permission
+  * add permission files to tell ROMs with native signature spoofing to enable it by default for microG GmsCore and Play Store or Fake Store
+     * applies to: Full, microG packages
+
 ### Updates
 
 * automatic
