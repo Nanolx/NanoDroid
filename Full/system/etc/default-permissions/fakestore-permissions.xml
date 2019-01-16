@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<exceptions>
+    <exception package="com.android.vending">
+        <!-- Signature Spoofing -->
+        <permission name="android.permission.FAKE_PACKAGE_SIGNATURE" fixed="false"/>
+    </exception>
+</exceptions>

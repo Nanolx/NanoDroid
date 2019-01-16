@@ -919,8 +919,10 @@ install_store () {
 		ui_print " << with Fake Store"
 		nanodroid_install_apk FakeStore
 
-		search_fake_package_signature && \
+		if search_fake_package_signature; then
+			nanodroid_install_file etc/default-permissions/fakestore-permissions.xml
 			nanodroid_install_file etc/permissions/com.android.vending.xml
+		fi
 	else 	ui_print " << without Fake Store"
 	fi
 
