@@ -23,6 +23,10 @@
   * add permission files to tell ROMs with native signature spoofing to enable it by default for microG GmsCore and Play Store or Fake Store
      * applies to: Full, microG packages
 
+* Bromite WebView
+  * update repository URL
+     * applies to: Full, F-Droid packages, build-package script
+
 ### Updates
 
 * automatic
