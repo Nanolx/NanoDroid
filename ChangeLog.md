@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 20.5.1.20190115 "USS T'Plana-Hath"
+## 20.5.1.20190116 "USS T'Plana-Hath"
 
 ### Bug fixes
 
