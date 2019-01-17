@@ -22,6 +22,14 @@ error () {
 	exit 1
 }
 
+grep_prop() {
+	[ -f /vendor/build.prop ] && \
+		FILES="/system/build.prop /vendor/build.prop" || \
+		FILES="/system/build.prop"
+
+	sed -n "s/^${1}=//p" ${FILES} | head -n 1
+}
+
 show_help () {
 
 	echo "nanodroid-overlay
@@ -45,6 +53,8 @@ Options:
 
 test "$(whoami)" != "root" && error "not running as root"
 
+SYS_BACKUP_PATH="/sdcard/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
+
 get_config () {
 	config=""
 	config_exists=0
@@ -66,10 +76,10 @@ overrides_add_intern () {
 		mkdir -p "${OVERLAY_PATH}/system/${sysdir}/${app}"
 		touch "${OVERLAY_PATH}/system/${sysdir}/${app}/.replace"
 	else
-		mkdir -p "/sdcard/nanodroid_backups/${sysdir}"
+		mkdir -p "${SYS_BACKUP_PATH}/${sysdir}"
 		echo "  moving to /sdcard/nanodroid_backups: ${app}"
-		rm -rf "/sdcard/nanodroid_backups/${sysdir}/${app}"
-		mv "/system/${sysdir}/${app}" "/sdcard/nanodroid_backups/${sysdir}/"
+		rm -rf "${SYS_BACKUP_PATH}/${sysdir}/${app}"
+		mv "/system/${sysdir}/${app}" "${SYS_BACKUP_PATH}/${sysdir}/"
 	fi
 
 	grep -q "^${app}" "${config}" 2>/dev/null || echo "${app}" >> "${config}"
@@ -97,10 +107,10 @@ overrides_remove_intern () {
 	else
 		if [[ -d /system/${sysdir}/${app} ]]; then
 			echo "  removing old backup: ${app}"
-			rm -rf "/sdcard/nanodroid_backups/${sysdir}/${app}"
+			rm -rf "${SYS_BACKUP_PATH}/${sysdir}/${app}"
 		else
 			echo "  reinstalling: ${app}"
-			mv "/sdcard/nanodroid_backups/${sysdir}/${app}" "/system/${sysdir}/"
+			mv "${SYS_BACKUP_PATH}/${sysdir}/${app}" "/system/${sysdir}/"
 		fi
 	fi
 
@@ -143,17 +153,17 @@ overrides_list () {
 		done
 	else
 		echo "Moved-Out apps from /system/app:"
-		for app in $(find "/sdcard/nanodroid_backups/app" -mindepth 1 -maxdepth 1 -type d); do
+		for app in $(find "${SYS_BACKUP_PATH}/app" -mindepth 1 -maxdepth 1 -type d); do
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 
 		echo "Moved-Out apps from /system/priv-app:"
-		for app in $(find "/sdcard/nanodroid_backups/priv-app" -mindepth 1 -maxdepth 1 -type d); do
+		for app in $(find "${SYS_BACKUP_PATH}/priv-app" -mindepth 1 -maxdepth 1 -type d); do
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 
 		echo "Moved-Out apps from /system/reserve:"
-		for app in $(find "/sdcard/nanodroid_backups/reserve" -mindepth 1 -maxdepth 1 -type d); do
+		for app in $(find "${SYS_BACKUP_PATH}/reserve" -mindepth 1 -maxdepth 1 -type d); do
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 	fi
