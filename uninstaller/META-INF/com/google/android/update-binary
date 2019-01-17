@@ -211,34 +211,39 @@ config_files=".nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 restore_apps () {
 	backup_path="/sdcard/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
-	if [ -d ${backup_path}/app/ ]; then
-		for app in ${backup_path}/app/*; do
-			if [ -d /system/app/${app} ]; then
-				ui_print " << removing backup: app:${app}"
-				rm -rf "${backup_path}/app/${app}"
-			else
-				ui_print " << restoring: app:${app}"
-				mv "${backup_path}/app/${app}" /system/app/
-				set_perm_data -r /system/app/${app}
-			fi
-		done
-	fi
+	for dir in /sdcard/nanodroid_backups ${backup_path}; do
+		if [ -d ${dir}/app/ ]; then
+			for app in ${dir}/app/*; do
+				if [ -d /system/app/${app} ]; then
+					ui_print " << removing backup: app:${app}"
+					rm -rf "${dir}/app/${app}"
+				else
+					ui_print " << restoring: app:${app}"
+					mv "${dir}/app/${app}" /system/app/
+					set_perm_data -r /system/app/${app}
+				fi
+			done
 
-	if [ -d ${backup_path}/priv-app/ ]; then
-		for app in ${backup_path}/priv-app/*; do
-			if [ -d /system/priv-app/${app} ]; then
-				ui_print " << removing backup: priv-app:${app}"
-				rm -rf "${backup_path}/priv-app/${app}"
-			else
-				ui_print " << restoring: priv-app:${app}"
-				mv "${backup_path}/priv-app/${app}" /system/priv-app/
-				set_perm_data -r /system/priv-app/${app}
-			fi
-		done
-	fi
+			rmdir ${dir}/app
+		fi
 
-	rm -rf "${backup_path}"
+		if [ -d ${dir}/priv-app/ ]; then
+			for app in ${dir}/priv-app/*; do
+				if [ -d /system/priv-app/${app} ]; then
+					ui_print " << removing backup: priv-app:${app}"
+					rm -rf "${dir}/priv-app/${app}"
+				else
+					ui_print " << restoring: priv-app:${app}"
+					mv "${dir}/priv-app/${app}" /system/priv-app/
+					set_perm_data -r /system/priv-app/${app}
+				fi
+			done
 
+			rmdir ${dir}/priv-app
+		fi
+	done
+
+	rmdir ${dir}
 }
 
 system_mode_uninstall () {
@@ -298,7 +303,7 @@ patcher_uninstall () {
 
 ui_print " "
 ui_print "*****************************"
-ui_print "   NanoDroid 20.5.1.20190116     "
+ui_print "   NanoDroid 20.6.99999999     "
 ui_print "      created by Nanolx      "
 ui_print "        Uninstaller          "
 ui_print "*****************************"
