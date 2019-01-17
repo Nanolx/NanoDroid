@@ -1,5 +1,22 @@
 # ChangeLog
 
+## 20.6 in-dev
+
+### Bug Fixes
+
+* Uninstaller
+  * ensure restored backups (System Mode) have proper permissions
+
+### General Changes
+
+* Scripts
+  * nanodroid-overlay
+     * store backups in System Mode per ROM in /sdcard/nanodroid_backups/${ro.build.flavor}_${ro.build.id}
+
+* Uninstaller
+  * improved System Mode uninstallation routine
+  * look for per ROM backups
+
 ## 20.5.1.20190116 "USS T'Plana-Hath"
 
 ### Bug fixes
