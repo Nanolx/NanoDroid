@@ -1048,14 +1048,15 @@ install_bromite_webview () {
 		esac
 
 		WEBVIEW_REPLACE=BromiteWebView
+		BACKUP_PATH="/sdcard/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
 		for app in webview webviewstub WebViewStub Webview; do
 			if [ -d /system/app/${app} ]; then
 				if [ "${MODE}" = "SYSTEM" ]; then
-					echo "    backing up ${app} to /sdcard/nanodroid_backups/app/${app}"
-					mkdir -p /sdcard/nanodroid_backups/app
-					rm -rf /sdcard/nanodroid_backups/app/${app}
-					mv /system/app/${app} /sdcard/nanodroid_backups/app/
+					echo "    backing up ${app} to ${BACKUP_PATH}/app/${app}"
+					mkdir -p "${BACKUP_PATH}/app"
+					rm -rf "${BACKUP_PATH}/app/${app}"
+					mv /system/app/${app} "${BACKUP_PATH}/app/"
 				fi
 
 				WEBVIEW_REPLACE=${app}
