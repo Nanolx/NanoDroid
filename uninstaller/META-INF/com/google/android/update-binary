@@ -40,6 +40,36 @@ is_mounted() {
 	return $?
 }
 
+
+set_perm () {
+	chown ${2}:${3} ${1} || error "failed change owner for ${1}"
+	chmod ${4} ${1} || error "failed to change mode for ${1}"
+
+	if [ ! -z "${5}" ]; then
+		chcon ${5} ${1} 2>/dev/null
+	else	chcon 'u:object_r:system_file:s0' ${1} 2>/dev/null
+	fi
+}
+
+set_perm_recursive() {
+	find ${1} -type d 2>/dev/null | while read dir; do
+		set_perm ${dir} ${2} ${3} ${4} ${6}
+	done
+	find ${1} -type f 2>/dev/null | while read file; do
+		set_perm ${file} ${2} ${3} ${5} ${6}
+	done
+}
+
+set_perm_data () {
+	if [ "${1}" = "-r" ]; then
+		echo "    perm: data [recursive] {${2}}"
+		set_perm_recursive ${2} 0 0 0755 0644
+	else
+		echo "    perm: data [single] {${1}}"
+		set_perm ${1} 0 0 0644
+	fi
+}
+
 setup_busybox () {
 	mkdir /dev/tmp
 
@@ -179,35 +209,36 @@ config_locations="/sdcard /external_sd /data $(dirname ${ZIP}))"
 config_files=".nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 
 restore_apps () {
-	if [ -d /sdcard/nanodroid_backups/app/ ]; then
-		for app in /sdcard/nanodroid_backups/app/*; do
+	backup_path="/sdcard/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
+
+	if [ -d ${backup_path}/app/ ]; then
+		for app in ${backup_path}/app/*; do
 			if [ -d /system/app/${app} ]; then
 				ui_print " << removing backup: app:${app}"
-				rm -rf /sdcard/nanodroid_backups/app/${app}
+				rm -rf "${backup_path}/app/${app}"
 			else
 				ui_print " << restoring: app:${app}"
-				mv /sdcard/nanodroid_backups/app/${app} /system/app/
-				chown -R root:root /system/app/${app}
+				mv "${backup_path}/app/${app}" /system/app/
+				set_perm_data -r /system/app/${app}
 			fi
 		done
-
-		rm -rf /sdcard/nanodroid_backups/app/
 	fi
 
-	if [ -d /sdcard/nanodroid_backups/priv-app/ ]; then
-		for app in /sdcard/nanodroid_backups/priv-app/*; do
+	if [ -d ${backup_path}/priv-app/ ]; then
+		for app in ${backup_path}/priv-app/*; do
 			if [ -d /system/priv-app/${app} ]; then
 				ui_print " << removing backup: priv-app:${app}"
-				rm -rf /sdcard/nanodroid_backups/priv-app/${app}
+				rm -rf "${backup_path}/priv-app/${app}"
 			else
 				ui_print " << restoring: priv-app:${app}"
-				mv /sdcard/nanodroid_backups/priv-app/${app} /system/priv-app/
-				chown -R root:root /system/priv-app/${app}
+				mv "${backup_path}/priv-app/${app}" /system/priv-app/
+				set_perm_data -r /system/priv-app/${app}
 			fi
 		done
-
-		rm -rf /sdcard/nanodroid_backups/priv-app/
 	fi
+
+	rm -rf "${backup_path}"
+
 }
 
 system_mode_uninstall () {
@@ -243,11 +274,11 @@ patcher_uninstall () {
 		if [ -f /sdcard/nanodroid_backups/${services_name} ]; then
 			ui_print " << restoring: unpatched services.jar"
 			mv "/sdcard/nanodroid_backups/${services_name}" /system/framework/services.jar
-			chown root:root /system/framework/services.jar
+			set_perm_data /system/framework/services.jar
 		elif [ -f /sdcard/nanodroid_backups/services.jar ]; then
 			ui_print " << restoring: unpatched services.jar"
 			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar
-			chown root:root /system/framework/services.jar
+			set_perm_data /system/framework/services.jar
 		else	ui_print " << can't restore unpatched services.jar"
 		fi
 	fi
