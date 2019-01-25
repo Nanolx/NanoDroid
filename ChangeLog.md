@@ -1,11 +1,18 @@
 # ChangeLog
 
-## 20.6 in-dev
+## 20.6.20180125 "Malachowski"
 
 ### Bug Fixes
 
 * Uninstaller
   * ensure restored backups (System Mode) have proper permissions
+
+* Push Messages
+  * GsfProxy needs the same signature as GmsCore in order for Push Messages to fully work
+  * when using NanoDroid's GmsCore a re-signed GsfProxy with the NanoDroid key will be installed
+     * it's the official GsfProxy apk only re-signed with that different key
+  * when using official GmsCore the official GsfProxy will be installed
+  * thanks to @Vavun for pointing this out
 
 ### General Changes
 
@@ -16,6 +23,17 @@
 * Uninstaller
   * improved System Mode uninstallation routine
   * look for per ROM backups
+
+### Updates
+
+* automatic
+  * Bromite WebView
+     * arm, arm64: 72.0.3626.68
+     * x86: 72.0.3626.73
+
+* manual
+  * Google Play Store (13.3.16)
+  * microG GmsCore (0.2.6.14847-dirty-163 [NanoDroid])
 
 ## 20.5.1.20190116 "USS T'Plana-Hath"
 
