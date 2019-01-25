@@ -18,7 +18,7 @@ nlx_OMNICLOCK=(https://www.nanolx.org/apk/OmniClock.apk app OmniClock)
 ###
 
 uG_GMSCORE=(microg com.google.android.gms priv-app GmsCore_Official)
-uG_GSFPROXY=(microg com.google.android.gsf priv-app GsfProxy)
+uG_GSFPROXY=(microg com.google.android.gsf priv-app GsfProxy_Official)
 uG_DROIDGUARD=(microg org.microg.gms.droidguard app DroidGuard)
 uG_FAKESTORE=(microg com.android.vending priv-app FakeStore)
 fd_NLPDEJAVU=(fdroid org.fitchfamily.android.dejavu app nlpBackendDejavu)
@@ -178,7 +178,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/priv-app/Phonesky/Phonesky.apk
 	Full/system/priv-app/YalpStore/YalpStore.apk
 	Full/system/priv-app/AuroraStore/AuroraStore.apk
-	Full/system/priv-app/GsfProxy/GsfProxy.apk
+	Full/system/priv-app/GsfProxy_Official/GsfProxy_Official.apk
 	Full/system/priv-app/GmsCore_NanoDroid/GmsCore_NanoDroid.apk
 	Full/system/priv-app/GmsCore_Official/GmsCore_Official.apk
 	BromiteWebView/system/app/BromiteWebView_arm/BromiteWebView_arm.apk

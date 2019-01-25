@@ -760,13 +760,15 @@ install_microg () {
 		if [ "${nanodroid_gmscore}" -eq 1 ]; then
 			ui_print "   ++ Official microG GmsCore"
 			nanodroid_install_apk GmsCore_Official "" GmsCore
+			GSFPROXY=GsfProxy_Official
 		else
 			ui_print "   ++ NanoDroid microG GmsCore"
 			nanodroid_install_apk GmsCore_NanoDroid multilib GmsCore
+			GSFPROXY=GsfProxy_NanoDroid
 		fi
 
 		if [ "${nanodroid_microg}" -ne 2 ]; then
-			for app in GsfProxy DroidGuard; do
+			for app in ${GSFPROXY} DroidGuard; do
 				nanodroid_install_apk ${app}
 			done
 		fi
