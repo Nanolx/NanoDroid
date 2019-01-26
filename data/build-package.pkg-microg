@@ -14,7 +14,8 @@ create_microg_package() {
 	done
 
 	for app in FakeStore GmsCore_Official GmsCore_NanoDroid \
-		Phonesky GsfProxy YalpStore AuroraStore; do
+		Phonesky GsfProxy_Official GsfProxy_NanoDroid \
+		YalpStore AuroraStore; do
 		zip_add "system/priv-app/${app}/"
 	done
 
