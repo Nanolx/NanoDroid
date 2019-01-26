@@ -768,9 +768,8 @@ install_microg () {
 		fi
 
 		if [ "${nanodroid_microg}" -ne 2 ]; then
-			for app in ${GSFPROXY} DroidGuard; do
-				nanodroid_install_apk ${app}
-			done
+			nanodroid_install_apk DroidGuard
+			nanodroid_install_apk ${GSFPROY} multilib GsfProxy
 		fi
 
 		for app in ${NLPBACKEND}; do
