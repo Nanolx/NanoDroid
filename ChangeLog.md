@@ -7,6 +7,10 @@
 * Uninstaller
   * ensure restored backups (System Mode) have proper permissions
 
+* NanoDroid-Overlay
+  * when listing non-overriden apps in Magisk Mode, skip NanoDroid's own packages
+  * fix adding overlays to configuration if a similarly named app already is in the configuration
+
 * Push Messages
   * GsfProxy needs the same signature as GmsCore in order for Push Messages to fully work
   * when using NanoDroid's GmsCore a re-signed GsfProxy with the NanoDroid key will be installed
@@ -19,7 +23,6 @@
 * Scripts
   * nanodroid-overlay
      * store backups in System Mode per ROM in /sdcard/nanodroid_backups/${ro.build.flavor}_${ro.build.id}
-     * when listing non-overriden apps in Magisk Mode, skip NanoDroid's own packages
 
 * Uninstaller
   * improved System Mode uninstallation routine

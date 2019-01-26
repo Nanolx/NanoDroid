@@ -82,7 +82,7 @@ overrides_add_intern () {
 		mv "/system/${sysdir}/${app}" "${SYS_BACKUP_PATH}/${sysdir}/"
 	fi
 
-	grep -q "^${app}" "${config}" 2>/dev/null || echo "${app}" >> "${config}"
+	grep -q "^${app}$" "${config}" 2>/dev/null || echo "${app}" >> "${config}"
 }
 
 overrides_add () {
