@@ -1,6 +1,6 @@
 set_progress(0.0);
 ui_print(" ");
-ui_print("> NanoDroid Setup Wizard 20.6.20190125");
+ui_print("> NanoDroid Setup Wizard 20.6.20190126");
 ui_print(" ");
 set_progress(0.1);
 

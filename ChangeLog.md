@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 20.6.20180125 "Malachowski"
+## 20.6.20180126 "Malachowski"
 
 ### Bug Fixes
 
@@ -19,6 +19,7 @@
 * Scripts
   * nanodroid-overlay
      * store backups in System Mode per ROM in /sdcard/nanodroid_backups/${ro.build.flavor}_${ro.build.id}
+     * when listing non-overriden apps in Magisk Mode, skip NanoDroid's own packages
 
 * Uninstaller
   * improved System Mode uninstallation routine
