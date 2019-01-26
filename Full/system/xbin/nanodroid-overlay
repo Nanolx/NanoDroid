@@ -173,17 +173,17 @@ overrides_list_non () {
 	if [[ ${NO_MAGISK} -eq 0 ]]; then
 		echo "non-overriden apps from /system/app:"
 		for app in $(find "/system/app" -mindepth 1 -maxdepth 1 -type d); do
-			[[ ! -f ${OVERLAY_PATH}/${app}/.replace ]] && echo "  * $(basename ${app})"
+			[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
 		done
 
 		echo "non-overriden apps from /system/priv-app:"
 		for app in $(find "/system/priv-app" -mindepth 1 -maxdepth 1 -type d); do
-			[[ ! -f ${OVERLAY_PATH}/${app}/.replace ]] && echo "  * $(basename ${app})"
+			[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
 		done
 
 		echo "non-overriden apps from /system/reserve:"
 		for app in $(find "/system/reserve" -mindepth 1 -maxdepth 1 -type d); do
-			[[ ! -f ${OVERLAY_PATH}/${app}/.replace ]] && echo "  * $(basename ${app})"
+			[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
 		done
 	else
 		echo "non-moved-out apps from /system/app:"
