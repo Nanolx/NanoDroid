@@ -5,7 +5,10 @@ NANODROID_UPGRADE=0
 INSTALL_SUCCESS=TRUE
 NANODROID_LIST=/data/adb/NanoDroid_FileList
 
-GOOGLE_APPS="AMAPNetworkLocation
+print_google_apps()
+{
+cat <<EOF
+AMAPNetworkLocation
 BaiduNetworkLocation
 BlankStore
 ConfigUpdater
@@ -38,20 +41,32 @@ PrebuiltGmsCorePix
 UnifiedNlp
 Velvet
 Vending
-WhisperPush"
+WhisperPush
+EOF
+}
 
-GOOGLE_DATA="com.amap.android.location
+print_google_data ()
+{
+cat <<EOF
+com.amap.android.location
 com.baidu.location
 com.google.android.location
 org.microg.nlp
-org.microg.unifiednlp"
+org.microg.unifiednlp
+EOF
+}
 
-GOOGLE_DATA_DIRTY="com.android.vending
+print_google_data_dirty ()
+{
+cat <<EOF
+com.android.vending
 com.google.android.gms
 com.google.android.gsf
 com.google.android.gsf.login
 com.google.android.feedback
-com.mgoogle.android.gms"
+com.mgoogle.android.gms
+EOF
+}
 
 ##########################################################################################
 # Misc. Functions
@@ -338,6 +353,8 @@ unpack_zip () {
 	ui_print " > prepare installation"
 	unzip -o "${ZIP}" -d "${INSTALLER}" || \
 		error "failed to prepare environment!"
+
+	rm -rf ${TMPDIR}/framework-res
 }
 
 nanodroid_finalize () {
@@ -531,6 +548,8 @@ magisk_install_setup () {
 	ui_print " > setup Magisk environment"
 
 	MOUNTPATH=${TMPDIR}/magisk_img
+	rm -rf ${MOUNTPATH}
+	mkdir -p ${MOUNTPATH}
 
 	if [ -f /data/adb/magisk/util_functions.sh ]; then
 		NVBASE=/data/adb
@@ -552,7 +571,29 @@ magisk_install_setup () {
 	request_size_check "${INSTALLER}"
 	reqSizeM=$((reqSizeM * 2))
 
-	mount_magisk_img
+	if [ -f ${IMG} ]; then
+		MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
+		is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
+
+		check_filesystem ${IMG} ${MOUNTPATH}
+
+		if [ ${reqSizeM} -gt ${curFreeM} ]; then
+			${MAGISKBIN}/magisk imgtool umount ${MOUNTPATH} ${MAGISKLOOP}
+			newSizeM=$(((curSizeM + reqSizeM - curFreeM) / 32 * 32 + 64))
+			resize2fs -f ${IMG} ${newSizeM}M
+			e2fsck -yf ${IMG}
+			MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
+			is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
+		fi
+
+	else
+		newSizeM=$((reqSizeM / 32 * 32 + 64))
+		${MAGISKBIN}/magisk imgtool create ${IMG} ${newSizeM}
+		e2fsck -yf ${IMG}
+
+		MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
+		is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
+	fi
 
 	case ${MODID} in
 		NanoDroid )
@@ -637,7 +678,8 @@ magisk_install_finish () {
 		${NANODROID_BINDIR}/nanodroid-font -s "${CUSTOM_FONT}"
 	fi
 
-	unmount_magisk_img
+	e2fsck -yf ${IMG}
+
 	recovery_cleanup
 }
 
@@ -647,14 +689,16 @@ magisk_install_finish () {
 
 gapps_solve_conflicts () {
 	# first get rid of conflicting packages
-	for app in ${GOOGLE_APPS}; do
+	print_google_apps | while read app; do
+		echo " ++ removing app: ${app} [google_apps]"
 		${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
 
 		rm -rf /data/dalvik-cache/*/system"@priv-app@${app}"[@\.]*@classes.*
 		rm -rf /data/dalvik-cache/*/system"@app@${app}"[@\.]*@classes.*
 	done
 
-	for app in ${GOOGLE_DATA}; do
+	print_google_data | while read app; do
+		echo " ++ removing data for: ${app} [google_data]"
 		rm -rf /data/data/${app}
 		rm -rf /data/user/*/${app}
 		rm -rf /data/user_de/*/${app}
@@ -670,7 +714,8 @@ gapps_destroy_artifacts () {
 	if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
 		rm -rf /data/dalvik-cache/*/system"@priv-app@GmsCore"[@\.]*@classes.*
 
-		for app in ${GOOGLE_DATA_DIRTY}; do
+		print_google_data_dirty | while read app; do
+			echo " ++ removing data for: ${app} [google_data_dirty]"
 			rm -rf /data/data/${app}
 			rm -rf /data/user/*/${app}
 			rm -rf /data/user_de/*/${app}
@@ -693,8 +738,8 @@ gapps_destroy_artifacts () {
 		done
 
 		if [ -f /data/system/packages.list ]; then
-			for app in ${GOOGLE_DATA_DIRTY}; do
-				echo "  ++ de-registering app: ${GOOGLE_DATA_DIRTY} (if installed)"
+			print_google_data_dirty | while read app; do
+				echo "  ++ de-registering app: ${app} (if installed)"
 				sed -e "/${app}/d" -i /data/system/packages.list
 			done
 		fi
@@ -711,8 +756,11 @@ search_fake_package_signature () {
 	HAS_FAKESIGN=false
 
 	FW_RES_DIR="${TMPDIR}/framework-res"
-	mkdir -p "${FW_RES_DIR}"
-	unzip -o /system/framework/framework-res.apk -d "${FW_RES_DIR}"
+
+	if [ ! -f ${FW_RES_DIR}/AndroidManifest.xml ]; then
+		mkdir -p "${FW_RES_DIR}"
+		unzip -o /system/framework/framework-res.apk -d "${FW_RES_DIR}"
+	fi
 
 	grep -qF "${PERMISSION}" "${FW_RES_DIR}/AndroidManifest.xml" && HAS_FAKESIGN=true
 	od -A n -t x1 "${FW_RES_DIR}/AndroidManifest.xml" | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true
