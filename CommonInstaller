@@ -585,7 +585,6 @@ magisk_install_setup () {
 			MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
 			is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
 		fi
-
 	else
 		newSizeM=$((reqSizeM / 32 * 32 + 64))
 		${MAGISKBIN}/magisk imgtool create ${IMG} ${newSizeM}

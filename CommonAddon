@@ -16,8 +16,10 @@ source /tmp/backuptool.functions
 
 MODID=@MODID@
 OUTFD=
-
-GOOGLE_APPS="AMAPNetworkLocation
+print_google_apps()
+{
+cat <<EOF
+AMAPNetworkLocation
 BaiduNetworkLocation
 BlankStore
 ConfigUpdater
@@ -50,13 +52,20 @@ PrebuiltGmsCorePix
 UnifiedNlp
 Velvet
 Vending
-WhisperPush"
+WhisperPush
+EOF
+}
 
-GOOGLE_DATA="com.amap.android.location
+print_google_data ()
+{
+cat <<EOF
+com.amap.android.location
 com.baidu.location
 com.google.android.location
 org.microg.nlp
-org.microg.unifiednlp"
+org.microg.unifiednlp
+EOF
+}
 
 # check for configuration files
 config_locations="/sdcard /external_sd /data"
@@ -191,11 +200,11 @@ postrestore_action () {
 	fi
 
 	ui_print " ++ ${MODID} addon.d: GApps removal"
-	for app in ${GOOGLE_APPS}; do
+	print_google_apps | while read app; do
 		${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
 	done
 
-	for app in ${GOOGLE_DATA}; do
+	print_google_data | while read app; do
 		rm -rf /data/data/${app}
 		rm -rf /data/user/*/${app}
 		rm -rf /data/user_de/*/${app}
