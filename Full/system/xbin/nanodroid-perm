@@ -44,7 +44,7 @@ permissions () {
 
 # microG and Play Store
 permissions ${microG} ${perm_fake}
-permisisons ${microG} ${perm_floc}
+permissions ${microG} ${perm_floc}
 permissions ${microG} ${perm_cloc}
 permissions ${PlayStore} ${perm_fake}
 
