@@ -6,7 +6,7 @@ If you want to check beforehand (or afterwards), if your ROM supports Signature 
 
 ## Pre-Check
 
-If your `/system/framework/services.jar` file contains the file `classes.dex`, you can skip deodexing and start patching right-away, else following theese instructions.
+If your `/system/framework/services.jar` file contains the file `classes.dex`, you can skip deodexing and start patching right-away, else following these instructions.
 
 ## Android 9.0 Pie
 
