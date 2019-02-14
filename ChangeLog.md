@@ -1,5 +1,35 @@
 # ChangeLog
 
+## 20.7 in-dev
+
+### Bug Fixes
+
+* nanodroid-perm
+  * fix typo prevent some permissions to be set
+
+* Installer
+  * fix resizing magisk.img failing due it being dirty
+  * fix GApps removal in certain cases
+
+### General
+
+* Installer
+  * re-use already unpacked framework-res when checking for native sigspoof more than once
+  * more verbose GApps removal logging
+
+### Updates
+
+* automatic
+  * Simple Gallery (6.5.1)
+  * Bromite System WebView (72.0.3628.108)
+  * Odyssey (1.1.17)
+  * NewPipe (0.15.1)
+  * Termux (0.66)
+
+* manual
+  * microG GmsCore (0.2.6.15090-167-dirty)
+  * Play Store (13.2.60)
+
 ## 20.6.20180126 "Malachowski"
 
 ### Bug Fixes
