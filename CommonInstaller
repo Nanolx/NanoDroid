@@ -562,6 +562,7 @@ magisk_install_setup () {
 	fi
 
 	IMG=${NVBASE}/magisk.img
+	e2fsck -yf ${IMG}
 
 	MODPATH=${MOUNTPATH}/${MODID}
 	REALPATH=/sbin/.magisk/img/${MODID}
@@ -677,6 +678,7 @@ magisk_install_finish () {
 		${NANODROID_BINDIR}/nanodroid-font -s "${CUSTOM_FONT}"
 	fi
 
+	unmount_magisk_img
 	e2fsck -yf ${IMG}
 
 	recovery_cleanup
