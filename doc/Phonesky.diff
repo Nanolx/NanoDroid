@@ -1,6 +1,6 @@
-diff -Nupr PS_13518.orig/AndroidManifest.xml PS_13518/AndroidManifest.xml
---- PS_13518.orig/AndroidManifest.xml	2019-02-11 19:53:17.792379650 +0100
-+++ PS_13518/AndroidManifest.xml	2019-02-11 19:56:36.089797219 +0100
+diff -Nupr PS_13620.orig/AndroidManifest.xml PS_13620/AndroidManifest.xml
+--- PS_13620.orig/AndroidManifest.xml	2019-02-14 20:39:54.100472936 +0100
++++ PS_13620/AndroidManifest.xml	2019-02-14 20:46:35.452731118 +0100
 @@ -86,6 +86,7 @@
      <uses-permission android:name="android.permission.READ_RUNTIME_PROFILES"/>
      <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
@@ -35,9 +35,9 @@ diff -Nupr PS_13518.orig/AndroidManifest.xml PS_13518/AndroidManifest.xml
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_13518.orig/res/values/arrays.xml PS_13518/res/values/arrays.xml
---- PS_13518.orig/res/values/arrays.xml	2019-02-11 19:53:14.856332521 +0100
-+++ PS_13518/res/values/arrays.xml	2019-02-11 19:54:46.909397042 +0100
+diff -Nupr PS_13620.orig/res/values/arrays.xml PS_13620/res/values/arrays.xml
+--- PS_13620.orig/res/values/arrays.xml	2019-02-14 20:39:42.252466882 +0100
++++ PS_13620/res/values/arrays.xml	2019-02-14 20:46:35.452731118 +0100
 @@ -1,7 +1,15 @@
  <?xml version="1.0" encoding="utf-8"?>
  <resources>
@@ -58,36 +58,36 @@ diff -Nupr PS_13518.orig/res/values/arrays.xml PS_13518/res/values/arrays.xml
 +        <item>Disable Network Type Override</item>
 +    </string-array>
  </resources>
-diff -Nupr PS_13518.orig/res/values/public.xml PS_13518/res/values/public.xml
---- PS_13518.orig/res/values/public.xml	2019-02-11 19:53:14.856332521 +0100
-+++ PS_13518/res/values/public.xml	2019-02-11 19:59:32.965216697 +0100
-@@ -11359,6 +11359,7 @@
-     <public type="string" name="zero_rating_watch_video_dialog_message" id="0x7f130943" />
-     <public type="string" name="zero_rating_watch_video_dialog_title" id="0x7f130944" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f130945" />
-+    <public type="string" name="fake_signature" id="0x7f130946" />
+diff -Nupr PS_13620.orig/res/values/public.xml PS_13620/res/values/public.xml
+--- PS_13620.orig/res/values/public.xml	2019-02-14 20:39:42.252466882 +0100
++++ PS_13620/res/values/public.xml	2019-02-14 20:48:16.484804668 +0100
+@@ -11403,6 +11403,7 @@
+     <public type="string" name="zero_rating_watch_video_dialog_message" id="0x7f130947" />
+     <public type="string" name="zero_rating_watch_video_dialog_title" id="0x7f130948" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f130949" />
++    <public type="string" name="fake_signature" id="0x7f13094a" />
      <public type="style" name="AccountRow" id="0x7f140007" />
      <public type="style" name="AccountRowBase" id="0x7f140008" />
      <public type="style" name="AccountRowSubtitle" id="0x7f14000b" />
-@@ -12625,4 +12626,4 @@
+@@ -12693,4 +12694,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002c" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002d" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002e" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_13518.orig/res/values/strings.xml PS_13518/res/values/strings.xml
---- PS_13518.orig/res/values/strings.xml	2019-02-11 19:53:14.856332521 +0100
-+++ PS_13518/res/values/strings.xml	2019-02-11 19:57:19.449768366 +0100
-@@ -2163,4 +2163,5 @@ Check with your carrier for any limits o
+diff -Nupr PS_13620.orig/res/values/strings.xml PS_13620/res/values/strings.xml
+--- PS_13620.orig/res/values/strings.xml	2019-02-14 20:39:42.252466882 +0100
++++ PS_13620/res/values/strings.xml	2019-02-14 20:46:35.456731120 +0100
+@@ -2168,4 +2168,5 @@ Check with your carrier for any limits o
      <string name="zero_rating_watch_video_dialog_message">"Video streaming isn't included in free data for Play. Data charges will apply when you watch this video."</string>
      <string name="zero_rating_watch_video_dialog_title">Watch video on mobile data?</string>
      <string name="current_locale_sanity_check" />
 +    <string name="fake_signature">308204433082032ba003020102020900c2e08746644a308d300d06092a864886f70d01010405003074310b3009060355040613025553311330110603550408130a43616c69666f726e6961311630140603550407130d4d6f756e7461696e205669657731143012060355040a130b476f6f676c6520496e632e3110300e060355040b1307416e64726f69643110300e06035504031307416e64726f6964301e170d3038303832313233313333345a170d3336303130373233313333345a3074310b3009060355040613025553311330110603550408130a43616c69666f726e6961311630140603550407130d4d6f756e7461696e205669657731143012060355040a130b476f6f676c6520496e632e3110300e060355040b1307416e64726f69643110300e06035504031307416e64726f696430820120300d06092a864886f70d01010105000382010d00308201080282010100ab562e00d83ba208ae0a966f124e29da11f2ab56d08f58e2cca91303e9b754d372f640a71b1dcb130967624e4656a7776a92193db2e5bfb724a91e77188b0e6a47a43b33d9609b77183145ccdf7b2e586674c9e1565b1f4c6a5955bff251a63dabf9c55c27222252e875e4f8154a645f897168c0b1bfc612eabf785769bb34aa7984dc7e2ea2764cae8307d8c17154d7ee5f64a51a44a602c249054157dc02cd5f5c0e55fbef8519fbe327f0b1511692c5a06f19d18385f5c4dbc2d6b93f68cc2979c70e18ab93866b3bd5db8999552a0e3b4c99df58fb918bedc182ba35e003c1b4b10dd244a8ee24fffd333872ab5221985edab0fc0d0b145b6aa192858e79020103a381d93081d6301d0603551d0e04160414c77d8cc2211756259a7fd382df6be398e4d786a53081a60603551d2304819e30819b8014c77d8cc2211756259a7fd382df6be398e4d786a5a178a4763074310b3009060355040613025553311330110603550408130a43616c69666f726e6961311630140603550407130d4d6f756e7461696e205669657731143012060355040a130b476f6f676c6520496e632e3110300e060355040b1307416e64726f69643110300e06035504031307416e64726f6964820900c2e08746644a308d300c0603551d13040530030101ff300d06092a864886f70d010104050003820101006dd252ceef85302c360aaace939bcff2cca904bb5d7a1661f8ae46b2994204d0ff4a68c7ed1a531ec4595a623ce60763b167297a7ae35712c407f208f0cb109429124d7b106219c084ca3eb3f9ad5fb871ef92269a8be28bf16d44c8d9a08e6cb2f005bb3fe2cb96447e868e731076ad45b33f6009ea19c161e62641aa99271dfd5228c5c587875ddb7f452758d661f6cc0cccb7352e424cc4365c523532f7325137593c4ae341f4db41edda0d0b1071a7c440f0fe9ea01cb627ca674369d084bd2fd911ff06cdbf2cfa10dc0f893ae35762919048c7efc64c7144178342f70581c9de573af55b390dd7fdb9418631895d5f759f30112687ff621410c069308a</string>
  </resources>
-diff -Nupr PS_13518.orig/smali/com/google/android/finsky/headless/GmsCoreUpdateService.smali PS_13518/smali/com/google/android/finsky/headless/GmsCoreUpdateService.smali
---- PS_13518.orig/smali/com/google/android/finsky/headless/GmsCoreUpdateService.smali	2019-02-11 19:53:15.096336412 +0100
-+++ PS_13518/smali/com/google/android/finsky/headless/GmsCoreUpdateService.smali	2019-02-11 20:00:01.473029714 +0100
+diff -Nupr PS_13620.orig/smali/com/google/android/finsky/headless/GmsCoreUpdateService.smali PS_13620/smali/com/google/android/finsky/headless/GmsCoreUpdateService.smali
+--- PS_13620.orig/smali/com/google/android/finsky/headless/GmsCoreUpdateService.smali	2019-02-14 20:39:42.932467226 +0100
++++ PS_13620/smali/com/google/android/finsky/headless/GmsCoreUpdateService.smali	2019-02-14 20:46:35.456731120 +0100
 @@ -60,8 +60,6 @@
      invoke-virtual {v0, v1}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;
  
@@ -97,10 +97,10 @@ diff -Nupr PS_13518.orig/smali/com/google/android/finsky/headless/GmsCoreUpdateS
      return-void
  .end method
  
-diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_13518/smali/com/google/android/finsky/selfupdate/i.smali
---- PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali	2019-02-11 19:53:15.112336670 +0100
-+++ PS_13518/smali/com/google/android/finsky/selfupdate/i.smali	2019-02-11 20:02:13.131950987 +0100
-@@ -752,8 +752,6 @@
+diff -Nupr PS_13620.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_13620/smali/com/google/android/finsky/selfupdate/i.smali
+--- PS_13620.orig/smali/com/google/android/finsky/selfupdate/i.smali	2019-02-14 20:39:42.948467233 +0100
++++ PS_13620/smali/com/google/android/finsky/selfupdate/i.smali	2019-02-14 20:49:21.016852437 +0100
+@@ -719,8 +719,6 @@
  
      move-result v0
  
@@ -109,7 +109,7 @@ diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_1
      const-string v0, "Skipping DFE self-update check as there is an update already queued."
  
      .line 24
-@@ -811,300 +809,7 @@
+@@ -768,298 +766,7 @@
      move v0, v6
  
      .line 57
@@ -127,18 +127,18 @@ diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_1
 -    .line 31
 -    new-instance v2, Lcom/google/android/finsky/selfupdate/g;
 -
--    iget-object v0, p0, Lcom/google/android/finsky/selfupdate/i;->k:Lcom/google/android/finsky/ec/g;
+-    iget-object v0, p0, Lcom/google/android/finsky/selfupdate/i;->k:Lcom/google/android/finsky/ed/g;
 -
 -    iget-object v3, p0, Lcom/google/android/finsky/selfupdate/i;->g:Lcom/google/android/finsky/recoverymode/c;
 -
 -    iget-object v4, p0, Lcom/google/android/finsky/selfupdate/i;->h:Lcom/google/android/finsky/bc/a;
 -
--    invoke-direct {v2, p3, v0, v3, v4}, Lcom/google/android/finsky/selfupdate/g;-><init>(Lcom/google/android/finsky/bt/h;Lcom/google/android/finsky/ec/g;Lcom/google/android/finsky/recoverymode/c;Lcom/google/android/finsky/bc/a;)V
+-    invoke-direct {v2, p3, v0, v3, v4}, Lcom/google/android/finsky/selfupdate/g;-><init>(Lcom/google/android/finsky/bt/h;Lcom/google/android/finsky/ed/g;Lcom/google/android/finsky/recoverymode/c;Lcom/google/android/finsky/bc/a;)V
 -
 -    .line 32
--    iget-object v0, p0, Lcom/google/android/finsky/selfupdate/i;->k:Lcom/google/android/finsky/ec/g;
+-    iget-object v0, p0, Lcom/google/android/finsky/selfupdate/i;->k:Lcom/google/android/finsky/ed/g;
 -
--    invoke-static {p3, v0}, Lcom/google/android/finsky/selfupdate/g;->a(Lcom/google/android/finsky/bt/h;Lcom/google/android/finsky/ec/g;)Z
+-    invoke-static {p3, v0}, Lcom/google/android/finsky/selfupdate/g;->a(Lcom/google/android/finsky/bt/h;Lcom/google/android/finsky/ed/g;)Z
 -
 -    move-result v0
 -
@@ -172,7 +172,7 @@ diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_1
 -
 -    .line 37
 -    :try_start_0
--    sget-object v0, Lcom/google/android/finsky/ey/a;->b:Lcom/google/android/finsky/aj/q;
+-    sget-object v0, Lcom/google/android/finsky/ez/a;->b:Lcom/google/android/finsky/aj/q;
 -
 -    invoke-virtual {v0}, Lcom/google/android/finsky/aj/q;->a()Ljava/lang/Object;
 -
@@ -191,7 +191,7 @@ diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_1
 -    if-gtz v0, :cond_1
 -
 -    .line 38
--    sget-object v0, Lcom/google/android/finsky/ey/a;->b:Lcom/google/android/finsky/aj/q;
+-    sget-object v0, Lcom/google/android/finsky/ez/a;->b:Lcom/google/android/finsky/aj/q;
 -
 -    invoke-static {}, Lcom/google/android/finsky/utils/k;->a()J
 -
@@ -232,7 +232,7 @@ diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_1
 -    move-object v4, p4
 -
 -    .line 41
--    invoke-virtual/range {v0 .. v5}, Lcom/google/android/finsky/selfupdate/i;->a(ILcom/google/android/finsky/api/f;Lcom/google/android/finsky/bt/h;Lcom/google/android/finsky/analytics/az;Ljava/lang/Runnable;)V
+-    invoke-virtual/range {v0 .. v5}, Lcom/google/android/finsky/selfupdate/i;->a(ILcom/google/android/finsky/api/e;Lcom/google/android/finsky/bt/h;Lcom/google/android/finsky/analytics/az;Ljava/lang/Runnable;)V
 -
 -    .line 42
 -    :try_start_1
@@ -300,7 +300,7 @@ diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_1
 -    invoke-virtual {v5, v0, p1}, Lcom/google/android/finsky/scheduler/b/c;->b(Ljava/lang/String;I)Lcom/google/android/finsky/scheduler/b/c;
 -
 -    .line 51
--    invoke-interface {p2}, Lcom/google/android/finsky/api/f;->c()Ljava/lang/String;
+-    invoke-interface {p2}, Lcom/google/android/finsky/api/e;->c()Ljava/lang/String;
 -
 -    move-result-object v0
 -
@@ -309,7 +309,7 @@ diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_1
 -    const-string v0, "self_update_account_name"
 -
 -    .line 52
--    invoke-interface {p2}, Lcom/google/android/finsky/api/f;->c()Ljava/lang/String;
+-    invoke-interface {p2}, Lcom/google/android/finsky/api/e;->c()Ljava/lang/String;
 -
 -    move-result-object v2
 -
@@ -353,7 +353,7 @@ diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_1
 -
 -    move-object v6, p3
 -
--    invoke-direct/range {v0 .. v6}, Lcom/google/android/finsky/selfupdate/k;-><init>(Lcom/google/android/finsky/selfupdate/i;Lcom/google/common/util/concurrent/ap;Lcom/google/android/finsky/analytics/az;ILcom/google/android/finsky/api/f;Lcom/google/android/finsky/bt/h;)V
+-    invoke-direct/range {v0 .. v6}, Lcom/google/android/finsky/selfupdate/k;-><init>(Lcom/google/android/finsky/selfupdate/i;Lcom/google/common/util/concurrent/ap;Lcom/google/android/finsky/analytics/az;ILcom/google/android/finsky/api/e;Lcom/google/android/finsky/bt/h;)V
 -
 -    iget-object v1, p0, Lcom/google/android/finsky/selfupdate/i;->j:Ljava/util/concurrent/Executor;
 -
@@ -401,18 +401,16 @@ diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/i.smali PS_1
 -    .line 61
 -    invoke-virtual {v1, v0}, Lcom/google/android/finsky/analytics/j;->a(Ljava/lang/Throwable;)Lcom/google/android/finsky/analytics/j;
 -
--    move-result-object v0
--
 -    .line 62
--    invoke-virtual {p4, v0}, Lcom/google/android/finsky/analytics/az;->a(Lcom/google/android/finsky/analytics/j;)Lcom/google/android/finsky/analytics/az;
+-    invoke-virtual {p4, v1}, Lcom/google/android/finsky/analytics/az;->a(Lcom/google/android/finsky/analytics/j;)Lcom/google/android/finsky/analytics/az;
 -
 -    goto :goto_1
  .end method
  
  .method final b(I)Lcom/google/android/finsky/analytics/j;
-diff -Nupr PS_13518.orig/smali/com/google/android/finsky/selfupdate/p.smali PS_13518/smali/com/google/android/finsky/selfupdate/p.smali
---- PS_13518.orig/smali/com/google/android/finsky/selfupdate/p.smali	2019-02-11 19:53:15.112336670 +0100
-+++ PS_13518/smali/com/google/android/finsky/selfupdate/p.smali	2019-02-11 20:05:35.777848500 +0100
+diff -Nupr PS_13620.orig/smali/com/google/android/finsky/selfupdate/p.smali PS_13620/smali/com/google/android/finsky/selfupdate/p.smali
+--- PS_13620.orig/smali/com/google/android/finsky/selfupdate/p.smali	2019-02-14 20:39:42.948467233 +0100
++++ PS_13620/smali/com/google/android/finsky/selfupdate/p.smali	2019-02-14 20:46:35.456731120 +0100
 @@ -308,7 +308,7 @@
      const/4 v0, 0x1
  
