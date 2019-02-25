@@ -216,11 +216,11 @@ grab_apk_from_github () {
 grab_apk_from_ogapps () {
 	case "${1}" in
 		"com.google.android.syncadapters.calendar" )
-			APK_URL="https://github.com/opengapps/all/blob/master/${2}/${1}/15/nodpi/2015080710.apk?raw=true"
+			APK_URL="https://gitlab.nezorfla.me/opengapps/all/blob/master/${2}/${1}/15/nodpi/2015080710.apk?raw=true"
 		;;
 
 		* )
-			APK_URL="https://github.com/opengapps/all/blob/master/${2}/${1}/${4}/nodpi/${4}.apk?raw=true"
+			APK_URL="https://gitlab.nezorfla.me/opengapps/all/blob/master/${2}/${1}/${4}/nodpi/${4}.apk?raw=true"
 		;;
 	esac
 
@@ -253,7 +253,7 @@ grab_lib_from_ogapps () {
 		arm64 | x86_64 ) LIBD=lib64 ;;
 	esac
 
-	LIB_URL="https://github.com/opengapps/${3}/blob/master/${LIBD}/${2}/${1}?raw=true"
+	LIB_URL="https://gitlab.nezorfla.me/opengapps/${3}/blob/master/${LIBD}/${2}/${1}?raw=true"
 	SWP_DEST="${CWD}/Full/swipe/${3}"
 
 	if [[ "${4}" == "true" ]]; then
