@@ -158,6 +158,7 @@ misc. stuff:
 	dalvik	[jar]		| prepare a jar file for dalvikvm usage
 	ver	[ver] [date]	| bump version
 	bump			| bump versionCode in Magisk Modules
+	u-patch			| download Haystack patches
 "
 
 	exit 0
