@@ -12,27 +12,19 @@ AMAPNetworkLocation
 BaiduNetworkLocation
 BlankStore
 ConfigUpdater
-DejaVuBackend
-DejaVuNlpBackend
-FDroidPriv
 GCS
 GmsCoreSetupPrebuilt
 GmsCore_update
-GmsDroidGuard
 GoogleFeedback
 GoogleLoginService
 GoogleOneTimeInitializer
 GoogleServicesFramework
 GoogleConnectivityServices
 GoogleTTS
-IchnaeaNlpBackend
 LegacyNetworkLocation
 MarketUpdater
 MarkupGoogle
-MozillaNlpBackend
 NetworkLocation
-NominatimGeocoderBackend
-NominatimNlpBackend
 PlayGames
 PlayStore
 PrebuiltGmsCore
@@ -787,15 +779,21 @@ install_microg () {
 
 		ui_print " << with microg"
 		ui_print "   ++ Nominatim geocoder backend"
+		${NANODROID_BINDIR}/nanodroid-overlay --add NominatimGeocoderBackend
+		${NANODROID_BINDIR}/nanodroid-overlay --add NominatimNlpBackend
 
 		if [ "${nanodroid_nlpbackend:0:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendDejavu"
 			ui_print "   ++ Déjà Vu location backend"
+			${NANODROID_BINDIR}/nanodroid-overlay --add DejaVuNlpBackend
+			${NANODROID_BINDIR}/nanodroid-overlay --add DejaVuBackend
 		fi
 
 		if [ "${nanodroid_nlpbackend:1:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendIchnaea"
 			ui_print "   ++ Ichnaea location backend"
+			${NANODROID_BINDIR}/nanodroid-overlay --add IchnaeaNlpBackend
+			${NANODROID_BINDIR}/nanodroid-overlay --add MozillaNlpBackend
 		fi
 
 		if [ "${nanodroid_nlpbackend:2:1}" -eq 1 ]; then
@@ -820,6 +818,8 @@ install_microg () {
 			for app in GsfProxy DroidGuard; do
 				nanodroid_install_apk ${app}
 			done
+
+			${NANODROID_BINDIR}/nanodroid-overlay --add GmsDroidGuard
 		fi
 
 		for app in ${NLPBACKEND}; do
@@ -880,6 +880,9 @@ install_fdroid () {
 		ui_print " << with F-Droid"
 		nanodroid_install_apk FDroid
 		nanodroid_install_apk FDroidPrivileged
+
+		${NANODROID_BINDIR}/nanodroid-overlay --add FDroidPriv
+
 		nanodroid_install_file etc/permissions/org.fdroid.fdroid.privileged.xml
 		nanodroid_install_file etc/org.fdroid.fdroid/additional_repos.xml
 	else	ui_print " << without F-Droid"
