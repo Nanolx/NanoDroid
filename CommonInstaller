@@ -1343,7 +1343,7 @@ nanodroid_install_lib () {
 					cp ${lib} "${libd}/${lib_arch}/" || \
 						error "installing libraries failed"
 
-					installinfo_add "/${dir}/${app}/lib/${lib_arch}/$(basename ${lib})"
+					installinfo_add "${libd}/${lib_arch}/$(basename ${lib})"
 				done
 
 				[ -z "${multilib}" ] && break
