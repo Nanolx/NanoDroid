@@ -290,7 +290,9 @@ detect_mode () {
 		0 | *)
 			MODE_DETECT=detected
 
-			if [ -f /data/adb/magisk/magisk ]; then
+			if [ -f "${NANODROID_LIST}" ]; then
+				MODE=SYSTEM
+			elif [ -f /data/adb/magisk/magisk ]; then
 				MODE=MAGISK
 			elif [ -f /data/.magisk/magisk ]; then
 				migrate_magisk_custom /data/.magisk/
