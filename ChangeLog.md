@@ -10,12 +10,26 @@
 * Installer
   * fix resizing magisk.img failing due it being dirty
   * fix GApps removal in certain cases
+  * fix compatibility with LineageOS for microG
+     * certain components now only get removed if NanoDroid's replacements are actually going to be installed
+  * fix storing library installation information in System Mode installation for APKs installed to an alias path
+     * fixes addon.d being unable to restore libraries after ROM update
+     * affects microG GmsCore and Bromite WebView
 
 ### General
 
 * Installer
   * re-use already unpacked framework-res when checking for native sigspoof more than once
   * more verbose GApps removal logging
+  * make `unzip` less noisy to prevent twrp.log pollution
+
+* Patcher
+  * update Haystack patches to lastest versions by @Lanchon
+     * improved builds
+     * official Android Pie support
+
+* build-package Script
+  * update to new OpenGApps host URL
 
 ### Updates
 
