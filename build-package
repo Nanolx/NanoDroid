@@ -136,6 +136,10 @@ for opt in ${@}; do
 			check_nanodroid
 		;;
 
+		u-patch )
+			update_patches
+		;;
+
 		check )
 			check_nanodroid
 		;;

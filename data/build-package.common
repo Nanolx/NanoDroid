@@ -21,6 +21,12 @@ check_nanodroid () {
 	fi
 }
 
+update_patches () {
+	grab_patches sigspoof-core/services.jar.dex core_services.jar.dex
+	grab_patches sigspoof-hook-4.1-6.0/services.jar.dex hook_4.1-6.0_services.jar.dex
+	grab_patches sigspoof-hook-7.0-9.0/services.jar.dex hook_7.0-9.0_services.jar.dex
+}
+
 progress () {
 	sleep 0.5
 	while [ -d "/proc/${1}" ];do

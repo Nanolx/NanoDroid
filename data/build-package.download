@@ -272,3 +272,17 @@ grab_lib_from_ogapps () {
 	wget -q -O "${LIB_DEST}" "${LIB_URL}" || \
 		rm -f "${LIB_DEST}"
 }
+
+grab_patches () {
+	BASE_URL="https://github.com/Lanchon/haystack/blob/master/patches"
+
+	PATCH_URL="${BASE_URL}/${1}?raw=true"
+	PATCH_DST="${CWD}/patcher/dexpatcher/${2}"
+
+	echo -e "\nUpdating from Haystack   : ${2}"
+	echo "	Checking SHA256 hash not (yet) supported"
+
+	wget -q -O "${PATCH_DST}" "${PATCH_URL}" || \
+		rm -f "${PATCH_DST}"
+
+}
