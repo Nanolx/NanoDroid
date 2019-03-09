@@ -1,6 +1,7 @@
 #!/bin/bash
 
 NANODROID_MISSING_FILES=0
+NANODROID_BROKEN_FILES=0
 missing_database=""
 
 check_nanodroid () {
@@ -8,16 +9,39 @@ check_nanodroid () {
 		if [[ ! -f ${CWD}/${file} ]]; then
 			NANODROID_MISSING_FILES=1
 			missing_database=(${missing_database[@]} ${file})
+		else
+			mimetype=$(file -b --mime-type ${file})
+			case ${mimetype} in
+				application/x-sharedlib )
+					# library
+				;;
+
+				application/java-archive | application/zip )
+					# APK
+				;;
+
+				* )
+					NANODROID_BROKEN_FILES=1
+					broken_database=(${broken_database[@]} ${file})
+				;;
+			esac
 		fi
 	done
 
 	if [[ ${NANODROID_MISSING_FILES} -ne 0 ]]; then
 		echo -e "\nThe following files are missing:\n"
 		printf '%s\n' ${missing_database[@]}
-		return 1
-	else
+	fi
+
+	if [[ ${NANODROID_BROKEN_FILES} -ne 0 ]]; then
+		echo -e "\nThe following files are broken:\n"
+		printf '%s\n' ${broken_database[@]}
+	fi
+
+	if [[ ${NANODROID_MISSING_FILES} -eq 0 && ${NANODROID_BROKEN_FILES} -eq 0 ]]; then
 		echo -e "\nNanoDroid correctly populated\n"
 		return 0
+	else	return 1
 	fi
 }
 
