@@ -291,8 +291,11 @@ search_fake_package_signature () {
 	HAS_FAKESIGN=false
 
 	FW_RES_DIR="${TMPDIR}/framework-res"
-	mkdir -p "${FW_RES_DIR}"
-	unzip -o /system/framework/framework-res.apk -d "${FW_RES_DIR}"
+
+	if [ ! -f ${FW_RES_DIR}/AndroidManifest.xml ]; then
+		mkdir -p "${FW_RES_DIR}"
+		unzip -o /system/framework/framework-res.apk -d "${FW_RES_DIR}" 2>/dev/null
+	fi
 
 	grep -qF "${PERMISSION}" "${FW_RES_DIR}/AndroidManifest.xml" && HAS_FAKESIGN=true
 	od -A n -t x1 "${FW_RES_DIR}/AndroidManifest.xml" | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true
@@ -367,7 +370,7 @@ setup_patcher () {
 	rm -rf ${TMPDIR}
 	mkdir -p ${TMPDIR}
 
-	unzip -o "${ZIP}" -d ${TMPDIR} || \
+	unzip -o "${ZIP}" -d ${TMPDIR} 2>/dev/null || \
 		error "failed to prepare environment"
 
 	for bin in zip.arm zip.x86 \
