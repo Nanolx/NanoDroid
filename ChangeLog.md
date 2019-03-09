@@ -24,8 +24,8 @@
   * make `unzip` less noisy to prevent twrp.log pollution
 
 * Patcher
-  * update Haystack patches to lastest versions by @Lanchon
-     * improved builds
+  * update Haystack patches to 20190308 by @Lanchon
+     * improved patches
      * official Android Pie support
 
 * build-package Script
@@ -34,15 +34,16 @@
 ### Updates
 
 * automatic
-  * Simple Gallery (6.5.4)
-  * Simple Calendar (6.3.0)
-  * Bromite System WebView (72.0.3626.120)
+  * Simple Gallery (6.5.5)
+  * Simple Calendar (6.3.2)
+  * Bromite System WebView (73.0.3683.61)
   * Odyssey (1.1.17)
   * NewPipe (0.16.0)
   * Termux (0.66)
   * Blokada (3.7.022000)
   * AnySoftKeyboard (1.9.2629)
   * Open Camera (1.45.2)
+  * QKSMS (3.6.3)
 
 * manual
   * microG GmsCore (0.2.6.15090-167-dirty)
