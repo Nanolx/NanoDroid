@@ -1,6 +1,6 @@
 id=NanoDroid_microG
 name=NanoDroid (microG sub module)
-version=v20.7.20190310
+version=v20.7.90.99999999
 versionCode=70
 author=Nanolx
 description=NanoDroid (microG sub module) for LineageOS/AOSP based ROMs
