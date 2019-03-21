@@ -678,7 +678,8 @@ List of known issues and their respective fixes or workarounds.
   * ensure you don't have an adblocker blocking the domain `mtalk.google.com` it is required for GCM to work
   * when using Titanium Backup first install the app only (without data) and start it, this will register the app, after that you can restore the data using Titanium Backup
   * if an app is not shown as registered in microG Settings / Google Cloud Messaging, try uninstalling and re-installing it
-  * when restoring the ROM from a TWRP backup GCM is often broken, no workaround currently known, except uninstalling and re-installing the apps
+  * when restoring the ROM from a TWRP backup GCM registration for apps is sometimes broken. You may use the following command to reset GMS settings for a given app using it's appname, or if no appname is given for all applications. Apps will re-register when launched afterwards:
+     * `nutl -r APPNAME` (eg.: APPNAME = `com.nianticlabs.pokemongo`) or `nutl -r`
 
 ### Unified Nlp
 
