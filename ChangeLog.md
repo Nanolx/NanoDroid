@@ -1,5 +1,37 @@
 # ChangeLog
 
+## 20.8 in-dev "Prometheus"
+
+### Bug Fixes
+
+* Full, microG packages
+  * fix bootloop with OmniROM Pie
+
+### General
+
+* Installer
+  * add support for Magisk 19.0
+     * Magisk < 19.0 still supported
+  * improved A/B partition scheme support (from Magisk 19.0 @topjohnwu)
+
+* nanodroid-util script
+  * add `-r`, `--reset-gms-data` param, resets GMS data (including GCM registration) for given app (or all, if none) @ale5000
+
+* sysconfig
+  * improved sysconfig for better uNlp Pie support @oF2pks, @Vavun
+
+### Updates
+
+* automatic
+  * AnySoftKeyboard (1.10.364)
+  * Tor Browser (60.6.1)
+  * Simple Calendar (6.4.1)
+  * Simple Gallery (6.6.1)
+  * OsmAnd+ (3.3.6)
+  * NewPipe (0.16.1)
+  * Oandbackup (0.3.5-universal)
+  * Bromite System WebView (73.0.3683.88)
+
 ## 20.7.20190310 "749 Mark 148"
 
 ### Bug Fixes
