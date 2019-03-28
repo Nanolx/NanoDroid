@@ -18,18 +18,22 @@
 <config>
     <!-- microG GmsCore must always have network access for GCM. -->
     <allow-in-power-save package="com.google.android.gms" />
-    <allow-in-power-save package="com.android.location.fused" />
-
     <allow-in-data-usage-save package="com.google.android.gms" />
-
-    <allow-in-power-save-except-idle package="com.google.android.gms" />
-    <allow-in-power-save-except-idle package="com.google.android.maps.jar" />
-    <allow-in-power-save-except-idle package="com.android.location.fused" />
-
     <allow-unthrottled-location package="com.google.android.gms" />
-    <allow-unthrottled-location package="com.android.location.fused" />
-    <allow-unthrottled-location package="com.google.android.maps.jar" />
 
+    <!-- Ensure app store applications has internet access to manage updates. -->
+    <allow-in-power-save-except-idle package="com.android.vending" />
+    <allow-in-power-save-except-idle package="org.fdroid.fdroid" />
+
+    <!-- Bare minimum microG components. -->
+    <app-link package="com.google.android.gms" />
+    <app-link package="com.android.vending" />
+
+    <!-- Optional microG components. -->
+    <app-link package="org.microg.gms.droidguard" />
+    <app-link package="com.google.android.gsf" />
+
+    <!-- Uncontrolled access to location for backends. -->
     <allow-unthrottled-location package="org.openbmap.unifiedNlp" />
     <allow-unthrottled-location package="org.fitchfamily.android.wifi_backend" />
     <allow-unthrottled-location package="org.fitchfamily.android.gsmlocation" />
@@ -38,28 +42,12 @@
     <allow-unthrottled-location package="org.microg.nlp.backend.ichnaea" />
     <allow-unthrottled-location package="org.microg.nlp.backend.apple" />
 
-    <app-link package="org.fdroid.fdroid" />
-    <app-link package="com.android.vending" />
-
-    <system-user-whitelisted-app package="com.android.location.fused" />
-    <system-user-whitelisted-app package="org.openbmap.unifiedNlp" />
-    <system-user-whitelisted-app package="org.fitchfamily.android.wifi_backend" />
-    <system-user-whitelisted-app package="org.fitchfamily.android.gsmlocation" />
-    <system-user-whitelisted-app package="com.google.android.maps.jar" />
-    <system-user-whitelisted-app package="org.microg.nlp.backend.nominatim" />
-    <system-user-whitelisted-app package="org.fitchfamily.android.dejavu" />
-    <system-user-whitelisted-app package="org.microg.nlp.backend.ichnaea" />
+    <!-- Apps that have ability to run as system user. -->
     <system-user-whitelisted-app package="com.google.android.gms" />
-    <system-user-whitelisted-app package="org.fdroid.fdroid" />
     <system-user-whitelisted-app package="com.google.android.gsf" />
     <system-user-whitelisted-app package="org.microg.gms.droidguard" />
-    <system-user-whitelisted-app package="com.android.vending" />
     <system-user-whitelisted-app package="org.fdroid.fdroid.privileged" />
 
-    <hidden-api-whitelisted-app package="com.google.android.gsf" />
-    <hidden-api-whitelisted-app package="com.google.android.maps.jar" />
-    <hidden-api-whitelisted-app package="org.microg.gms.droidguard" />
+    <!-- Third party apps allowed to access the entire private API  -->
     <hidden-api-whitelisted-app package="com.google.android.gms" />
-    <hidden-api-whitelisted-app package="org.fdroid.fdroid.privileged" />
-    <hidden-api-whitelisted-app package="com.android.location.fused" />
 </config>
