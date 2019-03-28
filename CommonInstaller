@@ -104,10 +104,7 @@ grep_cmdline() {
 }
 
 is_mounted() {
-	if [ ! -z "${2}" ]; then
-		cat /proc/mounts | grep ${1} | grep ${2}, >/dev/null
-	else	cat /proc/mounts | grep ${1} >/dev/null
-	fi
+	grep -q "$(readlink -f ${1})" /proc/mounts 2>/dev/null
 	return $?
 }
 
@@ -231,12 +228,12 @@ mount_partitions () {
 
 	if [ ! -f /system/build.prop ]; then
 		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
-		mount -t ext4 -o rw ${SYSTEMBLOCK} /system
+		mount -o rw ${SYSTEMBLOCK} /system
 	fi
 
 	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system (unsupported A/B device?)"
 
-	if [ -f /system/init ]; then
+	if [ -f /system/init.rc ]; then
 		mkdir /system_root 2>/dev/null
 		mount --move /system /system_root
 		mount -o bind /system_root/system /system
@@ -248,7 +245,7 @@ mount_partitions () {
 		! is_mounted /vendor && mount /vendor
 		if ! is_mounted /vendor; then
 			VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
-			mount -t ext4 -o ro ${VENDORBLOCK} /vendor
+			mount -o ro ${VENDORBLOCK} /vendor
 		fi
 	elif [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
@@ -541,52 +538,58 @@ magisk_install_setup () {
 	ui_print " "
 	ui_print " > setup Magisk environment"
 
-	MOUNTPATH=${TMPDIR}/magisk_img
-	rm -rf ${MOUNTPATH}
-	mkdir -p ${MOUNTPATH}
-
 	if [ -f /data/adb/magisk/util_functions.sh ]; then
 		NVBASE=/data/adb
 		. /data/adb/magisk/util_functions.sh
-	elif [ -f /data/magisk/util_functions.sh ]; then
-		NVBASE=/data
-		. /data/magisk/util_functions.sh
 	else
 		error "Magisk version 15.0 or newer is required"
 	fi
 
-	IMG=${NVBASE}/magisk.img
-	e2fsck -yf ${IMG}
+	if [ ${MAGISK_VER_CODE} -gt 18100 ]; then
+		MOUNTPATH=${NVBASE}/modules
+		MODPATH=${MOUNTPATH}/${MODID}
+		REALPATH=${MODPATH}
 
-	MODPATH=${MOUNTPATH}/${MODID}
-	REALPATH=/sbin/.magisk/img/${MODID}
+		# XXX when upgrading from Magisk 18.1 to 19.0 and flashing NanoDroid in one go,
+		# XXX and NanoDroid installation logs exist, assume an upgrade
+		[[ $(find /data/adb -type f -name 'NanoDroid*') && -f ${NVBASE}/magisk.img ]] && NANODROID_UPGRADE=1
 
-	recovery_actions
+		recovery_actions
+	else
+		MOUNTPATH=${TMPDIR}/magisk_img
+		MODPATH=${MOUNTPATH}/${MODID}
+		REALPATH=/sbin/.magisk/img/${MODID}
 
-	request_size_check "${INSTALLER}"
-	reqSizeM=$((reqSizeM * 2))
+		IMG=${NVBASE}/magisk.img
+		e2fsck -yf ${IMG}
 
-	if [ -f ${IMG} ]; then
-		MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
-		is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
+		recovery_actions
 
-		check_filesystem ${IMG} ${MOUNTPATH}
+		request_size_check "${INSTALLER}"
+		reqSizeM=$((reqSizeM * 2))
 
-		if [ ${reqSizeM} -gt ${curFreeM} ]; then
-			${MAGISKBIN}/magisk imgtool umount ${MOUNTPATH} ${MAGISKLOOP}
-			newSizeM=$(((curSizeM + reqSizeM - curFreeM) / 32 * 32 + 64))
-			resize2fs -f ${IMG} ${newSizeM}M
+		if [ -f ${IMG} ]; then
+			MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
+			is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
+
+			check_filesystem ${IMG} ${MOUNTPATH}
+
+			if [ ${reqSizeM} -gt ${curFreeM} ]; then
+				${MAGISKBIN}/magisk imgtool umount ${MOUNTPATH} ${MAGISKLOOP}
+				newSizeM=$(((curSizeM + reqSizeM - curFreeM) / 32 * 32 + 64))
+				resize2fs -f ${IMG} ${newSizeM}M
+				e2fsck -yf ${IMG}
+				MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
+				is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
+			fi
+		else
+			newSizeM=$((reqSizeM / 32 * 32 + 64))
+			${MAGISKBIN}/magisk imgtool create ${IMG} ${newSizeM}
 			e2fsck -yf ${IMG}
+
 			MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
 			is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
 		fi
-	else
-		newSizeM=$((reqSizeM / 32 * 32 + 64))
-		${MAGISKBIN}/magisk imgtool create ${IMG} ${newSizeM}
-		e2fsck -yf ${IMG}
-
-		MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
-		is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
 	fi
 
 	case ${MODID} in
@@ -653,7 +656,7 @@ magisk_install_postinst () {
 
 magisk_install_finish () {
 	# Magisk Module files
-	mktouch ${MODPATH}/auto_mount
+	[ ${MAGISK_VER_CODE} -le 18100 ] && mktouch ${MODPATH}/auto_mount
 	cp -af ${INSTALLER}/module.prop ${MODPATH}/module.prop
 
 	if [[ -f ${INSTALLER}/common/service.sh ]]; then
