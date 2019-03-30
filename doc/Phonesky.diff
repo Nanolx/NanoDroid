@@ -1,15 +1,15 @@
-diff -Nupr PS_14033.orig/AndroidManifest.xml PS_14033/AndroidManifest.xml
---- PS_14033.orig/AndroidManifest.xml	2019-03-18 22:28:17.895941987 +0100
-+++ PS_14033/AndroidManifest.xml	2019-03-18 22:29:19.719747348 +0100
-@@ -88,6 +88,7 @@
-     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+diff -Nupr PS_14258.orig/AndroidManifest.xml PS_14258/AndroidManifest.xml
+--- PS_14258.orig/AndroidManifest.xml	2019-03-30 09:17:08.839537207 +0100
++++ PS_14258/AndroidManifest.xml	2019-03-30 09:18:37.195509630 +0100
+@@ -89,6 +89,7 @@
      <uses-permission android:name="android.permission.REBOOT"/>
      <uses-permission android:name="android.permission.START_ACTIVITIES_FROM_BACKGROUND"/>
+     <uses-permission android:name="android.permission.VIBRATE"/>
 +    <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
      <uses-feature android:name="android.hardware.location" android:required="false"/>
      <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
      <uses-feature android:name="android.hardware.location.network" android:required="false"/>
-@@ -118,6 +119,7 @@
+@@ -119,6 +120,7 @@
      <permission android:name="com.google.android.finsky.permission.ACCESS_INSTANT_APP_NOTIFICATION_ENFORCEMENT" android:protectionLevel="signature"/>
      <permission android:description="@LEMON_transformed_from_string/perm_play_install_referrer_api_desc" android:label="@LEMON_transformed_from_string/perm_play_install_referrer_api_label" android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" android:protectionLevel="normal"/>
      <application android:backupAgent="com.android.vending.VendingBackupAgent" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher_play_store" android:killAfterRestore="false" android:label="@LEMON_transformed_from_string/app_long_name" android:name="com.google.android.finsky.application.classic.ClassicApplication" android:requiredForAllUsers="true" android:restoreAnyVersion="true" android:restoreNeedsApplication="true" android:restrictedAccountType="com.google" android:roundIcon="@mipmap/ic_round_launcher_play_store" android:supportsRtl="@bool/is_rtl_enabled">
@@ -17,7 +17,7 @@ diff -Nupr PS_14033.orig/AndroidManifest.xml PS_14033/AndroidManifest.xml
          <activity android:name="com.google.android.finsky.expandeddescriptionactivity.ExpandedDescriptionActivity" android:theme="@style/FinskyOverlayTheme"/>
          <provider android:authorities="com.google.android.finsky.instantapps.dna.PhoneskyArchiveProvider" android:enabled="@bool/instant_apps_supported" android:exported="true" android:name="com.google.android.finsky.instantapps.dna.PhoneskyArchiveProvider" android:process=":instant_app_installer"/>
          <provider android:authorities="com.google.android.finsky.instantapps.HintApiContentProvider" android:enabled="@bool/instant_apps_supported" android:exported="true" android:name="com.google.android.finsky.instantapps.HintApiContentProvider" android:process=":instant_app_installer"/>
-@@ -498,9 +500,7 @@
+@@ -499,9 +501,7 @@
              </intent-filter>
          </activity>
          <receiver android:name="com.google.android.finsky.boothandler.BootCompletedReceiver">
@@ -28,16 +28,16 @@ diff -Nupr PS_14033.orig/AndroidManifest.xml PS_14033/AndroidManifest.xml
          </receiver>
          <receiver android:exported="false" android:name="com.google.android.finsky.rollbackmanager.RollbackReceiver"/>
          <service android:exported="true" android:name="com.google.android.finsky.services.LicensingService" android:permission="com.android.vending.CHECK_LICENSE">
-@@ -955,4 +955,4 @@
+@@ -956,4 +956,4 @@
          </activity>
          <activity android:enabled="false" android:excludeFromRecents="true" android:icon="@mipmap/leak_canary_icon" android:label="@LEMON_transformed_from_string/leak_canary_storage_permission_activity_label" android:name="com.squareup.leakcanary.internal.RequestStoragePermissionActivity" android:process=":leakcanary" android:roundIcon="@mipmap/leak_canary_icon" android:taskAffinity="com.squareup.leakcanary.com.squareup.leakcanary" android:theme="@style/leak_canary_Theme.Transparent"/>
      </application>
 -</manifest>
 \ Kein Zeilenumbruch am Dateiende.
 +</manifest>
-diff -Nupr PS_14033.orig/res/values/arrays.xml PS_14033/res/values/arrays.xml
---- PS_14033.orig/res/values/arrays.xml	2019-03-18 22:28:13.811954220 +0100
-+++ PS_14033/res/values/arrays.xml	2019-03-18 22:29:32.899703985 +0100
+diff -Nupr PS_14258.orig/res/values/arrays.xml PS_14258/res/values/arrays.xml
+--- PS_14258.orig/res/values/arrays.xml	2019-03-30 09:17:07.399538518 +0100
++++ PS_14258/res/values/arrays.xml	2019-03-30 09:17:46.523513387 +0100
 @@ -1,7 +1,15 @@
  <?xml version="1.0" encoding="utf-8"?>
  <resources>
@@ -58,28 +58,28 @@ diff -Nupr PS_14033.orig/res/values/arrays.xml PS_14033/res/values/arrays.xml
 +        <item>Disable Network Type Override</item>
 +    </string-array>
  </resources>
-diff -Nupr PS_14033.orig/res/values/public.xml PS_14033/res/values/public.xml
---- PS_14033.orig/res/values/public.xml	2019-03-18 22:28:13.811954220 +0100
-+++ PS_14033/res/values/public.xml	2019-03-18 22:29:47.311655978 +0100
-@@ -11823,6 +11823,7 @@
-     <public type="string" name="zero_rating_watch_video_dialog_message" id="0x7f13098a" />
-     <public type="string" name="zero_rating_watch_video_dialog_title" id="0x7f13098b" />
-     <public type="string" name="current_locale_sanity_check" id="0x7f13098c" />
-+    <public type="string" name="fake_signature" id="0x7f13098d" />
+diff -Nupr PS_14258.orig/res/values/public.xml PS_14258/res/values/public.xml
+--- PS_14258.orig/res/values/public.xml	2019-03-30 09:17:07.403538514 +0100
++++ PS_14258/res/values/public.xml	2019-03-30 09:19:01.647517827 +0100
+@@ -11931,6 +11931,7 @@
+     <public type="string" name="zero_rating_watch_video_dialog_message" id="0x7f13099a" />
+     <public type="string" name="zero_rating_watch_video_dialog_title" id="0x7f13099b" />
+     <public type="string" name="current_locale_sanity_check" id="0x7f13099c" />
++    <public type="string" name="fake_signature" id="0x7f13099d" />
      <public type="style" name="AccountRow" id="0x7f140007" />
      <public type="style" name="AccountRowBase" id="0x7f140008" />
-     <public type="style" name="AccountRowSubtitle" id="0x7f14000b" />
-@@ -13164,4 +13165,4 @@
+     <public type="style" name="AccountRowSubtitle" id="0x7f14000a" />
+@@ -13238,4 +13239,4 @@
      <public type="LEMON_transformed_from_string" name="update_subscription_instrument" id="0x7f19002c" />
      <public type="LEMON_transformed_from_string" name="verify_app_chooser_label" id="0x7f19002d" />
      <public type="LEMON_transformed_from_string" name="verify_app_install_scanning" id="0x7f19002e" />
 -</resources>
 \ Kein Zeilenumbruch am Dateiende.
 +</resources>
-diff -Nupr PS_14033.orig/res/values/strings.xml PS_14033/res/values/strings.xml
---- PS_14033.orig/res/values/strings.xml	2019-03-18 22:28:13.811954220 +0100
-+++ PS_14033/res/values/strings.xml	2019-03-18 22:30:00.183750026 +0100
-@@ -2238,4 +2238,5 @@ Check with your carrier for any limits o
+diff -Nupr PS_14258.orig/res/values/strings.xml PS_14258/res/values/strings.xml
+--- PS_14258.orig/res/values/strings.xml	2019-03-30 09:17:07.399538518 +0100
++++ PS_14258/res/values/strings.xml	2019-03-30 09:19:15.939525298 +0100
+@@ -2245,4 +2245,5 @@ Check with your carrier for any limits o
      <string name="zero_rating_watch_video_dialog_message">"Video streaming isn't included in free data for Play. Data charges will apply when you watch this video."</string>
      <string name="zero_rating_watch_video_dialog_title">Watch video on mobile data?</string>
      <string name="current_locale_sanity_check" />

@@ -32,6 +32,10 @@
   * Oandbackup (0.3.5-universal)
   * Bromite System WebView (73.0.3683.88)
 
+* manual
+  * Play Store (14.2.58)
+  * microG GmsCore (0.2.6.15180-dirty-227)
+
 ## 20.7.20190310 "749 Mark 148"
 
 ### Bug Fixes
