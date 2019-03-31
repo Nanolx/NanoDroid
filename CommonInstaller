@@ -560,6 +560,8 @@ magisk_install_setup () {
 		MODPATH=${MOUNTPATH}/${MODID}
 		REALPATH=/sbin/.magisk/img/${MODID}
 
+		mkdir -p ${MOUNTPATH}
+
 		IMG=${NVBASE}/magisk.img
 		e2fsck -yf ${IMG}
 
