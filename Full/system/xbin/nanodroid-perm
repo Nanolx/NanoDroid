@@ -15,6 +15,10 @@ microG="com.google.android.gms"
 PlayStore="com.android.vending"
 GCalSync="com.google.android.syncadapters.calendar"
 GConSync="com.google.android.syncadapters.contacts"
+nlpIchnaea="org.microg.nlp.backend.ichnaea"
+nlpDejavu="org.fitchfamily.android.dejavu"
+nlpApple="org.microg.nlp.backend.apple"
+nlpBmap="org.openbmap.unifiedNlp"
 
 check_package () {
 	[[ $(grep "^${1} " /data/system/packages.list) ]] && return 0 || return 1
@@ -42,11 +46,18 @@ permissions () {
 
 [[ $(whoami) != "root" ]] && error "not running as root"
 
-# microG and Play Store
+# Fake Package Signature
 permissions ${microG} ${perm_fake}
-permissions ${microG} ${perm_floc}
-permissions ${microG} ${perm_cloc}
 permissions ${PlayStore} ${perm_fake}
+
+# Location
+for app in ${microG} ${nlpIchnaea} ${nlpDejavu} ${nlpApple} ${nlpBmap}; do
+	permissions ${app} ${perm_cloc}
+done
+
+for app in ${microG} ${nlpIchnaea} ${nlpDejavu} ${nlpApple}; do
+	permissions ${app} ${perm_floc}
+done
 
 # Google Calendar Sync
 permissions ${GCalSync} ${perm_calr}
