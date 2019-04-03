@@ -281,7 +281,7 @@ detect_mode () {
 
 			if [ -f "${NANODROID_LIST}" ]; then
 				MODE=SYSTEM
-			elif [ -f /data/adb/magisk/magisk ]; then
+			elif [ -f /data/adb/magisk/magisk -o -d /data/adb/modules ]; then
 				MODE=MAGISK
 			elif [ -f /data/.magisk/magisk ]; then
 				migrate_magisk_custom /data/.magisk/
@@ -298,17 +298,6 @@ detect_mode () {
 	ui_print " > Mode   | ${MODE}            | ${MODE_DETECT}"
 	ui_print " "
 
-	if [ "${MODE}" = "SYSTEM" ]; then
-		if [ -f "${NANODROID_LIST}" ]; then
-			NANODROID_UPGRADE=1
-		else	NANODROID_UPGRADE=0
-		fi
-
-		recovery_actions
-	fi
-
-	[ "${MODE}" = "MAGISK" ] && magisk_install_setup
-
 	if [ "${nanodroid_fonts}" -eq 1 ]; then
 		if test -h ${MODPATH}/system/fonts/Roboto-Regular.ttf; then
 			CUSTOM_FONT="$(basename $(readlink ${MODPATH}/system/fonts/Roboto-Regular.ttf) .ttf)"
@@ -316,7 +305,17 @@ detect_mode () {
 		fi
 	fi
 
-	if [ "${MODE}" = "MAGISK" ]; then
+	if [ "${MODE}" = "SYSTEM" ]; then
+		if [ -f "${NANODROID_LIST}" ]; then
+			NANODROID_UPGRADE=1
+		else	NANODROID_UPGRADE=0
+		fi
+
+		recovery_actions
+		unset MODPATH
+	else
+		magisk_install_setup
+
 		case ${MODID} in
 			NanoDroid | NanoDroid_microG )
 				magisk_install_preinst
@@ -324,7 +323,6 @@ detect_mode () {
 		esac
 
 		rm -rf "${MODPATH}"
-	else	unset MODPATH
 	fi
 
 	if [ "${ROM_NO_XBIN}" -eq 0 ]; then
@@ -556,42 +554,7 @@ magisk_install_setup () {
 
 		recovery_actions
 	else
-		MOUNTPATH=${TMPDIR}/magisk_img
-		MODPATH=${MOUNTPATH}/${MODID}
-		REALPATH=/sbin/.magisk/img/${MODID}
-
-		mkdir -p ${MOUNTPATH}
-
-		IMG=${NVBASE}/magisk.img
-		e2fsck -yf ${IMG}
-
-		recovery_actions
-
-		request_size_check "${INSTALLER}"
-		reqSizeM=$((reqSizeM * 2))
-
-		if [ -f ${IMG} ]; then
-			MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
-			is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
-
-			check_filesystem ${IMG} ${MOUNTPATH}
-
-			if [ ${reqSizeM} -gt ${curFreeM} ]; then
-				${MAGISKBIN}/magisk imgtool umount ${MOUNTPATH} ${MAGISKLOOP}
-				newSizeM=$(((curSizeM + reqSizeM - curFreeM) / 32 * 32 + 64))
-				resize2fs -f ${IMG} ${newSizeM}M
-				e2fsck -yf ${IMG}
-				MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
-				is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
-			fi
-		else
-			newSizeM=$((reqSizeM / 32 * 32 + 64))
-			${MAGISKBIN}/magisk imgtool create ${IMG} ${newSizeM}
-			e2fsck -yf ${IMG}
-
-			MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
-			is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
-		fi
+		magisk_install_setup_old
 	fi
 
 	case ${MODID} in
@@ -623,6 +586,45 @@ magisk_install_setup () {
 	esac
 
 	[ -d ${MODPATH} ] && NANODROID_UPGRADE=1
+}
+
+magisk_install_setup_old () {
+	MOUNTPATH=${TMPDIR}/magisk_img
+	MODPATH=${MOUNTPATH}/${MODID}
+	REALPATH=/sbin/.magisk/img/${MODID}
+
+	mkdir -p ${MOUNTPATH}
+
+	IMG=${NVBASE}/magisk.img
+	e2fsck -yf ${IMG}
+
+	recovery_actions
+
+	request_size_check "${INSTALLER}"
+	reqSizeM=$((reqSizeM * 2))
+
+	if [ -f ${IMG} ]; then
+		MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
+		is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
+
+		check_filesystem ${IMG} ${MOUNTPATH}
+
+		if [ ${reqSizeM} -gt ${curFreeM} ]; then
+			${MAGISKBIN}/magisk imgtool umount ${MOUNTPATH} ${MAGISKLOOP}
+			newSizeM=$(((curSizeM + reqSizeM - curFreeM) / 32 * 32 + 64))
+			resize2fs -f ${IMG} ${newSizeM}M
+			e2fsck -yf ${IMG}
+			MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
+			is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
+		fi
+	else
+		newSizeM=$((reqSizeM / 32 * 32 + 64))
+		${MAGISKBIN}/magisk imgtool create ${IMG} ${newSizeM}
+		e2fsck -yf ${IMG}
+
+		MAGISKLOOP=`${MAGISKBIN}/magisk imgtool mount ${IMG} ${MOUNTPATH}`
+		is_mounted ${MOUNTPATH} || error "failed to mount ${IMG}"
+	fi
 }
 
 magisk_install_preinst () {
@@ -661,8 +663,8 @@ magisk_install_finish () {
 	[ ${MAGISK_VER_CODE} -le 18100 ] && mktouch ${MODPATH}/auto_mount
 	cp -af ${INSTALLER}/module.prop ${MODPATH}/module.prop
 
-	if [[ -f ${INSTALLER}/common/service.sh ]]; then
-		cp -af ${INSTALLER}/common/service.sh ${MODPATH}/service.sh
+	if [ -f ${INSTALLER}/service.sh ]; then
+		cp -af ${INSTALLER}/service.sh ${MODPATH}/service.sh
 		chmod +x ${MODPATH}/service.sh
 	fi
 
@@ -677,8 +679,10 @@ magisk_install_finish () {
 		${NANODROID_BINDIR}/nanodroid-font -s "${CUSTOM_FONT}"
 	fi
 
-	unmount_magisk_img
-	e2fsck -yf ${IMG}
+	if [ ${MAGISK_VER_CODE} -le 18100 ]; then
+		unmount_magisk_img
+		e2fsck -yf ${IMG}
+	fi
 
 	recovery_cleanup
 }
