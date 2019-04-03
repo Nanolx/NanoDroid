@@ -13,9 +13,19 @@
   * add support for Magisk 19.0
      * Magisk < 19.0 still supported
   * improved A/B partition scheme support (from Magisk 19.0 @topjohnwu)
+  * code improvements
+
+* Patcher
+  * support installing patched services.jar into Magisk 19.0+ modules
+
+* Uninstaller
+  * support uninstalling Magisk 19.0+ modules
 
 * nanodroid-util script
   * add `-r`, `--reset-gms-data` param, resets GMS data (including GCM registration) for given app (or all, if none) @ale5000
+
+* nanodroid-perm script
+  * will now also set required permissions for uNlp backends
 
 * sysconfig
   * improved sysconfig for better uNlp Pie support @oF2pks, @Vavun
