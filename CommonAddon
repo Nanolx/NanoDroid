@@ -151,6 +151,8 @@ detect_outfd
 backup_action () {
 	sleep 5
 
+	mount /data
+
 	ui_print " ++ ${MODID} addon.d: backup"
 	cat ${NANODROID_LIST} | while read FILE; do
 		echo " + backup: ${FILE}"
