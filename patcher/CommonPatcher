@@ -74,11 +74,11 @@ mount_partitions () {
 
 	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
 
-	! is_mounted /system && mount -o rw /system
+	! is_mounted /system && mount -o rw /system || mount -o rw,remount /system
 
 	if [ ! -f /system/build.prop ]; then
 		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
-		mount -t ext4 -o rw ${SYSTEMBLOCK} /system
+		mount -o rw ${SYSTEMBLOCK} /system
 	fi
 
 	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system (unsupported A/B device?)"
@@ -95,7 +95,7 @@ mount_partitions () {
 		! is_mounted /vendor && mount /vendor
 		if ! is_mounted /vendor; then
 			VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
-			mount -t ext4 -o ro ${VENDORBLOCK} /vendor
+			mount -o ro ${VENDORBLOCK} /vendor
 		fi
 	elif [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
