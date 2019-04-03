@@ -522,7 +522,8 @@ backup_services_jar () {
 
 install_services () {
 	ui_print " "
-	for destination in /dev/tmp/magisk_img/NanoDroid /dev/tmp/magisk_img/NanoDroid_microG \
+	for destination in /data/adb/modules/NanoDroid /data/adb/modules/NanoDroid_microG \
+		/dev/tmp/magisk_img/NanoDroid /dev/tmp/magisk_img/NanoDroid_microG \
 		/sbin/.magisk/img/NanoDroid /sbin/.magisk/img/NanoDroid_microG /; do
 		if [ -d ${destination} ]; then
 			install_path="${destination}"
