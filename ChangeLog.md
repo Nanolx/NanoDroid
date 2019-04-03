@@ -30,11 +30,15 @@
   * OsmAnd+ (3.3.6)
   * NewPipe (0.16.1)
   * Oandbackup (0.3.5-universal)
-  * Bromite System WebView (73.0.3683.88)
+  * Bromite System WebView (73.0.3683.97)
+  * GNU Nano (4.0)
 
 * manual
   * Play Store (14.2.58)
   * microG GmsCore (0.2.6.15180-dirty-227)
+
+* tools
+  * Busybox (1.30.1) [installer only]
 
 ## 20.7.20190310 "749 Mark 148"
 
