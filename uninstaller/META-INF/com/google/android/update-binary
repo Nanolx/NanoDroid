@@ -348,7 +348,7 @@ if [ -d /data/adb/modules ]; then
 	for module in NanoDroid NanoDroid_microG NanoDroid_FDroid NanoDroid_BromiteWebView NanoDroid_OsmAnd; do
 		if [ -d /data/adb/modules/${module} ]; then
 			ui_print " << uninstalling: ${module}"
-			rm -rf /magisk/${module}
+			rm -rf /data/adb/modules/${module}
 		fi
 	done
 done
