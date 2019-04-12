@@ -118,4 +118,3 @@ case "${1}" in
 		NanoDroidPatcher
 	;;
 esac
-

@@ -20,6 +20,8 @@
 
 * Patcher
   * support installing patched services.jar into Magisk 19.0+ modules
+  * install org.spoofing system pseudo-app after patching @Vavun
+     * this is adds ROM wide *cosmetic* information about Signature Spoofing (so it shows up in the App Permissions)
 
 * Uninstaller
   * support uninstalling Magisk 19.0+ modules

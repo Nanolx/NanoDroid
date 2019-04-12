@@ -250,8 +250,6 @@ detect_arch () {
 detect_sdk () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
-
-
 	[ "${SDK_VERSION}" -gt 28 ] && \
 		error "Android versions beyond Pie are not yet supported"
 
@@ -408,20 +406,20 @@ call_dalvikvm () {
 deodex_vdex () {
 	ui_print " >> deodexing services.jar [VDEX]"
 
-       cp /system/framework/oat/${ARCH}/services.vdex \
-              ${BASEDIR}/services.vdex || \
-                error "failed to copy services.vdex"
-       
-       ${V_EX} -i ${BASEDIR}/services.vdex \
-              --ignore-crc-error --debug=4 || \
-                error "failed to deodex services.vdex"
-       
-       mv ${BASEDIR}/services.apk_classes.dex ${BASEDIR}/classes.dex || \
-                error "failed to deodex services.vdex"
+	cp /system/framework/oat/${ARCH}/services.vdex \
+		${BASEDIR}/services.vdex || \
+		error "failed to copy services.vdex"
 
-       ${ZIPB} -j "${BASEDIR}/services.jar" \
-              "${BASEDIR}/classes.dex" || \
-                error "zip failed"
+	${V_EX} -i ${BASEDIR}/services.vdex \
+		--ignore-crc-error --debug=4 || \
+		error "failed to deodex services.vdex"
+
+	mv ${BASEDIR}/services.apk_classes.dex ${BASEDIR}/classes.dex || \
+		error "failed to deodex services.vdex"
+
+	${ZIPB} -j "${BASEDIR}/services.jar" \
+		"${BASEDIR}/classes.dex" || \
+		error "zip failed"
 }
 
 deodex_odex () {
@@ -540,8 +538,10 @@ install_services () {
 	ui_print " << installing patched files to: ${install_path}"
 
 	mkdir -p "${install_path}/system/framework"
-	cp ${BASEDIR}/services.jar "${install_path}/system/framework" \
+	cp ${BASEDIR}/services.jar "${install_path}/system/framework/" \
 		|| error "failed to install services.jar"
+
+	cp "${BASEDIR}/org.spoofing.apk" "${install_path}/system/framework/"
 
 	touch /data/adb/NanoDroid_Patched
 }
@@ -567,7 +567,7 @@ install_addond () {
 		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
 		baksmali_23.dex baksmali_25.dex baksmali_26.dex \
 		smali_23.dex smali_25.dex smali_26.dex \
-		magic.mgc; do
+		magic.mgc org.spoofing.apk; do
 		cp "${BASEDIR}/${file}" ${PATCHER_ADDOND_DATA}/
 	done
 
