@@ -15,6 +15,9 @@
   * improved A/B partition scheme support (from Magisk 19.0 @topjohnwu)
   * code improvements
 
+* Full package
+  * switch to official stable OpenLauncher build (0.6.1)
+
 * Patcher
   * support installing patched services.jar into Magisk 19.0+ modules
 
@@ -35,17 +38,18 @@
 * automatic
   * AnySoftKeyboard (1.10.364)
   * Tor Browser (60.6.1)
-  * Simple Calendar (6.4.1)
-  * Simple Gallery (6.6.1)
+  * Simple Calendar (6.4.2)
+  * Simple Gallery (6.6.4)
   * OsmAnd+ (3.3.6)
   * NewPipe (0.16.1)
   * Oandbackup (0.3.5-universal)
-  * Bromite System WebView (73.0.3683.97)
+  * Bromite System WebView (73.0.3683.107)
   * GNU Nano (4.0)
+  * F-Droid (1.6)
 
 * manual
-  * Play Store (14.2.58)
-  * microG GmsCore (0.2.6.15180-dirty-227)
+  * Play Store (14.5.52)
+  * microG GmsCore (0.2.6.15180-dirty-241)
 
 * tools
   * Busybox (1.30.1) [installer only]
