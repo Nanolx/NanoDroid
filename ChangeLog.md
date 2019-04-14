@@ -43,14 +43,15 @@
 * automatic
   * AnySoftKeyboard (1.10.364)
   * Tor Browser (60.6.1)
-  * Simple Calendar (6.4.2)
+  * Simple Calendar (6.4.3)
   * Simple Gallery (6.6.4)
   * OsmAnd+ (3.3.6)
   * NewPipe (0.16.1)
   * Oandbackup (0.3.5-universal)
-  * Bromite System WebView (73.0.3683.107)
+  * Bromite System WebView (74.0.3729.80)
   * GNU Nano (4.0)
   * F-Droid (1.6)
+  * Aurora Store (3.0.3)
 
 * manual
   * Play Store (14.5.52)
