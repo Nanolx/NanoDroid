@@ -18,6 +18,9 @@
 * Full package
   * switch to official stable OpenLauncher build (0.6.1)
 
+* Full, microG package
+  * switch from Aurora Store v2 (com.dragons.aurora) to v3 (com.aurora.store) @Vavun
+
 * Patcher
   * support installing patched services.jar into Magisk 19.0+ modules
   * install org.spoofing system pseudo-app after patching @Vavun
