@@ -27,7 +27,7 @@ fd_NLPNOMINATIM=(fdroid org.microg.nlp.backend.nominatim app nlpBackendNominatim
 fd_NLPAPPLE=(fdroid org.microg.nlp.backend.apple app nlpBackendApple)
 fd_NLPRADIOCELL=(fdroid org.openbmap.unifiedNlp app nlpBackendRadiocell)
 fd_YALPSTORE=(fdroid com.github.yeriomin.yalpstore priv-app YalpStore)
-fd_AURORASTORE=(fdroid com.dragons.aurora priv-app AuroraStore)
+fd_AURORASTORE=(fdroid com.aurora.store priv-app AuroraStore)
 
 ###
 # F-Droid
