@@ -58,6 +58,7 @@ update_fdroid () {
 
 update_apps () {
 	# applications managed in repositories
+	grab_apk_from_repo ${fd_AMAZE[@]}
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BLOCKADA[@]}
@@ -86,7 +87,6 @@ update_apps () {
 	grab_apk_from_url ${nlx_OMNICLOCK[@]}
 
 	# APK Mirror
-	grab_apk_from_apkmirror ${am_AMAZE[@]}
 	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
 	grab_apk_from_apkmirror ${am_OPENWEATHER[@]}
 	grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
