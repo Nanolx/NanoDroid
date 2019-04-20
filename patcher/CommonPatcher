@@ -115,6 +115,35 @@ error () {
 	exit 1
 }
 
+set_perm () {
+	chown ${2}:${3} ${1} || error "failed change owner for ${1}"
+	chmod ${4} ${1} || error "failed to change mode for ${1}"
+
+	if [ ! -z "${5}" ]; then
+		chcon ${5} ${1} 2>/dev/null
+	else	chcon 'u:object_r:system_file:s0' ${1} 2>/dev/null
+	fi
+}
+
+set_perm_recursive() {
+	find ${1} -type d 2>/dev/null | while read dir; do
+		set_perm ${dir} ${2} ${3} ${4} ${6}
+	done
+	find ${1} -type f 2>/dev/null | while read file; do
+		set_perm ${file} ${2} ${3} ${5} ${6}
+	done
+}
+
+set_perm_data () {
+	if [ "${1}" = "-r" ]; then
+		echo "    perm: data [recursive] {${2}}"
+		set_perm_recursive ${2} 0 0 0755 0644
+	else
+		echo "    perm: data [single] {${1}}"
+		set_perm ${1} 0 0 0644
+	fi
+}
+
 ##########################################################################################
 # Device Functions
 ##########################################################################################
@@ -540,8 +569,10 @@ install_services () {
 	mkdir -p "${install_path}/system/framework"
 	cp ${BASEDIR}/services.jar "${install_path}/system/framework/" \
 		|| error "failed to install services.jar"
+	set_perm_data "${install_path}/system/framework/services.jar"
 
 	cp "${BASEDIR}/org.spoofing.apk" "${install_path}/system/framework/"
+	set_perm_data "${install_path}/system/framework/org.spoofing.apk"
 
 	touch /data/adb/NanoDroid_Patched
 }
