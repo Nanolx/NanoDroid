@@ -7,6 +7,9 @@
 * Full, microG packages
   * fix bootloop with OmniROM Pie
 
+* Patcher
+  * explicitely set permissions on installed files
+
 ### General
 
 * Installer
