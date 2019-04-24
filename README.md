@@ -65,7 +65,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 ## Current Release
 
 * Stable: 20.7.20190310 ([749 Mark 148](https://memory-alpha.fandom.com/wiki/Talos_IV))
-* Beta: 20.7.91.20190403 (Prometheus)
+* Beta: 20.7.92.20190424 (Prometheus)
 
 ## Downloads
 

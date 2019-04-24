@@ -51,16 +51,19 @@
   * OsmAnd+ (3.3.6)
   * NewPipe (0.16.1)
   * Oandbackup (0.3.5-universal)
-  * Bromite System WebView (74.0.3729.80)
-  * GNU Nano (4.0)
+  * Bromite System WebView (74.0.3729.106)
   * F-Droid (1.6)
   * Aurora Store (3.0.3)
+  * nlpBackend Déjà Vu (1.1.11)
+  * QKSMS (3.6.4)
+  * Termux (0.68)
 
 * manual
-  * Play Store (14.5.52)
-  * microG GmsCore (0.2.6.15180-dirty-241)
+  * Play Store (14.6.56)
+  * microG GmsCore (0.2.6.15181-75)
 
 * tools
+  * GNU Nano (4.0)
   * Busybox (1.30.1) [installer only]
 
 ## 20.7.20190310 "749 Mark 148"
