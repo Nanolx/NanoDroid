@@ -20,6 +20,7 @@
 
 * Full package
   * switch to official stable OpenLauncher build (0.6.1)
+  * drop Yahoo Weather Provider (they closed their APIs)
 
 * Full, microG package
   * switch from Aurora Store v2 (com.dragons.aurora) to v3 (com.aurora.store) @Vavun
@@ -57,6 +58,7 @@
   * nlpBackend Déjà Vu (1.1.11)
   * QKSMS (3.6.4)
   * Termux (0.68)
+  * Substratum (1020)
 
 * manual
   * Play Store (14.6.56)

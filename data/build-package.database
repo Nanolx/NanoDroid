@@ -66,6 +66,8 @@ fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 gd_ORBOT=(guardian org.torproject.android app Orbot)
 gd_TORBROWSER=(guardian org.torproject.torbrowser_alpha app TorBrowser)
 
+los_OPENWEATHER=(https://mirrorbits.lineageos.org/WeatherProviders/OpenWeatherMapWeatherProvider.apk app OpenWeatherMapProvider)
+
 ###
 # Google Sync Adapters
 ###
@@ -81,8 +83,6 @@ og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
 am_AMAZE=(team-amaze amaze-file-manager app Amaze amaze-file-manager)
 am_KERNELADIUTOR=(willi-ye kernel-adiutor app KernelAdiutor kernel-adiutor-root)
 am_SUBSTRATUM=(projekt substratum-theme-engine app Substratum substratum-theme-engine)
-am_OPENWEATHER=(lineageos openweathermap app OpenWeatherMapProvider openweathermap)
-am_YAHOOWEATHER=(lineageos yahoo-weather-2 app YahooWeatherProvider yahoo-weather)
 am_XDALABS=(xda xda-labs app XDALabs xda-labs)
 
 ###
@@ -168,7 +168,6 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/TorBrowser/TorBrowser.apk
 	Full/system/app/Twidere/Twidere.apk
 	Full/system/app/XDALabs/XDALabs.apk
-	Full/system/app/YahooWeatherProvider/YahooWeatherProvider.apk
 	Full/system/app/nlpBackendApple/nlpBackendApple.apk
 	Full/system/app/nlpBackendIchnaea/nlpBackendIchnaea.apk
 	Full/system/app/nlpBackendDejavu/nlpBackendDejavu.apk

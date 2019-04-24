@@ -85,12 +85,11 @@ update_apps () {
 
 	# generic URL
 	grab_apk_from_url ${nlx_OMNICLOCK[@]}
+	grab_apk_from_url ${los_OPENWEATHER[@]}
 
 	# APK Mirror
 	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
-	grab_apk_from_apkmirror ${am_OPENWEATHER[@]}
 	grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
-	grab_apk_from_apkmirror ${am_YAHOOWEATHER[@]}
 	grab_apk_from_apkmirror ${am_XDALABS[@]}
 }
 
