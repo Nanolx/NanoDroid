@@ -37,7 +37,6 @@ Full list of provided applications
 * Twidere (Twitter client) [> F-Droid](https://f-droid.org/packages/org.mariotaku.twidere)
 * XDA Labs [> XDA](https://forum.xda-developers.com/android/apps-games/labs-t3241866)
   * source not (yet) available
-* Yahoo Weather Provider [> GitHub](https://github.com/LineageOS/android_packages_apps_YahooWeatherProvider)
 
 ## Alter provided Applications
 

@@ -200,7 +200,6 @@ apps_add 26 Substratum
 apps_add 27 Termux
 apps_add 28 Twidere
 apps_add 29 XDALabs
-apps_add 30 YahooWeatherProvider
 
 ui_print " "
 ui_print "  < Debloated Applications"

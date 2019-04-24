@@ -1581,6 +1581,11 @@ check_cfg_apps () {
 	if grep -q Adaway "${cfg_apps}"; then
 		sed -e 's/Adaway/Blokada/g' -i "${cfg_apps}"
 	fi
+
+	# >= 20.7.92 no longer ships YahooWeatherProvider, remove
+	if grep -q YahooWeatherProvider "${cfg_apps}"; then
+		sed -e '/YahooWeatherProvider/d' -i "${cfg_apps}"
+	fi
 }
 
 # check whether '.nanodroid-overlay' is up to date
