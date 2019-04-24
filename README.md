@@ -144,7 +144,7 @@ The `build-package` script additionally supports the following parameters:
 The following applications are custom builds (see [F-Droid Repository](#f-droid-repository) below):
 
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
-  * [microG (in-)app-purchase support patch](doc/Phonesky.diff)
+  * [microG (in-)app-purchase support patch](https://gitlab.com/Nanolx/microg-phonesky-iap-support)
 * microG GmsCore (reason: built with additions)
   * [source (with detailed changes)](https://github.com/Nanolx/android_packages_apps_GmsCore)
 * microG DroidGuard Helper (reason: built with fix for non 32bit arm devices failing SafetyNet attestation)
@@ -216,7 +216,7 @@ NanoDroid includes
      * see the [> GApps Removal List](doc/GAppsRemoval.md#list-of-removed-location-providers)
 * F-Droid and it's privileged extension
 * modified Play Store to allow (in-)app-purchases with microG
-  * this required the Play Store to be modified, see the [> patch](doc/Phonesky.diff)
+  * this required the Play Store to be modified, see the [> patch](https://gitlab.com/Nanolx/microg-phonesky-iap-support)
   * alternatively Yalp Store can be installed instead
 * custom init scripts
 * pseudo-debloat feature (Magisk Mode)
