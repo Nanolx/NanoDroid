@@ -1436,7 +1436,7 @@ mount | awk '{print $1 " on " $3 " params: " $6}' \
 
 echo "
 ### SETUP ###
-" > ${nanodroid_logfile}
+" >> ${nanodroid_logfile}
 
 cat "${cfg_setup}" >> ${nanodroid_logfile}
 
