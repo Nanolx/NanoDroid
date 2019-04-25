@@ -505,6 +505,9 @@ setup_busybox () {
 
 	chmod 0755 ${INSTALLER}/sqlite3.${BIN_ARCH}
 
+	# XXX Magisk recovery_actions() compat
+	export BBDIR="${INSTALLER}/busybox"
+
 	export PATH="${INSTALLER}/busybox:${PATH}"
 }
 
@@ -1254,6 +1257,8 @@ nanodroid_install_apk () {
 	mkdir -p "${dest}"
 
 	echo "    installing app: ${app}"
+	echo "      from: ${source}"
+	echo "      into: ${dest} [${dest_apk}]"
 	cp "${source}" "${dest}/${dest_apk}" || \
 		error "failed to install ${source} to ${dest}"
 
@@ -1327,7 +1332,7 @@ nanodroid_install_lib () {
 	case ${unzip_return} in
 		0  ) echo "      ${app} does have libs" ;;
 		11 ) echo "      ${app} does not have any libs" ;;
-		*  ) error "  !! installing libs for ${app} failed" ;;
+		*  ) error "  !! installing libs for ${app} failed [${unzip_return}]" ;;
 	esac
 
 	if [ -d ${TMP_LIBDIR}/lib ]; then
