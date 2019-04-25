@@ -261,8 +261,6 @@ detect_arch () {
 		;;
 	esac
 
-	export PATH="${BASEDIR}/busybox:/system/bin:/system/xbin"
-
 	V_EX=${BASEDIR}/vdexExtractor.${ARCH}
 
 	chmod 0755 ${BUSY}
@@ -272,6 +270,8 @@ detect_arch () {
 
 	ln -sf ${BUSY} ${BASEDIR}/busybox/busybox
 	${BUSY} --install -s ${BASEDIR}/busybox/
+
+	export PATH="${BASEDIR}/busybox:/system/bin:/system/xbin"
 
 	ui_print " > device architecture: ${ARCH}"
 }
