@@ -236,6 +236,18 @@ detect_arch () {
 		;;
 	esac
 
+	V_EX=${BASEDIR}/vdexExtractor.${ARCH}
+
+	chmod 0755 ${BUSY}
+
+	rm -rf ${BASEDIR}/busybox
+	mkdir -p ${BASEDIR}/busybox
+
+	ln -sf ${BUSY} ${BASEDIR}/busybox/busybox
+	${BUSY} --install -s ${BASEDIR}/busybox/
+
+	export PATH="${BASEDIR}/busybox:/system/bin:/system/xbin"
+
 	DALVIKVM_BIN=$(ls -l /system/bin/dalvikvm | awk '{print $NF}')
 	DALVIKVM_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
 
@@ -260,18 +272,6 @@ detect_arch () {
 			esac
 		;;
 	esac
-
-	V_EX=${BASEDIR}/vdexExtractor.${ARCH}
-
-	chmod 0755 ${BUSY}
-
-	rm -rf ${BASEDIR}/busybox
-	mkdir -p ${BASEDIR}/busybox
-
-	ln -sf ${BUSY} ${BASEDIR}/busybox/busybox
-	${BUSY} --install -s ${BASEDIR}/busybox/
-
-	export PATH="${BASEDIR}/busybox:/system/bin:/system/xbin"
 
 	ui_print " > device architecture: ${ARCH}"
 }
