@@ -86,12 +86,12 @@ setup_busybox () {
 
 	case ${ARCH} in
 		arm | arm64 )
-			unzip -o "${ZIP}" busybox.arm -d "/dev/tmp"
+			unzip -oq "${ZIP}" busybox.arm -d "/dev/tmp"
 			BUSY=/dev/tmp/busybox.arm
 		;;
 
 		x86 | x86_64 )
-			unzip -o "${ZIP}" busybox.x86 -d "/dev/tmp"
+			unzip -oq "${ZIP}" busybox.x86 -d "/dev/tmp"
 			BUSY=/dev/tmp/busybox.x86
 		;;
 	esac

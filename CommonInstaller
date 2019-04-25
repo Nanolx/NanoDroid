@@ -340,7 +340,7 @@ unpack_zip () {
 	mkdir -p ${INSTALLER} || error "failed to prepare environment!"
 
 	ui_print " > prepare installation"
-	unzip -o "${ZIP}" -d "${INSTALLER}"  2>/dev/null || \
+	unzip -oq "${ZIP}" -d "${INSTALLER}" || \
 		error "failed to prepare environment!"
 
 	rm -rf ${TMPDIR}/framework-res
@@ -766,7 +766,7 @@ search_fake_package_signature () {
 
 	if [ ! -f ${FW_RES_DIR}/AndroidManifest.xml ]; then
 		mkdir -p "${FW_RES_DIR}"
-		unzip -o /system/framework/framework-res.apk -d "${FW_RES_DIR}" 2>/dev/null
+		unzip -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
 	fi
 
 	grep -qF "${PERMISSION}" "${FW_RES_DIR}/AndroidManifest.xml" && HAS_FAKESIGN=true

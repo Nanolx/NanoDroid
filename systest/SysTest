@@ -114,7 +114,7 @@ search_fake_package_signature () {
 
 	FW_RES_DIR="${TMPDIR}/framework-res"
 	mkdir -p "${FW_RES_DIR}"
-	unzip -o /system/framework/framework-res.apk -d "${FW_RES_DIR}"
+	unzip -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
 
 	grep -qF "${PERMISSION}" "${FW_RES_DIR}/AndroidManifest.xml" && HAS_FAKESIGN=true
 	od -A n -t x1 "${FW_RES_DIR}/AndroidManifest.xml" | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true

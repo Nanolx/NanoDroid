@@ -8,7 +8,7 @@ ZIPDIR=$(dirname "${ZIP}")
 MODID=NanoDroid
 
 mkdir -p /dev/tmp
-unzip -o "${ZIP}" CommonInstaller -d "/dev/tmp"
+unzip -oq "${ZIP}" CommonInstaller -d "/dev/tmp"
 if [ ! -f /dev/tmp/CommonInstaller ]; then
 	echo " !! failed to load Common Installer"
 	exit 1

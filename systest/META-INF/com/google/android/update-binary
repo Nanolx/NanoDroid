@@ -5,7 +5,7 @@ OUTFD=${2}
 ZIP=${3}
 
 mkdir -p /dev/tmp
-unzip -o "${ZIP}" -d "/dev/tmp"
+unzip -oq "${ZIP}" -d "/dev/tmp"
 if [ ! -f /dev/tmp/SysTest ]; then
 	echo " !! failed to load SysTest"
 	exit 1
