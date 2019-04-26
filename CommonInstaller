@@ -1332,7 +1332,8 @@ nanodroid_install_lib () {
 	case ${unzip_return} in
 		0  ) echo "      ${app} does have libs" ;;
 		11 ) echo "      ${app} does not have any libs" ;;
-		*  ) error "  !! installing libs for ${app} failed [${unzip_return}]" ;;
+		50 ) error "  not enough space available!" ;;
+		*  ) error "  installing libs for ${app} failed [${unzip_return}]" ;;
 	esac
 
 	if [ -d ${TMP_LIBDIR}/lib ]; then
