@@ -10,12 +10,17 @@
 * Patcher
   * explicitely set permissions on installed files
 
+* CommonInstaller
+  * fix creating installation logs
+
 ### General
 
 * Installer
   * add support for Magisk 19.0
      * Magisk < 19.0 still supported
   * improved A/B partition scheme support (from Magisk 19.0 @topjohnwu)
+  * proper error message when `unzip` fails due to not enough space available
+  * improved logging
   * code improvements
 
 * Full package
