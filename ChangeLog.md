@@ -12,6 +12,7 @@
 
 * CommonInstaller
   * fix creating installation logs
+  * installation of full package requires atleast 512 MB free space from TWRP, stop installation if there isn't enough free space
 
 ### General
 
