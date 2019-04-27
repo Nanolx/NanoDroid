@@ -64,6 +64,15 @@ EOF
 # Misc. Functions
 ##########################################################################################
 
+check_space () {
+	minimum_size=524288
+	size_available=$(df | awk '/\/dev$/{print $4}')
+
+	if [ ${size_available} -lt ${minimum_size} ]; then
+		error "Less than 512 MB free space availabe from TWRP!"
+	fi
+}
+
 detect_bootmode () {
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
 	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true

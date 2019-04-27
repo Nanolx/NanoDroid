@@ -16,6 +16,7 @@ else
 	source "/dev/tmp/CommonInstaller"
 fi
 
+check_space
 detect_bootmode
 detect_outfd
 show_progress 1.0 0
