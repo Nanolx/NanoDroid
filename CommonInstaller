@@ -254,6 +254,7 @@ mount_partitions () {
 	fi
 
 	mount | awk '{print $1 " on " $3 " params: " $6}'
+	df -h | sed '/^\//d'
 }
 
 migrate_magisk_custom () {
@@ -1434,6 +1435,12 @@ NANODROID_BINDIR=${NANODROID_BINDIR}
 
 mount | awk '{print $1 " on " $3 " params: " $6}' \
 	>> ${nanodroid_logfile}
+
+echo "
+### DISK USAGE ###
+" >> ${nanodroid_logfile}
+
+df -h | sed '/^\//d' >> ${nanodroid_logfile}
 
 echo "
 ### SETUP ###
