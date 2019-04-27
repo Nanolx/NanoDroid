@@ -982,7 +982,7 @@ install_store () {
 		3 )
 			ui_print " << with Aurora Store"
 			nanodroid_install_apk AuroraStore
-			nanodroid_install_file etc/permissions/com.dragons.aurora.xml
+			nanodroid_install_file etc/permissions/com.aurora.store.xml
 		;;
 
 		* )
