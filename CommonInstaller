@@ -76,7 +76,7 @@ check_space () {
 detect_bootmode () {
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
 	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
-	${BOOTMODE} || ps -A | grep zygote | grep -qv grep && BOOTMODE=true
+	${BOOTMODE} || ps -A 2>/dev/null | grep zygote | grep -qv grep && BOOTMODE=true
 
 	${BOOTMODE} && error "${MODID} must be flashed from TWRP!"
 }
