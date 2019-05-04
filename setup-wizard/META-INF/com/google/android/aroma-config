@@ -108,12 +108,12 @@ selectbox(
 
 	"Select the Google App Store you want", "", 2, #-- Group 1. key = "selected.1"
 	"None",			"Install no Google App Store",				0,	#-- selected.1 = 1
-	"Play Store",		"Install official Play Store",				1,	#-- selected.1 = 2
-	"Yalp Store",		"Install unofficial Yalp Store",			0,	#-- selected.1 = 3
-	"Aurora Store",		"Install unofficial Aurora Store",			0,	#-- selected.1 = 4
+	"Play Store",		"Install official Play Store",				0,	#-- selected.1 = 2
+	"Yalp Store",		"Install alternative Yalp Store",			0,	#-- selected.1 = 3
+	"Aurora Store",		"Install alternative Aurora Store",			0,	#-- selected.1 = 4
 	"Fake Store",		"Install Fake Store only",				0,	#-- selected.1 = 5
-	"Yalp + Fake Store",	"Install unofficial Yalp Store (+ Fake Store)",		0,	#-- selected.1 = 6
-	"Aurora + Fake Store",	"Install unofficial Aurora Store (+ Fake Store)",	0	#-- selected.1 = 7
+	"Yalp + Fake Store",	"Install alternative Yalp Store (and Fake Store)",	0,	#-- selected.1 = 6
+	"Aurora + Fake Store",	"Install alternative Aurora Store (and Fake Store)",	1	#-- selected.1 = 7
 
 );
 
