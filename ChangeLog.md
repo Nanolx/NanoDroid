@@ -1,6 +1,12 @@
 # ChangeLog
 
-## 20.8 in-dev "Prometheus"
+## 20.8.20190504 "[Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class))"
+
+### Notes
+
+* Full and microG packages up to version 20.7 by default installed Google Play. Starting with version 20.8 the default behaviour is changed and by default Aurora Store and Fake Store are now installed. If you previously ran the Setup Wizard nothing will change. If you don't have your own `nanodroid-setup` configuration file, you'll notice the different setup.
+
+* Bromite System WebView 74.x breaks Google Login. The Bromite System WebView thus stays at version 73.0.3683.107 until the bug is fixed. After logging in to your Google Account with all desired apps, you may update to the latest Bromite System WebView using F-Droid.
 
 ### Bug Fixes
 
@@ -58,17 +64,17 @@
   * OsmAnd+ (3.3.6)
   * NewPipe (0.16.1)
   * Oandbackup (0.3.5-universal)
-  * Bromite System WebView (74.0.3729.106)
+  * Bromite System WebView (73.0.3683.107)
   * F-Droid (1.6)
-  * Aurora Store (3.0.3)
+  * Aurora Store (3.0.4)
   * nlpBackend Déjà Vu (1.1.11)
   * QKSMS (3.6.4)
   * Termux (0.68)
   * Substratum (1020)
 
 * manual
-  * Play Store (14.6.56)
-  * microG GmsCore (0.2.6.15181-75)
+  * Play Store (14.7.50)
+  * microG GmsCore (0.2.6.15181-79)
 
 * tools
   * GNU Nano (4.0)
