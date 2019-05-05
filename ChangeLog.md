@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 20.9 in-dev
+
+### General
+
+* Installer, Uninstaller, Addon.d, Patcher, Scripts
+  * use full `/data/media/0` path instead of `/sdcard/`
+
 ## 20.8.20190504 "[Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class))"
 
 ### Notes
@@ -16,7 +23,7 @@
 * Patcher
   * explicitely set permissions on installed files
 
-* CommonInstaller
+* Installer
   * fix creating installation logs
   * installation of full package requires atleast 512 MB free space from TWRP, stop installation if there isn't enough free space
 
