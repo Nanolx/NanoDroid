@@ -24,7 +24,7 @@ done
 
 # filemask: *.*
 for logpath in /cache /cache/recovery /data/system/dropbox; do
-	find ${logpath} -mtime +8 -type f -name '*.apk' -exec rm -f {} \;
+	find ${logpath} -mtime +8 -type f -name '*.*' -exec rm -f {} \;
 done
 
 echo "Automatic Cleaning finished at $(date +"%m-%d-%Y %H:%M:%S")"
