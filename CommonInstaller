@@ -651,6 +651,16 @@ magisk_install_preinst () {
 		ui_print " << backing up patched services.jar"
 		cp ${MODPATH}/system/framework/services.jar ${TMPDIR}/services.jar
 	fi
+
+	if [ -d ${MODPATH}/logs ]; then
+		ui_print " << backing up init.d script logs"
+		cp -r ${MODPATH}/logs ${TMPDIR}/logs
+	fi
+
+	if [ -d ${MODPATH}/logcats ]; then
+		ui_print " << backing up logcats"
+		cp -r ${MODPATH}/logcats ${TMPDIR}/logcats
+	fi
 }
 
 magisk_install_postinst () {
@@ -663,6 +673,16 @@ magisk_install_postinst () {
 		if [ ! -z $(grep_prop ro.setupwizard.mode) ]; then
 			echo "ro.setupwizard.mode=DISABLED" >> ${MODPATH}/system.prop
 		fi
+	fi
+
+	if [ -d ${TMPDIR}/logs ]; then
+		ui_print " << restoring init.d script logs"
+		cp -r ${TMPDIR}/logs ${MODPATH}/logs
+	fi
+
+	if [ -d ${TMPDIR}/logcats ]; then
+		ui_print " << restoring logcats"
+		cp -r ${TMPDIR}/logcats ${MODPATH}/logcats
 	fi
 
 	if [ -f ${TMPDIR}/services.jar ]; then
