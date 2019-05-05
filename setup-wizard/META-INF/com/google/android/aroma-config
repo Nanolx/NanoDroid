@@ -36,7 +36,7 @@ selectbox(
 	"location.prop",
 
 	"Where to store configuration", "", 2, #-- Group 1. key = "selected.1"
-	"/sdcard",	"Internal Storage (wipe-safe)",		1,	#-- selected.1 = 1
+	"/data/media/0",	"Internal Storage (wipe-safe)",		1,	#-- selected.1 = 1
 	"/external_sd",	"External SD Card (if any)",		0,	#-- selected.1 = 2
 	"/data",	"Data Storage (not wipe-safe) ",	0	#-- selected.1 = 3
 );

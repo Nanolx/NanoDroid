@@ -60,7 +60,7 @@ EOF
 }
 
 # check for configuration files
-config_locations="/sdcard /external_sd /data"
+config_locations="/data/media/0 /external_sd /data"
 
 get_config () {
 	config=""

@@ -205,13 +205,13 @@ mount_partitions () {
 }
 
 # check for configuration files
-config_locations="/sdcard /external_sd /data $(dirname ${ZIP}))"
+config_locations="/data/media/0 /external_sd /data $(dirname ${ZIP}))"
 config_files=".nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 
 restore_apps () {
-	backup_path="/sdcard/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
+	backup_path="/data/media/0/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
-	for dir in /sdcard/nanodroid_backups ${backup_path}; do
+	for dir in /data/media/0/nanodroid_backups ${backup_path}; do
 		if [ -d ${dir}/app/ ]; then
 			for app in ${dir}/app/*; do
 				if [ -d /system/app/${app} ]; then
@@ -276,13 +276,13 @@ patcher_uninstall () {
 	if [ -f /data/adb/.nanodroid-patcher -o -f /data/adb/NanoDroid_Patched ]; then
 		services_name="services.jar_$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
-		if [ -f /sdcard/nanodroid_backups/${services_name} ]; then
+		if [ -f /data/media/0/nanodroid_backups/${services_name} ]; then
 			ui_print " << restoring: unpatched services.jar"
-			mv "/sdcard/nanodroid_backups/${services_name}" /system/framework/services.jar
+			mv "/data/media/0/nanodroid_backups/${services_name}" /system/framework/services.jar
 			set_perm_data /system/framework/services.jar
-		elif [ -f /sdcard/nanodroid_backups/services.jar ]; then
+		elif [ -f /data/media/0/nanodroid_backups/services.jar ]; then
 			ui_print " << restoring: unpatched services.jar"
-			mv /sdcard/nanodroid_backups/services.jar /system/framework/services.jar
+			mv /data/media/0/nanodroid_backups/services.jar /system/framework/services.jar
 			set_perm_data /system/framework/services.jar
 		else	ui_print " << can't restore unpatched services.jar"
 		fi

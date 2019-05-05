@@ -13,7 +13,7 @@ Magisk allows for apps to be magically removed upon runtime, they don't get actu
 
 ### Force Debloat Feature
 
-In System Mode apps can are moved to `/sdcard/nanodroid_backups/` or restored from there.
+In System Mode apps can are moved to `/data/media/0/nanodroid_backups/` or restored from there.
 
 ## Default Settings
 
@@ -48,7 +48,7 @@ You can pseudo-debloat applications by adding them to configuration file
 
 on your device, in one of the following directories
 
-* `/sdcard` (internal storage)
+* `/data/media/0` (internal storage)
 * `/external_sd` (TWRP path to SD Card (if any))
 * directory containing the zip file
 * `/data` (fallabck)

@@ -2,7 +2,7 @@
 
 export SHELL=${BASH}
 
-export HOME=/sdcard
+export HOME=/data/media/0
 export TMPDIR=${HOME}/.bash_tmp
 export HISTFILE=${HOME}/.bash_history
 

@@ -59,15 +59,15 @@ ui_print "******************************"
 ui_print " "
 
 if grep -q "selected.1=1" "${location_prop}"; then
-	ui_print " > saving configuration in: /sdcard"
-	configpath="/sdcard"
+	ui_print " > saving configuration in: /data/media/0"
+	configpath="/data/media/0"
 elif grep -q "selected.1=2" "${location_prop}"; then
 	if -d /external_sd; then
 		ui_print " > saving configuration in: /external_sd"
 		configpath="/external_sd"
 	else
-		ui_print " > saving configuration in: /sdcard"
-		configpath="/sdcard"
+		ui_print " > saving configuration in: /data/media/0"
+		configpath="/data/media/0"
 	fi
 elif grep -q "selected.1=3" "${location_prop}"; then
 	ui_print " > saving configuration in: /data"

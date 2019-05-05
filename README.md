@@ -223,7 +223,7 @@ NanoDroid includes
   * disables applications systemless-ly
   * pre-configured [> default settings](doc/NanoDroidOverlay.md)
 * force-debloat feature (Sytem Mode)
-  * moves applications out of the way to /sdcard/nanodroid_backup/
+  * moves applications out of the way to /data/media/0/nanodroid_backup/
   * pre-configured [> default settings](doc/NanoDroidOverlay.md)
 * several Open Source applications
   * include replacements for the pseudo-debloated applications
@@ -296,7 +296,7 @@ Extra packages, flashing through TWRP required (flashing through Magisk Manager 
 * **NanoDroid-setupwizard**: includes
   * **AROMA** based Setup Wizard to create the configuration files
   * user can choose where to store the configuration files
-     * `/sdcard` (fallback)
+     * `/data/media/0` (fallback)
      * `/external_sd`
      * `/data`
   * **NOTE:** AROMA only works on `arm` and `arm64`, if your device is `x86` or `x86_64`, it won't work
@@ -307,7 +307,7 @@ Extra packages, flashing through TWRP required (flashing through Magisk Manager 
   * restores GApps and location services auto-removed during installation (System Mode)
   * restores `services.jar` patched by NanoDroid-Patcher (System Mode)
 * **NanoDroid-systest**: includes
-  * system testing script which will create the logfile `/sdcard/NanoDroid-SysTest.log`
+  * system testing script which will create the logfile `/data/media/0/NanoDroid-SysTest.log`
   * the following data is collected:
      * device profile (ROM, manufacturer, device, ABI, builddate, security patch date)
      * detected LD_LIBRARY_PATH
