@@ -23,14 +23,14 @@ fi
 
 # select storage path
 if [ -n ${EXTERNAL_STORAGE} ]; then
-	STORAGE="${EXTERNAL_STORAGE}/logcats"
+	STORAGE="${EXTERNAL_STORAGE}"
 else
 	if [ -w /sdcard ]; then
-		STORAGE="/sdcard/logcats"
+		STORAGE="/sdcard"
 	elif [ -w /storage/self/primary ]; then
-		STORAGE="/storage/self/primary/logcats"
+		STORAGE="/storage/self/primary"
 	elif [ -w /data/media/0 ]; then
-		STORAGE="/data/media/0/logcats"
+		STORAGE="/data/media/0"
 	fi
 fi
 
