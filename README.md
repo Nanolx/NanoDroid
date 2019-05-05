@@ -268,8 +268,8 @@ The recovery log and installation configuration is stored after installation, re
 
 You'll find the files in
 
-* /data/adb/MODID_log_INSTALLDATE
-* /data/adb/MODID_twrp_INSTALLDATE
+* /data/media/0/nanodroid_logs/MODID_log_INSTALLDATE
+* /data/media/0/nanodroid_logs/MODID_twrp_INSTALLDATE
 
 where MODID is either
 
