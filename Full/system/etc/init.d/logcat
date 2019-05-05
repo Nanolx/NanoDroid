@@ -6,7 +6,13 @@ CURDATE=$(date +%Y%m%d-%I.%M.%S)
 # wait until boot completed
 until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
-LOGDIR="/data/media/0/logcats"
+if [ -w /data/media/0 ]; then
+	LOGDIR="/data/media/0/logcats"
+elif [ -w /storage/self/primary ]; then
+	LOGDIR="/storage/self/primary/logcats"
+else
+	LOGDIR="/sdcard/logcats"
+fi
 
 echo "logcat init script"
 echo "Starting Automatic Cleaning at $(date +"%m-%d-%Y %H:%M:%S")"
