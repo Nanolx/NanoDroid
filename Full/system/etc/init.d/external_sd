@@ -6,7 +6,7 @@ echo "external_sd init script"
 until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
 if getprop ro.build.characteristics | grep -q nosdcard; then
-	echo ">> no SD Card found"
+	echo ">> no SD Card Slot"
 	exit 0
 else
 	media_rw=$(grep "^/dev/block.*/mnt/media_rw" /proc/mounts \
@@ -16,7 +16,7 @@ else
 fi
 
 if [[ -d ${storage} ]]; then
-	echo ">> SD Card found"
+	echo ">> SD Card inserted"
 	echo ">> storage:  \"${storage}\""
 
 	if [[ -e /external_sd ]]; then
@@ -38,5 +38,5 @@ if [[ -d ${storage} ]]; then
 		mount -oro,remount /
 	fi
 else
-	echo ">> no SD Card found"
+	echo ">> no SD Card inserted"
 fi
