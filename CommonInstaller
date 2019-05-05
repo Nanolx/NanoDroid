@@ -4,6 +4,7 @@ VERSION=20.8.90.99999999
 NANODROID_UPGRADE=0
 INSTALL_SUCCESS=TRUE
 NANODROID_LIST=/data/adb/NanoDroid_FileList
+STORAGE=/data/media/0
 
 print_google_apps()
 {
@@ -721,7 +722,7 @@ gapps_solve_conflicts () {
 		rm -rf /data/user_de/*/${app}
 		rm -rf /data/app/${app}-*
 		rm -rf /mnt/asec/${app}-*
-		rm -rf /data/media/0/Android/data/${app}
+		rm -rf ${STORAGE}/Android/data/${app}
 	done
 }
 
@@ -738,7 +739,7 @@ gapps_destroy_artifacts () {
 			rm -rf /data/user_de/*/${app}
 			rm -rf /data/app/${app}-*
 			rm -rf /mnt/asec/${app}-*
-			rm -rf /data/media/0/Android/data/${app}
+			rm -rf ${STORAGE}/Android/data/${app}
 		done
 
 		find /data/system* -type f -name 'accounts*db' 2>/dev/null | while read database; do
@@ -1124,7 +1125,7 @@ install_bromite_webview () {
 		esac
 
 		WEBVIEW_REPLACE=BromiteWebView
-		BACKUP_PATH="/data/media/0/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
+		BACKUP_PATH="${STORAGE}/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
 		for app in webview webviewstub WebViewStub Webview; do
 			if [ -d /system/app/${app} ]; then
@@ -1147,7 +1148,7 @@ install_bromite_webview () {
 				rm -rf /data/user_de/*/${app}
 				rm -rf /data/app/${app}-*
 				rm -rf /mnt/asec/${app}-*
-				rm -rf /data/media/0/Android/data/${app}
+				rm -rf ${STORAGE}/Android/data/${app}
 			done
 		fi
 
@@ -1493,7 +1494,7 @@ ui_print " "
 ##########################################################################################
 
 # check for configuration files
-config_locations="/data/media/0 /external_sd ${ZIPDIR} /data"
+config_locations="${STORAGE} /external_sd ${ZIPDIR} /data"
 
 get_config () {
 	config=""
