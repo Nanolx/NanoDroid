@@ -4,7 +4,7 @@
 until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
 echo "logscleaner init script"
-echo "Starting Automatic Cleaning at $(date +"%m-%d-%Y %H:%M:%S")"
+echo "Starting Automatic Cleaning at $(date +%Y%m%d-%H.%M.%S)"
 
 # remove files older than a week to prevent pollution
 
@@ -34,4 +34,4 @@ for logpath in /cache /cache/recovery /data/system/dropbox; do
 		-print -exec rm -f {} \; 2>/dev/null
 done
 
-echo "Automatic Cleaning finished at $(date +"%m-%d-%Y %H:%M:%S")"
+echo "Automatic Cleaning finished at $(date +%Y%m%d-%H.%M.%S)"

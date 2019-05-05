@@ -22,6 +22,8 @@
   * move init.d scripts logs from `${MODDIR}/.logs` to `${MODDIR}/logs`
   * make all init.d scripts wait until device fully booted (sys.boot_completed)
      * only effects System Mode, already been the case for Magisk Mode before
+  * change and unify time format to 24h clock for logging to "+%Y%m%d-%H.%M.%S"
+     * example: 20190505-09.35.00, 20190505-21.35.00
 
 * logscleaner init.d Script
   * only clean files older than 7 days

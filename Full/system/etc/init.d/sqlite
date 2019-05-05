@@ -6,7 +6,7 @@ until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 echo "sqlite init script"
 
 if which sqlite3 >/dev/null; then
-	echo "SQLite database VACUUM and REINDEX started at $(date +"%m-%d-%Y %H:%M:%S")"
+	echo "SQLite database VACUUM and REINDEX started at $(date +%Y%m%d-%H.%M.%S)"
 	for i in `find /data/* -iname "*.db"`; do
 		sqlite3 $i 'VACUUM;'
 		resVac=$?
@@ -26,6 +26,6 @@ if which sqlite3 >/dev/null; then
 		echo "Database $i:  VACUUM=$resVac  REINDEX=$resIndex"
 	done
 
-	echo "SQLite database VACUUM and REINDEX finished at $(date +"%m-%d-%Y %H:%M:%S")"
+	echo "SQLite database VACUUM and REINDEX finished at $(date +%Y%m%d-%H.%M.%S)"
 else	echo "sqlite3 not installed, stop"
 fi

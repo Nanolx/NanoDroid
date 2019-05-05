@@ -6,17 +6,17 @@ until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 LOGDIR="/data/adb/logcats"
 
 echo "logcat init script"
-echo "Starting Automatic Cleaning at $(date +"%m-%d-%Y %H:%M:%S")"
+echo "Starting Automatic Cleaning at $(date +%Y%m%d-%H.%M.%S)"
 
 [[ ! -d ${LOGDIR} ]] && mkdir -p ${LOGDIR}
 
 # remove files older than a week to prevent pollution
 find ${LOGDIR} -print -mtime +8 -exec rm -f {} \; 2>/dev/null
 
-echo "Automatic Cleaning finished at $(date +"%m-%d-%Y %H:%M:%S")"
+echo "Automatic Cleaning finished at $(date +%Y%m%d-%H.%M.%S)"
 
 # Set current date in 20170607-12.07.25 format
-CURDATE=$(date +%Y%m%d-%I.%M.%S)
+CURDATE=$(date +%Y%m%d-%H.%M.%S)
 
 echo "Recording logcat to: ${LOGDIR}/${CURDATE}"
 

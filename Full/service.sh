@@ -12,7 +12,7 @@ LOGDIR="${MODDIR}"/logs
 until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
 # Set current date in 20170607-12.07.25 format
-CURDATE=$(date +%Y%m%d-%I.%M.%S)
+CURDATE=$(date +%Y%m%d-%H.%M.%S)
 
 # This script will be executed in late_start service mode
 # More info in the main Magisk thread
