@@ -405,16 +405,16 @@ The following init scripts are bundled with NanoDroid
 * fstrim
   * trim file systems (may increase speed)
 * logcat
-  * store logcat in /data/adb
+  * store logcat in /data/adb/logcat
      * logs older than 7 days are deleted on every reboot
 * logscleaner
-  * clean up log files
+  * clean up system log files older than 7 days
 * sqlite
   * clean up sqlite databases
 
 When in Magisk Mode the init scripts create their log files in
 
-  `/magisk/NanoDroid/.logs/${script}.log.${date}`
+  `/magisk/NanoDroid/logs/${script}.log.${date}`
 
 When installed to /system your ROM needs to support running scripts in
 
