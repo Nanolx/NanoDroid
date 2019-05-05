@@ -21,12 +21,17 @@ else
 	error "couldn't find NanoDroid!"
 fi
 
-if [ -w /data/media/0 ]; then
-	STORAGE="/data/media/0"
-elif [ -w /storage/self/primary ]; then
-	STORAGE="/storage/self/primary"
+# select storage path
+if [ -n ${EXTERNAL_STORAGE} ]; then
+	STORAGE="${EXTERNAL_STORAGE}/logcats"
 else
-	STORAGE="/sdcard"
+	if [ -w /sdcard ]; then
+		STORAGE="/sdcard/logcats"
+	elif [ -w /storage/self/primary ]; then
+		STORAGE="/storage/self/primary/logcats"
+	elif [ -w /data/media/0 ]; then
+		STORAGE="/data/media/0/logcats"
+	fi
 fi
 
 grep_prop() {

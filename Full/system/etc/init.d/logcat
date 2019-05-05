@@ -1,17 +1,19 @@
 #!/system/bin/sh
 
-# Set current date in 20170607-12.07.25 format
-CURDATE=$(date +%Y%m%d-%I.%M.%S)
-
 # wait until boot completed
 until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
-if [ -w /data/media/0 ]; then
-	LOGDIR="/data/media/0/logcats"
-elif [ -w /storage/self/primary ]; then
-	LOGDIR="/storage/self/primary/logcats"
+# select storage path
+if [ -n ${EXTERNAL_STORAGE} ]; then
+	LOGDIR="${EXTERNAL_STORAGE}/logcats"
 else
-	LOGDIR="/sdcard/logcats"
+	if [ -w /sdcard ]; then
+		LOGDIR="/sdcard/logcats"
+	elif [ -w /storage/self/primary ]; then
+		LOGDIR="/storage/self/primary/logcats"
+	elif [ -w /data/media/0 ]; then
+		LOGDIR="/data/media/0/logcats"
+	fi
 fi
 
 echo "logcat init script"
@@ -23,6 +25,10 @@ echo "Starting Automatic Cleaning at $(date +"%m-%d-%Y %H:%M:%S")"
 find /data/adb/logcat/ -print -mtime +8 -exec rm -f {} \; 2>/dev/null
 
 echo "Automatic Cleaning finished at $(date +"%m-%d-%Y %H:%M:%S")"
+
+# Set current date in 20170607-12.07.25 format
+CURDATE=$(date +%Y%m%d-%I.%M.%S)
+
 echo "Recording logcat to: ${LOGDIR}/${CURDATE}"
 
 logcat -f "${LOGDIR}/${CURDATE}" &

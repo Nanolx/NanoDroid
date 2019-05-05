@@ -2,12 +2,17 @@
 
 export SHELL=${BASH}
 
-if [ -w /data/media/0 ]; then
-	export HOME="/data/media/0"
-elif [ -w /storage/self/primary ]; then
-	export HOME="/storage/self/primary"
+# select storage path
+if [ -n ${EXTERNAL_STORAGE} ]; then
+	export HOME="${EXTERNAL_STORAGE}/logcats"
 else
-	export HOME="/sdcard"
+	if [ -w /sdcard ]; then
+		export HOME="/sdcard/logcats"
+	elif [ -w /storage/self/primary ]; then
+		export HOME="/storage/self/primary/logcats"
+	elif [ -w /data/media/0 ]; then
+		export HOME="/data/media/0/logcats"
+	fi
 fi
 
 export TMPDIR=${HOME}/.bash_tmp
