@@ -4,6 +4,11 @@ export NO_MAGISK=0
 export SYS_REMOUNT=0
 export MODPATH=@MODPATH@
 
+error () {
+	echo "!! ${@}"
+	exit 1
+}
+
 if [ -z "${MODPATH}" ]; then
 	OVERLAY_PATH=""
 	NO_MAGISK=1
@@ -13,14 +18,16 @@ elif [ -d "/dev/tmp/magisk_img/$(basename "${MODPATH}")" ]; then
 elif [ -d "${MODPATH}" ]; then
 	OVERLAY_PATH="${MODPATH}"
 else
-	echo "couldn't find NanoDroid!"
-	exit 1
+	error "couldn't find NanoDroid!"
 fi
 
-error () {
-	echo "!! ${@}"
-	exit 1
-}
+if [ -w /data/media/0 ]; then
+	STORAGE="/data/media/0"
+elif [ -w /storage/self/primary ]; then
+	STORAGE="/storage/self/primary"
+else
+	STORAGE="/sdcard"
+fi
 
 grep_prop() {
 	[ -f /vendor/build.prop ] && \
@@ -53,7 +60,7 @@ Options:
 
 test "$(whoami)" != "root" && error "not running as root"
 
-SYS_BACKUP_PATH="/data/media/0/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
+SYS_BACKUP_PATH="${STORAGE}/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
 get_config () {
 	config=""
@@ -77,7 +84,7 @@ overrides_add_intern () {
 		touch "${OVERLAY_PATH}/system/${sysdir}/${app}/.replace"
 	else
 		mkdir -p "${SYS_BACKUP_PATH}/${sysdir}"
-		echo "  moving to /data/media/0/nanodroid_backups: ${app}"
+		echo "  moving to ${STORAGE}/nanodroid_backups: ${app}"
 		rm -rf "${SYS_BACKUP_PATH}/${sysdir}/${app}"
 		mv "/system/${sysdir}/${app}" "${SYS_BACKUP_PATH}/${sysdir}/"
 	fi
@@ -126,9 +133,9 @@ overrides_remove () {
 			[ -f ${OVERLAY_PATH}/system/priv-app/${app}/.replace ] && overrides_remove_intern priv-app ${app}
 			[ -f ${OVERLAY_PATH}/system/reserve/${app}/.replace ] && overrides_remove_intern reserve ${app}
 		else
-			[ -d /data/media/0/nanodroid_backups/app/${app} ] && overrides_remove_intern app ${app}
-			[ -d /data/media/0/nanodroid_backups/priv-app/${app} ] && overrides_remove_intern priv-app ${app}
-			[ -d /data/media/0/nanodroid_backups/reserve/${app} ] && overrides_remove_intern reserve ${app}
+			[ -d ${STORAGE}/nanodroid_backups/app/${app} ] && overrides_remove_intern app ${app}
+			[ -d ${STORAGE}/nanodroid_backups/priv-app/${app} ] && overrides_remove_intern priv-app ${app}
+			[ -d ${STORAGE}/nanodroid_backups/reserve/${app} ] && overrides_remove_intern reserve ${app}
 		fi
 	done
 
@@ -240,7 +247,7 @@ overrides_genconfig () {
 config_locations="/data/media/0 /external_sd /data @ZIPDIR@ /dev/tmp/install"
 get_config .nanodroid-overlay
 
-[[ -f ${config} ]] && export config || config=/data/media/0/.nanodroid-overlay
+[[ -f ${config} ]] && export config || config=${STORAGE}/.nanodroid-overlay
 
 opt=${1}
 [[ -z ${opt} ]] && show_help || shift
