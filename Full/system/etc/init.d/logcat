@@ -1,9 +1,12 @@
 #!/system/bin/sh
 
+# Set current date in 20170607-12.07.25 format
+CURDATE=$(date +%Y%m%d-%I.%M.%S)
+
 # wait until boot completed
 until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
-LOGDIR="${MODDIR}"/logcats
+LOGDIR="/data/media/0/logcats"
 
 echo "logcat init script"
 echo "Starting Automatic Cleaning at $(date +"%m-%d-%Y %H:%M:%S")"

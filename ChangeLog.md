@@ -19,7 +19,7 @@
   * simplify code
 
 * init.d Scripts
-  * move init.d scripts logs from ${MODDIR}/.logs to ${MODDIR}/logs
+  * move init.d scripts logs from `${MODDIR}/.logs` to `${MODDIR}/logs`
   * make all init.d scripts wait until device fully booted (sys.boot_completed)
      * only effects System Mode, already been the case for Magisk Mode before
 
@@ -28,7 +28,7 @@
   * verbose logging
 
 * logcat init.d Script
-  * move logs from /data/adb/logcat to ${MODDIR}/logcats
+  * move logs from `/data/adb/logcat` to `/data/media/0/logcats`
   * verbose logging of the script itself
   * simplify code
 

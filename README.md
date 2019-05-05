@@ -405,7 +405,7 @@ The following init scripts are bundled with NanoDroid
 * fstrim
   * trim file systems (may increase speed)
 * logcat
-  * store logcat in /data/adb/logcat
+  * store logcat in /data/media/0/logcats
      * logs older than 7 days are deleted on every reboot
 * logscleaner
   * clean up system log files older than 7 days
