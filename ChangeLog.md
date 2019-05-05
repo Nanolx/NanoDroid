@@ -10,6 +10,13 @@
 * Installer
   * store installation logs into `/data/media/0/nanodroid_logs` instead of `/data/adb`
      * change file permissions, so they can be accessed as ordinary user
+  * simplify code
+
+* logscleaner init.d Script
+  * only clean files older than 7 days
+
+* logcat init.d Script
+  * simplify code
 
 ## 20.8.20190504 "[Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class))"
 
