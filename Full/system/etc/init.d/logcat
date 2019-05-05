@@ -1,10 +1,16 @@
 #!/system/bin/sh
 
-CURDATE=$(date +%Y%m%d-%I.%M.%S)
+LOGDIR="${MODDIR}"/logcats
 
-[[ ! -d /data/adb/logcat ]] && mkdir -p /data/adb/logcat
+echo "logcat init script"
+echo "Starting Automatic Cleaning at $(date +"%m-%d-%Y %H:%M:%S")"
+
+[[ ! -d ${LOGDIR} ]] && mkdir -p ${LOGDIR}
 
 # remove files older than a week to prevent pollution
-find /data/adb/logcat/ -mtime +8 -exec rm -f {} \;
+find /data/adb/logcat/ -print -mtime +8 -exec rm -f {} \; 2>/dev/null
 
-logcat -f "/data/adb/logcat/${CURDATE}" &
+echo "Automatic Cleaning finished at $(date +"%m-%d-%Y %H:%M:%S")"
+echo "Recording logcat to: ${LOGDIR}/${CURDATE}"
+
+logcat -f "${LOGDIR}/${CURDATE}" &
