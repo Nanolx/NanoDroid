@@ -2,11 +2,12 @@
 
 OUTFD=$2
 ZIP=$3
+BACKUP_DIR="${BACKUP_DIR}"
 
 detect_bootmode () {
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
 	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
-	${BOOTMODE} || ps -A | grep zygote | grep -qv grep && BOOTMODE=true
+	${BOOTMODE} || ps -A 2>/dev/null | grep zygote | grep -qv grep && BOOTMODE=true
 
 	${BOOTMODE} && error "NanoDroid Uninstaller can't be run from Magisk Manager!"
 }
@@ -209,9 +210,9 @@ config_locations="/data/media/0 /external_sd /data $(dirname ${ZIP}))"
 config_files=".nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 
 restore_apps () {
-	backup_path="/data/media/0/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
+	backup_path="${BACKUP_DIR}/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
-	for dir in /data/media/0/nanodroid_backups ${backup_path}; do
+	for dir in ${BACKUP_DIR} ${backup_path}; do
 		if [ -d ${dir}/app/ ]; then
 			for app in ${dir}/app/*; do
 				if [ -d /system/app/${app} ]; then
@@ -276,13 +277,13 @@ patcher_uninstall () {
 	if [ -f /data/adb/.nanodroid-patcher -o -f /data/adb/NanoDroid_Patched ]; then
 		services_name="services.jar_$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
-		if [ -f /data/media/0/nanodroid_backups/${services_name} ]; then
+		if [ -f ${BACKUP_DIR}/${services_name} ]; then
 			ui_print " << restoring: unpatched services.jar"
-			mv "/data/media/0/nanodroid_backups/${services_name}" /system/framework/services.jar
+			mv "${BACKUP_DIR}/${services_name}" /system/framework/services.jar
 			set_perm_data /system/framework/services.jar
-		elif [ -f /data/media/0/nanodroid_backups/services.jar ]; then
+		elif [ -f ${BACKUP_DIR}/services.jar ]; then
 			ui_print " << restoring: unpatched services.jar"
-			mv /data/media/0/nanodroid_backups/services.jar /system/framework/services.jar
+			mv ${BACKUP_DIR}/services.jar /system/framework/services.jar
 			set_perm_data /system/framework/services.jar
 		else	ui_print " << can't restore unpatched services.jar"
 		fi
