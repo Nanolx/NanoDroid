@@ -3,18 +3,7 @@
 # wait until boot completed
 until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
-# select storage path
-if [ -n ${EXTERNAL_STORAGE} ]; then
-	LOGDIR="${EXTERNAL_STORAGE}/logcats"
-else
-	if [ -w /sdcard ]; then
-		LOGDIR="/sdcard/logcats"
-	elif [ -w /storage/self/primary ]; then
-		LOGDIR="/storage/self/primary/logcats"
-	elif [ -w /data/media/0 ]; then
-		LOGDIR="/data/media/0/logcats"
-	fi
-fi
+LOGDIR="/data/adb/logcats"
 
 echo "logcat init script"
 echo "Starting Automatic Cleaning at $(date +"%m-%d-%Y %H:%M:%S")"
@@ -22,7 +11,7 @@ echo "Starting Automatic Cleaning at $(date +"%m-%d-%Y %H:%M:%S")"
 [[ ! -d ${LOGDIR} ]] && mkdir -p ${LOGDIR}
 
 # remove files older than a week to prevent pollution
-find /data/adb/logcat/ -print -mtime +8 -exec rm -f {} \; 2>/dev/null
+find ${LOGDIR} -print -mtime +8 -exec rm -f {} \; 2>/dev/null
 
 echo "Automatic Cleaning finished at $(date +"%m-%d-%Y %H:%M:%S")"
 

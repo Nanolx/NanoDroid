@@ -28,7 +28,6 @@
   * verbose logging
 
 * logcat init.d Script
-  * move logs from `/data/adb/logcat` to `/data/media/0/logcats`
   * verbose logging of the script itself
   * simplify code
 
