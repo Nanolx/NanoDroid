@@ -7,6 +7,10 @@
 * Installer, Uninstaller, Addon.d, Patcher, Scripts
   * use full `/data/media/0` path instead of `/sdcard/`
 
+* Installer
+  * store installation logs into `/data/media/0/nanodroid_logs` instead of `/data/adb`
+     * change file permissions, so they can be accessed as ordinary user
+
 ## 20.8.20190504 "[Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class))"
 
 ### Notes

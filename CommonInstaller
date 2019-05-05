@@ -1413,8 +1413,10 @@ nanodroid_substitute () {
 nanodroid_storelogs () {
 
 	curdate=$(date +%Y%m%d_%H.%M.%S)
-	nanodroid_logfile="/data/adb/${MODID}_log_${curdate}"
-	nanodroid_twrplog="/data/adb/${MODID}_twrp_${curdate}"
+	nanodroid_logfile="${STORAGE}/nanodroid_logs/${MODID}_log_${curdate}"
+	nanodroid_twrplog="${STORAGE}/nanodroid_logs/${MODID}_twrp_${curdate}"
+
+	mkdir -p "${STORAGE}/nanodroid_logs"
 
 	echo "\
 
@@ -1478,13 +1480,19 @@ cat "${cfg_overlay}" >> ${nanodroid_logfile}
 
 fi
 
+chown root:sdcard_rw ${nanodroid_logfile}
+chmod 0644 ${nanodroid_logfile}
+
 cat /tmp/recovery.log > ${nanodroid_twrplog}
 
-ui_print " | storing installation logs in /data/adb/"
-ui_print " | TWRP log:"
-ui_print " || $(basename ${nanodroid_twrplog})"
+chown root:sdcard_rw ${nanodroid_twrplog}
+chmod 0644 ${nanodroid_twrplog}
+
+ui_print " | storing installation logs in ${STORAGE}/nanodroid_logs/"
 ui_print " | NanoDroid log:"
 ui_print " || ""$(basename ${nanodroid_logfile})"
+ui_print " | TWRP log:"
+ui_print " || $(basename ${nanodroid_twrplog})"
 ui_print " "
 
 }
