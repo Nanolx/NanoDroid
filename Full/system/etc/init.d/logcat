@@ -1,5 +1,8 @@
 #!/system/bin/sh
 
+# wait until boot completed
+until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
+
 LOGDIR="${MODDIR}"/logcats
 
 echo "logcat init script"

@@ -20,6 +20,8 @@
 
 * init.d Scripts
   * move init.d scripts logs from ${MODDIR}/.logs to ${MODDIR}/logs
+  * make all init.d scripts wait until device fully booted (sys.boot_completed)
+     * only effects System Mode, already been the case for Magisk Mode before
 
 * logscleaner init.d Script
   * only clean files older than 7 days
