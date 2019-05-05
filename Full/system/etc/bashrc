@@ -2,7 +2,14 @@
 
 export SHELL=${BASH}
 
-export HOME=/data/media/0
+if [ -w /data/media/0 ]; then
+	export HOME="/data/media/0"
+elif [ -w /storage/self/primary ]; then
+	export HOME="/storage/self/primary"
+else
+	export HOME="/sdcard"
+fi
+
 export TMPDIR=${HOME}/.bash_tmp
 export HISTFILE=${HOME}/.bash_history
 
