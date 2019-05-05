@@ -15,7 +15,7 @@
 * Installer
   * store installation logs into `/data/media/0/nanodroid_logs` instead of `/data/adb`
      * change file permissions, so they can be accessed as ordinary user
-  * when updating NanoDroid in Magisk Mode make init.d logs and logcats survive it
+  * when updating NanoDroid in Magisk Mode make init.d logs survive it
   * simplify code
 
 * init.d Scripts
