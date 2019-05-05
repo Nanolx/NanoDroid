@@ -5,10 +5,15 @@ echo "external_sd init script"
 # wait until boot completed
 until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
-media_rw=$(grep "^/dev/block.*/mnt/media_rw" /proc/mounts \
-	| cut -d " " -f 2 \
-	| cut -d "/" -f 4)
-storage="/storage/${media_rw}"
+if getprop ro.build.characteristics | grep -q nosdcard; then
+	echo ">> no SD Card found"
+	exit 0
+else
+	media_rw=$(grep "^/dev/block.*/mnt/media_rw" /proc/mounts \
+		| cut -d " " -f 2 \
+		| cut -d "/" -f 4)
+	storage="/storage/${media_rw}"
+fi
 
 if [[ -d ${storage} ]]; then
 	echo ">> SD Card found"

@@ -30,6 +30,9 @@
   * verbose logging of the script itself
   * simplify code
 
+* external_sd init.d Script
+  * if `ro.build.characteristics` contains `nosdcard` abort without further action
+
 ## 20.8.20190504 "[Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class))"
 
 ### Notes
