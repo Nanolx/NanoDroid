@@ -24,6 +24,8 @@
     <!-- Ensure app store applications has internet access to manage updates. -->
     <allow-in-power-save-except-idle package="com.android.vending" />
     <allow-in-power-save-except-idle package="org.fdroid.fdroid" />
+    <allow-in-power-save-except-idle package="com.aurora.store" />
+    <allow-in-power-save-except-idle package="com.github.yeriomin.yalpstore" />
 
     <!-- Bare minimum microG components. -->
     <app-link package="com.google.android.gms" />

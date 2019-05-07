@@ -8,13 +8,13 @@ create_microg_package() {
 
 	cd "${CWD}/Full"
 
-	for app in DroidGuard nlpBackendApple nlpBackendDejavu \
+	for app in AuroraStore DroidGuard nlpBackendApple nlpBackendDejavu \
 		nlpBackendIchnaea nlpBackendNominatim nlpBackendRadiocell; do
 		zip_add "system/app/${app}/"
 	done
 
 	for app in FakeStore GmsCore_Official GmsCore_NanoDroid \
-		Phonesky GsfProxy YalpStore AuroraStore; do
+		Phonesky GsfProxy YalpStore; do
 		zip_add "system/priv-app/${app}/"
 	done
 
