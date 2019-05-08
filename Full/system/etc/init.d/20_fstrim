@@ -1,0 +1,23 @@
+#!/system/bin/sh
+
+# be sure init.rc post-fs-data completed
+until [ `getprop vold.post_fs_data_done`. = 1. ]; do sleep 1; done
+
+# run script only when battery charged enough
+capacity=$(cat /sys/class/power_supply/battery/capacity)
+if [ "$capacity" -gt "15" ]; then
+
+	echo "fstrim init script"
+
+	if [ -e /init.fstrim.sh ]; then
+		echo "/init.fstrim.sh exists, trimming /preload only"
+		fstrim -v /preload
+	else
+		echo "/init.fstrim.sh does not exist, trimming /cache, /system, /vendor, /data, /preload"
+		fstrim -v /cache
+		fstrim -v /system
+		fstrim -v /vendor
+		fstrim -v /data
+		fstrim -v /preload
+	fi
+fi
