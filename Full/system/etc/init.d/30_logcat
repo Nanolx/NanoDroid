@@ -1,7 +1,7 @@
 #!/system/bin/sh
 
-# wait until boot completed
-until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
+# be sure init.rc post-fs-data completed
+until [ `getprop vold.post_fs_data_done`. = 1. ]; do sleep 1; done
 
 LOGDIR="/data/adb/logcats"
 
