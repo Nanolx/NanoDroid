@@ -4,19 +4,19 @@
 MODDIR=${0%/*}
 
 # Create private Log directory
-LOGDIR="${MODDIR}"/logs
+LOGDIR="${MODDIR}/logs"
 
 [[ ! -d ${LOGDIR} ]] && mkdir -p "${LOGDIR}"
 
 # wait until boot completed
-until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
+until [ `getprop vold.post_fs_data_done`. = 1. ]; do sleep 1; done
 
 # Set current date in 20170607-12.07.25 format
 CURDATE=$(date +%Y%m%d-%H.%M.%S)
 
 # This script will be executed in late_start service mode
 # More info in the main Magisk thread
-for init in fstrim logscleaner sqlite external_sd logcat; do
+for init in 10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner; do
 	"${MODDIR}/init.d/${init}" | \
 		tee -a "${LOGDIR}/${init}.log.${CURDATE}" &
 done
