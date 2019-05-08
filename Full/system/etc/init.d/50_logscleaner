@@ -35,9 +35,9 @@ for logpath in /cache /cache/recovery /data/system/dropbox; do
 done
 
 # NanoDroid init.d logs
-if [ -d /data/adb/modules/NanoDroid/logs ]; then
-	find /data/adb/modules/NanoDroid/logs -mtime +8 -type f \
+for logpath in /data/adb/modules/NanoDroid/logs /data/adb/logcats; do
+	find ${logpath} -mtime +8 -type f \
 		-print -exec rm -f {} \; 2>/dev/null
-fi
+done
 
 echo "Automatic Cleaning finished at $(date +%Y%m%d-%H.%M.%S)"
