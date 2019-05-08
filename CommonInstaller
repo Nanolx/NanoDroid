@@ -1127,7 +1127,7 @@ install_initd () {
 		cp "${INSTALLER}/system/etc/init.d"/* "${INIT_BASE}/"
 		set_perm_bin "${INIT_BASE}"
 
-		for init in fstrim logcat logscleaner sqlite external_sd; do
+		for init in 10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner; do
 			installinfo_add "/system/etc/init.d/${init}"
 		done
 	else	ui_print " << without init scripts"
