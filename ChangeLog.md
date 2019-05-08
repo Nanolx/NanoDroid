@@ -9,13 +9,17 @@
 
 ### General
 
-* Installer, Uninstaller, Addon.d, Patcher, Scripts
-  * use full `/data/media/0` path instead of `/sdcard/`
+* Installer, Uninstaller, Addon.d, Patcher
+  * use full `/data/media/0` path instead of `/sdcard`
+
+* Scripts
+  * detect full path to storage instead of hardcoding `/sdcard`
 
 * Installer
   * store installation logs into `/data/media/0/nanodroid_logs` instead of `/data/adb`
      * change file permissions, so they can be accessed as ordinary user
   * when updating NanoDroid in Magisk Mode make init.d logs survive it
+  * move Aurora Store from `priv-app` to `app`, drop now useless permission file @Vavun
   * simplify code
 
 * init.d Scripts
@@ -24,6 +28,9 @@
      * only effects System Mode, already been the case for Magisk Mode before
   * change and unify time format to 24h clock for logging to "+%Y%m%d-%H.%M.%S"
      * example: 20190505-09.35.00, 20190505-21.35.00
+  * wait for `vold.post_fs_data_done` instead of `sys.boot_completed` @Vavun
+  * sort init.d logically, so that native init.d starts them successively @Vavun
+  * only execute load heavy scripts if battery charge is at least 15 % @Vavun
 
 * logscleaner init.d Script
   * only clean files older than 7 days
@@ -32,6 +39,9 @@
 * logcat init.d Script
   * verbose logging of the script itself
   * simplify code
+
+* fstrim init.d Scripts
+  * trim `/vendor` aswell @Vavun
 
 * external_sd init.d Script
   * if `ro.build.characteristics` contains `nosdcard` abort without further action
