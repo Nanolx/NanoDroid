@@ -7,8 +7,7 @@
 ##########################################################################################
 
 TMPDIR=/dev/tmp
-LOGFILE=/data/media/0/NanoDroid-SysTest.log
-rm -f ${LOGFILE}
+LOGFILE="/data/media/0/NanoDroid-SysTest-$(date +%Y%m%d-%H.%M.%S).log"
 
 ##########################################################################################
 # Generic Functions
