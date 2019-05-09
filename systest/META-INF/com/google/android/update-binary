@@ -26,8 +26,8 @@ ui_print " "
 ui_print " || performing tests"
 
 ui_print " "
-ui_print " || storing results in:"
-ui_print " || ${LOGFILE}"
+ui_print " || storing results in $(dirname ${LOGFILE}):"
+ui_print " ||   as $(basename ${LOGFILE})"
 ui_print " "
 
 mount_partitions
