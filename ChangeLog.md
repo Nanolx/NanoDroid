@@ -7,6 +7,9 @@
 * logscleaner init.d Script
   * prevent the script from unintentionally removing Magisk log
 
+* Uninstaller
+  * syntax fix
+
 ### General
 
 * Installer, Uninstaller, Addon.d, Patcher
@@ -21,6 +24,9 @@
   * when updating NanoDroid in Magisk Mode make init.d logs survive it
   * move Aurora Store from `priv-app` to `app`, drop now useless permission file @Vavun
   * simplify code
+
+* SysTest
+  * append date in +%Y%m%d-%H.%M.%S format to log file name
 
 * init.d Scripts
   * move init.d scripts logs from `${MODDIR}/.logs` to `${MODDIR}/logs`
