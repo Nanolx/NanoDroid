@@ -648,6 +648,15 @@ List of known issues and their respective fixes or workarounds.
   * either connect a Keyboard and use it to skip the first page (will work normally then)
   * use the custom NanoDroid microG GmsCore build, which has this issue fixed starting with version 0.2.6.14799-dirty-145
 
+### Google Account
+
+* Can't login to Google Account
+  * there's currently an issue where logging in with version 74.x of Chrome/Chromium/Bromite or WebView derived from them fails
+  * the work-arounds are:
+     * install an older version (up to 73.x)
+     * switch to Android System WebView (downloadable from Play Store or APK Mirror)
+     * uninstall updates to downgrade to factory version (which likely is older than 74.x)
+
 ### SafetyNet
 
 * Applications/SafetyNet check complain with `Google Play Services are missing`
