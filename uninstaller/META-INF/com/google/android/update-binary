@@ -352,7 +352,7 @@ if [ -d /data/adb/modules ]; then
 			rm -rf /data/adb/modules/${module}
 		fi
 	done
-done
+fi
 
 ui_print " >> clean up"
 
