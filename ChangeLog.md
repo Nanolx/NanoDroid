@@ -27,14 +27,15 @@
 
 * SysTest
   * append date in +%Y%m%d-%H.%M.%S format to log file name
+    * example: 20190505-09.35.00, 20190505-21.35.00
 
 * init.d Scripts
   * move init.d scripts logs from `${MODDIR}/.logs` to `${MODDIR}/logs`
-  * make all init.d scripts wait until device fully booted (sys.boot_completed)
-     * only effects System Mode, already been the case for Magisk Mode before
   * change and unify time format to 24h clock for logging to "+%Y%m%d-%H.%M.%S"
      * example: 20190505-09.35.00, 20190505-21.35.00
   * wait for `vold.post_fs_data_done` instead of `sys.boot_completed` @Vavun
+  * make all init.d scripts wait until device fully booted
+     * only effects System Mode, already been the case for Magisk Mode before
   * sort init.d logically, so that native init.d starts them successively @Vavun
   * only execute load heavy scripts if battery charge is at least 15 % @Vavun
 
