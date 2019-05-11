@@ -564,7 +564,7 @@ magisk_install_setup () {
 
 		# XXX when upgrading from Magisk 18.1 to 19.0 and flashing NanoDroid in one go,
 		# XXX and NanoDroid installation logs exist, assume an upgrade
-		[[ $(find /data/adb -type f -name 'NanoDroid*') && -f ${NVBASE}/magisk.img ]] && NANODROID_UPGRADE=1
+		[[ "$(find /data/adb -type f -name 'NanoDroid*')" && -f ${NVBASE}/magisk.img ]] && NANODROID_UPGRADE=1
 
 		recovery_actions
 	else
