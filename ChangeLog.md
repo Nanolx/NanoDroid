@@ -15,15 +15,6 @@
 * Installer, Uninstaller, Addon.d, Patcher
   * use full `/data/media/0` path instead of `/sdcard`
 
-* Full package
-  * drop OmniJAWS
-
-* Bromite WebView package
-  * only install Bromite WebView if ROM supports `com.android.webview`
-
-* Scripts
-  * detect full path to storage instead of hardcoding `/sdcard`
-
 * Installer
   * store installation logs into `/data/media/0/nanodroid_logs` instead of `/data/adb`
      * change file permissions, so they can be accessed as ordinary user
@@ -31,7 +22,6 @@
      * for example: `NanoDroid_20.8.20190504_log_20190505-21.35.00`
   * append `.log` extension to installation logs
   * when updating NanoDroid in Magisk Mode make init.d logs survive it
-  * move Aurora Store from `priv-app` to `app`, drop now useless permission file @Vavun
   * simplify code
 
 * Uninstaller
@@ -48,6 +38,18 @@
     * also log whehter Magisk is imageless or not
   * pipe installed package checks through `sort` for nicer log result
   * update mount code
+
+* Full package
+  * drop OmniJAWS
+
+* Full, microG packages
+  * move Aurora Store from `priv-app` to `app`, drop now useless permission file @Vavun
+
+* Bromite WebView package
+  * only install Bromite WebView if ROM supports `com.android.webview`
+
+* Scripts
+  * detect full path to storage instead of hardcoding `/sdcard`
 
 * init.d Scripts
   * move init.d scripts logs from `${MODDIR}/.logs` to `${MODDIR}/logs`
