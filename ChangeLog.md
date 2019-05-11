@@ -21,6 +21,8 @@
 * Installer
   * store installation logs into `/data/media/0/nanodroid_logs` instead of `/data/adb`
      * change file permissions, so they can be accessed as ordinary user
+  * append version to the installation logs
+     * for example: `NanoDroid_20.8.20190504_log_20190505-21.35.00`
   * when updating NanoDroid in Magisk Mode make init.d logs survive it
   * move Aurora Store from `priv-app` to `app`, drop now useless permission file @Vavun
   * simplify code
@@ -52,6 +54,12 @@
 
 * external_sd init.d Script
   * if `ro.build.characteristics` contains `nosdcard` abort without further action
+
+###  Updates
+
+* manual
+  * Google Play (14.9.52)
+  * MPV (20190511-nightly)
 
 ## 20.8.20190504 "[Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class))"
 
