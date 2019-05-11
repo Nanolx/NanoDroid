@@ -18,6 +18,9 @@
 * Full package
   * drop OmniJAWS
 
+* Bromite WebView package
+  * only install Bromite WebView if ROM supports `com.android.webview`
+
 * Scripts
   * detect full path to storage instead of hardcoding `/sdcard`
 

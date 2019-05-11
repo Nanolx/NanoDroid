@@ -785,25 +785,48 @@ gapps_destroy_artifacts () {
 }
 
 ##########################################################################################
+# check if ROM has native fake signature spoofing support
 # by @ale5000
 ##########################################################################################
 
-search_fake_package_signature () {
+check_fake_package_signature () {
 	PERMISSION=android.permission.FAKE_PACKAGE_SIGNATURE
 	PERMISSION_OD=$(echo -n "${PERMISSION}" | od -A n -t x1 | tr -d '\n' | sed -e 's/^ //g;s/ /00/g')
 	HAS_FAKESIGN=false
 
 	FW_RES_DIR="${TMPDIR}/framework-res"
+	FW_RES_FILE="${FW_RES_DIR}/AndroidManifest.xml"
 
-	if [ ! -f ${FW_RES_DIR}/AndroidManifest.xml ]; then
+	if [ ! -f ${FW_RES_FILE} ]; then
 		mkdir -p "${FW_RES_DIR}"
 		unzip -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
 	fi
 
-	grep -qF "${PERMISSION}" "${FW_RES_DIR}/AndroidManifest.xml" && HAS_FAKESIGN=true
-	od -A n -t x1 "${FW_RES_DIR}/AndroidManifest.xml" | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true
+	grep -qF "${PERMISSION}" "${FW_RES_FILE}" && HAS_FAKESIGN=true
+	od -A n -t x1 "${FW_RES_FILE}" | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true
 
 	${HAS_FAKESIGN} && return 0 || return 1
+}
+
+##########################################################################################
+# check if Bromite System WebView is supported
+##########################################################################################
+
+check_bromite_webview_support () {
+	WEBVIEW_PKG="com.android.webview"
+	HAS_WEBVIEW=false
+
+	FW_RES_DIR="${TMPDIR}/framework-res"
+	FW_RES_FILE="${FW_RES_DIR}/res/xml/config_webview_packages.xml"
+
+	if [ ! -f ${FW_RES_FILE} ]; then
+		mkdir -p "${FW_RES_DIR}"
+		unzip -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
+	fi
+
+	grep -qF "${WEBVIEW_PKG}" "${FW_RES_FILE}" && HAS_WEBVIEW=true
+
+	${HAS_WEBVIEW} && return 0 || return 1
 }
 
 ##########################################################################################
@@ -871,7 +894,7 @@ install_microg () {
 
 		# if android.permission.FAKE_PACKAGE_SIGNATURE is not a runtime-permission
 		# (read: ROM is not pre-patched), remove that permission from pre-sets
-		if ! search_fake_package_signature; then
+		if ! check_fake_package_signature; then
 			sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' \
 				-i ${INSTALLER}/system/etc/permissions/privapp-permissions-google.xml
 
@@ -987,7 +1010,7 @@ install_store () {
 
 			# if android.permission.FAKE_PACKAGE_SIGNATURE is not a runtime-permission
 			# (read: ROM is not pre-patched), remove that permission from pre-sets
-			search_fake_package_signature || \
+			check_fake_package_signature || \
 				sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' \
 					-i ${INSTALLER}/system/etc/default-permissions/phonesky-permissions.xml
 
@@ -1015,7 +1038,7 @@ install_store () {
 		ui_print " << with Fake Store"
 		nanodroid_install_apk FakeStore
 
-		if search_fake_package_signature; then
+		if check_fake_package_signature; then
 			nanodroid_install_file etc/default-permissions/fakestore-permissions.xml
 			nanodroid_install_file etc/permissions/com.android.vending.xml
 		fi
@@ -1136,42 +1159,47 @@ install_initd () {
 
 install_bromite_webview () {
 	if [ "${MODID}" = "NanoDroid_BromiteWebView" ]; then
-		ui_print " << with Bromite WebView"
 
-		case ${ARCH} in
-			arm | arm64 | x86 ) BROMITE_ARCH=${ARCH} ;;
-			x86_64 ) BROMITE_ARCH=x86 ;;
-		esac
+		if ! check_bromite_webview_support; then
+			error "ROM does not support Bromite WebView installation!"
+		else
+			ui_print " << with Bromite WebView"
 
-		WEBVIEW_REPLACE=BromiteWebView
-		BACKUP_PATH="${STORAGE}/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
+			case ${ARCH} in
+				arm | arm64 | x86 ) BROMITE_ARCH=${ARCH} ;;
+				x86_64 ) BROMITE_ARCH=x86 ;;
+			esac
 
-		for app in webview webviewstub WebViewStub Webview; do
-			if [ -d /system/app/${app} ]; then
-				if [ "${MODE}" = "SYSTEM" ]; then
-					echo "    backing up ${app} to ${BACKUP_PATH}/app/${app}"
-					mkdir -p "${BACKUP_PATH}/app"
-					rm -rf "${BACKUP_PATH}/app/${app}"
-					mv /system/app/${app} "${BACKUP_PATH}/app/"
+			WEBVIEW_REPLACE=BromiteWebView
+			BACKUP_PATH="${STORAGE}/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
+
+			for app in webview webviewstub WebViewStub Webview; do
+				if [ -d /system/app/${app} ]; then
+					if [ "${MODE}" = "SYSTEM" ]; then
+						echo "    backing up ${app} to ${BACKUP_PATH}/app/${app}"
+						mkdir -p "${BACKUP_PATH}/app"
+						rm -rf "${BACKUP_PATH}/app/${app}"
+						mv /system/app/${app} "${BACKUP_PATH}/app/"
+					fi
+
+					WEBVIEW_REPLACE=${app}
+					break
 				fi
-
-				WEBVIEW_REPLACE=${app}
-				break
-			fi
-		done
-
-		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
-			for app in com.android.webview; do
-				rm -rf /data/data/${app}
-				rm -rf /data/user/*/${app}
-				rm -rf /data/user_de/*/${app}
-				rm -rf /data/app/${app}-*
-				rm -rf /mnt/asec/${app}-*
-				rm -rf ${STORAGE}/Android/data/${app}
 			done
-		fi
 
-		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib ${WEBVIEW_REPLACE}
+			if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
+				for app in com.android.webview; do
+					rm -rf /data/data/${app}
+					rm -rf /data/user/*/${app}
+					rm -rf /data/user_de/*/${app}
+					rm -rf /data/app/${app}-*
+					rm -rf /mnt/asec/${app}-*
+					rm -rf ${STORAGE}/Android/data/${app}
+				done
+			fi
+
+			nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib ${WEBVIEW_REPLACE}
+		fi
 	fi
 }
 
