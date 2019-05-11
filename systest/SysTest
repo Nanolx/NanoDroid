@@ -359,6 +359,9 @@ store_results () {
 	add_log ""
 	find /system/priv-app -type f -name '*.apk' | sort >> ${LOGFILE}
 
+	chown root:sdcard_rw ${LOGFILE}
+	chmod 0644 ${LOGFILE}
+
 	export PATH=${OLD_PATH}
 }
 
