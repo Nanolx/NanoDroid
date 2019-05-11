@@ -7,7 +7,7 @@
 ##########################################################################################
 
 TMPDIR=/dev/tmp
-LOGFILE="/data/media/0/NanoDroid-SysTest-$(date +%Y%m%d-%H.%M.%S).log"
+LOGFILE="/data/media/0/nanodroid_logs/NanoDroid-SysTest-$(date +%Y%m%d-%H.%M.%S).log"
 
 ##########################################################################################
 # Generic Functions
@@ -320,30 +320,44 @@ store_results () {
 	add_log "Magisk installed?"
 	add_log "================="
 	add_log ""
-	[ -f /data/adb/magisk.img -o -f /data/magisk.img ] && add_log "MAGISK=TRUE" || add_log "MAGISK=FALSE"
+	if [ -f /data/adb/magisk/util_functions.sh ]; then
+		add_log "MAGISK=TRUE"
+
+		. /data/adb/magisk/util_functions.sh
+		add_log "MAGISK_VERSION=${MAGISK_VER_CODE}"
+
+		if [ ${MAGISK_VER_CODE} -gt 18100 ]; then
+			add_log "MAGISK_IMAGELESS=TRUE"
+		else	add_log "MAGISK_IMAGELESS=FALSE"
+		fi
+	else
+		add_log "MAGISK=FALSE"
+		add_Log "MAGISK_VERSION=NONE"
+		add_log "MAGISK_IMAGELESS=FALSE"
+	fi
 
 	add_log ""
 	add_log "Installed Google packages"
 	add_log "=== packages.list ======="
 	add_log ""
-	grep google /data/system/packages.list >> ${LOGFILE}
+	grep google /data/system/packages.list | sort >> ${LOGFILE}
 
 	add_log ""
 	add_log "=== packages.xml ========"
 	add_log ""
-	grep 'package .*google' /data/system/packages.xml >> ${LOGFILE}
+	grep 'package .*google' /data/system/packages.xml | sort >> ${LOGFILE}
 
 	add_log ""
 	add_log "Content of /system/app"
 	add_log "======================"
 	add_log ""
-	find /system/app -type f -name '*.apk' >> ${LOGFILE}
+	find /system/app -type f -name '*.apk' | sort >> ${LOGFILE}
 
 	add_log ""
 	add_log "Content of /system/priv-app"
 	add_log "======================"
 	add_log ""
-	find /system/priv-app -type f -name '*.apk' >> ${LOGFILE}
+	find /system/priv-app -type f -name '*.apk' | sort >> ${LOGFILE}
 
 	export PATH=${OLD_PATH}
 }
