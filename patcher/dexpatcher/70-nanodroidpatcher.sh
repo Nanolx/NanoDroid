@@ -58,16 +58,8 @@ NanoDroidPatcher () {
 	fi
 
 	detect_odex
-
-	[ -f ${MAGISK_IMG} ] && magisk_setup
-
 	patch_services
 	install_services
-
-	ui_print " "
-	ui_print " >> clean up"
-
-	magisk_cleanup
 
 	ui_print " "
 	ui_print " > Done!"

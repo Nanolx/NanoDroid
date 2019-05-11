@@ -21,9 +21,6 @@ setup_environment () {
 	elif [ -f /data/magisk/util_functions.sh ]; then
 		NVBASE=/data
 	fi
-
-	MAGISK_IMG=${NVBASE}/magisk.img
-	MAGISK_PATH=/dev/tmp/magisk_img
 }
 
 ui_print() {
@@ -40,27 +37,6 @@ is_mounted () {
 	return $?
 }
 
-mount_image() {
-	if [ ! -d "$2" ]; then
-		mount -o rw,remount rootfs /
-		mkdir -p "$2" 2>/dev/null
-		[ ! -d "$2" ] && return 1
-	fi
-
-	if ! is_mounted "$2"; then
-		LOOPDEVICE=
-		for LOOP in 0 1 2 3 4 5 6 7; do
-			if ! is_mounted "$2"; then
-				LOOPDEVICE=/dev/block/loop$LOOP
-				[ -e $LOOPDEVICE ] || mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
-				losetup $LOOPDEVICE "$1" && mount -t ext4 -o loop $LOOPDEVICE "$2"
-				if is_mounted "$2"; then
-					break;
-				fi
-			fi
-		done
-	fi
-}
 
 # taken from Magisk, with minor modifications for NanoDroid
 mount_partitions () {
@@ -111,7 +87,6 @@ error () {
 	ui_print " !! ${@}"
 	ui_print " "
 
-	magisk_cleanup
 	exit 1
 }
 
@@ -332,63 +307,6 @@ search_fake_package_signature () {
 }
 
 ##########################################################################################
-# Magisk Functions
-##########################################################################################
-
-grow_magisk_img () {
-	request_size_check /tmp/services.jar
-	image_size_check ${MAGISK_IMG}
-	if [ "$reqSizeM" -gt "$curFreeM" ]; then
-		SIZE=$(((reqSizeM + curUsedM) / 32 * 32 + 64))
-		resize2fs -f ${MAGISK_IMG} ${SIZE}M
-		e2fsck -yf ${MAGISK_IMG}
-	fi
-}
-
-shrink_magisk_img () {
-	image_size_check ${MAGISK_IMG}
-	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
-	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-		resize2fs -f ${MAGISK_IMG} ${NEWDATASIZE}M
-		e2fsck -yf ${MAGISK_IMG}
-	fi
-}
-
-request_size_check() {
-	reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
-	reqSizeM=$((reqSizeM / 1048576 + 1))
-}
-
-image_size_check() {
-	e2fsck -yf $1
-	curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
-	curUsedM=`echo "$curBlocks" | cut -d/ -f1`
-	curSizeM=`echo "$curBlocks" | cut -d/ -f1`
-	curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
-	curUsedM=$((curUsedM * 4 / 1024 + 1))
-	curSizeM=$((curSizeM * 4 / 1024))
-}
-
-magisk_setup () {
-	if [ -f ${MAGISK_IMG} ]; then
-		grow_magisk_img || \
-			error "failed to grow magisk.img"
-		mount_image ${MAGISK_IMG} ${MAGISK_PATH} || \
-			error "failed to mount ${MAGISK_PATH}"
-	fi
-}
-
-magisk_cleanup () {
-	if (is_mounted ${MAGISK_PATH}); then
-		umount ${MAGISK_PATH}
-		losetup -d $LOOPDEVICE
-		rmdir ${MAGISK_PATH}
-		shrink_magisk_img || \
-			error "failed to shrink magisk.img"
-	fi
-}
-
-##########################################################################################
 # Patcher Functions
 ##########################################################################################
 
@@ -549,9 +467,7 @@ backup_services_jar () {
 
 install_services () {
 	ui_print " "
-	for destination in /data/adb/modules/NanoDroid /data/adb/modules/NanoDroid_microG \
-		/dev/tmp/magisk_img/NanoDroid /dev/tmp/magisk_img/NanoDroid_microG \
-		/sbin/.magisk/img/NanoDroid /sbin/.magisk/img/NanoDroid_microG /; do
+	for destination in /data/adb/modules/NanoDroid /data/adb/modules/NanoDroid_microG /; do
 		if [ -d ${destination} ]; then
 			install_path="${destination}"
 			break

@@ -2,6 +2,11 @@
 
 ## 20.9 in-dev
 
+### Notes
+
+* This release drops support for Magisk older than version 19.0!
+  * except the Uninstaller
+
 ### Bugfixes
 
 * logscleaner init.d Script

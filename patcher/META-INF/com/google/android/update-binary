@@ -52,16 +52,9 @@ fi
 
 detect_odex
 
-[ -f ${MAGISK_IMG} ] && magisk_setup
-
 patch_services
 install_services
 install_addond
-
-ui_print " "
-ui_print " >> clean up"
-
-magisk_cleanup
 
 if ! ${BOOTMODE} ; then
 	umount -l /system_root 2>/dev/null
