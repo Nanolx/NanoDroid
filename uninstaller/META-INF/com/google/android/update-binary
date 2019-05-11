@@ -315,13 +315,16 @@ mount_partitions
 
 ui_print " << Removing installation logs (if any)"
 
-# old format
+# oldest format
 rm -f /data/adb/.nanodroid_*
 rm -f /data/adb/.recovery_*
 
-# new format
+# old format
 rm -f /data/adb/NanoDroid_log*
 rm -f /data/adb/NanoDroid_twrp*
+
+# new format
+rm -rf /data/media/0/nanodroid_logs
 
 # System Mode uninstallation
 for install_info in /data/adb/.nanodroid-list /data/adb/NanoDroid_FileList; do
