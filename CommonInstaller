@@ -1432,8 +1432,8 @@ nanodroid_substitute () {
 nanodroid_storelogs () {
 
 	curdate=$(date +%Y%m%d_%H.%M.%S)
-	nanodroid_logfile="${STORAGE}/nanodroid_logs/${MODID}_log_${curdate}"
-	nanodroid_twrplog="${STORAGE}/nanodroid_logs/${MODID}_twrp_${curdate}"
+	nanodroid_logfile="${STORAGE}/nanodroid_logs/${MODID}_${VERSION}_log_${curdate}"
+	nanodroid_twrplog="${STORAGE}/nanodroid_logs/${MODID}_${VERSION}_twrp_${curdate}"
 
 	mkdir -p "${STORAGE}/nanodroid_logs"
 
