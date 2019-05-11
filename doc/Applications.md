@@ -21,7 +21,6 @@ Full list of provided applications
 * Oandbackup (App backup and restore) [> F-Droid](https://f-droid.org/packages/dk.jens.backup)
 * Odyssey (Audio player) [> F-Droid](https://f-droid.org/packages/org.gateshipone.odyssey)
 * OmniClock [> GitHub](https://github.com/omnirom/android_packages_apps_OmniClock)
-* OmniJAWS [> GitHub](https://github.com/omnirom/android_packages_services_OmniJaws)
 * OpenCamera [> F-Droid](https://f-droid.org/packages/net.sourceforge.opencamera)
 * OpenKeyChain [> F-Droid](https://f-droid.org/packages/org.sufficientlysecure.keychain)
 * OpenLauncher [> F-Droid](https://f-droid.org/packages/com.benny.openlauncher)

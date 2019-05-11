@@ -64,7 +64,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 20.8.20190504 ([Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class))
+* Stable: 20.8.20190504 ([Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class)))
 * Beta: --- (---)
 
 ## Downloads
@@ -149,14 +149,9 @@ The following applications are custom builds (see [F-Droid Repository](#f-droid-
   * [source (with detailed changes)](https://github.com/Nanolx/android_packages_apps_GmsCore)
 * microG DroidGuard Helper (reason: built with fix for non 32bit arm devices failing SafetyNet attestation)
   * [source](https://github.com/ThibG/android_packages_apps_RemoteDroidGuard/tree/aarch64)
-* OmniJAWS (reason: no binary built outside of OmniROM available)
-  * [source](https://github.com/omnirom/android_packages_services_OmniJaws)
 * MPV (reason: infrequent updates)
   * [source](https://github.com/mpv-android/mpv-android)
   * [version code patch](https://nanolx.org/fdroid/mpv.diff)
-* OpenLauncher (reason: infrequent updates)
-  * [source](https://github.com/OpenLauncherTeam/openlauncher)
-  * [version code patch](https://nanolx.org/fdroid/openlauncher.diff)
 
 Also `build-package` looks if the configuration files
 

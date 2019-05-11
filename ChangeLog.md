@@ -15,6 +15,9 @@
 * Installer, Uninstaller, Addon.d, Patcher
   * use full `/data/media/0` path instead of `/sdcard`
 
+* Full package
+  * drop OmniJAWS
+
 * Scripts
   * detect full path to storage instead of hardcoding `/sdcard`
 

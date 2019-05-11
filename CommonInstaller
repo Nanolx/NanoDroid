@@ -1636,6 +1636,11 @@ check_cfg_apps () {
 	if grep -q YahooWeatherProvider "${cfg_apps}"; then
 		sed -e '/YahooWeatherProvider/d' -i "${cfg_apps}"
 	fi
+
+	# >= 20.8.90 no longer ships OmniJAWS, remove
+	if grep -q OmniJAWS "${cfg_apps}"; then
+		sed -e '/OmniJAWS/d' -i "${cfg_apps}"
+	fi
 }
 
 # check whether '.nanodroid-overlay' is up to date
