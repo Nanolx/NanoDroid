@@ -34,6 +34,9 @@
   * move Aurora Store from `priv-app` to `app`, drop now useless permission file @Vavun
   * simplify code
 
+* Uninstaller
+  * remove `/data/media/0/nanodroid_logs` aswell
+
 * SysTest
   * store logs into `/data/media/0/nanodroid_logs` instead of `/data/media/0`
      * change file permissions, so they can be accessed as ordinary user
@@ -44,6 +47,7 @@
     * also log Magisk version
     * also log whehter Magisk is imageless or not
   * pipe installed package checks through `sort` for nicer log result
+  * update mount code
 
 * init.d Scripts
   * move init.d scripts logs from `${MODDIR}/.logs` to `${MODDIR}/logs`
