@@ -36,6 +36,7 @@
 * SysTest
   * append date in +%Y%m%d-%H.%M.%S format to log file name
     * example: 20190505-09.35.00, 20190505-21.35.00
+  * add check whether ROM supports Bromite WebView installation
 
 * init.d Scripts
   * move init.d scripts logs from `${MODDIR}/.logs` to `${MODDIR}/logs`
