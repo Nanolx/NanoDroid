@@ -70,7 +70,6 @@ update_apps () {
 	grab_apk_from_repo ${fd_NEWPIPE[@]}
 	grab_apk_from_repo ${fd_OANDBACKUP[@]}
 	grab_apk_from_repo ${fd_ODYSSEY[@]}
-	grab_apk_from_repo ${nlx_OMNIJAWS[@]}
 	grab_apk_from_repo ${fd_OPENCAMERA[@]}
 	grab_apk_from_repo ${fd_OPENKEYCHAIN[@]}
 	grab_apk_from_repo ${fd_OPENLAUNCHER[@]}
