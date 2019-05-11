@@ -559,7 +559,6 @@ magisk_install_setup () {
 	if [ ${MAGISK_VER_CODE} -gt 18100 ]; then
 		MOUNTPATH=${NVBASE}/modules
 		MODPATH=${MOUNTPATH}/${MODID}
-		REALPATH=${MODPATH}
 
 		# XXX when upgrading from Magisk 18.1 to 19.0 and flashing NanoDroid in one go,
 		# XXX and NanoDroid installation logs exist, assume an upgrade
@@ -1407,7 +1406,7 @@ nanodroid_substitute () {
 	fi
 
 	if grep -q @MODPATH@ ${target}; then
-		sed -e "s|@MODPATH@|${REALPATH}|g" -i ${target}
+		sed -e "s|@MODPATH@|${MODPATH}|g" -i ${target}
 		echo "    substitute: adjust @MODPATH@ in ${target}"
 	fi
 }
@@ -1436,7 +1435,6 @@ ARCH=${ARCH}
 LIB_ARCHES=${LIB_ARCHES}
 MODPATH=${MODPATH}
 SWIPE_LIBDIR=${SWIPE_LIBDIR}
-REALPATH=${REALPATH}
 MODE=${MODE}
 MAGISK_VER_CODE=${MAGISK_VER_CODE}
 CUSTOM_FONT=${CUSTOM_FONT}
