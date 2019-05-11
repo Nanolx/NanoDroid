@@ -21,6 +21,9 @@ for init in 10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner; do
 		tee -a "${LOGDIR}/${init}.log.${CURDATE}" &
 done
 
+# wait until boot completed
+until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
+
 # in Magisk Mode microG DroidGuard Helper needs to be installed as user app
 pm list packages -f | grep -q /data.*org.microg.gms.droidguard || \
 	pm install -r "${MODDIR}/system/app/DroidGuard/DroidGuard.apk" &
