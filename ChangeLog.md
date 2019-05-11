@@ -29,14 +29,21 @@
      * change file permissions, so they can be accessed as ordinary user
   * append version to the installation logs
      * for example: `NanoDroid_20.8.20190504_log_20190505-21.35.00`
+  * append `.log` extension to installation logs
   * when updating NanoDroid in Magisk Mode make init.d logs survive it
   * move Aurora Store from `priv-app` to `app`, drop now useless permission file @Vavun
   * simplify code
 
 * SysTest
+  * store logs into `/data/media/0/nanodroid_logs` instead of `/data/media/0`
+     * change file permissions, so they can be accessed as ordinary user
   * append date in +%Y%m%d-%H.%M.%S format to log file name
     * example: 20190505-09.35.00, 20190505-21.35.00
   * add check whether ROM supports Bromite WebView installation
+  * improve check whether Magisk is installed
+    * also log Magisk version
+    * also log whehter Magisk is imageless or not
+  * pipe installed package checks through `sort` for nicer log result
 
 * init.d Scripts
   * move init.d scripts logs from `${MODDIR}/.logs` to `${MODDIR}/logs`
