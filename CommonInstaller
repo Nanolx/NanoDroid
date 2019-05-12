@@ -213,12 +213,14 @@ error () {
 	ui_print "${@}"
 	ui_print " !!"
 
-	[ "${MODE}" = "MAGISK" ] && rm -rf "${MODPATH}"
+	if is_mounted /data; then
+		[ "${MODE}" = "MAGISK" ] && rm -rf "${MODPATH}"
 
-	recovery_cleanup
+		recovery_cleanup
 
-	INSTALL_SUCCESS=FALSE
-	nanodroid_storelogs
+		INSTALL_SUCCESS=FALSE
+		nanodroid_storelogs
+	fi
 
 	exit 1
 }
