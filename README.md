@@ -588,6 +588,7 @@ Stock ROMs with GApps may not allow to switch from Google GmsCore to microG GmsC
 
 When upgrading NanoDroid or installing on a known clean ROM (read: GApps free), you may also just
 
+* boot into TWRP
 * install **Magisk**
   * recommended, but not required
   * if **Magisk** is installed, NanoDroid will be installed as Magisk-Module, else it will install into `/system` directly

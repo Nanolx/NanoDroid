@@ -40,7 +40,7 @@
   * add check whether ROM supports Bromite WebView installation
   * improve check whether Magisk is installed
     * also log Magisk version
-    * also log whehter Magisk is imageless or not
+    * also log whether Magisk is imageless or not
   * pipe installed package checks through `sort` for nicer log result
   * update mount code
 
