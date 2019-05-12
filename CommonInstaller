@@ -304,6 +304,10 @@ detect_mode () {
 		fi
 	fi
 
+	[ "${ROM_NO_XBIN}" -eq 1 ] && \
+		NANODROID_BINDIR="${MODPATH}/system/bin" || \
+		NANODROID_BINDIR="${MODPATH}/system/xbin"
+
 	case ${MODE} in
 		SYSTEM )
 			recovery_actions
@@ -480,11 +484,8 @@ detect_arch () {
 
 	if [ ! -d /system/xbin ]; then
 		ROM_NO_XBIN=1
-		NANODROID_BINDIR="${MODPATH}/system/bin"
 		echo " ++ ROM has no /system/xbin, using /system/bin instead"
-	else
-		ROM_NO_XBIN=0
-		NANODROID_BINDIR="${MODPATH}/system/xbin"
+	else	ROM_NO_XBIN=0
 	fi
 
 	[ ! -d /data/adb ] && mkdir /data/adb
