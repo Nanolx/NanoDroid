@@ -66,10 +66,13 @@ EOF
 ##########################################################################################
 
 check_space () {
-	minimum_size=524288
-	size_available=$(df | awk '/\/dev$/{print $4}')
+	space_required=524288
+	space_available=$(df /dev 2>/dev/null | awk '/tmpfs/{print $4}')
 
-	if [ ${size_available} -lt ${minimum_size} ]; then
+	echo "  required space : ${space_required}"
+	echo "  available space: ${space_available}"
+
+	if [ ${space_available} -lt ${space_required} ]; then
 		error "Less than 512 MB free space availabe from TWRP!"
 	fi
 }
@@ -261,7 +264,6 @@ mount_partitions () {
 	fi
 
 	mount | awk '{print $1 " on " $3 " params: " $6}'
-	df -h | sed '/^\//d'
 }
 
 detect_mode () {
@@ -1437,7 +1439,7 @@ echo "
 ### DISK USAGE ###
 " >> ${nanodroid_logfile}
 
-df -h | sed '/^\//d' >> ${nanodroid_logfile}
+df 2>/dev/null | sed '/^\//d' >> ${nanodroid_logfile}
 
 echo "
 ### SETUP ###
