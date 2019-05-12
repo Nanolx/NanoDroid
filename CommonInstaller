@@ -1097,7 +1097,6 @@ install_initd () {
 
 install_bromite_webview () {
 	if [ "${MODID}" = "NanoDroid_BromiteWebView" ]; then
-
 		if ! check_bromite_webview_support; then
 			error "ROM does not support Bromite WebView installation!"
 		else
