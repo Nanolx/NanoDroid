@@ -8,9 +8,4 @@ until [ `getprop sys.boot_completed`. = 1. ]; do sleep 1; done
 
 # Bromite WebView needs to be installed as user app
 pm list packages -f | grep -q /data.*com.android.webview || \
-	pm install -r "${MODDIR}"/system/app/*/*.apk &
-
-# install Magisk Manager if NanoDroid migration was run
-[ -f /data/adb/magisk.apk ] && \
-	pm install -r /data/adb/magisk.apk ; \
-	rm -f /data/adb/magisk.apk &
+	pm install -r "${MODDIR}/system/app/BromiteWebView/BromiteWebView.apk" &
