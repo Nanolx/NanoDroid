@@ -299,17 +299,6 @@ detect_mode () {
 	ui_print " > Mode   | ${MODE}            | ${MODE_DETECT}"
 	ui_print " "
 
-	if [ "${nanodroid_fonts}" -eq 1 ]; then
-		if test -h ${MODPATH}/system/fonts/Roboto-Regular.ttf; then
-			CUSTOM_FONT="$(basename $(readlink ${MODPATH}/system/fonts/Roboto-Regular.ttf) .ttf)"
-			ui_print " << Detected NanoDroid-Font (${CUSTOM_FONT})"
-		fi
-	fi
-
-	[ "${ROM_NO_XBIN}" -eq 1 ] && \
-		NANODROID_BINDIR="${MODPATH}/system/bin" || \
-		NANODROID_BINDIR="${MODPATH}/system/xbin"
-
 	case ${MODE} in
 		SYSTEM )
 			recovery_actions
@@ -328,6 +317,17 @@ detect_mode () {
 			rm -rf "${MODPATH}"
 		;;
 	esac
+
+	if [ "${nanodroid_fonts}" -eq 1 ]; then
+		if test -h ${MODPATH}/system/fonts/Roboto-Regular.ttf; then
+			CUSTOM_FONT="$(basename $(readlink ${MODPATH}/system/fonts/Roboto-Regular.ttf) .ttf)"
+			ui_print " << Detected NanoDroid-Font (${CUSTOM_FONT})"
+		fi
+	fi
+
+	[ "${ROM_NO_XBIN}" -eq 1 ] && \
+		NANODROID_BINDIR="${MODPATH}/system/bin" || \
+		NANODROID_BINDIR="${MODPATH}/system/xbin"
 }
 
 unpack_zip () {
