@@ -264,19 +264,6 @@ mount_partitions () {
 	df -h | sed '/^\//d'
 }
 
-migrate_magisk_custom () {
-	if [ ! -d /data/adb/ ]; then
-		mkdir -p /data/adb/
-		chown root:root /data/adb
-		chmod 0644 /data/adb
-	fi
-
-	if [ ! -f /data/adb/magisk.db ]; then
-		mv ${1} /data/adb/magisk
-		cp /data/adb/magisk/magisk.apk /data/adb/magisk.apk
-	fi
-}
-
 detect_mode () {
 	[ -f /data/adb/.nanodroid-list ] && mv /data/adb/.nanodroid-list "${NANODROID_LIST}"
 
@@ -287,20 +274,20 @@ detect_mode () {
 		;;
 
 		0 | *)
+			MODE=SYSTEM
 			MODE_DETECT=detected
+
+			for magisk in /data/adb/magisk/magisk /data/magisk/magisk \
+				/data/.magisk/magisk /data/adb/modules; do
+				if [ -e ${magisk} ]; then
+					MODE=MAGISK
+					break
+				fi
+			done
 
 			if [ -f "${NANODROID_LIST}" ]; then
 				MODE=SYSTEM
-			elif [ -f /data/adb/magisk/magisk -o -d /data/adb/modules ]; then
-				MODE=MAGISK
-			elif [ -f /data/.magisk/magisk ]; then
-				migrate_magisk_custom /data/.magisk/
-				MODE=MAGISK
-			elif [ -f /data/magisk/magisk ]; then
-				migrate_magisk_custom /data/magisk/
-				MODE=MAGISK
-			else
-				MODE=SYSTEM
+				NANODROID_UPGRADE=1
 			fi
 		;;
 	esac
@@ -315,30 +302,24 @@ detect_mode () {
 		fi
 	fi
 
-	if [ "${MODE}" = "SYSTEM" ]; then
-		if [ -f "${NANODROID_LIST}" ]; then
-			NANODROID_UPGRADE=1
-		else	NANODROID_UPGRADE=0
-		fi
+	case ${MODE} in
+		SYSTEM )
+			recovery_actions
+			unset MODPATH
+		;;
 
-		recovery_actions
-		unset MODPATH
-	else
-		magisk_install_setup
+		MAGISK )
+			magisk_install_setup
 
-		case ${MODID} in
-			NanoDroid | NanoDroid_microG )
-				magisk_install_preinst
-			;;
-		esac
+			case ${MODID} in
+				NanoDroid | NanoDroid_microG )
+					magisk_install_preinst
+				;;
+			esac
 
-		rm -rf "${MODPATH}"
-	fi
-
-	if [ "${ROM_NO_XBIN}" -eq 0 ]; then
-		NANODROID_BINDIR="${MODPATH}/system/xbin"
-	else	NANODROID_BINDIR="${MODPATH}/system/bin"
-	fi
+			rm -rf "${MODPATH}"
+		;;
+	esac
 }
 
 unpack_zip () {
@@ -497,8 +478,11 @@ detect_arch () {
 
 	if [ ! -d /system/xbin ]; then
 		ROM_NO_XBIN=1
+		NANODROID_BINDIR="${MODPATH}/system/bin"
 		echo " ++ ROM has no /system/xbin, using /system/bin instead"
-	else	ROM_NO_XBIN=0
+	else
+		ROM_NO_XBIN=0
+		NANODROID_BINDIR="${MODPATH}/system/xbin"
 	fi
 
 	[ ! -d /data/adb ] && mkdir /data/adb
