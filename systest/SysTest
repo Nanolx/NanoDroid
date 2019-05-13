@@ -263,6 +263,8 @@ add_log () {
 }
 
 store_results () {
+	mkdir -p "$(dirname "${LOGFILE}")"
+
 	add_log "NanoDroid System Test Results"
 	add_log "============================="
 	add_log ""
