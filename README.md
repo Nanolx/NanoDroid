@@ -534,7 +534,7 @@ Full [> Details](doc/AlterInstallation.md) on altering installation manually, or
 
 This is the recommended way.
 
-### Stock ROM without GApps, custom ROM with/without OpenGApps
+###### Stock ROM without GApps, custom ROM with/without OpenGApps
 
 OpenGApps and GApps-less ROMs don't need further measurements, the Installer takes care of required steps.
 
@@ -552,7 +552,7 @@ OpenGApps and GApps-less ROMs don't need further measurements, the Installer tak
      * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 9.0)
 * reboot into ROM
 
-### Stock ROM with GApps
+###### Stock ROM with GApps
 
 Stock ROMs with GApps may not allow to switch from Google GmsCore to microG GmsCore in-place, thus the installation is slightly different.
 
