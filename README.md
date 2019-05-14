@@ -30,7 +30,6 @@ Table of Contents
             * [Parallel Installations](#parallel-installations)
          * [Extras](#extras)
          * [F-Droid Repository](#f-droid-repository)
-         * [Scripts](#scripts)
       * [Details](#details)
          * [NanoDroid](#nanodroid-1)
             * [NanoDroid-Overlay](#nanodroid-overlay)
@@ -329,14 +328,6 @@ Extra packages, flashing trough TWRP recommended, flashing through Magisk Manage
 ### F-Droid Repository
 
 In order to ease updating NanoDroid's custom application builds you can use it's companion [F-Droid Repository](https://www.nanolx.org/fdroid/repo)
-
-### Scripts
-
-Misc. Scripts for use from PC/Notebook, while device is in TWRP, they are found in this repository:
-
-* **mount-magisk**
-  * script to mount or unmount Magisk in TWRP
-  * script toggles mount-state (read: will mount Magisk if unmounted and unmount Magisk if mounted)
 
 ## Details
 
