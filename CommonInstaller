@@ -415,7 +415,11 @@ detect_arch () {
 				SWIPE_LIBDIR=lib64 ;;
 	esac
 
-	chmod +x "${INSTALLER}/system/xbin/unzip.${BIN_ARCH}"
+	UNZIP="${INSTALLER}/system/xbin/unzip.${BIN_ARCH}"
+	chmod +x "${UNZIP}"
+
+	AAPT="${INSTALLER}/system/xbin/aapt.${BIN_ARCH}"
+	chmod +x "${AAPT}"
 
 	case ${SDK_VERSION} in
 		19 )		GSYNC_VER=K	;;
@@ -742,7 +746,7 @@ check_fake_package_signature () {
 
 	if [ ! -f ${FW_RES_FILE} ]; then
 		mkdir -p "${FW_RES_DIR}"
-		unzip -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
+		"${UNZIP}" -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
 	fi
 
 	grep -qF "${PERMISSION}" "${FW_RES_FILE}" && HAS_FAKESIGN=true
@@ -764,12 +768,53 @@ check_bromite_webview_support () {
 
 	if [ ! -f ${FW_RES_FILE} ]; then
 		mkdir -p "${FW_RES_DIR}"
-		unzip -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
+		"${UNZIP}" -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
 	fi
 
 	grep -qF "${WEBVIEW_PKG}" "${FW_RES_FILE}" && HAS_WEBVIEW=true
 
 	${HAS_WEBVIEW} && return 0 || return 1
+}
+
+##########################################################################################
+# privapp permission whitelist generation
+##########################################################################################
+
+dump_system_privapp_permissions () {
+	# XXX this looks shitty
+	"${AAPT}" d --values xmltree /system/framework/framework-res.apk \
+		tr -d '\n' | sed -e 's/E:/\n/g' | grep '(type 0x11)0x12' | \
+		awk -F\" '{print $2}' | sort > "${TMPDIR}/privapp-permissions.list"
+}
+
+dump_app_privapp_permissions () {
+	APK="${1}"
+	APK_NAME="$("${AAPT}" dump badging "${APK}" | awk -F \' '/^package: name/{print $2}')"
+
+	"${AAPT}" dump permissions "${APK}" | \
+		awk -F \' '/^uses-permission:/{print $2}' | \
+		sort > "${TMPDIR}/${APK_NAME}.list"
+}
+
+create_privapp_permissions_whitelist () {
+	APK_NAME="${1}"
+	APK_LIST="${TMPDIR}/${1}.list"
+	SYS_LIST="${TMPDIR}/privapp-permissions.list"
+	APP_WHITELIST="${TMPDIR}/${APK_NAME}.xml"
+
+	echo '<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <privapp-permissions package="'${APK_NAME}'">' > "${APP_WHITELIST}"
+
+	cat "${APK_LIST}" | while read perm; do
+		if grep -q "${perm}" "${SYS_LIST}"; then
+			echo "  ++ package ${APK_NAME} needs privapp-whitelist ${perm}"
+			echo '        <permission name="'${perm}'" />' >> "${APP_WHITELIST}"
+		fi
+	done
+
+	echo '    </privapp-permissions>
+</permissions>' >> "${APP_WHITELIST}"
 }
 
 ##########################################################################################
@@ -1071,7 +1116,7 @@ install_shell_utils () {
 		ui_print " << with Shell Utilities"
 
 		# architecture dependend stuff
-		for binary in col colcrt colrm column findfs findmnt \
+		for binary in aapt col colcrt colrm column findfs findmnt \
 			hexdump lessecho lesskey look lsblk lscpu lsipc \
 			lslocks lsns ncal setterm unzip whereis; do
 			nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
@@ -1324,8 +1369,7 @@ nanodroid_install_lib () {
 
 	unset srcdir
 
-	"${INSTALLER}/system/xbin/unzip.${BIN_ARCH}" \
-		-oq "${apk}" "lib/*" -d "${TMP_LIBDIR}" \
+	"${UNZIP}" -oq "${apk}" "lib/*" -d "${TMP_LIBDIR}" \
 		2>/dev/null
 	unzip_return=$?
 
