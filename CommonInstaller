@@ -781,26 +781,33 @@ check_bromite_webview_support () {
 ##########################################################################################
 
 dump_system_privapp_permissions () {
+	SYS_LIST="${TMPDIR}/privapp-permissions.list"
+
 	# XXX this looks shitty
 	"${AAPT}" d --values xmltree /system/framework/framework-res.apk \
 		tr -d '\n' | sed -e 's/E:/\n/g' | grep '(type 0x11)0x12' | \
-		awk -F\" '{print $2}' | sort > "${TMPDIR}/privapp-permissions.list"
-}
+		awk -F\" '{print $2}' | sort > "${SYS_LIST}"
 
-dump_app_privapp_permissions () {
-	APK="${1}"
-	APK_NAME="$("${AAPT}" dump badging "${APK}" | awk -F \' '/^package: name/{print $2}')"
-
-	"${AAPT}" dump permissions "${APK}" | \
-		awk -F \' '/^uses-permission:/{print $2}' | \
-		sort > "${TMPDIR}/${APK_NAME}.list"
+	# XXX pre-patched custom ROM
+	check_fake_package_signature && \
+		echo "android.permission.FAKE_PACKAGE_SIGNATURE" >> "${SYS_LIST}"
 }
 
 create_privapp_permissions_whitelist () {
-	APK_NAME="${1}"
-	APK_LIST="${TMPDIR}/${1}.list"
+	APK="${MODPATH}/system/priv-app/${1}/${1}.apk"
+	APK_NAME="$("${AAPT}" dump badging "${APK}" | awk -F \' '/^package: name/{print $2}')"
+	APK_LIST="${TMPDIR}/${APK_NAME}.list"
+
 	SYS_LIST="${TMPDIR}/privapp-permissions.list"
+
 	APP_WHITELIST="${TMPDIR}/${APK_NAME}.xml"
+	INST_WHITELIST="${MODPATH}/system/etc/permissions/${APK_NAME}.xml"
+
+	[ ! -f "${SYS_LIST}" ] && dump_system_privapp_permissions
+
+	"${AAPT}" dump permissions "${APK}" | \
+		awk -F \' '/^uses-permission:/{print $2}' | \
+		sort > "${TMPDIR}/${APK_LIST}"
 
 	echo '<?xml version="1.0" encoding="utf-8"?>
 <permissions>
@@ -815,6 +822,11 @@ create_privapp_permissions_whitelist () {
 
 	echo '    </privapp-permissions>
 </permissions>' >> "${APP_WHITELIST}"
+
+	mkdir -p "${MODPATH}/system/etc/permissions/"
+	cp "${APP_WHITELIST}" "${INST_WHITELIST}"
+	set_perm_data "${INST_WHITELIST}"
+	installinfo_add "${INST_WHITELIST}"
 }
 
 ##########################################################################################
@@ -880,18 +892,13 @@ install_microg () {
 			nanodroid_install_apk ${app}
 		done
 
-		# if android.permission.FAKE_PACKAGE_SIGNATURE is not a runtime-permission
-		# (read: ROM is not pre-patched), remove that permission from pre-sets
-		if ! check_fake_package_signature; then
-			sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' \
-				-i ${INSTALLER}/system/etc/permissions/privapp-permissions-google.xml
+		check_fake_package_signature || \
+			sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' -i \
+			${INSTALLER}/system/etc/default-permissions/microg-permissions.xml
 
-			sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' \
-				-i ${INSTALLER}/system/etc/default-permissions/microg-permissions.xml
-		fi
+		create_privapp_permissions_whitelist GmsCore
 
 		nanodroid_install_file etc/permissions/features.xml
-		nanodroid_install_file etc/permissions/privapp-permissions-google.xml
 		nanodroid_install_file etc/default-permissions/microg-permissions.xml
 		nanodroid_install_file etc/sysconfig/microg-a5k.xml
 
@@ -921,6 +928,7 @@ install_gsync () {
 				nanodroid_install_apk ${app}
 			done
 
+			create_privapp_permissions_whitelist GoogleBackupTransport
 			nanodroid_install_file etc/default-permissions/google-sync-permissions.xml
 		fi
 	else	ui_print " << without Google Sync Adapters"
@@ -937,7 +945,7 @@ install_fdroid () {
 
 		${NANODROID_BINDIR}/nanodroid-overlay --add FDroidPriv
 
-		nanodroid_install_file etc/permissions/org.fdroid.fdroid.privileged.xml
+		create_privapp_permissions_whitelist FDroidPrivileged
 		nanodroid_install_file etc/org.fdroid.fdroid/additional_repos.xml
 	else	ui_print " << without F-Droid"
 	fi
@@ -996,19 +1004,14 @@ install_store () {
 			ui_print " << with Play Store"
 			nanodroid_install_apk Phonesky
 
-			# if android.permission.FAKE_PACKAGE_SIGNATURE is not a runtime-permission
-			# (read: ROM is not pre-patched), remove that permission from pre-sets
-			check_fake_package_signature || \
-				sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' \
-					-i ${INSTALLER}/system/etc/default-permissions/phonesky-permissions.xml
-
+			create_privapp_permissions_whitelist Phonesky
 			nanodroid_install_file etc/default-permissions/phonesky-permissions.xml
 		;;
 
 		2 )
 			ui_print " << with Yalp Store"
 			nanodroid_install_apk YalpStore
-			nanodroid_install_file etc/permissions/com.github.yeriomin.yalpstore.xml
+			create_privapp_permissions_whitelist YalpStore
 		;;
 
 		3 )
@@ -1026,10 +1029,9 @@ install_store () {
 		ui_print " << with Fake Store"
 		nanodroid_install_apk FakeStore
 
-		if check_fake_package_signature; then
+		check_fake_package_signature && \
 			nanodroid_install_file etc/default-permissions/fakestore-permissions.xml
-			nanodroid_install_file etc/permissions/com.android.vending.xml
-		fi
+		create_privapp_permissions_whitelist FakeStore
 	else 	ui_print " << without Fake Store"
 	fi
 
