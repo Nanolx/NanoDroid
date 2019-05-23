@@ -10,7 +10,7 @@ create_full_package () {
 	zip_add
 	cd "${CWD}"
 
-	for file in Common{Installer,Addon} busybox.* sqlite3.*; do
+	for file in Common{Installer,Addon} busybox.* sqlite3.* aapt.*; do
 		zip_add ${file}
 	done
 

@@ -21,8 +21,8 @@ create_microg_package() {
 	for input in "system/xbin/nanodroid*" "system/xbin/novl" \
 		"system/xbin/npem" "system/xbin/nprp" \
 		"system/xbin/nutl" "system/xbin/unzip*" "system/framework/" \
-		"gsync/" "system/etc/permissions/" "system/etc/sysconfig/" \
-		"system/etc/default-permissions/" "swipe/"; do
+		"gsync/" "system/etc/sysconfig/" "swipe/" \
+		"system/etc/default-permissions/"; do
 		zip_add "${input}"
 	done
 
@@ -30,7 +30,7 @@ create_microg_package() {
 	zip_add
 	cd "${CWD}"
 
-	for file in Common{Installer,Addon} busybox.* sqlite3.*; do
+	for file in Common{Installer,Addon} busybox.* sqlite3.* aapt.*; do
 		zip_add ${file}
 	done
 

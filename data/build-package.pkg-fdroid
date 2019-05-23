@@ -9,7 +9,6 @@ create_fdroid_package() {
 	cd "${CWD}/Full"
 	zip_add "system/app/FDroid/"
 	zip_add "system/priv-app/FDroidPrivileged/"
-	zip_add "system/etc/permissions/org.fdroid.fdroid.privileged.xml"
 	zip_add "system/etc/org.fdroid.fdroid/"
 	zip_add "system/xbin/unzip*"
 	cd "${CWD}"
@@ -18,10 +17,9 @@ create_fdroid_package() {
 	zip_add
 	cd "${CWD}"
 
-	zip_add CommonInstaller
-	zip_add CommonAddon
-	zip_add busybox.arm
-	zip_add busybox.x86
+	for file in Common{Installer,Addon} busybox.* aapt.*; do
+		zip_add ${file}
+	done
 
 	zip_add_doc
 	zip_add_config .nanodroid-setup 0
