@@ -17,9 +17,13 @@ create_fdroid_package() {
 	zip_add
 	cd "${CWD}"
 
-	for file in Common{Installer,Addon} busybox.* aapt.*; do
-		zip_add ${file}
-	done
+	zip_add CommonInstaller
+	zip_add CommonAddon
+
+	cd "${CWD}/tools"
+	zip_add "busybox*"
+	zip_add "aapt*"
+	cd "${CWD}"
 
 	zip_add_doc
 	zip_add_config .nanodroid-setup 0

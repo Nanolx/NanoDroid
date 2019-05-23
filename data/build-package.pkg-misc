@@ -8,10 +8,11 @@ create_patcher_package() {
 
 	cd "${CWD}/patcher"
 	zip_add
+
+	cd "${CWD}/tools"
+	zip_add "busybox*"
 	cd "${CWD}"
 
-	zip_add busybox.arm
-	zip_add busybox.x86
 	zip_add_doc
 
 	sum_sign_package "${ZIP}"
