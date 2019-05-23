@@ -27,6 +27,7 @@
      * for example: `NanoDroid_20.8.20190504_log_20190505-21.35.00`
   * append `.log` extension to installation logs
   * when updating NanoDroid in Magisk Mode make init.d logs survive it
+  * automatically create priv-app permission whitelist files
   * simplify code
 
 * Uninstaller
