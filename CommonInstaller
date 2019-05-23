@@ -807,7 +807,7 @@ create_privapp_permissions_whitelist () {
 
 	"${AAPT}" dump permissions "${APK}" | \
 		awk -F \' '/^uses-permission:/{print $2}' | \
-		sort > "${TMPDIR}/${APK_LIST}"
+		sort > "${APK_LIST}"
 
 	echo '<?xml version="1.0" encoding="utf-8"?>
 <permissions>
