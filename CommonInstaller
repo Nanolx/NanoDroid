@@ -1118,7 +1118,7 @@ install_shell_utils () {
 		ui_print " << with Shell Utilities"
 
 		# architecture dependend stuff
-		for binary in aapt col colcrt colrm column findfs findmnt \
+		for binary in col colcrt colrm column findfs findmnt \
 			hexdump lessecho lesskey look lsblk lscpu lsipc \
 			lslocks lsns ncal setterm unzip whereis; do
 			nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
