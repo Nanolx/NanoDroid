@@ -418,7 +418,7 @@ detect_arch () {
 	UNZIP="${INSTALLER}/system/xbin/unzip.${BIN_ARCH}"
 	chmod +x "${UNZIP}"
 
-	AAPT="${INSTALLER}/system/xbin/aapt.${BIN_ARCH}"
+	AAPT="${INSTALLER}/aapt.${BIN_ARCH}"
 	chmod +x "${AAPT}"
 
 	case ${SDK_VERSION} in
