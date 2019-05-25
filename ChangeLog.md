@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 20.9 in-dev
+## 21.0 in-dev
 
 ### Notes
 
@@ -87,11 +87,11 @@
   * Simple Gallery (6.7.5)
   * Simple Calendar (6.5.0)
   * F-Droid (1.6.1)
-  * Termux (0.69)
-  * Tor Browser (60.6.1)
+  * Termux (0.71)
+  * Tor Browser (60.7.1)
 
 * manual
-  * Google Play (14.9.70)
+  * Google Play (15.0.13)
   * MPV (20190511-nightly)
 
 ## 20.8.20190504 "[Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class))"
