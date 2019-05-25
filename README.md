@@ -66,7 +66,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 ## Current Release
 
 * Stable: 20.8.20190504 ([Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class)))
-* Beta: --- (---)
+* Beta: 20.8.91.20190525 (21.0-beta2)
 
 ## Downloads
 
@@ -244,7 +244,7 @@ NanoDroid includes
 Module packages, flashing through TWRP required (flashing through Magisk Manager is not supported).
 
 * **NanoDroid**: includes
-  * everything mentioned in the Summary
+  * everything mentioned in the Summary above
 * **NanoDroid-microG**: includes (only)
   * microG and it's companions
   * pseudo/force-debloat feature
