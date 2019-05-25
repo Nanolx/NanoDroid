@@ -22,7 +22,7 @@ create_microg_package() {
 		"system/xbin/npem" "system/xbin/nprp" \
 		"system/xbin/nutl" "system/xbin/unzip*" "system/framework/" \
 		"gsync/" "system/etc/sysconfig/" "swipe/" \
-		"system/etc/default-permissions/"; do
+		"system/etc/default-permissions/" "system/etc/permissions/"; do
 		zip_add "${input}"
 	done
 
