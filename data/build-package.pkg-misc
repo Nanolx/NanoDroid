@@ -54,8 +54,10 @@ create_uninstaller_package() {
 	zip_add
 	cd "${CWD}"
 
-	zip_add busybox.arm
-	zip_add busybox.x86
+	cd "${CWD}/tools"
+	zip_add "busybox*"
+	cd "${CWD}"
+
 	zip_add_doc
 
 	sum_sign_package "${ZIP}"
@@ -76,8 +78,10 @@ create_systest_package() {
 	zip_add
 	cd "${CWD}"
 
-	zip_add busybox.arm
-	zip_add busybox.x86
+	cd "${CWD}/tools"
+	zip_add "busybox*"
+	cd "${CWD}"
+
 	zip_add_doc
 
 	sum_sign_package "${ZIP}"
