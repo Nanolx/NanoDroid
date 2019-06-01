@@ -96,8 +96,8 @@
   * Aurora Store (3.0.5)
 
 * manual
-  * microG (NanoDroid) (0.2.7.17455-mapbox)
-  * microG (Official) (0.2.7.17455-mapbox)
+  * microG (NanoDroid) (0.2.7.17455-65-mapbox)
+  * microG (Official) (0.2.7.17455-vtm)
   * Google Play (15.1.23)
   * MPV (20190511-nightly)
 
