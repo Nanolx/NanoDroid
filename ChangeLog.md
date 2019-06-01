@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 21.0 in-dev
+## 21.0.20190601 "[USS Reliant](https://memory-alpha.fandom.com//wiki/USS_Reliant)"
 
 ### Notes
 
@@ -84,14 +84,21 @@
 ###  Updates
 
 * automatic
-  * Simple Gallery (6.7.5)
+  * Simple Gallery (6.7.7)
   * Simple Calendar (6.5.0)
-  * F-Droid (1.6.1)
-  * Termux (0.71)
-  * Tor Browser (60.7.1)
+  * F-Droid (1.7-alpha0)
+  * Termux (0.72)
+  * Tor Browser (60.7.0)
+  * Bromite System WebView (75.0.3770.70)
+  * Open Camera (1.46)
+  * OpenVPN (0.7.8)
+  * AnySoftKeyboard (1.10.606)
+  * Aurora Store (3.0.5)
 
 * manual
-  * Google Play (15.0.13)
+  * microG (NanoDroid) (0.2.7.)
+  * microG (Official) (0.2.7.17455-mapbox)
+  * Google Play (15.1.23)
   * MPV (20190511-nightly)
 
 ## 20.8.20190504 "[Prometheus](https://memory-alpha.fandom.com/wiki/USS_Prometheus_(Prometheus_class))"
