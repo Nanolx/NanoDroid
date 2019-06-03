@@ -640,13 +640,13 @@ List of known issues and their respective fixes or workarounds.
 ### Google Account
 
 * Can't login to Google Account
-  * there's currently an issue where logging in with version 74.x of Chrome/Chromium/Bromite or WebView derived from them fails
-  * the work-arounds are:
-     * install an older version (up to 73.x)
-     * switch to Android System WebView (downloadable from Play Store or APK Mirror)
-     * uninstall updates to downgrade to factory version (which likely is older than 74.x)
+  * there's an issue where logging in with version 74.x of Chrome/Chromium/Bromite or WebView derived from them fails
+  * the fix is:
+     * update microG to 0.2.7.17455
 
 ### SafetyNet
+
+**Note:** microG's Droid Guard Helper is currently _not_ able to perform SafetyNet Attestation.
 
 * Applications/SafetyNet check complain with `Google Play Services are missing`
   * you did not
@@ -719,6 +719,9 @@ List of known issues and their respective fixes or workarounds.
   * some ROMs already have the patch built-in, if you patch those ROMs (again), it results in heavy lags
 
 ### Google Software
+
+* Maps doesn't work when installed a second time
+  * remove your Google Account and re-add it, that'll make Maps work again.
 
 * Hangouts isn't properly working
   * as root, on-device, run the following command:
