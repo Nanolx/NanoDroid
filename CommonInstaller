@@ -803,7 +803,7 @@ create_privapp_permissions_whitelist () {
 	SYS_LIST="${TMPDIR}/privapp-permissions.list"
 
 	APP_WHITELIST="${TMPDIR}/${APK_NAME}.xml"
-	INST_WHITELIST="${MODPATH}/system/etc/permissions/${APK_NAME}.xml"
+	INST_WHITELIST="/system/etc/permissions/${APK_NAME}.xml"
 
 	[ ! -f "${SYS_LIST}" ] && dump_system_privapp_permissions
 
@@ -826,8 +826,8 @@ create_privapp_permissions_whitelist () {
 </permissions>' >> "${APP_WHITELIST}"
 
 	mkdir -p "${MODPATH}/system/etc/permissions/"
-	cp "${APP_WHITELIST}" "${INST_WHITELIST}"
-	set_perm_data "${INST_WHITELIST}"
+	cp "${APP_WHITELIST}" "${MODPATH}/${INST_WHITELIST}"
+	set_perm_data "${MODPATH}/${INST_WHITELIST}"
 	installinfo_add "${INST_WHITELIST}"
 }
 
