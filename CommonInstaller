@@ -968,15 +968,7 @@ install_apps () {
 		ui_print "${APP_STRING}"
 
 		for app in ${INSTALL_APPS}; do
-			if [[ ${app} = OmniClock && -d /system/app/OmniClockOSS ]]; then
-				if [ "${nanodroid_override}" -eq 0 ]; then
-					ui_print " <<> app: OmniClock already provided by ROM (as OmniClockOSS)"
-				else
-					nanodroid_install_apk ${app}
-					echo "   + removing conflicting OmniClockOSS"
-					${NANODROID_BINDIR}/nanodroid-overlay --add OmniClockOSS
-				fi
-			elif [[ -d /system/app/${app} && ! -d ${MODPATH}/system/app/${app} ]]; then
+			if [[ -d /system/app/${app} && ! -d ${MODPATH}/system/app/${app} ]]; then
 				if [ "${nanodroid_override}" -eq 0 ]; then
 					ui_print " <<> app: ${app} already provided by ROM"
 				else	nanodroid_install_apk ${app}
