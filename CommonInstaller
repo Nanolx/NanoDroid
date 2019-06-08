@@ -1652,6 +1652,11 @@ check_cfg_apps () {
 	if grep -q OmniJAWS "${cfg_apps}"; then
 		sed -e '/OmniJAWS/d' -i "${cfg_apps}"
 	fi
+
+	# >= 21.0.90 has Alarmio instead of OmniClock, migrate
+	if grep -q OmniClock "${cfg_apps}"; then
+		sed -e 's/OmniClock/Alarmio/g' -i "${cfg_apps}"
+	fi
 }
 
 # check whether '.nanodroid-overlay' is up to date
