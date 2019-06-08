@@ -9,8 +9,6 @@ nlx_DROIDGUARD=(nanolx org.microg.gms.droidguard app DroidGuard)
 nlx_MPV=(nanolx is.xyz.mpv app MPV)
 nlx_PHONESKY=(nanolx com.android.vending priv-app Phonesky)
 
-nlx_OMNICLOCK=(https://www.nanolx.org/apk/OmniClock.apk app OmniClock)
-
 ###
 # microG
 ###
@@ -38,6 +36,7 @@ fd_FDROID_PE=(fdroid org.fdroid.fdroid.privileged priv-app FDroidPrivileged)
 # Apps
 ###
 
+fd_ALARMIO=(fdroid me.jfenn.alarmio app Alarmio)
 fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
 fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
@@ -64,8 +63,6 @@ fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 gd_ORBOT=(guardian org.torproject.android app Orbot)
 gd_TORBROWSER=(guardian org.torproject.torbrowser_alpha app TorBrowser)
 
-los_OPENWEATHER=(https://mirrorbits.lineageos.org/WeatherProviders/OpenWeatherMapWeatherProvider.apk app OpenWeatherMapProvider)
-
 ###
 # Google Sync Adapters
 ###
@@ -78,7 +75,6 @@ og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
 # APK Mirror
 ###
 
-am_AMAZE=(team-amaze amaze-file-manager app Amaze amaze-file-manager)
 am_KERNELADIUTOR=(willi-ye kernel-adiutor app KernelAdiutor kernel-adiutor-root)
 am_SUBSTRATUM=(projekt substratum-theme-engine app Substratum substratum-theme-engine)
 am_XDALABS=(xda xda-labs app XDALabs xda-labs)
@@ -136,6 +132,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/swipe/x86/libjni_latinimegoogle.so
 	Full/swipe/x86_64/libjni_keyboarddecoder.so
 	Full/swipe/x86_64/libjni_latinimegoogle.so
+	Full/system/app/Alarmio/Alarmio.apk
 	Full/system/app/Amaze/Amaze.apk
 	Full/system/app/AnysoftKeyboard/AnysoftKeyboard.apk
 	Full/system/app/AuroraStore/AuroraStore.apk
@@ -151,12 +148,10 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/NewPipe/NewPipe.apk
 	Full/system/app/Oandbackup/Oandbackup.apk
 	Full/system/app/Odyssey/Odyssey.apk
-	Full/system/app/OmniClock/OmniClock.apk
 	Full/system/app/OpenCamera/OpenCamera.apk
 	Full/system/app/OpenKeyChain/OpenKeyChain.apk
 	Full/system/app/OpenLauncher/OpenLauncher.apk
 	Full/system/app/OpenVPN/OpenVPN.apk
-	Full/system/app/OpenWeatherMapProvider/OpenWeatherMapProvider.apk
 	Full/system/app/Orbot/Orbot.apk
 	Full/system/app/QKSMS/QKSMS.apk
 	Full/system/app/SimpleCalendar/SimpleCalendar.apk
