@@ -1,5 +1,33 @@
 # ChangeLog
 
+## 22.0 in-dev
+
+### Notes
+
+* This release replaces `OmniClock` with `Alarmio`
+  * if you previously opted-in for OmniClock you'll be auto-migrated to Alarmio
+
+* This release drops `OpenWeatherMapProvider`
+  * check your ROM for supported Weather Providers
+
+### Bugfixes
+
+* SetupWizard
+  * fix creating configuration files
+
+### Updates
+
+* automatic
+  * Alarmio (1.0.2)
+  * NewPipe (0.16.2)
+  * Odyssey (1.1.18)
+  * Bromite System WebView (75.0.3770.82)
+
+* manual
+  * microG GmsCore (0.2.14755-beta-80)
+  * MPV (20190604-nightly)
+  * Play Store (15.2.38)
+
 ## 21.0.20190601 "[USS Reliant](https://memory-alpha.fandom.com//wiki/USS_Reliant)"
 
 ### Notes
