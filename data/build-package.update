@@ -58,6 +58,7 @@ update_fdroid () {
 
 update_apps () {
 	# applications managed in repositories
+	grab_apk_from_repo ${fd_ALARMIO[@]}
 	grab_apk_from_repo ${fd_AMAZE[@]}
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
@@ -81,10 +82,6 @@ update_apps () {
 	grab_apk_from_repo ${fd_TWIDERE[@]}
 	grab_apk_from_repo ${gd_ORBOT[@]}
 	grab_apk_from_repo ${gd_TORBROWSER[@]}
-
-	# generic URL
-	grab_apk_from_url ${nlx_OMNICLOCK[@]}
-	grab_apk_from_url ${los_OPENWEATHER[@]}
 
 	# APK Mirror
 	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
