@@ -351,10 +351,10 @@ nanodroid_finalize () {
 	case ${MODID} in
 		NanoDroid | NanoDroid_microG )
 			if [ "${nanodroid_overlay}" -eq 1 ]; then
-				ui_print " << with /system applications override"
+				ui_print " << with /system applications overlays"
 				${NANODROID_BINDIR}/nanodroid-overlay --create
 			else
-				ui_print " << without /system applications override"
+				ui_print " << without /system applications overlays"
 			fi
 		;;
 	esac
