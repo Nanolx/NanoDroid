@@ -968,11 +968,8 @@ install_apps () {
 		ui_print "${APP_STRING}"
 
 		for app in ${INSTALL_APPS}; do
-			if [[ -d /system/app/${app} && ! -d ${MODPATH}/system/app/${app} ]]; then
-				if [ "${nanodroid_override}" -eq 0 ]; then
-					ui_print " <<> app: ${app} already provided by ROM"
-				else	nanodroid_install_apk ${app}
-				fi
+			if [[ -d /system/app/${app} ]]; then
+				ui_print " <<> app: ${app} already provided by ROM"
 			elif [[ -d "${INSTALLER}/system/app/${app}" ]]; then
 				nanodroid_install_apk ${app}
 			else	ui_print " <<>> app: ${app} missing"
