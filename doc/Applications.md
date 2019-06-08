@@ -7,8 +7,9 @@ The applications provided by NanoDroid will be
 * directly installed as system applications when installed in System Mode
 
 Full list of provided applications
+* Alarmio (Alarm Clock) [> F-Droid](https://f-droid.org/packages/me.jfenn.alarmio)
 * Amaze (File Manager) [> F-Droid](https://f-droid.org/packages/com.amaze.filemanager)
-* AnySoftKeyboard [> F-Droid](https://f-droid.org//packages/com.menny.android.anysoftkeyboard)
+* AnySoftKeyboard [> F-Droid](https://f-droid.org/packages/com.menny.android.anysoftkeyboard)
 * BeHe Keyboard [> F-Droid](https://f-droid.org/packages/com.vlath.keyboard/)
 * Blokada [> F-Droid](https://f-droid.org/en/packages/org.blokada.alarm/)
 * Face Slim (Facebook client) [> F-Droid](https://f-droid.org/packages/org.indywidualni.fblite)
@@ -20,11 +21,9 @@ Full list of provided applications
 * New Pipe (YouTube client) [> F-Droid](https://f-droid.org/packages/org.schabi.newpipe)
 * Oandbackup (App backup and restore) [> F-Droid](https://f-droid.org/packages/dk.jens.backup)
 * Odyssey (Audio player) [> F-Droid](https://f-droid.org/packages/org.gateshipone.odyssey)
-* OmniClock [> GitHub](https://github.com/omnirom/android_packages_apps_OmniClock)
 * OpenCamera [> F-Droid](https://f-droid.org/packages/net.sourceforge.opencamera)
 * OpenKeyChain [> F-Droid](https://f-droid.org/packages/org.sufficientlysecure.keychain)
 * OpenLauncher [> F-Droid](https://f-droid.org/packages/com.benny.openlauncher)
-* OpenWeatherMap Weather Provider [> GitHub](https://github.com/LineageOS/android_packages_apps_OpenWeatherMapProvider)
 * OpenVPN [> F-Droid](https://f-droid.org/packages/de.blinkt.openvpn)
 * Orbot [> Guardian Project](https://guardianproject.info/apps/orbot/)
 * QKSMS [> F-Droid](https://f-droid.org/packages/com.moez.QKSMS)
