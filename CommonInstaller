@@ -1616,7 +1616,9 @@ check_cfg_setup () {
 	[ -z "${nanodroid_nano}" ] && set_prop nanodroid_nano 1
 	[ -z "${nanodroid_utils}" ] && set_prop nanodroid_utils 1
 	[ -z "${nanodroid_fonts}" ] && set_prop nanodroid_fonts 1
-	[ -z "${nanodroid_override}" ] && set_prop nanodroid_override 0
+
+	# in NanoDroid 21.0.90 nanodroid_override was dropped
+	sed -e '/nanodroid_override/d' -i "${cfg_setup}"
 
 	source "${cfg_setup}"
 }
