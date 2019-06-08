@@ -1656,6 +1656,11 @@ check_cfg_apps () {
 	if grep -q OmniClock "${cfg_apps}"; then
 		sed -e 's/OmniClock/Alarmio/g' -i "${cfg_apps}"
 	fi
+
+	# >= 21.0.90 no longer ships OpenWeatherMapProvider, remove
+	if grep -q OpenWeatherMapProvider "${cfg_apps}"; then
+		sed -e '/OpenWeatherMapProvider/d' -i "${cfg_apps}"
+	fi
 }
 
 # check whether '.nanodroid-overlay' is up to date
