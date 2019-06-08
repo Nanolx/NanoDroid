@@ -188,17 +188,16 @@ apps_add 14 Odyssey
 apps_add 15 OpenCamera
 apps_add 16 OpenKeyChain
 apps_add 17 OpenLauncher
-apps_add 18 OpenWeatherMapProvider
-apps_add 19 OpenVPN
-apps_add 20 Orbot
-apps_add 21 TorBrowser
-apps_add 22 QKSMS
-apps_add 23 SimpleCalendar
-apps_add 24 SimpleGallery
-apps_add 25 Substratum
-apps_add 26 Termux
-apps_add 27 Twidere
-apps_add 28 XDALabs
+apps_add 18 OpenVPN
+apps_add 19 Orbot
+apps_add 20 TorBrowser
+apps_add 21 QKSMS
+apps_add 22 SimpleCalendar
+apps_add 23 SimpleGallery
+apps_add 24 Substratum
+apps_add 25 Termux
+apps_add 26 Twidere
+apps_add 27 XDALabs
 
 ui_print " "
 ui_print "  < Debloated Applications"
