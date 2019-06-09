@@ -644,16 +644,20 @@ List of known issues and their respective fixes or workarounds.
   * the fix is:
      * update microG to 0.2.7.17455
 
+### Google Play Services are missing
+
+* This misleading error message actually means 'Something is wrong with Play Store'
+  * ensure as mentioned above you properly [setup microG](#microg-setup) and reboot
+  * install either Fake Store or Play Store
+     * grant signature spoofing permission to Fake Store or Play Store
+         * go to System Settings > Apps > Permissions > Signature Spoofing for that
+
 ### SafetyNet
 
 **Note:** microG's Droid Guard Helper is currently _not_ able to perform SafetyNet Attestation.
 
-* Applications/SafetyNet check complain with `Google Play Services are missing`
-  * you did not
-      * [setup microG](#microg-setup) (or did not reboot afterwards)
-      * grant signature spoofing permission to Fake Store or Play Store
-         * go to Settings / Apps / Permissions / Signature Spoofing and grant it
-      * install either Fake Store or Play Store
+* SafetyNet check complain with `Google Play Services are missing`
+  * see [Google Play Services are missing](#googleplayservicesaremissing) above
 * SafetyNet check fails after upgrading Magisk to version 18.0
   * go to Magisk Manager > Magisk Hide and activate it for `microG DroidGuard Helper`
 * Applications crash during SafetyNet check
@@ -711,6 +715,19 @@ List of known issues and their respective fixes or workarounds.
   * go to System Settings > Apps > Special Access > Battery Optimization > All Apps
   * tap on your Alarm Clock, for example `Alarmio` and choose `don't optimize`
 
+### Google Software
+
+* Maps doesn't work when installed a second time
+  * remove your Google Account and re-add it, that'll make Maps work again
+  * remove traces from previous insallations, like
+     * /sdcard/Android/data/com.google.android.apps.maps
+     * /data/system/graphicsstats/1559520000000/com.google.android.apps.maps
+         * where `1559520000000` is the Maps version, so may differ
+
+* Hangouts isn't properly working
+  * as root, on-device, run the following command:
+     * `pm disable com.google.android.talk/com.google.android.apps.hangouts.service.NetworkConnectionCheckingService`
+
 ### Other
 
 * Some Stock ROMs do not properly work after first boot since their SetupWizard is disabled by NanoDroid (because it's incompatible with microG)
@@ -725,15 +742,6 @@ List of known issues and their respective fixes or workarounds.
       * this is done automatically in Magisk Mode (as of version 20.5)
 * ROM lags after applying signature spoofing patch
   * some ROMs already have the patch built-in, if you patch those ROMs (again), it results in heavy lags
-
-### Google Software
-
-* Maps doesn't work when installed a second time
-  * remove your Google Account and re-add it, that'll make Maps work again.
-
-* Hangouts isn't properly working
-  * as root, on-device, run the following command:
-     * `pm disable com.google.android.talk/com.google.android.apps.hangouts.service.NetworkConnectionCheckingService`
 
 Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
 
