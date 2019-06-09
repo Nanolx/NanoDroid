@@ -15,6 +15,14 @@
 * SetupWizard
   * fix creating configuration files
 
+### General Changes
+
+* SetupWizard
+  * backup previous configuration files into `/data/media/0/nanodroid_backups/config_%Y%m%d-%H.%M.%S`
+     * where `%Y%m%d-%H.%M.%S` is the current date in `20190609-12.07.16` format
+  * sort list of applications alphabetically
+  * string changes
+
 ### Updates
 
 * automatic
