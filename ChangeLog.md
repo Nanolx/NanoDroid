@@ -15,6 +15,9 @@
 * SetupWizard
   * fix creating configuration files
 
+* Full package
+  * switch from Tor Browser alpha to Tor Browser stable release
+
 ### General Changes
 
 * SetupWizard
@@ -30,6 +33,8 @@
   * NewPipe (0.16.2)
   * Odyssey (1.1.18)
   * Bromite System WebView (75.0.3770.82)
+  * Orbot (16.1.0-BETA-4)
+  * Tor Browser (60.7.0)
 
 * manual
   * microG GmsCore (0.2.7.14755-beta-80)

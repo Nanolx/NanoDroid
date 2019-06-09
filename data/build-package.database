@@ -61,7 +61,7 @@ fd_TERMUX=(fdroid com.termux app Termux)
 fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 
 gd_ORBOT=(guardian org.torproject.android app Orbot)
-gd_TORBROWSER=(guardian org.torproject.torbrowser_alpha app TorBrowser)
+gd_TORBROWSER=(guardian org.torproject.torbrowser app TorBrowser)
 
 ###
 # Google Sync Adapters
