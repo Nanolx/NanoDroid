@@ -703,6 +703,12 @@ List of known issues and their respective fixes or workarounds.
   * this is because F-Droid's Priviledged Extension is not compatible with those ROMs, disable it from
       * F-Droid > Settings > Expert Settings > Privileged Extension
 
+### Alarm Clock not ringing
+
+* Due to changes in Android, to ensure your Alarm Clock is actually waking you up, you need Android to ignore battery optimization for it, to do so:
+  * go to System Settings > Apps > Special Access > Battery Optimization > All Apps
+  * tap on your Alarm Clock, for example `Alarmio` and choose `don't optimize`
+
 ### Other
 
 * Some Stock ROMs do not properly work after first boot since their SetupWizard is disabled by NanoDroid (because it's incompatible with microG)
