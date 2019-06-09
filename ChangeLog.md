@@ -16,13 +16,15 @@
 * This release drops `OpenWeatherMapProvider`
   * check your ROM for supported Weather Providers
 
+* This release switches from alpha to stable `Tor Browser` build
+
 ### Bugfixes
 
 * SetupWizard
   * fix creating configuration files
 
-* Full package
-  * switch from Tor Browser alpha to Tor Browser stable release
+* SysTest
+  * allow running from Magisk Manager
 
 ### General Changes
 
