@@ -28,14 +28,7 @@ export ANDROID_DATA=${BASEDIR}
 NanoDroidPatcher () {
 	sleep 5
 
-	ui_print " "
-	ui_print "*******************************"
-	ui_print "   NanoDroid Framework Patcher   "
-	ui_print "     addon.d 21.0.90.99999999     "
-	ui_print "       created by @Nanolx      "
-	ui_print " Utilizing DexPatcher @lanchon "
-	ui_print "*******************************"
-	ui_print " "
+	show_banner
 
 	mount_partitions
 

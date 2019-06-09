@@ -2,6 +2,7 @@
 
 OUTFD=2
 CONF_BACKUP="/data/media/0/nanodroid_backups/config_$(date +%Y%m%d-%H.%M.%S)"
+VERSION=21.0.90.99999999
 
 ui_print() {
 	echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
@@ -53,11 +54,13 @@ gmscore_prop="${aromapath}/gmscore.prop"
 
 ui_print " "
 ui_print "****************************"
-ui_print " NanoDroid 21.0.90.99999999 "
-ui_print "    created by @Nanolx      "
-ui_print "       Setup Wizard         "
+ui_print " NanoDroid                  "
+ui_print " Setup Wizard               "
+ui_print " ${VERSION}                 "
 ui_print "****************************"
 ui_print " "
+
+ui_print " > Creating Configuration files"
 
 if (is_mounted /data); then
 	mount -orw,remount /data >/dev/null
@@ -92,7 +95,7 @@ for setupfile in ${nanodroid_apps} ${nanodroid_overlay} ${nanodroid_setup}; do
 done
 
 ui_print " "
-ui_print "  < Installer Configuration"
+ui_print " < Installer Configuration"
 
 setup_add 1 nanodroid_fdroid
 setup_add 2 nanodroid_apps
@@ -173,7 +176,7 @@ elif grep -q "selected.1=2" "${gmscore_prop}"; then
 fi
 
 ui_print " "
-ui_print "  < Installed Applications"
+ui_print " < Installed Applications"
 
 apps_add 1 Alarmio
 apps_add 2 Amaze
@@ -204,7 +207,7 @@ apps_add 26 Twidere
 apps_add 27 XDALabs
 
 ui_print " "
-ui_print "  < Debloated Applications"
+ui_print " < Debloated Applications"
 
 overlay_add 1 BasicDreams
 overlay_add 2 Browser
@@ -236,3 +239,9 @@ overlay_add 27 ViaBrowser
 overlay_add 28 Wallpaper
 overlay_add 29 WallpaperBackup
 overlay_add 30 WallpaperPickerGoogle
+
+ui_print " "
+ui_print " >> Now flash the NanoDroid package of your choice!"
+ui_print " "
+ui_print " > Thanks for using NanoDroid"
+ui_print " "

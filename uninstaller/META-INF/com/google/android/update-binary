@@ -2,7 +2,8 @@
 
 OUTFD=$2
 ZIP=$3
-BACKUP_DIR="${BACKUP_DIR}"
+BACKUP_DIR="/data/media/0/nanodroid_backups"
+VERSION=21.0.90.99999999
 
 detect_bootmode () {
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
@@ -303,11 +304,11 @@ patcher_uninstall () {
 }
 
 ui_print " "
-ui_print "*****************************"
-ui_print "   NanoDroid 21.0.90.99999999     "
-ui_print "      created by Nanolx      "
-ui_print "        Uninstaller          "
-ui_print "*****************************"
+ui_print "**********************"
+ui_print " NanoDroid            "
+ui_print " Uninstaller          "
+ui_print " ${VERSION}           "
+ui_print "**********************"
 ui_print " "
 
 detect_bootmode

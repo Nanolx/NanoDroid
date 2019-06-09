@@ -99,30 +99,22 @@ increase_version_number() {
 	else	ver=${3}
 	fi
 
-	sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/build-package"
-	sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/CommonInstaller"
+	for file in  "build-package" "CommonInstaller" \
+		"systest/SysTest" "patcher/CommonPatcher" \
+		"setup-wizard/nanodroid-setup" "ommonAddon" \
+		"uninstaller/META-INF/com/google/android/update-binary"; do
+		sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/${file}"
+	done
 
 	for module in Full microG F-Droid BromiteWebView OsmAnd; do
 		sed -e "s/version=.*/version=v${2}.${ver}/" -i \
 			"${CWD}/${module}/module.prop"
 	done
 
-	sed -e "s/\"      NanoDroid.*/\"      NanoDroid ${2}.${ver}     \"/" -i \
-		"${CWD}/patcher/META-INF/com/google/android/update-binary"
-
-	sed -e "s/\"   NanoDroid.*/\"   NanoDroid ${2}.${ver}     \"/" -i \
-			"${CWD}/uninstaller/META-INF/com/google/android/update-binary"
-
 	sed -e "s/rom_version\",.*/rom_version\",	\"${2}\")\;/" -i \
 		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
 	sed -e "s/rom_date\",.*/rom_date\",	\"${ver}\")\;/" -i \
 		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
-	sed -e "s/Wizard.*/Wizard ${2}.${ver}\")\;/" -i \
-		"${CWD}/setup-wizard/META-INF/com/google/android/updater-script"
-	sed -e "s/\"     NanoDroid.*/\"     NanoDroid ${2}.${ver}    \"/" -i \
-		"${CWD}/setup-wizard/nanodroid-setup"
-	sed -e "s/\"     addon.d.*/\"     addon.d ${2}.${ver}     \"/" -i \
-		"${CWD}"/patcher/dexpatcher/70-nanodroidpatcher.sh
 
 	exit 0
 }

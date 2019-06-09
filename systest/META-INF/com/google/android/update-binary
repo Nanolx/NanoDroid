@@ -16,12 +16,7 @@ fi
 detect_bootmode
 detect_outfd
 
-ui_print " "
-ui_print "******************************"
-ui_print "      NanoDroid SysTest       "
-ui_print "          20181118            "
-ui_print "******************************"
-ui_print " "
+show_banner
 
 ui_print " || performing tests"
 

@@ -185,25 +185,25 @@ detect_outfd () {
 show_banner () {
 	ui_print " "
 	ui_print "*****************************"
-	ui_print "   NanoDroid ${VERSION}   "
-	ui_print "      created by Nanolx      "
+	ui_print " NanoDroid                   "
 	case ${MODID} in
 		NanoDroid )
-			ui_print "        Full package         "
+			ui_print " > Full package              "
 		;;
 		NanoDroid_microG )
-			ui_print "       microG package        "
+			ui_print " > microG package            "
 		;;
 		NanoDroid_FDroid )
-			ui_print "       F-Droid package       "
+			ui_print " > F-Droid package           "
 		;;
 		NanoDroid_BromiteWebView )
-			ui_print "   Bromite WebView package   "
+			ui_print " > Bromite WebView package   "
 		;;
 		NanoDroid_OsmAnd )
-			ui_print "   OsmAnd package   "
+			ui_print " > OsmAnd package            "
 		;;
 	esac
+	ui_print " ${VERSION}                  "
 	ui_print "*****************************"
 	ui_print " "
 }
@@ -538,6 +538,7 @@ recovery_cleanup () {
 ##########################################################################################
 
 magisk_install_setup () {
+	ui_print " "
 	ui_print "******************************"
 	ui_print "Powered by Magisk (@topjohnwu)"
 	ui_print "******************************"

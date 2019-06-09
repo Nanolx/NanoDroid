@@ -16,6 +16,8 @@ source /tmp/backuptool.functions
 
 MODID=@MODID@
 OUTFD=
+VERSION=21.0.90.99999999
+
 print_google_apps()
 {
 cat <<EOF
@@ -73,6 +75,20 @@ get_config () {
 		fi
 	done
 }
+
+is_mounted() {
+	if [ ! -z "$2" ]; then
+		cat /proc/mounts | grep $1 | grep $2, >/dev/null
+	else
+		cat /proc/mounts | grep $1 >/dev/null
+	fi
+	return $?
+}
+
+if (is_mounted /data); then
+	mount -orw,remount /data >/dev/null
+else	mount -orw /data >/dev/null
+fi
 
 if [ ! -d /system/xbin ]; then
 	NANODROID_BINDIR=/system/bin
@@ -153,7 +169,7 @@ backup_action () {
 
 	mount /data
 
-	ui_print " ++ ${MODID} addon.d: backup"
+	ui_print " ++ ${MODID} ${VERSION} addon.d: backup"
 	cat ${NANODROID_LIST} | while read FILE; do
 		echo " + backup: ${FILE}"
 		backup_file "${FILE}"
@@ -166,18 +182,18 @@ backup_action () {
 		echo CUSTOM_FONT=${CUSTOM_FONT} > /tmp/nanodroid_font
 	fi
 
-	ui_print " ++ ${MODID} addon.d: backup done"
+	ui_print " ++ ${MODID} ${VERSION} addon.d: backup done"
 }
 
 restore_action () {
 	sleep 5
 
-	ui_print " ++ ${MODID} addon.d: restore"
+	ui_print " ++ ${MODID} ${VERSION} addon.d: restore"
 	cat ${NANODROID_LIST} | while read FILE; do
 		echo " + restore: ${FILE}"
 		restore_file "${FILE}"
 	done
-	ui_print " ++ ${MODID} addon.d: restore done"
+	ui_print " ++ ${MODID} ${VERSION} addon.d: restore done"
 }
 
 postrestore_action () {
@@ -187,13 +203,13 @@ postrestore_action () {
 
 	if [ -f /tmp/nanodroid_font ]; then
 		source /tmp/nanodroid_font
-		ui_print " ++ ${MODID} addon.d: restoring NanoDroid-Font (${CUSTOM_FONT})"
+		ui_print " ++ ${MODID} ${VERSION} addon.d: restoring NanoDroid-Font (${CUSTOM_FONT})"
 
 		${NANODROID_BINDIR}/nanodroid-font -s "${CUSTOM_FONT}"
 		rm /tmp/nanodroid_font
 	fi
 
-	ui_print " ++ ${MODID} addon.d: GApps removal"
+	ui_print " ++ ${MODID} ${VERSION} addon.d: GApps removal"
 	print_google_apps | while read app; do
 		${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
 	done
@@ -204,16 +220,16 @@ postrestore_action () {
 		rm -rf /data/user_de/*/${app}
 		rm -rf /data/app/${app}-*
 	done
-	ui_print " ++ ${MODID} addon.d: GApps removal done"
+	ui_print " ++ ${MODID} ${VERSION} addon.d: GApps removal done"
 
 
 	get_config setup
 	if [ "${config_exists}" -eq 1 ]; then
 		source "${config}"
 		if [ "${nanodroid_overlay}" -eq 1 ]; then
-			ui_print " ++ ${MODID} addon.d: creating Overlays"
+			ui_print " ++ ${MODID} ${VERSION} addon.d: creating Overlays"
 			${NANODROID_BINDIR}/nanodroid-overlay --create
-			ui_print " ++ ${MODID} addon.d: creating Overlays done"
+			ui_print " ++ ${MODID} ${VERSION} addon.d: creating Overlays done"
 		fi
 	fi
 

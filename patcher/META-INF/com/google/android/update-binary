@@ -20,14 +20,7 @@ BASEDIR="${TMPDIR}/dexpatcher"
 
 detect_outfd
 
-ui_print " "
-ui_print "********************************"
-ui_print "      NanoDroid 21.0.90.99999999     "
-ui_print "       created by @Nanolx       "
-ui_print "       Framework Patcher        "
-ui_print "Powered by DexPatcher (@lanchon)"
-ui_print "********************************"
-ui_print " "
+show_banner
 
 mount_partitions
 

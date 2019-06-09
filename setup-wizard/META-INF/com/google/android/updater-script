@@ -1,19 +1,5 @@
 set_progress(0.0);
-ui_print(" ");
-ui_print("> NanoDroid Setup Wizard 21.0.90.99999999");
-ui_print(" ");
-set_progress(0.1);
-
-ui_print("> Creating Configuration Files");
 package_extract_file("nanodroid-setup", "/tmp/nanodroid-setup");
 set_perm(0, 0, 0777, "/tmp/nanodroid-setup");
 run_program("/tmp/nanodroid-setup");
-
-ui_print(" ");
-ui_print(">> Now flash the NanoDroid package of your choice!");
-ui_print(" ");
-
-ui_print("> Thanks for using NanoDroid");
-ui_print(" ");
-
 set_progress(1.0);

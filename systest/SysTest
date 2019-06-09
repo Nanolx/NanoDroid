@@ -6,12 +6,22 @@
 #
 ##########################################################################################
 
+VERSION=21.0.90.99999999
 TMPDIR=/dev/tmp
 LOGFILE="/data/media/0/nanodroid_logs/NanoDroid-SysTest-$(date +%Y%m%d-%H.%M.%S).log"
 
 ##########################################################################################
 # Generic Functions
 ##########################################################################################
+
+show_banner () {
+	ui_print " "
+	ui_print "*******************"
+	ui_print " NanoDroid SysTest "
+	ui_print " ${VERSION}        "
+	ui_print "*******************"
+	ui_print " "
+}
 
 ui_print() {
 	${BOOTMODE} && echo "${1}" || \
