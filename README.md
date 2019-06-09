@@ -678,6 +678,8 @@ List of known issues and their respective fixes or workarounds.
   * if an app is not shown as registered in microG Settings / Google Cloud Messaging, try uninstalling and re-installing it
   * when restoring the ROM from a TWRP backup GCM registration for apps is sometimes broken. You may use the following command to reset GMS settings for a given app using it's appname, or if no appname is given for all applications. Apps will re-register when launched afterwards:
      * `nutl -r APPNAME` (eg.: APPNAME = `com.nianticlabs.pokemongo`) or `nutl -r`
+  * if you can't make any app registering for Google Cloud Messaging, try the following
+     * open the Phone app and dial the following: `*#*#2432546#*#*` (or ` *#*#CHECKIN#*#*`)
 
 ### Unified Nlp
 
