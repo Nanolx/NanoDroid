@@ -23,9 +23,8 @@
 * SetupWizard
   * fix creating configuration files
 
-* SysTest
-  * allow running from Magisk Manager
-  * filter out Magisk mounts from log
+* Uninstaller
+  * fix System Mode overlay restoration
 
 ### General Changes
 
@@ -34,6 +33,10 @@
      * where `%Y%m%d-%H.%M.%S` is the current date in `20190609-12.07.16` format
   * sort list of applications alphabetically
   * string changes
+
+* SysTest
+  * allow running from Magisk Manager
+  * filter out Magisk mounts from log
 
 ### Updates
 
