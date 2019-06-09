@@ -1,6 +1,7 @@
 #!/sbin/sh
 
 OUTFD=2
+CONF_BACKUP="/data/media/0/nanodroid_backups/config_$(date +%Y%m%d-%H.%M.%S)"
 
 ui_print() {
 	echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
@@ -51,11 +52,11 @@ ug_prop="${aromapath}/ug.prop"
 gmscore_prop="${aromapath}/gmscore.prop"
 
 ui_print " "
-ui_print "******************************"
-ui_print "     NanoDroid 21.0.90.99999999    "
-ui_print "      created by @Nanolx      "
-ui_print "         Setup Wizard         "
-ui_print "******************************"
+ui_print "****************************"
+ui_print " NanoDroid 21.0.90.99999999 "
+ui_print "    created by @Nanolx      "
+ui_print "       Setup Wizard         "
+ui_print "****************************"
 ui_print " "
 
 if (is_mounted /data); then
@@ -84,7 +85,10 @@ nanodroid_overlay="${configpath}/.nanodroid-overlay"
 nanodroid_setup="${configpath}/.nanodroid-setup"
 
 for setupfile in ${nanodroid_apps} ${nanodroid_overlay} ${nanodroid_setup}; do
-	rm -f "${setupfile}"
+	if [ -f ${setupfile} ]; then
+		mkdir -p "${CONF_BACKUP}"
+		mv "${setupfile}" "${CONF_BACKUP}"
+	fi
 done
 
 ui_print " "
