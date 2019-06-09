@@ -16,7 +16,6 @@ Full list of provided applications
 * K-9 Mail [> F-Droid](https://f-droid.org/packages/com.fsck.k9)
 * Kernel Adiutor [> GitHub](https://github.com/Grarak/KernelAdiutor)
 * KeyPassDX (Password Safe) [> F-Droid](https://f-droid.org/en/packages/com.kunzisoft.keepass.libre)
-* Lightning (Browser) [> F-Droid](https://f-droid.org/packages/acr.browser.lightning)
 * MPV (Video Player) [> GitHub](https://github.com/mpv-android/mpv-android)
 * New Pipe (YouTube client) [> F-Droid](https://f-droid.org/packages/org.schabi.newpipe)
 * Oandbackup (App backup and restore) [> F-Droid](https://f-droid.org/packages/dk.jens.backup)
@@ -26,6 +25,7 @@ Full list of provided applications
 * OpenLauncher [> F-Droid](https://f-droid.org/packages/com.benny.openlauncher)
 * OpenVPN [> F-Droid](https://f-droid.org/packages/de.blinkt.openvpn)
 * Orbot [> Guardian Project](https://guardianproject.info/apps/orbot/)
+* Privacy Browser [> F-Droid](https://f-droid.org/de/packages/com.stoutner.privacybrowser.standard/)
 * QKSMS [> F-Droid](https://f-droid.org/packages/com.moez.QKSMS)
 * Simple Calendar Pro [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.calendar.pro)
 * Simple Gallery Pro [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.gallery.pro)
@@ -47,7 +47,7 @@ on your device, in one of the following directories
 * `/data/media/0` (internal storage)
 * `/external_sd` (TWRP path to SD Card (if any))
 * directory containing the zip file
-* `/data` (fallabck)
+* `/data` (fallback)
 
 All applications listed in that file will be installed. See the [default settings](.nanodroid-apps), which are used when no `.nanodroid-apps` configuration file was found. 
 

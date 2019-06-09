@@ -7,6 +7,9 @@
 * This release replaces `OmniClock` with `Alarmio`
   * if you previously opted-in for OmniClock you'll be auto-migrated to Alarmio
 
+* This release replaces `Lightning` with `Privacy Browser`
+  * if you previously opted-in for Lightning you'll be auto-migrated to Privacy Browser
+
 * This release drops `OpenWeatherMapProvider`
   * check your ROM for supported Weather Providers
 

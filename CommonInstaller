@@ -1661,6 +1661,9 @@ check_cfg_apps () {
 	if grep -q OpenWeatherMapProvider "${cfg_apps}"; then
 		sed -e '/OpenWeatherMapProvider/d' -i "${cfg_apps}"
 	fi
+
+	# >= 21.0.90 has Lightning instead of Privacy Browser, migrate
+	grep -q Lightning "${cfg_apps}" && sed -e 's/Lightning/PrivacyBrowser/g' -i "${cfg_apps}"
 }
 
 # check whether '.nanodroid-overlay' is up to date
