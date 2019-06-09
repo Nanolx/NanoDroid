@@ -25,6 +25,7 @@
 
 * SysTest
   * allow running from Magisk Manager
+  * filter out Magisk mounts from log
 
 ### General Changes
 
