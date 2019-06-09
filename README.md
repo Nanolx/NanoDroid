@@ -670,8 +670,9 @@ List of known issues and their respective fixes or workarounds.
 * Play Store giving error RH-01
   * ensure you rebooted after [microG setup](#microg-setup)
   * ensure Play Store has signature spoofing permission
-      * go to Settings / Apps / Permissions / Signature Spoofing and grant it
+      * go to Settings > Apps > Permissions > Signature Spoofing and grant it
   * force close Play Store and open it again
+  * go to Settings > Apps > Play Store > Permissions and grant at least the `Phone` permission
 
 ### Push Messages
 
