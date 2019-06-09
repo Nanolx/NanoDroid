@@ -634,8 +634,7 @@ List of known issues and their respective fixes or workarounds.
 * microG lacks features
   * if you use AppOps, PrivacyGuard or the like you have to grant microG GmsCore **all** permissions, if you prevent some permissions, some apps or features might not work as expected or not at all. Note: some APIs/features are stubs in microG GmsCore, meaning they exist that apps don't complain, but they do nothing - thus blocking microG GmsCore is pretty much of no benefit.
 * You can't get past the first page of the microG login wizard on KitKat
-  * either connect a Keyboard and use it to skip the first page (will work normally then)
-  * use the custom NanoDroid microG GmsCore build, which has this issue fixed starting with version 0.2.6.14799-dirty-145
+  * updating microG to (at least) 0.2.7.17455 will fix the issue
 
 ### Google Account
 
