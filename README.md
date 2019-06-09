@@ -538,6 +538,8 @@ OpenGApps and GApps-less ROMs don't need further measurements, the Installer tak
   * recommended, but not required
   * if **Magisk** is installed, NanoDroid will be installed as Magisk-Module, else it will install into `/system` directly
 * install desired Kernel (if any)
+* boot into ROM (for **Magisk** module installation only)
+* boot into TWRP again (for **Magisk** module installation only)
 * install **NanoDroid**
   * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](doc/DeodexServices.md)
      * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 9.0)
@@ -555,8 +557,6 @@ Stock ROMs with GApps may not allow to switch from Google GmsCore to microG GmsC
 * install **Magisk**
   * recommended, but not required
   * if **Magisk** is installed, NanoDroid will be installed as Magisk-Module, else it will install into `/system` directly
-  * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](doc/DeodexServices.md)
-     * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 9.0)
 * install desired Kernel (if any)
 * mount `/system` read-write and remove the following folders
   * GApps GmsCore (which can have multiple paths, depending on the ROM):
