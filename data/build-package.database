@@ -39,9 +39,9 @@ fd_FDROID_PE=(fdroid org.fdroid.fdroid.privileged priv-app FDroidPrivileged)
 fd_ALARMIO=(fdroid me.jfenn.alarmio app Alarmio)
 fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
-fd_BEHEKEYBOARD=(fdroid com.vlath.keyboard app BeHeKeyboard)
 fd_BLOCKADA=(fdroid org.blokada.alarm app Blokada)
 fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
+fd_HACKERSKEYBOARD=(fdroid org.pocketworkstation.pckeyboard app HackersKeyboard)
 fd_KEEPASSDX=(fdroid com.kunzisoft.keepass.libre app KeePassDX)
 fd_K9MAIL=(fdroid com.fsck.k9 app K9Mail)
 fd_NEWPIPE=(fdroid org.schabi.newpipe app NewPipe)
@@ -136,10 +136,10 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk
 	Full/system/app/Amaze/Amaze.apk
 	Full/system/app/AnysoftKeyboard/AnysoftKeyboard.apk
 	Full/system/app/AuroraStore/AuroraStore.apk
-	Full/system/app/BeHeKeyboard/BeHeKeyboard.apk
 	Full/system/app/Blokada/Blokada.apk
 	Full/system/app/FDroid/FDroid.apk
 	Full/system/app/FaceSlim/FaceSlim.apk
+	Full/system/app/HackersKeyboard/HackersKeyboard.apk
 	Full/system/app/K9Mail/K9Mail.apk
 	Full/system/app/KeePassDX/KeePassDX.apk
 	Full/system/app/KernelAdiutor/KernelAdiutor.apk

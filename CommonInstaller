@@ -1648,6 +1648,9 @@ check_cfg_apps () {
 
 	# >= 21.0.90 has Lightning instead of Privacy Browser, migrate
 	grep -q Lightning "${cfg_apps}" && sed -e 's/Lightning/PrivacyBrowser/g' -i "${cfg_apps}"
+
+	# >= 21.0.90 has Hacker's Keyboard instead of BeHeKeyboard, migrate
+	grep -q BeHeKeyboard "${cfg_apps}" && sed -e 's/BeHeKeyboard/HackersKeyboard/g' -i "${cfg_apps}"
 }
 
 # check whether '.nanodroid-overlay' is up to date

@@ -10,6 +10,9 @@
 * This release replaces `Lightning` with `Privacy Browser`
   * if you previously opted-in for Lightning you'll be auto-migrated to Privacy Browser
 
+* This release replaces `BeHeKeyboard` with `Hacker's Keyboard`
+  * if you previously opted-in for BeHeKeyboard you'll be auto-migrated to Hacker's Keyboard
+
 * This release drops `OpenWeatherMapProvider`
   * check your ROM for supported Weather Providers
 

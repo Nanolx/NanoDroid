@@ -178,9 +178,9 @@ ui_print "  < Installed Applications"
 apps_add 1 Alarmio
 apps_add 2 Amaze
 apps_add 3 AnysoftKeyboard
-apps_add 4 BeHeKeyboard
-apps_add 5 Blokada
-apps_add 6 FaceSlim
+apps_add 4 Blokada
+apps_add 5 FaceSlim
+apps_add 6 HackersKeyboard
 apps_add 7 K9Mail
 apps_add 8 KeePassDX
 apps_add 9 KernelAdiutor
