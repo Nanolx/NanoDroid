@@ -641,8 +641,7 @@ List of known issues and their respective fixes or workarounds.
 
 * Can't login to Google Account
   * there's an issue where logging in with version 74.x of Chrome/Chromium/Bromite or WebView derived from them fails
-  * the fix is:
-     * update microG to 0.2.7.17455
+  * the fix is to update microG to (at least) version 0.2.7.17455
 
 ### Google Play Services are missing
 
@@ -657,7 +656,7 @@ List of known issues and their respective fixes or workarounds.
 **Note:** microG's Droid Guard Helper is currently _not_ able to perform SafetyNet Attestation.
 
 * SafetyNet check complain with `Google Play Services are missing`
-  * see [Google Play Services are missing](#googleplayservicesaremissing) above
+  * see [Google Play Services are missing](#google-play-services-are-missing) above
 * SafetyNet check fails after upgrading Magisk to version 18.0
   * go to Magisk Manager > Magisk Hide and activate it for `microG DroidGuard Helper`
 * Applications crash during SafetyNet check
