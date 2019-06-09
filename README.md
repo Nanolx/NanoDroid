@@ -650,6 +650,7 @@ List of known issues and their respective fixes or workarounds.
   * install either Fake Store or Play Store
      * grant signature spoofing permission to Fake Store or Play Store
          * go to System Settings > Apps > Permissions > Signature Spoofing for that
+         * on some ROMs you have to tap on the 3-dot-menu `Show System Apps` to see Fake Store
 
 ### SafetyNet
 
