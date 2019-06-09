@@ -61,7 +61,6 @@ update_apps () {
 	grab_apk_from_repo ${fd_ALARMIO[@]}
 	grab_apk_from_repo ${fd_AMAZE[@]}
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
-	grab_apk_from_repo ${fd_BEHEKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BLOCKADA[@]}
 	grab_apk_from_repo ${fd_FACESLIM[@]}
 	grab_apk_from_repo ${fd_HACKERSKEYBOARD[@]}
