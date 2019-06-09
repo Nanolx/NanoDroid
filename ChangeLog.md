@@ -24,7 +24,7 @@
   * Bromite System WebView (75.0.3770.82)
 
 * manual
-  * microG GmsCore (0.2.14755-beta-80)
+  * microG GmsCore (0.2.7.14755-beta-80)
   * MPV (20190604-nightly)
   * Play Store (15.2.38)
 
