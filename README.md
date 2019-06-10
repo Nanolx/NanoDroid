@@ -303,7 +303,8 @@ Extra packages, flashing through TWRP required (flashing through Magisk Manager 
   * restores GApps and location services auto-removed during installation (System Mode)
   * restores `services.jar` patched by NanoDroid-Patcher (System Mode)
 * **NanoDroid-systest**: includes
-  * system testing script which will create the logfile `/data/media/0/NanoDroid-SysTest.log`
+  * system testing script which will create the logfile as `/data/media/0/nanodroid_logs/NanoDroid-SysTest-TESTDATE.log`
+     * TESTDATE is the date of testrun in %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14).
   * the following data is collected:
      * device profile (ROM, manufacturer, device, ABI, builddate, security patch date)
      * detected LD_LIBRARY_PATH
@@ -311,7 +312,8 @@ Extra packages, flashing through TWRP required (flashing through Magisk Manager 
      * mounted partitions, whether device is A/B
      * list of installed GApps
      * file list of /system/app and /system/priv-app
-     * whether the ROM has native signature spoofing support 
+     * whether the ROM has native signature spoofing support
+     * whether the ROM supports Bromite WebView installations
   * use this to provide additional informations when posting issues
 
 Extra packages, flashing trough TWRP recommended, flashing through Magisk Manager is supported.
