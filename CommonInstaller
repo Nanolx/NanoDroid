@@ -269,8 +269,6 @@ mount_partitions () {
 }
 
 detect_mode () {
-	[ -f /data/adb/.nanodroid-list ] && mv /data/adb/.nanodroid-list "${NANODROID_LIST}"
-
 	case "${nanodroid_forcesystem}" in
 		1 )
 			MODE_DETECT=forced
