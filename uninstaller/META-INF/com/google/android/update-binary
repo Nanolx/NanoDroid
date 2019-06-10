@@ -42,7 +42,6 @@ is_mounted() {
 	return $?
 }
 
-
 set_perm () {
 	chown ${2}:${3} ${1} || error "failed change owner for ${1}"
 	chmod ${4} ${1} || error "failed to change mode for ${1}"
@@ -115,51 +114,6 @@ error () {
 	exit 1
 }
 
-request_size_check() {
-	reqSizeM=`unzip -l "$1" 2>/dev/null | tail -n 1 | awk '{ print $1 }'`
-	reqSizeM=$((reqSizeM / 1048576 + 1))
-}
-
-image_size_check() {
-	e2fsck -yf $1
-	curBlocks=`e2fsck -n $1 2>/dev/null | grep $1 | cut -d, -f3 | cut -d\  -f2`;
-	curUsedM=`echo "$curBlocks" | cut -d/ -f1`
-	curSizeM=`echo "$curBlocks" | cut -d/ -f1`
-	curFreeM=$(((curSizeM - curUsedM) * 4 / 1024))
-	curUsedM=$((curUsedM * 4 / 1024 + 1))
-	curSizeM=$((curSizeM * 4 / 1024))
-}
-
-shrink_magisk_img () {
-	image_size_check /data/magisk.img
-	NEWDATASIZE=$((curUsedM / 32 * 32 + 32))
-	if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-		resize2fs $IMG ${NEWDATASIZE}M
-	fi
-}
-
-mount_image() {
-	if [ ! -d "$2" ]; then
-		mount -o rw,remount rootfs /
-		mkdir -p "$2" 2>/dev/null
-		[ ! -d "$2" ] && return 1
-	fi
-
-	if ! is_mounted "$2"; then
-		LOOPDEVICE=
-		for LOOP in 0 1 2 3 4 5 6 7; do
-			if ! is_mounted "$2"; then
-				LOOPDEVICE=/dev/block/loop$LOOP
-				[ -e $LOOPDEVICE ] || mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
-				losetup $LOOPDEVICE "$1" && mount -t ext4 -o loop $LOOPDEVICE "$2"
-				if is_mounted "$2"; then
-					break;
-				fi
-			fi
-		done
-	fi
-}
-
 # taken from Magisk, with minor modifications for NanoDroid
 mount_partitions () {
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
@@ -213,37 +167,35 @@ config_files=".nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 restore_apps () {
 	backup_path="${BACKUP_DIR}/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
-	for dir in ${BACKUP_DIR} ${backup_path}; do
-		if [ -d ${dir}/app/ ]; then
-			for app in ${dir}/app/*; do
-				if [ -d /system/app/${app} ]; then
-					ui_print " << removing backup: app:${app}"
-					rm -rf "${dir}/app/${app}"
-				else
-					ui_print " << restoring: app:${app}"
-					mv "${dir}/app/${app}" /system/app/
-					set_perm_data -r /system/app/${app}
-				fi
-			done
+	if [ -d ${backup_path}/app/ ]; then
+		for app in ${dir}/app/*; do
+			if [ -d /system/app/${app} ]; then
+				ui_print " << removing backup: app:${app}"
+				rm -rf "${dir}/app/${app}"
+			else
+				ui_print " << restoring: app:${app}"
+				mv "${dir}/app/${app}" /system/app/
+				set_perm_data -r /system/app/${app}
+			fi
+		done
 
-			rmdir ${dir}/app
-		fi
+		rmdir ${dir}/app
+	fi
 
-		if [ -d ${dir}/priv-app/ ]; then
-			for app in ${dir}/priv-app/*; do
-				if [ -d /system/priv-app/${app} ]; then
-					ui_print " << removing backup: priv-app:${app}"
-					rm -rf "${dir}/priv-app/${app}"
-				else
-					ui_print " << restoring: priv-app:${app}"
-					mv "${dir}/priv-app/${app}" /system/priv-app/
-					set_perm_data -r /system/priv-app/${app}
-				fi
-			done
+	if [ -d ${backup_path}/priv-app/ ]; then
+		for app in ${dir}/priv-app/*; do
+			if [ -d /system/priv-app/${app} ]; then
+				ui_print " << removing backup: priv-app:${app}"
+				rm -rf "${dir}/priv-app/${app}"
+			else
+				ui_print " << restoring: priv-app:${app}"
+				mv "${dir}/priv-app/${app}" /system/priv-app/
+				set_perm_data -r /system/priv-app/${app}
+			fi
+		done
 
-			rmdir ${dir}/priv-app
-		fi
-	done
+		rmdir ${dir}/priv-app
+	fi
 
 	rmdir ${dir}
 }
@@ -291,16 +243,8 @@ patcher_uninstall () {
 	fi
 
 	[ -d /data/adb/nanodroid_patcher ] && rm -rf /data/adb/nanodroid_patcher
-
-	for addonsh in /system/addon.d/999-nanodroidpatcher.sh \
-		/system/addon.d/70-nanodroidpatcher.sh \
-		/system/addon.d/91-nanodroid.sh; do
-		[ -f ${addonsh} ] && rm -f ${addonsh}
-	done
-
-	for pfile in /data/adb/.nanodroid-patcher /data/adb/NanoDroid_Patched; do
-		[ -f ${pfile} ] && rm -f ${pfile}
-	done
+	[ -f /system/addon.d/70-nanodroidpatcher.sh ] && rm -f ${addonsh}
+	[ -f /data/adb/NanoDroid_Patched ] && rm -f ${pfile}
 }
 
 ui_print " "
@@ -316,10 +260,6 @@ mount_partitions
 
 ui_print " << Removing installation logs (if any)"
 
-# oldest format
-rm -f /data/adb/.nanodroid_*
-rm -f /data/adb/.recovery_*
-
 # old format
 rm -f /data/adb/NanoDroid_log*
 rm -f /data/adb/NanoDroid_twrp*
@@ -328,29 +268,13 @@ rm -f /data/adb/NanoDroid_twrp*
 rm -rf /data/media/0/nanodroid_logs
 
 # System Mode uninstallation
-for install_info in /data/adb/.nanodroid-list /data/adb/NanoDroid_FileList; do
-	[ -f ${install_info} ] && system_mode_uninstall ${install_info}
-done
+[ -f /data/adb/NanoDroid_FileList ] && system_mode_uninstall ${install_info}
 
 patcher_uninstall
 
-if [ -f /data/adb/magisk.img ]; then
-	mkdir -p /magisk
-	mount_image /data/adb/magisk.img /magisk || \
-		error " failed to mount /magisk"
-fi
-
-if (is_mounted /magisk); then
-	for module in NanoDroid NanoDroid_microG NanoDroid_FDroid NanoDroid_BromiteWebView NanoDroid_OsmAnd; do
-		if [ -d /magisk/${module} ]; then
-			ui_print " << uninstalling: ${module}"
-			rm -rf /magisk/${module}
-		fi
-	done
-fi
-
 if [ -d /data/adb/modules ]; then
-	for module in NanoDroid NanoDroid_microG NanoDroid_FDroid NanoDroid_BromiteWebView NanoDroid_OsmAnd; do
+	for module in NanoDroid NanoDroid_microG NanoDroid_FDroid \
+		NanoDroid_BromiteWebView NanoDroid_OsmAnd; do
 		if [ -d /data/adb/modules/${module} ]; then
 			ui_print " << uninstalling: ${module}"
 			rm -rf /data/adb/modules/${module}
@@ -359,14 +283,6 @@ if [ -d /data/adb/modules ]; then
 fi
 
 ui_print " >> clean up"
-
-if (is_mounted /magisk); then
-	umount /magisk
-	losetup -d $LOOPDEVICE
-	rmdir /magisk
-	shrink_magisk_img || \
-		error " failed to shrink magisk.img"
-fi
 
 umount /system
 
