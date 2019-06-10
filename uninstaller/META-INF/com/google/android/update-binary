@@ -272,15 +272,13 @@ rm -rf /data/media/0/nanodroid_logs
 
 patcher_uninstall
 
-if [ -d /data/adb/modules ]; then
-	for module in NanoDroid NanoDroid_microG NanoDroid_FDroid \
-		NanoDroid_BromiteWebView NanoDroid_OsmAnd; do
-		if [ -d /data/adb/modules/${module} ]; then
-			ui_print " << uninstalling: ${module}"
-			rm -rf /data/adb/modules/${module}
-		fi
-	done
-fi
+for module in NanoDroid NanoDroid_microG NanoDroid_FDroid \
+	NanoDroid_BromiteWebView NanoDroid_OsmAnd; do
+	if [ -d /data/adb/modules/${module} ]; then
+		ui_print " << uninstalling: ${module}"
+		rm -rf /data/adb/modules/${module}
+	fi
+done
 
 ui_print " >> clean up"
 
