@@ -37,28 +37,6 @@ is_mounted () {
 	return $?
 }
 
-mount_image() {
-	if [ ! -d "$2" ]; then
-		mount -o rw,remount rootfs /
-		mkdir -p "$2" 2>/dev/null
-		[ ! -d "$2" ] && return 1
-	fi
-
-	if ! is_mounted "$2"; then
-		LOOPDEVICE=
-		for LOOP in 0 1 2 3 4 5 6 7; do
-			if ! is_mounted "$2"; then
-				LOOPDEVICE=/dev/block/loop$LOOP
-				[ -e $LOOPDEVICE ] || mknod $LOOPDEVICE b 7 $LOOP 2>/dev/null
-				losetup $LOOPDEVICE "$1" && mount -t ext4 -o loop $LOOPDEVICE "$2"
-				if is_mounted "$2"; then
-					break;
-				fi
-			fi
-		done
-	fi
-}
-
 # taken from Magisk, with minor modifications for NanoDroid
 mount_partitions () {
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
