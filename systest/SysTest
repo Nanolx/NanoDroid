@@ -272,6 +272,14 @@ store_results () {
 	add_log ""
 	mount | sed '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}' >> ${LOGFILE}
 
+	if [ ! ${BOOTMODE} ]; then
+		add_log ""
+		add_log "TWRP usuable space for Installer"
+		add_log "================================"
+		add_log ""
+		add_log $(df /dev 2>/dev/null | awk '/tmpfs/{print $4}')
+	fi
+
 	add_log ""
 	add_log "DalvikVM, LD_LIBRARY_PATH and DEX status"
 	add_log "========================================"
