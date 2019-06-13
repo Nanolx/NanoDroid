@@ -293,20 +293,20 @@ store_results () {
 	done
 
 	add_log ""
-	add_log "Native SigSpoof?"
-	add_log "================"
+	add_log "Native Signature Spoofing support"
+	add_log "================================="
 	add_log ""
 	check_fake_package_signature && add_log "NATIVE_SIGSPOOF=TRUE" || add_log "NATIVE_SIGSPOOF=FALSE"
 
 	add_log ""
-	add_log "Bromite WebView supported?"
-	add_log "=========================="
+	add_log "Bromite System WebView supported"
+	add_log "================================"
 	add_log ""
 	check_bromite_webview_support && add_log "WEBVIEW_SUPPORT=TRUE" || add_log "WEBVIEW_SUPPORT=FALSE"
 
 	add_log ""
-	add_log "Magisk installed?"
-	add_log "================="
+	add_log "Magisk Installation"
+	add_log "================"
 	add_log ""
 	if [ -f /data/adb/magisk/util_functions.sh ]; then
 		add_log "MAGISK=TRUE"
