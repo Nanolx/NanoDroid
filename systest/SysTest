@@ -351,7 +351,7 @@ store_results () {
 
 	add_log ""
 	add_log "Content of /system/priv-app"
-	add_log "======================"
+	add_log "==========================="
 	add_log ""
 	find /system/priv-app -type f -name '*.apk' | sort >> ${LOGFILE}
 

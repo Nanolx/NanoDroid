@@ -13,8 +13,6 @@ if [ -z "${MODPATH}" ]; then
 	OVERLAY_PATH=""
 	NO_MAGISK=1
 	[ ! -d /twres ] && SYS_REMOUNT=1
-elif [ -d "/dev/tmp/magisk_img/$(basename "${MODPATH}")" ]; then
-	OVERLAY_PATH="/dev/tmp/magisk_img/$(basename "${MODPATH}")"
 elif [ -d "${MODPATH}" ]; then
 	OVERLAY_PATH="${MODPATH}"
 else

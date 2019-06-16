@@ -4,12 +4,10 @@ export NO_MAGISK=0
 export MODPATH=@MODPATH@
 
 if [ -z "${MODPATH}" ]; then
-	OVERLAY_PATH=""
+	OVERLAY_PATH="/system/fonts"
 	NO_MAGISK=1
-elif [ -d "/dev/tmp/magisk_img/$(basename "${MODPATH}")" ]; then
-	OVERLAY_PATH="/dev/tmp/magisk_img/$(basename "${MODPATH}")"
 elif [ -d "${MODPATH}" ]; then
-	OVERLAY_PATH="${MODPATH}"
+	OVERLAY_PATH="${MODPATH}/system/fonts"
 else
 	echo "couldn't find NanoDroid!"
 	exit 1

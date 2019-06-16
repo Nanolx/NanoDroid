@@ -28,6 +28,9 @@
   * drop support for uninstalling old Magisk mode installs (Magisk < 19.0)
   * drop support for uninstalling old System mode installs (NanoDroid < 18.0.3)
 
+* nanodroid-font Scipt
+  * fix applying font
+
 ### General Changes
 
 * SetupWizard
