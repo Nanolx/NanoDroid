@@ -21,6 +21,7 @@ done
 index_update_required () {
 	INDEX_FILE=${1}
 
+	test ! -f ${INDEX_FILE} && return 0
 	test $(stat --format=%Y ${INDEX_FILE}) -le $(($(date +%s) - 3600)) && return 0
 	test $(file -b ${INDEX_FILE}) == "empty" && return 0
 
