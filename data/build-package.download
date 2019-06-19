@@ -28,32 +28,35 @@ index_update_required () {
 	return 1
 }
 
+update_index () {
+	INDEX_JAR=${1}
+	INDEX_JSON="${CWD}/data/$(basename ${INDEX_JAR} .jar).json"
+	INDEX_REPO=${2}
+
+	index_update_required ${INDEX_JSON} && \
+		( wget -q -O "${INDEX_JAR}" "${INDEX_REPO}/index-v1.jar" || error " failed to update repo index" )
+
+	unzip -q ${INDEX_JAR} index-v1.json -d "${CWD}/data/"
+	mv "${CWD}/data/index-v1.json" "${INDEX_JSON}"
+	rm -f ${INDEX_JAR}
+}
+
 update_indices () {
 	echo "+++ upating Repo Indices"
 	echo " ++ F-Droid"
-	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_FDROID}).index.xml"
-	index_update_required ${INDEX_FILE} && \
-		( wget -q -O "${INDEX_FILE}" "${REPO_FDROID}/index.xml" || error " failed to update F-Droid repo index" )
+	update_index "${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_FDROID}).index-v1.jar" "${REPO_FDROID}"
 
 	echo " ++ Guardian Project"
-	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_GUARDIAN}).index.xml"
-	index_update_required ${INDEX_FILE} && \
-		( wget -q -O "${INDEX_FILE}" "${REPO_GUARDIAN}/index.xml" || error " failed to update Guardian Project repo index" )
+	update_index "${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_GUARDIAN}).index-v1.jar" "${REPO_GUARDIAN}"
 
 	echo " ++ microG"
-	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_MICROG}).index.xml"
-	index_update_required ${INDEX_FILE} && \
-		( wget -q -O "${INDEX_FILE}" "${REPO_MICROG}/index.xml" || error " failed to update microG repo index" )
+	update_index "${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_MICROG}).index-v1.jar" "${REPO_MICROG}"
 
 	echo " ++ Nanolx"
-	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_NANOLX}).index.xml"
-	index_update_required ${INDEX_FILE} && \
-		( wget -q -O "${INDEX_FILE}" "${REPO_NANOLX}/index.xml" || error " failed to update Nanolx repo index" )
+	update_index "${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_NANOLX}).index-v1.jar" "${REPO_NANOLX}"
 
 	echo " ++ Bromite"
-	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_BROMITE}).index.xml"
-	index_update_required ${INDEX_FILE} && \
-		( wget -q -O "${INDEX_FILE}" "${REPO_BROMITE}/index.xml" || error " failed to update Bromite repo index" )
+	update_index "${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_BROMITE}).index-v1.jar" "${REPO_BROMITE}"
 }
 
 grab_apk_from_repo () {
@@ -85,16 +88,16 @@ grab_apk_from_repo () {
 	esac
 
 	DOMAIN="$(awk -F/ '{print $3}' <<< ${REPO})"
-	INDEX_FILE="${CWD}/data/${DOMAIN}.index.xml"
+	INDEX_FILE="${CWD}/data/${DOMAIN}.index-v1.json"
 
 	PKG_NAME="${2}"
 
 	if [ -z "${5}" ]; then
-		APK_NAME="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/apkname/text()" ${INDEX_FILE})"
-		SHA_SUM="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[1]/hash/text()" ${INDEX_FILE})"
+		APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0].apkName' ${INDEX_FILE})"
+		SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0].hash' ${INDEX_FILE})"
 	else
-		APK_NAME="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[nativecode=\"${5}\"][1]/apkname/text()" ${INDEX_FILE})"
-		SHA_SUM="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[nativecode=\"${5}\"][1]/hash/text()" ${INDEX_FILE})"
+		APK_NAME="$(jq --arg pkg "${PKG_NAME}" --arg arch "${5}" '[.packages[$pkg][] | select (.nativecode[]==$arch).apkName][0]' ${INDEX_FILE})"
+		SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" --arg arch "${5}" '[.packages[$pkg][] | select (.nativecode[]==$arch).hash][0]' ${INDEX_FILE})"
 	fi
 
 	case "${PKG_NAME}" in
@@ -104,6 +107,15 @@ grab_apk_from_repo () {
 
 		net.osmand.plus | net.osmand.srtmPlugin.paid )
 			APK_DEST="${CWD}/OsmAnd/system/${3}/${4}"
+		;;
+
+		com.google.android.gms )
+			# XXX select mapbox build in official microG repo
+			if [ ${REPO} == ${REPO_MICROG} ]; then
+				APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][] | select (.versionName | contains("mapbox")).apkName' ${INDEX_FILE})"
+				SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][] | select (.versionName | contains("mapbox")).hash' ${INDEX_FILE})"
+			fi
+			APK_DEST="${CWD}/Full/system/${3}/${4}"
 		;;
 
 		* )

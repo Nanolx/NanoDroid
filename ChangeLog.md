@@ -18,6 +18,9 @@
 
 * This release switches from alpha to stable `Tor Browser` build
 
+* This release will by default install the official microG GmsCore instead of the custom build
+  * additionally the mapbox instead of vtm build flavour is now shipped
+
 ### Bugfixes
 
 * SetupWizard
@@ -57,7 +60,8 @@
   * Simple Calendar (6.5.1)
 
 * manual
-  * microG GmsCore (0.2.7.14755-beta-80)
+  * custom microG GmsCore (0.2.7.14755-beta-80-mapbox)
+  * official microG GmsCore (0.2.7.14755-mapbox)
   * MPV (20190604-nightly)
   * Play Store (15.3.17)
 
