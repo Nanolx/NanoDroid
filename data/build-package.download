@@ -18,27 +18,41 @@ for dep in xmllint gawk wget curl sha256sum; do
 	fi
 done
 
+index_update_required () {
+	INDEX_FILE=${1}
+
+	test $(stat --format=%Y ${INDEX_FILE}) -le $(($(date +%s) - 3600)) && return 0
+	test $(file -b ${INDEX_FILE}) == "empty" && return 0
+
+	return 1
+}
+
 update_indices () {
 	echo "+++ upating Repo Indices"
 	echo " ++ F-Droid"
 	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_FDROID}).index.xml"
-	wget -q -O "${INDEX_FILE}" "${REPO_FDROID}/index.xml" || error " failed to update F-Droid repo index"
+	index_update_required ${INDEX_FILE} && \
+		( wget -q -O "${INDEX_FILE}" "${REPO_FDROID}/index.xml" || error " failed to update F-Droid repo index" )
 
 	echo " ++ Guardian Project"
 	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_GUARDIAN}).index.xml"
-	wget -q -O "${INDEX_FILE}" "${REPO_GUARDIAN}/index.xml" || error " failed to update Guardian Project repo index"
+	index_update_required ${INDEX_FILE} && \
+		( wget -q -O "${INDEX_FILE}" "${REPO_GUARDIAN}/index.xml" || error " failed to update Guardian Project repo index" )
 
 	echo " ++ microG"
 	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_MICROG}).index.xml"
-	wget -q -O "${INDEX_FILE}" "${REPO_MICROG}/index.xml" || error " failed to update microG repo index"
+	index_update_required ${INDEX_FILE} && \
+		( wget -q -O "${INDEX_FILE}" "${REPO_MICROG}/index.xml" || error " failed to update microG repo index" )
 
 	echo " ++ Nanolx"
 	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_NANOLX}).index.xml"
-	wget -q -O "${INDEX_FILE}" "${REPO_NANOLX}/index.xml" || error " failed to update Nanolx repo index"
+	index_update_required ${INDEX_FILE} && \
+		( wget -q -O "${INDEX_FILE}" "${REPO_NANOLX}/index.xml" || error " failed to update Nanolx repo index" )
 
 	echo " ++ Bromite"
 	INDEX_FILE="${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_BROMITE}).index.xml"
-	wget -q -O "${INDEX_FILE}" "${REPO_BROMITE}/index.xml" || error " failed to update Bromite repo index"
+	index_update_required ${INDEX_FILE} && \
+		( wget -q -O "${INDEX_FILE}" "${REPO_BROMITE}/index.xml" || error " failed to update Bromite repo index" )
 }
 
 grab_apk_from_repo () {
@@ -82,8 +96,6 @@ grab_apk_from_repo () {
 		SHA_SUM="$(xmllint --xpath "/fdroid/application[id=\"${PKG_NAME}\"]/package[nativecode=\"${5}\"][1]/hash/text()" ${INDEX_FILE})"
 	fi
 
-	APK_URL="${REPO}/${APK_NAME}"
-
 	case "${PKG_NAME}" in
 		com.android.webview )
 			APK_DEST="${CWD}/BromiteWebView/system/${3}/${4}"
@@ -97,6 +109,8 @@ grab_apk_from_repo () {
 			APK_DEST="${CWD}/Full/system/${3}/${4}"
 		;;
 	esac
+
+	APK_URL="${REPO}/${APK_NAME}"
 
 	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
 		TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
