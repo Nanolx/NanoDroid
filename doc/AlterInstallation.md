@@ -17,7 +17,7 @@ create it manually with the following content for the **full** package
 
 ```
 nanodroid_microg=1
-nanodroid_gmscore=0
+nanodroid_gmscore=1
 nanodroid_fdroid=1
 nanodroid_apps=1
 nanodroid_play=31
@@ -38,7 +38,7 @@ nanodroid_fonts=1
 the **microG** package supports the following options (nanodroid_microg is always 1)
 
 ```
-nanodroid_gmscore=0
+nanodroid_gmscore=1
 nanodroid_play=10
 nanodroid_overlay=0
 nanodroid_mapsv1=1
