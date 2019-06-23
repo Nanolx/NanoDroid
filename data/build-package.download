@@ -11,7 +11,7 @@ REPO_NANOLX="https://nanolx.org/fdroid/repo"
 REPO_BROMITE="https://fdroid.bromite.org/fdroid/repo"
 
 # check dependencies
-for dep in xmllint gawk wget curl sha256sum; do
+for dep in gawk wget curl sha256sum jq; do
 	if ! which ${dep} &>/dev/null; then
 		echo "${dep} is not installed!"
 		exit 1
@@ -33,8 +33,9 @@ update_index () {
 	INDEX_JSON="${CWD}/data/$(basename ${INDEX_JAR} .jar).json"
 	INDEX_REPO=${2}
 
-	index_update_required ${INDEX_JSON} && \
-		( wget -q -O "${INDEX_JAR}" "${INDEX_REPO}/index-v1.jar" || error " failed to update repo index" )
+	if index_update_required ${INDEX_JSON}; then
+		wget -q -O "${INDEX_JAR}" "${INDEX_REPO}/index-v1.jar" || error " failed to update repo index"
+	fi
 
 	unzip -q ${INDEX_JAR} index-v1.json -d "${CWD}/data/"
 	mv "${CWD}/data/index-v1.json" "${INDEX_JSON}"
