@@ -1,0 +1,23 @@
+#!/bin/bash
+
+get_apk_info () {
+
+	APK=${1}
+	APK_FILE=$(basename ${APK})
+	APK_NAME=$(aapt dump badging "${APK}" 2>/dev/null | gawk -F \' '/^package: name/{print $2}')
+	APK_VERSION=$(aapt dump badging "${APK}" 2>/dev/null | gawk -F \' '/^package: name/{print $6}')
+	APK_CODE=$(aapt dump badging "${APK}" 2>/dev/null | gawk -F \' '/^package: name/{print $4}')
+	APK_PERM=$(aapt dump badging "${APK}" 2>/dev/null | gawk -F \' '/^uses-permission:/{print $2}' | sort)
+	APK_SHA=($(sha256sum ${APK}))
+	[[ ${APK} == *priv-app* ]] && APK_PRIV=Yes || APK_PRIV=No
+
+	echo "Android Package: ${APK_NAME}
+	| Filename:	${APK_FILE}
+	| Version:	${APK_VERSION}
+	| VersionCode:	${APK_CODE}
+	| SHA256:	${APK_SHA}
+	| Priviledged:	${APK_PRIV}
+	| Permissions:
+$(printf "\t|- %s\n" ${APK_PERM})" >> ${REPORT_FILE}
+
+}
