@@ -41,7 +41,7 @@ create_microg_package() {
 	zip_add_config .nanodroid-overlay
 	zip_add_config .nanodroid-setup 1
 
-	sum_sign_package "${ZIP}"
+	sum_sign_package "$(basename ${ZIP})"
 }
 
 mk_pkg_microg () {

@@ -24,7 +24,7 @@ create_osmand_package() {
 	zip_add_doc
 	zip_add_config .nanodroid-setup 0
 
-	sum_sign_package "${ZIP}"
+	sum_sign_package "$(basename ${ZIP})"
 }
 
 mk_pkg_osmand () {

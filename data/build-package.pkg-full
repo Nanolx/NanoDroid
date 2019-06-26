@@ -22,7 +22,7 @@ create_full_package () {
 	zip_add_config .nanodroid-setup 0
 	zip_add_config .nanodroid-apps
 
-	sum_sign_package "${ZIP}"
+	sum_sign_package "$(basename ${ZIP})"
 }
 
 mk_pkg_full () {

@@ -15,7 +15,7 @@ create_patcher_package() {
 
 	zip_add_doc
 
-	sum_sign_package "${ZIP}"
+	sum_sign_package "$(basename ${ZIP})"
 }
 
 mk_pkg_patcher () {
@@ -36,7 +36,7 @@ create_setupwizard_package() {
 
 	zip_add_doc
 
-	sum_sign_package "${ZIP}"
+	sum_sign_package "$(basename ${ZIP})"
 }
 
 mk_pkg_setupwizard () {
@@ -60,7 +60,7 @@ create_uninstaller_package() {
 
 	zip_add_doc
 
-	sum_sign_package "${ZIP}"
+	sum_sign_package "$(basename ${ZIP})"
 }
 
 mk_pkg_uninstaller () {
@@ -84,7 +84,7 @@ create_systest_package() {
 
 	zip_add_doc
 
-	sum_sign_package "${ZIP}"
+	sum_sign_package "$(basename ${ZIP})"
 }
 
 mk_pkg_systest () {

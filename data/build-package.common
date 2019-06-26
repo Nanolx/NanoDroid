@@ -196,6 +196,7 @@ error () {
 }
 
 sum_sign_package () {
+	cd "${CWD}"
 	sha256sum "${1}" > "${1}.sha256"
 	gpg --sign --detach-sign "${1}.sha256"
 }
