@@ -415,7 +415,7 @@ detect_arch () {
 				SWIPE_LIBDIR=lib64 ;;
 	esac
 
-	UNZIP="${INSTALLER}/system/xbin/unzip.${BIN_ARCH}"
+	UNZIP="${INSTALLER}/unzip.${BIN_ARCH}"
 	chmod +x "${UNZIP}"
 
 	AAPT="${INSTALLER}/aapt.${BIN_ARCH}"
@@ -1110,7 +1110,7 @@ install_shell_utils () {
 		# architecture dependend stuff
 		for binary in col colcrt colrm column findfs findmnt \
 			hexdump lessecho lesskey look lsblk lscpu lsipc \
-			lslocks lsns ncal setterm unzip whereis; do
+			lslocks lsns ncal setterm whereis; do
 			nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
 		done
 	else	ui_print " << without Shell Utilities"
