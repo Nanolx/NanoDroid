@@ -64,11 +64,21 @@ progress () {
 }
 
 zip_add () {
-	case ${1} in
-		*/ )	zip -qr "${ZIP}" ${1} || exit 1 ;;
-		"" )	zip -qr "${ZIP}" *    || exit 1 ;;
-		*  )	zip -q "${ZIP}" ${1}  || exit 1 ;;
-	esac
+	FILE_PATH="${CWD}/${1}"
+	FILE_MASK="${2}"
+	ZIP_PATH="${CWD}/${ZIP}"
+
+	cd "${FILE_PATH}"
+
+	if [ -z "${FILE_MASK}" ]; then
+		zip -qr "${ZIP_PATH}" * || exit 1
+	elif [ -d "${FILE_MASK}" ]; then
+		zip -qr "${ZIP_PATH}" "${FILE_MASK}"  || exit 1
+	else
+		zip -q "${ZIP_PATH}" ${FILE_MASK} || exit 1
+	fi
+
+	cd "${CWD}"
 }
 
 zip_add_config () {
@@ -77,23 +87,42 @@ zip_add_config () {
 	else	cd "${CWD}/doc"
 	fi
 
-	if [[ -n "${2}" && "${2}" -eq 1 ]]; then
-		sed -e 's/nanodroid_overlay=1/nanodroid_overlay=0/' -i "${1}"
-		zip_add "${1}"
-		sed -e 's/nanodroid_overlay=0/nanodroid_overlay=1/' -i "${1}"
-	else
-		zip_add "${1}"
-	fi
+	ZIP_PATH="${CWD}/${ZIP}"
+
+	case ${2} in
+		1 )
+			sed -e 's/nanodroid_overlay=1/nanodroid_overlay=0/' -i "${1}"
+			zip -q "${ZIP_PATH}" "${1}" || exit 1
+			sed -e 's/nanodroid_overlay=0/nanodroid_overlay=1/' -i "${1}"
+		;;
+
+		* )
+			zip -q "${ZIP_PATH}" "${1}" || exit 1
+		;;
+	esac
 
 	cd "${CWD}"
 }
 
-zip_add_doc () {
-	zip_add README.md
-	zip_add ChangeLog.md
+zip_add_base () {
+	ZIP_PATH="${CWD}/${ZIP}"
+
+	cd "${CWD}"
+
+	for file in CommonAddon CommonInstaller README.md ChangeLog.md; do
+		zip -q "${ZIP_PATH}" ${file} || exit 1
+	done
 }
 
-increase_version_number() {
+zip_add_tool () {
+	cd "${CWD}/tools"
+
+	zip -q "${ZIP_PATH}" ${1}.* || exit 1
+
+	cd "${CWD}"
+}
+
+increase_version_number () {
 	if [ -z ${3} ]; then
 		ver=99999999
 	else	ver=${3}
@@ -186,7 +215,7 @@ Creating Package
 
 	Type		${1}
 	Name		$(basename ${ZIP})
-	Directory	$(dirname ${ZIP})
+	Directory	${CWD}
 "
 }
 
@@ -197,6 +226,6 @@ error () {
 
 sum_sign_package () {
 	cd "${CWD}"
-	sha256sum "${1}" > "${1}.sha256"
-	gpg --sign --detach-sign "${1}.sha256"
+	sha256sum "${ZIP}" > "${ZIP}.sha256"
+	gpg --sign --detach-sign "${ZIP}.sha256"
 }
