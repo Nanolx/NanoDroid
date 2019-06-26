@@ -22,8 +22,8 @@ index_update_required () {
 	INDEX_FILE=${1}
 
 	test ! -f ${INDEX_FILE} && return 0
-	test $(stat --format=%Y ${INDEX_FILE}) -le $(($(date +%s) - 3600)) && return 0
-	test $(file -b ${INDEX_FILE}) == "empty" && return 0
+	test $(stat --format=%Z ${INDEX_FILE}) -le $(($(date +%s) - 3600)) && return 0
+	test "$(file -b ${INDEX_FILE})" == "empty" && return 0
 
 	return 1
 }
@@ -35,11 +35,11 @@ update_index () {
 
 	if index_update_required ${INDEX_JSON}; then
 		wget -q -O "${INDEX_JAR}" "${INDEX_REPO}/index-v1.jar" || error " failed to update repo index"
-	fi
 
-	unzip -q ${INDEX_JAR} index-v1.json -d "${CWD}/data/"
-	mv "${CWD}/data/index-v1.json" "${INDEX_JSON}"
-	rm -f ${INDEX_JAR}
+		unzip -q ${INDEX_JAR} index-v1.json -d "${CWD}/data/"
+		mv "${CWD}/data/index-v1.json" "${INDEX_JSON}"
+		rm -f ${INDEX_JAR}
+	fi
 }
 
 update_indices () {
@@ -97,7 +97,7 @@ grab_apk_from_repo () {
 		APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0].apkName' ${INDEX_FILE})"
 		SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0].hash' ${INDEX_FILE})"
 	else
-		APK_NAME="$(jq --arg pkg "${PKG_NAME}" --arg arch "${5}" '[.packages[$pkg][] | select (.nativecode[]==$arch).apkName][0]' ${INDEX_FILE})"
+		APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" --arg arch "${5}" '[.packages[$pkg][] | select (.nativecode[]==$arch).apkName][0]' ${INDEX_FILE})"
 		SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" --arg arch "${5}" '[.packages[$pkg][] | select (.nativecode[]==$arch).hash][0]' ${INDEX_FILE})"
 	fi
 
