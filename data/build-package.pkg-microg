@@ -1,47 +1,37 @@
 #!/bin/bash
 
 create_microg_package() {
-	ZIP="${CWD}/NanoDroid-microG-${VERSION}".zip
-	rm -f "${ZIP}"*
+	ZIP="NanoDroid-microG-${VERSION}.zip"
 
 	print_package "microG"
 
-	cd "${CWD}/Full"
+	zip_add_base
 
 	for app in AuroraStore DroidGuard nlpBackendApple nlpBackendDejavu \
 		nlpBackendIchnaea nlpBackendNominatim nlpBackendRadiocell; do
-		zip_add "system/app/${app}/"
+		zip_add Full system/app/${app}/
 	done
 
 	for app in FakeStore GmsCore_Official GmsCore_NanoDroid \
 		Phonesky GsfProxy YalpStore; do
-		zip_add "system/priv-app/${app}/"
+		zip_add Full system/priv-app/${app}/
 	done
 
-	for input in "system/xbin/nanodroid*" "system/xbin/novl" \
+	for content in "system/xbin/nanodroid*" "system/xbin/novl" \
 		"system/xbin/npem" "system/xbin/nprp" \
 		"system/xbin/nutl" "system/xbin/unzip*" "system/framework/" \
 		"gsync/" "system/etc/sysconfig/" "swipe/" \
 		"system/etc/default-permissions/" "system/etc/permissions/"; do
-		zip_add "${input}"
+		zip_add Full "${content}"
 	done
 
-	cd "${CWD}/microG"
-	zip_add
-	cd "${CWD}"
+	zip_add microG
+	zip_add tools
 
-	zip_add CommonInstaller
-	zip_add CommonAddon
-
-	cd "${CWD}/tools"
-	zip_add "*"
-	cd "${CWD}"
-
-	zip_add_doc
 	zip_add_config .nanodroid-overlay
-	zip_add_config .nanodroid-setup 1
+	zip_add_config .nanodroid-setup 0
 
-	sum_sign_package "$(basename ${ZIP})"
+	sum_sign_package
 }
 
 mk_pkg_microg () {

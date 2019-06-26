@@ -114,6 +114,15 @@ zip_add_base () {
 	done
 }
 
+zip_add_doc () {
+	ZIP_PATH="${CWD}/${ZIP}"
+
+	cd "${CWD}"
+
+	zip -q "${ZIP_PATH}" README.md || exit 1
+	zip -q "${ZIP_PATH}" ChangeLog.md || exit 1
+}
+
 zip_add_tool () {
 	cd "${CWD}/tools"
 
@@ -214,9 +223,11 @@ print_package () {
 Creating Package
 
 	Type		${1}
-	Name		$(basename ${ZIP})
+	Name		${ZIP}
 	Directory	${CWD}
 "
+
+	rm -f "${CWD}/${ZIP}"*
 }
 
 error () {

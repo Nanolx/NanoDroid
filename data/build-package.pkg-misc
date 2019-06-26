@@ -1,21 +1,15 @@
 #!/bin/bash
 
 create_patcher_package() {
-	ZIP="${CWD}/NanoDroid-patcher-${VERSION}".zip
-	rm -f "${ZIP}"*
+	ZIP="NanoDroid-patcher-${VERSION}.zip"
 
 	print_package "Framework Patcher"
 
-	cd "${CWD}/patcher"
-	zip_add
-
-	cd "${CWD}/tools"
-	zip_add "busybox*"
-	cd "${CWD}"
-
+	zip_add patcher
 	zip_add_doc
+	zip_add_tool busybox
 
-	sum_sign_package "$(basename ${ZIP})"
+	sum_sign_package
 }
 
 mk_pkg_patcher () {
@@ -25,18 +19,14 @@ mk_pkg_patcher () {
 
 
 create_setupwizard_package() {
-	ZIP="${CWD}/NanoDroid-setupwizard-${VERSION}".zip
-	rm -f "${ZIP}"*
+	ZIP="NanoDroid-setupwizard-${VERSION}.zip"
 
 	print_package "Setup Wizard"
 
-	cd "${CWD}/setup-wizard"
-	zip_add
-	cd "${CWD}"
-
+	zip_add setup-wizard
 	zip_add_doc
 
-	sum_sign_package "$(basename ${ZIP})"
+	sum_sign_package
 }
 
 mk_pkg_setupwizard () {
@@ -45,22 +35,15 @@ mk_pkg_setupwizard () {
 }
 
 create_uninstaller_package() {
-	ZIP="${CWD}/NanoDroid-uninstaller-${VERSION}".zip
-	rm -f "${ZIP}"*
+	ZIP="NanoDroid-uninstaller-${VERSION}.zip"
 
 	print_package "Uninstaller"
 
-	cd "${CWD}/uninstaller"
-	zip_add
-	cd "${CWD}"
-
-	cd "${CWD}/tools"
-	zip_add "busybox*"
-	cd "${CWD}"
-
+	zip_add uninstaller
 	zip_add_doc
+	zip_add_tool busybox
 
-	sum_sign_package "$(basename ${ZIP})"
+	sum_sign_package
 }
 
 mk_pkg_uninstaller () {
@@ -69,22 +52,15 @@ mk_pkg_uninstaller () {
 }
 
 create_systest_package() {
-	ZIP="${CWD}/NanoDroid-systest-${VERSION}".zip
-	rm -f "${ZIP}"*
+	ZIP="NanoDroid-systest-${VERSION}.zip"
 
 	print_package "SysTest"
 
-	cd "${CWD}/systest"
-	zip_add
-	cd "${CWD}"
-
-	cd "${CWD}/tools"
-	zip_add "busybox*"
-	cd "${CWD}"
-
+	zip_add systest
 	zip_add_doc
+	zip_add_tool busybox
 
-	sum_sign_package "$(basename ${ZIP})"
+	sum_sign_package
 }
 
 mk_pkg_systest () {

@@ -1,28 +1,19 @@
 #!/bin/bash
 
 create_full_package () {
-	ZIP="${CWD}/NanoDroid-${VERSION}".zip
-	rm -f "${ZIP}"*
+	ZIP="NanoDroid-${VERSION}.zip"
 
 	print_package "Full"
 
-	cd "${CWD}/Full"
-	zip_add
-	cd "${CWD}"
+	zip_add_base
+	zip_add Full
+	zip_add tools
 
-	zip_add CommonInstaller
-	zip_add CommonAddon
-
-	cd "${CWD}/tools"
-	zip_add "*"
-	cd "${CWD}"
-
-	zip_add_doc
 	zip_add_config .nanodroid-overlay
-	zip_add_config .nanodroid-setup 0
+	zip_add_config .nanodroid-setup 1
 	zip_add_config .nanodroid-apps
 
-	sum_sign_package "$(basename ${ZIP})"
+	sum_sign_package
 }
 
 mk_pkg_full () {

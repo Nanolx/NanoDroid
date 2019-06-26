@@ -1,28 +1,17 @@
 #!/bin/bash
 
 create_bromite_webview_package () {
-	ZIP="${CWD}/NanoDroid-BromiteWebView-${VERSION}".zip
-	rm -f "${ZIP}"*
+	ZIP="NanoDroid-BromiteWebView-${VERSION}.zip"
 
-	print_package "BromiteWebView"
+	print_package BromiteWebView
 
-	cd "${CWD}/BromiteWebView"
-	zip_add
-	cd "${CWD}/Full"
-	zip_add "system/xbin/unzip*"
-	cd "${CWD}"
-
-	zip_add CommonInstaller
-	zip_add CommonAddon
-
-	cd "${CWD}/tools"
-	zip_add "busybox*"
-	cd "${CWD}"
-
-	zip_add_doc
+	zip_add_base
+	zip_add BromiteWebView
+	zip_add_tool busybox
+	zip_add_tool unzip
 	zip_add_config .nanodroid-setup 0
 
-	sum_sign_package "$(basename ${ZIP})"
+	sum_sign_package
 }
 
 mk_pkg_bromite_webview () {

@@ -1,30 +1,16 @@
 #!/bin/bash
 
 create_osmand_package() {
-	ZIP="${CWD}/NanoDroid-OsmAnd-${VERSION}".zip
-	rm -f "${ZIP}"*
+	ZIP="NanoDroid-OsmAnd-${VERSION}.zip"
 
 	print_package "OsmAnd"
 
-	cd "${CWD}/Full"
-	zip_add "system/xbin/unzip*"
-	cd "${CWD}"
-
-	cd "${CWD}/OsmAnd"
-	zip_add
-	cd "${CWD}"
-
-	zip_add CommonInstaller
-	zip_add CommonAddon
-
-	cd "${CWD}/tools"
-	zip_add "busybox*"
-	cd "${CWD}"
-
-	zip_add_doc
+	zip_add_base
+	zip_add OsmAnd
+	zip_add_tool busybox
 	zip_add_config .nanodroid-setup 0
 
-	sum_sign_package "$(basename ${ZIP})"
+	sum_sign_package
 }
 
 mk_pkg_osmand () {

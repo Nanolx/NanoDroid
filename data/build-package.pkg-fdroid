@@ -1,34 +1,20 @@
 #!/bin/bash
 
 create_fdroid_package() {
-	ZIP="${CWD}/NanoDroid-fdroid-${VERSION}".zip
-	rm -f "${ZIP}"*
+	ZIP="NanoDroid-fdroid-${VERSION}".zip
 
 	print_package "F-Droid"
 
-	cd "${CWD}/Full"
-	zip_add "system/app/FDroid/"
-	zip_add "system/priv-app/FDroidPrivileged/"
-	zip_add "system/etc/org.fdroid.fdroid/"
-	zip_add "system/xbin/unzip*"
-	cd "${CWD}"
-
-	cd "${CWD}/F-Droid"
-	zip_add
-	cd "${CWD}"
-
-	zip_add CommonInstaller
-	zip_add CommonAddon
-
-	cd "${CWD}/tools"
-	zip_add "busybox*"
-	zip_add "aapt*"
-	cd "${CWD}"
-
-	zip_add_doc
+	zip_add_base
+	zip_add F-Droid
+	zip_add Full system/app/FDroid/
+	zip_add Full system/etc/org.fdroid.fdroid/
+	zip_add Full system/priv-app/FDroidPrivileged/
+	zip_add_tool aapt
+	zip_add_tool busybox
 	zip_add_config .nanodroid-setup 0
 
-	sum_sign_package "$(basename ${ZIP})"
+	sum_sign_package
 }
 
 mk_pkg_fdroid () {
