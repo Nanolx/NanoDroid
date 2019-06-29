@@ -17,13 +17,14 @@ create_microg_package() {
 		zip_add Full system/priv-app/${app}/
 	done
 
-	for content in "system/xbin/nanodroid*" "system/xbin/novl" \
-		"system/xbin/npem" "system/xbin/nprp" \
-		"system/xbin/nutl" "system/xbin/unzip*" "system/framework/" \
-		"gsync/" "system/etc/sysconfig/" "swipe/" \
-		"system/etc/default-permissions/" "system/etc/permissions/"; do
-		zip_add Full "${content}"
+	for content in "xbin/nanodroid*" "xbin/novl" "xbin/npem" \
+		"xbin/nprp" "xbin/nutl" "framework/" "etc/sysconfig/" \
+		"etc/default-permissions/" "etc/permissions/"; do
+		zip_add Full "system/${content}"
 	done
+
+	zip_add Full gsync/
+	zip_add Full swipe/
 
 	zip_add microG
 	zip_add tools
