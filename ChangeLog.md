@@ -34,17 +34,27 @@
 * nanodroid-font Scipt
   * fix applying font
 
+* build-package
+  * fix filepaths in SHA256 checksums
+
 ### General Changes
 
 * SetupWizard
   * backup previous configuration files into `/data/media/0/nanodroid_backups/config_%Y%m%d-%H.%M.%S`
      * where `%Y%m%d-%H.%M.%S` is the current date in `20190609-12.07.16` format
   * sort list of applications alphabetically
+  * make official microG GmsCore the default choice
   * string changes
 
 * SysTest
   * allow running from Magisk Manager
   * filter out Magisk mounts from log
+  * log usable space for Installer
+
+* build-package
+  * use JSON instead of XML indices for F-Droid repositories
+  * only download F-Droid indices if required
+  * several internal improvements
 
 ### Updates
 
@@ -52,18 +62,19 @@
   * Alarmio (1.0.2)
   * NewPipe (0.16.2)
   * Odyssey (1.1.18)
-  * Bromite System WebView (75.0.3770.86)
-  * Orbot (16.1.0-BETA-4)
+  * Bromite System WebView (75.0.3770.109)
+  * Orbot (16.1.0-BETA-5)
   * Tor Browser (60.7.0)
-  * F-Droid (1.7-alpha1)
-  * Simple Gallery (6.7.9)
+  * F-Droid (1.7-alpha2)
+  * Simple Gallery (6.8.0)
   * Simple Calendar (6.5.1)
+  * QKSMS (3.6.6)
 
 * manual
   * custom microG GmsCore (0.2.7.14755-beta-80-mapbox)
   * official microG GmsCore (0.2.7.14755-mapbox)
-  * MPV (20190604-nightly)
-  * Play Store (15.3.17)
+  * MPV (20190620-nightly)
+  * Play Store (15.5.22)
 
 ## 21.0.20190601 "[USS Reliant](https://memory-alpha.fandom.com//wiki/USS_Reliant)"
 
