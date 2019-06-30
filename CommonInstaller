@@ -1418,7 +1418,7 @@ nanodroid_substitute () {
 	[ ! -f "${target}" ] && error "file: ${file} not found"
 
 	if grep -q @ZIPDIR@ "${target}"; then
-		if [[ "${ZIPDIR}" == "/external_sd" ]]; then
+		if [[ "${ZIPDIR}" == "/external_sd" ]] || [[ "${ZIPDIR}" == "/sdcard1" ]]; then
 			# /external_sd is already known by `nanodroid-overlay`
 			# no need to add it a second time
 			sed -e 's|@ZIPDIR@||' -i ${target}
@@ -1528,7 +1528,7 @@ ui_print " "
 ##########################################################################################
 
 # check for configuration files
-config_locations="${STORAGE} /external_sd ${ZIPDIR} /data"
+config_locations="${STORAGE} /external_sd /sdcard1 ${ZIPDIR} /data"
 
 get_config () {
 	config=""
