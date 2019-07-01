@@ -329,14 +329,14 @@ detect_mode () {
 }
 
 detect_migrate_microg () {
-	gmscore_update=$(find /data/app -type d -name 'com.google.android.gms*')
+	GMSCORE_PATH=$(find /data/app -type d -name 'com.google.android.gms*' 2>/dev/null)
 	GMSCORE_UPDATE=0
 
-	if [! -z ${gmscore_update} ]; then
-		if ${UNZIP} -l "${gmscore_update}/base.apk" | grep META-INF/NANOLX.RSA; then
+	if [! -z ${GMSCORE_PATH} ]; then
+		if ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
 			echo "    + NanoDroid microG GmsCore installed in /data/app"
 			GMSCORE_UPDATE=1
-		elif ${UNZIP} -l "${gmscore_update}/base.apk" | grep microg; then
+		elif ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep microg 2>/dev/null; then
 			echo "    + Official microG GmsCore installed in /data/app"
 			GMSCORE_UPDATE=2
 		else
@@ -352,13 +352,13 @@ detect_migrate_microg () {
 
 	if [ "${nanodroid_gmscore}" -eq 1 && "${GMSCORE_UPDATE}" -eq 1 ]; then
 		echo "    + Removing NanoDroid microG GmsCore in favor of Official microG GmsCore"
-		rm -rf "${gmscore_update}"
+		rm -rf "${GMSCORE_PATH}"
 	elif [ "${nanodroid_gmscore}" -eq 0 && "${GMSCORE_UPDATE}" -eq 2 ]; then
 		echo "    + Removing Official microG GmsCore in favor of NanoDroid microG GmsCore"
-		rm -rf "${gmscore_update}"
+		rm -rf "${GMSCORE_PATH}"
 	elif [ "${GMSCORE_UPDATE}" -eq 3 ]; then
 		echo "    + Removing GApps GmsCore [XXX who did we end up here?]"
-		rm -rf "${gmscore_update}"
+		rm -rf "${GMSCORE_PATH}"
 	fi
 }
 
@@ -1503,6 +1503,8 @@ NANODROID_UPGRADE=${NANODROID_UPGRADE}
 NANODROID_BINDIR=${NANODROID_BINDIR}
 HAS_FAKESIGN=${HAS_FAKESIGN}
 HAS_WEBVIEW=${HAS_WEBVIEW}
+GMSCORE_PATH=${GMSCORE_PATH}
+GMSCORE_UPDATE=${GMSCORE_UPDATE}
 
 ### MOUNTED PARTITIONS ###
 " >> ${nanodroid_logfile}
