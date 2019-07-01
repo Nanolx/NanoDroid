@@ -28,8 +28,6 @@
 
 * Uninstaller
   * fix System Mode overlay restoration
-  * drop support for uninstalling old Magisk mode installs (Magisk < 19.0)
-  * drop support for uninstalling old System mode installs (NanoDroid < 18.0.3)
 
 * nanodroid-font Scipt
   * fix applying font
@@ -50,6 +48,15 @@
   * allow running from Magisk Manager
   * filter out Magisk mounts from log
   * log usable space for Installer
+
+* Installer
+  * allow in-place migration between NanoDroid and Official microG GmsCore
+  * support recoveries with `/sdcard1` (like OrangeFox) @Vavun
+  * internal improvements
+
+* Uninstaller
+  * drop support for uninstalling old Magisk mode installs (Magisk < 19.0)
+  * drop support for uninstalling old System mode installs (NanoDroid < 18.0.3)
 
 * build-package
   * use JSON instead of XML indices for F-Droid repositories
