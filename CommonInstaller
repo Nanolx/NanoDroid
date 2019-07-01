@@ -328,6 +328,40 @@ detect_mode () {
 		NANODROID_BINDIR="${MODPATH}/system/xbin"
 }
 
+detect_migrate_microg () {
+	gmscore_update=$(find /data/app -type d -name 'com.google.android.gms*')
+	GMSCORE_UPDATE=0
+
+	if [! -z ${gmscore_update} ]; then
+		if ${UNZIP} -l "${gmscore_update}/base.apk" | grep META-INF/NANOLX.RSA; then
+			echo "    + NanoDroid microG GmsCore installed in /data/app"
+			GMSCORE_UPDATE=1
+		elif ${UNZIP} -l "${gmscore_update}/base.apk" | grep microg; then
+			echo "    + Official microG GmsCore installed in /data/app"
+			GMSCORE_UPDATE=2
+		else
+			# should never be reached as we call the helper functions
+			# gapps_solve_conflicts() and gapps_destroy_artifacts()
+			# before detect_migrate_microg() when NANODROID_UPGRADE=0
+			echo "    + Stock GApps GmsCore installed in /data/app"
+			GMSCORE_UPDATE=3
+		fi
+	else
+		GMSCORE_UPDATE=0
+	fi
+
+	if [ "${nanodroid_gmscore}" -eq 1 && "${GMSCORE_UPDATE}" -eq 1 ]; then
+		echo "    + Removing NanoDroid microG GmsCore in favor of Official microG GmsCore"
+		rm -rf "${gmscore_update}"
+	elif [ "${nanodroid_gmscore}" -eq 0 && "${GMSCORE_UPDATE}" -eq 2 ]; then
+		echo "    + Removing Official microG GmsCore in favor of NanoDroid microG GmsCore"
+		rm -rf "${gmscore_update}"
+	elif [ "${GMSCORE_UPDATE}" -eq 3 ]; then
+		echo "    + Removing GApps GmsCore [XXX who did we end up here?]"
+		rm -rf "${gmscore_update}"
+	fi
+}
+
 unpack_zip () {
 	TMPDIR=/dev/tmp
 	TMP_LIBDIR=${TMPDIR}/nanodroid-lib
@@ -872,6 +906,8 @@ install_microg () {
 			NLPBACKEND="${NLPBACKEND} nlpBackendRadiocell"
 			ui_print "   ++ Radiocell location backend"
 		fi
+
+		detect_migrate_microg
 
 		if [ "${nanodroid_gmscore}" -eq 1 ]; then
 			ui_print "   ++ Official microG GmsCore"
