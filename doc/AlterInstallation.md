@@ -8,7 +8,8 @@ To alter the installation you can create the file
 
 on your device, in one of the following directories
 
-* `/data/media/0` (internal storage)
+* `/data/media/0` (internal storage (TWRP))
+* `/sdcard1` (internal storage (ORANGEFOX))
 * `/external_sd` (TWRP path to SD Card (if any))
 * directory containing the zip file
 * `/data` (fallback)
