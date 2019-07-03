@@ -73,13 +73,15 @@
   * Orbot (16.1.0-BETA-5)
   * Tor Browser (60.7.0)
   * F-Droid (1.7-alpha2)
-  * Simple Gallery (6.8.0)
-  * Simple Calendar (6.5.1)
+  * Simple Gallery (6.8.1)
+  * Simple Calendar (6.5.3)
   * QKSMS (3.6.6)
+  * OpenKeychain (5.3)
+  * Twidere (3.7.4)
 
 * manual
-  * custom microG GmsCore (0.2.7.14755-beta-80-mapbox)
-  * official microG GmsCore (0.2.7.14755-mapbox)
+  * custom microG GmsCore (0.2.8.17785-beta-1-mapbox)
+  * official microG GmsCore (0.2.8.17785-mapbox)
   * MPV (20190620-nightly)
   * Play Store (15.5.22)
 
