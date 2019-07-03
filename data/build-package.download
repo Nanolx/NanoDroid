@@ -113,8 +113,8 @@ grab_apk_from_repo () {
 		com.google.android.gms )
 			# XXX select mapbox build in official microG repo
 			if [ ${REPO} == ${REPO_MICROG} ]; then
-				APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][] | select (.versionName | contains("mapbox")).apkName' ${INDEX_FILE})"
-				SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][] | select (.versionName | contains("mapbox")).hash' ${INDEX_FILE})"
+				APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).apkName' ${INDEX_FILE})"
+				SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).hash' ${INDEX_FILE})"
 			fi
 			APK_DEST="${CWD}/Full/system/${3}/${4}"
 		;;
