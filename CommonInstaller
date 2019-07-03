@@ -350,13 +350,13 @@ detect_migrate_microg () {
 		GMSCORE_UPDATE=0
 	fi
 
-	if [ "${nanodroid_gmscore}" -eq 1 && "${GMSCORE_UPDATE}" -eq 1 ]; then
+	if [[ "${nanodroid_gmscore}" -eq 1 && "${GMSCORE_UPDATE}" -eq 1 ]]; then
 		echo "    + Removing NanoDroid microG GmsCore in favor of Official microG GmsCore"
 		rm -rf "${GMSCORE_PATH}"
-	elif [ "${nanodroid_gmscore}" -eq 0 && "${GMSCORE_UPDATE}" -eq 2 ]; then
+	elif [[ "${nanodroid_gmscore}" -eq 0 && "${GMSCORE_UPDATE}" -eq 2 ]]; then
 		echo "    + Removing Official microG GmsCore in favor of NanoDroid microG GmsCore"
 		rm -rf "${GMSCORE_PATH}"
-	elif [ "${GMSCORE_UPDATE}" -eq 3 ]; then
+	elif [[ "${GMSCORE_UPDATE}" -eq 3 ]]; then
 		echo "    + Removing GApps GmsCore [XXX who did we end up here?]"
 		rm -rf "${GMSCORE_PATH}"
 	fi
