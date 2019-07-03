@@ -139,7 +139,7 @@ increase_version_number () {
 
 	for file in  "build-package" "CommonInstaller" \
 		"systest/SysTest" "patcher/CommonPatcher" \
-		"setup-wizard/nanodroid-setup" "ommonAddon" \
+		"setup-wizard/nanodroid-setup" "CommonAddon" \
 		"uninstaller/META-INF/com/google/android/update-binary"; do
 		sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/${file}"
 	done
