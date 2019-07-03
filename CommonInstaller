@@ -332,7 +332,7 @@ detect_migrate_microg () {
 	GMSCORE_PATH=$(find /data/app -type d -name 'com.google.android.gms*' 2>/dev/null)
 	GMSCORE_UPDATE=0
 
-	if [! -z ${GMSCORE_PATH} ]; then
+	if [ ! -z ${GMSCORE_PATH} ]; then
 		if ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
 			echo "    + NanoDroid microG GmsCore installed in /data/app"
 			GMSCORE_UPDATE=1
