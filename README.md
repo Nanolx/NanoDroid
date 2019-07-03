@@ -66,7 +66,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 ## Current Release
 
 * Stable: 21.0.20190601 ([USS Reliant](https://memory-alpha.fandom.com//wiki/USS_Reliant))
-* Beta: --- (---)
+* Beta: 21.0.90.20190703 (22.0-beta1)
 
 ## Downloads
 
