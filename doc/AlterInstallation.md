@@ -18,7 +18,6 @@ create it manually with the following content for the **full** package
 
 ```
 nanodroid_microg=1
-nanodroid_gmscore=1
 nanodroid_fdroid=1
 nanodroid_apps=1
 nanodroid_play=31
@@ -39,7 +38,6 @@ nanodroid_fonts=1
 the **microG** package supports the following options (nanodroid_microg is always 1)
 
 ```
-nanodroid_gmscore=1
 nanodroid_play=10
 nanodroid_overlay=0
 nanodroid_mapsv1=1
@@ -71,13 +69,6 @@ whether to provide **microG**
   * note: OpenSource purists setting; this will leave you
       * without Push Messaging support through GCM
       * without the ability to pass SafetyNet attestation
-
-`nanodroid_gmscore=[0|1]`
-
-which microG GmsCore to install
-
-* 0 = install NanoDroid's [custom microG GmsCore](https://github.com/Nanolx/android_packages_apps_GmsCore)
-* 1 = install [official microG GmsCore](https://github.com/microg/android_packages_apps_GmsCore)
 
 `nanodroid_fdroid=[0|1]`
 
