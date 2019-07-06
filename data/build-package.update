@@ -27,7 +27,6 @@ update_swipe () {
 }
 
 update_microg () {
-	grab_apk_from_repo ${nlx_GMSCORE[@]}
 	grab_apk_from_repo ${uG_GMSCORE[@]}
 	grab_apk_from_repo ${uG_GSFPROXY[@]}
 	grab_apk_from_repo ${nlx_DROIDGUARD[@]}
