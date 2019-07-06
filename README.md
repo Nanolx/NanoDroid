@@ -2,9 +2,7 @@
 
 NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, both devices with or without A/B partition scheme, aswell as Magisk Mode (module) installation. It also includes several tools (eg. GNU Bash, GNU Nano, more), scripts, fonts, sounds and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
 
-Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them, see [Alter Installation](#alter-installation) below. 
-
-NanoDroid allows you to choose between the official microG GmsCore and a custom microG GmsCore (default), [list of changes](https://github.com/Nanolx/android_packages_apps_GmsCore#changes).
+Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them, see [Alter Installation](#alter-installation) below.
 
 In order for full microG experience NanoDroid contains a modified Play Store which allows (in-)app-purchases with microG, which would normally not be possible. It also tries to remove all previously installed GApps on it's own. For ROMs without builtin signature spoofing support NanoDroid includes an on-device Patcher which tries to patch your ROM from TWRP.
 
@@ -146,8 +144,6 @@ The following applications are custom builds (see [F-Droid Repository](#f-droid-
 
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
   * [microG (in-)app-purchase support patch](https://gitlab.com/Nanolx/microg-phonesky-iap-support)
-* microG GmsCore (reason: built with additions)
-  * [source (with detailed changes)](https://github.com/Nanolx/android_packages_apps_GmsCore)
 * microG DroidGuard Helper (reason: built with fix for non 32bit arm devices failing SafetyNet attestation)
   * [source](https://github.com/ThibG/android_packages_apps_RemoteDroidGuard/tree/aarch64)
 * MPV (reason: infrequent updates)
@@ -458,7 +454,7 @@ microG is an Open Source replacement for Google Services, full details can be fo
 
 NanoDroid includes microG as follows
 
-* microG GmsCore, choose from offical build [> GitHub](https://github.com/microg/android_packages_apps_GmsCore) and custom build [> GitHub](https://github.com/Nanolx/android_packages_apps_GmsCore)
+* microG GmsCore [> GitHub](https://github.com/microg/android_packages_apps_GmsCore)
 * with optional **Déjà Vu** location provider backend [> F-Droid](https://f-droid.org/de/packages/org.fitchfamily.android.dejavu/)
 * with optional **Mozilla** location provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
 * with optional **Apple** location provider backend [> F-Droid](https://f-droid.org/de/packages/org.microg.nlp.backend.apple/)
@@ -765,7 +761,7 @@ Additional credits go to
   * https://forum.xda-developers.com/showthread.php?t=2239421
 * shadow53 for automatic apk grabbing base code
   * https://shadow53.com/android/no-gapps/
-* ale5000 for microG system permission files, GApps Removal list and native signature spoofing detection
+* ale5000 for GApps Removal list and native signature spoofing detection
   * https://github.com/micro5k
 * PaperYoshi for Nintendo Fonts
   * http://downloads.paperyoshi.at/
@@ -781,7 +777,7 @@ Special Thanks to the contributors
   * fixes for x86_64 support
 * Vavun
   * OsmAnd package
-  * several contributions to NanoDroid and it's microG GmsCore fork
+  * several contributions to NanoDroid and it's former microG GmsCore fork
 
 Special Thanks to the beta testers
 
@@ -800,5 +796,5 @@ Q: what devices is this tested on?
 A: OnePlus 5T, OnePlus 3T, Nexus 6
 
 Q: what ROMs was this tested on?
-A: OxygenOS Pie, OmniROM, NitrogenOS; should work on any LineageOS / AOSP based ROM and most Stock ROMs.
+A: AICP, OmniROM, NitrogenOS; should work on any LineageOS / AOSP based ROM and most Stock ROMs.
 ```
