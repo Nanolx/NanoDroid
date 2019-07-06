@@ -144,8 +144,6 @@ The following applications are custom builds (see [F-Droid Repository](#f-droid-
 
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
   * [microG (in-)app-purchase support patch](https://gitlab.com/Nanolx/microg-phonesky-iap-support)
-* microG DroidGuard Helper (reason: built with fix for non 32bit arm devices failing SafetyNet attestation)
-  * [source](https://github.com/ThibG/android_packages_apps_RemoteDroidGuard/tree/aarch64)
 * MPV (reason: infrequent updates)
   * [source](https://github.com/mpv-android/mpv-android)
   * [version code patch](https://nanolx.org/fdroid/mpv.diff)
