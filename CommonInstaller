@@ -330,34 +330,19 @@ detect_mode () {
 
 detect_migrate_microg () {
 	GMSCORE_PATH=$(find /data/app -type d -name 'com.google.android.gms*' 2>/dev/null)
-	GMSCORE_UPDATE=0
+	GMSCORE_NANOLX=0
 
 	if [ ! -z ${GMSCORE_PATH} ]; then
 		if ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
 			echo "    + NanoDroid microG GmsCore installed in /data/app"
-			GMSCORE_UPDATE=1
-		elif ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep microg 2>/dev/null; then
-			echo "    + Official microG GmsCore installed in /data/app"
-			GMSCORE_UPDATE=2
-		else
-			# should never be reached as we call the helper functions
-			# gapps_solve_conflicts() and gapps_destroy_artifacts()
-			# before detect_migrate_microg() when NANODROID_UPGRADE=0
-			echo "    + Stock GApps GmsCore installed in /data/app"
-			GMSCORE_UPDATE=3
+			GMSCORE_NANOLX=1
 		fi
 	else
-		GMSCORE_UPDATE=0
+		GMSCORE_NANOLX=0
 	fi
 
-	if [[ "${nanodroid_gmscore}" -eq 1 && "${GMSCORE_UPDATE}" -eq 1 ]]; then
+	if [[ "${GMSCORE_NANOLX}" -eq 1 ]]; then
 		echo "    + Removing NanoDroid microG GmsCore in favor of Official microG GmsCore"
-		rm -rf "${GMSCORE_PATH}"
-	elif [[ "${nanodroid_gmscore}" -eq 0 && "${GMSCORE_UPDATE}" -eq 2 ]]; then
-		echo "    + Removing Official microG GmsCore in favor of NanoDroid microG GmsCore"
-		rm -rf "${GMSCORE_PATH}"
-	elif [[ "${GMSCORE_UPDATE}" -eq 3 ]]; then
-		echo "    + Removing GApps GmsCore [XXX who did we end up here?]"
 		rm -rf "${GMSCORE_PATH}"
 	fi
 }
@@ -907,15 +892,11 @@ install_microg () {
 			ui_print "   ++ Radiocell location backend"
 		fi
 
+		# migrate from Nanolx microG GmsCore to Official microG GmsCore
 		detect_migrate_microg
 
-		if [ "${nanodroid_gmscore}" -eq 1 ]; then
-			ui_print "   ++ Official microG GmsCore"
-			nanodroid_install_apk GmsCore_Official "" GmsCore
-		else
-			ui_print "   ++ NanoDroid microG GmsCore"
-			nanodroid_install_apk GmsCore_NanoDroid multilib GmsCore
-		fi
+		ui_print "   ++ microG GmsCore"
+		nanodroid_install_apk GmsCore
 
 		if [ "${nanodroid_microg}" -ne 2 ]; then
 			for app in GsfProxy DroidGuard; do
@@ -1504,7 +1485,7 @@ NANODROID_BINDIR=${NANODROID_BINDIR}
 HAS_FAKESIGN=${HAS_FAKESIGN}
 HAS_WEBVIEW=${HAS_WEBVIEW}
 GMSCORE_PATH=${GMSCORE_PATH}
-GMSCORE_UPDATE=${GMSCORE_UPDATE}
+GMSCORE_NANOLX=${GMSCORE_NANOLX}
 
 ### MOUNTED PARTITIONS ###
 " >> ${nanodroid_logfile}
@@ -1590,7 +1571,6 @@ check_cfg_setup () {
 
 	[ -z "${nanodroid_fdroid}" ] && set_prop nanodroid_fdroid 1
 	[ -z "${nanodroid_microg}" ] && set_prop nanodroid_microg 1
-	[ -z "${nanodroid_gmscore}" ] && set_prop nanodroid_gmscore 0
 	[ -z "${nanodroid_apps}" ] && set_prop nanodroid_apps 1
 
 	[ -z "${nanodroid_play}" ] && set_prop nanodroid_play 10
