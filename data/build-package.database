@@ -4,7 +4,6 @@
 # NanoDroid self-provided apks
 ###
 
-nlx_DROIDGUARD=(nanolx org.microg.gms.droidguard app DroidGuard)
 nlx_MPV=(nanolx is.xyz.mpv app MPV)
 nlx_PHONESKY=(nanolx com.android.vending priv-app Phonesky)
 
