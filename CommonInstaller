@@ -329,21 +329,22 @@ detect_mode () {
 }
 
 detect_migrate_microg () {
-	GMSCORE_PATH=$(find /data/app -type d -name 'com.google.android.gms*' 2>/dev/null)
-	GMSCORE_NANOLX=0
+	GMSCORE_PATH=$(find /data/app -type d -name 'com.google.android.gms-*' 2>/dev/null)
 
 	if [ ! -z ${GMSCORE_PATH} ]; then
 		if ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
-			echo "    + NanoDroid microG GmsCore installed in /data/app"
-			GMSCORE_NANOLX=1
+			echo "    + Removing NanoDroid microG GmsCore in favor of Official microG GmsCore"
+			rm -rf "${GMSCORE_PATH}"
 		fi
-	else
-		GMSCORE_NANOLX=0
 	fi
 
-	if [[ "${GMSCORE_NANOLX}" -eq 1 ]]; then
-		echo "    + Removing NanoDroid microG GmsCore in favor of Official microG GmsCore"
-		rm -rf "${GMSCORE_PATH}"
+	DROIDGUARD_PATH=$(find /data/app -type d -name 'org.microg.gms.droidguard-*' 2>/dev/null)
+
+	if [ ! -z ${DROIDGUARD_PATH} ]; then
+		if ${UNZIP} -l "${DROIDGUARD_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
+			echo "    + Removing NanoDroid DroidGuard in favor of Official DroidGuard"
+			rm -rf "${DROIDGUARD_PATH}"
+		fi
 	fi
 }
 
@@ -1484,8 +1485,6 @@ NANODROID_UPGRADE=${NANODROID_UPGRADE}
 NANODROID_BINDIR=${NANODROID_BINDIR}
 HAS_FAKESIGN=${HAS_FAKESIGN}
 HAS_WEBVIEW=${HAS_WEBVIEW}
-GMSCORE_PATH=${GMSCORE_PATH}
-GMSCORE_NANOLX=${GMSCORE_NANOLX}
 
 ### MOUNTED PARTITIONS ###
 " >> ${nanodroid_logfile}
