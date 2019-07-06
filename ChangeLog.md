@@ -4,6 +4,9 @@
 
 ### Notes
 
+* This release longer ships the custom microG GmsCore
+  * if you previously opted-in for it you'll be auto-migrated to the official build
+
 * This release replaces `OmniClock` with `Alarmio`
   * if you previously opted-in for OmniClock you'll be auto-migrated to Alarmio
 
@@ -17,9 +20,6 @@
   * check your ROM for supported Weather Providers
 
 * This release switches from alpha to stable `Tor Browser` build
-
-* This release will by default install the official microG GmsCore instead of the custom build
-  * additionally the mapbox instead of vtm build flavour is now shipped
 
 ### Bugfixes
 
@@ -73,14 +73,14 @@
   * Orbot (16.1.0-BETA-5)
   * Tor Browser (60.7.0)
   * F-Droid (1.7-alpha2)
-  * Simple Gallery (6.8.1)
-  * Simple Calendar (6.5.3)
+  * Simple Gallery (6.8.2)
+  * Simple Calendar (6.5.4)
   * QKSMS (3.6.6)
   * OpenKeychain (5.3)
-  * Twidere (3.7.4)
+  * Twidere (3.7.5)
+  * OsmAnd+ (3.4.0)
 
 * manual
-  * custom microG GmsCore (0.2.8.17785-beta-1-mapbox)
   * official microG GmsCore (0.2.8.17785-mapbox)
   * MPV (20190620-nightly)
   * Play Store (15.5.22)
