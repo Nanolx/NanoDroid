@@ -4,7 +4,10 @@
 
 ### Notes
 
-* This release longer ships the custom microG GmsCore
+* This release no longer ships the custom microG GmsCore
+  * if you previously opted-in for it you'll be auto-migrated to the official build
+
+* This release no longer ships the custom microG DroidGuard Helper
   * if you previously opted-in for it you'll be auto-migrated to the official build
 
 * This release replaces `OmniClock` with `Alarmio`
