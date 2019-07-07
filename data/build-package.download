@@ -150,14 +150,12 @@ grab_apk_from_repo () {
 		wget -q -O "${APK_DEST}/${4}.apk" "${APK_URL}"
 
 		if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
-			if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
-				echo "	SHA256 hash of ${4}.apk is correct"
-				bzip2 -z "${APK_DEST}/${4}.apk"
-			else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
-				\n	expected	: ${SHA_SUM}\
-				\n	got		: ${IN_CHECKSUM}"
-				rm -f "${APK_DEST}/${4}.apk"
-			fi
+			echo "	SHA256 hash of ${4}.apk is correct"
+			bzip2 -z "${APK_DEST}/${4}.apk"
+		else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
+			\n	expected	: ${SHA_SUM}\
+			\n	got		: ${IN_CHECKSUM}"
+			rm -f "${APK_DEST}/${4}.apk"
 		fi
 	fi
 }
@@ -210,14 +208,12 @@ ${5}-${VERSION}-android-apk-download"
 		wget --user-agent="${USER_AGENT}" -q "${APK_URL}" -O "${APK_DEST}/${4}.apk"
 
 		if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
-			if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
-				echo "	SHA256 hash of ${4}.apk is correct"
-				bzip2 -z "${APK_DEST}/${4}.apk"
-			else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
-				\n	expected	: ${SHA_SUM}\
-				\n	got		: ${IN_CHECKSUM}"
-				rm -f "${APK_DEST}/${4}.apk"
-			fi
+			echo "	SHA256 hash of ${4}.apk is correct"
+			bzip2 -z "${APK_DEST}/${4}.apk"
+		else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
+			\n	expected	: ${SHA_SUM}\
+			\n	got		: ${IN_CHECKSUM}"
+			rm -f "${APK_DEST}/${4}.apk"
 		fi
 	fi
 }
