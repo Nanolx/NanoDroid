@@ -16,7 +16,7 @@ check_nanodroid () {
 					# library
 				;;
 
-				application/java-archive | application/zip )
+				application/java-archive | application/zip | application/x-bzip2)
 					# APK
 				;;
 
