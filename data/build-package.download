@@ -11,7 +11,7 @@ REPO_NANOLX="https://nanolx.org/fdroid/repo"
 REPO_BROMITE="https://fdroid.bromite.org/fdroid/repo"
 
 # check dependencies
-for dep in gawk wget curl sha256sum jq; do
+for dep in gawk wget curl sha256sum jq bzip2; do
 	if ! which ${dep} &>/dev/null; then
 		echo "${dep} is not installed!"
 		exit 1
@@ -26,6 +26,25 @@ index_update_required () {
 	test "$(file -b ${INDEX_FILE})" == "empty" && return 0
 
 	return 1
+}
+
+check_sha256sum () {
+	INPUT="${1}"
+
+	IN_CHECKSUM=""
+	EX_CHECKSUM="${2}"
+
+	case ${INPUT} in
+		*.bz2 )
+			IN_CHECKSUM=$(bzip2 -dc ${INPUT} 2>/dev/null | sha256sum | gawk '{print $1}')
+		;;
+
+		* )
+			IN_CHECKSUM=$(sha256sum ${INPUT} 2>/dev/null | gawk '{print $1}')
+		;;
+	esac
+
+	[ ${IN_CHECKSUM} == ${EX_CHECKSUM} ] && return 0 || return 1
 }
 
 update_index () {
@@ -112,10 +131,8 @@ grab_apk_from_repo () {
 
 		com.google.android.gms )
 			# XXX select mapbox build in official microG repo
-			if [ ${REPO} == ${REPO_MICROG} ]; then
-				APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).apkName' ${INDEX_FILE})"
-				SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).hash' ${INDEX_FILE})"
-			fi
+			APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).apkName' ${INDEX_FILE})"
+			SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).hash' ${INDEX_FILE})"
 			APK_DEST="${CWD}/Full/system/${3}/${4}"
 		;;
 
@@ -126,29 +143,22 @@ grab_apk_from_repo () {
 
 	APK_URL="${REPO}/${APK_NAME}"
 
-	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
-		TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
-
-		if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
-			echo -e "\nUp-to-Date from ${REPO_P} : ${4}.apk"
-		else	echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
-			rm -f "${APK_DEST}/${4}.apk"
-			wget -q -O "${APK_DEST}/${4}.apk" "${APK_URL}"
-		fi
-	else
-		echo -e "\nDownloading from ${REPO_P}: ${4}.apk"
-		mkdir -p "${APK_DEST}"
+	if check_sha256sum "${APK_DEST}/${4}.apk.bz2" "${SHA_SUM}"; then
+		echo -e "\nUp-to-Date from ${REPO_P} : ${4}.apk"
+	else	echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
+		rm -f "${APK_DEST}/${4}.apk.bz2"
 		wget -q -O "${APK_DEST}/${4}.apk" "${APK_URL}"
-	fi
 
-	TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
-
-	if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
-		echo "	SHA256 hash of ${4}.apk is correct"
-	else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
-		\n	expected	: ${SHA_SUM}\
-		\n	got		: ${TMP_SUM/ *}"
-		rm -f "${APK_DEST}/${4}.apk"
+		if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
+			if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
+				echo "	SHA256 hash of ${4}.apk is correct"
+				bzip2 -z "${APK_DEST}/${4}.apk"
+			else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
+				\n	expected	: ${SHA_SUM}\
+				\n	got		: ${IN_CHECKSUM}"
+				rm -f "${APK_DEST}/${4}.apk"
+			fi
+		fi
 	fi
 }
 
@@ -193,31 +203,22 @@ ${5}-${VERSION}-android-apk-download"
 	APK_URL="https://www.apkmirror.com${URL_WP}"
 	APK_DEST="${CWD}/Full/system/${3}/${4}"
 
-	if [[ -f "${APK_DEST}/${4}.apk" ]]; then
-		TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
+	if check_sha256sum "${APK_DEST}/${4}.apk.bz2" "${SHA_SUM}"; then
+		echo -e "\nUp-to-Date from APK Mirror : ${4}.apk"
+	else	echo -e "\nUpdating from APK Mirror   : ${4}.apk"
+		rm -f "${APK_DEST}/${4}.apk.bz2"
+		wget --user-agent="${USER_AGENT}" -q "${APK_URL}" -O "${APK_DEST}/${4}.apk"
 
-		if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
-			echo -e "\nUp-to-Date from APK Mirror: ${4}.apk"
-		else	echo -e "\nUpdating from APK Mirror  : ${4}.apk"
-			rm -f "${APK_DEST}/${4}.apk"
-			wget --user-agent="${USER_AGENT}" -q \
-				"${APK_URL}" -O "${APK_DEST}/${4}.apk"
+		if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
+			if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
+				echo "	SHA256 hash of ${4}.apk is correct"
+				bzip2 -z "${APK_DEST}/${4}.apk"
+			else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
+				\n	expected	: ${SHA_SUM}\
+				\n	got		: ${IN_CHECKSUM}"
+				rm -f "${APK_DEST}/${4}.apk"
+			fi
 		fi
-	else
-		echo -e "\nDownloading from APK Mirror: ${4}.apk"
-		mkdir -p "${APK_DEST}"
-		wget --user-agent="${USER_AGENT}" -q \
-			"${APK_URL}" -O "${APK_DEST}/${4}.apk"
-	fi
-
-	TMP_SUM="$(sha256sum "${APK_DEST}/${4}.apk")"
-
-	if [[ "${SHA_SUM}" == "${TMP_SUM/ */}" ]]; then
-		echo "	SHA256 hash of ${4}.apk is correct"
-	else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
-		\n	expected	: ${SHA_SUM}\
-		\n	got		: ${TMP_SUM/ *}"
-		rm -f "${APK_DEST}/${4}.apk"
 	fi
 }
 
@@ -312,5 +313,4 @@ grab_patches () {
 
 	wget -q -O "${PATCH_DST}" "${PATCH_URL}" || \
 		rm -f "${PATCH_DST}"
-
 }
