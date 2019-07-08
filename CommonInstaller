@@ -335,6 +335,9 @@ detect_migrate_microg () {
 		if ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
 			echo "    + Removing NanoDroid microG GmsCore in favor of Official microG GmsCore"
 			rm -rf "${GMSCORE_PATH}"
+
+			echo "    + Resetting GCM/FCM connection of all apps to allow re-registration"
+			find /data/data/*/shared_prefs -name com.google.android.gms.*.xml -delete
 		fi
 	fi
 
