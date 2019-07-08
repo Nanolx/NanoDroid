@@ -11,7 +11,7 @@ REPO_NANOLX="https://nanolx.org/fdroid/repo"
 REPO_BROMITE="https://fdroid.bromite.org/fdroid/repo"
 
 # check dependencies
-for dep in gawk wget curl sha256sum jq bzip2; do
+for dep in gawk wget curl sha256sum jq gzip; do
 	if ! which ${dep} &>/dev/null; then
 		echo "${dep} is not installed!"
 		exit 1
@@ -35,8 +35,8 @@ check_sha256sum () {
 	EX_CHECKSUM="${2}"
 
 	case ${INPUT} in
-		*.bz2 )
-			IN_CHECKSUM=$(bzip2 -dc ${INPUT} 2>/dev/null | sha256sum | gawk '{print $1}')
+		*.gz )
+			IN_CHECKSUM=$(gzip -dc ${INPUT} 2>/dev/null | sha256sum | gawk '{print $1}')
 		;;
 
 		* )
@@ -143,15 +143,15 @@ grab_apk_from_repo () {
 
 	APK_URL="${REPO}/${APK_NAME}"
 
-	if check_sha256sum "${APK_DEST}/${4}.apk.bz2" "${SHA_SUM}"; then
+	if check_sha256sum "${APK_DEST}/${4}.apk.gz" "${SHA_SUM}"; then
 		echo -e "\nUp-to-Date from ${REPO_P} : ${4}.apk"
 	else	echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
-		rm -f "${APK_DEST}/${4}.apk.bz2"
+		rm -f "${APK_DEST}/${4}.apk.gz"
 		wget -q -O "${APK_DEST}/${4}.apk" "${APK_URL}"
 
 		if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
 			echo "	SHA256 hash of ${4}.apk is correct"
-			bzip2 -z "${APK_DEST}/${4}.apk"
+			gzip "${APK_DEST}/${4}.apk"
 		else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
 			\n	expected	: ${SHA_SUM}\
 			\n	got		: ${IN_CHECKSUM}"
@@ -201,15 +201,15 @@ ${5}-${VERSION}-android-apk-download"
 	APK_URL="https://www.apkmirror.com${URL_WP}"
 	APK_DEST="${CWD}/Full/system/${3}/${4}"
 
-	if check_sha256sum "${APK_DEST}/${4}.apk.bz2" "${SHA_SUM}"; then
+	if check_sha256sum "${APK_DEST}/${4}.apk.gz" "${SHA_SUM}"; then
 		echo -e "\nUp-to-Date from APK Mirror : ${4}.apk"
 	else	echo -e "\nUpdating from APK Mirror   : ${4}.apk"
-		rm -f "${APK_DEST}/${4}.apk.bz2"
+		rm -f "${APK_DEST}/${4}.apk.gz"
 		wget --user-agent="${USER_AGENT}" -q "${APK_URL}" -O "${APK_DEST}/${4}.apk"
 
 		if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
 			echo "	SHA256 hash of ${4}.apk is correct"
-			bzip2 -z "${APK_DEST}/${4}.apk"
+			gzip "${APK_DEST}/${4}.apk"
 		else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
 			\n	expected	: ${SHA_SUM}\
 			\n	got		: ${IN_CHECKSUM}"
@@ -260,9 +260,9 @@ grab_apk_from_ogapps () {
 
 	APK_DEST="${CWD}/Full/gsync/${API_LETTER}/${2}/${3}"
 
-	if [[ -f "${APK_DEST}/${3}.apk.bz2" ]]; then
+	if [[ -f "${APK_DEST}/${3}.apk.gz" ]]; then
 		echo -e "\nUpdating from OpenGApps   : ${3}.apk [${API_LETTER}]"
-		rm -f "${APK_DEST}/${3}.apk.bz2"
+		rm -f "${APK_DEST}/${3}.apk.gz"
 	else	echo -e "\nDownloading from OpenGApps: ${3}.apk [${API_LETTER}]"
 		mkdir -p "${APK_DEST}"
 	fi
@@ -272,7 +272,7 @@ grab_apk_from_ogapps () {
 	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 
-	[ -f "${APK_DEST}/${3}.apk" ] && bzip2 -z "${APK_DEST}/${3}.apk"
+	[ -f "${APK_DEST}/${3}.apk" ] && gzip "${APK_DEST}/${3}.apk"
 }
 
 grab_lib_from_ogapps () {

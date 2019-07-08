@@ -1311,11 +1311,11 @@ nanodroid_install_apk () {
 	echo "    installing app: ${app}"
 	echo "      from: ${source}"
 	echo "      into: ${dest} [${dest_apk}]"
-	cp "${source}.bz2" "${dest}/${dest_apk}.bz2" || \
+	cp "${source}.gz" "${dest}/${dest_apk}.gz" || \
 		error "failed to install ${source} to ${dest}"
 
-	bzip2 -d "${dest}/${dest_apk}.bz2" || \
-		error "failed to decompress ${dest}/${dest_apk}.bz2"
+	gzip -d "${dest}/${dest_apk}.gz" || \
+		error "failed to decompress ${dest}/${dest_apk}.gz"
 
 	installinfo_add "${dest}/${dest_apk}"
 
