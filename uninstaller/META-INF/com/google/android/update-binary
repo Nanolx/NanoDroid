@@ -168,36 +168,36 @@ restore_apps () {
 	backup_path="${BACKUP_DIR}/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
 	if [ -d ${backup_path}/app/ ]; then
-		for app in ${dir}/app/*; do
-			if [ -d /system/app/${app} ]; then
-				ui_print " << removing backup: app:${app}"
-				rm -rf "${dir}/app/${app}"
+		for app in ${backup_path}/app/*; do
+			_app=$(basename ${app})
+			if [ -d /system/app/${_app} ]; then
+				ui_print " << removing backup: app:{_app}"
+				rm -rf "${app}"
 			else
-				ui_print " << restoring: app:${app}"
-				mv "${dir}/app/${app}" /system/app/
-				set_perm_data -r /system/app/${app}
+				ui_print " << restoring: app:${_app}"
+				mv "${app}" "/system/app/${_app}"
+				set_perm_data -r "/system/app/${_app}"
 			fi
 		done
 
-		rmdir ${dir}/app
+		rmdir ${backup_path}/app
 	fi
 
 	if [ -d ${backup_path}/priv-app/ ]; then
-		for app in ${dir}/priv-app/*; do
-			if [ -d /system/priv-app/${app} ]; then
-				ui_print " << removing backup: priv-app:${app}"
-				rm -rf "${dir}/priv-app/${app}"
+		for app in ${backup_path}/priv-app/*; do
+			_app=$(basename ${app})
+			if [ -d /system/priv-app/${_app} ]; then
+				ui_print " << removing backup: priv-app:{_app}"
+				rm -rf "${app}"
 			else
-				ui_print " << restoring: priv-app:${app}"
-				mv "${dir}/priv-app/${app}" /system/priv-app/
-				set_perm_data -r /system/priv-app/${app}
+				ui_print " << restoring: priv-app:${_app}"
+				mv "${app}" "/system/priv-app/${_app}"
+				set_perm_data -r "/system/priv-app/${_app}"
 			fi
 		done
 
-		rmdir ${dir}/priv-app
+		rmdir ${backup_path}/priv-app
 	fi
-
-	rmdir ${dir}
 }
 
 system_mode_uninstall () {
@@ -214,20 +214,19 @@ system_mode_uninstall () {
 	fi
 
 	restore_apps
-	xargs rm -f < ${system_list} || error "failed to remove files"
+	xargs rm < ${system_list} || error "failed to remove files"
 
 	# remove empty directories
 	# (find -empty not available on Android)
-	for dir in app priv-app share; do
-		find /system/${dir} -type d | \
-			xargs rmdir --ignore-fail-on-non-empty
+	for dir in app priv-app; do
+		find /system/${dir} -type d | xargs rmdir -p
 	done
 
 	rm -f "${system_list}"
 }
 
 patcher_uninstall () {
-	if [ -f /data/adb/.nanodroid-patcher -o -f /data/adb/NanoDroid_Patched ]; then
+	if [ -f /data/adb/NanoDroid_Patched ]; then
 		services_name="services.jar_$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
 		if [ -f ${BACKUP_DIR}/${services_name} ]; then
@@ -268,7 +267,7 @@ rm -f /data/adb/NanoDroid_twrp*
 rm -rf /data/media/0/nanodroid_logs
 
 # System Mode uninstallation
-[ -f /data/adb/NanoDroid_FileList ] && system_mode_uninstall ${install_info}
+[ -f /data/adb/NanoDroid_FileList ] && system_mode_uninstall /data/adb/NanoDroid_FileList
 
 patcher_uninstall
 
