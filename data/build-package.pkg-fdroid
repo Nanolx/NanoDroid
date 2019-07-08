@@ -5,13 +5,7 @@ create_fdroid_package() {
 
 	print_package "F-Droid"
 
-	zip_add_base
 	zip_add F-Droid
-	zip_add Full system/app/FDroid/
-	zip_add Full system/etc/org.fdroid.fdroid/
-	zip_add Full system/priv-app/FDroidPrivileged/
-	zip_add_tool aapt
-	zip_add_tool busybox
 	zip_add_config .nanodroid-setup 0
 
 	sum_sign_package
