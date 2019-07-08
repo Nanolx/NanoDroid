@@ -29,8 +29,14 @@
 * SetupWizard
   * fix creating configuration files
 
+* Installer
+  * improve automatic privapp-whitelist creation
+     * fixes LineageOS 16 bootloops
+  * ensure FAKE_PACKAGE_SIGNATURE is only in default-permissions on ROMs with native support
+     * fixes LineageOS 16 bootloops
+
 * Uninstaller
-  * fix System Mode overlay restoration
+  * several fixes for System Mode uninstallation
 
 * nanodroid-font Scipt
   * fix applying font
@@ -64,7 +70,9 @@
 * build-package
   * use JSON instead of XML indices for F-Droid repositories
   * only download F-Droid indices if required
-  * several internal improvements
+  * compress APKs using GNU Zip (gzip)
+     * saves about 120 MB space in TWRP for full package
+  * many internal improvements
 
 ### Updates
 
@@ -75,7 +83,7 @@
   * Bromite System WebView (75.0.3770.109)
   * Orbot (16.1.0-BETA-5)
   * Tor Browser (60.7.0)
-  * F-Droid (1.7-alpha2)
+  * F-Droid (1.7)
   * Simple Gallery (6.8.2)
   * Simple Calendar (6.5.4)
   * QKSMS (3.6.6)
