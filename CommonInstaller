@@ -1010,6 +1010,10 @@ install_store () {
 			nanodroid_install_apk Phonesky
 
 			create_privapp_permissions_whitelist Phonesky
+
+			check_fake_package_signature || \
+				sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' -i \
+				${INSTALLER}/system/etc/default-permissions/phonesky-permissions.xml
 			nanodroid_install_file etc/default-permissions/phonesky-permissions.xml
 		;;
 
