@@ -1,0 +1,142 @@
+#!/bin/bash
+
+create_full_package () {
+	ZIP="NanoDroid-${VERSION}.zip"
+
+	print_package "Full"
+
+	zip_add Full
+	zip_add_config .nanodroid-setup 1
+
+	sum_sign_package
+}
+
+mk_pkg_full () {
+	create_full_package &
+	progress $!
+}
+
+create_microg_package() {
+	ZIP="NanoDroid-microG-${VERSION}.zip"
+
+	print_package "microG"
+
+
+	zip_add microG
+	zip_add_config .nanodroid-setup 0
+
+	sum_sign_package
+}
+
+mk_pkg_microg () {
+	create_microg_package &
+	progress $!
+}
+
+create_fdroid_package() {
+	ZIP="NanoDroid-fdroid-${VERSION}".zip
+
+	print_package "F-Droid"
+
+	zip_add F-Droid
+	zip_add_config .nanodroid-setup 0
+
+	sum_sign_package
+}
+
+mk_pkg_fdroid () {
+	create_fdroid_package &
+	progress $!
+}
+
+create_bromite_webview_package () {
+	ZIP="NanoDroid-BromiteWebView-${VERSION}.zip"
+
+	print_package BromiteWebView
+
+	zip_add BromiteWebView
+	zip_add_config .nanodroid-setup 0
+
+	sum_sign_package
+}
+
+mk_pkg_bromite_webview () {
+	create_bromite_webview_package &
+	progress $!
+}
+
+create_osmand_package() {
+	ZIP="NanoDroid-OsmAnd-${VERSION}.zip"
+
+	print_package "OsmAnd"
+
+	zip_add OsmAnd
+	zip_add_config .nanodroid-setup 0
+
+	sum_sign_package
+}
+
+mk_pkg_osmand () {
+	create_osmand_package &
+	progress $!
+}
+
+create_patcher_package() {
+	ZIP="NanoDroid-patcher-${VERSION}.zip"
+
+	print_package "Framework Patcher"
+
+	zip_add patcher
+
+	sum_sign_package
+}
+
+mk_pkg_patcher () {
+	create_patcher_package &
+	progress $!
+}
+
+create_setupwizard_package() {
+	ZIP="NanoDroid-setupwizard-${VERSION}.zip"
+
+	print_package "Setup Wizard"
+
+	zip_add setup-wizard
+
+	sum_sign_package
+}
+
+mk_pkg_setupwizard () {
+	create_setupwizard_package &
+	progress $!
+}
+
+create_uninstaller_package() {
+	ZIP="NanoDroid-uninstaller-${VERSION}.zip"
+
+	print_package "Uninstaller"
+
+	zip_add uninstaller
+
+	sum_sign_package
+}
+
+mk_pkg_uninstaller () {
+	create_uninstaller_package &
+	progress $!
+}
+
+create_systest_package() {
+	ZIP="NanoDroid-systest-${VERSION}.zip"
+
+	print_package "SysTest"
+
+	zip_add systest
+
+	sum_sign_package
+}
+
+mk_pkg_systest () {
+	create_systest_package &
+	progress $!
+}

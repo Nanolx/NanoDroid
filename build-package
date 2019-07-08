@@ -4,9 +4,7 @@ VERSION=21.0.90.20190703
 CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
-for funcfile in  pkg-full pkg-microg pkg-fdroid \
-	pkg-misc update common download database \
-	pkg-bromite pkg-osmand; do
+for funcfile in  pkg update common download database; do
 	source "${CWD}/data/build-package.${funcfile}" || exit 1
 done
 
