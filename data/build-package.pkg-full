@@ -5,13 +5,8 @@ create_full_package () {
 
 	print_package "Full"
 
-	zip_add_base
 	zip_add Full
-	zip_add tools
-
-	zip_add_config .nanodroid-overlay
 	zip_add_config .nanodroid-setup 1
-	zip_add_config .nanodroid-apps
 
 	sum_sign_package
 }

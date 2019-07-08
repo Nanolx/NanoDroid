@@ -5,9 +5,7 @@ create_osmand_package() {
 
 	print_package "OsmAnd"
 
-	zip_add_base
 	zip_add OsmAnd
-	zip_add_tool busybox
 	zip_add_config .nanodroid-setup 0
 
 	sum_sign_package

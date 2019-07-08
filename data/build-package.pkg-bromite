@@ -5,10 +5,7 @@ create_bromite_webview_package () {
 
 	print_package BromiteWebView
 
-	zip_add_base
 	zip_add BromiteWebView
-	zip_add_tool busybox
-	zip_add_tool unzip
 	zip_add_config .nanodroid-setup 0
 
 	sum_sign_package

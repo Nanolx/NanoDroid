@@ -5,30 +5,8 @@ create_microg_package() {
 
 	print_package "microG"
 
-	zip_add_base
-
-	for app in AuroraStore DroidGuard nlpBackendApple nlpBackendDejavu \
-		nlpBackendIchnaea nlpBackendNominatim nlpBackendRadiocell; do
-		zip_add Full system/app/${app}/
-	done
-
-	for app in FakeStore GmsCore Phonesky GsfProxy YalpStore; do
-		zip_add Full system/priv-app/${app}/
-	done
-
-	for content in "xbin/nanodroid*" "xbin/novl" "xbin/npem" \
-		"xbin/nprp" "xbin/nutl" "framework/" "etc/sysconfig/" \
-		"etc/default-permissions/" "etc/permissions/"; do
-		zip_add Full "system/${content}"
-	done
-
-	zip_add Full gsync/
-	zip_add Full swipe/
 
 	zip_add microG
-	zip_add tools
-
-	zip_add_config .nanodroid-overlay
 	zip_add_config .nanodroid-setup 0
 
 	sum_sign_package
