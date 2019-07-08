@@ -233,10 +233,6 @@ patcher_uninstall () {
 			ui_print " << restoring: unpatched services.jar"
 			mv "${BACKUP_DIR}/${services_name}" /system/framework/services.jar
 			set_perm_data /system/framework/services.jar
-		elif [ -f ${BACKUP_DIR}/services.jar ]; then
-			ui_print " << restoring: unpatched services.jar"
-			mv ${BACKUP_DIR}/services.jar /system/framework/services.jar
-			set_perm_data /system/framework/services.jar
 		else	ui_print " << can't restore unpatched services.jar"
 		fi
 	fi
