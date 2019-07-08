@@ -981,16 +981,10 @@ install_apps () {
 
 		INSTALL_APPS=$(cat "${cfg_apps}")
 		for app in ${INSTALL_APPS}; do
-			[[ -d "${INSTALLER}/system/app/${app}" ]] && \
-				APP_STRING="${APP_STRING} ${app}, "
-		done
-
-		ui_print "${APP_STRING}"
-
-		for app in ${INSTALL_APPS}; do
 			if [[ -d /system/app/${app} ]]; then
 				ui_print " <<> app: ${app} already provided by ROM"
 			elif [[ -d "${INSTALLER}/system/app/${app}" ]]; then
+				ui_print " <<> ${app}"
 				nanodroid_install_apk ${app}
 			else	ui_print " <<>> app: ${app} missing"
 			fi
