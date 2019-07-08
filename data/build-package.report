@@ -2,13 +2,15 @@
 
 get_apk_info () {
 
+	REPORT_FILE="${CWD}/NanoDroid_${VERSION}"
+
 	APK=${1}
 	APK_FILE=$(basename ${APK})
 	APK_NAME=$(aapt dump badging "${APK}" 2>/dev/null | gawk -F \' '/^package: name/{print $2}')
 	APK_VERSION=$(aapt dump badging "${APK}" 2>/dev/null | gawk -F \' '/^package: name/{print $6}')
 	APK_CODE=$(aapt dump badging "${APK}" 2>/dev/null | gawk -F \' '/^package: name/{print $4}')
 	APK_PERM=$(aapt dump badging "${APK}" 2>/dev/null | gawk -F \' '/^uses-permission:/{print $2}' | sort)
-	APK_SHA=($(sha256sum ${APK}))
+	APK_SHA=($(bzip2 -dc ${APK} | sha256sum | gawk '{print $1}'))
 	[[ ${APK} == *priv-app* ]] && APK_PRIV=Yes || APK_PRIV=No
 
 	echo "Android Package: ${APK_NAME}
