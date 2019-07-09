@@ -18,7 +18,7 @@ fi
 
 detect_bootmode
 detect_outfd
-check_space
+#check_space
 show_progress 1.0 0
 
 show_banner
