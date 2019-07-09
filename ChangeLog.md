@@ -6,6 +6,7 @@
 
 * This release no longer ships the custom microG GmsCore
   * if you previously opted-in for it you'll be auto-migrated to the official build
+  * the setup variable `nanodroid_gmscore` is obsolete now
 
 * This release no longer ships the custom microG DroidGuard Helper
   * if you previously opted-in for it you'll be auto-migrated to the official build
@@ -80,7 +81,7 @@
   * Alarmio (1.0.2)
   * NewPipe (0.16.2)
   * Odyssey (1.1.18)
-  * Bromite System WebView (75.0.3770.109)
+  * Bromite System WebView (75.0.3770.132)
   * Orbot (16.1.0-BETA-5)
   * Tor Browser (60.7.0)
   * F-Droid (1.7)
