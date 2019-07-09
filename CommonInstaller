@@ -914,10 +914,6 @@ install_microg () {
 			nanodroid_install_apk ${app}
 		done
 
-		check_fake_package_signature || \
-			sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' -i \
-			${INSTALLER}/system/etc/default-permissions/microg-permissions.xml
-
 		create_privapp_permissions_whitelist GmsCore
 
 		nanodroid_install_file etc/permissions/features.xml
@@ -1011,9 +1007,6 @@ install_store () {
 
 			create_privapp_permissions_whitelist Phonesky
 
-			check_fake_package_signature || \
-				sed '/android.permission.FAKE_PACKAGE_SIGNATURE/d' -i \
-				${INSTALLER}/system/etc/default-permissions/phonesky-permissions.xml
 			nanodroid_install_file etc/default-permissions/phonesky-permissions.xml
 		;;
 
@@ -1038,8 +1031,6 @@ install_store () {
 		ui_print " << with Fake Store"
 		nanodroid_install_apk FakeStore
 
-		check_fake_package_signature && \
-			nanodroid_install_file etc/default-permissions/fakestore-permissions.xml
 		create_privapp_permissions_whitelist FakeStore
 	else 	ui_print " << without Fake Store"
 	fi
