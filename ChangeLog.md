@@ -33,8 +33,8 @@
 * Installer
   * improve automatic privapp-whitelist creation
      * fixes LineageOS 16 bootloops
-  * ensure FAKE_PACKAGE_SIGNATURE is only in default-permissions on ROMs with native support
-     * fixes LineageOS 16 bootloops
+  * fix bootloops on LineageOS 16
+  * fix bootloops on LineageOS 16 for microG
 
 * Uninstaller
   * several fixes for System Mode uninstallation
