@@ -75,6 +75,9 @@
      * saves about 120 MB space in TWRP for full package
   * many internal improvements
 
+* Patcher
+  * build dexpatcher dex with minimal SDK 19 (KitKat)
+
 ### Updates
 
 * automatic
@@ -94,6 +97,7 @@
   * Twidere (3.7.5)
 
 * manual
+  * dexpatcher (1.6.3)
   * MPV (20190620-nightly)
   * Play Store (15.5.22)
 
