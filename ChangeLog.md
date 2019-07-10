@@ -79,21 +79,21 @@
 
 * automatic
   * Alarmio (1.0.2)
+  * Bromite System WebView (75.0.3770.132)
+  * F-Droid (1.7)
+  * microG GmsCore (0.2.8.17785-mapbox)
   * NewPipe (0.16.2)
   * Odyssey (1.1.18)
-  * Bromite System WebView (75.0.3770.132)
-  * Orbot (16.1.0-BETA-5)
-  * Tor Browser (60.7.0)
-  * F-Droid (1.7)
-  * Simple Gallery (6.8.2)
-  * Simple Calendar (6.5.4)
-  * QKSMS (3.6.6)
   * OpenKeychain (5.3)
-  * Twidere (3.7.5)
+  * Orbot (16.1.0-RC-2)
   * OsmAnd+ (3.4.0)
+  * QKSMS (3.6.6)
+  * Simple Calendar (6.5.4)
+  * Simple Gallery (6.8.2)
+  * Tor Browser (60.8.0)
+  * Twidere (3.7.5)
 
 * manual
-  * official microG GmsCore (0.2.8.17785-mapbox)
   * MPV (20190620-nightly)
   * Play Store (15.5.22)
 
