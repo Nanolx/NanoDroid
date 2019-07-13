@@ -13,8 +13,10 @@ AMAPNetworkLocation
 BaiduNetworkLocation
 BlankStore
 ConfigUpdater
+DroidGuard
 GCS
 GmsCoreSetupPrebuilt
+GmsCore
 GmsCore_update
 GoogleFeedback
 GoogleLoginService
@@ -22,10 +24,12 @@ GoogleOneTimeInitializer
 GoogleServicesFramework
 GoogleConnectivityServices
 GoogleTTS
+GsfProxy
 LegacyNetworkLocation
 MarketUpdater
 MarkupGoogle
 NetworkLocation
+Phonesky
 PlayGames
 PlayStore
 PrebuiltGmsCore
@@ -1308,7 +1312,7 @@ nanodroid_install_apk () {
 	cp "${source}.gz" "${dest}/${dest_apk}.gz" || \
 		error "failed to install ${source} to ${dest}"
 
-	gzip -d "${dest}/${dest_apk}.gz" || \
+	gzip -fd "${dest}/${dest_apk}.gz" || \
 		error "failed to decompress ${dest}/${dest_apk}.gz"
 
 	installinfo_add "${dest}/${dest_apk}"
