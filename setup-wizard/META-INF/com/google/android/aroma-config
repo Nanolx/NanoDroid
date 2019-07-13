@@ -1,8 +1,8 @@
 ini_set("rom_name",	"NanoDroid SetupWizard");
-ini_set("rom_version",	"21.0.91");
+ini_set("rom_version",	"22.0");
 ini_set("rom_author",	"Nanolx");
 ini_set("rom_device",	"Generic (LOS/AOSP)");
-ini_set("rom_date",	"20190709");
+ini_set("rom_date",	"20190713");
 
 ini_set("force_colorspace","rgba");
 splash(2000, "nanolx");

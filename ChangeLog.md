@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 22.0 in-dev
+## 22.0.20190713 [USS Excelsior](https://memory-alpha.fandom.com/wiki/USS_Excelsior)
 
 ### Notes
 

@@ -16,7 +16,7 @@ source /tmp/backuptool.functions
 
 MODID=@MODID@
 OUTFD=
-VERSION=21.0.91.20190709
+VERSION=22.0.20190713
 
 print_google_apps()
 {
