@@ -82,7 +82,7 @@
 
 * automatic
   * Alarmio (1.0.2)
-  * Bromite System WebView (75.0.3770.132)
+  * Bromite System WebView (75.0.3770.139)
   * F-Droid (1.7)
   * microG GmsCore (0.2.8.17785-mapbox)
   * NewPipe (0.16.2)
@@ -99,7 +99,7 @@
 * manual
   * dexpatcher (1.6.3)
   * MPV (20190620-nightly)
-  * Play Store (15.5.22)
+  * Play Store (15.7.17)
 
 ## 21.0.20190601 "[USS Reliant](https://memory-alpha.fandom.com//wiki/USS_Reliant)"
 
