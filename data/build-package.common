@@ -112,26 +112,26 @@ increase_version_number () {
 
 	for file in  "build-package" "CommonInstaller" \
 		"systest/SysTest" "patcher/CommonPatcher" \
-		"setup-wizard/nanodroid-setup" "CommonAddon" \
+		"SetupWizard/nanodroid-setup" "CommonAddon" \
 		"uninstaller/META-INF/com/google/android/update-binary"; do
 		sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/${file}"
 	done
 
-	for module in Full microG F-Droid BromiteWebView OsmAnd; do
+	for module in Full microG FDroid BromiteWebView OsmAnd; do
 		sed -e "s/version=.*/version=v${2}.${ver}/" -i \
 			"${CWD}/${module}/module.prop"
 	done
 
 	sed -e "s/rom_version\",.*/rom_version\",	\"${2}\")\;/" -i \
-		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
+		"${CWD}/SetupWizard/META-INF/com/google/android/aroma-config"
 	sed -e "s/rom_date\",.*/rom_date\",	\"${ver}\")\;/" -i \
-		"${CWD}/setup-wizard/META-INF/com/google/android/aroma-config"
+		"${CWD}/SetupWizard/META-INF/com/google/android/aroma-config"
 
 	exit 0
 }
 
 increase_module_version () {
-	for module in Full microG F-Droid BromiteWebView OsmAnd; do
+	for module in Full microG FDroid BromiteWebView OsmAnd; do
 		eval $(grep versionCode "${PWD}"/"${module}"/module.prop)
 		versionCode=$((versionCode+1))
 		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
@@ -169,12 +169,12 @@ update contents:
 	u-gsync			| update Google Sync Adapters
 
 create zip files:
-	full			| create full package zip from repo
+	full			| create Full package zip from repo
 	microg			| create microG package zip from repo
-	fdroid			| create F-Droid package zip from repo
+	fdroid			| create FDroid package zip from repo
 	patcher			| create framework patcher zip from repo
 	uninstaller		| create uninstaller zip from repo
-	setupwizard		| create setup-wizard zip from repo
+	setupwizard		| create SetupWizard zip from repo
 	bromitewebview		| create Bromite WebView zip from repo
 	osmand		| create OsmAnd package zip from repo
 	all			| create all zips from repo

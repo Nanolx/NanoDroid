@@ -36,9 +36,9 @@ mk_pkg_microg () {
 create_fdroid_package() {
 	ZIP="NanoDroid-fdroid-${VERSION}".zip
 
-	print_package "F-Droid"
+	print_package "FDroid"
 
-	zip_add F-Droid
+	zip_add FDroid
 	zip_add_config .nanodroid-setup 0
 
 	sum_sign_package
@@ -101,7 +101,7 @@ create_setupwizard_package() {
 
 	print_package "Setup Wizard"
 
-	zip_add setup-wizard
+	zip_add SetupWizard
 
 	sum_sign_package
 }
