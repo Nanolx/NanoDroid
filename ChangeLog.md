@@ -11,6 +11,7 @@
 
 * manual
   * sqlite3 (3290000)
+  * GNU Nano (4.2)
 
 ## 22.0.20190713 [USS Excelsior](https://memory-alpha.fandom.com/wiki/USS_Excelsior)
 
