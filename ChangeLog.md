@@ -1,5 +1,17 @@
 # ChangeLog
 
+## 23.0 in-dev
+
+### Updates
+
+* automatic
+  * OsmAnd+ (3.4.4)
+  * Simple Gallery (6.8.3)
+  * Twidere (3.7.6)
+
+* manual
+  * sqlite3 (3290000)
+
 ## 22.0.20190713 [USS Excelsior](https://memory-alpha.fandom.com/wiki/USS_Excelsior)
 
 ### Notes
