@@ -4,4 +4,4 @@ version=v23.0.99999999
 versionCode=10
 author=Nanolx
 description=NanoDroid (Bromite WebView sub module)
-minMagisk=1500
+minMagisk=1900
