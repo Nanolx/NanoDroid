@@ -1544,7 +1544,7 @@ ui_print " "
 ##########################################################################################
 
 # check for configuration files
-config_locations="${STORAGE} /external_sd /sdcard1 ${ZIPDIR} /data"
+config_locations="${STORAGE} /external_sd /sdcard1 ${ZIPDIR} /data ${INSTALLER}"
 
 get_config () {
 	config=""
