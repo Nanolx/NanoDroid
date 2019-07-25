@@ -13,10 +13,8 @@ AMAPNetworkLocation
 BaiduNetworkLocation
 BlankStore
 ConfigUpdater
-DroidGuard
 GCS
 GmsCoreSetupPrebuilt
-GmsCore
 GmsCore_update
 GoogleFeedback
 GoogleLoginService
@@ -24,7 +22,6 @@ GoogleOneTimeInitializer
 GoogleServicesFramework
 GoogleConnectivityServices
 GoogleTTS
-GsfProxy
 LegacyNetworkLocation
 MarketUpdater
 MarkupGoogle
