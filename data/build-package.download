@@ -164,67 +164,29 @@ grab_apk_from_url () {
 	APK_URL="${1}"
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
 
+	rm -f "${APK_DEST}/${3}.apk.gz"
+
 	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
-		echo -e "\nUpdating from URL         : ${3}.apk"
-	else	echo -e "\nDownloading from URL      : ${3}.apk"
-		mkdir -p "${APK_DEST}"
+	       echo -e "\nUpdating from URL         : ${3}.apk"
+	else    echo -e "\nDownloading from URL      : ${3}.apk"
+	       mkdir -p "${APK_DEST}"
 	fi
 
-	echo "	Checking SHA256 hash not (yet) supported"
+	echo "  Checking SHA256 hash not (yet) supported"
 
 	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
+
+	gzip "${APK_DEST}/${3}.apk"
 }
-
-# XXX
-# I've never used curl, nor whatever, I suck at
-# automated HTML parsing, so you'll get eyesore
-# from looking at his code, you've been warned.
-
-USER_AGENT="Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0"
-grab_apk_from_apkmirror () {
-	VERSION=$(curl -s -N https://www.apkmirror.com/apk/${1}/${2}/ | \
-		gawk -F\" '/apk.*release/{print $4 ; exit}' | \
-		sed -e "s,.*${2}-,,g;s,-release/,,g")
-
-	URL_STRING="https://www.apkmirror.com/apk/\
-${1}/${2}/${2}-${VERSION}-release/\
-${5}-${VERSION}-android-apk-download"
-
-	URL_WP=$(curl -s -N "${URL_STRING}/download/" | \
-		gawk -F\" '/If not, please click/{print $18}')
-
-	SHA_SUM=$(curl -s -N "${URL_STRING}/" | \
-		grep "SHA-256.*[^>]</span>" | \
-		sed -e 's,.*\">,,;s,</span>,,')
-
-	APK_URL="https://www.apkmirror.com${URL_WP}"
-	APK_DEST="${CWD}/Full/system/${3}/${4}"
-
-	if check_sha256sum "${APK_DEST}/${4}.apk.gz" "${SHA_SUM}"; then
-		echo -e "\nUp-to-Date from APK Mirror : ${4}.apk"
-	else	echo -e "\nUpdating from APK Mirror   : ${4}.apk"
-		rm -f "${APK_DEST}/${4}.apk.gz"
-		wget --user-agent="${USER_AGENT}" -q "${APK_URL}" -O "${APK_DEST}/${4}.apk"
-
-		if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
-			echo "	SHA256 hash of ${4}.apk is correct"
-			gzip "${APK_DEST}/${4}.apk"
-		else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
-			\n	expected	: ${SHA_SUM}\
-			\n	got		: ${IN_CHECKSUM}"
-			rm -f "${APK_DEST}/${4}.apk"
-		fi
-	fi
-}
-
 
 grab_apk_from_github () {
-	TAG_NAME="$(curl -s -N https://api.github.com/repos/${1}/releases | gawk -F\" '/tag_name/{print $4; exit}')"
-	APK_NAME="$(curl -s -N https://api.github.com/repos/${1}/releases | gawk -F\" '/name.*.apk/{print $4; exit}')"
-
-	APK_URL="https://github.com/${1}/releases/download/${TAG_NAME}/${APK_NAME}"
+	APK_URL="$(curl -s -N https://api.github.com/repos/${1}/releases | \
+		gawk -F\" -v N=3 -v pattern="name.*.apk" '{i=(1+(i%N)); if (buffer[i]&& $0 ~ pattern) print buffer[i]; buffer[i]=$4}' | \
+		head -n 1)"
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
+
+	rm -f "${APK_DEST}/${3}.apk.gz"
 
 	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
 		echo -e "\nUpdating from GitHub      : ${3}.apk"
@@ -236,6 +198,8 @@ grab_apk_from_github () {
 
 	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
+
+	gzip "${APK_DEST}/${3}.apk"
 }
 
 grab_apk_from_ogapps () {
