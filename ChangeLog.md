@@ -1,6 +1,18 @@
 # ChangeLog
 
-## 23.0 in-dev
+## 22.1.20190726 [USS Enterprise B](https://memory-alpha.fandom.com/wiki/USS_Enterprise_(NCC-1701-B))
+
+### Notes
+
+* This replaces original `Yalp Store` with `Yalp Store (fork)`
+  * original Yalp Store seems not be maintained anymore
+
+* This replaces `Kernel Adiutor` with `SmartPack-Kernel-Manager`
+  * if you've previously opted-in for `Kernel Adiutor`, you'll be auto-migrated
+
+* This release changes the mirrors a bit
+  * Nanolx: like before only the latest stable relase and current beta release
+  * Android Filehost: archive for all stable releases, no more beta releases
 
 ### Bugfixes
 
@@ -12,6 +24,16 @@
 * Installer
   * include path to setup files in installation log
 
+* Magisk Modules
+  * bump minimum Magisk version in all module.prop files to 1900
+  * unify services.sh into one file for all packages
+
+* build-package
+  * fix comparing SHA256 hashes in some corner cases
+  * download `Substratum` APK from GitHub instead of APK Mirror
+  * download `XDA Labs` apk from XDA instead of APK Mirror
+  * drop support for downloading APKs from `https://www.apkmirror.com`
+
 ### Updates
 
 * automatic
@@ -21,8 +43,11 @@
   * Twidere (3.7.6)
 
 * manual
-  * sqlite3 (3290000)
   * GNU Nano (4.2)
+  * Google Play (15.9.21)
+
+* tools
+  * sqlite3 (3290000)
 
 ## 22.0.20190713 [USS Excelsior](https://memory-alpha.fandom.com/wiki/USS_Excelsior)
 
