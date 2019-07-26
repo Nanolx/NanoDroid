@@ -15,7 +15,7 @@ Table of Contents
       * [Current Release](#current-release)
       * [Downloads](#downloads)
          * [Primary Mirror](#primary-mirror)
-         * [Secondary Mirror](#secondary-mirror)
+         * [Archive Mirror](#archive-mirror)
          * [SHA256 Checksum and GPG Signature](#sha256-checksum-and-gpg-signature)
          * [Snapshots](#snapshots)
       * [Supported Android Versions](#supported-android-versions)
@@ -63,24 +63,23 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 22.0.20190713 ([USS Excelsior](https://memory-alpha.fandom.com/wiki/USS_Excelsior))
+* Stable: 22.1.20190726 ([USS Enterprise B](https://memory-alpha.fandom.com/wiki/USS_Enterprise_(NCC-1701-B)))
 * Beta: --- (---)
 
 ## Downloads
 
 ### Primary Mirror
 
-On AndroidFileHost **all** stable and beta releases are available.
-
-* Stable Downloads [> Androidfilehost](https://androidfilehost.com/?w=files&flid=198483)
-* Beta Downloads [> Androidfilehost](https://androidfilehost.com/?w=files&flid=183250)
-
-### Secondary Mirror
-
-On Nanolx the latest stable and beta releases are available, no previous releases.
+On Nanolx the latest stable and current beta releases are available, no previous releases.
 
 * Stable Downloads [> Nanolx](https://downloads.nanolx.org/NanoDroid/Stable)
 * Beta Downloads [> Nanolx](https://downloads.nanolx.org/NanoDroid/Beta)
+
+### Archive Mirror
+
+On AndroidFileHost all stable releases are available.
+
+* Stable Downloads [> Androidfilehost](https://androidfilehost.com/?w=files&flid=198483)
 
 ### SHA256 Checksum and GPG Signature
 
@@ -466,7 +465,7 @@ NanoDroid includes microG as follows
   * disabled by default
 * optional Swipe libraries
   * disabled by default
-* choose between modified **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/), **Yalp Store** [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=yalp&fdid=com.github.yeriomin.yalpstore) or **Aurora Store** [> F-Droid](https://f-droid.org/de/packages/com.dragons.aurora/)
+* choose between modified **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/), **Yalp Store** [> F-Droid](https://f-droid.org/en/packages/com.github.kiliakin.yalpstore/) or **Aurora Store** [> F-Droid](https://f-droid.org/de/packages/com.dragons.aurora/)
   * **Yalp Store** and **Aurora Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
      * go to **Yalp Store** or **Aurora Store** Settings > Installation Method > `Using system permissions`
   * Play Store is modified to allow (in-)app-purchases with microG
