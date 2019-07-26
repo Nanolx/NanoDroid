@@ -44,7 +44,7 @@ check_sha256sum () {
 		;;
 	esac
 
-	[ ${IN_CHECKSUM} == ${EX_CHECKSUM} ] && return 0 || return 1
+	[[ ${IN_CHECKSUM} == ${EX_CHECKSUM} ]] && return 0 || return 1
 }
 
 update_index () {
