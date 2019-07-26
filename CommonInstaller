@@ -1672,7 +1672,10 @@ check_cfg_apps () {
 
 # check whether '.nanodroid-overlay' is up to date
 check_cfg_overlay () {
-	return 0
+	# 22.0 flagged the following for overlay creation which caused issues
+	grep -q "^GmsCore$" "${cfg_overlay}" && sed '/^GmsCore$/d' -i "${cfg_overlay}"
+	grep -q "^GsfProxy$" "${cfg_overlay}" && sed '/^GsfProxy$/d' -i "${cfg_overlay}"
+	grep -q "^DroidGuard$" "${cfg_overlay}" && sed '/^DroidGuard$/d' -i "${cfg_overlay}"
 }
 
 get_cfg_setup () {

@@ -2,10 +2,21 @@
 
 ## 23.0 in-dev
 
+### Bugfixes
+
+* Installer
+  * fix microG installation in System Mode
+
+### General Changes
+
+* Installer
+  * include path to setup files in installation log
+
 ### Updates
 
 * automatic
   * OsmAnd+ (3.4.4)
+  * Privacy Browser (3.2)
   * Simple Gallery (6.8.3)
   * Twidere (3.7.6)
 
