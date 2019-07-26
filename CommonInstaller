@@ -1642,7 +1642,7 @@ check_cfg_apps () {
 	# <= 16.3 has KeePass DX instead of KeePassDroid, migrate
 	grep -q KeePassDroid "${cfg_apps}" && sed -e 's/KeePassDroid/KeePassDX/g' -i "${cfg_apps}"
 
-	# <= 17.0~beta1 && <= 17.2~beta1 has Bucket (LibreSubtratum) instead of Substratum, migrate
+	# <= 17.7 has Substratum instead of Bucket (LibreSubtratum), migrate
 	grep -q Bucket "${cfg_apps}" && sed -e 's/Bucket/Substratum/g' -i "${cfg_apps}"
 
 	# <= 18.1 has Orfox instead of TorBrowser, migrate
