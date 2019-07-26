@@ -1,8 +1,8 @@
 ini_set("rom_name",	"NanoDroid SetupWizard");
-ini_set("rom_version",	"23.0");
+ini_set("rom_version",	"22.1");
 ini_set("rom_author",	"Nanolx");
 ini_set("rom_device",	"Generic (LOS/AOSP)");
-ini_set("rom_date",	"99999999");
+ini_set("rom_date",	"2019076");
 
 ini_set("force_colorspace","rgba");
 splash(2000, "nanolx");
@@ -120,7 +120,6 @@ checkbox(
 	"HackersKeyboard",		"Powerful developer Keyboard",		1,
 	"K9Mail",			"Powerful Mail client",			1,
 	"KeePassDX",			"Password Safe",			1,
-	"KernelAdiutor",		"Customize Kernel Settings",		1,
 	"MPV",				"Video Player",				1,
 	"NewPipe",			"YouTube frontend and downloader",	1,
 	"Oandbackup",			"Backup and Restore Apps",		1,
@@ -135,6 +134,7 @@ checkbox(
 	"QKSMS",			"Great SMS / MMS messenger",		1,
 	"SimpleCalendar",		"Easy to use Calendar",			1,
 	"SimpleGallery",		"Easy to use Gallery",			1,
+	"SmartPack-Kernel-Manager",	"Customize Kernel Settings",		1,
 	"Substratum",			"Substratum Theme Engine App",		1,
 	"Termux",			"Powerful Terminal Emulator",		1,
 	"Twidere",			"Customizable Twitter Client",		1,

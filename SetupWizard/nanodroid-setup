@@ -2,7 +2,7 @@
 
 OUTFD=2
 CONF_BACKUP="/data/media/0/nanodroid_backups/config_$(date +%Y%m%d-%H.%M.%S)"
-VERSION=23.0.99999999
+VERSION=22.1.2019076
 
 ui_print() {
 	echo -n -e "ui_print $1\n" >> /proc/self/fd/$OUTFD
@@ -180,21 +180,21 @@ apps_add 5 FaceSlim
 apps_add 6 HackersKeyboard
 apps_add 7 K9Mail
 apps_add 8 KeePassDX
-apps_add 9 KernelAdiutor
-apps_add 10 MPV
-apps_add 11 NewPipe
-apps_add 12 Oandbackup
-apps_add 13 Odyssey
-apps_add 14 OpenCamera
-apps_add 15 OpenKeyChain
-apps_add 16 OpenLauncher
-apps_add 17 OpenVPN
-apps_add 18 Orbot
-apps_add 19 TorBrowser
-apps_add 20 PrivacyBrowser
-apps_add 21 QKSMS
-apps_add 22 SimpleCalendar
-apps_add 23 SimpleGallery
+apps_add 9 MPV
+apps_add 10 NewPipe
+apps_add 11 Oandbackup
+apps_add 12 Odyssey
+apps_add 13 OpenCamera
+apps_add 14 OpenKeyChain
+apps_add 15 OpenLauncher
+apps_add 16 OpenVPN
+apps_add 17 Orbot
+apps_add 18 TorBrowser
+apps_add 19 PrivacyBrowser
+apps_add 20 QKSMS
+apps_add 21 SimpleCalendar
+apps_add 22 SimpleGallery
+apps_add 23 SmartPackKernelManager
 apps_add 24 Substratum
 apps_add 25 Termux
 apps_add 26 Twidere
