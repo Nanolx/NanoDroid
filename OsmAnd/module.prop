@@ -1,7 +1,7 @@
 id=NanoDroid_OsmAnd
 name=NanoDroid (OsmAnd)
-version=v23.0.99999999
-versionCode=9
+version=v22.1.2019076
+versionCode=10
 author=Nanolx
 description=NanoDroid (OsmAnd sub module)
 minMagisk=1900
