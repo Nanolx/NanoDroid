@@ -1495,6 +1495,8 @@ df 2>/dev/null | sed '/^\//d' >> ${nanodroid_logfile}
 
 echo "
 ### SETUP ###
+
+configuration: ${cfg_setup}
 " >> ${nanodroid_logfile}
 
 cat "${cfg_setup}" >> ${nanodroid_logfile}
@@ -1503,6 +1505,8 @@ if [ ! -z "${cfg_apps}" ]; then
 
 echo "
 ### APPS ###
+
+configuration: ${cfg_apps}
 " >> ${nanodroid_logfile}
 
 cat "${cfg_apps}" >> ${nanodroid_logfile}
@@ -1513,6 +1517,8 @@ if [ ! -z "${cfg_overlay}" ]; then
 
 echo "
 ### OVERLAY ###
+
+configuration: ${cfg_overlay}
 " >> ${nanodroid_logfile}
 
 cat "${cfg_overlay}" >> ${nanodroid_logfile}
