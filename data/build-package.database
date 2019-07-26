@@ -20,7 +20,7 @@ fd_NLPMOZILLA=(fdroid org.microg.nlp.backend.ichnaea app nlpBackendIchnaea)
 fd_NLPNOMINATIM=(fdroid org.microg.nlp.backend.nominatim app nlpBackendNominatim)
 fd_NLPAPPLE=(fdroid org.microg.nlp.backend.apple app nlpBackendApple)
 fd_NLPRADIOCELL=(fdroid org.openbmap.unifiedNlp app nlpBackendRadiocell)
-fd_YALPSTORE=(fdroid com.github.yeriomin.yalpstore priv-app YalpStore)
+fd_YALPSTORE=(fdroid com.github.kiliakin.yalpstore priv-app YalpStore)
 fd_AURORASTORE=(fdroid com.aurora.store app AuroraStore)
 
 ###
@@ -49,9 +49,7 @@ fd_OPENCAMERA=(fdroid net.sourceforge.opencamera app OpenCamera)
 fd_OPENKEYCHAIN=(fdroid org.sufficientlysecure.keychain app OpenKeyChain)
 fd_OPENLAUNCHER=(fdroid com.benny.openlauncher app OpenLauncher)
 fd_OPENVPN=(fdroid de.blinkt.openvpn app OpenVPN)
-fd_OSMAND=(fdroid net.osmand.plus app OsmAnd)
 fd_PRIVACY_BROWSER=(fdroid com.stoutner.privacybrowser.standard app PrivacyBrowser)
-fd_OSMAND_CONTOURLINES=(fdroid net.osmand.srtmPlugin.paid app OsmAnd_ContourLines)
 fd_QKSMS=(fdroid com.moez.QKSMS app QKSMS)
 fd_SIMPLECALENDAR=(fdroid com.simplemobiletools.calendar.pro app SimpleCalendar)
 fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery.pro app SimpleGallery)
@@ -70,18 +68,17 @@ og_CONSYNC=(com.google.android.syncadapters.contacts app GoogleContactsSync)
 og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
 
 ###
-# APK Mirror
-###
-
-am_KERNELADIUTOR=(willi-ye kernel-adiutor app KernelAdiutor kernel-adiutor-root)
-am_SUBSTRATUM=(projekt substratum-theme-engine app Substratum substratum-theme-engine)
-am_XDALABS=(xda xda-labs app XDALabs xda-labs)
-
-###
 # GitHub
 ###
 
-# gh_NAME=(ORG/REPO DIR APP)
+gh_SMARTPACKKERNELMANAGER=(SmartPack/SmartPack-Kernel-Manager app SmartPackKernelManager)
+gh_SUBSTRATUM=(substratum/substratum app Substratum)
+
+###
+# URL
+###
+
+raw_XDALABS=(https://labs.xda-developers.com/latest app XDALabs)
 
 ###
 # Bromite WebView
@@ -90,6 +87,13 @@ am_XDALABS=(xda xda-labs app XDALabs xda-labs)
 bm_WEBVIEW_arm64=(bromite com.android.webview app BromiteWebView_arm64 arm64-v8a)
 bm_WEBVIEW_arm=(bromite com.android.webview app BromiteWebView_arm armeabi-v7a)
 bm_WEBVIEW_x86=(bromite com.android.webview app BromiteWebView_x86 x86)
+
+###
+# OSM And+
+###
+
+fd_OSMAND=(fdroid net.osmand.plus app OsmAnd)
+fd_OSMAND_CONTOURLINES=(fdroid net.osmand.srtmPlugin.paid app OsmAnd_ContourLines)
 
 ###
 # Files Database (for consistency check)
@@ -140,7 +144,6 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	Full/system/app/HackersKeyboard/HackersKeyboard.apk.gz
 	Full/system/app/K9Mail/K9Mail.apk.gz
 	Full/system/app/KeePassDX/KeePassDX.apk.gz
-	Full/system/app/KernelAdiutor/KernelAdiutor.apk.gz
 	Full/system/app/MPV/MPV.apk.gz
 	Full/system/app/NewPipe/NewPipe.apk.gz
 	Full/system/app/Oandbackup/Oandbackup.apk.gz
@@ -154,6 +157,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	Full/system/app/QKSMS/QKSMS.apk.gz
 	Full/system/app/SimpleCalendar/SimpleCalendar.apk.gz
 	Full/system/app/SimpleGallery/SimpleGallery.apk.gz
+	Full/system/app/SmartPackKernelManager/SmartPackKernelManager.apk.gz
 	Full/system/app/Substratum/Substratum.apk.gz
 	Full/system/app/Termux/Termux.apk.gz
 	Full/system/app/TorBrowser/TorBrowser.apk.gz

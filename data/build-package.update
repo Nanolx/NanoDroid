@@ -82,10 +82,12 @@ update_apps () {
 	grab_apk_from_repo ${gd_ORBOT[@]}
 	grab_apk_from_repo ${gd_TORBROWSER[@]}
 
-	# APK Mirror
-	grab_apk_from_apkmirror ${am_KERNELADIUTOR[@]}
-	grab_apk_from_apkmirror ${am_SUBSTRATUM[@]}
-	grab_apk_from_apkmirror ${am_XDALABS[@]}
+	# GitHub
+	grab_apk_from_github ${gh_SMARTPACKKERNELMANAGER[@]}
+	grab_apk_from_github ${gh_SUBSTRATUM[@]}
+
+	# URL
+	grab_apk_from_url ${raw_XDALABS[@]}
 }
 
 update_bromite () {
