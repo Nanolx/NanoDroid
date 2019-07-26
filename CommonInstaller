@@ -1,6 +1,6 @@
 #!/sbin/sh
 
-VERSION=23.0.99999999
+VERSION=22.1.2019076
 NANODROID_UPGRADE=0
 INSTALL_SUCCESS=TRUE
 NANODROID_LIST=/data/adb/NanoDroid_FileList
@@ -1668,6 +1668,9 @@ check_cfg_apps () {
 
 	# >= 21.0.90 has Hacker's Keyboard instead of BeHeKeyboard, migrate
 	grep -q BeHeKeyboard "${cfg_apps}" && sed -e 's/BeHeKeyboard/HackersKeyboard/g' -i "${cfg_apps}"
+
+	# >= 22.1 has SmartPack-Kernel-Manager instead of Kernel Adiutor, migrate
+	grep -q KernelAdiutor "${cfg_apps}" && sed -e 's/KernelAdiutor/SmartPackKernelManager/g' -i "${cfg_apps}"
 }
 
 # check whether '.nanodroid-overlay' is up to date
