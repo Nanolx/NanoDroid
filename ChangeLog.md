@@ -5,16 +5,16 @@
 ### Bugfixes
 
 * Installer
-  * fix mounting /system on-A/B devices with system-as-root
+  * fix mounting /system on non-A/B devices with system-as-root
 
 * Uninstaller
-  * fix mounting /system on-A/B devices with system-as-root
+  * fix mounting /system on non-A/B devices with system-as-root
 
 * Patcher
-  * fix mounting /system on-A/B devices with system-as-root
+  * fix mounting /system on non-A/B devices with system-as-root
 
 * SysTest
-  * fix mounting /system on-A/B devices with system-as-root
+  * fix mounting /system on non-A/B devices with system-as-root
 
 ### General Changes
 
