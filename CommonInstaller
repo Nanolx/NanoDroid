@@ -234,7 +234,9 @@ mount_partitions () {
 		[ "${SLOT}" = "_" ] && SLOT=
 	fi
 
-	SYSTEM_AS_ROOT=NO
+	DEVICE_AB=FALSE
+	VENDOR_COMPAT=FALSE
+	SYSTEM_AS_ROOT=FALSE
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
@@ -242,12 +244,13 @@ mount_partitions () {
 	! is_mounted /system && mount -o rw /system || mount -o rw,remount /system
 
 	if [ ! -f /system/build.prop ]; then
+		DEVICE_AB=TRUE
 		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
 		mount -o rw ${SYSTEMBLOCK} /system
 	fi
 
 	if [ -f /system/init.rc ]; then
-		SYSTEM_AS_ROOT=YES
+		SYSTEM_AS_ROOT=TRUE
 		[ -L /system_root ] && rm -f /system_root
 		mkdir -p /system_root 2>/dev/null
 		mount --move /system /system_root
@@ -255,7 +258,7 @@ mount_partitions () {
 	else
 		grep ' / ' /proc/mounts | grep -qv 'rootfs' || \
 			grep -q ' /system_root ' /proc/mounts \
-			&& SYSTEM_AS_ROOT=YES || SYSTEM_ROOT=NO
+			&& SYSTEM_AS_ROOT=TRUE || SYSTEM_ROOT=FALSE
 	fi
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
@@ -268,6 +271,7 @@ mount_partitions () {
 		fi
 	elif [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
+		VENDOR_COMPAT=TRUE
 		echo " xxx compat /vendor link created!"
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
@@ -1494,8 +1498,10 @@ mount | awk '{print $1 " on " $3 " params: " $6}' \
 	>> ${nanodroid_logfile}
 
 echo "
-### PARTITION BLOCKS ###
+### PARTITION INFORMATION ###
 
+DEVICE_AB=${DEVICE_AB}
+VENDOR_COMPAT=${VENDOR_COMPAT}
 SYSTEM_AS_ROOT=${SYSTEM_AS_ROOT}
 SYSTEMBLOCK=${SYSTEMBLOCK}
 VENDORBLOCK=${VENDORBLOCK}
