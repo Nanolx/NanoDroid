@@ -1,5 +1,36 @@
 # ChangeLog
 
+## 23.0 in-dev
+
+### Bugfixes
+
+* Installer
+  * fix mounting /system on-A/B devices with system-as-root
+
+* Uninstaller
+  * fix mounting /system on-A/B devices with system-as-root
+
+* Patcher
+  * fix mounting /system on-A/B devices with system-as-root
+
+* SysTest
+  * fix mounting /system on-A/B devices with system-as-root
+
+### General Changes
+
+* Installer
+  * log whether device is A/B
+  * log used system block device
+  * log used vendor block device
+  * log whether device is system-as-root
+  * log whether vendor compat link was created
+
+* SysTest
+  * only bind-mount random device when in TWRP
+  * log used system block device
+  * log used vendor block device
+  * log whether device is system-as-root
+
 ## 22.1.20190726 [USS Enterprise B](https://memory-alpha.fandom.com/wiki/USS_Enterprise_(NCC-1701-B))
 
 ### Notes
