@@ -234,6 +234,8 @@ mount_partitions () {
 		[ "${SLOT}" = "_" ] && SLOT=
 	fi
 
+	SYSTEM_AS_ROOT=NO
+
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
 	mount -o bind /dev/urandom /dev/random
@@ -244,12 +246,16 @@ mount_partitions () {
 		mount -o rw ${SYSTEMBLOCK} /system
 	fi
 
-	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system (unsupported A/B device?)"
-
 	if [ -f /system/init.rc ]; then
-		mkdir /system_root 2>/dev/null
+		SYSTEM_AS_ROOT=YES
+		[ -L /system_root ] && rm -f /system_root
+		mkdir -p /system_root 2>/dev/null
 		mount --move /system /system_root
 		mount -o bind /system_root/system /system
+	else
+		grep ' / ' /proc/mounts | grep -qv 'rootfs' || \
+			grep -q ' /system_root ' /proc/mounts \
+			&& SYSTEM_AS_ROOT=YES || SYSTEM_ROOT=NO
 	fi
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
@@ -1488,6 +1494,12 @@ mount | awk '{print $1 " on " $3 " params: " $6}' \
 	>> ${nanodroid_logfile}
 
 echo "
+### PARTITION BLOCKS ###
+
+SYSTEM_AS_ROOT=${SYSTEM_AS_ROOT}
+SYSTEMBLOCK=${SYSTEMBLOCK}
+VENDORBLOCK=${VENDORBLOCK}
+
 ### DISK USAGE ###
 " >> ${nanodroid_logfile}
 
