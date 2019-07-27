@@ -46,11 +46,13 @@ mount_partitions () {
 	fi
 
 	DEVICE_AB=FALSE
+	SYSTEM_AS_ROOT=FALSE
 	VENDOR_COMPAT=FALSE
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
-	mount -o bind /dev/urandom /dev/random
+	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
+
 	! is_mounted /system && mount -o rw /system || mount -o rw,remount /system
 
 	if [ ! -f /system/build.prop ]; then
@@ -60,10 +62,15 @@ mount_partitions () {
 	fi
 
 	if [ -f /system/init.rc ]; then
+		SYSTEM_AS_ROOT=TRUE
 		[ -L /system_root ] && rm -f /system_root
 		mkdir /system_root 2>/dev/null
 		mount --move /system /system_root
 		mount -o bind /system_root/system /system
+	else
+		grep ' / ' /proc/mounts | grep -qv 'rootfs' || \
+			grep -q ' /system_root ' /proc/mounts \
+			&& SYSTEM_AS_ROOT=YES || SYSTEM_ROOT=NO
 	fi
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
@@ -268,6 +275,9 @@ store_results () {
 	add_log ""
 	add_log "DEVICE_AB=${DEVICE_AB}"
 	add_log "VENDOR_COMPAT=${VENDOR_COMPAT}"
+	add_log "SYSTEM_AS_ROOT=${SYSTEM_AS_ROOT}"
+	add_log "SYSTEMBLOCK=${SYSTEMBLOCK}"
+	add_log "VENDORBLOCK=${VENDORBLOCK}"
 	add_log ""
 	mount | sed '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}' >> ${LOGFILE}
 
