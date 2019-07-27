@@ -59,9 +59,8 @@ mount_partitions () {
 		mount -o rw ${SYSTEMBLOCK} /system
 	fi
 
-	[ -f /system/build.prop ] || is_mounted /system || error "failed to mount /system (unsupported A/B device?)"
-
 	if [ -f /system/init.rc ]; then
+		[ -L /system_root ] && rm -f /system_root
 		mkdir /system_root 2>/dev/null
 		mount --move /system /system_root
 		mount -o bind /system_root/system /system
