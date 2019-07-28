@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 22.2 in-dev
+## 22.2 [Nexus](https://memory-alpha.fandom.com/wiki/Nexus)
 
 ### Bugfixes
 
@@ -34,6 +34,14 @@
   * log used system block device
   * log used vendor block device
   * log whether device is system-as-root
+
+### Updates
+
+* automatic
+  * Bromite System WebView (76.0.3809.85)
+
+* manual
+  * Google Play (16.0.15)
 
 ## 22.1.20190726 [USS Enterprise B](https://memory-alpha.fandom.com/wiki/USS_Enterprise_(NCC-1701-B))
 

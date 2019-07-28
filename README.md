@@ -63,7 +63,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 22.1.20190726 ([USS Enterprise B](https://memory-alpha.fandom.com/wiki/USS_Enterprise_(NCC-1701-B)))
+* Stable: 22.2.20190728 ([Nexus](https://memory-alpha.fandom.com/wiki/Nexus))
 * Beta: --- (---)
 
 ## Downloads
