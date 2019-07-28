@@ -71,7 +71,7 @@ zip_add () {
 	cd "${FILE_PATH}"
 
 	if [ -z "${FILE_MASK}" ]; then
-		zip -qr "${ZIP_PATH}" * || exit 1
+		zip -qr "${ZIP_PATH}" . || exit 1
 	elif [ -d "${FILE_MASK}" ]; then
 		zip -qr "${ZIP_PATH}" "${FILE_MASK}"  || exit 1
 	else
