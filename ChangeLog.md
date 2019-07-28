@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 22.2 [Nexus](https://memory-alpha.fandom.com/wiki/Nexus)
+## 22.2.20190728 [Nexus](https://memory-alpha.fandom.com/wiki/Nexus)
 
 ### Bugfixes
 
