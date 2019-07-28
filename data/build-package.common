@@ -82,11 +82,6 @@ zip_add () {
 }
 
 zip_add_config () {
-	if [ -f "${CWD}/data/${1}" ]; then
-		cd "${CWD}/data"
-	else	cd "${CWD}/doc"
-	fi
-
 	ZIP_PATH="${CWD}/${ZIP}"
 
 	case ${2} in

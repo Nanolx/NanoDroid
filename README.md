@@ -147,14 +147,6 @@ The following applications are custom builds (see [F-Droid Repository](#f-droid-
   * [source](https://github.com/mpv-android/mpv-android)
   * [version code patch](https://nanolx.org/fdroid/mpv.diff)
 
-Also `build-package` looks if the configuration files
-
-* `.nanodroid-setup`
-* `.nanodroid-apps`
-* `.nanodroid-overlay`
-
-exist in the `data` directory of the repository, if so, those files are used when creating packages instead of the default ones from the `doc` directory.
-
 See the documentation below for more information on those files and what they do.
 
 ## Supported Android Versions
