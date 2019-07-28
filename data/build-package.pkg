@@ -21,7 +21,6 @@ create_microg_package() {
 
 	print_package "microG"
 
-
 	zip_add microG
 	zip_add_config .nanodroid-setup 0
 

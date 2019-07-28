@@ -82,6 +82,8 @@ zip_add () {
 }
 
 zip_add_config () {
+	cd "${CWD}/doc"
+
 	ZIP_PATH="${CWD}/${ZIP}"
 
 	case ${2} in
