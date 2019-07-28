@@ -1,8 +1,12 @@
 # ChangeLog
 
-## 23.0 in-dev
+## 22.2 in-dev
 
 ### Bugfixes
+
+* build-package
+  * fix fallback `.nandroid-apps` configuration file not being packaged
+  * fix fallback `.nanodroid-overlay` configuration file not being packaged
 
 * Installer
   * fix mounting /system on non-A/B devices with system-as-root
