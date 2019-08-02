@@ -3,7 +3,7 @@
 OUTFD=$2
 ZIP=$3
 BACKUP_DIR="/data/media/0/nanodroid_backups"
-VERSION=22.2.20190728
+VERSION=22.3.99999999
 
 detect_bootmode () {
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
