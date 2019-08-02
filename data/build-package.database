@@ -29,6 +29,7 @@ fd_AURORASTORE=(fdroid com.aurora.store app AuroraStore)
 
 fd_FDROID=(fdroid org.fdroid.fdroid app FDroid)
 fd_FDROID_PE=(fdroid org.fdroid.fdroid.privileged priv-app FDroidPrivileged)
+fd_AURORADROID=(fdroid com.aurora.adroid app AuroraDroid)
 
 ###
 # Apps
@@ -143,6 +144,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	Full/system/app/Alarmio/Alarmio.apk.gz
 	Full/system/app/Amaze/Amaze.apk.gz
 	Full/system/app/AnysoftKeyboard/AnysoftKeyboard.apk.gz
+	Full/system/app/AuroraDroid/AuroraDroid.apk.gz
 	Full/system/app/AuroraStore/AuroraStore.apk.gz
 	Full/system/app/Blokada/Blokada.apk.gz
 	Full/system/app/FDroid/FDroid.apk.gz
@@ -181,6 +183,7 @@ files_database=( Full/gsync/K/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	Full/system/priv-app/YalpStore/YalpStore.apk.gz
 	Full/system/priv-app/GsfProxy/GsfProxy.apk.gz
 	Full/system/priv-app/GmsCore/GmsCore.apk.gz
+	Full/system/priv-app/AuroraServices/AuroraServices.apk.gz
 	BromiteWebView/system/app/BromiteWebView_arm/BromiteWebView_arm.apk.gz
 	BromiteWebView/system/app/BromiteWebView_arm64/BromiteWebView_arm64.apk.gz
 	BromiteWebView/system/app/BromiteWebView_x86/BromiteWebView_x86.apk.gz
