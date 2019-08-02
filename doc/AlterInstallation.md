@@ -63,16 +63,21 @@ Alternatively you can also use the NanoDroid-SetupWizard package instead of manu
 
 whether to provide **microG**
 
-* 0 = don't install microG at all
+* 0 = don't install microG at all (Note: does not effect NanoDroid-microG package)
 * 1 = install microG GmsCore, GsfProxy and DroidGuard Helper and Nominatim Geocoder Backend
 * 2 = install microG GmsCore and Nominatim Geocoder Backend only
   * note: OpenSource purists setting; this will leave you
       * without Push Messaging support through GCM
       * without the ability to pass SafetyNet attestation
 
-`nanodroid_fdroid=[0|1]`
+`nanodroid_fdroid=[0|1|2]`
 
 whether to provide **F-Droid**
+
+* 0 = don't install F-Droid at all (Note: does not effect NanoDroid-FDroid package)
+* 1 = install official F-Droid client
+* 2 = install unofficial Aurora F-Droid client
+  * alongside Aurora Services addon
 
 `nanodroid_apps=[0|1]`
 
@@ -86,6 +91,7 @@ what app store to use:
   * 1 = Play Store
   * 2 = Yalp Store
   * 3 = Aurora Store
+      * alongside Aurora Services addon
 * 2nd item
   * 0 = without Fake Store
   * 1 = with Fake Store
