@@ -202,6 +202,27 @@ grab_apk_from_github () {
 	gzip "${APK_DEST}/${3}.apk"
 }
 
+grab_apk_from_gitlab () {
+	APK_URL="https://gitlab.com/$(curl -s -N https://gitlab.com/${1}/-/tags | \
+		gawk -F\" '/\.apk/{print $6 ; exit}')"
+	APK_DEST="${CWD}/Full/system/${2}/${3}"
+
+	rm -f "${APK_DEST}/${3}.apk.gz"
+
+	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+		echo -e "\nUpdating from GitLab      : ${3}.apk"
+	else	echo -e "\nDownloading from GitLab   : ${3}.apk"
+		mkdir -p "${APK_DEST}"
+	fi
+
+	echo "	Checking SHA256 hash not (yet) supported"
+
+	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+		rm -f "${APK_DEST}/${3}.apk"
+
+	gzip "${APK_DEST}/${3}.apk"
+}
+
 grab_apk_from_ogapps () {
 	case "${1}" in
 		"com.google.android.syncadapters.calendar" )
