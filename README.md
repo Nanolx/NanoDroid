@@ -195,10 +195,12 @@ NanoDroid includes
      * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
      * the Uninstaller will restore them (or re-flash the ROM)
      * see the [> GApps Removal List](doc/GAppsRemoval.md#list-of-removed-location-providers)
-* F-Droid and it's privileged extension
+* [> F-Droid](https://f-droid.org) and it's privileged extension
+  * alternatively you can install [> Aurora Droid](https://f-droid.org/en/packages/com.aurora.adroid) and it's services extension
 * modified Play Store to allow (in-)app-purchases with microG
   * this required the Play Store to be modified, see the [> patch](https://gitlab.com/Nanolx/microg-phonesky-iap-support)
-  * alternatively Yalp Store can be installed instead
+  * alternatively [> Yalp Store (fork)](https://f-droid.org/en/packages/com.github.kiliakin.yalpstore) can be installed instead
+  * alternatively [> Aurora Store](https://f-droid.org/en/packages/com.aurora.store) and it's services extension can be installed instead
 * custom init scripts
 * pseudo-debloat feature (Magisk Mode)
   * disables applications systemless-ly
