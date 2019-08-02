@@ -27,6 +27,7 @@ update_swipe () {
 }
 
 update_microg () {
+	# applications managed in repositories
 	grab_apk_from_repo ${uG_GMSCORE[@]}
 	grab_apk_from_repo ${uG_GSFPROXY[@]}
 	grab_apk_from_repo ${uG_DROIDGUARD[@]}
@@ -39,6 +40,9 @@ update_microg () {
 	grab_apk_from_repo ${fd_YALPSTORE[@]}
 	grab_apk_from_repo ${fd_AURORASTORE[@]}
 	grab_apk_from_repo ${nlx_PHONESKY[@]}
+
+	# GitLab
+	grab_apk_from_gitlab ${gl_AURORASERVICES[@]}
 }
 
 update_gsync () {

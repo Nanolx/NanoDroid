@@ -75,6 +75,12 @@ gh_SMARTPACKKERNELMANAGER=(SmartPack/SmartPack-Kernel-Manager app SmartPackKerne
 gh_SUBSTRATUM=(substratum/substratum app Substratum)
 
 ###
+# GitLab
+###
+
+gl_AURORASERVICES=(AuroraOSS/AuroraServices priv-app AuroraServices)
+
+###
 # URL
 ###
 
