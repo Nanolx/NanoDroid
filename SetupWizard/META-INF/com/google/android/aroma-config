@@ -48,7 +48,6 @@ checkbox(
 	"setup.prop",
 
 	"Adjust the basic settings", "", 2, #-- Group 1
-	"F-Droid",	"Install F-Droid FOSS App Store",			1,
 	"Apps",		"Install Apps (customized later)",			1,
 	"Overlay",	"Debloat Apps (customized later)",			1,
 	"Zelda Tunes",	"Install The Legend of Zelda rintones and sounds",	1,
@@ -70,9 +69,21 @@ selectbox(
 	"ug.prop",
 
 	"Select whether to install microG", "", 2, #-- Group 1. key = "selected.1"
-	"None",		"Don't install microG",							0,	#-- selected.1 = 1
+	"None",		"Don't install microG (does not effect NanoDroid-microG)",		0,	#-- selected.1 = 1
 	"Full",		"Install microG [GmsCore, GsfProxy, DroidGuard Helper, Nominatim]",	1,	#-- selected.1 = 2
 	"Minimal",	"Install microG [GmsCore, Nominatim]",					0	#-- selected.1 = 3
+);
+
+selectbox(
+	"F-Droid",
+	"F-Droid",
+	"@customize",
+	"fd.prop",
+
+	"Select whether to install F-Droid", "", 2, #-- Group 1. key = "selected.1"
+	"None",		"Don't install F-Droid (does not effect NanoDroid-FDroid)",	0,	#-- selected.1 = 1
+	"Official",	"Install official F-Droid client",				1,	#-- selected.1 = 2
+	"Aurora Droid",	"Install unofficial Aurora Droid client",			0	#-- selected.1 = 3
 );
 
 checkbox(
