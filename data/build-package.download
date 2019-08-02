@@ -146,6 +146,7 @@ grab_apk_from_repo () {
 	if check_sha256sum "${APK_DEST}/${4}.apk.gz" "${SHA_SUM}"; then
 		echo -e "\nUp-to-Date from ${REPO_P} : ${4}.apk"
 	else	echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
+		mkdir -p "${APK_DEST}"
 		rm -f "${APK_DEST}/${4}.apk.gz"
 		wget -q -O "${APK_DEST}/${4}.apk" "${APK_URL}"
 
@@ -167,9 +168,9 @@ grab_apk_from_url () {
 	rm -f "${APK_DEST}/${3}.apk.gz"
 
 	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
-	       echo -e "\nUpdating from URL         : ${3}.apk"
+		echo -e "\nUpdating from URL         : ${3}.apk"
 	else    echo -e "\nDownloading from URL      : ${3}.apk"
-	       mkdir -p "${APK_DEST}"
+		mkdir -p "${APK_DEST}"
 	fi
 
 	echo "  Checking SHA256 hash not (yet) supported"
