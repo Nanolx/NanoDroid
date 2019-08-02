@@ -81,20 +81,20 @@ zip_add () {
 	cd "${CWD}"
 }
 
-zip_add_config () {
+zip_add_setup () {
 	cd "${CWD}/doc"
 
 	ZIP_PATH="${CWD}/${ZIP}"
 
-	case ${2} in
-		1 )
-			sed -e 's/nanodroid_overlay=1/nanodroid_overlay=0/' -i "${1}"
-			zip -q "${ZIP_PATH}" "${1}" || exit 1
-			sed -e 's/nanodroid_overlay=0/nanodroid_overlay=1/' -i "${1}"
+	case ${1} in
+		0 )
+			sed -e 's/nanodroid_overlay=1/nanodroid_overlay=0/' -i .nanodroid-setup
+			zip -q "${ZIP_PATH}" .nanodroid-setup || exit 1
+			sed -e 's/nanodroid_overlay=0/nanodroid_overlay=1/' -i .nanodroid-setup
 		;;
 
-		* )
-			zip -q "${ZIP_PATH}" "${1}" || exit 1
+		1 )
+			zip -q "${ZIP_PATH}" .nanodroid-setup || exit 1
 		;;
 	esac
 

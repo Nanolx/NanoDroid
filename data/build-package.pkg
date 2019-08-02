@@ -6,7 +6,7 @@ create_full_package () {
 	print_package "Full"
 
 	zip_add Full
-	zip_add_config .nanodroid-setup 1
+	zip_add_setup 1
 
 	sum_sign_package
 }
@@ -22,7 +22,7 @@ create_microg_package() {
 	print_package "microG"
 
 	zip_add microG
-	zip_add_config .nanodroid-setup 0
+	zip_add_setup 0
 
 	sum_sign_package
 }
@@ -38,7 +38,7 @@ create_fdroid_package() {
 	print_package "FDroid"
 
 	zip_add FDroid
-	zip_add_config .nanodroid-setup 0
+	zip_add_setup 0
 
 	sum_sign_package
 }
@@ -54,7 +54,7 @@ create_bromite_webview_package () {
 	print_package BromiteWebView
 
 	zip_add BromiteWebView
-	zip_add_config .nanodroid-setup 0
+	zip_add_setup 0
 
 	sum_sign_package
 }
@@ -70,7 +70,7 @@ create_osmand_package() {
 	print_package "OsmAnd"
 
 	zip_add OsmAnd
-	zip_add_config .nanodroid-setup 0
+	zip_add_setup 0
 
 	sum_sign_package
 }
