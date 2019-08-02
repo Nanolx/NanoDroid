@@ -1,5 +1,44 @@
 # ChangeLog
 
+## 22.3 in-dev
+
+### Bugfixes
+
+* build-package
+  * fix downloading APKs from repos when NanoDroid repo clone is empty
+  * fix default setting of `nanodroid-overlay` variable across packages
+
+### General Changes
+
+* build-package
+  * support downloading APKs from GitLab
+
+* Full, microG packages
+  * when installing Aurora Store, also install Aurora Services
+
+* Full, F-Droid packages
+  * new value `nanodroid_fdroid=2` setup value
+     * installs Aurora Droid instead of official F-Droid client
+         * also installs Aurora Services
+
+* SetupWizard
+  * update to support new `nanodroid_fdroid=2` value
+  * clearify that `nanodroid_microg=0` does not effect microG package
+  * clearify that `nanodroid_fdroid=0` does not effect F-Droid package
+
+### Updates
+
+* automatic
+  * Aurora Droid (1.0.3)
+  * Aurora Services (1.0.2)
+  * Aurora Store (3.0.8)
+  * Blokada (4.1.5)
+  * Bromite System WebView (76.0.3809.91)
+  * F-Droid (1.7.1)
+  * OsmAnd+ (3.4.5)
+  * Simple Calendar (6.5.4)
+  * Simple Gallery (6.8.4)
+
 ## 22.2.20190728 [Nexus](https://memory-alpha.fandom.com/wiki/Nexus)
 
 ### Bugfixes
