@@ -183,8 +183,7 @@ grab_apk_from_url () {
 
 grab_apk_from_github () {
 	APK_URL="$(curl -s -N https://api.github.com/repos/${1}/releases | \
-		gawk -F\" -v N=3 -v pattern="name.*.apk" '{i=(1+(i%N)); if (buffer[i]&& $0 ~ pattern) print buffer[i]; buffer[i]=$4}' | \
-		head -n 1)"
+		gawk -F\" '/browser_download_url.*apk/{print $4 ; exit}')"
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
 
 	rm -f "${APK_DEST}/${3}.apk.gz"
