@@ -7,11 +7,13 @@
 * build-package
   * fix downloading APKs from repos when NanoDroid repo clone is empty
   * fix default setting of `nanodroid-overlay` variable across packages
+  * fix downloading APKs from GitHub
 
 ### General Changes
 
 * build-package
   * support downloading APKs from GitLab
+  * improve checking NanoDroid integrity
 
 * Full, microG packages
   * when installing Aurora Store, also install Aurora Services
