@@ -10,7 +10,18 @@ check_nanodroid () {
 			NANODROID_MISSING_FILES=1
 			missing_database=(${missing_database[@]} ${file})
 		else
-			mimetype=$(file -b --mime-type ${file})
+			case ${file} in
+				*.gz )
+					mimetype=$(file -b --mime-type ${file})
+					mimetype_int=$(gzip -dc ${file} | file -b --mime-type - )
+				;;
+
+				*.so* )
+					mimetype=$(file -b --mime-type ${file})
+					mimetype_int=""
+				;;
+			esac
+
 			case ${mimetype} in
 				application/x-sharedlib )
 					# library
@@ -25,17 +36,32 @@ check_nanodroid () {
 					broken_database=(${broken_database[@]} ${file})
 				;;
 			esac
+
+			case ${mimetype_int} in
+				"" )
+					# library
+				;;
+
+				application/java-archive | application/zip )
+					# APK
+				;;
+
+				* )
+					NANODROID_BROKEN_FILES=1
+					broken_database=(${broken_database[@]} ${file})
+				;;
+			esac
 		fi
 	done
 
 	if [[ ${NANODROID_MISSING_FILES} -ne 0 ]]; then
 		echo -e "\nThe following files are missing:\n"
-		printf '%s\n' ${missing_database[@]}
+		printf '%s\n' ${missing_database[@]} | uniq
 	fi
 
 	if [[ ${NANODROID_BROKEN_FILES} -ne 0 ]]; then
 		echo -e "\nThe following files are broken:\n"
-		printf '%s\n' ${broken_database[@]}
+		printf '%s\n' ${broken_database[@]} | uniq
 	fi
 
 	if [[ ${NANODROID_MISSING_FILES} -eq 0 && ${NANODROID_BROKEN_FILES} -eq 0 ]]; then
