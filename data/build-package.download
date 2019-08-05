@@ -178,7 +178,11 @@ grab_apk_from_url () {
 	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 
-	gzip "${APK_DEST}/${3}.apk"
+	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+		gzip "${APK_DEST}/${3}.apk"
+	else
+		echo "error downloading ${3}"
+	fi
 }
 
 grab_apk_from_github () {
@@ -199,7 +203,11 @@ grab_apk_from_github () {
 	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 
-	gzip "${APK_DEST}/${3}.apk"
+	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+		gzip "${APK_DEST}/${3}.apk"
+	else
+		echo "error downloading ${3}"
+	fi
 }
 
 grab_apk_from_gitlab () {
@@ -220,7 +228,11 @@ grab_apk_from_gitlab () {
 	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 
-	gzip "${APK_DEST}/${3}.apk"
+	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+		gzip "${APK_DEST}/${3}.apk"
+	else
+		echo "error downloading ${3}"
+	fi
 }
 
 grab_apk_from_ogapps () {
