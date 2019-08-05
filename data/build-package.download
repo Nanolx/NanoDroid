@@ -11,7 +11,7 @@ REPO_NANOLX="https://nanolx.org/fdroid/repo"
 REPO_BROMITE="https://fdroid.bromite.org/fdroid/repo"
 
 # check dependencies
-for dep in gawk wget curl sha256sum jq gzip; do
+for dep in gawk curl sha256sum jq gzip; do
 	if ! which ${dep} &>/dev/null; then
 		echo "${dep} is not installed!"
 		exit 1
@@ -53,7 +53,7 @@ update_index () {
 	INDEX_REPO=${2}
 
 	if index_update_required ${INDEX_JSON}; then
-		wget -q -O "${INDEX_JAR}" "${INDEX_REPO}/index-v1.jar" || error " failed to update repo index"
+		curl -sSL -o "${INDEX_JAR}" "${INDEX_REPO}/index-v1.jar" || error " failed to update repo index"
 
 		unzip -q ${INDEX_JAR} index-v1.json -d "${CWD}/data/"
 		mv "${CWD}/data/index-v1.json" "${INDEX_JSON}"
@@ -148,7 +148,7 @@ grab_apk_from_repo () {
 	else	echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
 		mkdir -p "${APK_DEST}"
 		rm -f "${APK_DEST}/${4}.apk.gz"
-		wget -q -O "${APK_DEST}/${4}.apk" "${APK_URL}"
+		curl -sSL -o "${APK_DEST}/${4}.apk" "${APK_URL}"
 
 		if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
 			echo "	SHA256 hash of ${4}.apk is correct"
@@ -175,18 +175,17 @@ grab_apk_from_url () {
 
 	echo "  Checking SHA256 hash not (yet) supported"
 
-	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+	curl -sSL -o "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 
 	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
 		gzip "${APK_DEST}/${3}.apk"
-	else
-		echo "error downloading ${3}"
+	else	echo "error downloading ${3}"
 	fi
 }
 
 grab_apk_from_github () {
-	APK_URL="$(curl -s -N https://api.github.com/repos/${1}/releases | \
+	APK_URL="$(curl -s -N "https://api.github.com/repos/${1}/releases" | \
 		gawk -F\" '/browser_download_url.*apk/{print $4 ; exit}')"
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
 
@@ -198,20 +197,21 @@ grab_apk_from_github () {
 		mkdir -p "${APK_DEST}"
 	fi
 
+
+
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+	curl -sSL -o "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 
 	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
 		gzip "${APK_DEST}/${3}.apk"
-	else
-		echo "error downloading ${3}"
+	else	echo "error downloading ${3}"
 	fi
 }
 
 grab_apk_from_gitlab () {
-	APK_URL="https://gitlab.com/$(curl -s -N https://gitlab.com/${1}/-/tags | \
+	APK_URL="https://gitlab.com$(curl -s -N "https://gitlab.com/${1}/-/tags" | \
 		gawk -F\" '/\.apk/{print $6 ; exit}')"
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
 
@@ -225,13 +225,12 @@ grab_apk_from_gitlab () {
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+	curl -sSL -o "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 
 	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
 		gzip "${APK_DEST}/${3}.apk"
-	else
-		echo "error downloading ${3}"
+	else	echo "error downloading ${3}"
 	fi
 }
 
@@ -266,7 +265,7 @@ grab_apk_from_ogapps () {
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -q -O "${APK_DEST}/${3}.apk" "${APK_URL}" || \
+	curl -sSL -o "${APK_DEST}/${3}.apk" "${APK_URL}" || \
 		rm -f "${APK_DEST}/${3}.apk"
 
 	[ -f "${APK_DEST}/${3}.apk" ] && gzip "${APK_DEST}/${3}.apk"
@@ -278,7 +277,7 @@ grab_lib_from_ogapps () {
 		arm64 | x86_64 ) LIBD=lib64 ;;
 	esac
 
-	LIB_URL="https://gitlab.nezorfla.me/opengapps/${3}/raw/master/${LIBD}/${2}/${1}?inline=false"
+	LIB_URL="https://gitlab.opengapps.org/opengapps/${3}/raw/master/${LIBD}/${2}/${1}?inline=false"
 	SWP_DEST="${CWD}/Full/swipe/${3}"
 
 	if [[ "${4}" == "true" ]]; then
@@ -294,7 +293,7 @@ grab_lib_from_ogapps () {
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -q -O "${LIB_DEST}" "${LIB_URL}" || \
+	curl -sSL -o "${LIB_DEST}" "${LIB_URL}" || \
 		rm -f "${LIB_DEST}"
 }
 
@@ -307,6 +306,6 @@ grab_patches () {
 	echo -e "\nUpdating from Haystack   : ${2}"
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	wget -q -O "${PATCH_DST}" "${PATCH_URL}" || \
+	curl -sSL -o "${PATCH_DST}" "${PATCH_URL}" || \
 		rm -f "${PATCH_DST}"
 }

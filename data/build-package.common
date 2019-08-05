@@ -34,6 +34,7 @@ check_nanodroid () {
 				* )
 					NANODROID_BROKEN_FILES=1
 					broken_database=(${broken_database[@]} ${file})
+					rm -f ${file}
 				;;
 			esac
 
@@ -49,6 +50,7 @@ check_nanodroid () {
 				* )
 					NANODROID_BROKEN_FILES=1
 					broken_database=(${broken_database[@]} ${file})
+					rm -f ${file}
 				;;
 			esac
 		fi
@@ -60,7 +62,7 @@ check_nanodroid () {
 	fi
 
 	if [[ ${NANODROID_BROKEN_FILES} -ne 0 ]]; then
-		echo -e "\nThe following files are broken:\n"
+		echo -e "\nThe following files are broken (and will be removed):\n"
 		printf '%s\n' ${broken_database[@]} | uniq
 	fi
 
