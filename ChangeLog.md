@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 22.3 in-dev
+## 22.3.20190805 [Transwarp](https://memory-alpha.fandom.com/wiki/Transwarp)
 
 ### Bugfixes
 
@@ -33,13 +33,13 @@
 * automatic
   * Aurora Droid (1.0.3)
   * Aurora Services (1.0.2)
-  * Aurora Store (3.0.8)
+  * Aurora Store (3.0.9)
   * Blokada (4.1.5)
   * Bromite System WebView (76.0.3809.91)
   * F-Droid (1.7.1)
   * OsmAnd+ (3.4.5)
   * Simple Calendar (6.5.4)
-  * Simple Gallery (6.8.4)
+  * Simple Gallery (6.9.1)
 
 ## 22.2.20190728 [Nexus](https://memory-alpha.fandom.com/wiki/Nexus)
 
