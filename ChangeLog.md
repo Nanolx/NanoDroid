@@ -9,11 +9,15 @@
   * fix default setting of `nanodroid-overlay` variable across packages
   * fix downloading APKs from GitHub
 
+* Magisk Module
+  * fix installing Bromite System WebView as user-app on first boot
+
 ### General Changes
 
 * build-package
   * support downloading APKs from GitLab
   * improve checking NanoDroid integrity
+  * use cURL instead of wget for downloads
 
 * Full, microG packages
   * when installing Aurora Store, also install Aurora Services
