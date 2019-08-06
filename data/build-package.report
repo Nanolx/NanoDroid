@@ -108,7 +108,7 @@ get_swipe_info () {
 get_bin_info () {
 
 	BIN_FILE=$(basename ${1})
-	BIN_NAME=$(basename ${1} | sed -e 's/\.*//')
+	BIN_NAME=$(basename ${1} | sed -e 's/\..*//')
 	BIN_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 
 	case ${BIN_PATH} in
