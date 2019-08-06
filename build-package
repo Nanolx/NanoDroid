@@ -4,7 +4,7 @@ VERSION=22.3.20190805
 CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
-for funcfile in  pkg update common download database; do
+for funcfile in  pkg update common download database report; do
 	source "${CWD}/data/build-package.${funcfile}" || exit 1
 done
 
@@ -145,6 +145,10 @@ for opt in ${@}; do
 					echo "aborted"
 				;;
 			esac
+		;;
+
+		report )
+			create_report
 		;;
 
 		* )

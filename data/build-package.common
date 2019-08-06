@@ -5,19 +5,19 @@ NANODROID_BROKEN_FILES=0
 missing_database=""
 
 check_nanodroid () {
-	for file in ${files_database[@]}; do
+	for file in ${apk_database[@]} ${lib_database[@]}; do
 		if [[ ! -f ${CWD}/${file} ]]; then
 			NANODROID_MISSING_FILES=1
 			missing_database=(${missing_database[@]} ${file})
 		else
 			case ${file} in
 				*.gz )
-					mimetype=$(file -b --mime-type ${file})
-					mimetype_int=$(gzip -dc ${file} | file -b --mime-type - )
+					mimetype=$(file -b --mime-type ${CWD}/${file})
+					mimetype_int=$(gzip -dc ${CWD}/${file} | file -b --mime-type - )
 				;;
 
 				*.so* )
-					mimetype=$(file -b --mime-type ${file})
+					mimetype=$(file -b --mime-type ${CWD}/${file})
 					mimetype_int=""
 				;;
 			esac
@@ -34,7 +34,7 @@ check_nanodroid () {
 				* )
 					NANODROID_BROKEN_FILES=1
 					broken_database=(${broken_database[@]} ${file})
-					rm -f ${file}
+					rm -f ${CWD}/${file}
 				;;
 			esac
 
@@ -50,7 +50,7 @@ check_nanodroid () {
 				* )
 					NANODROID_BROKEN_FILES=1
 					broken_database=(${broken_database[@]} ${file})
-					rm -f ${file}
+					rm -f ${CWD}/${file}
 				;;
 			esac
 		fi
@@ -207,6 +207,7 @@ create zip files:
 misc. stuff:
 	check			| check if all files were properly downloaded
 	clean			| remove any untracked files from the repo
+	report			| create package report (work-in-progress)
 	dalvik	[jar]		| prepare a jar file for dalvikvm usage
 	ver	[ver] [date]	| bump version
 	bump			| bump versionCode in Magisk Modules
