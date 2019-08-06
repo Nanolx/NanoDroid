@@ -1,15 +1,15 @@
 # ChangeLog
 
-## 22.3.20190805 [Transwarp](https://memory-alpha.fandom.com/wiki/Transwarp)
+## 22.3.20190805 "[Transwarp](https://memory-alpha.fandom.com/wiki/Transwarp)"
 
 ### Bugfixes
 
 * build-package
   * fix downloading APKs from repos when NanoDroid repo clone is empty
-  * fix default setting of `nanodroid-overlay` variable across packages
+  * fix default setting of `nanodroid_overlay` variable across packages
   * fix downloading APKs from GitHub
 
-* Magisk Module
+* Magisk service.sh
   * fix installing Bromite System WebView as user-app on first boot
 
 ### General Changes
@@ -23,12 +23,12 @@
   * when installing Aurora Store, also install Aurora Services
 
 * Full, F-Droid packages
-  * new value `nanodroid_fdroid=2` setup value
+  * new `nanodroid_fdroid=2` configuration value
      * installs Aurora Droid instead of official F-Droid client
          * also installs Aurora Services
 
 * SetupWizard
-  * update to support new `nanodroid_fdroid=2` value
+  * update to support new `nanodroid_fdroid=2` configuration value
   * clearify that `nanodroid_microg=0` does not effect microG package
   * clearify that `nanodroid_fdroid=0` does not effect F-Droid package
 
@@ -45,7 +45,7 @@
   * Simple Calendar (6.5.4)
   * Simple Gallery (6.9.1)
 
-## 22.2.20190728 [Nexus](https://memory-alpha.fandom.com/wiki/Nexus)
+## 22.2.20190728 "[Nexus](https://memory-alpha.fandom.com/wiki/Nexus)"
 
 ### Bugfixes
 
@@ -88,7 +88,7 @@
 * manual
   * Google Play (16.0.15)
 
-## 22.1.20190726 [USS Enterprise B](https://memory-alpha.fandom.com/wiki/USS_Enterprise_(NCC-1701-B))
+## 22.1.20190726 "[USS Enterprise B](https://memory-alpha.fandom.com/wiki/USS_Enterprise_(NCC-1701-B))"
 
 ### Notes
 
@@ -137,7 +137,7 @@
 * tools
   * sqlite3 (3290000)
 
-## 22.0.20190713 [USS Excelsior](https://memory-alpha.fandom.com/wiki/USS_Excelsior)
+## 22.0.20190713 "[USS Excelsior](https://memory-alpha.fandom.com/wiki/USS_Excelsior)"
 
 ### Notes
 
