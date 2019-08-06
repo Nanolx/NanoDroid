@@ -13,17 +13,17 @@ done
 for opt in ${@}; do
 	case ${opt} in
 		full)
-			check_nanodroid || error "run nanodroid-pull first!"
+			check_nanodroid || error "run 'build-package pull' first!"
 			mk_pkg_full
 		;;
 
 		microg )
-			check_nanodroid || error "run nanodroid-pull first!"
+			check_nanodroid || error "run 'build-package pull' first!"
 			mk_pkg_microg
 		;;
 
 		fdroid )
-			check_nanodroid || error "run nanodroid-pull first!"
+			check_nanodroid || error "run 'build-package pull' first!"
 			mk_pkg_fdroid
 		;;
 
@@ -40,12 +40,12 @@ for opt in ${@}; do
 		;;
 
 		bromitewebview )
-			check_nanodroid || error "run nanodroid-pull first!"
+			check_nanodroid || error "run 'build-package pull' first!"
 			mk_pkg_bromite_webview
 		;;
 
 		osmand )
-			check_nanodroid || error "run nanodroid-pull first!"
+			check_nanodroid || error "run 'build-package pull' first!"
 			mk_pkg_osmand
 		;;
 
@@ -54,7 +54,7 @@ for opt in ${@}; do
 		;;
 
 		all )
-			check_nanodroid || error "run nanodroid-pull first!"
+			check_nanodroid || error "run 'build-package pull' first!"
 			mk_pkg_full
 			mk_pkg_microg
 			mk_pkg_fdroid
@@ -148,7 +148,7 @@ for opt in ${@}; do
 		;;
 
 		report )
-			check_nanodroid || error "run nanodroid-pull first!"
+			check_nanodroid || error "run 'build-package pull' first!"
 			create_report
 		;;
 
