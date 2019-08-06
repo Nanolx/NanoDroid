@@ -43,6 +43,7 @@ get_apk_info () {
 		*gsync/N* ) APK_TYPE="Google Sync Adapters [Nougat]" ;;
 		*gsync/O* ) APK_TYPE="Google Sync Adapters [Oreo]" ;;
 		*gsync/P* ) APK_TYPE="Google Sync Adapters [Pie]" ;;
+		*gsync/common*) APK_TYPE="Google Sync Adatpers [Generic]" ;;
 		*priv-app*) APK_TYPE="Privileged Application" ;;
 		*app*     ) APK_TYPE="Generic Application" ;;
 	esac
