@@ -23,23 +23,39 @@ get_apk_info () {
 
 	gzip -dc ${IN} > ${CWD}/_report.apk
 
-	APK_FILE="$(basename ${IN}) [$(dirname ${1})]"
+	APK_FILE=$(basename ${IN})
+	APK_PATH=$(dirname ${1})
 	APK_NAME=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $2}')
 	APK_VERSION=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $6}')
 	APK_CODE=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $4}')
 	APK_PERM=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^uses-permission:/{print $2}' | sort)
-	APK_SHA=($(sha256sum ${APK} | gawk '{print $1}'))
-	[[ ${APK} == *priv-app* ]] && APK_PRIV=Yes || APK_PRIV=No
+	APK_SHA=$(sha256sum ${APK} | gawk '{print $1}')
+	GZIP_SHA=$(sha256sum ${IN} | gawk '{print $1}')
+
+	case ${IN} in
+		*gsync/K* ) APK_TYPE="Google Sync Adapters [KitKat]" ;;
+		*gsync/L* ) APK_TYPE="Google Sync Adapters [Lolipop]" ;;
+		*gsync/M* ) APK_TYPE="Google Sync Adapters [Marshmallow]" ;;
+		*gsync/N* ) APK_TYPE="Google Sync Adapters [Nougat]" ;;
+		*gsync/O* ) APK_TYPE="Google Sync Adapters [Oreo]" ;;
+		*gsync/P* ) APK_TYPE="Google Sync Adapters [Pie]" ;;
+		*priv-app*) APK_TYPE="Privileged Application" ;;
+		*app*     ) APK_TYPE="Generic Application" ;;
+	esac
 
 	echo "Android Package: ${APK_NAME}
 	| Filename:	${APK_FILE}
+	| Path:		${APK_PATH}
+	| Type:		${APK_TYPE}
 	| Version:	${APK_VERSION}
 	| VersionCode:	${APK_CODE}
-	| SHA256:	${APK_SHA}
-	| Priviledged:	${APK_PRIV}
-	| Permissions:
-$(printf "\t|- %s\n" ${APK_PERM})
-" >> ${REPORT_FILE}
+	| SHA256 APK:	${APK_SHA}
+	| SHA256 GZip:	${GZIP_SHA}" >> ${REPORT_FILE}
+
+	if [ -z "${APK_PERM}" ]; then
+		echo -e "	| Permissions:	none requested\n" >> ${REPORT_FILE}
+	else	echo -e "$(printf "\t|- %s\n" ${APK_PERM})\n" >> ${REPORT_FILE}
+	fi
 
 	rm -f ${APK}
 
