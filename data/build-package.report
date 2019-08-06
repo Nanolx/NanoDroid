@@ -10,29 +10,31 @@ create_report () {
 ==========================================================
 " > ${REPORT_FILE}
 
-	for apk in ${apk_database[@]}; do
-		get_apk_info ${apk}
+	for file in $(find ${CWD}/Full -type f); do
+		case ${file} in
+			*.apk.gz ) get_apk_info ${file} ;;
+			*.so*  ) get_swipe_info ${file} ;;
+		esac
 	done
 
 }
 
 get_apk_info () {
 
-	IN=${CWD}/${1}
 	APK=${CWD}/_report.apk
 
-	gzip -dc ${IN} > ${CWD}/_report.apk
+	gzip -dc ${1} > ${APK}
 
-	APK_FILE=$(basename ${IN})
-	APK_PATH=$(dirname ${1})
+	APK_FILE=$(basename ${1})
+	APK_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 	APK_NAME=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $2}')
 	APK_VERSION=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $6}')
 	APK_CODE=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $4}')
 	APK_PERM=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^uses-permission:/{print $2}' | sort)
 	APK_SHA=$(sha256sum ${APK} | gawk '{print $1}')
-	GZIP_SHA=$(sha256sum ${IN} | gawk '{print $1}')
+	GZIP_SHA=$(sha256sum ${1} | gawk '{print $1}')
 
-	case ${IN} in
+	case ${1} in
 		*gsync/K* ) APK_TYPE="Google Sync Adapters [KitKat]" ;;
 		*gsync/L* ) APK_TYPE="Google Sync Adapters [Lolipop]" ;;
 		*gsync/M* ) APK_TYPE="Google Sync Adapters [Marshmallow]" ;;
@@ -45,7 +47,7 @@ get_apk_info () {
 
 	echo "Android Package: ${APK_NAME}
 	| Filename:	${APK_FILE}
-	| Path:		${APK_PATH}
+	| Origin:	${APK_PATH}
 	| Type:		${APK_TYPE}
 	| Version:	${APK_VERSION}
 	| VersionCode:	${APK_CODE}
@@ -58,5 +60,44 @@ get_apk_info () {
 	fi
 
 	rm -f ${APK}
+
+}
+
+get_swipe_info () {
+
+	LIB_FILE=$(basename ${1})
+	LIB_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+
+	case ${LIB_FILE} in
+		*libjni_latinimegoogle* ) LIB_NAME="Latin IME Google" ;;
+		*libjni_keyboarddecoder*) LIB_NAME="Keyboard Decoder" ;;
+	esac
+
+	case ${1} in
+		*19* ) LIB_CODE="19 [KitKat]" ;;
+		*21* ) LIB_CODE="21 [Lollipop]" ;;
+		*22* ) LIB_CODE="22 [Lollipop]" ;;
+		*23* ) LIB_CODE="23 [Marshmallow]" ;;
+		*24* ) LIB_CODE="23 [Nougat] {24}" ;;
+		*25* ) LIB_CODE="23 [Nougat] {25}" ;;
+		*26* ) LIB_CODE="26 [Oreo] {26}" ;;
+		*27* ) LIB_CODE="27 [Oreo]" ;;
+		*28* ) LIB_CODE="28 [Pie]" ;;
+		*    ) LIB_CODE="Generic" ;;
+	esac
+
+	LIB_ARCH=$(file -b ${1} | gawk -F, '{print $2 " [ " $1 " ] [" $3 " ]"}')
+	LIB_SPECS=$(file -b ${1} | gawk -F, '{print $4 " [" $5 " ]"}')
+
+	LIB_SHA=$(sha256sum ${1} | gawk '{print $1}')
+
+	echo "Android Library: ${LIB_NAME}
+	| Filename:	${LIB_FILE}
+	| Origin:	${LIB_PATH}
+	| SDK Code:	${LIB_CODE}
+	| Arch:		${LIB_ARCH}
+	| Specifics:	${LIB_SPECS}
+	| SHA256:	${LIB_SHA}
+" >> ${REPORT_FILE}
 
 }
