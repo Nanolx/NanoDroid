@@ -1295,7 +1295,8 @@ nanodroid_install_apk () {
 	unset prefix
 	unset source
 
-	for sdir in system/app system/priv-app gsync/${GSYNC_VER}/app gsync/${GSYNC_VER}/priv-app; do
+	for sdir in system/app system/priv-app gsync/common/app \
+		gsync/${GSYNC_VER}/app gsync/${GSYNC_VER}/priv-app; do
 		if [ -f "${INSTALLER}/${sdir}/${app}/${app}.apk.gz" ]; then
 			source="${INSTALLER}/${sdir}/${app}/${app}.apk"
 			dir=system/$(basename ${sdir})
