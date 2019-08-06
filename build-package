@@ -148,6 +148,7 @@ for opt in ${@}; do
 		;;
 
 		report )
+			check_nanodroid || error "run nanodroid-pull first!"
 			create_report
 		;;
 
