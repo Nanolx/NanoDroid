@@ -10,7 +10,7 @@ create_report () {
 ==========================================================
 " > ${REPORT_FILE}
 
-	for file in $(find ${CWD}/Full -type f); do
+	for file in $(find ${CWD} -type f); do
 		case ${file} in
 			*.apk.gz ) get_apk_info ${file} ;;
 			*.so*  ) get_swipe_info ${file} ;;
