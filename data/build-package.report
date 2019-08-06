@@ -13,7 +13,9 @@ create_report () {
 	for file in $(find ${CWD} -type f); do
 		case ${file} in
 			*.apk.gz ) get_apk_info ${file} ;;
-			*.so*  ) get_swipe_info ${file} ;;
+			*.so*    ) get_swipe_info ${file} ;;
+			*xbin*   ) get_bin_info ${file} ;;
+			*tools*  ) get_bin_info ${file} ;;
 		esac
 	done
 
@@ -98,6 +100,32 @@ get_swipe_info () {
 	| Arch:		${LIB_ARCH}
 	| Specifics:	${LIB_SPECS}
 	| SHA256:	${LIB_SHA}
+" >> ${REPORT_FILE}
+
+}
+
+get_bin_info () {
+
+	BIN_FILE=$(basename ${1})
+	BIN_NAME=$(basename ${1} | sed -e 's/\.*//')
+	BIN_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+
+	case ${BIN_PATH} in
+		*xbin* ) BIN_TYPE="Android User Utility" ;;
+		*tools*) BIN_TYPE="Android Installer Utility" ;;
+	esac
+
+	BIN_ARCH=$(file -b ${1} | gawk -F, '{print $2 " [ " $1 " ] [" $3 " ]"}')
+	BIN_SPECS=$(file -b ${1} | gawk -F, '{print $4 " [" $7 " ] [" $6 " ]"}')
+
+	BIN_SHA=$(sha256sum ${1} | gawk '{print $1}')
+
+	echo "${BIN_TYPE}: ${BIN_NAME}
+	| Filename:	${BIN_FILE}
+	| Origin:	${BIN_PATH}
+	| Arch:		${BIN_ARCH}
+	| Specifics:	${BIN_SPECS}
+	| SHA256:	${BIN_SHA}
 " >> ${REPORT_FILE}
 
 }
