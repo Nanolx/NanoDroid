@@ -16,6 +16,7 @@ create_report () {
 			*.so*    ) get_swipe_info ${file} ;;
 			*xbin*   ) get_bin_info ${file} ;;
 			*tools*  ) get_bin_info ${file} ;;
+			*etc*    ) get_etc_info ${file} ;;
 		esac
 	done
 
@@ -59,7 +60,7 @@ get_apk_info () {
 
 	if [ -z "${APK_PERM}" ]; then
 		echo -e "	| Permissions:	none requested\n" >> ${REPORT_FILE}
-	else	echo -e "$(printf "\t|- %s\n" ${APK_PERM})\n" >> ${REPORT_FILE}
+	else	echo -e "	| Permissions:\n$(printf "\t|- %s\n" ${APK_PERM})\n" >> ${REPORT_FILE}
 	fi
 
 	rm -f ${APK}
@@ -128,5 +129,40 @@ get_bin_info () {
 	| Specifics:	${BIN_SPECS}
 	| SHA256:	${BIN_SHA}
 " >> ${REPORT_FILE}
+
+}
+
+get_etc_info () {
+
+	ETC_FILE=$(basename ${1})
+	ETC_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+
+	ETC_PKGS=""
+
+	case ${ETC_PATH} in
+		*gsync*default-permissions* ) ETC_TYPE="Google Sync Adapaters Permissions"
+		                              ETC_PKGS="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
+		*etc/permissions*           ) ETC_TYPE="Application Permissions"
+		                              ETC_PKGS="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
+		*etc/default-permissions*   ) ETC_TYPE="Application Permissions"
+		                              ETC_PKGS="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
+		*etc/terminfo*              ) ETC_TYPE="GNU Nano Terminfo" ;;
+		*etc/init.d*                ) ETC_TYPE="NanoDroid init Script" ;;
+		*etc/sysconfig*             ) ETC_TYPE="Linux sysconfig Settings" ;;
+		*etc/bash*                  ) ETC_TYPE="GNU Bash Configuration" ;;
+		*etc/org.fdroid.fdroid*     ) ETC_TYPE="F-Droid Configuration" ;;
+	esac
+
+	ETC_SHA=$(sha256sum ${1} | gawk '{print $1}')
+
+	echo "${ETC_TYPE}: ${ETC_FILE}
+	| Filename:	${ETC_FILE}
+	| Origin:	${ETC_PATH}
+	| SHA256:	${ETC_SHA}" >> ${REPORT_FILE}
+
+	if [ -z "${ETC_PKGS}" ]; then
+		echo -e "	| Packages:	none\n" >> ${REPORT_FILE}
+	else	echo -e "	| Packages:\n$(printf "\t|- %s\n" ${ETC_PKGS})\n" >> ${REPORT_FILE}
+	fi
 
 }
