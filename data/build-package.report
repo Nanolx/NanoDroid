@@ -137,6 +137,8 @@ get_etc_info () {
 	ETC_FILE=$(basename ${1})
 	ETC_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 
+	ETC_PKGS=""
+
 	case ${ETC_PATH} in
 		*gsync*default-permissions* ) ETC_TYPE="Google Sync Adapaters Permissions"
 		                              ETC_PKGS="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
