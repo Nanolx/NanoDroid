@@ -137,8 +137,6 @@ get_etc_info () {
 	ETC_FILE=$(basename ${1})
 	ETC_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 
-	ETC_PKGS=""
-
 	case ${ETC_PATH} in
 		*gsync*default-permissions* ) ETC_TYPE="Google Sync Adapaters Permissions"
 		                              ETC_PKGS="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
@@ -160,9 +158,7 @@ get_etc_info () {
 	| Origin:	${ETC_PATH}
 	| SHA256:	${ETC_SHA}" >> ${REPORT_FILE}
 
-	if [ -z "${ETC_PKGS}" ]; then
-		echo -e "	| Packages:	none\n" >> ${REPORT_FILE}
-	else	echo -e "	| Packages:\n$(printf "\t|- %s\n" ${ETC_PKGS})\n" >> ${REPORT_FILE}
-	fi
+	[ ! -z "${ETC_PKGS}" ] && \
+		echo -e "	| Packages:\n$(printf "\t|- %s\n" ${ETC_PKGS})\n" >> ${REPORT_FILE}
 
 }
