@@ -2,24 +2,41 @@
 
 REPORT_FILE="${CWD}/NanoDroid_Report_${VERSION}"
 
-create_report () {
+create_report_real () {
 
-	CURDATE=$(date +%Y%m%d-%H.%M.%S)
+	case ${VERSION} in
+		*99999999* ) ND_TYPE="Beta Release" ;;
+		*          ) ND_TYPE="Stable Release" ;;
+	esac
 
-	echo "NanoDroid ${VERSION} package report [${CURDATE}]
+	echo "creating NanoDroid report:
+
+	| NanoDroid Version:	${VERSION}
+	| NanoDroid Type:	${ND_TYPE}
+	| NanoDroid Report:	$(basename ${REPORT_FILE})
+"
+
+	echo "NanoDroid ${VERSION} package report [$(date +%Y%m%d-%H.%M.%S)]
 ==========================================================
 " > ${REPORT_FILE}
 
 	for file in $(find ${CWD} -type f); do
 		case ${file} in
 			*.apk.gz ) get_apk_info ${file} ;;
-			*.so*    ) get_swipe_info ${file} ;;
+			*.so*    ) get_lib_info ${file} ;;
 			*xbin*   ) get_bin_info ${file} ;;
 			*tools*  ) get_bin_info ${file} ;;
 			*etc*    ) get_etc_info ${file} ;;
+			*.dex*   ) get_dex_info ${file} ;;
+			*        ) get_msc_info ${file} ;;
 		esac
 	done
 
+}
+
+create_report () {
+	create_report_real &
+	progress $!
 }
 
 get_apk_info () {
@@ -67,7 +84,7 @@ get_apk_info () {
 
 }
 
-get_swipe_info () {
+get_lib_info () {
 
 	LIB_FILE=$(basename ${1})
 	LIB_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
@@ -162,7 +179,44 @@ get_etc_info () {
 
 	if [ ! -z "${ETC_PKGS}" ]; then
 		echo -e "	| Packages:\n$(printf "\t|- %s\n" ${ETC_PKGS})\n" >> ${REPORT_FILE}
-	else	echo -e "\n" >> ${REPORT_FILE}
+	else	echo "" >> ${REPORT_FILE}
 	fi
+
+}
+
+get_dex_info () {
+
+	DEX_FILE=$(basename ${1})
+	DEX_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+
+	case ${DEX_FILE} in
+		*services* ) DEX_TYPE="Android DEX Patch File"
+		             DEX_NAME=$(basename ${1} .jar.dex) ;;
+		*          ) DEX_TYPE="Android Dalvik Executable"
+		             DEX_NAME=$(basename ${1} .dex) ;;
+	esac
+
+	case ${DEX_FILE} in
+		*services* ) DEX_SDK=$(gawk -F\_ '{print $2}' <(echo ${DEX_FILE})) ;;
+		*smali*    ) DEX_SDK=$(sed 's/.*_\(.*\)\..*/\1/' <(echo ${DEX_FILE})) ;;
+		*          ) DEX_SDK="universal" ;;
+	esac
+
+	DEX_VER=$(file -b ${1} | gawk '{print $5}')
+	DEX_SHA=$(sha256sum ${1} | gawk '{print $1}')
+
+	echo "${DEX_TYPE}: ${DEX_NAME}
+	| Filename:	${DEX_FILE}
+	| Origin:	${DEX_PATH}
+	| DEX Version:	${DEX_VER}
+	| DEX SDK:	${DEX_SDK}
+	| SHA256:	${DEX_SHA}
+" >> ${REPORT_FILE}
+
+}
+
+get_msc_info () {
+
+	return 0
 
 }
