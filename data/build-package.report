@@ -217,6 +217,76 @@ get_dex_info () {
 
 get_msc_info () {
 
-	return 0
+	case ${1} in
+		*CommonAddon*     ) MSC_TYPE="NanoDroid addon.d" ;;
+		*CommonInstaller* ) MSC_TYPE="NanoDroid Installer" ;;
+
+		*CommonPatcher*   ) MSC_TYPE="NanoDroid Framework Patcher" ;;
+		*70-nanodroidpatcher.sh* ) MSC_TYPE="NanoDroid Framework Patcher addon.d" ;;
+		*org.spoofing.apk*) MSC_TYPE="NanoDroid Framework Patcher spoofing info provider" ;;
+		*patcher*update*  ) MSC_TYPE="NanoDroid Framework Patcher TWRP invoker" ;;
+
+		*SysTest*         ) MSC_TYPE="NanoDroid System Tester" ;;
+		*systest*update*  ) MSC_TYPE="NanoDroid System Tester TWRP invoker" ;;
+
+		*Bromite*update*  ) MSC_TYPE="NanoDroid BromiteWebView Package TWRP invoker" ;;
+
+		*FDroid*update*   ) MSC_TYPE="NanoDroid F-Droid Package TWRP invoker" ;;
+
+		*Full*update*     ) MSC_TYPE="NanoDroid Full Package TWRP invoker" ;;
+
+		*microG*update*   ) MSC_TYPE="NanoDroid microG Package TWRP invoker" ;;
+
+		*OsmAnd*update*   ) MSC_TYPE="NanoDroid OsmAnd Package TWRP invoker" ;;
+
+		*SetupWizard*update*) MSC_TYPE="NanoDroid SetupWizard AROMA invoker" ;;
+		*SetupWizard*aroma*) MSC_TYPE="NanoDroid SetupWizard AROMA configuration" ;;
+		*nanodroid-setup*  ) MSC_TYPE="NanoDroid SetupWizard Worker" ;;
+
+		*uninstaller*binary*) MSC_TYPE="NanoDroid Uninstaller" ;;
+		*uninstaller*update*) MSC_TYPE="NanoDroid Uninstaller TWRP invoker" ;;
+
+		*ChangeLog.md*    ) MSC_TYPE="NanoDroid ChangeLog" ;;
+		*README.md*       ) MSC_TYPE="NanoDroid README" ;;
+
+		*service.sh*     ) MSC_TYPE="NanoDroid Magisk services.sh" ;;
+		*module.prop*     ) MSC_TYPE="NanoDroid Magisk Module properties" ;;
+
+		*.maps.jar*       ) MSC_TYPE="microG Maps v1 support" ;;
+
+		*noti*.ogg*       ) MSC_TYPE="The Legend of Zelda: Notification" ;;
+		*ring*.ogg*       ) MSC_TYPE="The Legend of Zelda: Ringtone" ;;
+		*ui*.ogg*         ) MSC_TYPE="The Legend of Zelda: UI Sound" ;;
+		*noti*.mp3*       ) MSC_TYPE="The Legend of Zelda: Notification" ;;
+		*ring*.mp3*       ) MSC_TYPE="The Legend of Zelda: Ringtone" ;;
+		*ui*.mp3*         ) MSC_TYPE="The Legend of Zelda: UI Sound" ;;
+		*.ttf*            ) MSC_TYPE="Nintendo UI Font" ;;
+
+		*LICENSE*         ) MSC_TYPE="exclude" ;;
+		*doc*             ) MSC_TYPE="exclude" ;;
+		*build-package*   ) MSC_TYPE="exclude" ;;
+		*.json*           ) MSC_TYPE="exclude" ;;
+		*.git*            ) MSC_TYPE="exclude" ;;
+		*NanoDroid_Report*) MSC_TYPE="exclude" ;;
+		*NanoDroid/dist*  ) MSC_TYPE="exclude" ;;
+
+		*                 ) MSC_TYPE="unknown" ;;
+	esac
+
+	case ${MSC_TYPE} in
+		exclude ) return 0 ;;
+		unknown ) echo "No report template for file:	${1}" ;;
+		*       ) MSC_FILE=$(basename ${1})
+		          MSC_NAME=$(basename ${1} | sed -e 's/\..*//')
+		          MSC_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+		          MSC_SHA=$(sha256sum ${1} | gawk '{print $1}')
+
+		          echo "${MSC_TYPE}: ${MSC_NAME}
+	| Filename:	${MSC_FILE}
+	| Origin:	${MSC_PATH}
+	| SHA256:	${MSC_SHA}
+" >> ${REPORT_FILE}
+		;;
+	esac
 
 }
