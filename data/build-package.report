@@ -9,6 +9,8 @@ create_report_real () {
 		*          ) ND_TYPE="Stable Release" ;;
 	esac
 
+	rm -f "${REPORT_FILE}"*
+
 	echo "creating NanoDroid report:
 
 	| NanoDroid Version:	${VERSION}
@@ -20,7 +22,7 @@ create_report_real () {
 ==========================================================
 " > ${REPORT_FILE}
 
-	for file in $(find ${CWD} -type f); do
+	for file in $(find ${CWD} -type f | sort); do
 		case ${file} in
 			*.apk.gz ) get_apk_info ${file} ;;
 			*.so*    ) get_lib_info ${file} ;;
@@ -223,6 +225,8 @@ get_msc_info () {
 		*CommonAddon*     ) MSC_TYPE="NanoDroid universal addon.d" ;;
 		*CommonInstaller* ) MSC_TYPE="NanoDroid universal Installer" ;;
 
+		*service.sh*     ) MSC_TYPE="NanoDroid universal Magisk Module services.sh" ;;
+
 		*CommonPatcher*   ) MSC_TYPE="NanoDroid Framework Patcher" ;;
 		*70-nanodroidpatcher.sh* ) MSC_TYPE="NanoDroid Framework Patcher addon.d" ;;
 		*org.spoofing.apk*) MSC_TYPE="NanoDroid Framework Patcher spoofing info provider" ;;
@@ -232,18 +236,23 @@ get_msc_info () {
 		*systest*update*  ) MSC_TYPE="NanoDroid System Tester TWRP invoker" ;;
 
 		*Bromite*update*  ) MSC_TYPE="NanoDroid BromiteWebView Package TWRP invoker" ;;
+		*Bromite*.prop*   ) MSC_TYPE="NanoDroid BromiteWebView Package Module Module properties" ;;
 
 		*FDroid*update*   ) MSC_TYPE="NanoDroid F-Droid Package TWRP invoker" ;;
+		*FDroid*.prop*    ) MSC_TYPE="NanoDroid F-Droid Package Module Module properties" ;;
 
 		*Full*update*     ) MSC_TYPE="NanoDroid Full Package TWRP invoker" ;;
+		*Full*.prop*      ) MSC_TYPE="NanoDroid Full Package Module Module properties" ;;
 
 		*microG*update*   ) MSC_TYPE="NanoDroid microG Package TWRP invoker" ;;
+		*microG*.prop*    ) MSC_TYPE="NanoDroid microG Package Module Module properties" ;;
 
 		*OsmAnd*update*   ) MSC_TYPE="NanoDroid OsmAnd Package TWRP invoker" ;;
+		*OsmAnd*.prop*    ) MSC_TYPE="NanoDroid OsmAnd Package Module Module properties" ;;
 
 		*SetupWizard*update*) MSC_TYPE="NanoDroid SetupWizard AROMA invoker" ;;
 		*SetupWizard*aroma*) MSC_TYPE="NanoDroid SetupWizard AROMA configuration" ;;
-		*nanodroid-setup*  ) MSC_TYPE="NanoDroid SetupWizard Worker" ;;
+		*SetupWizard/nano*) MSC_TYPE="NanoDroid SetupWizard Worker" ;;
 
 		*uninstaller*binary*) MSC_TYPE="NanoDroid Uninstaller" ;;
 		*uninstaller*update*) MSC_TYPE="NanoDroid Uninstaller TWRP invoker" ;;
@@ -251,8 +260,9 @@ get_msc_info () {
 		*ChangeLog.md*    ) MSC_TYPE="NanoDroid ChangeLog" ;;
 		*README.md*       ) MSC_TYPE="NanoDroid README" ;;
 
-		*service.sh*     ) MSC_TYPE="NanoDroid Magisk services.sh" ;;
-		*module.prop*     ) MSC_TYPE="NanoDroid Magisk Module properties" ;;
+		*.nanodroid-apps* ) MSC_TYPE="NanoDroid default app installation configuration" ;;
+		*.nanodroid-setup*) MSC_TYPE="NanoDroid default installation configuration" ;;
+		*.nanodroid-overlay*) MSC_TYPE="NanoDroid default overlay configuration" ;;
 
 		*.maps.jar*       ) MSC_TYPE="microG Maps v1 support" ;;
 
