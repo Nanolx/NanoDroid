@@ -236,8 +236,8 @@ error () {
 
 sum_sign_package () {
 	cd "${CWD}"
-	cd "$(dirname "${ZIP}")"
-	sha256sum "$(basename "${ZIP}")" > "${ZIP}.sha256"
+	cd "$(dirname "${1}")"
+	sha256sum "$(basename "${1}")" > "${1}.sha256"
 	cd "${CWD}"
-	gpg --sign --detach-sign "${ZIP}.sha256"
+	gpg --sign --detach-sign "${1}.sha256"
 }

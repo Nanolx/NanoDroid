@@ -8,7 +8,7 @@ create_full_package () {
 	zip_add Full
 	zip_add_setup 1
 
-	sum_sign_package
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_full () {
@@ -24,7 +24,7 @@ create_microg_package() {
 	zip_add microG
 	zip_add_setup 0
 
-	sum_sign_package
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_microg () {
@@ -40,7 +40,7 @@ create_fdroid_package() {
 	zip_add FDroid
 	zip_add_setup 0
 
-	sum_sign_package
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_fdroid () {
@@ -56,7 +56,7 @@ create_bromite_webview_package () {
 	zip_add BromiteWebView
 	zip_add_setup 0
 
-	sum_sign_package
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_bromite_webview () {
@@ -72,7 +72,7 @@ create_osmand_package() {
 	zip_add OsmAnd
 	zip_add_setup 0
 
-	sum_sign_package
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_osmand () {
@@ -87,7 +87,7 @@ create_patcher_package() {
 
 	zip_add patcher
 
-	sum_sign_package
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_patcher () {
@@ -102,7 +102,7 @@ create_setupwizard_package() {
 
 	zip_add SetupWizard
 
-	sum_sign_package
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_setupwizard () {
@@ -117,7 +117,7 @@ create_uninstaller_package() {
 
 	zip_add uninstaller
 
-	sum_sign_package
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_uninstaller () {
@@ -132,7 +132,7 @@ create_systest_package() {
 
 	zip_add systest
 
-	sum_sign_package
+	sum_sign_package "${ZIP}"
 }
 
 mk_pkg_systest () {

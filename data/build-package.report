@@ -32,6 +32,8 @@ create_report_real () {
 		esac
 	done
 
+	sum_sign_package "${REPORT_FILE}"
+
 }
 
 create_report () {
