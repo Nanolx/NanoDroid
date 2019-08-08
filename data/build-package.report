@@ -218,8 +218,8 @@ get_dex_info () {
 get_msc_info () {
 
 	case ${1} in
-		*CommonAddon*     ) MSC_TYPE="NanoDroid addon.d" ;;
-		*CommonInstaller* ) MSC_TYPE="NanoDroid Installer" ;;
+		*CommonAddon*     ) MSC_TYPE="NanoDroid universal addon.d" ;;
+		*CommonInstaller* ) MSC_TYPE="NanoDroid universal Installer" ;;
 
 		*CommonPatcher*   ) MSC_TYPE="NanoDroid Framework Patcher" ;;
 		*70-nanodroidpatcher.sh* ) MSC_TYPE="NanoDroid Framework Patcher addon.d" ;;
