@@ -211,8 +211,9 @@ grab_apk_from_github () {
 }
 
 grab_apk_from_gitlab () {
-	APK_URL="https://gitlab.com$(curl -s -N "https://gitlab.com/${1}/-/tags" | \
-		gawk -F\" '/\.apk/{print $6 ; exit}')"
+	APK_URL=$(curl -s -N "https://gitlab.com/${1}/-/tags" | grep '.apk' | head -n 1)
+	APK_URL=${APK_URL##*a href=\"}
+	APK_URL="https://gitlab.com/${APK_URL%\">*}"
 	APK_DEST="${CWD}/Full/system/${2}/${3}"
 
 	rm -f "${APK_DEST}/${3}.apk.gz"
