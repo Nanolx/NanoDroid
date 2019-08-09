@@ -64,6 +64,7 @@ for opt in ${@}; do
 			mk_pkg_bromite_webview
 			mk_pkg_osmand
 			mk_pkg_systest
+			create_report
 		;;
 
 		ver )

@@ -22,8 +22,10 @@ create_report_real () {
 ==========================================================
 " > ${REPORT_FILE}
 
-	for file in $(find ${CWD} -type f | sort); do
+	for file in $(find ${CWD} -maxdepth 1 -type f | sort) \
+		    $(find ${CWD} -mindepth 2 -type f | sort); do
 		case ${file} in
+			*NanoDroid*.zip* ) get_dst_info ${file} ;;
 			*.apk.gz ) get_apk_info ${file} ;;
 			*.so*    ) get_lib_info ${file} ;;
 			*xbin*   ) get_bin_info ${file} ;;
@@ -227,32 +229,32 @@ get_msc_info () {
 
 		*service.sh*     ) MSC_TYPE="NanoDroid universal Magisk Module services.sh" ;;
 
-		*CommonPatcher*   ) MSC_TYPE="NanoDroid Framework Patcher" ;;
-		*70-nanodroidpatcher.sh* ) MSC_TYPE="NanoDroid Framework Patcher addon.d" ;;
-		*org.spoofing.apk*) MSC_TYPE="NanoDroid Framework Patcher spoofing info provider" ;;
-		*patcher*update*  ) MSC_TYPE="NanoDroid Framework Patcher TWRP invoker" ;;
-
-		*SysTest*         ) MSC_TYPE="NanoDroid System Tester" ;;
-		*systest*update*  ) MSC_TYPE="NanoDroid System Tester TWRP invoker" ;;
-
-		*Bromite*update*  ) MSC_TYPE="NanoDroid BromiteWebView Package TWRP invoker" ;;
-		*Bromite*.prop*   ) MSC_TYPE="NanoDroid BromiteWebView Package Module Module properties" ;;
-
-		*FDroid*update*   ) MSC_TYPE="NanoDroid F-Droid Package TWRP invoker" ;;
-		*FDroid*.prop*    ) MSC_TYPE="NanoDroid F-Droid Package Module Module properties" ;;
-
 		*Full*update*     ) MSC_TYPE="NanoDroid Full Package TWRP invoker" ;;
 		*Full*.prop*      ) MSC_TYPE="NanoDroid Full Package Module Module properties" ;;
 
 		*microG*update*   ) MSC_TYPE="NanoDroid microG Package TWRP invoker" ;;
 		*microG*.prop*    ) MSC_TYPE="NanoDroid microG Package Module Module properties" ;;
 
+		*FDroid*update*   ) MSC_TYPE="NanoDroid F-Droid Package TWRP invoker" ;;
+		*FDroid*.prop*    ) MSC_TYPE="NanoDroid F-Droid Package Module Module properties" ;;
+
+		*Bromite*update*  ) MSC_TYPE="NanoDroid BromiteWebView Package TWRP invoker" ;;
+		*Bromite*.prop*   ) MSC_TYPE="NanoDroid BromiteWebView Package Module Module properties" ;;
+
 		*OsmAnd*update*   ) MSC_TYPE="NanoDroid OsmAnd Package TWRP invoker" ;;
 		*OsmAnd*.prop*    ) MSC_TYPE="NanoDroid OsmAnd Package Module Module properties" ;;
+
+		*CommonPatcher*   ) MSC_TYPE="NanoDroid Framework Patcher" ;;
+		*70-nanodroidpatcher.sh* ) MSC_TYPE="NanoDroid Framework Patcher addon.d" ;;
+		*org.spoofing.apk*) MSC_TYPE="NanoDroid Framework Patcher spoofing info provider" ;;
+		*patcher*update*  ) MSC_TYPE="NanoDroid Framework Patcher TWRP invoker" ;;
 
 		*SetupWizard*update*) MSC_TYPE="NanoDroid SetupWizard AROMA invoker" ;;
 		*SetupWizard*aroma*) MSC_TYPE="NanoDroid SetupWizard AROMA configuration" ;;
 		*SetupWizard/nano*) MSC_TYPE="NanoDroid SetupWizard Worker" ;;
+
+		*SysTest*         ) MSC_TYPE="NanoDroid System Tester" ;;
+		*systest*update*  ) MSC_TYPE="NanoDroid System Tester TWRP invoker" ;;
 
 		*uninstaller*binary*) MSC_TYPE="NanoDroid Uninstaller" ;;
 		*uninstaller*update*) MSC_TYPE="NanoDroid Uninstaller TWRP invoker" ;;
@@ -300,5 +302,44 @@ get_msc_info () {
 " >> ${REPORT_FILE}
 		;;
 	esac
+
+}
+
+get_dst_info () {
+
+	if [[ ! ${1} == *NanoDroid/dist* ]]; then
+
+		DST_FILE=$(basename ${1})
+		DST_NAME=$(basename ${1} | sed -e 's/-[0-9].*//')
+		DST_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+
+		case ${DST_FILE} in
+			*NanoDroid-[0-9]*.zip*) DST_PKG="NanoDroid Full" ;;
+			*microG*.zip*         ) DST_PKG="NanoDroid microG" ;;
+			*fdroid*.zip*         ) DST_PKG="NanoDroid F-Droid" ;;
+			*BromiteWebView*.zip* ) DST_PKG="NanoDroid BromiteWebView" ;;
+			*OsmAnd*.zip*         ) DST_PKG="NanoDroid OsmAnd" ;;
+			*patcher*.zip*        ) DST_PKG="NanoDroid Framework Patcher" ;;
+			*setupwizard*.zip*    ) DST_PKG="NanoDroid SetupWizard" ;;
+			*systest*.zip*        ) DST_PKG="NanoDroid System Tester" ;;
+			*uninstaller*.zip*    ) DST_PKG="NanoDroid Uninstaller" ;;
+		esac
+
+		case ${DST_FILE} in
+			*.zip    ) DST_TYPE="Flashable Package" ;;
+			*.sha256 ) DST_TYPE="Flashable Package (SHA256 Checksum)" ;;
+			*.sig    ) DST_TYPE="Flashable Package (GPG Signature)" ;;
+		esac
+
+		DST_SHA=$(sha256sum ${1} | gawk '{print $1}')
+
+		echo "${DST_TYPE}: ${DST_NAME}
+	| Filename:	${DST_FILE}
+	| Origin:	${DST_PATH}
+	| Package:	${DST_PKG}
+	| SHA256:	${DST_SHA}
+" >> ${REPORT_FILE}
+
+	fi
 
 }
