@@ -4,11 +4,11 @@
 # Michael Bryant / Shadow53
 # https://gitlab.com/Shadow53/android-zip-builder
 
-REPO_FDROID="https://f-droid.org/repo"
-REPO_GUARDIAN="https://guardianproject.info/fdroid/repo"
-REPO_MICROG="https://microg.org/fdroid/repo"
-REPO_NANOLX="https://nanolx.org/fdroid/repo"
-REPO_BROMITE="https://fdroid.bromite.org/fdroid/repo"
+repo_fdroid="https://f-droid.org/repo"
+repo_guardian="https://guardianproject.info/fdroid/repo"
+repo_microg="https://microg.org/fdroid/repo"
+repo_nanolx="https://nanolx.org/fdroid/repo"
+repo_bromite="https://fdroid.bromite.org/fdroid/repo"
 
 # check dependencies
 for dep in gawk curl sha256sum jq gzip; do
@@ -19,218 +19,225 @@ for dep in gawk curl sha256sum jq gzip; do
 done
 
 index_update_required () {
-	INDEX_FILE=${1}
+	index_file=${1}
 
-	test ! -f ${INDEX_FILE} && return 0
-	test $(stat --format=%Z ${INDEX_FILE}) -le $(($(date +%s) - 3600)) && return 0
-	test "$(file -b ${INDEX_FILE})" == "empty" && return 0
+	test ! -f ${index_file} && return 0
+	test $(stat --format=%Z ${index_file}) -le $(($(date +%s) - 3600)) && return 0
+	test "$(file -b ${index_file})" == "empty" && return 0
 
 	return 1
 }
 
 check_sha256sum () {
-	INPUT="${1}"
+	local input="${1}"
 
-	IN_CHECKSUM=""
-	EX_CHECKSUM="${2}"
+	in_checksum=""
+	local ex_checksum="${2}"
 
-	case ${INPUT} in
+	case ${input} in
 		*.gz )
-			IN_CHECKSUM=$(gzip -dc ${INPUT} 2>/dev/null | sha256sum | gawk '{print $1}')
+			in_checksum=$(gzip -dc ${input} 2>/dev/null | sha256sum | gawk '{print $1}')
 		;;
 
 		* )
-			IN_CHECKSUM=$(sha256sum ${INPUT} 2>/dev/null | gawk '{print $1}')
+			in_checksum=$(sha256sum ${input} 2>/dev/null | gawk '{print $1}')
 		;;
 	esac
 
-	[[ ${IN_CHECKSUM} == ${EX_CHECKSUM} ]] && return 0 || return 1
+	[[ ${in_checksum} == ${ex_checksum} ]] && return 0 || return 1
 }
 
 update_index () {
-	INDEX_JAR=${1}
-	INDEX_JSON="${CWD}/data/$(basename ${INDEX_JAR} .jar).json"
-	INDEX_REPO=${2}
+	local index_jar=${1}
+	local index_json="$repofolder/$(basename ${index_jar} .jar).json"
+	local index_repo=${2}
 
-	if index_update_required ${INDEX_JSON}; then
-		curl -sSL -o "${INDEX_JAR}" "${INDEX_REPO}/index-v1.jar" || error " failed to update repo index"
+	if index_update_required ${index_json}; then
+		debug_message " curl -sSL -o \"${index_jar#$CWD/}\" \"${index_repo}/index-v1.jar\""
+		curl -sSL -o "${index_jar}" "${index_repo}/index-v1.jar" || error " failed to update repo index"
 
-		unzip -q ${INDEX_JAR} index-v1.json -d "${CWD}/data/"
-		mv "${CWD}/data/index-v1.json" "${INDEX_JSON}"
-		rm -f ${INDEX_JAR}
+		unzip -q ${index_jar} index-v1.json -d "$repofolder/"
+		mv "$repofolder/index-v1.json" "${index_json}"
+		rm -f ${index_jar}
 	fi
 }
 
 update_indices () {
 	echo "+++ upating Repo Indices"
 	echo " ++ F-Droid"
-	update_index "${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_FDROID}).index-v1.jar" "${REPO_FDROID}"
+	[ ! -d "$repofolder" ] && rm -rf "$repofolder" && mkdir -p "$repofolder"
+	update_index "$repofolder/$(awk -F/ '{print $3}' <<< ${repo_fdroid}).index-v1.jar" "${repo_fdroid}"
 
 	echo " ++ Guardian Project"
-	update_index "${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_GUARDIAN}).index-v1.jar" "${REPO_GUARDIAN}"
+	update_index "$repofolder/$(awk -F/ '{print $3}' <<< ${repo_guardian}).index-v1.jar" "${repo_guardian}"
 
 	echo " ++ microG"
-	update_index "${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_MICROG}).index-v1.jar" "${REPO_MICROG}"
+	update_index "$repofolder/$(awk -F/ '{print $3}' <<< ${repo_microg}).index-v1.jar" "${repo_microg}"
 
 	echo " ++ Nanolx"
-	update_index "${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_NANOLX}).index-v1.jar" "${REPO_NANOLX}"
+	update_index "$repofolder/$(awk -F/ '{print $3}' <<< ${repo_nanolx}).index-v1.jar" "${repo_nanolx}"
 
 	echo " ++ Bromite"
-	update_index "${CWD}/data/$(awk -F/ '{print $3}' <<< ${REPO_BROMITE}).index-v1.jar" "${REPO_BROMITE}"
+	update_index "$repofolder/$(awk -F/ '{print $3}' <<< ${repo_bromite}).index-v1.jar" "${repo_bromite}"
 }
 
 grab_apk_from_repo () {
 	case "${1}" in
 		fdroid )
-			REPO=${REPO_FDROID}
-			REPO_P="F-Droid"
+			local repo=${repo_fdroid}
+			local repo_p="F-Droid"
 		;;
 
 		guardian )
-			REPO=${REPO_GUARDIAN}
-			REPO_P="Guardian Project"
+			local repo=${repo_guardian}
+			local repo_p="Guardian Project"
 		;;
 
 		microg )
-			REPO=${REPO_MICROG}
-			REPO_P="microG"
+			local repo=${repo_microg}
+			local repo_p="microG"
 		;;
 
 		nanolx )
-			REPO=${REPO_NANOLX}
-			REPO_P="Nanolx"
+			local repo=${repo_nanolx}
+			local repo_p="Nanolx"
 		;;
 
 		bromite )
-			REPO=${REPO_BROMITE}
-			REPO_P="Bromite"
+			local repo=${repo_bromite}
+			local repo_p="Bromite"
 		;;
 	esac
 
-	DOMAIN="$(awk -F/ '{print $3}' <<< ${REPO})"
-	INDEX_FILE="${CWD}/data/${DOMAIN}.index-v1.json"
+	local domain="$(awk -F/ '{print $3}' <<< ${repo})"
+	index_file="$repofolder/${domain}.index-v1.json"
 
-	PKG_NAME="${2}"
+	local pkg_name="${2}"
 
 	if [ -z "${5}" ]; then
-		APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0].apkName' ${INDEX_FILE})"
-		SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0].hash' ${INDEX_FILE})"
+		local apk_name="$(jq -r --arg pkg "${pkg_name}" '.packages[$pkg][0].apkName' ${index_file})"
+		local sha_sum="$(jq -r --arg pkg "${pkg_name}" '.packages[$pkg][0].hash' ${index_file})"
 	else
-		APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" --arg arch "${5}" '[.packages[$pkg][] | select (.nativecode[]==$arch).apkName][0]' ${INDEX_FILE})"
-		SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" --arg arch "${5}" '[.packages[$pkg][] | select (.nativecode[]==$arch).hash][0]' ${INDEX_FILE})"
+		local apk_name="$(jq -r --arg pkg "${pkg_name}" --arg arch "${5}" '[.packages[$pkg][] | select (.nativecode[]==$arch).apkName][0]' ${index_file})"
+		local sha_sum="$(jq -r --arg pkg "${pkg_name}" --arg arch "${5}" '[.packages[$pkg][] | select (.nativecode[]==$arch).hash][0]' ${index_file})"
 	fi
 
-	case "${PKG_NAME}" in
+	case "${pkg_name}" in
 		com.android.webview )
-			APK_DEST="${CWD}/BromiteWebView/system/${3}/${4}"
+			local apk_dest="${appsfolder[12]}/${3}/${4}"
 		;;
 
 		net.osmand.plus | net.osmand.srtmPlugin.paid )
-			APK_DEST="${CWD}/OsmAnd/system/${3}/${4}"
+			local apk_dest="${appsfolder[10]}/${3}/${4}"
 		;;
 
 		com.google.android.gms )
 			# XXX select mapbox build in official microG repo
-			APK_NAME="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).apkName' ${INDEX_FILE})"
-			SHA_SUM="$(jq -r --arg pkg "${PKG_NAME}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).hash' ${INDEX_FILE})"
-			APK_DEST="${CWD}/Full/system/${3}/${4}"
+			local apk_name="$(jq -r --arg pkg "${pkg_name}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).apkName' ${index_file})"
+			local sha_sum="$(jq -r --arg pkg "${pkg_name}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).hash' ${index_file})"
+			local apk_dest="${appsfolder[2]}/${3}/${4}"
 		;;
 
 		* )
-			APK_DEST="${CWD}/Full/system/${3}/${4}"
+			local apk_dest="${appsfolder[2]}/${3}/${4}"
 		;;
 	esac
 
-	APK_URL="${REPO}/${APK_NAME}"
+	local apk_url="${repo}/${apk_name}"
 
-	if check_sha256sum "${APK_DEST}/${4}.apk.gz" "${SHA_SUM}"; then
-		echo -e "\nUp-to-Date from ${REPO_P} : ${4}.apk"
-	else	echo -e "\nUpdating from ${REPO_P}   : ${4}.apk"
-		mkdir -p "${APK_DEST}"
-		rm -f "${APK_DEST}/${4}.apk.gz"
-		curl -sSL -o "${APK_DEST}/${4}.apk" "${APK_URL}"
+	if check_sha256sum "${apk_dest}/${4}.apk.gz" "${sha_sum}"; then
+		echo -e "\nUp-to-Date from ${repo_p} : ${4}.apk"
+	else	echo -e "\nUpdating from ${repo_p}   : ${4}.apk"
+		mkdir -p "${apk_dest}"
+		rm -f "${apk_dest}/${4}.apk.gz"
+		debug_message "curl -sSL -o \"${apk_dest#$CWD/}/${4}.apk\" \"${apk_url}\""
+		curl -sSL -o "${apk_dest}/${4}.apk" "${apk_url}"
 
-		if check_sha256sum "${APK_DEST}/${4}.apk" "${SHA_SUM}"; then
+		if check_sha256sum "${apk_dest}/${4}.apk" "${sha_sum}"; then
 			echo "	SHA256 hash of ${4}.apk is correct"
-			gzip "${APK_DEST}/${4}.apk"
+			gzip "${apk_dest}/${4}.apk"
 		else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
-			\n	expected	: ${SHA_SUM}\
-			\n	got		: ${IN_CHECKSUM}"
-			rm -f "${APK_DEST}/${4}.apk"
+			\n	expected	: ${sha_sum}\
+			\n	got		: ${in_checksum}"
+			rm -f "${apk_dest}/${4}.apk"
 		fi
 	fi
 }
 
 grab_apk_from_url () {
-	APK_URL="${1}"
-	APK_DEST="${CWD}/Full/system/${2}/${3}"
+	local apk_url="${1}"
+	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
-	rm -f "${APK_DEST}/${3}.apk.gz"
+	rm -f "${apk_dest}/${3}.apk.gz"
 
-	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+	if [[ -f "${apk_dest}/${3}.apk" ]]; then
 		echo -e "\nUpdating from URL         : ${3}.apk"
 	else    echo -e "\nDownloading from URL      : ${3}.apk"
-		mkdir -p "${APK_DEST}"
+		mkdir -p "${apk_dest}"
 	fi
 
 	echo "  Checking SHA256 hash not (yet) supported"
 
-	curl -sSL -o "${APK_DEST}/${3}.apk" "${APK_URL}" || \
-		rm -f "${APK_DEST}/${3}.apk"
+	debug_message "curl -sSL -o \"${apk_dest#$CWD/}/${3}.apk\" \"${apk_url}\""
+	curl -sSL -o "${apk_dest}/${3}.apk" "${apk_url}" || \
+		rm -f "${apk_dest}/${3}.apk"
 
-	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
-		gzip "${APK_DEST}/${3}.apk"
+	if [[ -f "${apk_dest}/${3}.apk" ]]; then
+		gzip "${apk_dest}/${3}.apk"
 	else	echo "error downloading ${3}"
 	fi
 }
 
 grab_apk_from_github () {
-	APK_URL="$(curl -s -N "https://api.github.com/repos/${1}/releases" | \
+	local apk_url="$(curl -s -N "https://api.github.com/repos/${1}/releases" | \
 		gawk -F\" '/browser_download_url.*apk/{print $4 ; exit}')"
-	APK_DEST="${CWD}/Full/system/${2}/${3}"
+	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
-	rm -f "${APK_DEST}/${3}.apk.gz"
+	rm -f "${apk_dest}/${3}.apk.gz"
 
-	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+	if [[ -f "${apk_dest}/${3}.apk" ]]; then
 		echo -e "\nUpdating from GitHub      : ${3}.apk"
 	else	echo -e "\nDownloading from GitHub   : ${3}.apk"
-		mkdir -p "${APK_DEST}"
+		mkdir -p "${apk_dest}"
 	fi
 
 
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	curl -sSL -o "${APK_DEST}/${3}.apk" "${APK_URL}" || \
-		rm -f "${APK_DEST}/${3}.apk"
+	debug_message "curl -sSL -o \"${apk_dest#$CWD/}/${3}.apk\" \"${apk_url}\""
+	curl -sSL -o "${apk_dest}/${3}.apk" "${apk_url}" || \
+		rm -f "${apk_dest}/${3}.apk"
 
-	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
-		gzip "${APK_DEST}/${3}.apk"
+	if [[ -f "${apk_dest}/${3}.apk" ]]; then
+		gzip "${apk_dest}/${3}.apk"
 	else	echo "error downloading ${3}"
 	fi
 }
 
 grab_apk_from_gitlab () {
-	APK_URL=$(curl -s -N "https://gitlab.com/${1}/-/tags" | grep '.apk' | head -n 1)
-	APK_URL=${APK_URL##*a href=\"}
-	APK_URL="https://gitlab.com/${APK_URL%\">*}"
-	APK_DEST="${CWD}/Full/system/${2}/${3}"
+	local apk_url=$(curl -s -N "https://gitlab.com/${1}/-/tags" | grep '.apk' | head -n 1)
+	echo "$apk_url"
+	local apk_url=${apk_url%\">*.apk*}
+	local apk_url="https://gitlab.com${apk_url##*a href=\"}"
+	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
-	rm -f "${APK_DEST}/${3}.apk.gz"
+	rm -f "${apk_dest}/${3}.apk.gz"
 
-	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
+	if [[ -f "${apk_dest}/${3}.apk" ]]; then
 		echo -e "\nUpdating from GitLab      : ${3}.apk"
 	else	echo -e "\nDownloading from GitLab   : ${3}.apk"
-		mkdir -p "${APK_DEST}"
+		mkdir -p "${apk_dest}"
 	fi
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	curl -sSL -o "${APK_DEST}/${3}.apk" "${APK_URL}" || \
-		rm -f "${APK_DEST}/${3}.apk"
+	debug_message "curl -sSL -o \"${apk_dest#$CWD/}/${3}.apk\" \"${apk_url}\""
+	curl -sSL -o "${apk_dest}/${3}.apk" "${apk_url}" || \
+		rm -f "${apk_dest}/${3}.apk"
 
-	if [[ -f "${APK_DEST}/${3}.apk" ]]; then
-		gzip "${APK_DEST}/${3}.apk"
+	if [[ -f "${apk_dest}/${3}.apk" ]]; then
+		gzip "${apk_dest}/${3}.apk"
 	else	echo "error downloading ${3}"
 	fi
 }
@@ -238,38 +245,39 @@ grab_apk_from_gitlab () {
 grab_apk_from_ogapps () {
 	case "${1}" in
 		"com.google.android.syncadapters.calendar" )
-			APK_URL="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/15/nodpi/2015080710.apk"
-			API_LETTER=common
+			local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/15/nodpi/2015080710.apk"
+			local api_letter=common
 		;;
 
 		* )
-			APK_URL="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
+			apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
 			case "${4}" in
-				19 ) API_LETTER=K ;;
-				21 ) API_LETTER=L ;;
-				23 ) API_LETTER=M ;;
-				24 ) API_LETTER=N ;;
-				26 ) API_LETTER=O ;;
-				28 ) API_LETTER=P ;;
+				19 ) local api_letter=K ;;
+				21 ) local api_letter=L ;;
+				23 ) local api_letter=M ;;
+				24 ) local api_letter=N ;;
+				26 ) local api_letter=O ;;
+				28 ) local api_letter=P ;;
 			esac
 		;;
 	esac
 
-	APK_DEST="${CWD}/Full/gsync/${API_LETTER}/${2}/${3}"
+	apk_dest="${appsfolder[6]}/${api_letter}/${2}/${3}"
 
-	if [[ -f "${APK_DEST}/${3}.apk.gz" ]]; then
-		echo -e "\nUpdating from OpenGApps   : ${3}.apk [${API_LETTER}]"
-		rm -f "${APK_DEST}/${3}.apk.gz"
-	else	echo -e "\nDownloading from OpenGApps: ${3}.apk [${API_LETTER}]"
-		mkdir -p "${APK_DEST}"
+	if [[ -f "${apk_dest}/${3}.apk.gz" ]]; then
+		echo -e "\nUpdating from OpenGApps   : ${3}.apk [${api_letter}]"
+		rm -f "${apk_dest}/${3}.apk.gz"
+	else	echo -e "\nDownloading from OpenGApps: ${3}.apk [${api_letter}]"
+		mkdir -p "${apk_dest}"
 	fi
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	curl -sSL -o "${APK_DEST}/${3}.apk" "${APK_URL}" || \
-		rm -f "${APK_DEST}/${3}.apk"
+	debug_message "curl -sSL -o \"${apk_dest#$CWD/}/${3}.apk\" \"${apk_url}\""
+	curl -sSL -o "${apk_dest}/${3}.apk" "${apk_url}" || \
+		rm -f "${apk_dest}/${3}.apk"
 
-	[ -f "${APK_DEST}/${3}.apk" ] && gzip "${APK_DEST}/${3}.apk"
+	[ -f "${apk_dest}/${3}.apk" ] && gzip "${apk_dest}/${3}.apk"
 }
 
 grab_lib_from_ogapps () {
@@ -278,35 +286,36 @@ grab_lib_from_ogapps () {
 		arm64 | x86_64 ) LIBD=lib64 ;;
 	esac
 
-	LIB_URL="https://gitlab.opengapps.org/opengapps/${3}/raw/master/${LIBD}/${2}/${1}?inline=false"
-	SWP_DEST="${CWD}/Full/swipe/${3}"
+	local lib_url="https://gitlab.opengapps.org/opengapps/${3}/raw/master/${LIBD}/${2}/${1}?inline=false"
+	local swp_dest="${appsfolder[8]}/${3}"
 
 	if [[ "${4}" == "true" ]]; then
-		LIB_DEST="${SWP_DEST}/${1}_${2}"
-	else	LIB_DEST="${SWP_DEST}/${1}"
+		local lib_dest="${swp_dest}/${1}_${2}"
+	else	lib_dest="${swp_dest}/${1}"
 	fi
 
-	if [[ -f "${LIB_DEST}" ]]; then
+	if [[ -f "${lib_dest}" ]]; then
 		echo -e "\nUpdating from OpenGApps   : ${1} [${2}:${3}]"
 	else	echo -e "\nDownloading from OpenGApps: ${1} [${2}:${3}]"
-		mkdir -p "${SWP_DEST}"
+		mkdir -p "${swp_dest}"
 	fi
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	curl -sSL -o "${LIB_DEST}" "${LIB_URL}" || \
-		rm -f "${LIB_DEST}"
+	debug_message "curl -sSL -o \"${lib_dest#$CWD/}\" \"${lib_url}\""
+	curl -sSL -o "${lib_dest}" "${lib_url}" || \
+		rm -f "${lib_dest}"
 }
 
 grab_patches () {
-	BASE_URL="https://github.com/Lanchon/haystack/blob/master/patches"
+	base_url="https://github.com/Lanchon/haystack/blob/master/patches"
 
-	PATCH_URL="${BASE_URL}/${1}?raw=true"
-	PATCH_DST="${CWD}/patcher/dexpatcher/${2}"
+	patch_url="${base_url}/${1}?raw=true"
+	patch_dst="${CWD}/patcher/dexpatcher/${2}"
 
 	echo -e "\nUpdating from Haystack   : ${2}"
 	echo "	Checking SHA256 hash not (yet) supported"
 
-	curl -sSL -o "${PATCH_DST}" "${PATCH_URL}" || \
-		rm -f "${PATCH_DST}"
+	curl -sSL -o "${patch_dst}" "${patch_url}" || \
+		rm -f "${patch_dst}"
 }

@@ -4,8 +4,28 @@ VERSION=22.3.20190805
 CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
-for funcfile in  pkg update common download database report; do
-	source "${CWD}/data/build-package.${funcfile}" || exit 1
+# DIRS
+datafolder="${CWD}/data"
+repofolder="$datafolder/repo"
+
+# AppsFolder
+appsfolder[0]="Full"
+appsfolder[1]="${appsfolder[0]}/system"
+appsfolder[2]="${CWD}/${appsfolder[1]}"
+appsfolder[3]="${appsfolder[1]}/app"
+appsfolder[4]="${appsfolder[1]}/priv-app"
+appsfolder[5]="${appsfolder[0]}/gsync"
+appsfolder[6]="${CWD}/${appsfolder[5]}"
+appsfolder[7]="${appsfolder[0]}/swipe"
+appsfolder[8]="${CWD}/${appsfolder[7]}"
+appsfolder[9]="OsmAnd/system"
+appsfolder[10]="${CWD}/${appsfolder[9]}"
+appsfolder[11]="BromiteWebView/system"
+appsfolder[12]="${CWD}/${appsfolder[11]}"
+
+
+for funcfile in pkg update common download database report; do
+	source "$datafolder/build-package.${funcfile}" || exit 1
 done
 
 [[ -z ${1} ]] && show_help

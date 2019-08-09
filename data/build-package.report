@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPORT_FILE="${CWD}/NanoDroid_Report_${VERSION}"
+report_file="${CWD}/NanoDroid_Report_${VERSION}"
 
 create_report_real () {
 
@@ -9,18 +9,18 @@ create_report_real () {
 		*          ) ND_TYPE="Stable Release" ;;
 	esac
 
-	rm -f "${REPORT_FILE}"*
+	rm -f "${report_file}"*
 
 	echo "creating NanoDroid report:
 
 	| NanoDroid Version:	${VERSION}
 	| NanoDroid Type:	${ND_TYPE}
-	| NanoDroid Report:	$(basename ${REPORT_FILE})
+	| NanoDroid Report:	$(basename ${report_file})
 "
 
 	echo "NanoDroid ${VERSION} package report [$(date +%Y%m%d-%H.%M.%S)]
 ==========================================================
-" > ${REPORT_FILE}
+" > ${report_file}
 
 	for file in $(find ${CWD} -maxdepth 1 -type f | sort) \
 		    $(find ${CWD} -mindepth 2 -type f | sort); do
@@ -36,7 +36,7 @@ create_report_real () {
 		esac
 	done
 
-	sum_sign_package "${REPORT_FILE}"
+	sum_sign_package "${report_file}"
 
 }
 
@@ -51,14 +51,14 @@ get_apk_info () {
 
 	gzip -dc ${1} > ${APK}
 
-	APK_FILE=$(basename ${1})
-	APK_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
-	APK_NAME=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $2}')
-	APK_VERSION=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $6}')
-	APK_CODE=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $4}')
-	APK_PERM=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^uses-permission:/{print $2}' | sort)
-	APK_SHA=$(sha256sum ${APK} | gawk '{print $1}')
-	GZIP_SHA=$(sha256sum ${1} | gawk '{print $1}')
+	apk_file=$(basename ${1})
+	apk_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+	apk_name=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $2}')
+	apk_version=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $6}')
+	apk_code=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $4}')
+	apk_perm=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^uses-permission:/{print $2}' | sort)
+	apk_sha=$(sha256sum ${APK} | gawk '{print $1}')
+	gzip_sha=$(sha256sum ${1} | gawk '{print $1}')
 
 	case ${1} in
 		*gsync/K* ) APK_TYPE="Google Sync Adapters [KitKat]" ;;
@@ -72,18 +72,18 @@ get_apk_info () {
 		*app*     ) APK_TYPE="Generic Application" ;;
 	esac
 
-	echo "Android Package: ${APK_NAME}
-	| Filename:	${APK_FILE}
-	| Origin:	${APK_PATH}
+	echo "Android Package: ${apk_name}
+	| Filename:	${apk_file}
+	| Origin:	${apk_path}
 	| Type:		${APK_TYPE}
-	| Version:	${APK_VERSION}
-	| VersionCode:	${APK_CODE}
-	| SHA256 APK:	${APK_SHA}
-	| SHA256 GZip:	${GZIP_SHA}" >> ${REPORT_FILE}
+	| Version:	${apk_version}
+	| VersionCode:	${apk_code}
+	| SHA256 APK:	${apk_sha}
+	| SHA256 GZip:	${gzip_sha}" >> ${report_file}
 
-	if [ -z "${APK_PERM}" ]; then
-		echo -e "	| Permissions:	none requested\n" >> ${REPORT_FILE}
-	else	echo -e "	| Permissions:\n$(printf "\t|- %s\n" ${APK_PERM})\n" >> ${REPORT_FILE}
+	if [ -z "${apk_perm}" ]; then
+		echo -e "	| Permissions:	none requested\n" >> ${report_file}
+	else	echo -e "	| Permissions:\n$(printf "\t|- %s\n" ${apk_perm})\n" >> ${report_file}
 	fi
 
 	rm -f ${APK}
@@ -92,214 +92,214 @@ get_apk_info () {
 
 get_lib_info () {
 
-	LIB_FILE=$(basename ${1})
-	LIB_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+	local lib_file=$(basename ${1})
+	local lib_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 
-	case ${LIB_FILE} in
+	case ${lib_file} in
 		*libjni_latinimegoogle* ) LIB_NAME="Latin IME Google" ;;
 		*libjni_keyboarddecoder*) LIB_NAME="Keyboard Decoder" ;;
 	esac
 
 	case ${1} in
-		*19* ) LIB_CODE="19 [KitKat]" ;;
-		*21* ) LIB_CODE="21 [Lollipop]" ;;
-		*22* ) LIB_CODE="22 [Lollipop]" ;;
-		*23* ) LIB_CODE="23 [Marshmallow]" ;;
-		*24* ) LIB_CODE="23 [Nougat] {24}" ;;
-		*25* ) LIB_CODE="23 [Nougat] {25}" ;;
-		*26* ) LIB_CODE="26 [Oreo] {26}" ;;
-		*27* ) LIB_CODE="27 [Oreo]" ;;
-		*28* ) LIB_CODE="28 [Pie]" ;;
-		*    ) LIB_CODE="Generic" ;;
+		*19* ) local lib_code="19 [KitKat]" ;;
+		*21* ) local lib_code="21 [Lollipop]" ;;
+		*22* ) local lib_code="22 [Lollipop]" ;;
+		*23* ) local lib_code="23 [Marshmallow]" ;;
+		*24* ) local lib_code="23 [Nougat] {24}" ;;
+		*25* ) local lib_code="23 [Nougat] {25}" ;;
+		*26* ) local lib_code="26 [Oreo] {26}" ;;
+		*27* ) local lib_code="27 [Oreo]" ;;
+		*28* ) local lib_code="28 [Pie]" ;;
+		*    ) local lib_code="Generic" ;;
 	esac
 
-	LIB_ARCH=$(file -b ${1} | gawk -F, '{print $2 " [ " $1 " ] [" $3 " ]"}')
-	LIB_SPECS=$(file -b ${1} | gawk -F, '{print $4 " [" $5 " ]"}')
+	local lib_arch=$(file -b ${1} | gawk -F, '{print $2 " [ " $1 " ] [" $3 " ]"}')
+	local lib_specs=$(file -b ${1} | gawk -F, '{print $4 " [" $5 " ]"}')
 
-	LIB_SHA=$(sha256sum ${1} | gawk '{print $1}')
+	lib_sha=$(sha256sum ${1} | gawk '{print $1}')
 
 	echo "Android Library: ${LIB_NAME}
-	| Filename:	${LIB_FILE}
-	| Origin:	${LIB_PATH}
-	| SDK Code:	${LIB_CODE}
-	| Arch:		${LIB_ARCH}
-	| Specifics:	${LIB_SPECS}
-	| SHA256:	${LIB_SHA}
-" >> ${REPORT_FILE}
+	| Filename:	${lib_file}
+	| Origin:	${lib_path}
+	| SDK Code:	${lib_code}
+	| Arch:		${lib_arch}
+	| Specifics:	${lib_specs}
+	| SHA256:	${lib_sha}
+" >> ${report_file}
 
 }
 
 get_bin_info () {
 
-	BIN_FILE=$(basename ${1})
-	BIN_NAME=$(basename ${1} | sed -e 's/\..*//')
-	BIN_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+	local bin_file=$(basename ${1})
+	local bin_name=$(basename ${1} | sed -e 's/\..*//')
+	local bin_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 
-	case ${BIN_PATH} in
-		*xbin* ) BIN_TYPE="Android User Utility" ;;
-		*tools*) BIN_TYPE="Android Installer Utility" ;;
+	case ${bin_path} in
+		*xbin* ) local bin_type="Android User Utility" ;;
+		*tools*) local bin_type="Android Installer Utility" ;;
 	esac
 
-	BIN_ARCH=$(file -b ${1} | gawk -F, '{print $2 " [ " $1 " ] [" $3 " ]"}')
-	BIN_SPECS=$(file -b ${1} | gawk -F, '{print $4 " [" $7 " ] [" $6 " ]"}')
+	local bin_arch=$(file -b ${1} | gawk -F, '{print $2 " [ " $1 " ] [" $3 " ]"}')
+	local bin_specs=$(file -b ${1} | gawk -F, '{print $4 " [" $7 " ] [" $6 " ]"}')
 
-	BIN_SHA=$(sha256sum ${1} | gawk '{print $1}')
+	local bin_sha=$(sha256sum ${1} | gawk '{print $1}')
 
-	echo "${BIN_TYPE}: ${BIN_NAME}
-	| Filename:	${BIN_FILE}
-	| Origin:	${BIN_PATH}
-	| Arch:		${BIN_ARCH}
-	| Specifics:	${BIN_SPECS}
-	| SHA256:	${BIN_SHA}
-" >> ${REPORT_FILE}
+	echo "${bin_type}: ${bin_name}
+	| Filename:	${bin_file}
+	| Origin:	${bin_path}
+	| Arch:		${bin_arch}
+	| Specifics:	${bin_specs}
+	| SHA256:	${bin_sha}
+" >> ${report_file}
 
 }
 
 get_etc_info () {
 
-	ETC_FILE=$(basename ${1})
-	ETC_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+	local etc_file=$(basename ${1})
+	local etc_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 
-	ETC_PKGS=""
+	local etc_pkgs=""
 
-	case ${ETC_PATH} in
-		*gsync*default-permissions* ) ETC_TYPE="Google Sync Adapaters Permissions"
-		                              ETC_PKGS="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
-		*etc/permissions*           ) ETC_TYPE="Application Permissions"
-		                              ETC_PKGS="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
-		*etc/default-permissions*   ) ETC_TYPE="Application Permissions"
-		                              ETC_PKGS="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
-		*etc/terminfo*              ) ETC_TYPE="GNU Nano Terminfo" ;;
-		*etc/init.d*                ) ETC_TYPE="NanoDroid init Script" ;;
-		*etc/sysconfig*             ) ETC_TYPE="Linux sysconfig Settings" ;;
-		*etc/bash*                  ) ETC_TYPE="GNU Bash Configuration" ;;
-		*etc/org.fdroid.fdroid*     ) ETC_TYPE="F-Droid Configuration" ;;
+	case ${etc_path} in
+		*gsync*default-permissions* ) local etc_type="Google Sync Adapaters Permissions"
+		                              local etc_pkgs="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
+		*etc/permissions*           ) local etc_type="Application Permissions"
+		                              local etc_pkgs="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
+		*etc/default-permissions*   ) local etc_type="Application Permissions"
+		                              local etc_pkgs="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
+		*etc/terminfo*              ) local etc_type="GNU Nano Terminfo" ;;
+		*etc/init.d*                ) local etc_type="NanoDroid init Script" ;;
+		*etc/sysconfig*             ) local etc_type="Linux sysconfig Settings" ;;
+		*etc/bash*                  ) local etc_type="GNU Bash Configuration" ;;
+		*etc/org.fdroid.fdroid*     ) local etc_type="F-Droid Configuration" ;;
 	esac
 
-	ETC_SHA=$(sha256sum ${1} | gawk '{print $1}')
+	local etc_sha=$(sha256sum ${1} | gawk '{print $1}')
 
-	echo "${ETC_TYPE}: ${ETC_FILE}
-	| Filename:	${ETC_FILE}
-	| Origin:	${ETC_PATH}
-	| SHA256:	${ETC_SHA}" >> ${REPORT_FILE}
+	echo "${etc_type}: ${etc_file}
+	| Filename:	${etc_file}
+	| Origin:	${etc_path}
+	| SHA256:	${etc_sha}" >> ${report_file}
 
-	if [ ! -z "${ETC_PKGS}" ]; then
-		echo -e "	| Packages:\n$(printf "\t|- %s\n" ${ETC_PKGS})\n" >> ${REPORT_FILE}
-	else	echo "" >> ${REPORT_FILE}
+	if [ ! -z "${etc_pkgs}" ]; then
+		echo -e "	| Packages:\n$(printf "\t|- %s\n" ${etc_pkgs})\n" >> ${report_file}
+	else	echo "" >> ${report_file}
 	fi
 
 }
 
 get_dex_info () {
 
-	DEX_FILE=$(basename ${1})
-	DEX_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+	local dex_file=$(basename ${1})
+	local dex_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 
-	case ${DEX_FILE} in
-		*services* ) DEX_TYPE="Android DEX Patch File"
-		             DEX_NAME=$(basename ${1} .jar.dex) ;;
-		*          ) DEX_TYPE="Android Dalvik Executable"
-		             DEX_NAME=$(basename ${1} .dex) ;;
+	case ${dex_file} in
+		*services* ) local dex_type="Android DEX Patch File"
+		             local dex_name=$(basename ${1} .jar.dex) ;;
+		*          ) local dex_type="Android Dalvik Executable"
+		             local dex_name=$(basename ${1} .dex) ;;
 	esac
 
-	case ${DEX_FILE} in
-		*services* ) DEX_SDK=$(gawk -F\_ '{print $2}' <(echo ${DEX_FILE})) ;;
-		*smali*    ) DEX_SDK=$(sed 's/.*_\(.*\)\..*/\1/' <(echo ${DEX_FILE})) ;;
-		*          ) DEX_SDK="universal" ;;
+	case ${dex_file} in
+		*services* ) local dex_sdk=$(gawk -F\_ '{print $2}' <(echo ${dex_file})) ;;
+		*smali*    ) local dex_sdk=$(sed 's/.*_\(.*\)\..*/\1/' <(echo ${dex_file})) ;;
+		*          ) local dex_sdk="universal" ;;
 	esac
 
-	DEX_VER=$(file -b ${1} | gawk '{print $5}')
-	DEX_SHA=$(sha256sum ${1} | gawk '{print $1}')
+	dex_ver=$(file -b ${1} | gawk '{print $5}')
+	dex_sha=$(sha256sum ${1} | gawk '{print $1}')
 
-	echo "${DEX_TYPE}: ${DEX_NAME}
-	| Filename:	${DEX_FILE}
-	| Origin:	${DEX_PATH}
-	| DEX Version:	${DEX_VER}
-	| DEX SDK:	${DEX_SDK}
-	| SHA256:	${DEX_SHA}
-" >> ${REPORT_FILE}
+	echo "${dex_type}: ${dex_name}
+	| Filename:	${dex_file}
+	| Origin:	${dex_path}
+	| DEX Version:	${dex_ver}
+	| DEX SDK:	${dex_sdk}
+	| SHA256:	${dex_sha}
+" >> ${report_file}
 
 }
 
 get_msc_info () {
 
 	case ${1} in
-		*CommonAddon*     ) MSC_TYPE="NanoDroid universal addon.d" ;;
-		*CommonInstaller* ) MSC_TYPE="NanoDroid universal Installer" ;;
+		*CommonAddon*     ) local msc_type="NanoDroid universal addon.d" ;;
+		*CommonInstaller* ) local msc_type="NanoDroid universal Installer" ;;
 
-		*service.sh*     ) MSC_TYPE="NanoDroid universal Magisk Module services.sh" ;;
+		*service.sh*     ) local msc_type="NanoDroid universal Magisk Module services.sh" ;;
 
-		*Full*update*     ) MSC_TYPE="NanoDroid Full Package TWRP invoker" ;;
-		*Full*.prop*      ) MSC_TYPE="NanoDroid Full Package Module Module properties" ;;
+		*Full*update*     ) local msc_type="NanoDroid Full Package TWRP invoker" ;;
+		*Full*.prop*      ) local msc_type="NanoDroid Full Package Module Module properties" ;;
 
-		*microG*update*   ) MSC_TYPE="NanoDroid microG Package TWRP invoker" ;;
-		*microG*.prop*    ) MSC_TYPE="NanoDroid microG Package Module Module properties" ;;
+		*microG*update*   ) local msc_type="NanoDroid microG Package TWRP invoker" ;;
+		*microG*.prop*    ) local msc_type="NanoDroid microG Package Module Module properties" ;;
 
-		*FDroid*update*   ) MSC_TYPE="NanoDroid F-Droid Package TWRP invoker" ;;
-		*FDroid*.prop*    ) MSC_TYPE="NanoDroid F-Droid Package Module Module properties" ;;
+		*FDroid*update*   ) local msc_type="NanoDroid F-Droid Package TWRP invoker" ;;
+		*FDroid*.prop*    ) local msc_type="NanoDroid F-Droid Package Module Module properties" ;;
 
-		*Bromite*update*  ) MSC_TYPE="NanoDroid BromiteWebView Package TWRP invoker" ;;
-		*Bromite*.prop*   ) MSC_TYPE="NanoDroid BromiteWebView Package Module Module properties" ;;
+		*Bromite*update*  ) local msc_type="NanoDroid BromiteWebView Package TWRP invoker" ;;
+		*Bromite*.prop*   ) local msc_type="NanoDroid BromiteWebView Package Module Module properties" ;;
 
-		*OsmAnd*update*   ) MSC_TYPE="NanoDroid OsmAnd Package TWRP invoker" ;;
-		*OsmAnd*.prop*    ) MSC_TYPE="NanoDroid OsmAnd Package Module Module properties" ;;
+		*OsmAnd*update*   ) local msc_type="NanoDroid OsmAnd Package TWRP invoker" ;;
+		*OsmAnd*.prop*    ) local msc_type="NanoDroid OsmAnd Package Module Module properties" ;;
 
-		*CommonPatcher*   ) MSC_TYPE="NanoDroid Framework Patcher" ;;
-		*70-nanodroidpatcher.sh* ) MSC_TYPE="NanoDroid Framework Patcher addon.d" ;;
-		*org.spoofing.apk*) MSC_TYPE="NanoDroid Framework Patcher spoofing info provider" ;;
-		*patcher*update*  ) MSC_TYPE="NanoDroid Framework Patcher TWRP invoker" ;;
+		*CommonPatcher*   ) local msc_type="NanoDroid Framework Patcher" ;;
+		*70-nanodroidpatcher.sh* ) local msc_type="NanoDroid Framework Patcher addon.d" ;;
+		*org.spoofing.apk*) local msc_type="NanoDroid Framework Patcher spoofing info provider" ;;
+		*patcher*update*  ) local msc_type="NanoDroid Framework Patcher TWRP invoker" ;;
 
-		*SetupWizard*update*) MSC_TYPE="NanoDroid SetupWizard AROMA invoker" ;;
-		*SetupWizard*aroma*) MSC_TYPE="NanoDroid SetupWizard AROMA configuration" ;;
-		*SetupWizard/nano*) MSC_TYPE="NanoDroid SetupWizard Worker" ;;
+		*SetupWizard*update*) local msc_type="NanoDroid SetupWizard AROMA invoker" ;;
+		*SetupWizard*aroma*) local msc_type="NanoDroid SetupWizard AROMA configuration" ;;
+		*SetupWizard/nano*) local msc_type="NanoDroid SetupWizard Worker" ;;
 
-		*SysTest*         ) MSC_TYPE="NanoDroid System Tester" ;;
-		*systest*update*  ) MSC_TYPE="NanoDroid System Tester TWRP invoker" ;;
+		*SysTest*         ) local msc_type="NanoDroid System Tester" ;;
+		*systest*update*  ) local msc_type="NanoDroid System Tester TWRP invoker" ;;
 
-		*uninstaller*binary*) MSC_TYPE="NanoDroid Uninstaller" ;;
-		*uninstaller*update*) MSC_TYPE="NanoDroid Uninstaller TWRP invoker" ;;
+		*uninstaller*binary*) local msc_type="NanoDroid Uninstaller" ;;
+		*uninstaller*update*) local msc_type="NanoDroid Uninstaller TWRP invoker" ;;
 
-		*ChangeLog.md*    ) MSC_TYPE="NanoDroid ChangeLog" ;;
-		*README.md*       ) MSC_TYPE="NanoDroid README" ;;
+		*ChangeLog.md*    ) local msc_type="NanoDroid ChangeLog" ;;
+		*README.md*       ) local msc_type="NanoDroid README" ;;
 
-		*.nanodroid-apps* ) MSC_TYPE="NanoDroid default app installation configuration" ;;
-		*.nanodroid-setup*) MSC_TYPE="NanoDroid default installation configuration" ;;
-		*.nanodroid-overlay*) MSC_TYPE="NanoDroid default overlay configuration" ;;
+		*.nanodroid-apps* ) local msc_type="NanoDroid default app installation configuration" ;;
+		*.nanodroid-setup*) local msc_type="NanoDroid default installation configuration" ;;
+		*.nanodroid-overlay*) local msc_type="NanoDroid default overlay configuration" ;;
 
-		*.maps.jar*       ) MSC_TYPE="microG Maps v1 support" ;;
+		*.maps.jar*       ) local msc_type="microG Maps v1 support" ;;
 
-		*noti*.ogg*       ) MSC_TYPE="The Legend of Zelda: Notification" ;;
-		*ring*.ogg*       ) MSC_TYPE="The Legend of Zelda: Ringtone" ;;
-		*ui*.ogg*         ) MSC_TYPE="The Legend of Zelda: UI Sound" ;;
-		*noti*.mp3*       ) MSC_TYPE="The Legend of Zelda: Notification" ;;
-		*ring*.mp3*       ) MSC_TYPE="The Legend of Zelda: Ringtone" ;;
-		*ui*.mp3*         ) MSC_TYPE="The Legend of Zelda: UI Sound" ;;
-		*.ttf*            ) MSC_TYPE="Nintendo UI Font" ;;
+		*noti*.ogg*       ) local msc_type="The Legend of Zelda: Notification" ;;
+		*ring*.ogg*       ) local msc_type="The Legend of Zelda: Ringtone" ;;
+		*ui*.ogg*         ) local msc_type="The Legend of Zelda: UI Sound" ;;
+		*noti*.mp3*       ) local msc_type="The Legend of Zelda: Notification" ;;
+		*ring*.mp3*       ) local msc_type="The Legend of Zelda: Ringtone" ;;
+		*ui*.mp3*         ) local msc_type="The Legend of Zelda: UI Sound" ;;
+		*.ttf*            ) local msc_type="Nintendo UI Font" ;;
 
-		*LICENSE*         ) MSC_TYPE="exclude" ;;
-		*doc*             ) MSC_TYPE="exclude" ;;
-		*build-package*   ) MSC_TYPE="exclude" ;;
-		*.json*           ) MSC_TYPE="exclude" ;;
-		*.git*            ) MSC_TYPE="exclude" ;;
-		*NanoDroid_Report*) MSC_TYPE="exclude" ;;
-		*NanoDroid/dist*  ) MSC_TYPE="exclude" ;;
+		*LICENSE*         ) local msc_type="exclude" ;;
+		*doc*             ) local msc_type="exclude" ;;
+		*build-package*   ) local msc_type="exclude" ;;
+		*.json*           ) local msc_type="exclude" ;;
+		*.git*            ) local msc_type="exclude" ;;
+		*NanoDroid_Report*) local msc_type="exclude" ;;
+		*NanoDroid/dist*  ) local msc_type="exclude" ;;
 
-		*                 ) MSC_TYPE="unknown" ;;
+		*                 ) local msc_type="unknown" ;;
 	esac
 
-	case ${MSC_TYPE} in
+	case ${msc_type} in
 		exclude ) return 0 ;;
 		unknown ) echo "No report template for file:	${1}" ;;
-		*       ) MSC_FILE=$(basename ${1})
-		          MSC_NAME=$(basename ${1} | sed -e 's/\..*//')
-		          MSC_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
-		          MSC_SHA=$(sha256sum ${1} | gawk '{print $1}')
+		*       ) local msc_file=$(basename ${1})
+		          local msc_name=$(basename ${1} | sed -e 's/\..*//')
+		          local msc_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+		          local msc_sha=$(sha256sum ${1} | gawk '{print $1}')
 
-		          echo "${MSC_TYPE}: ${MSC_NAME}
-	| Filename:	${MSC_FILE}
-	| Origin:	${MSC_PATH}
-	| SHA256:	${MSC_SHA}
-" >> ${REPORT_FILE}
+		          echo "${msc_type}: ${msc_name}
+	| Filename:	${msc_file}
+	| Origin:	${msc_path}
+	| SHA256:	${msc_sha}
+" >> ${report_file}
 		;;
 	esac
 
@@ -309,36 +309,36 @@ get_dst_info () {
 
 	if [[ ! ${1} == *NanoDroid/dist* ]]; then
 
-		DST_FILE=$(basename ${1})
-		DST_NAME=$(basename ${1} | sed -e 's/-[0-9].*//')
-		DST_PATH=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
+		local dst_file=$(basename ${1})
+		local dst_name=$(basename ${1} | sed -e 's/-[0-9].*//')
+		local dst_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 
-		case ${DST_FILE} in
-			*NanoDroid-[0-9]*.zip*) DST_PKG="NanoDroid Full" ;;
-			*microG*.zip*         ) DST_PKG="NanoDroid microG" ;;
-			*fdroid*.zip*         ) DST_PKG="NanoDroid F-Droid" ;;
-			*BromiteWebView*.zip* ) DST_PKG="NanoDroid BromiteWebView" ;;
-			*OsmAnd*.zip*         ) DST_PKG="NanoDroid OsmAnd" ;;
-			*patcher*.zip*        ) DST_PKG="NanoDroid Framework Patcher" ;;
-			*setupwizard*.zip*    ) DST_PKG="NanoDroid SetupWizard" ;;
-			*systest*.zip*        ) DST_PKG="NanoDroid System Tester" ;;
-			*uninstaller*.zip*    ) DST_PKG="NanoDroid Uninstaller" ;;
+		case ${dst_file} in
+			*NanoDroid-[0-9]*.zip*) local dst_pkg="NanoDroid Full" ;;
+			*microG*.zip*         ) local dst_pkg="NanoDroid microG" ;;
+			*fdroid*.zip*         ) local dst_pkg="NanoDroid F-Droid" ;;
+			*BromiteWebView*.zip* ) local dst_pkg="NanoDroid BromiteWebView" ;;
+			*OsmAnd*.zip*         ) local dst_pkg="NanoDroid OsmAnd" ;;
+			*patcher*.zip*        ) local dst_pkg="NanoDroid Framework Patcher" ;;
+			*setupwizard*.zip*    ) local dst_pkg="NanoDroid SetupWizard" ;;
+			*systest*.zip*        ) local dst_pkg="NanoDroid System Tester" ;;
+			*uninstaller*.zip*    ) local dst_pkg="NanoDroid Uninstaller" ;;
 		esac
 
-		case ${DST_FILE} in
-			*.zip    ) DST_TYPE="Flashable Package" ;;
-			*.sha256 ) DST_TYPE="Flashable Package (SHA256 Checksum)" ;;
-			*.sig    ) DST_TYPE="Flashable Package (GPG Signature)" ;;
+		case ${dst_file} in
+			*.zip    ) local dst_type="Flashable Package" ;;
+			*.sha256 ) local dst_type="Flashable Package (SHA256 Checksum)" ;;
+			*.sig    ) local dst_type="Flashable Package (GPG Signature)" ;;
 		esac
 
-		DST_SHA=$(sha256sum ${1} | gawk '{print $1}')
+		dst_sha=$(sha256sum ${1} | gawk '{print $1}')
 
-		echo "${DST_TYPE}: ${DST_NAME}
-	| Filename:	${DST_FILE}
-	| Origin:	${DST_PATH}
-	| Package:	${DST_PKG}
-	| SHA256:	${DST_SHA}
-" >> ${REPORT_FILE}
+		echo "${dst_type}: ${dst_name}
+	| Filename:	${dst_file}
+	| Origin:	${dst_path}
+	| Package:	${dst_pkg}
+	| SHA256:	${dst_sha}
+" >> ${report_file}
 
 	fi
 
