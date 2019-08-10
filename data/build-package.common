@@ -1,13 +1,17 @@
 #!/bin/bash
 
-NANODROID_MISSING_FILES=0
-NANODROID_BROKEN_FILES=0
+nanodroid_missing_files=0
+nanodroid_broken_files=0
 missing_database=""
+
+debug_message () {
+	[ "$DEBUG" = '1' ] && echo "$2$(tput setaf 3)$1$(tput sgr 0)"
+}
 
 check_nanodroid () {
 	for file in ${file_database[@]}; do
 		if [[ ! -f ${CWD}/${file} ]]; then
-			NANODROID_MISSING_FILES=1
+			nanodroid_missing_files=1
 			missing_database=(${missing_database[@]} ${file})
 		else
 			case ${file} in
@@ -32,7 +36,7 @@ check_nanodroid () {
 				;;
 
 				* )
-					NANODROID_BROKEN_FILES=1
+					nanodroid_broken_files=1
 					broken_database=(${broken_database[@]} ${file})
 					rm -f ${CWD}/${file}
 				;;
@@ -48,7 +52,7 @@ check_nanodroid () {
 				;;
 
 				* )
-					NANODROID_BROKEN_FILES=1
+					nanodroid_broken_files=1
 					broken_database=(${broken_database[@]} ${file})
 					rm -f ${CWD}/${file}
 				;;
@@ -56,17 +60,17 @@ check_nanodroid () {
 		fi
 	done
 
-	if [[ ${NANODROID_MISSING_FILES} -ne 0 ]]; then
+	if [[ ${nanodroid_missing_files} -ne 0 ]]; then
 		echo -e "\nThe following files are missing:\n"
 		printf '%s\n' ${missing_database[@]} | uniq
 	fi
 
-	if [[ ${NANODROID_BROKEN_FILES} -ne 0 ]]; then
+	if [[ ${nanodroid_broken_files} -ne 0 ]]; then
 		echo -e "\nThe following files are broken (and will be removed):\n"
 		printf '%s\n' ${broken_database[@]} | uniq
 	fi
 
-	if [[ ${NANODROID_MISSING_FILES} -eq 0 && ${NANODROID_BROKEN_FILES} -eq 0 ]]; then
+	if [[ ${nanodroid_missing_files} -eq 0 && ${nanodroid_broken_files} -eq 0 ]]; then
 		echo -e "\nNanoDroid correctly populated\n"
 		return 0
 	else	return 1
@@ -92,18 +96,18 @@ progress () {
 }
 
 zip_add () {
-	FILE_PATH="${CWD}/${1}"
-	FILE_MASK="${2}"
-	ZIP_PATH="${CWD}/${ZIP}"
+	local file_path="${CWD}/${1}"
+	local file_mask="${2}"
+	local zip_path="${CWD}/${ZIP}"
 
-	cd "${FILE_PATH}"
+	cd "${file_path}"
 
-	if [ -z "${FILE_MASK}" ]; then
-		zip -qr "${ZIP_PATH}" . || exit 1
-	elif [ -d "${FILE_MASK}" ]; then
-		zip -qr "${ZIP_PATH}" "${FILE_MASK}"  || exit 1
+	if [ -z "${file_mask}" ]; then
+		zip -qr "${zip_path}" . || exit 1
+	elif [ -d "${file_mask}" ]; then
+		zip -qr "${zip_path}" "${file_mask}"  || exit 1
 	else
-		zip -q "${ZIP_PATH}" ${FILE_MASK} || exit 1
+		zip -q "${zip_path}" ${file_mask} || exit 1
 	fi
 
 	cd "${CWD}"
@@ -112,17 +116,17 @@ zip_add () {
 zip_add_setup () {
 	cd "${CWD}/doc"
 
-	ZIP_PATH="${CWD}/${ZIP}"
+	local zip_path="${CWD}/${ZIP}"
 
 	case ${1} in
 		0 )
 			sed -e 's/nanodroid_overlay=1/nanodroid_overlay=0/' -i .nanodroid-setup
-			zip -q "${ZIP_PATH}" .nanodroid-setup || exit 1
+			zip -q "${zip_path}" .nanodroid-setup || exit 1
 			sed -e 's/nanodroid_overlay=0/nanodroid_overlay=1/' -i .nanodroid-setup
 		;;
 
 		1 )
-			zip -q "${ZIP_PATH}" .nanodroid-setup || exit 1
+			zip -q "${zip_path}" .nanodroid-setup || exit 1
 		;;
 	esac
 
@@ -158,7 +162,7 @@ increase_version_number () {
 increase_module_version () {
 	for module in Full microG FDroid BromiteWebView OsmAnd; do
 		eval $(grep versionCode "${PWD}"/"${module}"/module.prop)
-		versionCode=$((versionCode+1))
+		local versionCode=$((versionCode+1))
 		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
 			-i "${CWD}/${module}/module.prop"
 	done
