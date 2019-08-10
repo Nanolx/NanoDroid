@@ -102,29 +102,34 @@ for opt in ${@}; do
 		pull )
 			update_indices
 			nanodroid_pull
+			update_master
 			check_nanodroid
 		;;
 
 		u-microg )
 			update_indices
 			update_microg
+			update_master
 			check_nanodroid
 		;;
 
 		u-fdroid )
 			update_indices
 			update_fdroid
+			update_master
 			check_nanodroid
 		;;
 
 		u-apps )
 			update_indices
 			update_apps
+			update_master
 			check_nanodroid
 		;;
 
 		u-swipe )
 			update_swipe
+			update_master
 			check_nanodroid
 		;;
 

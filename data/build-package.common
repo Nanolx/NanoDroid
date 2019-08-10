@@ -5,7 +5,7 @@ nanodroid_broken_files=0
 missing_database=""
 
 debug_message () {
- [ "$DEBUG" = '1' ] && echo "$(tput setaf 3)$1$(tput sgr 0)"
+	[ "$DEBUG" = '1' ] && echo "$2$(tput setaf 3)$1$(tput sgr 0)"
 }
 
 check_nanodroid () {
