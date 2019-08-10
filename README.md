@@ -762,14 +762,16 @@ Additional credits go to
 * JesusFreke for smali/baksmali
   * https://github.com/JesusFreke/smali
 
-Special Thanks to the contributors
+Special Thanks to the contributors (starting with most recent contribution)
 
+* TanyaEleventhGoddess
+  * various improvements and fixed for `build-package`
 * Gia90
   * Android 6.0 support for Patcher
   * fixes for x86_64 support
 * Vavun
   * OsmAnd package
-  * several contributions to NanoDroid and it's former microG GmsCore fork
+  * several contributions to NanoDroid (and it's former microG GmsCore fork)
 
 Special Thanks to the beta testers
 
