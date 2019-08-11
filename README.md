@@ -142,9 +142,9 @@ The `build-package` script additionally supports the following parameters:
 
 ## "Secret" parameters
 
-`export DEBUG=1` allows seeing debug messages when repos are fetched and APKs are downloaded
+`export BP_DEBUG=1` allows seeing debug messages when repos are fetched and APKs are downloaded
 
-`export USE_WGET=1` tells the script to use wget for downloading indices and APks
+`export BP_USE_WGET=1` tells the script to use wget for downloading indices and APks
 
 ## Custom builds
 

@@ -21,7 +21,7 @@ done
 debug_download () {
 	case $1 in
 		index)
-			if [ "$USE_WGET" = '1' ]; then
+			if [ "$BP_USE_WGET" = '1' ]; then
 				rm -rf "$2"
 				debug_message normal "wget -q --show-progress \"$3\" -O \"${2#$CWD/}\"" " "
 				wget -q --show-progress "$3" -O "$2" || error "$4"
@@ -31,7 +31,7 @@ debug_download () {
 			fi
 		;;
 		no_delete)
-			if [ "$USE_WGET" = '1' ]; then
+			if [ "$BP_USE_WGET" = '1' ]; then
 				rm -rf "$2"
 				debug_message normal "wget -q --show-progress \"$3\" -O \"${2#$CWD/}\""
 				wget -q --show-progress "$3" -O "$2"
@@ -41,7 +41,7 @@ debug_download () {
 			fi
 		;;
 		delete)
-			if [ "$USE_WGET" = '1' ]; then
+			if [ "$BP_USE_WGET" = '1' ]; then
 				rm -rf "$2"
 				debug_message normal "wget -q --show-progress \"$3\" -O \"${2#$CWD/}\""
 				wget -q --show-progress "$3" -O "$2" || rm -f "$4"
@@ -220,7 +220,7 @@ grab_apk_from_url () {
 }
 
 grab_apk_from_github () {
-	[ "$DEBUG" = '1' ] && debug_message normal "curl -s -N \"https://api.github.com/repos/${1}/releases\""
+	[ "$BP_DEBUG" = '1' ] && debug_message normal "curl -s -N \"https://api.github.com/repos/${1}/releases\""
 	local apk_url="$(curl -s -N "https://api.github.com/repos/${1}/releases" | \
 		gawk -F\" '/browser_download_url.*apk/{print $4 ; exit}')"
 	local apk_dest="${appsfolder[2]}/${2}/${3}"
@@ -246,7 +246,7 @@ grab_apk_from_github () {
 }
 
 grab_apk_from_gitlab () {
-	[ "$DEBUG" = '1' ] && debug_message newline "curl -s -N \"https://gitlab.com/${1}/-/tags\"" "\n"
+	[ "$BP_DEBUG" = '1' ] && debug_message newline "curl -s -N \"https://gitlab.com/${1}/-/tags\"" "\n"
 	local apk_url=$(curl -s -N "https://gitlab.com/${1}/-/tags" | grep '.apk' | head -n 1)
 	local apk_url=${apk_url%\">*.apk*}
 	local apk_url="https://gitlab.com${apk_url##*a href=\"}"
