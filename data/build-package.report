@@ -11,7 +11,8 @@ create_report_real () {
 
 	rm -f "${report_file}"*
 
-	echo "creating NanoDroid report:
+	echo "
+creating NanoDroid report:
 
 	| NanoDroid Version:	${VERSION}
 	| NanoDroid Type:	${ND_TYPE}
