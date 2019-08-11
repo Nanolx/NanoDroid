@@ -1,5 +1,38 @@
 # ChangeLog
 
+## 22.4.20190811 "[Château Picard](https://memory-alpha.fandom.com/wiki/Chateau_Picard)"
+
+### Bugfixes
+
+* build-package
+  * fix various minor issues @TanyaEleventhGoddess
+
+### General Changes
+
+* build-package
+  * major refactoring @TanyaEleventhGoddess
+  * new envvar `BP_USE_WGET=1`: use `wget` instead of `curl` for downloads @TanyaEleventhGoddess
+  * new envvar `BP_DEBUG=1`: print debug information during downloads @TanyaEleventhGoddess
+  * dynamic date in created packages @TanyaEleventhGoddess
+  * new switch `report`: create package report with (way too much) information about NanoDroid
+     * will also be auto-created when building `all` packages
+     * reports get their SHA256 checksum and GPG signature
+
+* Installer
+  * `GoogleCalendarSync` is the same APK across all Android versions, thus it's now only downloaded/included once
+
+### Updates
+
+* automatic
+  * Aurora Services (1.0.4)
+  * Bromite System WebView (76.0.3809.100)
+  * OsmAnd+ (3.4.)
+  * Simple Calendar (6.5.7)
+  * Termux (0.73)
+
+* manual
+  * Google Play (16.1.23)
+
 ## 22.3.20190805 "[Transwarp](https://memory-alpha.fandom.com/wiki/Transwarp)"
 
 ### Bugfixes
