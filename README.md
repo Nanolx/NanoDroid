@@ -140,6 +140,14 @@ The `build-package` script additionally supports the following parameters:
 * `ver [version] [date]` change project version
 * `bump` increment Magisk module version by 1
 
+## "Secret" parameters
+
+`export DEBUG=1` allows seeing debug messages when repos are fetched and APKs are downloaded
+
+`export USE_WGET=1` tells the script to use wget for downloading indices and APks
+
+## Custom builds
+
 The following applications are custom builds (see [F-Droid Repository](#f-droid-repository) below):
 
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
