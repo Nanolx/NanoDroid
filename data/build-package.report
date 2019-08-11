@@ -5,9 +5,11 @@ report_file="${CWD}/NanoDroid-Report-${VERSION}"
 create_report_real () {
 
 	case ${VERSION} in
-		*99999999* ) ND_TYPE="Beta Release" ;;
-		*          ) ND_TYPE="Stable Release" ;;
+		*99999999* ) build_type="Beta Release" ;;
+		*          ) build_type="Stable Release" ;;
 	esac
+
+	[ "${build_date}" -ne "${version_date}" ] && build_type="Snapshot Release" ;;
 
 	rm -f "${report_file}"*
 
@@ -15,7 +17,7 @@ create_report_real () {
 creating NanoDroid report:
 
 	| NanoDroid Version:	${VERSION}
-	| NanoDroid Type:	${ND_TYPE}
+	| NanoDroid Type:	${build_type}
 	| NanoDroid Report:	$(basename ${report_file})
 "
 

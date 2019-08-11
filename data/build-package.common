@@ -143,27 +143,28 @@ zip_add_setup () {
 
 increase_version_number () {
 	if [ -z ${3} ]; then
-		ver=99999999
-	else	ver=${3}
+		date=99999999
+	else	date=${3}
 	fi
 
 	for file in "CommonAddon" "CommonInstaller" \
 		"systest/SysTest" "patcher/CommonPatcher" \
 		"SetupWizard/nanodroid-setup" \
 		"uninstaller/META-INF/com/google/android/update-binary"; do
-		sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/${file}"
+		sed -e "s/^VERSION=.*/VERSION=${2}.${date}/" -i "${CWD}/${file}"
 	done
 
 	sed -e "s/^version_code.*/version_code=${2}" -i "${CWD}/build-package"
+	sed -e "s/^version_date.*/version_date=${date}" -i "${CWD}/build-package"
 
 	for module in Full microG FDroid BromiteWebView OsmAnd; do
-		sed -e "s/version=.*/version=v${2}.${ver}/" -i \
+		sed -e "s/version=.*/version=v${2}.${date}/" -i \
 			"${CWD}/${module}/module.prop"
 	done
 
 	sed -e "s/rom_version\",.*/rom_version\",	\"${2}\")\;/" -i \
 		"${CWD}/SetupWizard/META-INF/com/google/android/aroma-config"
-	sed -e "s/rom_date\",.*/rom_date\",	\"${ver}\")\;/" -i \
+	sed -e "s/rom_date\",.*/rom_date\",	\"${date}\")\;/" -i \
 		"${CWD}/SetupWizard/META-INF/com/google/android/aroma-config"
 
 	exit 0

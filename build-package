@@ -1,6 +1,8 @@
 #!/bin/bash
 
 version_code=22.3
+version_date=20190811
+
 build_date=$(LANG='en_US' date +"%Y%m%d")
 
 VERSION=${version_code}.${build_date}
