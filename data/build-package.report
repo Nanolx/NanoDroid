@@ -1,6 +1,6 @@
 #!/bin/bash
 
-report_file="${CWD}/NanoDroid_Report_${VERSION}"
+report_file="${CWD}/NanoDroid-Report-${VERSION}"
 
 create_report_real () {
 
