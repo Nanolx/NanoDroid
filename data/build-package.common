@@ -147,12 +147,14 @@ increase_version_number () {
 	else	ver=${3}
 	fi
 
-	for file in  "build-package" "CommonInstaller" \
+	for file in "CommonAddon" "CommonInstaller" \
 		"systest/SysTest" "patcher/CommonPatcher" \
-		"SetupWizard/nanodroid-setup" "CommonAddon" \
+		"SetupWizard/nanodroid-setup" \
 		"uninstaller/META-INF/com/google/android/update-binary"; do
 		sed -e "s/^VERSION=.*/VERSION=${2}.${ver}/" -i "${CWD}/${file}"
 	done
+
+	sed -e "s/^version_code.*/version_code=${2}" -i "${CWD}/build-package"
 
 	for module in Full microG FDroid BromiteWebView OsmAnd; do
 		sed -e "s/version=.*/version=v${2}.${ver}/" -i \
