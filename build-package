@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=22.3.$(LANG='en_US' date +"%Y%m%d")
+VERSION=22.4.20190811
 CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
