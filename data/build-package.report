@@ -282,7 +282,7 @@ get_msc_info () {
 		*build-package*   ) local msc_type="exclude" ;;
 		*.json*           ) local msc_type="exclude" ;;
 		*.git*            ) local msc_type="exclude" ;;
-		*NanoDroid_Report*) local msc_type="exclude" ;;
+		*NanoDroid-Report*) local msc_type="exclude" ;;
 		*NanoDroid/dist*  ) local msc_type="exclude" ;;
 
 		*                 ) local msc_type="unknown" ;;
