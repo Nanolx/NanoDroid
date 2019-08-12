@@ -26,7 +26,7 @@
 * automatic
   * Aurora Services (1.0.4)
   * Bromite System WebView (76.0.3809.100)
-  * OsmAnd+ (3.4.)
+  * OsmAnd+ (3.4.6)
   * Simple Calendar (6.5.7)
   * Termux (0.73)
 
