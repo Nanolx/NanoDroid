@@ -9,11 +9,11 @@ create_report_real () {
 		*          ) build_type="Stable Release" ;;
 	esac
 
-	[ "${build_date}" -ne "${version_date}" ] && build_type="Snapshot Release" ;;
+	[ "${build_date}" -ne "${version_date}" ] && build_type="Snapshot Release"
 
 	rm -f "${report_file}"*
 
-	echo "
+	echo -e "
 creating NanoDroid report:
 
 	| NanoDroid Version:	${VERSION}
@@ -21,8 +21,10 @@ creating NanoDroid report:
 	| NanoDroid Report:	$(basename ${report_file})
 "
 
-	echo "NanoDroid ${VERSION} package report [$(date +%Y%m%d-%H.%M.%S)]
-==========================================================
+	echo "NanoDroid Package Report
+	| NanoDroid Version:	${VERSION}
+	| NanoDroid Type:	${build_type}
+	| Report Date:		$(date +%Y%m%d-%H.%M.%S)
 " > ${report_file}
 
 	for file in $(find ${CWD} -maxdepth 1 -type f | sort) \
@@ -70,7 +72,7 @@ get_apk_info () {
 		*gsync/N* ) APK_TYPE="Google Sync Adapters [Nougat]" ;;
 		*gsync/O* ) APK_TYPE="Google Sync Adapters [Oreo]" ;;
 		*gsync/P* ) APK_TYPE="Google Sync Adapters [Pie]" ;;
-		*gsync/common*) APK_TYPE="Google Sync Adatpers [Generic]" ;;
+		*gsync/common*) APK_TYPE="Google Sync Adapters [Generic]" ;;
 		*priv-app*) APK_TYPE="Privileged Application" ;;
 		*app*     ) APK_TYPE="Generic Application" ;;
 	esac
@@ -135,7 +137,7 @@ get_lib_info () {
 get_bin_info () {
 
 	local bin_file=$(basename ${1})
-	local bin_name=$(basename ${1} | sed -e 's/\..*//')
+	local bin_name=$(basename ${1} | sed -e 's/\.[^.]*$//')
 	local bin_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 
 	case ${bin_path} in
@@ -165,8 +167,8 @@ get_etc_info () {
 
 	local etc_pkgs=""
 
-	case ${etc_path} in
-		*gsync*default-permissions* ) local etc_type="Google Sync Adapaters Permissions"
+	case ${1} in
+		*gsync*default-permissions* ) local etc_type="Google Sync Adapters Permissions"
 		                              local etc_pkgs="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
 		*etc/permissions*           ) local etc_type="Application Permissions"
 		                              local etc_pkgs="$(gawk -F\" '/package=/{print $2}' ${1})" ;;
@@ -230,7 +232,7 @@ get_msc_info () {
 		*CommonAddon*     ) local msc_type="NanoDroid universal addon.d" ;;
 		*CommonInstaller* ) local msc_type="NanoDroid universal Installer" ;;
 
-		*service.sh*     ) local msc_type="NanoDroid universal Magisk Module services.sh" ;;
+		*service.sh*      ) local msc_type="NanoDroid universal Magisk Module service.sh" ;;
 
 		*Full*update*     ) local msc_type="NanoDroid Full Package TWRP invoker" ;;
 		*Full*.prop*      ) local msc_type="NanoDroid Full Package Module Module properties" ;;
@@ -269,14 +271,15 @@ get_msc_info () {
 		*.nanodroid-setup*) local msc_type="NanoDroid default installation configuration" ;;
 		*.nanodroid-overlay*) local msc_type="NanoDroid default overlay configuration" ;;
 
-		*.maps.jar*       ) local msc_type="microG Maps v1 support" ;;
+		*.maps.jar*       ) local msc_type="microG Maps v1 support"
+				    local msc_name=$(basename ${1}) ;;
 
-		*noti*.ogg*       ) local msc_type="The Legend of Zelda: Notification" ;;
-		*ring*.ogg*       ) local msc_type="The Legend of Zelda: Ringtone" ;;
-		*ui*.ogg*         ) local msc_type="The Legend of Zelda: UI Sound" ;;
-		*noti*.mp3*       ) local msc_type="The Legend of Zelda: Notification" ;;
-		*ring*.mp3*       ) local msc_type="The Legend of Zelda: Ringtone" ;;
-		*ui*.mp3*         ) local msc_type="The Legend of Zelda: UI Sound" ;;
+		*noti*.ogg*       ) local msc_type="The Legend of Zelda Notification" ;;
+		*ring*.ogg*       ) local msc_type="The Legend of Zelda Ringtone" ;;
+		*ui*.ogg*         ) local msc_type="The Legend of Zelda UI Sound" ;;
+		*noti*.mp3*       ) local msc_type="The Legend of Zelda Notification" ;;
+		*ring*.mp3*       ) local msc_type="The Legend of Zelda Ringtone" ;;
+		*ui*.mp3*         ) local msc_type="The Legend of Zelda UI Sound" ;;
 		*.ttf*            ) local msc_type="Nintendo UI Font" ;;
 
 		*LICENSE*         ) local msc_type="exclude" ;;
@@ -290,13 +293,17 @@ get_msc_info () {
 		*                 ) local msc_type="unknown" ;;
 	esac
 
+	[[ "${1}" == *.prop* ]] && local msc_name=$(basename ${1})
+	[[ "${msc_type}" == *Zelda* ]] && local msc_name=$(basename ${1} | sed -e 's/\..*//;s/_/ /g')
+
 	case ${msc_type} in
 		exclude ) return 0 ;;
 		unknown ) echo "No report template for file:	${1}" ;;
 		*       ) local msc_file=$(basename ${1})
-		          local msc_name=$(basename ${1} | sed -e 's/\..*//')
 		          local msc_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 		          local msc_sha=$(sha256sum ${1} | gawk '{print $1}')
+
+		          [ -z "${msc_name}" ] && local msc_name=$(basename ${1} | sed -e 's/\.[^.]*$//')
 
 		          echo "${msc_type}: ${msc_name}
 	| Filename:	${msc_file}
