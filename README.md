@@ -134,7 +134,7 @@ for apks downloaded from F-Droid repositories or from APK Mirror, `build-package
 The `build-package` script additionally supports the following parameters:
 
 * `check` check if all files were properly downloaded
-* `report` create a package report **work-in-progress**
+* `report` create a package report
 * `clean` remove any untracked files from the repo (e. g. from `build-package pull`)
 * `dalvik [.jar]` prepare a jar file for use with DalvikVM (requires Android SDK)
 * `ver [version] [date]` change project version
