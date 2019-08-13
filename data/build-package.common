@@ -166,8 +166,6 @@ increase_version_number () {
 		"${CWD}/SetupWizard/META-INF/com/google/android/aroma-config"
 	sed -e "s/rom_date\",.*/rom_date\",	\"${date}\")\;/" -i \
 		"${CWD}/SetupWizard/META-INF/com/google/android/aroma-config"
-
-	exit 0
 }
 
 increase_module_version () {
@@ -177,8 +175,6 @@ increase_module_version () {
 		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
 			-i "${CWD}/${module}/module.prop"
 	done
-
-	exit 0
 }
 
 dalvikize_jar () {
