@@ -142,27 +142,29 @@ zip_add_setup () {
 }
 
 increase_version_number () {
-	if [ -z ${3} ]; then
+	if [ -z ${2} ]; then
 		date=99999999
-	else	date=${3}
+	else	date=${2}
 	fi
+
+	[ -z ${1} ] && error "no new version number given (current: ${version_code})"
 
 	for file in "CommonAddon" "CommonInstaller" \
 		"systest/SysTest" "patcher/CommonPatcher" \
 		"SetupWizard/nanodroid-setup" \
 		"uninstaller/META-INF/com/google/android/update-binary"; do
-		sed -e "s/^VERSION=.*/VERSION=${2}.${date}/" -i "${CWD}/${file}"
+		sed -e "s/^VERSION=.*/VERSION=${1}.${date}/" -i "${CWD}/${file}"
 	done
 
-	sed -e "s/^version_code.*/version_code=${2}" -i "${CWD}/build-package"
+	sed -e "s/^version_code.*/version_code=${1}" -i "${CWD}/build-package"
 	sed -e "s/^version_date.*/version_date=${date}" -i "${CWD}/build-package"
 
 	for module in Full microG FDroid BromiteWebView OsmAnd; do
-		sed -e "s/version=.*/version=v${2}.${date}/" -i \
+		sed -e "s/version=.*/version=v${1}.${date}/" -i \
 			"${CWD}/${module}/module.prop"
 	done
 
-	sed -e "s/rom_version\",.*/rom_version\",	\"${2}\")\;/" -i \
+	sed -e "s/rom_version\",.*/rom_version\",	\"${1}\")\;/" -i \
 		"${CWD}/SetupWizard/META-INF/com/google/android/aroma-config"
 	sed -e "s/rom_date\",.*/rom_date\",	\"${date}\")\;/" -i \
 		"${CWD}/SetupWizard/META-INF/com/google/android/aroma-config"
@@ -170,7 +172,7 @@ increase_version_number () {
 
 increase_module_version () {
 	for module in Full microG FDroid BromiteWebView OsmAnd; do
-		eval $(grep versionCode "${PWD}"/"${module}"/module.prop)
+		eval $(grep versionCode "${CWD}/${module}/module.prop")
 		local versionCode=$((versionCode+1))
 		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
 			-i "${CWD}/${module}/module.prop"

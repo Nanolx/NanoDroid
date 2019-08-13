@@ -93,7 +93,7 @@ for opt in ${@}; do
 		;;
 
 		ver )
-			increase_version_number "${@}"
+			increase_version_number "${2}" "${3}"
 		;;
 
 		bump )
@@ -101,7 +101,7 @@ for opt in ${@}; do
 		;;
 
 		dalvik )
-			dalvikize_jar "${2}"
+			dalvikize_jar "${2}" "${3}"
 		;;
 
 		pull )
