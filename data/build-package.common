@@ -182,13 +182,19 @@ increase_module_version () {
 }
 
 dalvikize_jar () {
-	if [[ -f ${1} ]]; then
-		${ANDROID_HOME}/build-tools/27.0.3/dx --dex \
+
+	[ -z "${ANDROID_HOME}" ] && error "ANDROID_HOME is not set!"
+	[ ! -f "${ANDROID_HOME}/build-tools/28.0.3/dx" ] && error "can't find 'dx' binary in \"${ANDROID_HOME}/build-tools/28.0.3\"!"
+	[ ! -z "${2}" ] && local dx_extra_arg="--min-sdk-version=${2}"
+
+	if [ -f "${1}" ]; then
+		${ANDROID_HOME}/build-tools/28.0.3/dx --dex \
 			--output="$(basename "${1}" .jar).dex" \
-			"${1}"
+			${dx_extra_arg} "${1}"
+	else
+		error "can't find input file \"${1}\""
 	fi
 
-	exit 0
 }
 
 show_help () {
@@ -225,9 +231,9 @@ misc. stuff:
 	check			| check if all files were properly downloaded
 	clean			| remove any untracked files from the repo
 	report			| create package report (work-in-progress)
-	dalvik	[jar]		| prepare a jar file for dalvikvm usage
-	ver	[ver] [date]	| bump version
-	bump			| bump versionCode in Magisk Modules
+	dalvik	[jar] [:minsdk]	| prepare a jar file for dalvikvm usage
+	ver	[ver] [:date]	| bump version accross whole project
+	bump			| increment Magisk Module versionCodes by 1
 "
 
 	exit 0
