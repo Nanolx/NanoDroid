@@ -65,8 +65,9 @@ mount_partitions () {
 
 	! is_mounted /system && mount -o rw /system || mount -o rw,remount /system
 
-	if [ ! -f /system/build.prop ]; then
-		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
+	if ! is_mounted /system; then
+		sys_tmp=$(find /dev/block -type l -iname system${SLOT} | head -n 1)
+		SYSTEMBLOCK=$(readlink -f ${sys_tmp})
 		mount -o rw ${SYSTEMBLOCK} /system
 	fi
 
@@ -82,7 +83,8 @@ mount_partitions () {
 	if [ -L /system/vendor ]; then
 		! is_mounted /vendor && mount /vendor
 		if ! is_mounted /vendor; then
-			VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
+			vendor_tmp=$(find /dev/block -type l -iname vendor${SLOT} | head -n 1)
+			VENDORBLOCK=$(readlink -f ${vendor_tmp})
 			mount -o ro ${VENDORBLOCK} /vendor
 		fi
 	elif [ -d /system/vendor ]; then
