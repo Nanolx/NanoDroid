@@ -347,8 +347,16 @@ call_dalvikvm () {
 		BOOTCLASSES=${BOOTCLASSES}:${jar}
 	done
 
-	DALVIKVM_OPTS="-verbose:gc -verbose:jit -verbose:jni \
-		-verbose:class -Xnodex2oat -Xnoimage-dex2oat"
+	supported_opts=$(dalvikvm --help 2>&1)
+
+	DALVIKVM_OPTS=""
+
+	[[ "${supported_opts}" == *\[no\]dex2oat* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -Xnodex2oat"
+	[[ "${supported_opts}" == *\[no\]image-dex2oat* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -Xnoimage-dex2oat"
+	[[ "${supported_opts}" == *verbose:*gc* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:gc"
+	[[ "${supported_opts}" == *verbose:*jit* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jit"
+	[[ "${supported_opts}" == *verbose:*jni* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jni"
+	[[ "${supported_opts}" == *verbose:*class* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:class"
 
 	if [ "${ROM_DEX_STATUS}" = "DEODEX" ]; then
 		/system/bin/dalvikvm \
