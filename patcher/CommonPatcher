@@ -347,7 +347,7 @@ call_dalvikvm () {
 		BOOTCLASSES=${BOOTCLASSES}:${jar}
 	done
 
-	supported_opts=$(dalvikvm --help 2>&1)
+	supported_opts=$(/system/bin/dalvikvm --help 2>&1)
 
 	DALVIKVM_OPTS=""
 
