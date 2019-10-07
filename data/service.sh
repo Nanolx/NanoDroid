@@ -37,8 +37,13 @@ install_bromitewebview () {
 	until [ $(getprop sys.boot_completed). = 1. ]; do sleep 1; done
 
 	# Bromite WebView needs to be installed as user app to prevent crashes
-	pm list packages -f | grep -q /data.*com.android.webview || \
-		pm install -r "${MODDIR}"/system/app/*/*.apk &
+	if [ -d "${MODDIR}/system/product/app" ]; then
+		pm list packages -f | grep -q /data.*com.android.webview || \
+			pm install -r "${MODDIR}"/system/product/app/*/*.apk &
+	else
+		pm list packages -f | grep -q /data.*com.android.webview || \
+			pm install -r "${MODDIR}"/system/app/*/*.apk &
+	fi
 }
 
 case ${MODULE} in

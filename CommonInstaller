@@ -1184,6 +1184,7 @@ install_bromite_webview () {
 			esac
 
 			WEBVIEW_REPLACE=BromiteWebView
+			WEBVIEW_DIR=""
 			BACKUP_PATH="${STORAGE}/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
 			for app in webview webviewstub WebViewStub Webview; do
@@ -1196,6 +1197,19 @@ install_bromite_webview () {
 					fi
 
 					WEBVIEW_REPLACE=${app}
+					break
+				fi
+
+				if [ -d /system/product/app/${app} ]; then
+					if [ "${MODE}" = "SYSTEM" ]; then
+						echo "    backing up ${app} to ${BACKUP_PATH}/product/app/${app}"
+						mkdir -p "${BACKUP_PATH}/product/app"
+						rm -rf "${BACKUP_PATH}/product/app/${app}"
+						mv /system/product/app/${app} "${BACKUP_PATH}/product/app/"
+					fi
+
+					WEBVIEW_REPLACE=${app}
+					WEBVIEW_DIR="product/app"
 					break
 				fi
 			done
@@ -1211,7 +1225,7 @@ install_bromite_webview () {
 				done
 			fi
 
-			nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib ${WEBVIEW_REPLACE}
+			nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib ${WEBVIEW_REPLACE} ${WEBVIEW_DIR}
 		fi
 	fi
 }
@@ -1308,6 +1322,8 @@ nanodroid_install_apk () {
 			break
 		fi
 	done
+
+	[ -n "${4}" ] && dir="system/${4}"
 
 	[ -z "${source}" ] && error "app ${app} not found"
 
