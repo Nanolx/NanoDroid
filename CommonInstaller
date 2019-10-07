@@ -228,44 +228,40 @@ error () {
 
 # taken from Magisk, with minor modifications for NanoDroid
 mount_partitions () {
-	SLOT=$(grep_cmdline androidboot.slot_suffix)
-	if [ -z ${SLOT} ]; then
-		SLOT=_$(grep_cmdline androidboot.slot)
-		[ "${SLOT}" = "_" ] && SLOT=
-	fi
-
 	DEVICE_AB=FALSE
 	VENDOR_COMPAT=FALSE
-	SYSTEM_AS_ROOT=FALSE
+
+	SYSTEM_AS_ROOT=$(getprop ro.build.system_root_image)
+	SYSTEM_BLOCK=/dev/block/bootdevice/by-name/system
+
+	if [ "${SYSTEM_AS_ROOT}" == "true" ]; then
+		SLOT=$(grep_cmdline androidboot.slot_suffix)
+		if [ -n "${SLOT}" ]; then
+			DEVICE_AB=TRUE
+			SYSTEM_BLOCK=/dev/block/bootdevice/by-name/system${SLOT}
+		fi
+		SYSTEM_MOUNT=/system_root
+	else
+		SYSTEM_MOUNT=/system
+	fi
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
 	mount -o bind /dev/urandom /dev/random
-	! is_mounted /system && mount -o rw /system || mount -o rw,remount /system
-
-	if [ ! -f /system/build.prop ]; then
-		DEVICE_AB=TRUE
-		sys_tmp=$(find /dev/block -type l -iname system${SLOT} | head -n 1)
-		SYSTEMBLOCK=$(readlink -f ${sys_tmp})
-		mount -o rw ${SYSTEMBLOCK} /system
-	fi
+	! is_mounted ${SYSTEM_MOUNT} && mount -o rw ${SYSTEM_BLOCK} ${SYSTEM_MOUNT} || mount -o rw,remount ${SYSTEM_MOUNT}
 
 	if [ -f /system/init.rc ]; then
-		SYSTEM_AS_ROOT=TRUE
 		[ -L /system_root ] && rm -f /system_root
 		mkdir -p /system_root 2>/dev/null
 		mount --move /system /system_root
 		mount -o bind /system_root/system /system
-	else
-		grep ' / ' /proc/mounts | grep -qv 'rootfs' || \
-			grep -q ' /system_root ' /proc/mounts \
-			&& SYSTEM_AS_ROOT=TRUE || SYSTEM_ROOT=FALSE
 	fi
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
+	! is_mounted /vendor && mount /vendor
+
 	if [ -L /system/vendor ]; then
-		! is_mounted /vendor && mount /vendor
 		if ! is_mounted /vendor; then
 			vendor_tmp=$(find /dev/block -type l -iname vendor${SLOT} | head -n 1)
 			VENDORBLOCK=$(readlink -f ${vendor_tmp})
@@ -328,13 +324,6 @@ detect_mode () {
 			rm -rf "${MODPATH}"
 		;;
 	esac
-
-	if [ "${nanodroid_fonts}" -eq 1 ]; then
-		if test -h ${MODPATH}/system/fonts/Roboto-Regular.ttf; then
-			CUSTOM_FONT="$(basename $(readlink ${MODPATH}/system/fonts/Roboto-Regular.ttf) .ttf)"
-			ui_print " << Detected NanoDroid-Font (${CUSTOM_FONT})"
-		fi
-	fi
 
 	[ "${ROM_NO_XBIN}" -eq 1 ] && \
 		NANODROID_BINDIR="${MODPATH}/system/bin" || \
@@ -547,24 +536,28 @@ setup_busybox () {
 	# XXX Magisk recovery_actions() compat
 	export BBDIR="${INSTALLER}/busybox"
 
-	export PATH="${INSTALLER}/busybox:${PATH}"
+	export PATH="${BBDIR}:${PATH}"
 }
 
 # Taken from Magisk, used for System Mode installation
 recovery_actions () {
 	mv /sbin /sbin_tmp
-	OLD_LD_LIB=$LD_LIBRARY_PATH
-	OLD_LD_PRE=$LD_PRELOAD
+	OLD_LD_LIB=${LD_LIBRARY_PATH}
+	OLD_LD_PRE=${LD_PRELOAD}
+	OLD_LD_CFG=${LD_CONFIG_FILE}
 	unset LD_LIBRARY_PATH
 	unset LD_PRELOAD
+	unset LD_CONFIG_FILE
+	export PATH=${BBDIR}:/system/bin:/vendor/bin
 }
 
 # Taken from Magisk, used for System Mode installation
 recovery_cleanup () {
 	mv /sbin_tmp /sbin 2>/dev/null
-	[ -z $OLD_PATH ] || export PATH=$OLD_PATH
-	[ -z $OLD_LD_LIB ] || export LD_LIBRARY_PATH=$OLD_LD_LIB
-	[ -z $OLD_LD_PRE ] || export LD_PRELOAD=$OLD_LD_PRE
+	[ -n ${OLD_PATH} ] && export PATH=${OLD_PATH}
+	[ -n ${OLD_LD_LIB} ] && export LD_LIBRARY_PATH=${OLD_LD_LIB}
+	[ -n ${OLD_LD_PRE} ] && export LD_PRELOAD=${OLD_LD_PRE}
+	[ -n ${OLD_LD_CFG} ] && export LD_CONFIG_FILE=${OLD_LD_CFG}
 }
 
 ##########################################################################################
@@ -696,11 +689,6 @@ magisk_install_finish () {
 			magisk_install_postinst
 		;;
 	esac
-
-	if [ "${nanodroid_fonts}" -eq 1 -a ! -z ${CUSTOM_FONT} ]; then
-		ui_print " << Restore NanoDroid-Font (${CUSTOM_FONT})"
-		${NANODROID_BINDIR}/nanodroid-font -s "${CUSTOM_FONT}"
-	fi
 
 	recovery_cleanup
 }
@@ -1072,7 +1060,11 @@ install_zelda () {
 	# install Zelda Ringtones when requested
 	if [ "${nanodroid_zelda}" -eq 1 ]; then
 		ui_print " << with Zelda sounds"
-		nanodroid_install_dir media
+		if [ -d /system/media/audio ]; then
+			nanodroid_install_dir media
+		elif [ -d /system/product/media/audio ]; then
+			nanodroid_install_dir media /system/product/media
+		fi
 	else	ui_print " << without Zelda sounds"
 	fi
 }
@@ -1109,17 +1101,6 @@ install_nanodroidscripts () {
 		done
 
 		nanodroid_substitute xbin/nanodroid-prop
-	fi
-}
-
-install_fonts () {
-	if [ "${nanodroid_fonts}" -eq 1 ]; then
-		ui_print " << with Nintendo Fonts"
-		nanodroid_install_file xbin/nanodroid-font bin
-		nanodroid_substitute xbin/nanodroid-font
-		nanodroid_install_file xbin/nfnt bin
-
-		nanodroid_install_dir fonts
 	fi
 }
 
@@ -1268,7 +1249,7 @@ install_addond () {
 
 nanodroid_install_dir () {
 	dir="${1}"
-	dest="/system/${dir}"
+	[ -n "${2}" ] && dest="${2}" || dest="/system/${dir}"
 
 	[ ! -d "${INSTALLER}/system/${dir}" ] && \
 		error "dir: ${dir} not found"
@@ -1495,7 +1476,6 @@ MODPATH=${MODPATH}
 SWIPE_LIBDIR=${SWIPE_LIBDIR}
 MODE=${MODE}
 MAGISK_VER_CODE=${MAGISK_VER_CODE}
-CUSTOM_FONT=${CUSTOM_FONT}
 ROM_NO_XBIN=${ROM_NO_XBIN}
 NANODROID_UPGRADE=${NANODROID_UPGRADE}
 NANODROID_BINDIR=${NANODROID_BINDIR}
@@ -1662,10 +1642,12 @@ check_cfg_setup () {
 	[ -z "${nanodroid_bash}" ] && set_prop nanodroid_bash 1
 	[ -z "${nanodroid_nano}" ] && set_prop nanodroid_nano 1
 	[ -z "${nanodroid_utils}" ] && set_prop nanodroid_utils 1
-	[ -z "${nanodroid_fonts}" ] && set_prop nanodroid_fonts 1
 
 	# in NanoDroid 21.0.90 nanodroid_override was dropped
 	sed -e '/nanodroid_override/d' -i "${cfg_setup}"
+
+	# in NanoDroid 22.5 nanodroid_fonts was dropped
+	sed -e '/nanodroid_fonts/d' -i "${cfg_setup}"
 
 	source "${cfg_setup}"
 }

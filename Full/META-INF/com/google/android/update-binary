@@ -56,7 +56,6 @@ install_swipe
 install_bash
 install_nano
 install_shell_utils
-install_fonts
 set_progress 0.9
 
 nanodroid_finalize

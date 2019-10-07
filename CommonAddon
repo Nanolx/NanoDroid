@@ -175,13 +175,6 @@ backup_action () {
 		backup_file "${FILE}"
 	done
 
-	if test -h /system/fonts/Roboto-Regular.ttf; then
-		CUSTOM_FONT="$(basename $(readlink /system/fonts/Roboto-Regular.ttf) .ttf)"
-		ui_print " ++ ${MODID} addon.d: detected NanoDroid-Font (${CUSTOM_FONT})"
-
-		echo CUSTOM_FONT=${CUSTOM_FONT} > /tmp/nanodroid_font
-	fi
-
 	ui_print " ++ ${MODID} ${VERSION} addon.d: backup done"
 }
 
@@ -200,14 +193,6 @@ postrestore_action () {
 	sleep 5
 
 	set_ldlibrarypath
-
-	if [ -f /tmp/nanodroid_font ]; then
-		source /tmp/nanodroid_font
-		ui_print " ++ ${MODID} ${VERSION} addon.d: restoring NanoDroid-Font (${CUSTOM_FONT})"
-
-		${NANODROID_BINDIR}/nanodroid-font -s "${CUSTOM_FONT}"
-		rm /tmp/nanodroid_font
-	fi
 
 	ui_print " ++ ${MODID} ${VERSION} addon.d: GApps removal"
 	print_google_apps | while read app; do

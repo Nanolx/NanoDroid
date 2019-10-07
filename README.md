@@ -34,7 +34,6 @@ Table of Contents
             * [NanoDroid-Prop](#nanodroid-prop)
             * [NanoDroid-Perm](#nanodroid-perm)
             * [NanoDroid-Util](#nanodroid-util)
-            * [NanoDroid-Font](#nanodroid-font)
             * [init scripts](#init-scripts)
             * [Shell Utilities](#shell-utilities)
             * [GNU Bash and GNU Nano](#gnu-bash-and-gnu-nano)
@@ -42,7 +41,6 @@ Table of Contents
          * [F-Droid](#f-droid)
          * [Applications](#applications)
          * [The Legend of Zelda ringtones and sounds](#the-legend-of-zelda-ringtones-and-sounds)
-         * [Nintendo Fonts](#nintendo-fonts)
       * [Installation](#installation)
          * [Alter Installation](#alter-installation)
          * [Installation Process](#installation-process)
@@ -229,9 +227,7 @@ NanoDroid includes
   * Addon.d support for System Mode installation
      * restores NanoDroid after ROM update
      * re-debloates GApps, if required
-     * restored NanoDroid-Font setup, if required
 * The Legend of Zelda ringtones and sounds
-* System UI fonts from several Nintendo games
 
 ## Packages
 
@@ -375,12 +371,6 @@ The `nanodroid-util` script contains the following features
 
 Full details on the NanoDroid-Util Script [> Details](doc/NanoDroidUtil.md)
 
-#### NanoDroid-Font
-
-The `nanodroid-font` script changes the Sytem UI font
-
-Full details on the NanoDroid-Font Script [> Details](doc/NanoDroidFont.md)
-
 #### init scripts
 
 The following init scripts are bundled with NanoDroid
@@ -497,12 +487,6 @@ NanoDroid includes a variety of OpenSource applications, check full [> list](doc
 NanoDroid includes **The Legend of Zelda** [> Nintendo](http://www.zelda.com/) ringtones and sounds, because it's dangerous to root alone.
 
 Full [> Details](doc/ZeldaSounds.md)
-
-### Nintendo Fonts
-
-NanoDroid includes Nintendo Fonts.
-
-Full [> Details](doc/NanoDroidFont.md)
 
 ## Installation
 
@@ -763,8 +747,6 @@ Additional credits go to
   * https://shadow53.com/android/no-gapps/
 * ale5000 for GApps Removal list and native signature spoofing detection
   * https://github.com/micro5k
-* PaperYoshi for Nintendo Fonts
-  * http://downloads.paperyoshi.at/
 * anestisb for vdexExtractor
   * https://github.com/anestisb/vdexExtractor
 * JesusFreke for smali/baksmali
