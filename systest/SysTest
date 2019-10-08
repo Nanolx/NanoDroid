@@ -39,54 +39,75 @@ is_mounted () {
 
 # taken from Magisk, with minor modifications for NanoDroid
 mount_partitions () {
-	SLOT=$(grep_cmdline androidboot.slot_suffix)
-	if [ -z ${SLOT} ]; then
-		SLOT=_$(grep_cmdline androidboot.slot)
-		[ "${SLOT}" = "_" ] && SLOT=
-	fi
-
 	DEVICE_AB=FALSE
-	SYSTEM_AS_ROOT=FALSE
 	VENDOR_COMPAT=FALSE
+
+	SYSTEM_AS_ROOT=$(getprop ro.build.system_root_image)
+	SYSTEM_BLOCK=/dev/block/bootdevice/by-name/system
+
+	RUNTIME_APEX=""
+	APEX_LOOP=""
+
+	if [ "${SYSTEM_AS_ROOT}" == "true" ]; then
+		SLOT=$(grep_cmdline androidboot.slot_suffix)
+		if [ -n "${SLOT}" ]; then
+			DEVICE_AB=TRUE
+			SYSTEM_BLOCK=/dev/block/bootdevice/by-name/system${SLOT}
+		fi
+		SYSTEM_MOUNT=/system_root
+	else
+		SYSTEM_MOUNT=/system
+	fi
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
-	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
-
-	! is_mounted /system && mount -o rw /system || mount -o rw,remount /system
-
-	if [ ! -f /system/build.prop ]; then
-		DEVICE_AB=TRUE
-		SYSTEMBLOCK=$(find /dev/block -iname system${SLOT} | head -n 1)
-		mount -o rw ${SYSTEMBLOCK} /system
-	fi
+	mount -o bind /dev/urandom /dev/random
+	! is_mounted ${SYSTEM_MOUNT} && mount -o rw ${SYSTEM_BLOCK} ${SYSTEM_MOUNT} || mount -o rw,remount ${SYSTEM_MOUNT}
 
 	if [ -f /system/init.rc ]; then
-		SYSTEM_AS_ROOT=TRUE
 		[ -L /system_root ] && rm -f /system_root
-		mkdir /system_root 2>/dev/null
+		mkdir -p /system_root 2>/dev/null
 		mount --move /system /system_root
 		mount -o bind /system_root/system /system
-	else
-		grep ' / ' /proc/mounts | grep -qv 'rootfs' || \
-			grep -q ' /system_root ' /proc/mounts \
-			&& SYSTEM_AS_ROOT=YES || SYSTEM_ROOT=NO
 	fi
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
+	if [ -f /system/apex/com.android.runtime.apex ]; then
+		RUNTIME_APEX="/system/apex/com.android.runtime.apex"
+	elif [ -f /system/apex/com.android.runtime.release.apex ]; then
+		RUNTIME_APEX="/system/apex/com.android.runtime.release.apex"
+	fi
+
+	if [ -n "${RUNTIME_APEX}" ]; then
+		mkdir -p /dev/tmp/apex
+		unzip "${RUNTIME_APEX}" -d /dev/tmp/apex
+
+		mkdir -p /apex/com.android.runtime
+
+		mount -oloop,ro /dev/tmp/apex/apex_payload.img /apex/com.android.runtime
+
+		APEX_LOOP=$(mount | awk '/com.android.runtime/{print $1}')
+	fi
+
+	! is_mounted /vendor && mount /vendor
+
 	if [ -L /system/vendor ]; then
-		! is_mounted /vendor && mount /vendor
 		if ! is_mounted /vendor; then
-			VENDORBLOCK=$(find /dev/block -iname vendor${SLOT} | head -n 1)
+			vendor_tmp=$(find /dev/block -type l -iname vendor${SLOT} | head -n 1)
+			VENDORBLOCK=$(readlink -f ${vendor_tmp})
 			mount -o ro ${VENDORBLOCK} /vendor
 		fi
 	elif [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
 		VENDOR_COMPAT=TRUE
+		echo " xxx compat /vendor link created!"
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
+
+	mount | awk '{print $1 " on " $3 " params: " $6}'
 }
+
 
 error () {
 	ui_print " "
@@ -297,6 +318,7 @@ store_results () {
 	add_log "DALVIKVM_ARCH=${DALVIKVM_ARCH}"
 	add_log "LD_LIBRARY_PATH=${LD}"
 	add_log "ROM_DEX_STATUS=${ROM_DEX_STATUS}"
+	add_log "RUNTIME_APEX=${RUNTIME_APEX}"
 
 	add_log ""
 	add_log "Generic System Properties"
