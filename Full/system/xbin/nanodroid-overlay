@@ -163,20 +163,26 @@ overrides_list () {
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 
-		echo "Overrides for /system/reserve:"
-		for app in $(find "${OVERLAY_PATH}/system/reserve" -name "*.replace"); do
-			echo "  * $(basename $(dirname "${app}"))"
-		done
+		if [ -d /system/reserve ]; then
+			echo "Overrides for /system/reserve:"
+			for app in $(find "${OVERLAY_PATH}/system/reserve" -name "*.replace"); do
+				echo "  * $(basename $(dirname "${app}"))"
+			done
+		fi
 
-		echo "Overrides for /system/product/app:"
-		for app in $(find "${OVERLAY_PATH}/system/product/app" -name "*.replace"); do
-			echo "  * $(basename $(dirname "${app}"))"
-		done
+		if [ -d /system/product/app ]; then
+			echo "Overrides for /system/product/app:"
+			for app in $(find "${OVERLAY_PATH}/system/product/app" -name "*.replace"); do
+				echo "  * $(basename $(dirname "${app}"))"
+			done
+		fi
 
-		echo "Overrides for /system/product/priv-app:"
-		for app in $(find "${OVERLAY_PATH}/system/product/priv-app" -name "*.replace"); do
-			echo "  * $(basename $(dirname "${app}"))"
-		done
+		if [ -d /system/product/priv-app ]; then
+			echo "Overrides for /system/product/priv-app:"
+			for app in $(find "${OVERLAY_PATH}/system/product/priv-app" -name "*.replace"); do
+				echo "  * $(basename $(dirname "${app}"))"
+			done
+		fi
 	else
 		echo "Moved-Out apps from /system/app:"
 		for app in $(find "${SYS_BACKUP_PATH}/app" -mindepth 1 -maxdepth 1 -type d); do
@@ -188,20 +194,26 @@ overrides_list () {
 			echo "  * $(basename $(dirname "${app}"))"
 		done
 
-		echo "Moved-Out apps from /system/reserve:"
-		for app in $(find "${SYS_BACKUP_PATH}/reserve" -mindepth 1 -maxdepth 1 -type d); do
-			echo "  * $(basename $(dirname "${app}"))"
-		done
+		if [ -d /system/reserve ]; then
+			echo "Moved-Out apps from /system/reserve:"
+			for app in $(find "${SYS_BACKUP_PATH}/reserve" -mindepth 1 -maxdepth 1 -type d); do
+				echo "  * $(basename $(dirname "${app}"))"
+			done
+		fi
 
-		echo "Moved-Out apps from /system/product/app:"
-		for app in $(find "${SYS_BACKUP_PATH}/product/app" -mindepth 1 -maxdepth 1 -type d); do
-			echo "  * $(basename $(dirname "${app}"))"
-		done
+		if [ -d /system/product/app ]; then
+			echo "Moved-Out apps from /system/product/app:"
+			for app in $(find "${SYS_BACKUP_PATH}/product/app" -mindepth 1 -maxdepth 1 -type d); do
+				echo "  * $(basename $(dirname "${app}"))"
+			done
+		fi
 
-		echo "Moved-Out apps from /system/product/priv-app:"
-		for app in $(find "${SYS_BACKUP_PATH}/product/priv-app" -mindepth 1 -maxdepth 1 -type d); do
-			echo "  * $(basename $(dirname "${app}"))"
-		done
+		if [ -d /system/product/priv-app ]; then
+			echo "Moved-Out apps from /system/product/priv-app:"
+			for app in $(find "${SYS_BACKUP_PATH}/product/priv-app" -mindepth 1 -maxdepth 1 -type d); do
+				echo "  * $(basename $(dirname "${app}"))"
+			done
+		fi
 	fi
 }
 
@@ -217,20 +229,26 @@ overrides_list_non () {
 			[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
 		done
 
-		echo "non-overriden apps from /system/reserve:"
-		for app in $(find "/system/reserve" -mindepth 1 -maxdepth 1 -type d); do
-			[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
-		done
+		if [ -d /system/reserve ]; then
+			echo "non-overriden apps from /system/reserve:"
+			for app in $(find "/system/reserve" -mindepth 1 -maxdepth 1 -type d); do
+				[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
+			done
+		fi
 
-		echo "non-overriden apps from /system/product/app:"
-		for app in $(find "/system/product/app" -mindepth 1 -maxdepth 1 -type d); do
-			[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
-		done
+		if [ -d /system/product/app ]; then
+			echo "non-overriden apps from /system/product/app:"
+			for app in $(find "/system/product/app" -mindepth 1 -maxdepth 1 -type d); do
+				[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
+			done
+		fi
 
-		echo "non-overriden apps from /system/product/priv-app:"
-		for app in $(find "/system/product/priv-app" -mindepth 1 -maxdepth 1 -type d); do
-			[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
-		done
+		if [ -d /system/product/priv-app ]; then
+			echo "non-overriden apps from /system/product/priv-app:"
+			for app in $(find "/system/product/priv-app" -mindepth 1 -maxdepth 1 -type d); do
+				[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
+			done
+		fi
 	else
 		echo "non-moved-out apps from /system/app:"
 		for app in $(find "/system/app" -mindepth 1 -maxdepth 1  -type d); do
@@ -242,21 +260,26 @@ overrides_list_non () {
 			echo "  * $(basename ${app})"
 		done
 
-		echo "non-moved-out apps from /system/reserve:"
-		for app in $(find "/system/reserve" -mindepth 1 -maxdepth 1  -type d); do
-			echo "  * $(basename ${app})"
-		done
+		if [ -d /system/reserve ]; then
+			echo "non-moved-out apps from /system/reserve:"
+			for app in $(find "/system/reserve" -mindepth 1 -maxdepth 1  -type d); do
+				echo "  * $(basename ${app})"
+			done
+		fi
 
-		echo "non-moved-out apps from /system/product/app:"
-		for app in $(find "/system/product/app" -mindepth 1 -maxdepth 1  -type d); do
-			echo "  * $(basename ${app})"
-		done
+		if [ -d /system/product/app ]; then
+			echo "non-moved-out apps from /system/product/app:"
+			for app in $(find "/system/product/app" -mindepth 1 -maxdepth 1  -type d); do
+				echo "  * $(basename ${app})"
+			done
+		fi
 
-		echo "non-moved-out apps from /system/product/priv-app:"
-		for app in $(find "/system/product/priv-app" -mindepth 1 -maxdepth 1  -type d); do
-			echo "  * $(basename ${app})"
-		done
-
+		if [ -d /system/product/priv-app ]; then
+			echo "non-moved-out apps from /system/product/priv-app:"
+			for app in $(find "/system/product/priv-app" -mindepth 1 -maxdepth 1  -type d); do
+				echo "  * $(basename ${app})"
+			done
+		fi
 	fi
 
 }
@@ -264,11 +287,11 @@ overrides_list_non () {
 overrides_clear () {
 	if [[ ${NO_MAGISK} -eq 0 ]]; then
 		echo "  removing Overlays from ${OVERLAY_PATH}"
-		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace") \
-			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace") \
-			   $(find "${OVERLAY_PATH}/system/reserve" -name "*.replace") \
-			   $(find "${OVERLAY_PATH}/system/product/app" -name "*.replace") \
-			   $(find "${OVERLAY_PATH}/system/product/priv-app" -name "*.replace") ; do
+		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace" 2>/dev/null) \
+			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace" 2>/dev/null) \
+			   $(find "${OVERLAY_PATH}/system/reserve" -name "*.replace" 2>/dev/null) \
+			   $(find "${OVERLAY_PATH}/system/product/app" -name "*.replace" 2>/dev/null) \
+			   $(find "${OVERLAY_PATH}/system/product/priv-app" -name "*.replace" 2>/dev/null) ; do
 			echo "  removing override: $(basename $(dirname ${app}))"
 			rm -rf "$(dirname "${app}")"
 		done
@@ -283,11 +306,11 @@ overrides_genconfig () {
 		export config="/data/.nanodroid-overlay"
 		touch ${config}
 
-		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace") \
-			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace") \
-			   $(find "${OVERLAY_PATH}/system/reserve" -name "*.replace") \
-			   $(find "${OVERLAY_PATH}/system/product/app" -name "*.replace") \
-			   $(find "${OVERLAY_PATH}/system/product/priv-app" -name "*.replace"); do
+		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace" 2>/dev/null) \
+			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace" 2>/dev/null) \
+			   $(find "${OVERLAY_PATH}/system/reserve" -name "*.replace" 2>/dev/null) \
+			   $(find "${OVERLAY_PATH}/system/product/app" -name "*.replace" 2>/dev/null) \
+			   $(find "${OVERLAY_PATH}/system/product/priv-app" -name "*.replace" 2>/dev/null); do
 			xapp=$(basename $(dirname ${app}))
 			echo "  adding ${xapp} to configuration"
 			grep -q "^${xapp}$" "${config}" 2>/dev/null || echo "${xapp}" >> "${config}"
