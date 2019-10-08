@@ -223,6 +223,54 @@ restore_apps () {
 
 		rmdir ${backup_path}/priv-app
 	fi
+
+	if [ -d ${backup_path}/reserve/ ]; then
+		for app in ${backup_path}/reserve/*; do
+			_app=$(basename ${app})
+			if [ -d /system/reserve/${_app} ]; then
+				ui_print " << removing backup: reserve:{_app}"
+				rm -rf "${app}"
+			else
+				ui_print " << restoring: reserve:${_app}"
+				mv "${app}" "/system/reserve/${_app}"
+				set_perm_data -r "/system/reserve/${_app}"
+			fi
+		done
+
+		rmdir ${backup_path}/reserve
+	fi
+
+	if [ -d ${backup_path}/product/app/ ]; then
+		for app in ${backup_path}/product/app/*; do
+			_app=$(basename ${app})
+			if [ -d /system/product/app/${_app} ]; then
+				ui_print " << removing backup: product/app:{_app}"
+				rm -rf "${app}"
+			else
+				ui_print " << restoring: product/app:${_app}"
+				mv "${app}" "/system/product/app/${_app}"
+				set_perm_data -r "/system/product/app/${_app}"
+			fi
+		done
+
+		rmdir ${backup_path}/product/app
+	fi
+
+	if [ -d ${backup_path}/product/priv-app/ ]; then
+		for app in ${backup_path}/product/priv-app/*; do
+			_app=$(basename ${app})
+			if [ -d /system/product/priv-app/${_app} ]; then
+				ui_print " << removing backup: product/priv-app:{_app}"
+				rm -rf "${app}"
+			else
+				ui_print " << restoring: product/priv-app:${_app}"
+				mv "${app}" "/system/product/priv-app/${_app}"
+				set_perm_data -r "/system/product/priv-app/${_app}"
+			fi
+		done
+
+		rmdir ${backup_path}/product/priv-app
+	fi
 }
 
 system_mode_uninstall () {
