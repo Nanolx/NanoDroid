@@ -1,5 +1,49 @@
 # ChangeLog
 
+## 22.5 in-dev "---"
+
+### Bugfixes
+
+* Patcher
+  * better ROM compat by detecting what DalvikVM options are actually supported
+
+* Installer, Patcher, Uninstaller, SysTest
+  * improved support for A/B and system-as-root devices
+  * mount `com.android.runtime` APEX on Android 10 (if ROM provides it)
+     * required for fully working installation environment
+
+* Uninstaller
+  * properly unmount system partition on system-as-root devices
+
+* Full package
+  * on Android 10 ringtones may need to be installed into `/system/product/media`
+
+* Bromite WebView package
+  * on Android 10 Bromite System WebView may need to be installed into `/system/product/app`
+
+### General Changes
+
+* Full, microG packages
+  * drop `Yalp Store`, as it hasn't received updates for a year now
+  * update `nanodroid_play` setup value accordingly
+     * before: value 20 = Yalp Store; 21 = Yalp + Fake Store ; 30 = Aurora Store ; 31 = Aurora + Fake Store
+     * now: value 20 = Aurora Store ; 21 = Aurora + Fake Store
+     * user will be auto-migrated from Yalp to Aurora Store (if required)
+
+* SysTest
+  * log the mounted android runtime APEX on Android 10 (if ROM provides it)
+
+* Uninstaller
+  * in uninstalling System Mode NanoDroid support restoring apps from `/system/reserve` and `/system/product` (if any)
+
+* nanodroid-overlay Script
+  * support creating overlays for `/system/product/app`
+  * support creating overlays for `/system/product/priv-app`
+  * guard non-universal app-directories (`/system/reserve`, `/system/product`) to prevent meaningless error messages
+
+* nanodroid-font Script
+  * dropped `nanodroid-font` Script and Nintendo UI Fonts
+
 ## 22.4.20190811 "[Château Picard](https://memory-alpha.fandom.com/wiki/Chateau_Picard)"
 
 ### Bugfixes
