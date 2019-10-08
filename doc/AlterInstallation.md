@@ -20,7 +20,7 @@ create it manually with the following content for the **full** package
 nanodroid_microg=1
 nanodroid_fdroid=1
 nanodroid_apps=1
-nanodroid_play=31
+nanodroid_play=21
 nanodroid_overlay=1
 nanodroid_zelda=1
 nanodroid_mapsv1=1
@@ -37,7 +37,7 @@ nanodroid_utils=1
 the **microG** package supports the following options (nanodroid_microg is always 1)
 
 ```
-nanodroid_play=10
+nanodroid_play=21
 nanodroid_overlay=0
 nanodroid_mapsv1=1
 nanodroid_gsync=0
@@ -88,8 +88,7 @@ what app store to use:
 * 1st item
   * 0 = No App Store
   * 1 = Play Store
-  * 2 = Yalp Store
-  * 3 = Aurora Store
+  * 2 = Aurora Store
       * alongside Aurora Services addon
 * 2nd item
   * 0 = without Fake Store

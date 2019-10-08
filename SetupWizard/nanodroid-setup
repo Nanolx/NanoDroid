@@ -120,20 +120,14 @@ elif grep -q "selected.1=2" "${store_prop}"; then
 	ui_print "  <>> setting property: nanodroid_play [Play Store]"
 	echo "nanodroid_play=10" >> "${nanodroid_setup}"
 elif grep -q "selected.1=3" "${store_prop}"; then
-	ui_print "  <>> setting property: nanodroid_play [Yalp Store]"
+	ui_print "  <>> setting property: nanodroid_play [Aurora Store]"
 	echo "nanodroid_play=20" >> "${nanodroid_setup}"
 elif grep -q "selected.1=4" "${store_prop}"; then
-	ui_print "  <>> setting property: nanodroid_play [Aurora Store]"
-	echo "nanodroid_play=30" >> "${nanodroid_setup}"
-elif grep -q "selected.1=5" "${store_prop}"; then
 	ui_print "  <>> setting property: nanodroid_play [Fake Store]"
 	echo "nanodroid_play=01" >> "${nanodroid_setup}"
-elif grep -q "selected.1=6" "${store_prop}"; then
-	ui_print "  <>> setting property: nanodroid_play [Yalp + Fake Store]"
-	echo "nanodroid_play=21" >> "${nanodroid_setup}"
-elif grep -q "selected.1=7" "${store_prop}"; then
+elif grep -q "selected.1=5" "${store_prop}"; then
 	ui_print "  <>> setting property: nanodroid_play [Aurora + Fake Store]"
-	echo "nanodroid_play=31" >> "${nanodroid_setup}"
+	echo "nanodroid_play=21" >> "${nanodroid_setup}"
 fi
 
 if grep -q "item.1.1=1" "${nlp_prop}"; then

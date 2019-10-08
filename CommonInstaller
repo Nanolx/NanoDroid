@@ -1024,7 +1024,7 @@ install_store () {
 
 	[ "${FAKE_STORE}" -eq 1 ] && STORE_CONFLICT="Phonesky" || STORE_CONFLICT=""
 
-	# install Yalp, Aurora or Play Store whichever requested
+	# install Aurora or Play Store whichever requested
 	case "${STORE_CHOICE}" in
 		1 )
 			# force unselect Fake Store when user has choosen Play Store
@@ -1040,12 +1040,6 @@ install_store () {
 		;;
 
 		2 )
-			ui_print " << with Yalp Store"
-			nanodroid_install_apk YalpStore
-			create_privapp_permissions_whitelist YalpStore
-		;;
-
-		3 )
 			ui_print " << with Aurora Store"
 			nanodroid_install_apk AuroraStore
 			nanodroid_install_apk AuroraServices
@@ -1635,6 +1629,17 @@ check_cfg_setup () {
 			3 ) tmp_prop="01" ;;
 			4 ) tmp_prop="21" ;;
 			* ) tmp_prop="10" ;;
+		esac
+
+		sed -e '/^nanodroid_play/d' -i "${cfg_setup}"
+		set_prop nanodroid_play "${tmp_prop}"
+	fi
+
+	# in NanoDroid 22.5 nanodroid_play has changed
+	if [ "${nanodroid_play}" -ge 30 ]; then
+		case "${nanodroid_play}" in
+			30 )	tmp_prop=20 ;;
+			31 )	tmp_prop=21 ;;
 		esac
 
 		sed -e '/^nanodroid_play/d' -i "${cfg_setup}"

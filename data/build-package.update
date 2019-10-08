@@ -20,12 +20,10 @@ update_act[7]='0'
 update_act[8]='0'
 # AuroraServices
 update_act[9]='0'
-# Yalp
-update_act[10]='0'
 # Phonesky
-update_act[11]='0'
+update_act[10]='0'
 # General Apps
-update_act[12]='0'
+update_act[11]='0'
 
 nanodroid_pull () {
 	update_microg
@@ -75,7 +73,6 @@ update_microg () {
 	update_act[8]='1'
 	update_act[9]='1'
 	update_act[10]='1'
-	update_act[11]='1'
 }
 
 grab_gsync () {
@@ -135,7 +132,7 @@ grab_apps () {
 }
 
 update_apps () {
-	update_act[12]='1'
+	update_act[11]='1'
 }
 
 grab_bromite () {
@@ -164,10 +161,9 @@ update_master () {
 	[ "${update_act[9]}" = "1" ] && grab_apk_from_gitlab ${gl_AURORASERVICES[@]}
 	[ "${update_act[5]}" = "1" ] && grab_apk_from_repo ${fd_FDROID[@]}
 	[ "${update_act[6]}" = "1" ] && grab_apk_from_repo ${fd_FDROID_PE[@]}
-	[ "${update_act[10]}" = "1" ] && grab_apk_from_repo ${fd_YALPSTORE[@]}
-	[ "${update_act[11]}" = "1" ] && grab_apk_from_repo ${nlx_PHONESKY[@]}
+	[ "${update_act[10]}" = "1" ] && grab_apk_from_repo ${nlx_PHONESKY[@]}
 	[ "${update_act[3]}" = "1" ] && grab_bromite
 	[ "${update_act[4]}" = "1" ] && grab_osmand
-	[ "${update_act[12]}" = "1" ] && grab_apps
+	[ "${update_act[11]}" = "1" ] && grab_apps
 	[ "${update_act[2]}" = "1" ] && grab_gsync
 }

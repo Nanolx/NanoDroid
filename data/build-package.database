@@ -20,7 +20,6 @@ fd_NLPMOZILLA=(fdroid org.microg.nlp.backend.ichnaea app nlpBackendIchnaea)
 fd_NLPNOMINATIM=(fdroid org.microg.nlp.backend.nominatim app nlpBackendNominatim)
 fd_NLPAPPLE=(fdroid org.microg.nlp.backend.apple app nlpBackendApple)
 fd_NLPRADIOCELL=(fdroid org.openbmap.unifiedNlp app nlpBackendRadiocell)
-fd_YALPSTORE=(fdroid com.github.kiliakin.yalpstore priv-app YalpStore)
 fd_AURORASTORE=(fdroid com.aurora.store app AuroraStore)
 
 ###
@@ -150,7 +149,6 @@ file_database=(
 	${appsfolder[4]}/GmsCore/GmsCore.apk.gz
 	${appsfolder[4]}/GsfProxy/GsfProxy.apk.gz
 	${appsfolder[4]}/Phonesky/Phonesky.apk.gz
-	${appsfolder[4]}/YalpStore/YalpStore.apk.gz
 
 	${appsfolder[5]}/common/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	${appsfolder[5]}/K/app/GoogleContactsSync/GoogleContactsSync.apk.gz

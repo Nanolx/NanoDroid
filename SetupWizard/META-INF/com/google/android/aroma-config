@@ -108,10 +108,8 @@ selectbox(
 	"Select the Google App Store you want", "", 2, #-- Group 1. key = "selected.1"
 	"None",			"Install no Google App Store",				0,	#-- selected.1 = 1
 	"Play Store (patched)",	"Install patched Play Store with microG (in-)app-purchase support", 0,	#-- selected.1 = 2
-	"Yalp Store",		"Install alternative Yalp Store",			0,	#-- selected.1 = 3
 	"Aurora Store",		"Install alternative Aurora Store",			0,	#-- selected.1 = 4
 	"Fake Store",		"Install Fake Store only",				0,	#-- selected.1 = 5
-	"Yalp + Fake Store",	"Install alternative Yalp Store (and Fake Store)",	0,	#-- selected.1 = 6
 	"Aurora + Fake Store",	"Install alternative Aurora Store (and Fake Store)",	1	#-- selected.1 = 7
 
 );

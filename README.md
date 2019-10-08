@@ -206,7 +206,6 @@ NanoDroid includes
   * alternatively you can install [> Aurora Droid](https://f-droid.org/en/packages/com.aurora.adroid) and it's services extension
 * modified Play Store to allow (in-)app-purchases with microG
   * this required the Play Store to be modified, see the [> patch](https://gitlab.com/Nanolx/microg-phonesky-iap-support)
-  * alternatively [> Yalp Store (fork)](https://f-droid.org/en/packages/com.github.kiliakin.yalpstore) can be installed instead
   * alternatively [> Aurora Store](https://f-droid.org/en/packages/com.aurora.store) and it's services extension can be installed instead
 * custom init scripts
 * pseudo-debloat feature (Magisk Mode)
@@ -458,9 +457,9 @@ NanoDroid includes microG as follows
   * disabled by default
 * optional Swipe libraries
   * disabled by default
-* choose between modified **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/), **Yalp Store** [> F-Droid](https://f-droid.org/en/packages/com.github.kiliakin.yalpstore/) or **Aurora Store** [> F-Droid](https://f-droid.org/de/packages/com.dragons.aurora/)
-  * **Yalp Store** and **Aurora Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
-     * go to **Yalp Store** or **Aurora Store** Settings > Installation Method > `Using system permissions`
+* choose between modified **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/) or **Aurora Store** [> F-Droid](https://f-droid.org/de/packages/com.dragons.aurora/)
+  * **Aurora Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
+     * go to **Aurora Store** Settings > Installation Method > `Using system permissions`
   * Play Store is modified to allow (in-)app-purchases with microG
 * GApps and several location services conflict with microG and unified Nlp. Thus they are removed during NanoDroid installation
   * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
