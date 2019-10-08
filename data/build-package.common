@@ -156,8 +156,8 @@ increase_version_number () {
 		sed -e "s/^VERSION=.*/VERSION=${1}.${date}/" -i "${CWD}/${file}"
 	done
 
-	sed -e "s/^version_code.*/version_code=${1}" -i "${CWD}/build-package"
-	sed -e "s/^version_date.*/version_date=${date}" -i "${CWD}/build-package"
+	sed -e "s/^version_code.*/version_code=${1}/g" -i "${CWD}/build-package"
+	sed -e "s/^version_date.*/version_date=${date}/g" -i "${CWD}/build-package"
 
 	for module in Full microG FDroid BromiteWebView OsmAnd; do
 		sed -e "s/version=.*/version=v${1}.${date}/" -i \

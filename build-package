@@ -1,7 +1,7 @@
 #!/bin/bash
 
-version_code=22.4
-version_date=20190811
+version_code=22.5
+version_date=99999999
 
 build_date=$(LANG='en_US' date +"%Y%m%d")
 
@@ -94,14 +94,17 @@ for opt in ${@}; do
 
 		ver )
 			increase_version_number "${2}" "${3}"
+			exit $?
 		;;
 
 		bump )
 			increase_module_version
+			exit $?
 		;;
 
 		dalvik )
 			dalvikize_jar "${2}" "${3}"
+			exit $?
 		;;
 
 		pull )
