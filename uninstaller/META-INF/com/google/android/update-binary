@@ -350,7 +350,10 @@ done
 
 ui_print " >> clean up"
 
-umount /system
+umount -l /system_root 2>/dev/null
+umount -l /system 2>/dev/null
+umount -l /apex/com.android.runtime 2>/dev/null
+losetup -d ${APEX_LOOP} 2>/dev/null
 
 ui_print " "
 ui_print " > Done!"
