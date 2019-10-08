@@ -21,6 +21,9 @@
 * Bromite WebView package
   * on Android 10 Bromite System WebView may need to be installed into `/system/product/app`
 
+* build-package Script
+  * minor fix in version bumping
+
 ### General Changes
 
 * Full, microG packages
@@ -41,8 +44,34 @@
   * support creating overlays for `/system/product/priv-app`
   * guard non-universal app-directories (`/system/reserve`, `/system/product`) to prevent meaningless error messages
 
+* build-package Script
+  * improve dalvik-izing jar files
+
 * nanodroid-font Script
   * dropped `nanodroid-font` Script and Nintendo UI Fonts
+
+### Updates
+
+* automatic
+  * Aurora Droid (1.0.4)
+  * Aurora Store (3.1.2)
+  * Blokada (4.2.1)
+  * Bromite System WebView (77.0.3865.104)
+  * KeePassDX (2.5.0.0beta23)
+  * NewPipe (0.17.3)
+  * nlp Backend Déjà Vu (1.1.12)
+  * OpenCamera (1.47.2)
+  * Orbot (16.1.2-RC-2)
+  * OSM Android (3.4.8)
+  * QKSMS (3.7.2)
+  * Simple Calendar (6.6.1)
+  * Simple Gallery (6.10.0)
+  * SmartPack Kernel Manager (8.8)
+  * Termux (0.75)
+  * Tor Browser (60.9.0)
+
+* manual
+  * Google Play (16.9.10)
 
 ## 22.4.20190811 "[Château Picard](https://memory-alpha.fandom.com/wiki/Chateau_Picard)"
 
