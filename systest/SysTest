@@ -45,7 +45,8 @@ mount_partitions () {
 	SYSTEM_AS_ROOT=$(getprop ro.build.system_root_image)
 	SYSTEM_BLOCK=/dev/block/bootdevice/by-name/system
 
-	RUNTIME_APEX=""
+	APEX_FILE=""
+	APEX_DIR=""
 	APEX_LOOP=""
 
 	if [ "${SYSTEM_AS_ROOT}" == "true" ]; then
@@ -57,6 +58,31 @@ mount_partitions () {
 		SYSTEM_MOUNT=/system_root
 	else
 		SYSTEM_MOUNT=/system
+	fi
+
+	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+
+	for apex in com.android.runtime com.android.runtime.release com.android.runtime.debug; do
+		if [ -f /system/apex/${apex}.apex ]; then
+			APEX_FILE=/system/apex/${apex}.apex
+			break
+		elif [ -d /system/apex/${apex} ]; then
+			APEX_DIR=/system/apex/${apex}
+			break
+		fi
+	done
+
+	if [ -n "${APEX_FILE}" ]; then
+		mkdir -p /dev/tmp/apex
+		unzip "${RUNTIME_APEX}" -d /dev/tmp/apex
+
+		mkdir -p /apex/com.android.runtime
+		mount -oloop,ro /dev/tmp/apex/apex_payload.img /apex/com.android.runtime
+
+		APEX_LOOP=$(mount | awk '/com.android.runtime/{print $1}')
+	elif [ -n "${APEX_DIR}" ]; then
+		mkdir -p /apex
+		ln -sf "${APEX_DIR}" /apex/com.android.runtime
 	fi
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
@@ -318,7 +344,12 @@ store_results () {
 	add_log "DALVIKVM_ARCH=${DALVIKVM_ARCH}"
 	add_log "LD_LIBRARY_PATH=${LD}"
 	add_log "ROM_DEX_STATUS=${ROM_DEX_STATUS}"
-	add_log "RUNTIME_APEX=${RUNTIME_APEX}"
+
+	if [ -n "${APEX_FILE}" ]; then
+		add_log "APEX_FILE=${APEX_FILE}"
+	elif [ -n "${APEX_DIR}" ]; then
+		add_log "APEX_DIR=${APEX_DIR}"
+	fi
 
 	add_log ""
 	add_log "Generic System Properties"
