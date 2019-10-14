@@ -355,6 +355,8 @@ for module in NanoDroid NanoDroid_microG NanoDroid_FDroid \
 	fi
 done
 
+rm -f /data/adb/.nanodroid_runtimeclean
+
 ui_print " >> clean up"
 
 umount -l /system_root 2>/dev/null

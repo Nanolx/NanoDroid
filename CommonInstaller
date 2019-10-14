@@ -415,13 +415,15 @@ nanodroid_finalize () {
 		;;
 	esac
 
-	# required on Android 10, else all apps bundled with NanoDroid will not show a permission prompt for
-	# android.permission.WRITE_EXTERNAL_STORAGE (for whatever reason).
-	if [ "${SDK_VERSION}" -ge 29 ]; then
+	# required on Android 10, else all apps bundled with NanoDroid will not
+	# show a permission prompt for android.permission.WRITE_EXTERNAL_STORAGE
+	if [ "${SDK_VERSION}" -ge 29 -a ! -f /data/adb/.nanodroid_runtimeclean ]; then
 		find /data/system/users -type f -name 'runtime-permissions.xml' 2>/dev/null | while read file; do
 			rm -f "${file}"
 			echo "  ++ resetting permissions: ${file}"
 		done
+
+		touch /data/adb/.nanodroid_runtimeclean
 	fi
 
 	if [ "${MODE}" = "MAGISK" ]; then
