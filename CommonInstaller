@@ -281,7 +281,7 @@ mount_partitions () {
 
 	if [ -n "${APEX_FILE}" ]; then
 		mkdir -p /dev/tmp/apex
-		unzip "${RUNTIME_APEX}" -d /dev/tmp/apex
+		unzip "${APEX_FILE}" -d /dev/tmp/apex
 
 		mkdir -p /apex/com.android.runtime
 		mount -oloop,ro /dev/tmp/apex/apex_payload.img /apex/com.android.runtime
