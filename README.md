@@ -617,6 +617,11 @@ List of known issues and their respective fixes or workarounds.
 * You can't get past the first page of the microG login wizard on KitKat
   * updating microG to (at least) 0.2.7.17455 will fix the issue
 
+### Updating Play support libraries
+
+* Play Store tries to update itself or the Play Services, both updates fail because you have microG and a modified Play Store installed
+  * you can disable the `GMSCoreUpdateService` service of the Play Store to prevent it from updating
+
 ### Google Account
 
 * Can't login to Google Account
