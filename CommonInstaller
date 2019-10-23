@@ -304,7 +304,13 @@ mount_partitions () {
 	elif [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
 		VENDOR_COMPAT=TRUE
-		echo " xxx compat /vendor link created!"
+
+		if ! is_mounted /vendor; then
+			vendor_tmp=$(find /dev/block -type l -iname vendor${SLOT} | head -n 1)
+			VENDORB_LOCK=$(readlink -f ${vendor_tmp})
+			mount -o ro ${VENDOR_BLOCK} /vendor
+		fi
+
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
 
