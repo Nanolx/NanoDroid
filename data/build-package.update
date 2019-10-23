@@ -166,4 +166,5 @@ update_master () {
 	[ "${update_act[4]}" = "1" ] && grab_osmand
 	[ "${update_act[11]}" = "1" ] && grab_apps
 	[ "${update_act[2]}" = "1" ] && grab_gsync
+	[ "${update_act[1]}" = "1" ] && grab_swipe
 }
