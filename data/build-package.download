@@ -165,13 +165,6 @@ grab_apk_from_repo () {
 			local apk_dest="${appsfolder[10]}/${3}/${4}"
 		;;
 
-		com.google.android.gms )
-			# XXX select mapbox build in official microG repo
-			local apk_name="$(jq -r --arg pkg "${pkg_name}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).apkName' ${index_file})"
-			local sha_sum="$(jq -r --arg pkg "${pkg_name}" '.packages[$pkg][0] | select (.versionName | contains("mapbox")).hash' ${index_file})"
-			local apk_dest="${appsfolder[2]}/${3}/${4}"
-		;;
-
 		* )
 			local apk_dest="${appsfolder[2]}/${3}/${4}"
 		;;
