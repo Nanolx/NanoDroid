@@ -50,11 +50,11 @@ install_services
 install_addond
 
 if ! ${BOOTMODE} ; then
-	umount /system_root 2>/dev/null
-	umount /system 2>/dev/null
-	umount /vendor 2>/dev/null
-	umount /dev/random 2>/dev/null
-	umount /apex/com.android.runtime 2>/dev/null
+	umount -l /system_root 2>/dev/null
+	umount -l /system 2>/dev/null
+	umount -l /vendor 2>/dev/null
+	umount -l /dev/random 2>/dev/null
+	umount -l /apex/com.android.runtime 2>/dev/null
 	losetup -d ${APEX_LOOP} 2>/dev/null
 fi
 
