@@ -265,56 +265,50 @@ mount_apex () {
 mount_partitions () {
 	DEVICE_AB=FALSE
 	VENDOR_COMPAT=FALSE
-
-	SYSTEM_AS_ROOT=$(getprop ro.build.system_root_image)
+	SYSTEM_AS_ROOT=FALSE
 
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
-	if [ -n "${SLOT}" ]; then
-		DEVICE_AB=TRUE
-		SYSTEM_BLOCK=/dev/block/bootdevice/by-name/system${SLOT}
+	if [ -z ${SLOT} ]; then
+		SLOT=$(grep_cmdline androidboot.slot)
+		if [ -n ${SLOT} ]; then
+			SLOT=_${SLOT}
+			DEVICE_AB=TRUE
+		fi
 	fi
 
-	system_tmp=$(find /dev/block -type l -iname ssytem${SLOT} | head -n 1)
+	system_tmp=$(find /dev/block -type l -name system${SLOT} | head -n 1)
 	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
-
-	if [ "${SYSTEM_AS_ROOT}" == "true" ]; then
-		SYSTEM_MOUNT=/system_root
-		mkdir -p /system_root
-	else
-		SYSTEM_MOUNT=/system
-	fi
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
 	mount -o bind /dev/urandom /dev/random
-	! is_mounted ${SYSTEM_MOUNT} && mount -o rw ${SYSTEM_BLOCK} ${SYSTEM_MOUNT} || mount -o rw,remount ${SYSTEM_MOUNT}
+	! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system || mount -o rw,remount ${SYSTEM_BLOCK} /system
 
-	[ "${SYSTEM_AS_ROOT}" == "true" ] && mount -o bind /system_root/system /system
+	if [ -f /system/init.rc ]; then
+		SYSTEM_AS_ROOT=true
+		[ -L /system_root ] && rm -f /system_root
+		mkdir /system_root 2>/dev/null
+		mount --move /system /system_root
+		mount -o bind /system_root/system /system
+	fi
 
-	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
-
-	! is_mounted /vendor && mount /vendor
+	vendor_tmp=$(find /dev/block -type l -name vendor${SLOT} | head -n 1)
+	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
 
 	if [ -L /system/vendor ]; then
-		if ! is_mounted /vendor; then
-			vendor_tmp=$(find /dev/block -type l -iname vendor${SLOT} | head -n 1)
-			VENDORB_LOCK=$(readlink -f ${vendor_tmp})
-			mount -o ro ${VENDOR_BLOCK} /vendor
-		fi
+		! is_mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
 	elif [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
 		VENDOR_COMPAT=TRUE
 
-		if ! is_mounted /vendor; then
-			vendor_tmp=$(find /dev/block -type l -iname vendor${SLOT} | head -n 1)
-			VENDORB_LOCK=$(readlink -f ${vendor_tmp})
-			mount -o ro ${VENDOR_BLOCK} /vendor
-		fi
+		! is_mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
 
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
 
-	[ "${SDK_VERSION}" -ge 29 ] && mount_apex
+	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+
+	mount_apex
 
 	mount | awk '{print $1 " on " $3 " params: " $6}'
 }
@@ -454,11 +448,11 @@ nanodroid_finalize () {
 
 	rm -rf ${INSTALLER}
 
-	umount -l /system_root 2>/dev/null
-	umount -l /system 2>/dev/null
-	umount -l /vendor 2>/dev/null
-	umount -l /dev/random 2>/dev/null
-	umount -l /apex/com.android.runtime 2>/dev/null
+	umount /system_root 2>/dev/null
+	umount /system 2>/dev/null
+	umount /vendor 2>/dev/null
+	umount /dev/random 2>/dev/null
+	umount /apex/com.android.runtime 2>/dev/null
 	losetup -d ${APEX_LOOP} 2>/dev/null
 }
 
