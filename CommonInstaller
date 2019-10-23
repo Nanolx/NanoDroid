@@ -232,42 +232,10 @@ error () {
 	exit 1
 }
 
-# taken from Magisk, with minor modifications for NanoDroid
-mount_partitions () {
-	DEVICE_AB=FALSE
-	VENDOR_COMPAT=FALSE
-
-	SYSTEM_AS_ROOT=$(getprop ro.build.system_root_image)
-	SYSTEM_BLOCK=/dev/block/bootdevice/by-name/system
-
+mount_apex () {
 	APEX_FILE=""
 	APEX_DIR=""
 	APEX_LOOP=""
-
-	if [ "${SYSTEM_AS_ROOT}" == "true" ]; then
-		SLOT=$(grep_cmdline androidboot.slot_suffix)
-		if [ -n "${SLOT}" ]; then
-			DEVICE_AB=TRUE
-			SYSTEM_BLOCK=/dev/block/bootdevice/by-name/system${SLOT}
-		fi
-		SYSTEM_MOUNT=/system_root
-	else
-		SYSTEM_MOUNT=/system
-	fi
-
-	is_mounted /data || mount /data || error "failed to mount /data!"
-
-	mount -o bind /dev/urandom /dev/random
-	! is_mounted ${SYSTEM_MOUNT} && mount -o rw ${SYSTEM_BLOCK} ${SYSTEM_MOUNT} || mount -o rw,remount ${SYSTEM_MOUNT}
-
-	if [ -f /system/init.rc ]; then
-		[ -L /system_root ] && rm -f /system_root
-		mkdir -p /system_root 2>/dev/null
-		mount --move /system /system_root
-		mount -o bind /system_root/system /system
-	fi
-
-	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
 	for apex in com.android.runtime com.android.runtime.release com.android.runtime.debug; do
 		if [ -f /system/apex/${apex}.apex ]; then
@@ -291,14 +259,47 @@ mount_partitions () {
 		mkdir -p /apex
 		ln -sf "${APEX_DIR}" /apex/com.android.runtime
 	fi
+}
+
+# taken from Magisk, with minor modifications for NanoDroid
+mount_partitions () {
+	DEVICE_AB=FALSE
+	VENDOR_COMPAT=FALSE
+
+	SYSTEM_AS_ROOT=$(getprop ro.build.system_root_image)
+
+	SLOT=$(grep_cmdline androidboot.slot_suffix)
+	if [ -n "${SLOT}" ]; then
+		DEVICE_AB=TRUE
+		SYSTEM_BLOCK=/dev/block/bootdevice/by-name/system${SLOT}
+	fi
+
+	system_tmp=$(find /dev/block -type l -iname ssytem${SLOT} | head -n 1)
+	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
+
+	if [ "${SYSTEM_AS_ROOT}" == "true" ]; then
+		SYSTEM_MOUNT=/system_root
+		mkdir -p /system_root
+	else
+		SYSTEM_MOUNT=/system
+	fi
+
+	is_mounted /data || mount /data || error "failed to mount /data!"
+
+	mount -o bind /dev/urandom /dev/random
+	! is_mounted ${SYSTEM_MOUNT} && mount -o rw ${SYSTEM_BLOCK} ${SYSTEM_MOUNT} || mount -o rw,remount ${SYSTEM_MOUNT}
+
+	[ "${SYSTEM_AS_ROOT}" == "true" ] && mount -o bind /system_root/system /system
+
+	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
 	! is_mounted /vendor && mount /vendor
 
 	if [ -L /system/vendor ]; then
 		if ! is_mounted /vendor; then
 			vendor_tmp=$(find /dev/block -type l -iname vendor${SLOT} | head -n 1)
-			VENDORBLOCK=$(readlink -f ${vendor_tmp})
-			mount -o ro ${VENDORBLOCK} /vendor
+			VENDORB_LOCK=$(readlink -f ${vendor_tmp})
+			mount -o ro ${VENDOR_BLOCK} /vendor
 		fi
 	elif [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
@@ -306,6 +307,8 @@ mount_partitions () {
 		echo " xxx compat /vendor link created!"
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
+
+	[ "${SDK_VERSION}" -ge 29 ] && mount_apex
 
 	mount | awk '{print $1 " on " $3 " params: " $6}'
 }
