@@ -104,11 +104,7 @@ set_progress() {
 }
 
 grep_prop() {
-	[ -f /vendor/build.prop ] && \
-		FILES="/system/build.prop /vendor/build.prop" || \
-		FILES="/system/build.prop"
-
-	sed -n "s/^${1}=//p" ${FILES} | head -n 1
+	sed -n "s/^${1}=//p" ${build_props} | head -n 1
 }
 
 grep_cmdline() {
@@ -268,21 +264,28 @@ mount_partitions () {
 	SYSTEM_AS_ROOT=FALSE
 
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
+	echo " INFO: #1 [SLOT] ${SLOT}"
 	if [ -z ${SLOT} ]; then
 		SLOT=$(grep_cmdline androidboot.slot)
+		echo " INFO: #2 [SLOT] ${SLOT}"
 		if [ ! -z ${SLOT} ]; then
 			SLOT=_${SLOT}
+			echo " INFO: #3 [SLOT] ${SLOT}"
 			DEVICE_AB=TRUE
 		fi
 	fi
 
 	system_tmp=$(find /dev/block -type l -name system${SLOT} | head -n 1)
+	echo " INFO: #4 [system_tmp] ${system_tmp}"
 	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
+	echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
 	mount -o bind /dev/urandom /dev/random
-	! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system || mount -o rw,remount ${SYSTEM_BLOCK} /system
+	! is_mounted /system && mount -o rw /system
+	! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
+	! is_mounted /system && error "failed to mount /system!"
 
 	if [ -f /system/init.rc ]; then
 		SYSTEM_AS_ROOT=true
@@ -293,24 +296,31 @@ mount_partitions () {
 	fi
 
 	vendor_tmp=$(find /dev/block -type l -name vendor${SLOT} | head -n 1)
+	echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
 	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
+	echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
-	if [ -L /system/vendor ]; then
-		! is_mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
-	elif [ -d /system/vendor ]; then
+	! is_mounted /vendor && mount -o ro /vendor || mount -o ro ${VENDOR_BLOCK} /vendor
+
+	if [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
 		VENDOR_COMPAT=TRUE
-
-		! is_mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
-
-		ln -sf /system/vendor /vendor >/dev/null
+		mount -o bind /vendor /system/vendor
 	fi
 
-	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+	echo " "
+	mount | awk '{print $1 " on " $3 " params: " $6}'
+	echo " "
+
+	echo " INFO: #8 [prop]"
+	ls -l /system/*.prop
+
+	export build_props=$(find /system /system_root /vendor -type f -name build.prop)
+	echo " INFO: #9 [build_props] ${build_props}"
+
+	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
 	mount_apex
-
-	mount | awk '{print $1 " on " $3 " params: " $6}'
 }
 
 detect_mode () {
@@ -446,10 +456,9 @@ nanodroid_finalize () {
 	ui_print " Thanks for using NanoDroid "
 	ui_print " "
 
-	rm -rf ${INSTALLER}
-
 	umount -l /system_root 2>/dev/null
 	umount -l /system 2>/dev/null
+	umount -l /system/vendor 2>/dev/null
 	umount -l /vendor 2>/dev/null
 	umount -l /dev/random 2>/dev/null
 	umount -l /apex/com.android.runtime 2>/dev/null
