@@ -219,7 +219,7 @@ error () {
 	if is_mounted /data; then
 		[ "${MODE}" = "MAGISK" ] && rm -rf "${MODPATH}"
 
-		recovery_cleanup
+		recovery_cleanup_env
 
 		INSTALL_SUCCESS=FALSE
 		nanodroid_storelogs
@@ -245,7 +245,7 @@ mount_apex () {
 
 	if [ -n "${APEX_FILE}" ]; then
 		mkdir -p "${TMPDIR}/apex"
-		unzip "${APEX_FILE}" -d "${TMPDIR}/apex"
+		unzip -oq "${APEX_FILE}" -d "${TMPDIR}/apex"
 
 		mkdir -p /apex/com.android.runtime
 		mount -oloop,ro "${TMPDIR}/apex/apex_payload.img" /apex/com.android.runtime
@@ -354,7 +354,7 @@ detect_mode () {
 
 	case ${MODE} in
 		SYSTEM )
-			recovery_actions
+			recovery_setup_env
 			unset MODPATH
 		;;
 
@@ -414,6 +414,8 @@ unpack_zip () {
 	rm -rf ${TMPDIR}/framework-res
 	rm -f ${TMPDIR}/*.xml
 	rm -f ${TMPDIR}/*.list
+
+	chmod 0755 ${INSTALLER}/*.${BIN_ARCH}
 }
 
 nanodroid_finalize () {
@@ -449,7 +451,7 @@ nanodroid_finalize () {
 		sort ${NANODROID_LIST} | uniq > /tmp/nanodroid-list
 		mv /tmp/nanodroid-list ${NANODROID_LIST}
 
-		recovery_cleanup
+		recovery_cleanup_env
 	fi
 
 	ui_print " "
@@ -587,15 +589,12 @@ setup_busybox () {
 	chmod 0755 ${INSTALLER}/busybox.${BIN_ARCH}
 	${INSTALLER}/busybox.${BIN_ARCH} --install -s ${INSTALLER}/busybox/
 
-	chmod 0755 ${INSTALLER}/sqlite3.${BIN_ARCH}
-
-	# XXX Magisk recovery_actions() compat
+	# XXX Magisk recovery_setup_env() compat
 	export BBDIR="${INSTALLER}/busybox"
 }
 
 # Taken from Magisk, used for System Mode installation
-recovery_actions () {
-	mv /sbin /sbin_tmp
+recovery_setup_env () {
 	OLD_PATH=${PATH}
 	OLD_LD_LIB=${LD_LIBRARY_PATH}
 	OLD_LD_PRE=${LD_PRELOAD}
@@ -603,16 +602,15 @@ recovery_actions () {
 	unset LD_LIBRARY_PATH
 	unset LD_PRELOAD
 	unset LD_CONFIG_FILE
-	export PATH=${BBDIR}:/system/bin:/vendor/bin
+	PATH=${BBDIR}:/system/bin:/vendor/bin
 }
 
 # Taken from Magisk, used for System Mode installation
-recovery_cleanup () {
-	mv /sbin_tmp /sbin 2>/dev/null
-	[ -n ${OLD_PATH} ] && export PATH=${OLD_PATH}
-	[ -n ${OLD_LD_LIB} ] && export LD_LIBRARY_PATH=${OLD_LD_LIB}
-	[ -n ${OLD_LD_PRE} ] && export LD_PRELOAD=${OLD_LD_PRE}
-	[ -n ${OLD_LD_CFG} ] && export LD_CONFIG_FILE=${OLD_LD_CFG}
+recovery_cleanup_env () {
+	[ -n ${OLD_PATH} ] && PATH=${OLD_PATH}
+	[ -n ${OLD_LD_LIB} ] && LD_LIBRARY_PATH=${OLD_LD_LIB}
+	[ -n ${OLD_LD_PRE} ] && LD_PRELOAD=${OLD_LD_PRE}
+	[ -n ${OLD_LD_CFG} ] && LD_CONFIG_FILE=${OLD_LD_CFG}
 }
 
 ##########################################################################################
@@ -643,7 +641,7 @@ magisk_install_setup () {
 		[[ "$(find /data/adb -type f -name 'NanoDroid*')" && -f ${NVBASE}/magisk.img ]] && NANODROID_UPGRADE=1
 		[[ -d "${STORAGE}/nanodroid_logs" && -f ${NVBASE}/magisk.img ]] && NANODROID_UPGRADE=1
 
-		recovery_actions
+		recovery_setup_env
 	else
 		error "Magisk version 19.0 or newer is required"
 	fi
@@ -747,7 +745,7 @@ magisk_install_finish () {
 
 	sync
 	nanodroid_storelogs
-	recovery_cleanup
+	recovery_cleanup_env
 }
 
 ##########################################################################################
@@ -845,15 +843,7 @@ check_bromite_webview_support () {
 	WEBVIEW_PKG="com.android.webview"
 	HAS_WEBVIEW=false
 
-	FW_RES_DIR="${TMPDIR}/framework-res"
-	FW_RES_FILE="${FW_RES_DIR}/res/xml/config_webview_packages.xml"
-
-	if [ ! -f ${FW_RES_FILE} ]; then
-		mkdir -p "${FW_RES_DIR}"
-		"${UNZIP}" -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
-	fi
-
-	${AAPT} dump xmltree "${FW_RES_FILE}" res/xml/config_webview_packages.xml | \
+	${AAPT} dump xmltree /system/framework/framework-res.apk res/xml/config_webview_packages.xml | \
 		tr -d '\n' | sed -e 's/webviewprovider/\n/g' | grep com.android.webview | \
 		grep -q 'E: signature' || HAS_WEBVIEW=true
 
