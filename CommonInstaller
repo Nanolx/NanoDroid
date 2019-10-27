@@ -853,7 +853,9 @@ check_bromite_webview_support () {
 		"${UNZIP}" -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
 	fi
 
-	grep -qF "${WEBVIEW_PKG}" "${FW_RES_FILE}" && HAS_WEBVIEW=true
+	${AAPT} dump xmltree "${FW_RES_FILE}" res/xml/config_webview_packages.xml | \
+		tr -d '\n' | sed -e 's/webviewprovider/\n/g' | grep com.android.webview | \
+		 grep -q 'E: signature' && HAS_WEBVIEW=true
 
 	${HAS_WEBVIEW} && return 0 || return 1
 }
