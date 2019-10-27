@@ -588,9 +588,6 @@ setup_busybox () {
 
 	chmod 0755 ${INSTALLER}/busybox.${BIN_ARCH}
 	${INSTALLER}/busybox.${BIN_ARCH} --install -s ${INSTALLER}/busybox/
-
-	# XXX Magisk recovery_setup_env() compat
-	export BBDIR="${INSTALLER}/busybox"
 }
 
 # Taken from Magisk, used for System Mode installation
@@ -602,7 +599,7 @@ recovery_setup_env () {
 	unset LD_LIBRARY_PATH
 	unset LD_PRELOAD
 	unset LD_CONFIG_FILE
-	PATH=${BBDIR}:/system/bin:/vendor/bin
+	PATH=${INSTALLER}/busybox:/system/bin:/vendor/bin
 }
 
 # Taken from Magisk, used for System Mode installation
