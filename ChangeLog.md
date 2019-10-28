@@ -20,6 +20,7 @@
 
 * Bromite WebView package
   * on Android 10 Bromite System WebView may need to be installed into `/system/product/app`
+  * fix check whether ROM actually supports Bromite WebView
 
 * build-package Script
   * minor fix in version bumping
@@ -54,24 +55,29 @@
 
 * automatic
   * Aurora Droid (1.0.4)
-  * Aurora Store (3.1.2)
-  * Blokada (4.2.1)
-  * Bromite System WebView (77.0.3865.104)
+  * Aurora Store (3.1.3)
+  * Blokada (4.3.11)
+  * Bromite System WebView (78.0.3904.72)
   * KeePassDX (2.5.0.0beta23)
+  * microG GmsCore (0.2.9.19420)
   * NewPipe (0.17.3)
   * nlp Backend Déjà Vu (1.1.12)
   * OpenCamera (1.47.2)
   * Orbot (16.1.2-RC-2)
+  * OpenKeychain (5.4)
+  * OpenLauncher (0.7.0)
   * OSM Android (3.4.8)
   * QKSMS (3.7.2)
-  * Simple Calendar (6.6.1)
-  * Simple Gallery (6.10.0)
-  * SmartPack Kernel Manager (8.8)
-  * Termux (0.75)
-  * Tor Browser (60.9.0)
+  * Simple Calendar (6.6.3)
+  * Simple Gallery (6.10.2)
+  * SmartPack Kernel Manager (8.9)
+  * Substratum (1020)
+  * Termux (0.76)
+  * Tor Browser (68.2.0)
 
 * manual
-  * Google Play (16.9.10)
+  * Google Play (17.2.13)
+  * MPV (20191025-nightly)
 
 ## 22.4.20190811 "[Château Picard](https://memory-alpha.fandom.com/wiki/Chateau_Picard)"
 
