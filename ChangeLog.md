@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 22.5 in-dev "---"
+## 22.5.20191029 "[SS Emette](https://memory-alpha.fandom.com/wiki/SS_Emmette)"
 
 ### Bugfixes
 
@@ -59,7 +59,7 @@
   * Blokada (4.3.11)
   * Bromite System WebView (78.0.3904.72)
   * KeePassDX (2.5.0.0beta23)
-  * microG GmsCore (0.2.9.19420)
+  * microG GmsCore (0.2.9.19420-5 (official nightly))
   * NewPipe (0.17.3)
   * nlp Backend Déjà Vu (1.1.12)
   * OpenCamera (1.47.2)
@@ -67,9 +67,9 @@
   * OpenKeychain (5.4)
   * OpenLauncher (0.7.0)
   * OSM Android (3.4.8)
-  * QKSMS (3.7.2)
-  * Simple Calendar (6.6.3)
-  * Simple Gallery (6.10.2)
+  * QKSMS (3.7.3)
+  * Simple Calendar (6.6.4)
+  * Simple Gallery (6.10.3)
   * SmartPack Kernel Manager (8.9)
   * Substratum (1020)
   * Termux (0.76)

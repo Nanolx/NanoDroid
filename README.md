@@ -61,7 +61,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 22.4.20190811 ([Château Picard](https://memory-alpha.fandom.com/wiki/Chateau_Picard))
+* Stable: 22.5.20191029 ([SS Emette](https://memory-alpha.fandom.com/wiki/SS_Emmette))
 * Beta: --- (---)
 
 ## Downloads
@@ -170,8 +170,10 @@ NanoDroid officially supports the following Android versions:
 * 8.0 / SDK 26 (Oreo)
 * 8.1 / SDK 27 (Oreo)
 * 9.0 / SDK 28 (Pie)
-  * Patchers works if your ROM's services.jar already contains classes.dex
+  * Patcher works if your ROM's services.jar already contains classes.dex
      * [> Deodex Instructions](doc/DeodexServices.md)
+* 10.0 / SDK 29 (Q)
+  * Patcher not yet tested / updated
 
 earlier versions will never officially be supported (you may still report bugs, though).
 
