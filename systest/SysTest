@@ -55,7 +55,7 @@ mount_apex () {
 	if ! ${BOOTMODE}; then
 		if [ -n "${APEX_FILE}" ]; then
 			mkdir -p "${TMPDIR}/apex"
-			unzip "${APEX_FILE}" -d "${TMPDIR}/apex"
+			unzip -oq "${APEX_FILE}" -d "${TMPDIR}/apex"
 
 			mkdir -p /apex/com.android.runtime
 			mount -oloop,ro "${TMPDIR}/apex/apex_payload.img" /apex/com.android.runtime
@@ -75,21 +75,28 @@ mount_partitions () {
 	SYSTEM_AS_ROOT=FALSE
 
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
+	echo " INFO: #1 [SLOT] ${SLOT}"
 	if [ -z ${SLOT} ]; then
 		SLOT=$(grep_cmdline androidboot.slot)
+		echo " INFO: #2 [SLOT] ${SLOT}"
 		if [ ! -z ${SLOT} ]; then
 			SLOT=_${SLOT}
+			echo " INFO: #3 [SLOT] ${SLOT}"
 			DEVICE_AB=TRUE
 		fi
 	fi
 
 	system_tmp=$(find /dev/block -type l -name system${SLOT} | head -n 1)
+	echo " INFO: #4 [system_tmp] ${system_tmp}"
 	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
+	echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
-	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
-	! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system || mount -o rw,remount ${SYSTEM_BLOCK} /system
+	mount -o bind /dev/urandom /dev/random
+	! is_mounted /system && mount -o rw /system
+	! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
+	! is_mounted /system && error "failed to mount /system!"
 
 	if [ -f /system/init.rc ]; then
 		SYSTEM_AS_ROOT=true
@@ -100,24 +107,31 @@ mount_partitions () {
 	fi
 
 	vendor_tmp=$(find /dev/block -type l -name vendor${SLOT} | head -n 1)
+	echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
 	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
+	echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
-	if [ -L /system/vendor ]; then
-		! is_mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
-	elif [ -d /system/vendor ]; then
+	! is_mounted /vendor && mount -o ro /vendor || mount -o ro ${VENDOR_BLOCK} /vendor
+
+	if [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
 		VENDOR_COMPAT=TRUE
-
-		! is_mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
-
-		ln -sf /system/vendor /vendor >/dev/null
+		mount -o bind /vendor /system/vendor
 	fi
 
-	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
+	echo " "
+	mount | awk '{print $1 " on " $3 " params: " $6}'
+	echo " "
+
+	echo " INFO: #8 [prop]"
+	ls -l /system/*.prop
+
+	export build_props=$(find /system /system_root /vendor -type f -name build.prop)
+	echo " INFO: #9 [build_props] ${build_props}"
+
+	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
 	mount_apex
-
-	mount | awk '{print $1 " on " $3 " params: " $6}'
 }
 
 
@@ -160,15 +174,9 @@ check_bromite_webview_support () {
 	WEBVIEW_PKG="com.android.webview"
 	HAS_WEBVIEW=false
 
-	FW_RES_DIR="${TMPDIR}/framework-res"
-	FW_RES_FILE="${FW_RES_DIR}/res/xml/config_webview_packages.xml"
-
-	if [ ! -f ${FW_RES_FILE} ]; then
-		mkdir -p "${FW_RES_DIR}"
-		unzip -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
-	fi
-
-	grep -qF "${WEBVIEW_PKG}" "${FW_RES_FILE}" && HAS_WEBVIEW=true
+	${AAPT} dump xmltree /system/framework/framework-res.apk res/xml/config_webview_packages.xml | \
+		tr -d '\n' | sed -e 's/webviewprovider/\n/g' | grep com.android.webview | \
+		grep -q 'E: signature' || HAS_WEBVIEW=true
 
 	${HAS_WEBVIEW} && return 0 || return 1
 }
@@ -227,10 +235,12 @@ system_test () {
 		arm | arm64 )
 				BB=${TMPDIR}/busybox.arm
 				FILE=${TMPDIR}/file.arm
+				AAPT=${TMPDIR}/aapt.arm
 		;;
 		x86 | x86_64 )
 				BB=${TMPDIR}/busybox.x86
 				FILE=${TMPDIR}/file.x86
+				AAPT=${TMPDIR}/aapt.x86
 		;;
 	esac
 
@@ -244,7 +254,7 @@ system_test () {
 
 	export PATH="${TMPDIR}/busybox:${PATH}"
 
-	chmod 0755 "${FILE}"
+	chmod 0755 "${FILE}" "${AAPT}"
 
 	DALVIKVM_BIN=$(ls -l /system/bin/dalvikvm | awk '{print $NF}')
 	DALVIKVM_ARCH=$("${FILE}" -m "${TMPDIR}/magic.mgc" -L /system/bin/dalvikvm)
