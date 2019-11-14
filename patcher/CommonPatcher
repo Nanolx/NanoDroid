@@ -127,7 +127,7 @@ mount_partitions () {
 	if [ -d /system/vendor ]; then
 		### XXX work-around required for some ROMs
 		VENDOR_COMPAT=TRUE
-		mount -o bind /vendor /system/vendor
+		ln -sf /system/vendor /vendor >/dev/null
 	fi
 
 	echo " "
