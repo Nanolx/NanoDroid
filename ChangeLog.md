@@ -20,13 +20,13 @@
   * K-9 Mail (5.703)
   * KeePass DX (2.50.0.0beta25)
   * Lightning (5.1.0)
-  * NewPipe (0.17.4)
+  * NewPipe (0.18.0)
   * Open Camera (1.47.3)
   * OpenLauncher (0.7.2)
   * OSM Android+ (3.5.5)
   * QKSMS (3.7.10)
   * Simple Calendar Pro (6.8.2)
-  * Simple Gallery Pro (6.10.7)
+  * Simple Gallery Pro (6.10.8)
   * Tor Browser (68.3.0)
 
 * manual
@@ -34,7 +34,8 @@
   * MPV (20191106-nightly)
 
 * tools
-  * dexpatcher 1.8.0-alpha4
+  * dexpatcher (1.8.0-alpha4)
+  * vdexextractor (0.6.0)
 
 ## 22.5.20191029 "[SS Emette](https://memory-alpha.fandom.com/wiki/SS_Emmette)"
 
