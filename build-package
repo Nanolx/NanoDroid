@@ -143,18 +143,21 @@ for opt in ${@}; do
 
 		u-gsync )
 			update_gsync
+			update_master
 			check_nanodroid
 		;;
 
 		u-bromite )
 			update_indices
 			update_bromite
+			update_master
 			check_nanodroid
 		;;
 
 		u-osmand )
 			update_indices
 			update_osmand
+			update_master
 			check_nanodroid
 		;;
 
