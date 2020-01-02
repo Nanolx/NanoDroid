@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 22.5.1 in-dev
+## 22.5.1.20200102 "[NCIA-93](https://memory-alpha.fandom.com/wiki/NCIA-93_type)"
 
 ### Bugfixes
 
@@ -26,6 +26,7 @@
 * automatic
   * Aurora Store (3.1.5)
   * Blokada (4.4.3)
+  * Bromite System WebView (79.0.3945.107)
   * F-Droid (1.8-alpha0)
   * F-Droid Privileged Extension (0.2.11)
   * K-9 Mail (5.703)

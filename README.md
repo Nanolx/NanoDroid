@@ -61,7 +61,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 22.5.20191029 ([SS Emette](https://memory-alpha.fandom.com/wiki/SS_Emmette))
+* Stable: 22.5.1.20200102 ([NCIA-93](https://memory-alpha.fandom.com/wiki/NCIA-93_type))
 * Beta: --- (---)
 
 ## Downloads
