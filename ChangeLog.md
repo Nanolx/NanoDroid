@@ -10,6 +10,17 @@
 * Installer
   * fix compat with vendor partition on some devices
 
+* build-package
+  * fix `u-gsync` not working
+  * fix `u-bromite` not working
+  * fix `u-osmand` not working
+
+### General Changes
+
+* Sync Adapters
+  * use API 19 Calendar Sync only for API 19 (KitKat)
+  * use API 21 Calendar Sync for API 21 - API 28 (Lolipop - Pie)
+
 ### Updates
 
 * automatic
