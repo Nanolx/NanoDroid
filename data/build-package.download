@@ -266,12 +266,24 @@ grab_apk_from_gitlab () {
 grab_apk_from_ogapps () {
 	case "${1}" in
 		"com.google.android.syncadapters.calendar" )
-			local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/15/nodpi/2015080710.apk"
-			local api_letter=common
+			case "${4}" in
+				19 ) local api_letter=K ;;
+				21 ) local api_letter=L ;;
+				23 ) local api_letter=M ;;
+				24 ) local api_letter=N ;;
+				26 ) local api_letter=O ;;
+				28 ) local api_letter=P ;;
+			esac
+
+			if [ "${4}" -eq 19 ]; then
+				local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/15/nodpi/2015080710.apk"
+			else
+				local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/21/nodpi/2016184095.apk"
+			fi
 		;;
 
 		* )
-			apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
+			local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
 			case "${4}" in
 				19 ) local api_letter=K ;;
 				21 ) local api_letter=L ;;

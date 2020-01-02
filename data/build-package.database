@@ -150,17 +150,22 @@ file_database=(
 	${appsfolder[4]}/GsfProxy/GsfProxy.apk.gz
 	${appsfolder[4]}/Phonesky/Phonesky.apk.gz
 
-	${appsfolder[5]}/common/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
+	${appsfolder[5]}/K/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	${appsfolder[5]}/K/app/GoogleContactsSync/GoogleContactsSync.apk.gz
 	${appsfolder[5]}/K/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk.gz
+	${appsfolder[5]}/L/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	${appsfolder[5]}/L/app/GoogleContactsSync/GoogleContactsSync.apk.gz
 	${appsfolder[5]}/L/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk.gz
+	${appsfolder[5]}/M/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	${appsfolder[5]}/M/app/GoogleContactsSync/GoogleContactsSync.apk.gz
 	${appsfolder[5]}/M/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk.gz
+	${appsfolder[5]}/N/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	${appsfolder[5]}/N/app/GoogleContactsSync/GoogleContactsSync.apk.gz
 	${appsfolder[5]}/N/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk.gz
+	${appsfolder[5]}/O/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	${appsfolder[5]}/O/app/GoogleContactsSync/GoogleContactsSync.apk.gz
 	${appsfolder[5]}/O/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk.gz
+	${appsfolder[5]}/P/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	${appsfolder[5]}/P/app/GoogleContactsSync/GoogleContactsSync.apk.gz
 	${appsfolder[5]}/P/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk.gz
 
