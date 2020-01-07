@@ -1,5 +1,26 @@
 # ChangeLog
 
+## 22.5.2 in-dev
+
+### Bugfixes
+
+* Patcher
+  * fix dexpatcher crashing
+
+* Bromite System WebView
+  * Bromite System WebView will support Android 10 starting with version 80
+  * disable installation of Bromite System WebView on Android 10 for now
+
+### Updates
+
+* automatic
+  * Aurora Store (3.1.7)
+  * Privacy Browser (3.3)
+  * Simple Calendar Pro (6.8.3)
+
+* manual
+  * dexpatcher (1.8.0-alpha4-snapshot)
+
 ## 22.5.1.20200102 "[NCIA-93](https://memory-alpha.fandom.com/wiki/NCIA-93_type)"
 
 ### Bugfixes
@@ -31,7 +52,6 @@
   * F-Droid Privileged Extension (0.2.11)
   * K-9 Mail (5.703)
   * KeePass DX (2.50.0.0beta25)
-  * Lightning (5.1.0)
   * NewPipe (0.18.0)
   * Open Camera (1.47.3)
   * OpenLauncher (0.7.2)
