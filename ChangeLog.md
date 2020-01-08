@@ -4,6 +4,10 @@
 
 ### Bugfixes
 
+* Installer
+  * add more permission to privapp whitelist automatically (0xc212)
+     * fix bootloops on Android 10
+
 * Patcher
   * fix dexpatcher crashing
 
