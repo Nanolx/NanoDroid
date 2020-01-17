@@ -21,6 +21,7 @@
   * replace Face Slim with Frost
      * users will be auto migrated
   * no longer ship Substratum
+  * no longer ship Orbot
 
 * Patcher
   * for SDK 19 - 25 use dexpatcher 1.6.3

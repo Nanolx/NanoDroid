@@ -1765,6 +1765,10 @@ check_cfg_apps () {
 
 	# >= 22.5.2 no longer ships Substratum, remove
 	grep -q Substratum "${cfg_apps}" && sed -e '/Substratum/d' -i "${cfg_apps}"
+
+	# >= 22.5.2 no longer ship Orbot, remove
+	grep -q Orbot "${cfg_apps}" && sed -e '/Orbot/d' -i "${cfg_apps}"
+
 }
 
 # check whether '.nanodroid-overlay' is up to date

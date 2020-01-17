@@ -56,7 +56,6 @@ fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery.pro app SimpleGallery)
 fd_TERMUX=(fdroid com.termux app Termux)
 fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 
-gd_ORBOT=(guardian org.torproject.android app Orbot)
 gd_TORBROWSER=(guardian org.torproject.torbrowser app TorBrowser)
 
 ###
@@ -131,7 +130,6 @@ file_database=(
 	${appsfolder[3]}/OpenKeyChain/OpenKeyChain.apk.gz
 	${appsfolder[3]}/OpenLauncher/OpenLauncher.apk.gz
 	${appsfolder[3]}/OpenVPN/OpenVPN.apk.gz
-	${appsfolder[3]}/Orbot/Orbot.apk.gz
 	${appsfolder[3]}/PrivacyBrowser/PrivacyBrowser.apk.gz
 	${appsfolder[3]}/QKSMS/QKSMS.apk.gz
 	${appsfolder[3]}/SimpleCalendar/SimpleCalendar.apk.gz
