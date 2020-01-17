@@ -1762,6 +1762,9 @@ check_cfg_apps () {
 
 	# >= 22.5.2 has Frost instead of FaceSlim, migrate
 	grep -q FaceSlim "${cfg_apps}" && sed -e 's/FaceSlim/Frost/g' -i "${cfg_apps}"
+
+	# >= 22.5.2 no longer ships Substratum, remove
+	grep -q Substratum "${cfg_apps}" && sed -e '/Substratum/d' -i "${cfg_apps}"
 }
 
 # check whether '.nanodroid-overlay' is up to date

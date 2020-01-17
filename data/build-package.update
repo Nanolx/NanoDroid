@@ -124,7 +124,6 @@ grab_apps () {
 
 	# GitHub
 	grab_apk_from_github ${gh_SMARTPACKKERNELMANAGER[@]}
-	grab_apk_from_github ${gh_SUBSTRATUM[@]}
 
 	# URL
 	grab_apk_from_url ${raw_XDALABS[@]}

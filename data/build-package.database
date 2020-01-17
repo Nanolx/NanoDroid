@@ -137,7 +137,6 @@ file_database=(
 	${appsfolder[3]}/SimpleCalendar/SimpleCalendar.apk.gz
 	${appsfolder[3]}/SimpleGallery/SimpleGallery.apk.gz
 	${appsfolder[3]}/SmartPackKernelManager/SmartPackKernelManager.apk.gz
-	${appsfolder[3]}/Substratum/Substratum.apk.gz
 	${appsfolder[3]}/Termux/Termux.apk.gz
 	${appsfolder[3]}/TorBrowser/TorBrowser.apk.gz
 	${appsfolder[3]}/Twidere/Twidere.apk.gz
