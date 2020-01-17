@@ -22,6 +22,8 @@
      * users will be auto migrated
   * no longer ship Substratum
   * no longer ship Orbot
+  * no longer ship GNU Nano Editor
+     * use 0smosis' GNU Nano flashable zip
 
 * Patcher
   * for SDK 19 - 25 use dexpatcher 1.6.3

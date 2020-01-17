@@ -1150,17 +1150,6 @@ install_nanodroidscripts () {
 	fi
 }
 
-install_nano () {
-	if [ "${nanodroid_nano}" -eq 1 ]; then
-		ui_print " << with GNU Nano Terminal Editor"
-		nanodroid_install_dir etc/terminfo
-
-		nanodroid_install_file xbin/nano bin
-		nanodroid_install_file xbin/nano.bin bin
-	else	ui_print " << without GNU Nano Terminal Editor"
-	fi
-}
-
 install_shell_utils () {
 	if [ "${nanodroid_utils}" -eq 1 ]; then
 		ui_print " << with Shell Utilities"
@@ -1713,7 +1702,6 @@ check_cfg_setup () {
 	fi
 
 	[ -z "${nanodroid_bash}" ] && set_prop nanodroid_bash 1
-	[ -z "${nanodroid_nano}" ] && set_prop nanodroid_nano 1
 	[ -z "${nanodroid_utils}" ] && set_prop nanodroid_utils 1
 
 	# in NanoDroid 21.0.90 nanodroid_override was dropped
@@ -1721,6 +1709,9 @@ check_cfg_setup () {
 
 	# in NanoDroid 22.5 nanodroid_fonts was dropped
 	sed -e '/nanodroid_fonts/d' -i "${cfg_setup}"
+
+	# in NanoDroid 22.5.2 nanodroid_nano was dropped
+	sed -e '/nanodroid_nano/d' -i "${cfg_setup}"
 
 	source "${cfg_setup}"
 }

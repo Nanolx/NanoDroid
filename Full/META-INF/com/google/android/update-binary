@@ -54,7 +54,6 @@ install_zelda
 install_initd
 install_swipe
 install_bash
-install_nano
 install_shell_utils
 set_progress 0.9
 
