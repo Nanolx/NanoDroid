@@ -5,7 +5,7 @@ OUTFD=${2}
 ZIP=${3}
 
 ZIPDIR=$(dirname "${ZIP}")
-MODID=NanoDroid
+MODID=NanoDroid_Google
 
 mkdir -p /dev/tmp
 unzip -oq "${ZIP}" CommonInstaller -d "/dev/tmp"
@@ -39,19 +39,10 @@ get_cfg_overlay
 detect_mode
 set_progress 0.3
 
-install_nanodroidscripts
-install_microg
-install_mapsv1
-install_fdroid
-install_store
+install_gsync
 set_progress 0.5
 
-install_apps
-set_progress 0.75
-
-install_initd
-install_bash
-install_shell_utils
+install_swipe
 set_progress 0.9
 
 nanodroid_finalize

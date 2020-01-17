@@ -19,9 +19,9 @@ appsfolder[1]="${appsfolder[0]}/system"
 appsfolder[2]="${CWD}/${appsfolder[1]}"
 appsfolder[3]="${appsfolder[1]}/app"
 appsfolder[4]="${appsfolder[1]}/priv-app"
-appsfolder[5]="${appsfolder[0]}/gsync"
+appsfolder[5]="Google/gsync"
 appsfolder[6]="${CWD}/${appsfolder[5]}"
-appsfolder[7]="${appsfolder[0]}/swipe"
+appsfolder[7]="Google/swipe"
 appsfolder[8]="${CWD}/${appsfolder[7]}"
 appsfolder[9]="OsmAnd/system"
 appsfolder[10]="${CWD}/${appsfolder[9]}"
@@ -78,6 +78,11 @@ for opt in ${@}; do
 			mk_pkg_systest
 		;;
 
+		google )
+			check_nanodroid || error "run 'build-package pull' first!"
+			mk_pkg_google
+		;;
+
 		all )
 			check_nanodroid || error "run 'build-package pull' first!"
 			mk_pkg_full
@@ -89,6 +94,7 @@ for opt in ${@}; do
 			mk_pkg_bromite_webview
 			mk_pkg_osmand
 			mk_pkg_systest
+			mk_pkg_google
 			create_report
 		;;
 

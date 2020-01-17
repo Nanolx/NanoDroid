@@ -199,6 +199,9 @@ show_banner () {
 		NanoDroid_OsmAnd )
 			ui_print " > OsmAnd package            "
 		;;
+		NanoDroid_Google )
+			ui_print " > Google package            "
+		;;
 	esac
 
 	if [ "${ZIP}" == *${VERSION}* ]; then
@@ -667,7 +670,7 @@ magisk_install_setup () {
 				error "${MODID} can't be installed on Android 10 or newer"
 		;;
 
-		NanoDroid_OsmAnd )
+		NanoDroid_OsmAnd | NanoDroid_Google )
 			true
 		;;
 

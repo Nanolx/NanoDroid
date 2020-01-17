@@ -159,7 +159,7 @@ increase_version_number () {
 	sed -e "s/^version_code.*/version_code=${1}/g" -i "${CWD}/build-package"
 	sed -e "s/^version_date.*/version_date=${date}/g" -i "${CWD}/build-package"
 
-	for module in Full microG FDroid BromiteWebView OsmAnd; do
+	for module in Full microG FDroid BromiteWebView OsmAnd Google; do
 		sed -e "s/version=.*/version=v${1}.${date}/" -i \
 			"${CWD}/${module}/module.prop"
 	done
@@ -171,7 +171,7 @@ increase_version_number () {
 }
 
 increase_module_version () {
-	for module in Full microG FDroid BromiteWebView OsmAnd; do
+	for module in Full microG FDroid BromiteWebView OsmAnd Google; do
 		eval $(grep versionCode "${CWD}/${module}/module.prop")
 		local versionCode=$((versionCode+1))
 		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
@@ -223,6 +223,7 @@ create zip files:
 	setupwizard		| create SetupWizard zip from repo
 	bromitewebview		| create Bromite WebView zip from repo
 	osmand			| create OsmAnd package zip from repo
+	google			| create Google package zip from repo
 	all			| create all zips from repo
 
 misc. stuff:

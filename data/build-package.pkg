@@ -139,3 +139,19 @@ mk_pkg_systest () {
 	create_systest_package &
 	progress $!
 }
+
+create_google_package () {
+	ZIP="NanoDroid-Google-${VERSION}.zip"
+
+	print_package "Google"
+
+	zip_add Google
+	zip_add_setup 0
+
+	sum_sign_package "${ZIP}"
+}
+
+mk_pkg_google () {
+	create_google_package &
+	progress $!
+}

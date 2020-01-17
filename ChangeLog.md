@@ -31,6 +31,13 @@
      * look
      * setterm
   * no longer ship Zelda ringtones
+  * break-out Google Sync Adapters and Swipe libraries into NanoDroid-Google package
+
+* microG package
+  * break-out Google Sync Adapters and Swipe libraries into NanoDroid-Google package
+
+* Google package
+  * new package which includes Google Sync and Swipe libraries
 
 * Patcher
   * for SDK 19 - 25 use dexpatcher 1.6.3
