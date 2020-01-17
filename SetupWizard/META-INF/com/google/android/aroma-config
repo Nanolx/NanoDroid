@@ -81,8 +81,8 @@ selectbox(
 
 	"Select whether to install F-Droid", "", 2, #-- Group 1. key = "selected.1"
 	"None",		"Don't install F-Droid (does not effect NanoDroid-FDroid)",	0,	#-- selected.1 = 1
-	"Official",	"Install official F-Droid client",				1,	#-- selected.1 = 2
-	"Aurora Droid",	"Install unofficial Aurora Droid client",			0	#-- selected.1 = 3
+	"Official",	"Install official F-Droid client",				0,	#-- selected.1 = 2
+	"Aurora Droid",	"Install unofficial Aurora Droid client",			1	#-- selected.1 = 3
 );
 
 checkbox(
