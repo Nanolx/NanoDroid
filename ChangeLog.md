@@ -24,6 +24,12 @@
   * no longer ship Orbot
   * no longer ship GNU Nano Editor
      * use 0smosis' GNU Nano flashable zip
+  * drop the following shel utilities:
+     * col
+     * colcrt
+     * colrm
+     * look
+     * setterm
 
 * Patcher
   * for SDK 19 - 25 use dexpatcher 1.6.3
