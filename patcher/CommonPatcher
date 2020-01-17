@@ -334,6 +334,11 @@ detect_sdk () {
 		SMALI="${BASEDIR}/smali_23.dex"
 	fi
 
+	if [ "${SDK_VERSION}" -gt 25 ]; then
+		DEXPATCHER="${BASEDIR}/dexpatcher_26.dex"
+	else	DEXPATCHER="${BASEDIR}/dexpatcher_19.dex"
+	fi
+
 	PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 
 	if [ "${SDK_VERSION}" -lt 24 ]; then
@@ -511,7 +516,7 @@ patch_services () {
 	ui_print " >> patching services.jar"
 
 	call_dalvikvm \
-		-classpath "${BASEDIR}/dexpatcher.dex" \
+		-classpath "${DEXPATCHER}" \
 		lanchon.dexpatcher.Main \
 		${DEX_OPTS} --api-level "${SDK_VERSION}" \
 		--verbose --debug --output ${BASEDIR}/services.jar-mod \
