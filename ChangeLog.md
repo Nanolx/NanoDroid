@@ -39,6 +39,7 @@
 * SetupWizard
   * remove Nintendo Fonts entry (no longer available)
   * set Aurora Droid as default F-Droid client
+  * update for recent changes
 
 ### Updates
 
