@@ -111,7 +111,6 @@ setup_add 8 nanodroid_forcesystem
 setup_add 9 nanodroid_bash
 setup_add 10 nanodroid_nano
 setup_add 11 nanodroid_utils
-setup_add 12 nanodroid_fonts
 
 if grep -q "selected.1=1" "${store_prop}"; then
 	ui_print "  <>> setting property: nanodroid_play [None]"
