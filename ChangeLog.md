@@ -15,6 +15,20 @@
   * Bromite System WebView will support Android 10 starting with version 80
   * disable installation of Bromite System WebView on Android 10 for now
 
+### General Changes
+
+* Full Package
+  * replace Face Slim with Frost
+     * users will be auto migrated
+
+* Patcher
+  * for SDK 19 - 25 use dexpatcher 1.6.3
+  * for SDK 26 and newer user dexpatcher 1.8.0-alpha4
+
+* SetupWizard
+  * remove Nintendo Fonts entry (no longer available)
+  * set Aurora Droid as default F-Droid client
+
 ### Updates
 
 * automatic

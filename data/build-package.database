@@ -38,7 +38,7 @@ fd_ALARMIO=(fdroid me.jfenn.alarmio app Alarmio)
 fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
 fd_BLOCKADA=(fdroid org.blokada.alarm app Blokada)
-fd_FACESLIM=(fdroid org.indywidualni.fblite app FaceSlim)
+fd_FROST=(fdroid com.pitchedapps.frost app Frost)
 fd_HACKERSKEYBOARD=(fdroid org.pocketworkstation.pckeyboard app HackersKeyboard)
 fd_KEEPASSDX=(fdroid com.kunzisoft.keepass.libre app KeePassDX)
 fd_K9MAIL=(fdroid com.fsck.k9 app K9Mail)
@@ -113,7 +113,7 @@ file_database=(
 	${appsfolder[3]}/AuroraStore/AuroraStore.apk.gz
 	${appsfolder[3]}/Blokada/Blokada.apk.gz
 	${appsfolder[3]}/DroidGuard/DroidGuard.apk.gz
-	${appsfolder[3]}/FaceSlim/FaceSlim.apk.gz
+	${appsfolder[3]}/Frost/Frost.apk.gz
 	${appsfolder[3]}/FDroid/FDroid.apk.gz
 	${appsfolder[3]}/HackersKeyboard/HackersKeyboard.apk.gz
 	${appsfolder[3]}/K9Mail/K9Mail.apk.gz

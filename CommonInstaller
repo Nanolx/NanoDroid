@@ -1759,6 +1759,9 @@ check_cfg_apps () {
 
 	# >= 22.1 has SmartPack-Kernel-Manager instead of Kernel Adiutor, migrate
 	grep -q KernelAdiutor "${cfg_apps}" && sed -e 's/KernelAdiutor/SmartPackKernelManager/g' -i "${cfg_apps}"
+
+	# >= 22.5.2 has Frost instead of FaceSlim, migrate
+	grep -q FaceSlim "${cfg_apps}" && sed -e 's/FaceSlim/Frost/g' -i "${cfg_apps}"
 }
 
 # check whether '.nanodroid-overlay' is up to date
