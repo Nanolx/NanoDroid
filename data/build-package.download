@@ -243,6 +243,7 @@ grab_apk_from_gitlab () {
 	local apk_url=$(curl -s -N "https://gitlab.com/${1}/-/tags" | grep '.apk' | head -n 1)
 	local apk_url=${apk_url%\">*.apk*}
 	local apk_url="https://gitlab.com${apk_url##*a href=\"}"
+	local apk_url="${apk_url/\"*}"
 	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
 	rm -f "${apk_dest}/${3}.apk.gz"
