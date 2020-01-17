@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 22.5.2 in-dev
+## 22.6 in-dev
 
 ### Bugfixes
 
