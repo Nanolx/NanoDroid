@@ -40,7 +40,6 @@ Table of Contents
          * [microG](#microg)
          * [F-Droid](#f-droid)
          * [Applications](#applications)
-         * [The Legend of Zelda ringtones and sounds](#the-legend-of-zelda-ringtones-and-sounds)
       * [Installation](#installation)
          * [Alter Installation](#alter-installation)
          * [Installation Process](#installation-process)
@@ -223,12 +222,10 @@ NanoDroid includes
   * with automatic de-odexing up to Android 8.1
 * additional components
   * GNU Bash shell
-  * GNU Nano terminal editor
   * several utilities from `util-linux`, `bsdmainutils` and more
   * Addon.d support for System Mode installation
      * restores NanoDroid after ROM update
      * re-debloates GApps, if required
-* The Legend of Zelda ringtones and sounds
 
 ## Packages
 
@@ -405,9 +402,6 @@ Several utilities from `bsdmainutils` and `util-linux` are included:
 
 [> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils)
 
-* col
-* colcrt
-* colrm
 * column
 * hexdump
 * ncal
@@ -416,13 +410,11 @@ Several utilities from `bsdmainutils` and `util-linux` are included:
 
 * findfs
 * findmnt
-* look
 * lsblk
 * lscpu
 * lsipc
 * lslocks
 * lsns
-* setterm
 * whereis
 
 Other shell utilities
@@ -434,10 +426,9 @@ Other shell utilities
 
 #### GNU Bash and GNU Nano
 
-NanoDroid includes GNU Bash shell and the GNU Nano terminal editor.
+NanoDroid includes GNU Bash shell.
 
 * [> GNU Bash Website](https://www.gnu.org/software/bash/bash.html)
-* [> GNU Nano Website](https://www.nano-editor.org/)
 
 ### microG
 
@@ -482,12 +473,6 @@ Furthermore NanoDroid tells F-Droid to activate the following additional reposit
 ### Applications
 
 NanoDroid includes a variety of OpenSource applications, check full [> list](doc/Applications.md)
-
-### The Legend of Zelda ringtones and sounds
-
-NanoDroid includes **The Legend of Zelda** [> Nintendo](http://www.zelda.com/) ringtones and sounds, because it's dangerous to root alone.
-
-Full [> Details](doc/ZeldaSounds.md)
 
 ## Installation
 
