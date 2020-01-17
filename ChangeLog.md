@@ -30,6 +30,7 @@
      * colrm
      * look
      * setterm
+  * no longer ship Zelda ringtones
 
 * Patcher
   * for SDK 19 - 25 use dexpatcher 1.6.3

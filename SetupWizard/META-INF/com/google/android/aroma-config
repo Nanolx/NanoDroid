@@ -50,14 +50,12 @@ checkbox(
 	"Adjust the basic settings", "", 2, #-- Group 1
 	"Apps",		"Install Apps (customized later)",			1,
 	"Overlay",	"Debloat Apps (customized later)",			1,
-	"Zelda Tunes",	"Install The Legend of Zelda rintones and sounds",	1,
 	"Maps API v1",	"Install Google Maps API version 1",			1,
 	"Init Scripts",	"Install init scripts",					1,
 	"Google Sync",	"Install Google Contacts & Calendar Sync",		0,
 	"Swipe",	"Install Swipe libraries",				0,
 	"Force System",	"Force System Mode Installation",			0,
 	"GNU Bash",	"Install GNU Bash Shell",				1,
-	"GNU Nano",	"Install GNU Nano Terminal Editor",			1,
 	"Shell Utils",	"Install Shell Utils from bsdmainutils and util-linux",	1
 );
 

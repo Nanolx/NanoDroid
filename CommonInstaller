@@ -1102,19 +1102,6 @@ install_store () {
 	fi
 }
 
-install_zelda () {
-	# install Zelda Ringtones when requested
-	if [ "${nanodroid_zelda}" -eq 1 ]; then
-		ui_print " << with Zelda sounds"
-		if [ -d /system/media/audio ]; then
-			nanodroid_install_dir media
-		elif [ -d /system/product/media/audio ]; then
-			nanodroid_install_dir media /system/product/media
-		fi
-	else	ui_print " << without Zelda sounds"
-	fi
-}
-
 install_bash () {
 	if [ "${nanodroid_bash}" -eq 1 ]; then
 		ui_print " << with GNU Bash Shell"
@@ -1669,7 +1656,6 @@ check_cfg_setup () {
 	else	[ -z "${nanodroid_overlay}" ] && set_prop nanodroid_overlay 0
 	fi
 
-	[ -z "${nanodroid_zelda}" ] && set_prop nanodroid_zelda 1
 	[ -z "${nanodroid_mapsv1}" ] && set_prop nanodroid_mapsv1 1
 	[ -z "${nanodroid_init}" ] && set_prop nanodroid_init 1
 	[ -z "${nanodroid_gsync}" ] && set_prop nanodroid_gsync 0
@@ -1711,6 +1697,9 @@ check_cfg_setup () {
 
 	# in NanoDroid 22.5.2 nanodroid_nano was dropped
 	sed -e '/nanodroid_nano/d' -i "${cfg_setup}"
+
+	# in NanoDroid 22.5.2 nanodroid_zelda was dropped
+	sed -e '/nanodroid_zelda/d' -i "${cfg_setup}"
 
 	source "${cfg_setup}"
 }

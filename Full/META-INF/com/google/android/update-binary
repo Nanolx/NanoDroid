@@ -50,7 +50,6 @@ set_progress 0.5
 install_apps
 set_progress 0.75
 
-install_zelda
 install_initd
 install_swipe
 install_bash
