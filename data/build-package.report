@@ -333,6 +333,7 @@ get_dst_info () {
 			*setupwizard*.zip*    ) local dst_pkg="NanoDroid SetupWizard" ;;
 			*systest*.zip*        ) local dst_pkg="NanoDroid System Tester" ;;
 			*uninstaller*.zip*    ) local dst_pkg="NanoDroid Uninstaller" ;;
+			*Google*.zip*         ) local dst_pkg="NanoDroid Google" ;;
 		esac
 
 		case ${dst_file} in
