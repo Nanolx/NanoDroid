@@ -59,6 +59,9 @@
   * Tor Browser (68.4.1)
 
 * manual
+  * Google Play (18.4.45)
+
+* tools
   * dexpatcher (1.8.0-alpha4-snapshot)
 
 ## 22.5.1.20200102 "[NCIA-93](https://memory-alpha.fandom.com/wiki/NCIA-93_type)"
