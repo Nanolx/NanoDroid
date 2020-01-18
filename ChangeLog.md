@@ -52,8 +52,11 @@
 
 * automatic
   * Aurora Store (3.1.7)
+  * Bromite System WebView (79.0.3945.123)
+  * F-Droid (1.8-alpha1)
   * Privacy Browser (3.3)
   * Simple Calendar Pro (6.8.3)
+  * Tor Browser (68.4.1)
 
 * manual
   * dexpatcher (1.8.0-alpha4-snapshot)
