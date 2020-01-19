@@ -586,7 +586,7 @@ install_addond () {
 		/system/addon.d/75-nanodroidpatcher.sh \
 		/system/addon.d/999-nanodroidpatcher.sh
 
-	for file in core_services.jar.dex dexpatcher.dex \
+	for file in core_services.jar.dex dexpatcher_19.dex dexpatcher_26.dex \
 		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
 		baksmali_23.dex baksmali_25.dex baksmali_26.dex \
 		smali_23.dex smali_25.dex smali_26.dex \
