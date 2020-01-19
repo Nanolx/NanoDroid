@@ -264,6 +264,9 @@ get_msc_info () {
 		*uninstaller*binary*) local msc_type="NanoDroid Uninstaller" ;;
 		*uninstaller*update*) local msc_type="NanoDroid Uninstaller TWRP invoker" ;;
 
+		*Google*update*   ) local msc_type="NanoDroid Google Package TWRP invoker" ;;
+		*Google*.prop*    ) local msc_type="NanoDroid Google Module properties" ;;
+
 		*ChangeLog.md*    ) local msc_type="NanoDroid ChangeLog" ;;
 		*README.md*       ) local msc_type="NanoDroid README" ;;
 
@@ -273,14 +276,6 @@ get_msc_info () {
 
 		*.maps.jar*       ) local msc_type="microG Maps v1 support"
 				    local msc_name=$(basename ${1}) ;;
-
-		*noti*.ogg*       ) local msc_type="The Legend of Zelda Notification" ;;
-		*ring*.ogg*       ) local msc_type="The Legend of Zelda Ringtone" ;;
-		*ui*.ogg*         ) local msc_type="The Legend of Zelda UI Sound" ;;
-		*noti*.mp3*       ) local msc_type="The Legend of Zelda Notification" ;;
-		*ring*.mp3*       ) local msc_type="The Legend of Zelda Ringtone" ;;
-		*ui*.mp3*         ) local msc_type="The Legend of Zelda UI Sound" ;;
-		*.ttf*            ) local msc_type="Nintendo UI Font" ;;
 
 		*LICENSE*         ) local msc_type="exclude" ;;
 		*doc*             ) local msc_type="exclude" ;;
