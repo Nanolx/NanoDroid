@@ -524,6 +524,9 @@ detect_arch () {
 	case ${ARCH} in
 		arm )
 			case ${SDK_VERSION} in
+				29 )
+					LIBJNI_IME=libjni_latinimegoogle.so_28
+				;;
 				19 | 21 | 22 | 23 | 27 | 28 )
 					LIBJNI_IME=libjni_latinimegoogle.so_${SDK_VERSION}
 				;;
@@ -538,6 +541,9 @@ detect_arch () {
 
 		arm64 )
 			case ${SDK_VERSION} in
+				29 )
+					LIBJNI_IME=libjni_latinimegoogle.so_28
+				;;
 				21 | 22 | 23 | 27 | 28 )
 					LIBJNI_IME=libjni_latinimegoogle.so_${SDK_VERSION}
 				;;
@@ -555,7 +561,7 @@ detect_arch () {
 				19 | 21 | 22 )
 					SWIPE_UNSUPPORTED=1
 				;;
-				23 | 24 | 25 | 26 | 27 | 28 )
+				23 | 24 | 25 | 26 | 27 | 28 | 29 )
 					LIBJNI_IME=libjni_latinimegoogle.so
 				;;
 				* )
