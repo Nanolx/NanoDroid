@@ -1,6 +1,6 @@
 # NanoDroid
 
-NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, both devices with or without A/B partition scheme, aswell as Magisk Mode (module) installation. It also includes several tools (eg. GNU Bash, GNU Nano, more), scripts and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
+NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, both devices with or without A/B partition scheme, aswell as Magisk Mode (module) installation. It also includes several tools (eg. GNU Bash, tools from util-linux/bsdmainutils and more), scripts and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
 
 Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them, see [Alter Installation](#alter-installation) below.
 
