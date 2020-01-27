@@ -13,6 +13,7 @@
 
 * Bromite System WebView
   * Bromite System WebView will support Android 10 starting with version 80
+     * scheduled for release in February 2020
   * disable installation of Bromite System WebView on Android 10 for now
 
 ### General Changes
@@ -38,6 +39,7 @@
 
 * Google package
   * new package which includes Google Sync and Swipe libraries
+  * support Sync Adapters and swipe libraries on Android 10
 
 * Patcher
   * for SDK 19 - 25 use dexpatcher 1.6.3
@@ -52,14 +54,18 @@
 
 * automatic
   * Aurora Store (3.1.7)
-  * Bromite System WebView (79.0.3945.123)
+  * Blockada (4.5.1)
+  * Bromite System WebView (79.0.3945.139)
   * F-Droid (1.8-alpha1)
+  * New Pipe (0.18.1)
   * Privacy Browser (3.3)
+  * QKSMS (3.8.0)
   * Simple Calendar Pro (6.8.3)
+  * Termux (0.88)
   * Tor Browser (68.4.1)
 
 * manual
-  * Google Play (18.4.45)
+  * Google Play (18.5.59)
 
 * tools
   * dexpatcher (1.8.0-alpha4-snapshot)
