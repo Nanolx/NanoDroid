@@ -70,7 +70,8 @@
 
 * tools
   * dexpatcher (1.8.0-alpha4-snapshot)
-  * busybox (1.31.1) (only used by the installer!)
+  * busybox (1.31.1) (only used by the Installer!)
+  * magic.mgc (5.38) (only used by the Patcher!)
 
 ## 22.5.1.20200102 "[NCIA-93](https://memory-alpha.fandom.com/wiki/NCIA-93_type)"
 
