@@ -66,6 +66,7 @@
 
 * manual
   * Google Play (18.5.59)
+  * MPV (20200127-nightly)
 
 * tools
   * dexpatcher (1.8.0-alpha4-snapshot)

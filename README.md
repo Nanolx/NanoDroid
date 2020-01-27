@@ -125,6 +125,7 @@ You can create snapshots from this repository.
      * `build-package u-gsync` to update Google Sync Adapters
      * `build-package u-bromite` to update Bromite WebView
      * `build-package u-osmand` to update OpenStreetMap (OsmAnd)
+     * `build-package u-patch` to update Haystack patches
      * `build-package pull` to update/re-download everything
 
 for apks downloaded from F-Droid repositories or from APK Mirror, `build-package` checks the SHA256 hash.
@@ -178,6 +179,11 @@ NanoDroid officially supports the following Android versions:
 earlier versions will never officially be supported (you may still report bugs, though).
 
 Future versions will be officially supported, eventually.
+
+## Recommended Thirdparty Projects
+
+* [busybox](https://forum.xda-developers.com/showthread.php?t=2239421) by Osm0sis (highly recommended for all NanoDroid scripts properly working)
+* [GNU Nano editor](https://forum.xda-developers.com/showthread.php?t=2239421) by Osm0sis (simple, powerful commandline editor)
 
 ## Support
 
