@@ -115,6 +115,7 @@ You can create snapshots from this repository.
      * `build-package bromitewebview` to create the Bromite WebView package
      * `build-package osmand` for the OpenStreetMap (OsmAnd) package
      * `build-package systest` to create the SysTest package
+     * `build-package google` to create the Google (Sync Adapters & Swipe libraries) package
      * `build-package all` to create all packages at once
   * update required files:
      * `build-package u-microg` to update microG
@@ -172,7 +173,7 @@ NanoDroid officially supports the following Android versions:
   * Patcher works if your ROM's services.jar already contains classes.dex
      * [> Deodex Instructions](doc/DeodexServices.md)
 * 10.0 / SDK 29 (Q)
-  * Patcher not yet tested / updated
+  * Patcher does not yet support Android 10
 
 earlier versions will never officially be supported (you may still report bugs, though).
 
@@ -247,6 +248,9 @@ Module packages, flashing through TWRP required (flashing through Magisk Manager
 * **NanoDroid-OsmAnd**: includes (only)
   * [OsmAnd](https://f-droid.org/de/packages/net.osmand.plus/)
   * [OsmAnd Contour Lines plugin](https://f-droid.org/de/packages/net.osmand.srtmPlugin.paid/)
+* **NanoDroid-Google**: includes (only)
+  * Google Sync Adapters
+  * Swipe libaries
 
 #### Installation Logfiles
 
