@@ -165,6 +165,9 @@ file_database=(
 	${appsfolder[5]}/P/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
 	${appsfolder[5]}/P/app/GoogleContactsSync/GoogleContactsSync.apk.gz
 	${appsfolder[5]}/P/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk.gz
+	${appsfolder[5]}/Q/app/GoogleCalendarSync/GoogleCalendarSync.apk.gz
+	${appsfolder[5]}/Q/app/GoogleContactsSync/GoogleContactsSync.apk.gz
+	${appsfolder[5]}/Q/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk.gz
 
 	${appsfolder[11]}/app/BromiteWebView_arm/BromiteWebView_arm.apk.gz
 	${appsfolder[11]}/app/BromiteWebView_arm64/BromiteWebView_arm64.apk.gz

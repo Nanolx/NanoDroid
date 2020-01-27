@@ -265,17 +265,20 @@ grab_apk_from_gitlab () {
 }
 
 grab_apk_from_ogapps () {
+	case "${4}" in
+		19 ) local api_letter=K ;;
+		21 ) local api_letter=L ;;
+		23 ) local api_letter=M ;;
+		24 ) local api_letter=N ;;
+		26 ) local api_letter=O ;;
+		28 ) local api_letter=P ;;
+		29 ) local api_letter=Q ;;
+	esac
+
 	case "${1}" in
 		"com.google.android.syncadapters.calendar" )
-			case "${4}" in
-				19 ) local api_letter=K ;;
-				21 ) local api_letter=L ;;
-				23 ) local api_letter=M ;;
-				24 ) local api_letter=N ;;
-				26 ) local api_letter=O ;;
-				28 ) local api_letter=P ;;
-			esac
-
+			# use SDK 19 Calendar Syncadapter for SDK 19
+			# use SDK 21 Calendar Syncadapter for SDK 21 - 29
 			if [ "${4}" -eq 19 ]; then
 				local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/15/nodpi/2015080710.apk"
 			else
@@ -283,16 +286,17 @@ grab_apk_from_ogapps () {
 			fi
 		;;
 
-		* )
+		"com.google.android.syncadapters.contacts" )
 			local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
-			case "${4}" in
-				19 ) local api_letter=K ;;
-				21 ) local api_letter=L ;;
-				23 ) local api_letter=M ;;
-				24 ) local api_letter=N ;;
-				26 ) local api_letter=O ;;
-				28 ) local api_letter=P ;;
-			esac
+		;;
+
+		"com.google.android.backuptransport" )
+			# Use SDK 28 Backuptransport on SDK 29 aswell
+			if [ "${4}" -eq 29 ]; then
+				local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/28/nodpi/28.apk"
+			else
+				local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
+			fi
 		;;
 	esac
 
