@@ -25,7 +25,7 @@
   * no longer ship Orbot
   * no longer ship GNU Nano Editor
      * use 0smosis' GNU Nano flashable zip
-  * drop the following shel utilities:
+  * drop the following shell utilities:
      * col
      * colcrt
      * colrm
@@ -64,6 +64,7 @@
   * Privacy Browser (3.3)
   * QKSMS (3.8.0)
   * Simple Calendar Pro (6.8.3)
+  * SmartPack Kernel Manager (9.6)
   * Termux (0.88)
   * Tor Browser (68.4.1)
 
@@ -73,8 +74,8 @@
 
 * tools
   * dexpatcher (1.8.0-alpha4-snapshot)
-  * busybox (1.31.1) (only used by the Installer!)
-  * magic.mgc (5.38) (only used by the Patcher!)
+  * busybox (1.31.1) (only used by the Installer)
+  * magic.mgc (5.38) (only used by the Patcher)
 
 ## 22.5.1.20200102 "[NCIA-93](https://memory-alpha.fandom.com/wiki/NCIA-93_type)"
 
