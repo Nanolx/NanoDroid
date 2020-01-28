@@ -35,7 +35,6 @@ fd_AURORADROID=(fdroid com.aurora.adroid app AuroraDroid)
 ###
 
 fd_ALARMIO=(fdroid me.jfenn.alarmio app Alarmio)
-fd_AMAZE=(fdroid com.amaze.filemanager app Amaze)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
 fd_BLOCKADA=(fdroid org.blokada.alarm app Blokada)
 fd_FROST=(fdroid com.pitchedapps.frost app Frost)
@@ -70,8 +69,8 @@ og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
 # GitHub
 ###
 
+gh_AMAZE=(TeamAmaze/AmazeFileManager app Amaze)
 gh_SMARTPACKKERNELMANAGER=(SmartPack/SmartPack-Kernel-Manager app SmartPackKernelManager)
-gh_SUBSTRATUM=(substratum/substratum app Substratum)
 
 ###
 # GitLab

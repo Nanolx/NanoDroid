@@ -33,6 +33,7 @@
      * setterm
   * no longer ship Zelda ringtones
   * break-out Google Sync Adapters and Swipe libraries into NanoDroid-Google package
+  * switch from F-Droid to GitHub builds for Amaze
 
 * microG package
   * break-out Google Sync Adapters and Swipe libraries into NanoDroid-Google package
@@ -53,6 +54,8 @@
 ### Updates
 
 * automatic
+  * Amaze (3.4.1)
+  * Aurora Services (1.0.5)
   * Aurora Store (3.1.7)
   * Blockada (4.5.1)
   * Bromite System WebView (79.0.3945.139)
