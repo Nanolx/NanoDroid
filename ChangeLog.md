@@ -10,6 +10,7 @@
 
 * Patcher
   * fix dexpatcher crashing
+  * fix setting ld environment
 
 * Bromite System WebView
   * Bromite System WebView will support Android 10 starting with version 80
