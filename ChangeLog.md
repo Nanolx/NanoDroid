@@ -70,8 +70,8 @@
   * Tor Browser (68.4.1)
 
 * manual
-  * Google Play (18.5.59)
-  * MPV (20200127-nightly)
+  * Google Play (18.6.33)
+  * MPV (200131-nightly)
 
 * tools
   * dexpatcher (1.8.0-alpha4-snapshot)
