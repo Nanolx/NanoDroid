@@ -9,6 +9,7 @@ repo_guardian="https://guardianproject.info/fdroid/repo"
 repo_microg="https://microg.org/fdroid/repo"
 repo_nanolx="https://nanolx.org/fdroid/repo"
 repo_bromite="https://fdroid.bromite.org/fdroid/repo"
+repo_ogapps="https://gitlab.opengapps.org/opengapps"
 
 # check dependencies
 for dep in gawk curl sha256sum jq gzip; do
@@ -280,22 +281,22 @@ grab_apk_from_ogapps () {
 			# use SDK 19 Calendar Syncadapter for SDK 19
 			# use SDK 21 Calendar Syncadapter for SDK 21 - 29
 			if [ "${4}" -eq 19 ]; then
-				local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/15/nodpi/2015080710.apk"
+				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/15/nodpi/2015080710.apk"
 			else
-				local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/21/nodpi/2016184095.apk"
+				local apk_url="all/raw/master/${2}/${1}/21/nodpi/2016184095.apk"
 			fi
 		;;
 
 		"com.google.android.syncadapters.contacts" )
-			local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
+			local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
 		;;
 
 		"com.google.android.backuptransport" )
 			# Use SDK 28 Backuptransport on SDK 29 aswell
 			if [ "${4}" -eq 29 ]; then
-				local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/28/nodpi/28.apk"
+				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/28/nodpi/28.apk"
 			else
-				local apk_url="https://gitlab.opengapps.org/opengapps/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
+				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
 			fi
 		;;
 	esac
@@ -322,7 +323,7 @@ grab_lib_from_ogapps () {
 		arm64 | x86_64 ) LIBD=lib64 ;;
 	esac
 
-	local lib_url="https://gitlab.opengapps.org/opengapps/${3}/raw/master/${LIBD}/${2}/${1}?inline=false"
+	local lib_url="${repo_ogapps}/${3}/raw/master/${LIBD}/${2}/${1}?inline=false"
 	local swp_dest="${appsfolder[8]}/${3}"
 
 	if [[ "${4}" == "true" ]]; then
