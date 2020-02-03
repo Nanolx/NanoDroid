@@ -283,7 +283,7 @@ grab_apk_from_ogapps () {
 			if [ "${4}" -eq 19 ]; then
 				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/15/nodpi/2015080710.apk"
 			else
-				local apk_url="all/raw/master/${2}/${1}/21/nodpi/2016184095.apk"
+				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/21/nodpi/2016184095.apk"
 			fi
 		;;
 
