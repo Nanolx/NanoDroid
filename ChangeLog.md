@@ -12,11 +12,6 @@
   * fix dexpatcher crashing
   * fix setting ld environment
 
-* Bromite System WebView
-  * Bromite System WebView will support Android 10 starting with version 80
-     * scheduled for release in February 2020
-  * disable installation of Bromite System WebView on Android 10 for now
-
 ### General Changes
 
 * Full Package
@@ -58,21 +53,22 @@
   * Amaze (3.4.1)
   * Aurora Services (1.0.5)
   * Aurora Store (3.1.7)
-  * Blockada (4.5.1)
-  * Bromite System WebView (79.0.3945.139)
+  * Blockada (4.5.2)
+  * Bromite System WebView (80.0.3987.78)
   * F-Droid (1.8-alpha1)
+  * K-9 Mail (5.704)
   * New Pipe (0.18.2)
   * Open Keychain (5.5)
   * Privacy Browser (3.3)
-  * QKSMS (3.8.0)
+  * QKSMS (3.8.1)
   * Simple Calendar Pro (6.8.3)
   * SmartPack Kernel Manager (9.6)
-  * Termux (0.88)
+  * Termux (0.90)
   * Tor Browser (68.4.1)
 
 * manual
-  * Google Play (18.6.33)
-  * MPV (200131-nightly)
+  * Google Play (18.7.18)
+  * MPV (200207-nightly)
 
 * tools
   * dexpatcher (1.8.0-alpha4-snapshot)
