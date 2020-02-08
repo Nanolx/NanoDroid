@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 22.6 in-dev
+## 22.6.20200208 "[La Sirena](https://memory-alpha.fandom.com/wiki/La_Sirena)"
 
 ### Bugfixes
 
@@ -37,6 +37,9 @@
 * Google package
   * new package which includes Google Sync and Swipe libraries
   * support Sync Adapters and swipe libraries on Android 10
+
+* Bromite System WebView package
+  * Bromite v80 supports Android 10
 
 * Patcher
   * for SDK 19 - 25 use dexpatcher 1.6.3

@@ -60,8 +60,8 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 22.5.1.20200102 ([NCIA-93](https://memory-alpha.fandom.com/wiki/NCIA-93_type))
-* Beta: 22.6-beta2 (22.5.91.20200131)
+* Stable: 22.6.20200208 "[La Sirena](https://memory-alpha.fandom.com/wiki/La_Sirena)"
+* Beta: ---
 
 ## Downloads
 
