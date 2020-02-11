@@ -51,12 +51,8 @@ checkbox(
 	"Apps",		"Install Apps (customized later)",			1,
 	"Overlay",	"Debloat Apps (customized later)",			1,
 	"Maps API v1",	"Install Google Maps API version 1",			1,
-	"Init Scripts",	"Install init scripts",					1,
-	"Google Sync",	"Install Google Contacts & Calendar Sync",		0,
-	"Swipe",	"Install Swipe libraries",				0,
 	"Force System",	"Force System Mode Installation",			0,
-	"GNU Bash",	"Install GNU Bash Shell",				1,
-	"Shell Utils",	"Install Shell Utils from bsdmainutils and util-linux",	1
+	"GNU Bash",	"Install GNU Bash Shell",				1
 );
 
 selectbox(
@@ -109,6 +105,52 @@ selectbox(
 	"Fake Store",		"Install Fake Store only",				0,	#-- selected.1 = 5
 	"Aurora + Fake Store",	"Install alternative Aurora Store (and Fake Store)",	1	#-- selected.1 = 7
 
+);
+
+selectbox(
+	"Google Sync/Swipe",
+	"Google Sync/Swipe",
+	"@customize",
+	"gsync.prop",
+
+	"Select the Google Addons you want", "", 2, #-- Group 1. key = "selected.1"
+	"Google Sync",	"Install Google Contacts & Calendar Sync",		0,
+	"Swipe",	"Install Swipe libraries",				0
+);
+
+selectbox(
+	"Init Scripts",
+	"Init Scripts",
+	"@customize",
+	"initd.prop",
+
+	"Select the Init Scripts you want", "", 2, #-- Group 1. key = "selected.1"
+	"sqlite",	"cleanup and compress sqlite databases on boot",	1,
+	"fstrim",	"optmize/trim file systems on boot",			1,
+	"logcat",	"auto record logcats in /data/adb/logcats",		1,
+	"external_sd",	"link sdcard to /external_sd for easy adb access",	1,
+	"logscleaner",	"cleanup log files on boot",				0
+);
+
+selectbox(
+	"Shell Utilities",
+	"Shell Utilities",
+	"@customize",
+	"shellutil.prop",
+
+	"Select the Shell utilities you want", "", 2, #-- Group 1. key = "selected.1"
+	"findfs",	"---",							1,
+	"findmnt",	"---",							1,
+	"hexdump",	"---",							1,
+	"lessecho",	"---",							1,
+	"lesskey",	"---",							1,
+	"lsblk",	"---",							1,
+	"lscpu",	"---",							1,
+	"lsipc",	"---",							1,
+	"lslocks",	"---",							1,
+	"lsns",		"---",							1,
+	"ncal",		"---",							1,
+	"whereis",	"---",							1
 );
 
 checkbox(

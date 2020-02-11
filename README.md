@@ -274,6 +274,7 @@ where MODID is either
 * NanoDroid_FDroid
 * NanoDroid_BromiteWebView
 * NanoDroid_OsmAnd
+* NanoDroid_Google
 
 and INSTALLDATE is the date of installation in %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14).
 
@@ -480,6 +481,10 @@ Furthermore NanoDroid tells F-Droid to activate the following additional reposit
 * BromiteWebView F-Droid repository [> Link](https://www.bromite.org/fdroid)
 * official microG F-Droid repository [> Link](https://microg.org/fdroid.html)
 
+### Google Sync/Swipe Libraries
+
+Google Sync adapters and Swipe Libraries are optionally installable through the **NanoDroid-Google** package.
+
 ### Applications
 
 NanoDroid includes a variety of OpenSource applications, check full [> list](doc/Applications.md)
@@ -669,6 +674,8 @@ List of known issues and their respective fixes or workarounds.
      * open the Phone app and dial the following: `*#*#2432546#*#*` (or ` *#*#CHECKIN#*#*`)
 
 ### Unified Nlp
+
+**Note:** unified Nlp has known issues on Android 10.
 
 * unified Nlp is not registered in the system
   * some ROMs with native signature spoofing don't look for `com.google.android.gms` as location provider

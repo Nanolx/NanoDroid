@@ -17,7 +17,9 @@ run_initscripts () {
 
 	# NanoDroid init scripts
 	for init in 10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner; do
-		"${MODDIR}/init.d/${init}" | tee -a "${LOGDIR}/${init}.log.${CURDATE}" &
+		if [ -f "${MODDIR}/init.d/${init}" ]; then
+			"${MODDIR}/init.d/${init}" | tee -a "${LOGDIR}/${init}.log.${CURDATE}" &
+		fi
 	done
 }
 

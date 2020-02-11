@@ -22,16 +22,12 @@ nanodroid_fdroid=1
 nanodroid_apps=1
 nanodroid_play=21
 nanodroid_overlay=1
-nanodroid_zelda=1
 nanodroid_mapsv1=1
-nanodroid_init=1
-nanodroid_gsync=0
-nanodroid_swipe=0
+nanodroid_init="10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"
 nanodroid_forcesystem=0
 nanodroid_nlpbackend=1000
 nanodroid_bash=1
-nanodroid_nano=1
-nanodroid_utils=1
+nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"
 ```
 
 the **microG** package supports the following options (nanodroid_microg is always 1)
@@ -40,16 +36,21 @@ the **microG** package supports the following options (nanodroid_microg is alway
 nanodroid_play=21
 nanodroid_overlay=0
 nanodroid_mapsv1=1
-nanodroid_gsync=0
-nanodroid_swipe=0
 nanodroid_forcesystem=0
 nanodroid_nlpbackend=1000
 ```
 
-the **F-Droid** (nanodroid_fdroid is always 1) and **Bromite WebView** pckage supports the following options
+the **F-Droid** (nanodroid_fdroid is always 1) and **Bromite WebView** package supports the following options
 
 ```
 nanodroid_forcesystem=0
+```
+
+the **Google** package supports the following options
+
+```
+nanodroid_gsync=0
+nanodroid_swipe=0
 ```
 
 where `1` means `on` and `0` means `off`. If no `.nanodroid-setup` is found, the [default settings](.nanodroid-setup) will be used (equals to the example above), if your `.nanodroid-setup` file exists, but is missing entries, those entries will be added, using the default values.
@@ -98,17 +99,13 @@ what app store to use:
 
 whether to populate the overlay to pseudo-debloat `/system` applications (Magisk-only)
 
-`nanodroid_zelda=[0|1]`
-
-whether to provide The Legend of Zelda ringtones and sounds
-
 `nanodroid_mapsv1=[0|1]`
 
 whether to provide **microG** Maps API v1
 
-`nanodroid_init=[0|1]`
+`nanodroid_init="10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"`
 
-whether to provide init scripts
+whether to provide init scripts (the choosen ones, or "" for none)
 
 `nanodroid_gsync=[0|1]`
 
@@ -134,10 +131,6 @@ what location backends for microG to install
 
 whether to install GNU Bash Shell
 
-`nanoroid_nano=[0|1]`
+`nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"`
 
-whether to install GNU Nano Editor
-
-`nanodroid_utils=[0|1]`
-
-whether to install Shell Utils from util-linux and bsdmainutils
+whether to install Shell Utils from util-linux and bsdmainutils (the choosen ones, or "" for none)
