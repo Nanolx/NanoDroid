@@ -1687,7 +1687,10 @@ check_cfg_setup () {
 
 		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"
 		set_prop nanodroid_nlpbackend "${tmp_prop}"
-	elif [ "${#nanodroid_nlpbackend}" -eq 3 ]; then
+	fi
+
+	# in NanoDroid 20.5 nanodroid_nlpbackend has changed (again)
+	if [ "${#nanodroid_nlpbackend}" -eq 3 ]; then
 		tmp_prop="${nanodroid_nlpbackend}0"
 		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"
 		set_prop nanodroid_nlpbackend "${tmp_prop}"
@@ -1695,7 +1698,7 @@ check_cfg_setup () {
 
 	[ -z "${nanodroid_init}" ] && set_prop nanodroid_init \"10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner\"
 
-	# in NanoDroid 22.6 nanodroid_init has changed
+	# in NanoDroid 22.7 nanodroid_init has changed
 	if [ "${#nanodroid_init}" -eq 1 ]; then
 		tmp_prop="\"10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner\""
 		sed -e '/^nanodroid_init/d' -i "${cfg_setup}"
@@ -1704,7 +1707,7 @@ check_cfg_setup () {
 
 	[ -z "${nanodroid_utils}" ] && set_prop nanodroid_utils \"findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis\"
 
-	# in NanoDroid 22.6 nanodroid_util has changed
+	# in NanoDroid 22.7 nanodroid_util has changed
 	if [ "${#nanodroid_utils}" -eq 1 ]; then
 		tmp_prop="\"findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis\""
 

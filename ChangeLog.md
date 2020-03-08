@@ -1,5 +1,23 @@
 # ChangeLog
 
+## 22.7 (in-dev)
+
+### General Changes
+
+* Installer
+  * setup variable `nanodroid_init` is now a list `nanodroid_init="10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"`
+     * all listed init scripts will be installed
+  * setup variable `nanodroid_utils` is now a list `nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"`
+     * all listed utils will be installed
+  * the `column` util will always be installed (required by `nanodroid-overlay`)
+
+* Setup Wizard
+  * updated for aforementioned changes
+  * other minor changes
+
+* Documentation
+  * minor updates
+
 ## 22.6.20200208 "[La Sirena](https://memory-alpha.fandom.com/wiki/La_Sirena)"
 
 ### Bugfixes
