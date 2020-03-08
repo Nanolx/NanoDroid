@@ -1667,37 +1667,50 @@ check_cfg_setup () {
 	fi
 
 	[ -z "${nanodroid_mapsv1}" ] && set_prop nanodroid_mapsv1 1
-	[ -z "${nanodroid_init}" ] && set_prop nanodroid_init 1
 	[ -z "${nanodroid_gsync}" ] && set_prop nanodroid_gsync 0
 	[ -z "${nanodroid_forcesystem}" ] && set_prop nanodroid_forcesystem 0
 	[ -z "${nanodroid_swipe}" ] && set_prop nanodroid_swipe 0
 
-	[ -z "${nanodroid_nlpbackend}" ] && set_prop nanodroid_nlpbackend 100
+	[ -z "${nanodroid_bash}" ] && set_prop nanodroid_bash 1
+
+	[ -z "${nanodroid_nlpbackend}" ] && set_prop nanodroid_nlpbackend 1000
 
 	# in NanoDroid 20.3 nanodroid_nlpbackend has changed
 	if [ "${#nanodroid_nlpbackend}" -eq 1 ]; then
 		case "${nanodroid_nlpbackend}" in
-			0 ) tmp_prop="000" ;;
-			1 ) tmp_prop="100" ;;
-			2 ) tmp_prop="010" ;;
-			3 ) tmp_prop="110" ;;
-			* ) tmp_prop="100" ;;
+			0 ) tmp_prop="0000" ;;
+			1 ) tmp_prop="1000" ;;
+			2 ) tmp_prop="0100" ;;
+			3 ) tmp_prop="1100" ;;
+			* ) tmp_prop="1000" ;;
 		esac
 
 		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"
 		set_prop nanodroid_nlpbackend "${tmp_prop}"
-	fi
-
-	# in NanoDroid 20.5 nanodroid_nlpbackend has changed
-	if [ "${#nanodroid_nlpbackend}" -eq 3 ]; then
+	elif [ "${#nanodroid_nlpbackend}" -eq 3 ]; then
 		tmp_prop="${nanodroid_nlpbackend}0"
-
 		sed -e '/^nanodroid_nlpbackend/d' -i "${cfg_setup}"
 		set_prop nanodroid_nlpbackend "${tmp_prop}"
 	fi
 
-	[ -z "${nanodroid_bash}" ] && set_prop nanodroid_bash 1
-	[ -z "${nanodroid_utils}" ] && set_prop nanodroid_utils 1
+	[ -z "${nanodroid_init}" ] && set_prop nanodroid_init \"10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner\"
+
+	# in NanoDroid 22.6 nanodroid_init has changed
+	if [ "${#nanodroid_init}" -eq 1 ]; then
+		tmp_prop="\"10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner\""
+		sed -e '/^nanodroid_init/d' -i "${cfg_setup}"
+		set_prop nanodroid_init "${tmp_prop}"
+	fi
+
+	[ -z "${nanodroid_utils}" ] && set_prop nanodroid_utils \"findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis\"
+
+	# in NanoDroid 22.6 nanodroid_util has changed
+	if [ "${#nanodroid_utils}" -eq 1 ]; then
+		tmp_prop="\"findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis\""
+
+		sed -e '/^nanodroid_utils/d' -i "${cfg_setup}"
+		set_prop nanodroid_utils "${tmp_prop}"
+	fi
 
 	# in NanoDroid 21.0.90 nanodroid_override was dropped
 	sed -e '/nanodroid_override/d' -i "${cfg_setup}"
