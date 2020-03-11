@@ -98,6 +98,8 @@ for setupfile in ${nanodroid_apps} ${nanodroid_overlay} ${nanodroid_setup}; do
 		mkdir -p "${CONF_BACKUP}"
 		mv "${setupfile}" "${CONF_BACKUP}"
 	fi
+
+	touch ${setupfile}
 done
 
 ui_print " "

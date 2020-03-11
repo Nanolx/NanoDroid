@@ -2,6 +2,12 @@
 
 ## 22.7 (in-dev)
 
+### Bug Fixes
+
+* SetupWizard
+  * when selecting no apps create empty config file (working around an uncommon corner case)
+     * when one selects no apps but still activates "install apps", the installer would install all apps
+
 ### General Changes
 
 * Installer
