@@ -91,9 +91,12 @@ what app store to use:
   * 1 = Play Store
   * 2 = Aurora Store
       * alongside Aurora Services addon
+  * 3 = Play Store and Aurora Store
+      * alongside Aurora Services addon
 * 2nd item
   * 0 = without Fake Store
   * 1 = with Fake Store
+       * only if Play Store is not going to be installed
 
 `nanodroid_overlay=[0|1]`
 

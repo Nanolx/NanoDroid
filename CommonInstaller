@@ -1059,32 +1059,45 @@ install_apps () {
 	fi
 }
 
+install_store_play () {
+	# force unselect Fake Store when user has choosen Play Store
+	STORE_CONFLICT="FakeStore"
+	FAKE_STORE=0
+
+	ui_print " << with Play Store"
+	nanodroid_install_apk Phonesky
+
+	create_privapp_permissions_whitelist Phonesky
+
+	nanodroid_install_file etc/default-permissions/phonesky-permissions.xml
+}
+
+install_store_aurora () {
+	ui_print " << with Aurora Store"
+	nanodroid_install_apk AuroraStore
+	nanodroid_install_apk AuroraServices
+	create_privapp_permissions_whitelist AuroraServices
+}
+
 install_store () {
 	STORE_CHOICE=${nanodroid_play:0:1}
 	FAKE_STORE=${nanodroid_play:1:1}
 
 	[ "${FAKE_STORE}" -eq 1 ] && STORE_CONFLICT="Phonesky" || STORE_CONFLICT=""
 
-	# install Aurora or Play Store whichever requested
+	# install Aurora and/or Play Store whichever requested
 	case "${STORE_CHOICE}" in
 		1 )
-			# force unselect Fake Store when user has choosen Play Store
-			STORE_CONFLICT="FakeStore"
-			FAKE_STORE=0
-
-			ui_print " << with Play Store"
-			nanodroid_install_apk Phonesky
-
-			create_privapp_permissions_whitelist Phonesky
-
-			nanodroid_install_file etc/default-permissions/phonesky-permissions.xml
+			install_store_play
 		;;
 
 		2 )
-			ui_print " << with Aurora Store"
-			nanodroid_install_apk AuroraStore
-			nanodroid_install_apk AuroraServices
-			create_privapp_permissions_whitelist AuroraServices
+			install_store_aurora
+		;;
+
+		3 )
+			install_store_play
+			install_store_aurora
 		;;
 
 		* )
@@ -1651,14 +1664,9 @@ check_cfg_setup () {
 	fi
 
 	# in NanoDroid 22.5 nanodroid_play has changed
-	if [ "${nanodroid_play}" -ge 30 ]; then
-		case "${nanodroid_play}" in
-			30 )	tmp_prop=20 ;;
-			31 )	tmp_prop=21 ;;
-		esac
-
+	if [ "${nanodroid_play}" -gt 30 ]; then
 		sed -e '/^nanodroid_play/d' -i "${cfg_setup}"
-		set_prop nanodroid_play "${tmp_prop}"
+		set_prop nanodroid_play 20
 	fi
 
 	if [ "${MODID}" = "NanoDroid" ]; then
