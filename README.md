@@ -594,7 +594,9 @@ Once your ROM supports signature spoofing, you need to setup microG like this
   * go into **microG settings** and set up everything like:
      * check results in **Self-Check**, grant missing permissions (by tapping on them)
          * especially the **Battery Optimization** item
-         * if Phonesky (= Fake Store or Play Store) lacks signature spoofing permissions head to Settings / Apps / Permissions / Signature Spoofing and grant it
+         * if Phonesky (= Fake Store or Play Store) lacks signature spoofing permissions head to Settings > Apps > Permissions > Signature Spoofing and grant it
+             * or manually using `pm grant com.google.gms android.permission.FAKE_PACKAGE_SIGNATURE` as root on-device
+             * likewise `pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE` for Phonesky
      * enable **Google device registration**
      * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
      * enable **Google SafetyNet** (required for applications that utilize SafetyNet, for example Pokémon GO, ...)
@@ -638,6 +640,8 @@ List of known issues and their respective fixes or workarounds.
      * grant signature spoofing permission to Fake Store or Play Store
          * go to System Settings > Apps > Permissions > Signature Spoofing for that
          * on some ROMs you have to tap on the 3-dot-menu `Show System Apps` to see Fake Store
+             * or manually using `pm grant com.google.gms android.permission.FAKE_PACKAGE_SIGNATURE` as root on-device
+             * likewise `pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE` for Phonesky
 
 ### SafetyNet
 
