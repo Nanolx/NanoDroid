@@ -1209,7 +1209,7 @@ install_bromite_webview () {
 			WEBVIEW_DIR=""
 			BACKUP_PATH="${STORAGE}/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
-			for app in webview webviewstub WebViewStub Webview; do
+			for app in webview webviewstub WebViewStub Webview WebViewGoogle; do
 				if [ -d /system/app/${app} ]; then
 					if [ "${MODE}" = "SYSTEM" ]; then
 						echo "    backing up ${app} to ${BACKUP_PATH}/app/${app}"
