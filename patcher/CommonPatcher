@@ -317,8 +317,8 @@ detect_arch () {
 detect_sdk () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
-	[ "${SDK_VERSION}" -gt 28 ] && \
-		error "Android versions beyond Pie are not yet supported"
+	[ "${SDK_VERSION}" -gt 29 ] && \
+		error "Android versions beyond Android 10 are not yet supported"
 
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error "Android versions before Jelly Bean are not supported"
@@ -345,8 +345,8 @@ detect_sdk () {
 		ui_print " > Android 4.1 - 6.0 (SDK ${SDK_VERSION}) detected"
 		PATCH_HOOK="${BASEDIR}/hook_4.1-6.0_services.jar.dex"
 	else
-		ui_print " > Android 7.0 - 9.0 (SDK ${SDK_VERSION}) detected"
-		PATCH_HOOK="${BASEDIR}/hook_7.0-9.0_services.jar.dex"
+		ui_print " > Android 7.0 - 10.0 (SDK ${SDK_VERSION}) detected"
+		PATCH_HOOK="${BASEDIR}/hook_7.0-10.0_services.jar.dex"
 	fi
 
 	[ "${SDK_VERSION}" -gt 21 ] && DEX_OPTS="--multi-dex-threaded"
@@ -587,7 +587,7 @@ install_addond () {
 		/system/addon.d/999-nanodroidpatcher.sh
 
 	for file in core_services.jar.dex dexpatcher_19.dex dexpatcher_26.dex \
-		hook_4.1-6.0_services.jar.dex hook_7.0-9.0_services.jar.dex \
+		hook_4.1-6.0_services.jar.dex hook_7.0-10.0_services.jar.dex \
 		baksmali_23.dex baksmali_25.dex baksmali_26.dex \
 		smali_23.dex smali_25.dex smali_26.dex \
 		magic.mgc org.spoofing.apk; do

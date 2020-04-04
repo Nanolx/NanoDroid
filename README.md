@@ -174,7 +174,8 @@ NanoDroid officially supports the following Android versions:
   * Patcher works if your ROM's services.jar already contains classes.dex
      * [> Deodex Instructions](doc/DeodexServices.md)
 * 10.0 / SDK 29 (Q)
-  * Patcher does not yet support Android 10
+  * Patcher works if your ROM's services.jar already contains classes.dex
+     * [> Deodex Instructions](doc/DeodexServices.md)
 
 earlier versions will never officially be supported (you may still report bugs, though).
 
