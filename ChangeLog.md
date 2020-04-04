@@ -16,7 +16,7 @@
   * setup variable `nanodroid_utils` is now a list `nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"`
      * all listed utils will be installed
      * the `column` util will always be installed (required by `nanodroid-overlay`)
-  * setup variable `nanodroid_play` has a new value `30` which will install both Play Store and Yalp Store
+  * setup variable `nanodroid_play` has a new value `30` which will install both Play Store and Aurora Store
 
 * Full Package
   * switch to official (pre-)release for Twidere (version 4.x)
