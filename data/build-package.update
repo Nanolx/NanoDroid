@@ -117,12 +117,12 @@ grab_apps () {
 	grab_apk_from_repo ${fd_SIMPLECALENDAR[@]}
 	grab_apk_from_repo ${fd_SIMPLEGALLERY[@]}
 	grab_apk_from_repo ${fd_TERMUX[@]}
+	grab_apk_from_repo ${fd_TWIDERE[@]}
 	grab_apk_from_repo ${gd_TORBROWSER[@]}
 
 	# GitHub
 	grab_apk_from_github ${gh_AMAZE[@]}
 	grab_apk_from_github ${gh_SMARTPACKKERNELMANAGER[@]}
-	grab_apk_from_github ${gh_TWIDERE[@]}
 
 	# URL
 	grab_apk_from_url ${raw_XDALABS[@]}

@@ -53,6 +53,7 @@ fd_QKSMS=(fdroid com.moez.QKSMS app QKSMS)
 fd_SIMPLECALENDAR=(fdroid com.simplemobiletools.calendar.pro app SimpleCalendar)
 fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery.pro app SimpleGallery)
 fd_TERMUX=(fdroid com.termux app Termux)
+fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 
 gd_TORBROWSER=(guardian org.torproject.torbrowser app TorBrowser)
 
@@ -70,7 +71,6 @@ og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
 
 gh_AMAZE=(TeamAmaze/AmazeFileManager app Amaze)
 gh_SMARTPACKKERNELMANAGER=(SmartPack/SmartPack-Kernel-Manager app SmartPackKernelManager)
-gh_TWIDERE=(TwidereProject/Twidere-Android app Twidere)
 
 ###
 # GitLab
