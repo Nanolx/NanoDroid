@@ -77,6 +77,10 @@ mount_apex () {
 		mkdir -p /apex
 		ln -sf "${APEX_DIR}" /apex/com.android.runtime
 	fi
+
+	echo " INFO: #10 [APEX_FILE] ${APEX_FILE}"
+	echo " INFO: #11 [APEX_DIR] ${APEX_DIR}"
+	echo " INFO: #12 [APEX [ALL]] $(ls /system/apex/*.apex)"
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
