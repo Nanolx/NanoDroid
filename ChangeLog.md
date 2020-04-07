@@ -18,15 +18,14 @@
      * the `column` util will always be installed (required by `nanodroid-overlay`)
   * setup variable `nanodroid_play` has a new value `30` which will install both Play Store and Aurora Store
 
-* Full Package
-  * switch to official (pre-)release for Twidere (version 4.x)
-
 * Bromite WebView Package
   * add `WebViewGoogle` to known WebView packages
+      * leave a message that overriding might fail
 
 * Patcher
   * remove restriction for Android 10
   * use Android 7 - 9 patch for Android 10 (user-confirmed working)
+  * collect apex information for logfiles
 
 * Setup Wizard
   * updated for aforementioned changes
