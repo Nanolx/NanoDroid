@@ -1209,6 +1209,12 @@ install_bromite_webview () {
 			WEBVIEW_DIR=""
 			BACKUP_PATH="${STORAGE}/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
+			if [ -d /system/app/WebViewGoogle -o -d /system/producat/app/WebViewGoogle ]; then
+				ui_print " ++ Google WebView [WebViewGoogle] found."
+				ui_print " ++ overriding with Bromite WebView might fail."
+				echo " XXX WebViewGoogle (blergh)"
+			fi
+
 			for app in webview webviewstub WebViewStub Webview WebViewGoogle; do
 				if [ -d /system/app/${app} ]; then
 					if [ "${MODE}" = "SYSTEM" ]; then
