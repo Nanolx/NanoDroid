@@ -51,36 +51,48 @@ is_mounted () {
 }
 
 mount_apex () {
+	APEX_NAME=""
 	APEX_FILE=""
 	APEX_DIR=""
 	APEX_LOOP=""
+	APEX_LD=""
 
 	for apex in com.android.runtime com.android.runtime.release com.android.runtime.debug; do
 		if [ -f /system/apex/${apex}.apex ]; then
+			APEX_NAME=${apex}
 			APEX_FILE=/system/apex/${apex}.apex
 			break
 		elif [ -d /system/apex/${apex} ]; then
+			APEX_NAME=${apex}
 			APEX_DIR=/system/apex/${apex}
 			break
 		fi
 	done
 
-	if [ -n "${APEX_FILE}" ]; then
-		mkdir -p "${TMPDIR}/apex"
-		unzip -oq "${APEX_FILE}" -d "${TMPDIR}/apex"
+	if ${BOOTMODE}; then
+		APEX_LD=/system/apex/${APEX_NAME}
+	else
+		APEX_LD=/apex/${APEX_NAME}
 
-		mkdir -p /apex/com.android.runtime
-		mount -oloop,ro "${TMPDIR}/apex/apex_payload.img" /apex/com.android.runtime
+		if [ -n "${APEX_FILE}" ]; then
+			mkdir -p "${TMPDIR}/apex"
+			unzip -oq "${APEX_FILE}" -d "${TMPDIR}/apex"
 
-		APEX_LOOP=$(mount | awk '/com.android.runtime/{print $1}')
-	elif [ -n "${APEX_DIR}" ]; then
-		mkdir -p /apex
-		ln -sf "${APEX_DIR}" /apex/com.android.runtime
+			mkdir -p /apex/${APEX_NAME}
+			mount -oloop,ro "${TMPDIR}/apex/apex_payload.img" /apex/${APEX_NAME}
+
+			APEX_LOOP=$(mount | awk '/com.android.runtime/{print $1}')
+		elif [ -n "${APEX_DIR}" ]; then
+			mkdir -p /apex
+			ln -sf "${APEX_DIR}" /apex/${APEX_NAME}
+		fi
 	fi
 
-	echo " INFO: #10 [APEX_FILE] ${APEX_FILE}"
-	echo " INFO: #11 [APEX_DIR] ${APEX_DIR}"
-	echo " INFO: #12 [APEX [ALL]] $(ls /system/apex/*.apex)"
+	echo " INFO: #10 [APEX_NAME] ${APEX_NAME}"
+	echo " INFO: #11 [APEX_FILE] ${APEX_FILE}"
+	echo " INFO: #12 [APEX_DIR] ${APEX_DIR}"
+	echo " INFO: #13 [APEX_LD] ${APEX_LD}"
+	echo " INFO: #14 [APEX [ALL]] $(ls /system/apex/*.apex)"
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
@@ -295,21 +307,21 @@ detect_arch () {
 
 	case ${DALVIKVM_BIN} in
 		*dalvikvm32* )
-			export LD_LIBRARY_PATH="/system/lib:/vendor/lib:/system/vendor/lib"
+			export LD_LIBRARY_PATH="${APEX_LD}/lib:/system/lib:/vendor/lib:/system/vendor/lib"
 		;;
 
 		*dalvikvm64* )
-			export LD_LIBRARY_PATH="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+			export LD_LIBRARY_PATH="${APEX_LD}/lib64:/system/lib64:/vendor/lib64:/system/vendor/lib64"
 		;;
 
 		*dalvikvm* )
 			case ${DALVIKVM_ARCH} in
 				*32-bit* )
-					export LD_LIBRARY_PATH="/system/lib:/vendor/lib:/system/vendor/lib"
+					export LD_LIBRARY_PATH="${APEX_LD}/lib:/system/lib:/vendor/lib:/system/vendor/lib"
 				;;
 
 				*64-bit* )
-					export LD_LIBRARY_PATH="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+					export LD_LIBRARY_PATH="${APEX_LD}/lib64:/system/lib64:/vendor/lib64:/system/vendor/lib64"
 				;;
 			esac
 		;;
