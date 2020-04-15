@@ -423,7 +423,6 @@ call_dalvikvm () {
 
 	DALVIKVM_OPTS=""
 
-	[[ "${supported_opts}" == *\[no\]dex2oat* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -Xnodex2oat"
 	[[ "${supported_opts}" == *\[no\]image-dex2oat* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -Xnoimage-dex2oat"
 	[[ "${supported_opts}" == *verbose:*gc* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:gc"
 	[[ "${supported_opts}" == *verbose:*jit* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jit"
