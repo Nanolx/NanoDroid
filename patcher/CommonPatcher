@@ -254,7 +254,7 @@ detect_odex () {
 	ui_print " ++"
 
 	[ "${SDK_VERSION}" -gt 27 -a "${ROM_DEX_STATUS}" != "DEODEX" ] && \
-		error "Pie is only supported on de-odexed ROMs currently"
+		error "Android 9 or newer is only supported on de-odexed ROMs currently"
 }
 
 detect_arch () {
