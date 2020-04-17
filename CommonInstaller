@@ -234,7 +234,8 @@ error () {
 mount_apex () {
 	APEX_FILE=""
 	APEX_DIR=""
-	APEX_LOOP=""
+
+	mkdir -p /data/tmp && APEX_TMP=/data/tmp || APEX_TMP=${TMPDIR}
 
 	for apex in com.android.runtime com.android.runtime.release com.android.runtime.debug; do
 		if [ -f /system/apex/${apex}.apex ]; then
@@ -247,13 +248,14 @@ mount_apex () {
 	done
 
 	if [ -n "${APEX_FILE}" ]; then
-		mkdir -p "${TMPDIR}/apex"
-		unzip -oq "${APEX_FILE}" -d "${TMPDIR}/apex"
+		mkdir -p "${APEX_TMP}/apex"
+		unzip -oq "${APEX_FILE}" -d "${APEX_TMP}/apex"
+
+		test -e /dev/loop_apex || mknod -m644 /dev/loop_apex b 7 8
 
 		mkdir -p /apex/com.android.runtime
-		mount -oloop,ro "${TMPDIR}/apex/apex_payload.img" /apex/com.android.runtime
-
-		APEX_LOOP=$(mount | awk '/com.android.runtime/{print $1}')
+		losetup /dev/loop_apex "${APEX_TMP}/apex/apex_payload.img" || error "APEX losetup failed"
+		mount -text4 -oro,noatime /dev/loop_apex /apex/com.android.runtime
 	elif [ -n "${APEX_DIR}" ]; then
 		mkdir -p /apex
 		ln -sf "${APEX_DIR}" /apex/com.android.runtime
@@ -467,7 +469,8 @@ nanodroid_finalize () {
 	umount -l /vendor 2>/dev/null
 	umount -l /dev/random 2>/dev/null
 	umount -l /apex/com.android.runtime 2>/dev/null
-	losetup -d ${APEX_LOOP} 2>/dev/null
+	losetup -d /dev/loop_apex 2>/dev/null
+	rm -rf ${APEX_TMP}/apex
 }
 
 ##########################################################################################
