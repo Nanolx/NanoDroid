@@ -56,8 +56,6 @@ mount_apex () {
 	APEX_DIR=""
 	APEX_LD=""
 
-	mkdir -p /data/tmp && APEX_TMP=/data/tmp || APEX_TMP=${TMPDIR}
-
 	for apex in com.android.runtime com.android.runtime.release com.android.runtime.debug; do
 		if [ -f /system/apex/${apex}.apex ]; then
 			APEX_NAME=${apex}
@@ -76,18 +74,23 @@ mount_apex () {
 		APEX_LD=/apex/${APEX_NAME}
 
 		if [ -n "${APEX_FILE}" ]; then
-			mkdir -p "${APEX_TMP}/apex"
-			unzip -oq "${APEX_FILE}" -d "${APEX_TMP}/apex"
+			mkdir -p "${TMPDIR}/apex"
+			unzip -oq "${APEX_FILE}" -d "${TMPDIR}/apex"
 
 			test -e /dev/loop_apex || mknod -m644 /dev/loop_apex b 7 8
 
 			mkdir -p /apex/com.android.runtime
-			losetup /dev/loop_apex "${APEX_TMP}/apex/apex_payload.img" || error "APEX losetup failed"
-			mount -text4 -oro,noatime /dev/loop_apex /apex/com.android.runtime
+			losetup /dev/loop_apex "${TMPDIR}/apex/apex_payload.img" || error "APEX losetup failed!"
+			mount -text4 -oro,noatime /dev/loop_apex /apex/com.android.runtime || error "APEX mount failed!"
+
+			rm -rf "${TMPDIR}/apex"
 		elif [ -n "${APEX_DIR}" ]; then
 			mkdir -p /apex
 			ln -sf "${APEX_DIR}" /apex/${APEX_NAME}
 		fi
+
+		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+		export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
 	fi
 
 	echo " INFO: #10 [APEX_NAME] ${APEX_NAME}"
@@ -417,9 +420,22 @@ setup_patcher () {
 }
 
 call_dalvikvm () {
-	for jar in /system/framework/*.jar ; do
-		BOOTCLASSES=${BOOTCLASSES}:${jar}
-	done
+	FRAME=/system/framework
+
+	if [ -n "${APEX_NAME}" ]; then
+		APEXB=/apex/com.android.runtime/javalib
+		BOOTCLASSES=${APEXB}/core-oj.jar:${APEXB}/core-libart.jar:\
+${APEXB}/okhttp.jar:${APEXB}/bouncycastle.jar:${APEXB}/apache-xml.jar:\
+${FRAME}/framework.jar:${FRAME}/ext.jar:${FRAME}/telephony-common.jar:\
+${FRAME}/voip-common.jar:${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:\
+${FRAME}/telephony-ext.jar
+	else
+		BOOTCLASSES=${FRAME}/core-oj.jar:${FRAME}/core-libart.jar:\
+${FRAME}/okhttp.jar:${FRAME}/bouncycastle.jar:${FRAME}/apache-xml.jar:\
+${FRAME}/framework.jar:${FRAME}/ext.jar:${FRAME}/telephony-common.jar:\
+${FRAME}/voip-common.jar:${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:\
+${FRAME}/telephony-ext.jar
+	fi
 
 	supported_opts=$(/system/bin/dalvikvm --help 2>&1)
 

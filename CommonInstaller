@@ -235,8 +235,6 @@ mount_apex () {
 	APEX_FILE=""
 	APEX_DIR=""
 
-	mkdir -p /data/tmp && APEX_TMP=/data/tmp || APEX_TMP=${TMPDIR}
-
 	for apex in com.android.runtime com.android.runtime.release com.android.runtime.debug; do
 		if [ -f /system/apex/${apex}.apex ]; then
 			APEX_FILE=/system/apex/${apex}.apex
@@ -248,18 +246,22 @@ mount_apex () {
 	done
 
 	if [ -n "${APEX_FILE}" ]; then
-		mkdir -p "${APEX_TMP}/apex"
-		unzip -oq "${APEX_FILE}" -d "${APEX_TMP}/apex"
+		mkdir -p "${TMPDIR}/apex"
+		unzip -oq "${APEX_FILE}" -d "${TMPDIR}/apex"
 
 		test -e /dev/loop_apex || mknod -m644 /dev/loop_apex b 7 8
 
 		mkdir -p /apex/com.android.runtime
-		losetup /dev/loop_apex "${APEX_TMP}/apex/apex_payload.img" || error "APEX losetup failed"
-		mount -text4 -oro,noatime /dev/loop_apex /apex/com.android.runtime
+		losetup /dev/loop_apex "${TMPDIR}/apex/apex_payload.img" || error "APEX losetup failed!"
+		mount -text4 -oro,noatime /dev/loop_apex /apex/com.android.runtime || error "APEX mount failed!"
+
+		rm -rf "${TMPDIR}/apex"
 	elif [ -n "${APEX_DIR}" ]; then
 		mkdir -p /apex
 		ln -sf "${APEX_DIR}" /apex/com.android.runtime
 	fi
+
+	export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
@@ -468,9 +470,14 @@ nanodroid_finalize () {
 	umount -l /system/vendor 2>/dev/null
 	umount -l /vendor 2>/dev/null
 	umount -l /dev/random 2>/dev/null
+
 	umount -l /apex/com.android.runtime 2>/dev/null
 	losetup -d /dev/loop_apex 2>/dev/null
+
 	rm -rf ${APEX_TMP}/apex
+	rm -rf /apex
+
+	unset ANDROID_RUNTIME_ROOT
 }
 
 ##########################################################################################
