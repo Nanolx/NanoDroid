@@ -6,7 +6,7 @@
 #
 ##########################################################################################
 
-VERSION=22.6.20200208
+VERSION=22.6.90.99999999
 TMPDIR=/dev/tmp
 LOGFILE="/data/media/0/nanodroid_logs/NanoDroid-SysTest-$(date +%Y%m%d-%H.%M.%S).log"
 
