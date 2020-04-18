@@ -8,6 +8,14 @@
   * when selecting no apps create empty config file (working around an uncommon corner case)
      * when one selects no apps but still activates "install apps", the installer would install all apps
 
+* Patcher
+  * improved APEX compatibility
+  * drop `-Xnodex2oat`from `dalvikvm` flags to avoid crashes on Android 10
+     * falsely listed as supported flag by `dalvikvm --help`
+
+* Installer
+  * improved APEX compatibility
+
 ### General Changes
 
 * Installer
@@ -25,7 +33,7 @@
 * Patcher
   * remove restriction for Android 10
   * use Android 7 - 9 patch for Android 10 (user-confirmed working)
-  * collect apex information for logfiles
+  * collect APEX information in log
 
 * Setup Wizard
   * updated for aforementioned changes
@@ -33,6 +41,37 @@
 
 * Documentation
   * minor updates
+
+### Updates
+
+* automatic
+  * AnySoftKeyboard (1.10.1109)
+  * Aurora Droid (1.0.5)
+  * Aurora Services (1.0.6)
+  * Aurora Store (3.2.4)
+  * Bromite System WebView (81.0.4044.106)
+  * F-Droid (1.8-alpha2)
+  * Frost (2.4.4)
+  * K-9 Mail (5.708)
+  * KeePassDX (2.5RC1)
+  * NewPipe (0.19.2)
+  * Odyssey (1.1.19)
+  * OpenVPN (0.7.15)
+  * OsmAnd+ (3.6.3)
+  * Privacy Browser (3.4.1)
+  * Simple Calendar (6.9.1)
+  * Simple Gallery (6.14.0)
+  * SmartPack Kernel Manager (10.5)
+  * Termux (0.94)
+  * Tor Browser (68.7.0)
+  * Twidere (4.0.6)
+
+* manual
+  * Google Play (19.7.12)
+  * MPV (20200412-nightly)
+
+* tools
+  * sqlite3 (3310100)
 
 ## 22.6.20200208 "[La Sirena](https://memory-alpha.fandom.com/wiki/La_Sirena)"
 
