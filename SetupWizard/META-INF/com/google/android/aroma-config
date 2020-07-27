@@ -170,7 +170,7 @@ checkbox(
 	"KeePassDX",			"Password Safe",			1,
 	"MPV",				"Video Player",				1,
 	"NewPipe",			"YouTube frontend and downloader",	1,
-	"Oandbackup",			"Backup and Restore Apps",		1,
+	"OAndBackupX",			"Backup and Restore Apps",		1,
 	"Odyssey",			"Feature-Rich Music Player",		1,
 	"OpenCamera",			"Feature-Rich Camera",			1,
 	"OpenKeyChain",			"Encrypt or Sign E-Mails",		1,

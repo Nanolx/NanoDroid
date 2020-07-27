@@ -17,7 +17,7 @@ Full list of provided applications
 * KeyPassDX (Password Safe) [> F-Droid](https://f-droid.org/en/packages/com.kunzisoft.keepass.libre)
 * MPV (Video Player) [> GitHub](https://github.com/mpv-android/mpv-android)
 * New Pipe (YouTube client) [> F-Droid](https://f-droid.org/packages/org.schabi.newpipe)
-* Oandbackup (App backup and restore) [> F-Droid](https://f-droid.org/packages/dk.jens.backup)
+* OAndBackupX (App backup and restore) [> F-Droid](https://f-droid.org/de/packages/com.machiav3lli.backup/)
 * Odyssey (Audio player) [> F-Droid](https://f-droid.org/packages/org.gateshipone.odyssey)
 * OpenCamera [> F-Droid](https://f-droid.org/packages/net.sourceforge.opencamera)
 * OpenKeyChain [> F-Droid](https://f-droid.org/packages/org.sufficientlysecure.keychain)

@@ -1799,6 +1799,9 @@ check_cfg_apps () {
 	# >= 22.6 no longer ship Orbot, remove
 	grep -q Orbot "${cfg_apps}" && sed -e '/Orbot/d' -i "${cfg_apps}"
 
+	# >= 22.7 has OAndBackupX instead of Oandbackup
+	grep -q Oandbackup "${cfg_apps}" && sed -e 's/Oandbackup/OAndBackupX/g' -i "${cfg_apps}"
+
 }
 
 # check whether '.nanodroid-overlay' is up to date

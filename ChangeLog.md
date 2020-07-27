@@ -30,6 +30,9 @@
   * add `WebViewGoogle` to known WebView packages
       * leave a message that overriding might fail
 
+* Full Package
+  * switch from `Oandbackup` to `OAndBackupX`
+
 * Patcher
   * remove restriction for Android 10
   * use Android 7 - 9 patch for Android 10 (user-confirmed working)
