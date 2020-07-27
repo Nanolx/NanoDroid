@@ -106,7 +106,7 @@ grab_apps () {
 	grab_apk_from_repo ${fd_K9MAIL[@]}
 	grab_apk_from_repo ${nlx_MPV[@]}
 	grab_apk_from_repo ${fd_NEWPIPE[@]}
-	grab_apk_from_repo ${fd_OANDBACKUP[@]}
+	grab_apk_from_repo ${fd_OANDBACKUPX[@]}
 	grab_apk_from_repo ${fd_ODYSSEY[@]}
 	grab_apk_from_repo ${fd_OPENCAMERA[@]}
 	grab_apk_from_repo ${fd_OPENKEYCHAIN[@]}
