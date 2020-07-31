@@ -387,21 +387,40 @@ detect_migrate_microg () {
 	GMSCORE_PATH=$(find /data/app -type d -name 'com.google.android.gms-*' 2>/dev/null)
 
 	if [ ! -z ${GMSCORE_PATH} ]; then
-		if ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
-			echo "    + Removing NanoDroid microG GmsCore in favor of Official microG GmsCore"
-			rm -rf "${GMSCORE_PATH}"
+		if [ -n "${1}" ]; then
+			if ! ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
+				echo "    + Removing Official microG GmsCore in favor of NanoDroid microG GmsCore"
+				rm -rf "${GMSCORE_PATH}"
 
-			echo "    + Resetting GCM/FCM connection of all apps to allow re-registration"
-			find /data/data/*/shared_prefs -name com.google.android.gms.*.xml -delete
+				echo "    + Resetting GCM/FCM connection of all apps to allow re-registration"
+				find /data/data/*/shared_prefs -name com.google.android.gms.*.xml -delete
+			fi
+		else
+			if ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
+				echo "    + Removing NanoDroid microG GmsCore in favor of Official microG GmsCore"
+				rm -rf "${GMSCORE_PATH}"
+
+				echo "    + Resetting GCM/FCM connection of all apps to allow re-registration"
+				find /data/data/*/shared_prefs -name com.google.android.gms.*.xml -delete
+			fi
 		fi
 	fi
+}
 
+detect_migrate_droidguard () {
 	DROIDGUARD_PATH=$(find /data/app -type d -name 'org.microg.gms.droidguard-*' 2>/dev/null)
 
 	if [ ! -z ${DROIDGUARD_PATH} ]; then
-		if ${UNZIP} -l "${DROIDGUARD_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
-			echo "    + Removing NanoDroid DroidGuard in favor of Official DroidGuard"
+		if [ -n "${1}" ]; then
+			if ! ${UNZIP} -l "${DROIDGUARD_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
+			echo "    + Removing Official DroidGuard in favor of NanoDroid DroidGuard"
 			rm -rf "${DROIDGUARD_PATH}"
+			fi
+		else
+			if ${UNZIP} -l "${DROIDGUARD_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
+				echo "    + Removing NanoDroid DroidGuard in favor of Official DroidGuard"
+				rm -rf "${DROIDGUARD_PATH}"
+			fi
 		fi
 	fi
 }
@@ -972,6 +991,9 @@ install_microg () {
 
 		# migrate from Nanolx microG GmsCore to Official microG GmsCore
 		detect_migrate_microg
+
+		# migrate from Official DroidGuard to Nanolx DroidGuard
+		detect_migrate_droidguard reverse
 
 		ui_print "   ++ microG GmsCore"
 		nanodroid_install_apk GmsCore
