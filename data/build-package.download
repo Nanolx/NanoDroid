@@ -12,7 +12,7 @@ repo_bromite="https://fdroid.bromite.org/fdroid/repo"
 repo_ogapps="https://gitlab.opengapps.org/opengapps"
 
 # check dependencies
-for dep in gawk curl sha256sum jq gzip; do
+for dep in gawk curl jq gzip; do
 	if ! which ${dep} &>/dev/null; then
 		echo "${dep} is not installed!"
 		exit 1
@@ -72,11 +72,11 @@ check_sha256sum () {
 
 	case ${input} in
 		*.gz )
-			in_checksum=$(gzip -dc ${input} 2>/dev/null | sha256sum | gawk '{print $1}')
+			in_checksum=$(gzip -dc ${input} 2>/dev/null | ${sumsha256} | gawk '{print $1}')
 		;;
 
 		* )
-			in_checksum=$(sha256sum ${input} 2>/dev/null | gawk '{print $1}')
+			in_checksum=$(${sumsha256} ${input} 2>/dev/null | gawk '{print $1}')
 		;;
 	esac
 
@@ -173,14 +173,14 @@ grab_apk_from_repo () {
 
 	local apk_url="${repo}/${apk_name}"
 
-	if check_sha256sum "${apk_dest}/${4}.apk.gz" "${sha_sum}"; then
+	if check_${sumsha256} "${apk_dest}/${4}.apk.gz" "${sha_sum}"; then
 		echo -e "\nUp-to-Date from ${repo_p} : ${4}.apk"
 	else	echo -e "\nUpdating from ${repo_p}   : ${4}.apk"
 		mkdir -p "${apk_dest}"
 		rm -f "${apk_dest}/${4}.apk.gz"
 		debug_download no_delete "${apk_dest}/${4}.apk" "${apk_url}"
 
-		if check_sha256sum "${apk_dest}/${4}.apk" "${sha_sum}"; then
+		if check_${sumsha256} "${apk_dest}/${4}.apk" "${sha_sum}"; then
 			echo "	SHA256 hash of ${4}.apk is correct"
 			gzip "${apk_dest}/${4}.apk"
 		else	echo -e "	SHA256 hash of ${4}.apk is wrong!\

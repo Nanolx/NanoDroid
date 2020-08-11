@@ -9,6 +9,11 @@ VERSION=${version_code}.${build_date}
 CWD=$(readlink -m "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
+case $(uname -s) in
+	*Darwin*) export sumsha256="shasum -a 256" ;;
+	* )	  export sumsha256="sha256sum" ;;
+esac
+
 # DIRS
 datafolder="${CWD}/data"
 repofolder="$datafolder/repo"

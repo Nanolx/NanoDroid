@@ -62,8 +62,8 @@ get_apk_info () {
 	apk_version=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $6}')
 	apk_code=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $4}')
 	apk_perm=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^uses-permission:/{print $2}' | sort)
-	apk_sha=$(sha256sum ${APK} | gawk '{print $1}')
-	gzip_sha=$(sha256sum ${1} | gawk '{print $1}')
+	apk_sha=$(${sumsha256} ${APK} | gawk '{print $1}')
+	gzip_sha=$(${sumsha256} ${1} | gawk '{print $1}')
 
 	case ${1} in
 		*gsync/K* ) APK_TYPE="Google Sync Adapters [KitKat]" ;;
@@ -121,7 +121,7 @@ get_lib_info () {
 	local lib_arch=$(file -b ${1} | gawk -F, '{print $2 " [ " $1 " ] [" $3 " ]"}')
 	local lib_specs=$(file -b ${1} | gawk -F, '{print $4 " [" $5 " ]"}')
 
-	lib_sha=$(sha256sum ${1} | gawk '{print $1}')
+	lib_sha=$(${sumsha256} ${1} | gawk '{print $1}')
 
 	echo "Android Library: ${LIB_NAME}
 	| Filename:	${lib_file}
@@ -148,7 +148,7 @@ get_bin_info () {
 	local bin_arch=$(file -b ${1} | gawk -F, '{print $2 " [ " $1 " ] [" $3 " ]"}')
 	local bin_specs=$(file -b ${1} | gawk -F, '{print $4 " [" $7 " ] [" $6 " ]"}')
 
-	local bin_sha=$(sha256sum ${1} | gawk '{print $1}')
+	local bin_sha=$(${sumsha256} ${1} | gawk '{print $1}')
 
 	echo "${bin_type}: ${bin_name}
 	| Filename:	${bin_file}
@@ -181,7 +181,7 @@ get_etc_info () {
 		*etc/org.fdroid.fdroid*     ) local etc_type="F-Droid Configuration" ;;
 	esac
 
-	local etc_sha=$(sha256sum ${1} | gawk '{print $1}')
+	local etc_sha=$(${sumsha256} ${1} | gawk '{print $1}')
 
 	echo "${etc_type}: ${etc_file}
 	| Filename:	${etc_file}
@@ -214,7 +214,7 @@ get_dex_info () {
 	esac
 
 	dex_ver=$(file -b ${1} | gawk '{print $5}')
-	dex_sha=$(sha256sum ${1} | gawk '{print $1}')
+	dex_sha=$(${sumsha256} ${1} | gawk '{print $1}')
 
 	echo "${dex_type}: ${dex_name}
 	| Filename:	${dex_file}
@@ -296,7 +296,7 @@ get_msc_info () {
 		unknown ) echo "No report template for file:	${1}" ;;
 		*       ) local msc_file=$(basename ${1})
 		          local msc_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
-		          local msc_sha=$(sha256sum ${1} | gawk '{print $1}')
+		          local msc_sha=$(${sumsha256} ${1} | gawk '{print $1}')
 
 		          [ -z "${msc_name}" ] && local msc_name=$(basename ${1} | sed -e 's/\.[^.]*$//')
 
@@ -337,7 +337,7 @@ get_dst_info () {
 			*.sig    ) local dst_type="Flashable Package (GPG Signature)" ;;
 		esac
 
-		dst_sha=$(sha256sum ${1} | gawk '{print $1}')
+		dst_sha=$(${sumsha256} ${1} | gawk '{print $1}')
 
 		echo "${dst_type}: ${dst_name}
 	| Filename:	${dst_file}
