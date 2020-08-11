@@ -50,54 +50,67 @@ is_mounted () {
 	return $?
 }
 
+# taken from Magisk, with modifications for NanoDroid
+mount_apex_loop () {
+	local number=0
+	local minorx=1
+	local loop
+
+	[ -e /dev/block/loop1 ] && minorx=$(stat -Lc '%T' /dev/block/loop1)
+
+	apex_mount="${1}"
+	mkdir -p "${apex_mount}"
+
+	while [ ${number} -lt 64 ]; do
+		loop=/dev/block/loop${number}
+		[ -e ${loop} ] || mknod ${loop} b 7 $((number * minorx))
+
+		echo " *** mount_apex_loop [loop] ${loop}"
+		echo " *** mount_apex_loop [apex_mount] ${apex_mount}"
+
+		if losetup "${loop}" /apex/apex_payload.img; then
+			if mount -text4 -oro,noatime "${loop}" "${apex_mount}"; then
+				rm -f /apex/apex_payload.img
+				break
+			fi
+		fi
+
+		number=$((number + 1))
+	done
+}
+
+# taken from Magisk, with modifications for NanoDroid
 mount_apex () {
-	APEX_NAME=""
-	APEX_FILE=""
-	APEX_DIR=""
 	APEX_LD=""
 
-	for apex in com.android.runtime com.android.runtime.release com.android.runtime.debug; do
-		if [ -f /system/apex/${apex}.apex ]; then
-			APEX_NAME=${apex}
-			APEX_FILE=/system/apex/${apex}.apex
-			break
-		elif [ -d /system/apex/${apex} ]; then
-			APEX_NAME=${apex}
-			APEX_DIR=/system/apex/${apex}
-			break
-		fi
-	done
-
 	if ${BOOTMODE}; then
-		APEX_LD=/system/apex/${APEX_NAME}
+		APEX_LD=/system/apex/com.android.runtime
 	else
-		APEX_LD=/apex/${APEX_NAME}
+		APEX_LD=/apex/com.android.runtime
 
-		if [ -n "${APEX_FILE}" ]; then
-			mkdir -p "${TMPDIR}/apex"
-			unzip -oq "${APEX_FILE}" -d "${TMPDIR}/apex"
+		mkdir -p /apex
 
-			test -e /dev/loop_apex || mknod -m644 /dev/loop_apex b 7 8
+		for apex in /system/apex/*; do
+			apex_mount="/apex/$(basename ${apex} .apex)"
+			apex_loop="/dev/loop_apex_$(basename ${apex} .apex)"
 
-			mkdir -p /apex/com.android.runtime
-			losetup /dev/loop_apex "${TMPDIR}/apex/apex_payload.img" || error "APEX losetup failed!"
-			mount -text4 -oro,noatime /dev/loop_apex /apex/com.android.runtime || error "APEX mount failed!"
+			[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
+			[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
 
-			rm -rf "${TMPDIR}/apex"
-		elif [ -n "${APEX_DIR}" ]; then
-			mkdir -p /apex
-			ln -sf "${APEX_DIR}" /apex/${APEX_NAME}
-		fi
+			if [ -f "${apex}" ]; then
+				unzip -oq "${apex}" apex_payload.img -d /apex
+				mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
+			elif [ -d "${apex}" ]; then
+				mount -o bind "${apex}" "${apex_mount}"
+			fi
+		done
 
 		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
 		export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
 	fi
 
-	echo " INFO: #10 [APEX_NAME] ${APEX_NAME}"
-	echo " INFO: #11 [APEX_FILE] ${APEX_FILE}"
-	echo " INFO: #12 [APEX_DIR] ${APEX_DIR}"
-	echo " INFO: #13 [APEX_LD] ${APEX_LD}"
-	echo " INFO: #14 [APEX [ALL]] $(ls /system/apex/*.apex)"
+	echo " INFO: #10 [APEX_LD] ${APEX_LD}"
+	echo " INFO: #11 [APEX [ALL]] $(ls /system/apex/*.apex)"
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
@@ -164,6 +177,28 @@ mount_partitions () {
 	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
 	mount_apex
+}
+
+umount_partitions () {
+	umount -l /system_root 2>/dev/null
+	umount -l /system 2>/dev/null
+	umount -l /vendor 2>/dev/null
+	umount -l /dev/random 2>/dev/null
+
+	mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
+		umount -l "${apex_mount}" 2>/dev/null
+	done
+
+	mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
+		losetup -d "${apex_loop}" 2>/dev/null
+	done
+
+	unset ANDROID_RUNTIME_ROOT
+	unset ANDROID_TZDATA_ROOT
+	unset BOOTCLASSPATH
+
+	rm -rf ${APEX_TMP}/apex
+	rm -rf /apex
 }
 
 error () {
@@ -421,16 +456,18 @@ setup_patcher () {
 
 call_dalvikvm () {
 	FRAME=/system/framework
+	APEXB=/apex/com.android.runtime/javalib
 
-	if [ -n "${APEX_NAME}" ]; then
-		APEXB=/apex/com.android.runtime/javalib
-		BOOTCLASSES=${APEXB}/core-oj.jar:${APEXB}/core-libart.jar:\
+	if [ -d "${APEXB}" ]; then
+		export BOOTCLASSPATH=${APEXB}/core-oj.jar:${APEXB}/core-libart.jar:\
 ${APEXB}/okhttp.jar:${APEXB}/bouncycastle.jar:${APEXB}/apache-xml.jar:\
 ${FRAME}/framework.jar:${FRAME}/ext.jar:${FRAME}/telephony-common.jar:\
 ${FRAME}/voip-common.jar:${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:\
-${FRAME}/telephony-ext.jar
+${FRAME}/telephony-ext.jar:\
+/apex/com.android.conscrypt/javalib/conscrypt.jar:\
+/apex/com.android.media/javalib/updatable-media.jar
 	else
-		BOOTCLASSES=${FRAME}/core-oj.jar:${FRAME}/core-libart.jar:\
+		export BOOTCLASSPATH=${FRAME}/core-oj.jar:${FRAME}/core-libart.jar:\
 ${FRAME}/okhttp.jar:${FRAME}/bouncycastle.jar:${FRAME}/apache-xml.jar:\
 ${FRAME}/framework.jar:${FRAME}/ext.jar:${FRAME}/telephony-common.jar:\
 ${FRAME}/voip-common.jar:${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:\
@@ -447,16 +484,7 @@ ${FRAME}/telephony-ext.jar
 	[[ "${supported_opts}" == *verbose:*jni* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jni"
 	[[ "${supported_opts}" == *verbose:*class* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:class"
 
-	if [ "${ROM_DEX_STATUS}" = "DEODEX" ]; then
-		/system/bin/dalvikvm \
-			-Xbootclasspath:${BOOTCLASSES} \
-			${DALVIKVM_OPTS} \
-			"${@}"
-	else
-		/system/bin/dalvikvm \
-			${DALVIKVM_OPTS} \
-			"${@}"
-	fi
+	/system/bin/dalvikvm ${DALVIKVM_OPTS} "${@}"
 }
 
 deodex_vdex () {
@@ -638,4 +666,3 @@ install_addond () {
 	cp "${BASEDIR}/70-nanodroidpatcher.sh" /system/addon.d/
 	chmod 0755 /system/addon.d/70-nanodroidpatcher.sh
 }
-

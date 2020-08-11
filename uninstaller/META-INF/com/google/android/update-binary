@@ -113,33 +113,68 @@ error () {
 	ui_print " !!"
 	exit 1
 }
-mount_apex () {
-	APEX_FILE=""
-	APEX_DIR=""
-	APEX_LOOP=""
 
-	for apex in com.android.runtime com.android.runtime.release com.android.runtime.debug; do
-		if [ -f /system/apex/${apex}.apex ]; then
-			APEX_FILE=/system/apex/${apex}.apex
-			break
-		elif [ -d /system/apex/${apex} ]; then
-			APEX_DIR=/system/apex/${apex}
-			break
+# taken from Magisk, with modifications for NanoDroid
+mount_apex_loop () {
+	local number=0
+	local minorx=1
+	local loop
+
+	[ -e /dev/block/loop1 ] && minorx=$(stat -Lc '%T' /dev/block/loop1)
+
+	apex_mount="${1}"
+	mkdir -p "${apex_mount}"
+
+	while [ ${number} -lt 64 ]; do
+		loop=/dev/block/loop${number}
+		[ -e ${loop} ] || mknod ${loop} b 7 $((number * minorx))
+
+		echo " *** mount_apex_loop [loop] ${loop}"
+		echo " *** mount_apex_loop [apex_mount] ${apex_mount}"
+
+		if losetup "${loop}" /apex/apex_payload.img; then
+			if mount -text4 -oro,noatime "${loop}" "${apex_mount}"; then
+				rm -f /apex/apex_payload.img
+				break
+			fi
 		fi
+
+		number=$((number + 1))
 	done
+}
 
-	if [ -n "${APEX_FILE}" ]; then
-		mkdir -p "${TMPDIR}/apex"
-		unzip -oq "${APEX_FILE}" -d "${TMPDIR}/apex"
+# taken from Magisk, with modifications for NanoDroid
+mount_apex () {
+	APEX_LD=""
 
-		mkdir -p /apex/com.android.runtime
-		mount -oloop,ro "${TMPDIR}/apex/apex_payload.img" /apex/com.android.runtime
+	if ${BOOTMODE}; then
+		APEX_LD=/system/apex/com.android.runtime
+	else
+		APEX_LD=/apex/com.android.runtime
 
-		APEX_LOOP=$(mount | awk '/com.android.runtime/{print $1}')
-	elif [ -n "${APEX_DIR}" ]; then
 		mkdir -p /apex
-		ln -sf "${APEX_DIR}" /apex/com.android.runtime
+
+		for apex in /system/apex/*; do
+			apex_mount="/apex/$(basename ${apex} .apex)"
+			apex_loop="/dev/loop_apex_$(basename ${apex} .apex)"
+
+			[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
+			[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
+
+			if [ -f "${apex}" ]; then
+				unzip -oq "${apex}" apex_payload.img -d /apex
+				mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
+			elif [ -d "${apex}" ]; then
+				mount -o bind "${apex}" "${apex_mount}"
+			fi
+		done
+
+		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+		export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
 	fi
+
+	echo " INFO: #10 [APEX_LD] ${APEX_LD}"
+	echo " INFO: #11 [APEX [ALL]] $(ls /system/apex/*.apex)"
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
@@ -379,8 +414,20 @@ umount -l /system_root 2>/dev/null
 umount -l /system 2>/dev/null
 umount -l /vendor 2>/dev/null
 umount -l /dev/random 2>/dev/null
-umount -l /apex/com.android.runtime 2>/dev/null
-losetup -d ${APEX_LOOP} 2>/dev/null
+
+mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
+	umount -l "${apex_mount}" 2>/dev/null
+done
+
+mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
+	losetup -d "${apex_loop}" 2>/dev/null
+done
+
+unset ANDROID_RUNTIME_ROOT
+unset ANDROID_TZDATA_ROOT
+
+rm -rf ${APEX_TMP}/apex
+rm -rf /apex
 
 ui_print " "
 ui_print " > Done!"

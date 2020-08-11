@@ -54,6 +54,8 @@ NanoDroidPatcher () {
 	patch_services
 	install_services
 
+	umount_partitions
+
 	ui_print " "
 	ui_print " > Done!"
 	ui_print " "
