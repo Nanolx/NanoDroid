@@ -1,7 +1,7 @@
 #!/sbin/sh
 ##########################################################################################
 # 
-# NanoDroid Patcher survival script
+# NanoDroid Patcher (Haystack Frontend)
 # by Nanolx
 #
 ##########################################################################################
@@ -177,6 +177,9 @@ mount_partitions () {
 	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
 	mount_apex
+
+	${BOOTMODE} && export LD_CONFIG_FILE="/system/etc/ld.config.txt" || \
+		export LD_CONFIG_FILE="${APEX_LD}/etc/ld.config.txt"
 }
 
 umount_partitions () {
@@ -342,8 +345,8 @@ detect_arch () {
 
 	export PATH="${BASEDIR}/busybox:/system/bin:/system/xbin"
 
-	DALVIKVM_BIN=$(ls -l /system/bin/dalvikvm | awk '{print $NF}')
-	DALVIKVM_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
+	DALVIKVM_BIN=$(ls -l ${APEX_LD}/bin/dalvikvm | awk '{print $NF}')
+	DALVIKVM_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L ${APEX_LD}/bin/dalvikvm)
 
 	case ${DALVIKVM_BIN} in
 		*dalvikvm32* )
@@ -456,25 +459,16 @@ setup_patcher () {
 
 call_dalvikvm () {
 	FRAME=/system/framework
-	APEXB=/apex/com.android.runtime/javalib
+	APEXB=${APEX_LD}/javalib
 
-	if [ -d "${APEXB}" ]; then
-		export BOOTCLASSPATH=${APEXB}/core-oj.jar:${APEXB}/core-libart.jar:\
-${APEXB}/okhttp.jar:${APEXB}/bouncycastle.jar:${APEXB}/apache-xml.jar:\
-${FRAME}/framework.jar:${FRAME}/ext.jar:${FRAME}/telephony-common.jar:\
-${FRAME}/voip-common.jar:${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:\
-${FRAME}/telephony-ext.jar:\
+	export BOOTCLASSPATH=${APEXB}/core-oj.jar:${APEXB}/core-libart.jar:${APEXB}/okhttp.jar:\
+${APEXB}/bouncycastle.jar:${APEXB}/apache-xml.jar:${FRAME}/framework.jar:\
+${FRAME}/ext.jar:${FRAME}/telephony-common.jar:${FRAME}/voip-common.jar:\
+${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:${FRAME}/telephony-ext.jar:\
 /apex/com.android.conscrypt/javalib/conscrypt.jar:\
 /apex/com.android.media/javalib/updatable-media.jar
-	else
-		export BOOTCLASSPATH=${FRAME}/core-oj.jar:${FRAME}/core-libart.jar:\
-${FRAME}/okhttp.jar:${FRAME}/bouncycastle.jar:${FRAME}/apache-xml.jar:\
-${FRAME}/framework.jar:${FRAME}/ext.jar:${FRAME}/telephony-common.jar:\
-${FRAME}/voip-common.jar:${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:\
-${FRAME}/telephony-ext.jar
-	fi
 
-	supported_opts=$(/system/bin/dalvikvm --help 2>&1)
+	supported_opts=$(${APEX_LD}/bin/dalvikvm --help 2>&1)
 
 	DALVIKVM_OPTS=""
 
@@ -484,7 +478,7 @@ ${FRAME}/telephony-ext.jar
 	[[ "${supported_opts}" == *verbose:*jni* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jni"
 	[[ "${supported_opts}" == *verbose:*class* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:class"
 
-	/system/bin/dalvikvm ${DALVIKVM_OPTS} "${@}"
+	${APEX_LD}/bin/dalvikvm ${DALVIKVM_OPTS} "${@}"
 }
 
 deodex_vdex () {
