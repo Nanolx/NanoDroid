@@ -25,6 +25,7 @@ show_banner () {
 
 setup_environment () {
 	TMPDIR=/dev/tmp/install
+	APEX_LD=/system
 
 	export ANDROID_DATA=${TMPDIR}
 	export PATCHER_ADDOND_DATA=/data/adb/nanodroid_patcher
@@ -81,8 +82,6 @@ mount_apex_loop () {
 
 # taken from Magisk, with modifications for NanoDroid
 mount_apex () {
-	APEX_LD=""
-
 	if ${BOOTMODE}; then
 		APEX_LD=/system/apex/com.android.runtime
 	else
@@ -176,10 +175,9 @@ mount_partitions () {
 
 	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
-	mount_apex
+	[ -d /system/apex ] && mount_apex
 
-	${BOOTMODE} && export LD_CONFIG_FILE="/system/etc/ld.config.txt" || \
-		export LD_CONFIG_FILE="${APEX_LD}/etc/ld.config.txt"
+	export LD_CONFIG_FILE="${APEX_LD}/etc/ld.config.txt"
 }
 
 umount_partitions () {
