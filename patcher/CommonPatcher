@@ -391,11 +391,7 @@ detect_sdk () {
 		SMALI="${BASEDIR}/smali_23.dex"
 	fi
 
-	if [ "${SDK_VERSION}" -gt 25 ]; then
-		DEXPATCHER="${BASEDIR}/dexpatcher_26.dex"
-	else	DEXPATCHER="${BASEDIR}/dexpatcher_19.dex"
-	fi
-
+	DEXPATCHER="${BASEDIR}/dexpatcher.dex"
 	PATCH_CORE="${BASEDIR}/core_services.jar.dex"
 
 	if [ "${SDK_VERSION}" -lt 24 ]; then
@@ -633,13 +629,18 @@ install_addond () {
 	rm -rf ${PATCHER_ADDOND_DATA}
 	mkdir -p ${PATCHER_ADDOND_DATA}
 
+	# remove old NanoMod stuff
 	[ -d /data/nanomod.patcher ] && rm -rf /data/nanomod.patcher
 	[ -d /data/adb/nanomod_patcher ] && rm -rf /data/nanomod_patcher
 	rm -f /system/addon.d/75-nanomodpatcher.sh \
 		/system/addon.d/75-nanodroidpatcher.sh \
 		/system/addon.d/999-nanodroidpatcher.sh
 
-	for file in core_services.jar.dex dexpatcher_19.dex dexpatcher_26.dex \
+	# remove old, unused dexpatcher instances
+	rm -f ${PATCHER_ADDOND_DATA}/dexpatcher_19.dex \
+		${PATCHER_ADDOND_DATA}/dexpatcher_26.dex
+
+	for file in core_services.jar.dex dexpatcher.dex \
 		hook_4.1-6.0_services.jar.dex hook_7.0-10.0_services.jar.dex \
 		baksmali_23.dex baksmali_25.dex baksmali_26.dex \
 		smali_23.dex smali_25.dex smali_26.dex \
