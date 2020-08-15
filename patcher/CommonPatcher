@@ -399,6 +399,8 @@ detect_sdk () {
 		ui_print " > Android 7.0 - 10.0 (SDK ${SDK_VERSION}) detected"
 		PATCH_HOOK="${BASEDIR}/hook_7.0-10.0_services.jar.dex"
 	fi
+
+	[ "${SDK_VERSION}" -gt 21 ] && DEX_OPTS="--multi-dex-threaded"
 }
 
 ##########################################################################################
@@ -454,12 +456,12 @@ call_dalvikvm  () {
 		DALVIKVM_OPTS=""
 
 		ND_BOOTCLASSPATH=\
-	{APEXB}/core-oj.jar:${APEXB}/core-libart.jar:${APEXB}/okhttp.jar:\
-	${APEXB}/bouncycastle.jar:${APEXB}/apache-xml.jar:${FRAME}/framework.jar:\
-	${FRAME}/ext.jar:${FRAME}/telephony-common.jar:${FRAME}/voip-common.jar:\
-	${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:${FRAME}/telephony-ext.jar:\
-	/apex/com.android.conscrypt/javalib/conscrypt.jar:\
-	/apex/com.android.media/javalib/updatable-media.jar
+${APEXB}/core-oj.jar:${APEXB}/core-libart.jar:${APEXB}/okhttp.jar:\
+${APEXB}/bouncycastle.jar:${APEXB}/apache-xml.jar:${FRAME}/framework.jar:\
+${FRAME}/ext.jar:${FRAME}/telephony-common.jar:${FRAME}/voip-common.jar:\
+${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:${FRAME}/telephony-ext.jar:\
+/apex/com.android.conscrypt/javalib/conscrypt.jar:\
+/apex/com.android.media/javalib/updatable-media.jar
 
 		export BOOTCLASSPATH=${ND_BOOTCLASSPATH}
 
@@ -567,7 +569,7 @@ patch_services () {
 	call_dalvikvm  \
 		-classpath "${DEXPATCHER}" \
 		lanchon.dexpatcher.Main \
-		--api-level "${SDK_VERSION}" \
+		${DEX_OPTS} --api-level "${SDK_VERSION}" \
 		--verbose --debug \
 		--output ${BASEDIR}/services.jar-mod \
 		${BASEDIR}/services.jar ${PATCHES} || \
