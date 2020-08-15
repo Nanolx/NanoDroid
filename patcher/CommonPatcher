@@ -451,17 +451,15 @@ setup_patcher () {
 
 call_dalvikvm  () {
 	if [[ -z "${ND_BOOTCLASSPATH}" ]]; then
-		FRAME=/system/framework
-		APEXB=${APEX_LD}/javalib
 		DALVIKVM_OPTS=""
 
-		ND_BOOTCLASSPATH=\
-${APEXB}/core-oj.jar:${APEXB}/core-libart.jar:${APEXB}/okhttp.jar:\
-${APEXB}/bouncycastle.jar:${APEXB}/apache-xml.jar:${FRAME}/framework.jar:\
-${FRAME}/ext.jar:${FRAME}/telephony-common.jar:${FRAME}/voip-common.jar:\
-${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:${FRAME}/telephony-ext.jar:\
-/apex/com.android.conscrypt/javalib/conscrypt.jar:\
-/apex/com.android.media/javalib/updatable-media.jar
+		for jar in /system/framework/*.jar; do
+			ND_BOOTCLASSPATH="${jar}:${ND_BOOTCLASSPATH}"
+		done
+
+		for jar in /apex/*/javalib/*.jar; do
+			ND_BOOTCLASSPATH="${jar}:${ND_BOOTCLASSPATH}"
+		done
 
 		export BOOTCLASSPATH=${ND_BOOTCLASSPATH}
 
@@ -472,6 +470,9 @@ ${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:${FRAME}/telephony-ext.ja
 		[[ "${supported_opts}" == *verbose:*jit* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jit"
 		[[ "${supported_opts}" == *verbose:*jni* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jni"
 		[[ "${supported_opts}" == *verbose:*class* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:class"
+
+		echo " *** BOOTCLASSPATH=${BOOTCLASSPATH}"
+		echo " *** DALVIKVM_OPTS=${DALVIKVM_OPTS}"
 	fi
 
 	${APEX_LD}/bin/dalvikvm -Xnoimage-dex2oat ${DALVIKVM_OPTS} "${@}"
