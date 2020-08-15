@@ -125,14 +125,14 @@ mount_apex_loop () {
 	apex_mount="${1}"
 	mkdir -p "${apex_mount}"
 
+	echo " *** mount_apex_loop [apex_mount]: ${apex_mount}"
+
 	while [ ${number} -lt 64 ]; do
 		loop=/dev/block/loop${number}
 		[ -e ${loop} ] || mknod ${loop} b 7 $((number * minorx))
 
-		echo " *** mount_apex_loop [loop] ${loop}"
-		echo " *** mount_apex_loop [apex_mount] ${apex_mount}"
-
-		if losetup "${loop}" /apex/apex_payload.img; then
+		if losetup "${loop}" /apex/apex_payload.img 2>/dev/null; then
+			echo " *** mount_apex_loop [loop]: ${loop}"
 			if mount -text4 -oro,noatime "${loop}" "${apex_mount}"; then
 				rm -f /apex/apex_payload.img
 				break
