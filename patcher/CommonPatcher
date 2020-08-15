@@ -378,11 +378,11 @@ detect_sdk () {
 		BAKSMALI="${BASEDIR}/baksmali_26.dex"
 		SMALI="${BASEDIR}/smali_26.dex"
 	elif [ "${SDK_VERSION}" -gt 23 ]; then
-		BAKSMALI="${BASEDIR}/baksmali_25.dex"
-		SMALI="${BASEDIR}/smali_25.dex"
+		BAKSMALI="${BASEDIR}/baksmali_24.dex"
+		SMALI="${BASEDIR}/smali_24.dex"
 	else
-		BAKSMALI="${BASEDIR}/baksmali_23.dex"
-		SMALI="${BASEDIR}/smali_23.dex"
+		BAKSMALI="${BASEDIR}/baksmali_19.dex"
+		SMALI="${BASEDIR}/smali_19.dex"
 	fi
 
 	if [ "${SDK_VERSION}" -gt 25 ]; then
@@ -634,8 +634,8 @@ install_addond () {
 
 	for file in core_services.jar.dex dexpatcher_19.dex dexpatcher_26.dex \
 		hook_4.1-6.0_services.jar.dex hook_7.0-10.0_services.jar.dex \
-		baksmali_23.dex baksmali_25.dex baksmali_26.dex \
-		smali_23.dex smali_25.dex smali_26.dex \
+		baksmali_19.dex baksmali_24.dex baksmali_26.dex \
+		smali_19.dex smali_24.dex smali_26.dex \
 		magic.mgc org.spoofing.apk; do
 		cp "${BASEDIR}/${file}" ${PATCHER_ADDOND_DATA}/
 	done
