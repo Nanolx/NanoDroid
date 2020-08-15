@@ -29,12 +29,6 @@ setup_environment () {
 
 	export ANDROID_DATA=${TMPDIR}
 	export PATCHER_ADDOND_DATA=/data/adb/nanodroid_patcher
-
-	if [ -f /data/adb/magisk/util_functions.sh ]; then
-		NVBASE=/data/adb
-	elif [ -f /data/magisk/util_functions.sh ]; then
-		NVBASE=/data
-	fi
 }
 
 ui_print() {
@@ -258,9 +252,9 @@ detect_outfd () {
 }
 
 detect_bootmode () {
-	[ -z ${BOOTMODE} ] && BOOTMODE=false
-	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
-	${BOOTMODE} || ps -A | grep zygote | grep -qv grep && BOOTMODE=true
+	[ -z $BOOTMODE ] && ps | grep zygote | grep -qv grep && BOOTMODE=true
+	[ -z $BOOTMODE ] && ps -A 2>/dev/null | grep zygote | grep -qv grep && BOOTMODE=true
+	[ -z $BOOTMODE ] && BOOTMODE=false
 }
 
 grep_prop() {
@@ -401,8 +395,6 @@ detect_sdk () {
 		ui_print " > Android 7.0 - 10.0 (SDK ${SDK_VERSION}) detected"
 		PATCH_HOOK="${BASEDIR}/hook_7.0-10.0_services.jar.dex"
 	fi
-
-	[ "${SDK_VERSION}" -gt 21 ] && DEX_OPTS="--multi-dex-threaded"
 }
 
 ##########################################################################################
@@ -451,28 +443,32 @@ setup_patcher () {
 	mkdir -p /data/adb/
 }
 
-call_dalvikvm () {
-	FRAME=/system/framework
-	APEXB=${APEX_LD}/javalib
+call_dalvikvm  () {
+	if [[ -z "${ND_BOOTCLASSPATH}" ]]; then
+		FRAME=/system/framework
+		APEXB=${APEX_LD}/javalib
+		DALVIKVM_OPTS=""
 
-	export BOOTCLASSPATH=${APEXB}/core-oj.jar:${APEXB}/core-libart.jar:${APEXB}/okhttp.jar:\
-${APEXB}/bouncycastle.jar:${APEXB}/apache-xml.jar:${FRAME}/framework.jar:\
-${FRAME}/ext.jar:${FRAME}/telephony-common.jar:${FRAME}/voip-common.jar:\
-${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:${FRAME}/telephony-ext.jar:\
-/apex/com.android.conscrypt/javalib/conscrypt.jar:\
-/apex/com.android.media/javalib/updatable-media.jar
+		ND_BOOTCLASSPATH=\
+	{APEXB}/core-oj.jar:${APEXB}/core-libart.jar:${APEXB}/okhttp.jar:\
+	${APEXB}/bouncycastle.jar:${APEXB}/apache-xml.jar:${FRAME}/framework.jar:\
+	${FRAME}/ext.jar:${FRAME}/telephony-common.jar:${FRAME}/voip-common.jar:\
+	${FRAME}/ims-common.jar:${FRAME}/android.test.base.jar:${FRAME}/telephony-ext.jar:\
+	/apex/com.android.conscrypt/javalib/conscrypt.jar:\
+	/apex/com.android.media/javalib/updatable-media.jar
 
-	supported_opts=$(${APEX_LD}/bin/dalvikvm --help 2>&1)
+		export BOOTCLASSPATH=${ND_BOOTCLASSPATH}
 
-	DALVIKVM_OPTS=""
+		supported_opts=$(${APEX_LD}/bin/dalvikvm --help 2>&1)
 
-	[[ "${supported_opts}" == *\[no\]image-dex2oat* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -Xnoimage-dex2oat"
-	[[ "${supported_opts}" == *verbose:*gc* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:gc"
-	[[ "${supported_opts}" == *verbose:*jit* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jit"
-	[[ "${supported_opts}" == *verbose:*jni* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jni"
-	[[ "${supported_opts}" == *verbose:*class* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:class"
+		[[ "${supported_opts}" == *\[no\]image-dex2oat* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -Xnoimage-dex2oat"
+		[[ "${supported_opts}" == *verbose:*gc* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:gc"
+		[[ "${supported_opts}" == *verbose:*jit* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jit"
+		[[ "${supported_opts}" == *verbose:*jni* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:jni"
+		[[ "${supported_opts}" == *verbose:*class* ]] && DALVIKVM_OPTS="${DALVIKVM_OPTS} -verbose:class"
+	fi
 
-	${APEX_LD}/bin/dalvikvm ${DALVIKVM_OPTS} "${@}"
+	${APEX_LD}/bin/dalvikvm -Xnoimage-dex2oat ${DALVIKVM_OPTS} "${@}"
 }
 
 deodex_vdex () {
@@ -498,24 +494,24 @@ deodex_odex () {
 	ui_print " >> deodexing services.jar [ODEX]"
 
 	cp "/system/framework/oat/${ARCH}/services.odex" "${BASEDIR}"
-	
+
 	# baksmali/smali options switches (version dependent)
-	MAIN=Main
-	DEODEX="x"
-	ASSEMBLE="a"
-	BOOTCLASSPATH="-b"
-	CLASSPATHDIR="-d"
-	
 	if [ "${SDK_VERSION}" -lt 24 ]; then
 		MAIN=main
 		DEODEX="-x"
 		ASSEMBLE=
 		BOOTCLASSPATH="-c"
+	else
+		MAIN=Main
+		DEODEX="x"
+		ASSEMBLE="a"
+		BOOTCLASSPATH="-b"
+		CLASSPATHDIR="-d"
 	fi
 
 	ui_print "   [1] baksmali services.odex"
 
-	call_dalvikvm \
+	call_dalvikvm  \
 		-classpath "${BAKSMALI}" \
 		org.jf.baksmali.${MAIN} \
 		${DEODEX} \
@@ -527,8 +523,8 @@ deodex_odex () {
 		  error "failed to deodex services.jar"
 
 	ui_print "   [2] smali services.odex"
-	
-	call_dalvikvm \
+
+	call_dalvikvm  \
 		-classpath "${SMALI}" \
 		org.jf.smali.${MAIN} \
 		${ASSEMBLE} \
@@ -564,11 +560,12 @@ patch_services () {
 
 	ui_print " >> patching services.jar"
 
-	call_dalvikvm \
+	call_dalvikvm  \
 		-classpath "${DEXPATCHER}" \
 		lanchon.dexpatcher.Main \
-		${DEX_OPTS} --api-level "${SDK_VERSION}" \
-		--verbose --debug --output ${BASEDIR}/services.jar-mod \
+		--api-level "${SDK_VERSION}" \
+		--verbose --debug \
+		--output ${BASEDIR}/services.jar-mod \
 		${BASEDIR}/services.jar ${PATCHES} || \
 			error "failed to apply patches"
 
