@@ -35,7 +35,7 @@ setup_patcher
 detect_sdk
 detect_arch
 
-if search_fake_package_signature; then
+if check_fake_package_signature; then
 	error    " ROM has native signature spoofing already!"
 fi
 

@@ -407,7 +407,7 @@ detect_sdk () {
 # by @ale5000
 ##########################################################################################
 
-search_fake_package_signature () {
+check_fake_package_signature () {
 	PERMISSION=android.permission.FAKE_PACKAGE_SIGNATURE
 	PERMISSION_OD=$(echo -n "${PERMISSION}" | od -A n -t x1 | tr -d '\n' | sed -e 's/^ //g;s/ /00/g')
 	HAS_FAKESIGN=false

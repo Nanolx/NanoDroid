@@ -45,7 +45,7 @@ NanoDroidPatcher () {
 	detect_sdk
 	detect_arch
 
-	if search_fake_package_signature; then
+	if check_fake_package_signature; then
 		ui_print " ROM has native signature spoofing already!"
 		exit 0
 	fi
