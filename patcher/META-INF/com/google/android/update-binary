@@ -24,11 +24,7 @@ show_banner
 
 mount_partitions
 
-if [ -f /data/adb/.nanodroid-patcher ]; then
-	ui_print " !! /data/adb/.nanodroid-patcher exists"
-	ui_print " !! if you want to force patching, then"
-	error    " remove this file and try again"
-elif [ -f /data/adb/NanoDroid_Patched ]; then
+if [ -f /data/adb/NanoDroid_Patched ]; then
 	ui_print " !! /data/adb/NanoDroid_Patched exists"
 	ui_print " !! if you want to force patching, then"
 	error    " remove this file and try again"

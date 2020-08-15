@@ -630,12 +630,6 @@ install_addond () {
 	rm -rf ${PATCHER_ADDOND_DATA}
 	mkdir -p ${PATCHER_ADDOND_DATA}
 
-	[ -d /data/nanomod.patcher ] && rm -rf /data/nanomod.patcher
-	[ -d /data/adb/nanomod_patcher ] && rm -rf /data/nanomod_patcher
-	rm -f /system/addon.d/75-nanomodpatcher.sh \
-		/system/addon.d/75-nanodroidpatcher.sh \
-		/system/addon.d/999-nanodroidpatcher.sh
-
 	for file in core_services.jar.dex dexpatcher_19.dex dexpatcher_26.dex \
 		hook_4.1-6.0_services.jar.dex hook_7.0-10.0_services.jar.dex \
 		baksmali_23.dex baksmali_25.dex baksmali_26.dex \
