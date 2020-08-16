@@ -26,10 +26,6 @@
      * the `column` util will always be installed (required by `nanodroid-overlay`)
   * setup variable `nanodroid_play` has a new value `30` which will install both Play Store and Aurora Store
 
-* Bromite WebView Package
-  * add `WebViewGoogle` to known WebView packages
-      * leave a message that overriding might fail
-
 * Full Package
   * switch from `Oandbackup` to `OAndBackupX`
 
