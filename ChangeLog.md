@@ -15,6 +15,13 @@
 
 * Installer
   * improved APEX compatibility
+  * update dump_system_privapp_permissions() to fix bootloops with recent Play/GmsCore on Android 10
+
+* SysTest, Uninstaller
+  * improved APEX compatibility
+
+* Google Package
+  * fix GoogleCalendarSync SDK 21 - 29 @Spongebob
 
 ### General Changes
 
@@ -29,10 +36,20 @@
 * Full Package
   * switch from `Oandbackup` to `OAndBackupX`
 
+* Full, microG package
+  * use own DroidGuard instead of Official, as long as there's no release
+
 * Patcher
   * remove restriction for Android 10
   * use Android 7 - 9 patch for Android 10 (user-confirmed working)
   * collect APEX information in log
+  * create `BOOTCLASSPATH` on-the-fly and log it
+  * experimental: use newly proposed Haystack patches:
+     * https://github.com/Lanchon/haystack/pull/34
+  * various minor improvements
+
+* Patcher, Uninstaller
+  * drop old code regarding NanoMod (= NanoDroid older than version 16.0)
 
 * Setup Wizard
   * updated for aforementioned changes
@@ -41,36 +58,47 @@
 * Documentation
   * minor updates
 
+* build-package Script
+  * Darwin compatibility
+
 ### Updates
 
 * automatic
   * AnySoftKeyboard (1.10.1109)
-  * Aurora Droid (1.0.5)
+  * Aurora Droid (1.0.6)
   * Aurora Services (1.0.6)
-  * Aurora Store (3.2.4)
-  * Bromite System WebView (81.0.4044.106)
-  * F-Droid (1.8-alpha2)
-  * Frost (2.4.4)
-  * K-9 Mail (5.708)
-  * KeePassDX (2.5RC1)
-  * NewPipe (0.19.2)
+  * Aurora Store (3.2.9)
+  * Bromite System WebView (84.0.4147.121)
+  * F-Droid (1.10-alpha0)
+  * Frost (2.4.5)
+  * K-9 Mail (5.717)
+  * KeePassDX (2.8.1)
+  * NewPipe (0.19.8)
+  * OAndBackupX (3.0.0)
   * Odyssey (1.1.19)
+  * Open Camera (1.48.2)
+  * OpenLauncher (0.7.3)
   * OpenVPN (0.7.15)
-  * OsmAnd+ (3.6.3)
+  * OsmAnd+ (3.7.4)
   * Privacy Browser (3.4.1)
-  * Simple Calendar (6.9.1)
-  * Simple Gallery (6.14.0)
-  * SmartPack Kernel Manager (10.5)
-  * Termux (0.94)
-  * Tor Browser (68.7.0)
-  * Twidere (4.0.6)
+  * Simple Calendar (6.10.0)
+  * Simple Gallery (6.15.2)
+  * SmartPack Kernel Manager (12.8)
+  * Termux (0.96)
+  * Tor Browser (68.10.1)
+  * Twidere (4.1.4)
 
 * manual
-  * Google Play (19.7.12)
-  * MPV (20200412-nightly)
+  * Google Play (20.9.20)
+  * MPV (20200728-nightly)
 
 * tools
-  * sqlite3 (3310100)
+  * sqlite3 (3330000)
+  * smali (2.4.0) [SDK26+]
+  * baksmali (2.4.0) [SDK26+]
+  * file (5.38-5)
+  * dexpatcher (1.8.0-beta1) [SDK26+]
+  * aapt [from Substratum 1021]
 
 ## 22.6.20200208 "[La Sirena](https://memory-alpha.fandom.com/wiki/La_Sirena)"
 
