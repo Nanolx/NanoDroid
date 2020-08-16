@@ -170,8 +170,6 @@ mount_partitions () {
 	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
 	[ -d /system/apex ] && mount_apex
-
-	export LD_CONFIG_FILE="${APEX_LD}/etc/ld.config.txt"
 }
 
 umount_partitions () {
