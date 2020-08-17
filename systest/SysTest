@@ -291,26 +291,32 @@ system_test () {
 	DALVIKVM_ARCH=$("${FILE}" -m "${TMPDIR}/magic.mgc" -L ${APEX_LD}/bin/dalvikvm)
 
 	case ${DALVIKVM_BIN} in
-		dalvikvm32 )
-			LD="/system/lib:/vendor/lib:/system/vendor/lib"
+		*dalvikvm32* )
+			export LD="${APEX_LD}/lib:/system/lib:/vendor/lib:/system/vendor/lib:/product/lib:/system/product/lib"
 		;;
 
-		dalvikvm64 )
-			LD="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+		*dalvikvm64* )
+			export LD="${APEX_LD}/lib64:/system/lib64:/vendor/lib64:/system/vendor/lib64:/product/lib64:/system/product/lib64"
 		;;
 
-		dalvikvm )
+		*dalvikvm* )
 			case ${DALVIKVM_ARCH} in
 				*32-bit* )
-					LD="/system/lib:/vendor/lib:/system/vendor/lib"
+					export LD="${APEX_LD}/lib:/system/lib:/vendor/lib:/system/vendor/lib:/product/lib:/system/product/lib"
 				;;
 
 				*64-bit* )
-					LD="/system/lib64:/vendor/lib64:/system/vendor/lib64"
+					export LD="${APEX_LD}/lib64:/system/lib64:/vendor/lib64:/system/vendor/lib64:/product/lib64:/system/product/lib64"
 				;;
 			esac
 		;;
 	esac
+
+	if [ -f ${APEX_LD}/etc/ld.config.txt ]; then
+		export LD_FILE="${APEX_LD}/etc/ld.config.txt"
+	elif [ -f ${APEX_LD}/etc/ld.config.${SDK_VERSION}.txt ]; then
+		export LD_FILE="${APEX_LD}/etc/ld.config.${SDK_VERSION}.txt"
+	fi
 
 	SERVICES_JAR_DEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)
 
@@ -370,6 +376,7 @@ store_results () {
 	add_log "DALVIKVM_BIN=${DALVIKVM_BIN}"
 	add_log "DALVIKVM_ARCH=${DALVIKVM_ARCH}"
 	add_log "LD_LIBRARY_PATH=${LD}"
+	add_log "LD_CONFIG_FILE=${LD_FILE}"
 	add_log "ROM_DEX_STATUS=${ROM_DEX_STATUS}"
 
 	if [ -n "${APEX_FILE}" ]; then
