@@ -162,9 +162,8 @@ mount_partitions () {
 
 	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
-	mount_apex
+	[ -d /system/apex ] && mount_apex
 }
-
 
 error () {
 	ui_print " "
@@ -379,10 +378,18 @@ store_results () {
 	add_log "LD_CONFIG_FILE=${LD_FILE}"
 	add_log "ROM_DEX_STATUS=${ROM_DEX_STATUS}"
 
-	if [ -n "${APEX_FILE}" ]; then
-		add_log "APEX_FILE=${APEX_FILE}"
-	elif [ -n "${APEX_DIR}" ]; then
-		add_log "APEX_DIR=${APEX_DIR}"
+	if [ -d /system/apex ]; then
+		add_log ""
+		add_log "Loaded APEX modules"
+		add_log "==================="
+		add_log ""
+
+		i=0
+
+		for apex in /system/apex/*; do
+			i=$((i + 1))
+			add_log "[${i}] $(basename ${apex} .apex)"
+		done
 	fi
 
 	add_log ""

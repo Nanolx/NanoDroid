@@ -48,6 +48,10 @@
      * https://github.com/Lanchon/haystack/pull/34
   * various minor improvements
 
+* SysTest
+  * check and log LD_CONFIG_FILE
+  * fix collecting `dalvikvm` information on some recent ROMs
+
 * Patcher, Uninstaller
   * drop old code regarding NanoMod (= NanoDroid older than version 16.0)
 

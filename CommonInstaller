@@ -294,7 +294,7 @@ mount_apex () {
 	echo " INFO: #11 [APEX [ALL]] $(ls /system/apex/*.apex)"
 }
 
-# taken from Magisk, with modifications for NanoDroid
+# taken from Magisk, with minor modifications for NanoDroid
 mount_partitions () {
 	DEVICE_AB=FALSE
 	VENDOR_COMPAT=FALSE
@@ -357,7 +357,7 @@ mount_partitions () {
 
 	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
-	mount_apex
+	[ -d /system/apex ] && mount_apex
 }
 
 detect_mode () {
