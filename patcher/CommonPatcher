@@ -340,21 +340,21 @@ detect_arch () {
 
 	case ${DALVIKVM_BIN} in
 		*dalvikvm32* )
-			export LD_LIBRARY_PATH="${APEX_LD}/lib:/system/lib:/vendor/lib:/system/vendor/lib"
+			export LD_LIBRARY_PATH="${APEX_LD}/lib:/system/lib:/vendor/lib:/system/vendor/lib:/product/lib:/system/product/lib"
 		;;
 
 		*dalvikvm64* )
-			export LD_LIBRARY_PATH="${APEX_LD}/lib64:/system/lib64:/vendor/lib64:/system/vendor/lib64"
+			export LD_LIBRARY_PATH="${APEX_LD}/lib64:/system/lib64:/vendor/lib64:/system/vendor/lib64:/product/lib64:/system/product/lib64"
 		;;
 
 		*dalvikvm* )
 			case ${DALVIKVM_ARCH} in
 				*32-bit* )
-					export LD_LIBRARY_PATH="${APEX_LD}/lib:/system/lib:/vendor/lib:/system/vendor/lib"
+					export LD_LIBRARY_PATH="${APEX_LD}/lib:/system/lib:/vendor/lib:/system/vendor/lib:/product/lib:/system/product/lib"
 				;;
 
 				*64-bit* )
-					export LD_LIBRARY_PATH="${APEX_LD}/lib64:/system/lib64:/vendor/lib64:/system/vendor/lib64"
+					export LD_LIBRARY_PATH="${APEX_LD}/lib64:/system/lib64:/vendor/lib64:/system/vendor/lib64:/product/lib64:/system/product/lib64"
 				;;
 			esac
 		;;
