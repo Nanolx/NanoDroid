@@ -50,6 +50,7 @@
 
 * SysTest
   * check and log LD_CONFIG_FILE
+  * log loaded APEX modules
   * fix collecting `dalvikvm` information on some recent ROMs
 
 * Patcher, Uninstaller
