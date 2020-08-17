@@ -9,6 +9,7 @@
 VERSION=22.6.90.99999999
 TMPDIR=/dev/tmp
 LOGFILE="/data/media/0/nanodroid_logs/NanoDroid-SysTest-$(date +%Y%m%d-%H.%M.%S).log"
+APEX_LD=/system
 
 ##########################################################################################
 # Generic Functions
@@ -68,8 +69,6 @@ mount_apex_loop () {
 
 # taken from Magisk, with modifications for NanoDroid
 mount_apex () {
-	APEX_LD=""
-
 	if ${BOOTMODE}; then
 		APEX_LD=/system/apex/com.android.runtime
 	else
@@ -288,8 +287,8 @@ system_test () {
 
 	chmod 0755 "${FILE}" "${AAPT}"
 
-	DALVIKVM_BIN=$(ls -l /system/bin/dalvikvm | awk '{print $NF}')
-	DALVIKVM_ARCH=$("${FILE}" -m "${TMPDIR}/magic.mgc" -L /system/bin/dalvikvm)
+	DALVIKVM_BIN=$(ls -l ${APEX_LD}/bin/dalvikvm | awk '{print $NF}')
+	DALVIKVM_ARCH=$("${FILE}" -m "${TMPDIR}/magic.mgc" -L ${APEX_LD}/bin/dalvikvm)
 
 	case ${DALVIKVM_BIN} in
 		dalvikvm32 )
