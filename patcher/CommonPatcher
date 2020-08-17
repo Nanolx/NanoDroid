@@ -360,6 +360,13 @@ detect_arch () {
 		;;
 	esac
 
+	if [ -f ${APEX_LD}/etc/ld.config.txt ]; then
+		export LD_CONFIG_FILE="${APEX_LD}/etc/ld.config.txt"
+	elif [ -f ${APEX_LD}/etc/ld.config.${SDK_VERSION}.txt ]; then
+		export LD_CONFIG_FILE="${APEX_LD}/etc/ld.config.${SDK_VERSION}.txt"
+	fi
+
+	echo " *** LD_CONFIG_FILE=${LD_CONFIG_FILE}"
 	ui_print " > device architecture: ${ARCH}"
 }
 
