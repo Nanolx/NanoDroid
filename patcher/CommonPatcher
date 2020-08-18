@@ -54,7 +54,6 @@ mount_apex_loop () {
 	[ -e /dev/block/loop1 ] && minorx=$(stat -Lc '%T' /dev/block/loop1)
 
 	apex_mount="${1}"
-	mkdir -p "${apex_mount}"
 
 	echo " *** mount_apex_loop [apex_mount]: ${apex_mount}"
 
@@ -90,11 +89,12 @@ mount_apex () {
 			[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
 			[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
 
+			mkdir -p "${apex_mount}"
+
 			if [ -f "${apex}" ]; then
 				unzip -oq "${apex}" apex_payload.img -d /apex
 				mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
 			elif [ -d "${apex}" ]; then
-				mkdir -p "${apex_mount}"
 				mount -o bind "${apex}" "${apex_mount}"
 			fi
 		done
