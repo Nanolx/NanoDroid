@@ -1134,7 +1134,7 @@ install_fdroid () {
 	# install F-Droid if requested
 	# respectively force if it's the F-Droid package
 
-	if [ "${nanodroid_fdroid" -eq 3 ]; then
+	if [ "${nanodroid_fdroid}" -eq 3 ]; then
 		install_fdroid_fdroid
 		install_fdroid_aurora
 	elif [ "${nanodroid_fdroid}" -eq 2 ]; then
