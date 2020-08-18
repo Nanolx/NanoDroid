@@ -707,11 +707,11 @@ magisk_install_setup () {
 	fi
 
 	if [ ${MAGISK_VER_CODE} -gt 18100 ]; then
-		NVBASE=/data/adb
+		MAGIKSBASE=/data/adb
 
 		${BOOTMODE} && \
-			MODPATH=${NVBASE}/modules_update/${MODID} || \
-			MODPATH=${NVBASE}/modules/${MODID}
+			MODPATH=${MAGIKSBASE}/modules_update/${MODID} || \
+			MODPATH=${MAGIKSBASE}/modules/${MODID}
 
 		recovery_setup_env
 	else
@@ -723,9 +723,15 @@ magisk_install_setup () {
 			# check for sub-modules  which are not
 			# supposed to be installed alongside
 			for dir in NanoDroid_microG NanoDroid_FDroid; do
-				if [ -d ${NVBASE}/modules/${dir} ]; then
+				if [ -d ${MAGIKSBASE}/modules/${dir} ]; then
 					ui_print " !! ${dir} module detected - uninstalling!"
-					rm -rf ${NVBASE}/modules/${dir}
+					rm -rf ${MAGIKSBASE}/modules/${dir}
+					NANODROID_UPGRADE=1
+				fi
+
+				if [ -d ${MAGIKSBASE}/modules_update/${dir} ]; then
+					ui_print " !! ${dir} module detected - uninstalling!"
+					rm -rf ${MAGIKSBASE}/modules_update/${dir}
 					NANODROID_UPGRADE=1
 				fi
 			done
@@ -733,7 +739,7 @@ magisk_install_setup () {
 
 		NanoDroid_microG | NanoDroid_FDroid )
 			# check for Full package and abort if found
-			[ -d ${NVBASE}/modules/NanoDroid ] && \
+			[ -d ${MAGIKSBASE}/modules/NanoDroid -o -d ${MAGIKSBASE}/modules_update/NanoDroid ] && \
 				error "${MODID} can't be installed along side the Full package"
 		;;
 
@@ -815,7 +821,7 @@ magisk_install_finish () {
 		;;
 	esac
 
-	${BOOTMODE} && touch ${NVBASE}/modules/${MODID}/update
+	${BOOTMODE} && touch ${MAGIKSBASE}/modules/${MODID}/update
 
 	sync
 	nanodroid_storelogs
