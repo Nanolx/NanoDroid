@@ -73,7 +73,7 @@
   * Aurora Droid (1.0.6)
   * Aurora Services (1.0.6)
   * Aurora Store (3.2.9)
-  * Bromite System WebView (84.0.4147.121)
+  * Bromite System WebView (84.0.4147.132)
   * F-Droid (1.10-alpha0)
   * Frost (2.4.5)
   * K-9 Mail (5.717)
