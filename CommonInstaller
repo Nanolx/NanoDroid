@@ -79,11 +79,9 @@ check_space () {
 }
 
 detect_bootmode () {
+	[ -z ${BOOTMODE} ] && ps | grep zygote | grep -qv grep && BOOTMODE=true
+	[ -z ${BOOTMODE} ] && ps -A 2>/dev/null | grep zygote | grep -qv grep && BOOTMODE=true
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
-	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
-	${BOOTMODE} || ps -A 2>/dev/null | grep zygote | grep -qv grep && BOOTMODE=true
-
-	${BOOTMODE} && error "${MODID} must be flashed from TWRP!"
 }
 
 ui_print() {
@@ -222,7 +220,7 @@ error () {
 	if is_mounted /data; then
 		[ "${MODE}" = "MAGISK" ] && rm -rf "${MODPATH}"
 
-		recovery_cleanup_env
+		${BOOTMODE} || recovery_cleanup_env
 
 		INSTALL_SUCCESS=FALSE
 		nanodroid_storelogs
@@ -405,7 +403,7 @@ detect_mode () {
 				;;
 			esac
 
-			rm -rf "${MODPATH}"
+			${BOOTMODE} || rm -rf "${MODPATH}"
 		;;
 	esac
 
@@ -515,25 +513,29 @@ nanodroid_finalize () {
 	ui_print " Thanks for using NanoDroid "
 	ui_print " "
 
-	umount -l /system_root 2>/dev/null
-	umount -l /system 2>/dev/null
-	umount -l /system/vendor 2>/dev/null
-	umount -l /vendor 2>/dev/null
-	umount -l /dev/random 2>/dev/null
+	if ! ${BOOTMODE}; then
+		umount -l /system_root 2>/dev/null
+		umount -l /system 2>/dev/null
+		umount -l /system/vendor 2>/dev/null
+		umount -l /vendor 2>/dev/null
+		umount -l /dev/random 2>/dev/null
 
-	mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
-		umount -l "${apex_mount}" 2>/dev/null
-	done
+		mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
+			umount -l "${apex_mount}" 2>/dev/null
+		done
 
-	mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
-		losetup -d "${apex_loop}" 2>/dev/null
-	done
+		mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
+			losetup -d "${apex_loop}" 2>/dev/null
+		done
 
-	rm -rf ${APEX_TMP}/apex
-	rm -rf /apex
+		rm -rf ${APEX_TMP}/apex
+		rm -rf /apex
 
-	unset ANDROID_RUNTIME_ROOT
-	unset ANDROID_TZDATA_ROOT
+		unset ANDROID_RUNTIME_ROOT
+		unset ANDROID_TZDATA_ROOT
+	fi
+
+	rm -rf ${INSTALLER}
 }
 
 ##########################################################################################
@@ -699,20 +701,17 @@ magisk_install_setup () {
 	ui_print " > setup Magisk environment"
 
 	if [ -f /data/adb/magisk/util_functions.sh ]; then
-		NVBASE=/data/adb
 		. /data/adb/magisk/util_functions.sh
 	else
-		error "Magisk version 15.0 or newer is required"
+		error "Could not load Magisk util_functions.sh"
 	fi
 
 	if [ ${MAGISK_VER_CODE} -gt 18100 ]; then
-		MOUNTPATH=${NVBASE}/modules
-		MODPATH=${MOUNTPATH}/${MODID}
+		NVBASE=/data/adb
 
-		# XXX when upgrading from Magisk 18.1 to 19.0 and flashing NanoDroid in one go,
-		# XXX and NanoDroid installation logs exist, assume an upgrade
-		[[ "$(find /data/adb -type f -name 'NanoDroid*')" && -f ${NVBASE}/magisk.img ]] && NANODROID_UPGRADE=1
-		[[ -d "${STORAGE}/nanodroid_logs" && -f ${NVBASE}/magisk.img ]] && NANODROID_UPGRADE=1
+		${BOOTMODE} && \
+			MODPATH=${NVBASE}/modules_update/${MODID} || \
+			MODPATH=${NVBASE}/modules/${MODID}
 
 		recovery_setup_env
 	else
@@ -724,9 +723,9 @@ magisk_install_setup () {
 			# check for sub-modules  which are not
 			# supposed to be installed alongside
 			for dir in NanoDroid_microG NanoDroid_FDroid; do
-				if [ -d ${MOUNTPATH}/${dir} ]; then
+				if [ -d ${NVBASE}/modules/${dir} ]; then
 					ui_print " !! ${dir} module detected - uninstalling!"
-					rm -rf ${MOUNTPATH}/${dir}
+					rm -rf ${NVBASE}/modules/${dir}
 					NANODROID_UPGRADE=1
 				fi
 			done
@@ -734,7 +733,7 @@ magisk_install_setup () {
 
 		NanoDroid_microG | NanoDroid_FDroid )
 			# check for Full package and abort if found
-			[ -d ${MOUNTPATH}/NanoDroid ] && \
+			[ -d ${NVBASE}/modules/NanoDroid ] && \
 				error "${MODID} can't be installed along side the Full package"
 		;;
 
@@ -747,7 +746,7 @@ magisk_install_setup () {
 		;;
 	esac
 
-	[ -d ${MODPATH} ] && NANODROID_UPGRADE=1
+	[ -d ${MODPATH} -o -d ${OVERLAYPATH} ] && NANODROID_UPGRADE=1
 }
 
 magisk_install_preinst () {
@@ -816,9 +815,11 @@ magisk_install_finish () {
 		;;
 	esac
 
+	${BOOTMODE} && touch ${NVBASE}/modules/${MODID}/update
+
 	sync
 	nanodroid_storelogs
-	recovery_cleanup_env
+	${BOOTMODE} || recovery_cleanup_env
 }
 
 ##########################################################################################
@@ -1580,21 +1581,19 @@ nanodroid_substitute () {
 
 	[ ! -f "${target}" ] && error "file: ${file} not found"
 
-	if grep -q @ZIPDIR@ "${target}"; then
-		if [[ "${ZIPDIR}" == "/external_sd" ]] || [[ "${ZIPDIR}" == "/sdcard1" ]]; then
-			# /external_sd is already known by `nanodroid-overlay`
-			# no need to add it a second time
-			sed -e 's|@ZIPDIR@||' -i ${target}
-			echo "    substitute: remove @ZIPDIR@ in ${target}"
-		else
-			sed -e "s|@ZIPDIR@|${ZIPDIR}|g" -i ${target}
-			echo "    substitute: adjust @ZIPDIR@ in ${target}"
-		fi
-	fi
-
 	if grep -q @MODPATH@ ${target}; then
 		sed -e "s|@MODPATH@|${MODPATH}|g" -i ${target}
 		echo "    substitute: adjust @MODPATH@ in ${target}"
+	fi
+
+	if grep -q @MODID@ ${target}; then
+		sed -e "s|@MODID@|${MODID}|g" -i ${target}
+		echo "    substitute: adjust @MODID@ in ${target}"
+	fi
+
+	if grep -q @MODE@ ${target}; then
+		sed -e "s|@MODE@|${MODE}|g" -i ${target}
+		echo "    substitute: adjust @MODE@ in ${target}"
 	fi
 }
 
@@ -1602,7 +1601,6 @@ nanodroid_storelogs () {
 
 	curdate=$(date +%Y%m%d_%H.%M.%S)
 	nanodroid_logfile="${STORAGE}/nanodroid_logs/${MODID}_${VERSION}_log_${curdate}.log"
-	nanodroid_twrplog="${STORAGE}/nanodroid_logs/${MODID}_${VERSION}_twrp_${curdate}.log"
 
 	mkdir -p "${STORAGE}/nanodroid_logs"
 
@@ -1689,17 +1687,22 @@ fi
 chown root:sdcard_rw ${nanodroid_logfile}
 chmod 0644 ${nanodroid_logfile}
 
-cat /tmp/recovery.log > ${nanodroid_twrplog}
-
-chown root:sdcard_rw ${nanodroid_twrplog}
-chmod 0644 ${nanodroid_twrplog}
-
 ui_print " | storing installation logs in ${STORAGE}/nanodroid_logs/"
 ui_print " | NanoDroid log:"
 ui_print " || ""$(basename ${nanodroid_logfile})"
-ui_print " | TWRP log:"
-ui_print " || $(basename ${nanodroid_twrplog})"
-ui_print " "
+
+	if [ -d /twres ]; then
+		nanodroid_twrplog="${STORAGE}/nanodroid_logs/${MODID}_${VERSION}_twrp_${curdate}.log"
+
+		cat /tmp/recovery.log > ${nanodroid_twrplog}
+
+		chown root:sdcard_rw ${nanodroid_twrplog}
+		chmod 0644 ${nanodroid_twrplog}
+
+		ui_print " | TWRP log:"
+		ui_print " || $(basename ${nanodroid_twrplog})"
+		ui_print " "
+	fi
 
 }
 

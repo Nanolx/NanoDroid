@@ -21,11 +21,15 @@
   * improved APEX compatibility
 
 * Google Package
-  * fix GoogleCalendarSync SDK 21 - 29 @Spongebob
+  * fix GoogleCalendarSync on SDK 21 - 29 @Spongebob
 
 ### General Changes
 
 * Installer
+  * Installing through Magisk Manager is possible again (atleast 19.0 required, 20.4 highly recommended)
+     * please note that you will get an insane amount of messages while flashing
+     * that is, because the Installer logs a buttload of information, which TWRP stores in the recovery.log,
+     * but Magisk Manager displays it on-screen instead
   * setup variable `nanodroid_init` is now a list `nanodroid_init="10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"`
      * all listed init scripts will be installed
   * setup variable `nanodroid_utils` is now a list `nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"`
