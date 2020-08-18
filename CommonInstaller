@@ -1112,24 +1112,35 @@ install_gsync () {
 	fi
 }
 
+install_fdroid_aurora () {
+	ui_print " << with Aurora Droid"
+	nanodroid_install_apk AuroraDroid
+	nanodroid_install_apk AuroraServices
+	create_privapp_permissions_whitelist AuroraServices
+}
+
+install_fdroid_fdroid () {
+	ui_print " << with F-Droid"
+	nanodroid_install_apk FDroid
+	nanodroid_install_apk FDroidPrivileged
+
+	${NANODROID_BINDIR}/nanodroid-overlay --add FDroidPriv
+
+	create_privapp_permissions_whitelist FDroidPrivileged
+	nanodroid_install_file etc/org.fdroid.fdroid/additional_repos.xml
+}
+
 install_fdroid () {
 	# install F-Droid if requested
 	# respectively force if it's the F-Droid package
 
-	if [ "${nanodroid_fdroid}" -eq 2 ]; then
-		ui_print " << with Aurora Droid"
-		nanodroid_install_apk AuroraDroid
-		nanodroid_install_apk AuroraServices
-		create_privapp_permissions_whitelist AuroraServices
+	if [ "${nanodroid_fdroid" -eq 3 ]; then
+		install_fdroid_fdroid
+		install_fdroid_aurora
+	elif [ "${nanodroid_fdroid}" -eq 2 ]; then
+		install_fdroid_aurora
 	elif [ "${nanodroid_fdroid}" -eq 1 -o "${MODID}" = "NanoDroid_FDroid" ]; then
-		ui_print " << with F-Droid"
-		nanodroid_install_apk FDroid
-		nanodroid_install_apk FDroidPrivileged
-
-		${NANODROID_BINDIR}/nanodroid-overlay --add FDroidPriv
-
-		create_privapp_permissions_whitelist FDroidPrivileged
-		nanodroid_install_file etc/org.fdroid.fdroid/additional_repos.xml
+		install_fdroid_fdroid
 	else	ui_print " << without F-Droid"
 	fi
 }

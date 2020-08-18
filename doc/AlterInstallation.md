@@ -43,6 +43,7 @@ nanodroid_nlpbackend=1000
 the **F-Droid** (nanodroid_fdroid is always 1) and **Bromite WebView** package supports the following options
 
 ```
+nanodroid_fdroid=1
 nanodroid_forcesystem=0
 ```
 
@@ -76,8 +77,11 @@ whether to provide **F-Droid**
 
 * 0 = don't install F-Droid at all (Note: does not effect NanoDroid-FDroid package)
 * 1 = install official F-Droid client
+  * alongside priviledged extension
 * 2 = install unofficial Aurora F-Droid client
   * alongside Aurora Services addon
+* 3 = install both official and Aurora F-Droid clients
+  * alongside their addons
 
 `nanodroid_apps=[0|1]`
 

@@ -43,6 +43,11 @@
 * Full, microG package
   * use own DroidGuard instead of Official, as long as there's no release
 
+* Full, F-Droid package
+  * allow installing official and Aurora F-Droid clients alongside
+     * use `nanodroid_fdroid=3` to do so
+     * installs F-Droid priviledged extension and Aurora Services alongside
+
 * Patcher
   * Patching through Magisk Manager is possible (atleast 19.0 required, 20.4 highly recommended)
      * please note that you will get an insane amount of messages while flashing
