@@ -175,7 +175,7 @@ mount_apex () {
 	fi
 
 	echo " INFO: #10 [APEX_LD] ${APEX_LD}"
-	echo " INFO: #11 [APEX [ALL]] $(ls /system/apex/*.apex)"
+	echo " INFO: #11 [APEX [ALL]] $(ls /system/apex/*)"
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
