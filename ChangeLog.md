@@ -73,6 +73,7 @@
 
 * build-package Script
   * Darwin compatibility
+  * BSD compatibility
 
 ### Updates
 
