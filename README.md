@@ -239,7 +239,7 @@ NanoDroid includes
 
 ### Modules
 
-Module packages, flashing through TWRP required (flashing through Magisk Manager is not supported).
+Module packages, flash through TWRP (starting with version **22.6.91** flashing through Magisk Manager is supported again).
 
 * **NanoDroid**: includes
   * everything mentioned in the Summary above
@@ -304,6 +304,9 @@ Extra packages, flashing through TWRP required (flashing through Magisk Manager 
   * uninstalls NanoDroid-Patcher addon.d environment
   * restores GApps and location services auto-removed during installation (System Mode)
   * restores `services.jar` patched by NanoDroid-Patcher (System Mode)
+
+Extra packages, flashing trough TWRP recommended, flashing through Magisk Manager is supported.
+
 * **NanoDroid-systest**: includes
   * system testing script which will create the logfile as `/data/media/0/nanodroid_logs/NanoDroid-SysTest-TESTDATE.log`
      * TESTDATE is the date of testrun in %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14).
@@ -317,9 +320,6 @@ Extra packages, flashing through TWRP required (flashing through Magisk Manager 
      * whether the ROM has native signature spoofing support
      * whether the ROM supports Bromite WebView installations
   * use this to provide additional informations when posting issues
-
-Extra packages, flashing trough TWRP recommended, flashing through Magisk Manager is supported.
-
 * **NanoDroid-patcher**: includes
   * on-device framework-patcher for signature spoofing support
      * on Android up to 8.1 the Patcher will automatically deodex your services.jar
