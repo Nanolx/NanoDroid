@@ -262,7 +262,7 @@ mount_apex () {
 	APEX_LD=""
 
 	if ${BOOTMODE}; then
-		APEX_LD=/system/apex/com.android.runtime
+		APEX_LD=/apex/com.android.runtime
 	else
 		APEX_LD=/apex/com.android.runtime
 
