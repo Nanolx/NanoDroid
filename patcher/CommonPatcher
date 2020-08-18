@@ -94,6 +94,7 @@ mount_apex () {
 				unzip -oq "${apex}" apex_payload.img -d /apex
 				mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
 			elif [ -d "${apex}" ]; then
+				mkdir -p "${apex_mount}"
 				mount -o bind "${apex}" "${apex_mount}"
 			fi
 		done
