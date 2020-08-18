@@ -58,7 +58,7 @@ index_update_required () {
 	index_file=${1}
 
 	test ! -f ${index_file} && return 0
-	test $(stat --format=%Z ${index_file}) -le $(($(date +%s) - 3600)) && return 0
+	test $(${statx} ${index_file}) -le $(($(date +%s) - 3600)) && return 0
 	test "$(file -b ${index_file})" == "empty" && return 0
 
 	return 1

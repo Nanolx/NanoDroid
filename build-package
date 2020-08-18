@@ -10,8 +10,14 @@ CWD=$(readlink -n "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
 case $(uname -s) in
-	*Darwin*) export sumsha256="shasum -a 256" ;;
-	* )	  export sumsha256="sha256sum" ;;
+	*Darwin* | *BSD* )
+		export sumsha256="shasum -a 256"
+		export statx="stat -f %Z"
+	;;
+	*Linux* )
+		export sumsha256="sha256sum"
+		export statx="stat -c %Z"
+	;;
 esac
 
 # DIRS
