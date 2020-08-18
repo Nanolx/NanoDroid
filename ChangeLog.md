@@ -44,6 +44,10 @@
   * use own DroidGuard instead of Official, as long as there's no release
 
 * Patcher
+  * Patching through Magisk Manager is possible (atleast 19.0 required, 20.4 highly recommended)
+     * please note that you will get an insane amount of messages while flashing
+     * that is, because the Installer logs a buttload of information, which TWRP stores in the recovery.log,
+     * but Magisk Manager displays it on-screen instead
   * remove restriction for Android 10
   * use Android 7 - 9 patch for Android 10 (user-confirmed working)
   * collect APEX information in log
