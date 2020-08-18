@@ -76,7 +76,7 @@ mount_apex_loop () {
 # taken from Magisk, with modifications for NanoDroid
 mount_apex () {
 	if ${BOOTMODE}; then
-		APEX_LD=/system/apex/com.android.runtime
+		APEX_LD=/apex/com.android.runtime
 	else
 		APEX_LD=/apex/com.android.runtime
 
@@ -456,18 +456,20 @@ setup_patcher () {
 }
 
 call_dalvikvm  () {
-	if [[ -z "${ND_BOOTCLASSPATH}" ]]; then
+	if [ -z "${ND_BOOTCLASSPATH}" ]; then
 		DALVIKVM_OPTS=""
 
-		for jar in /system/framework/*.jar; do
-			ND_BOOTCLASSPATH="${jar}:${ND_BOOTCLASSPATH}"
-		done
+		if ! ${BOOTMODE}; then
+			for jar in /system/framework/*.jar; do
+				ND_BOOTCLASSPATH="${jar}:${ND_BOOTCLASSPATH}"
+			done
 
-		for jar in /apex/*/javalib/*.jar; do
-			ND_BOOTCLASSPATH="${jar}:${ND_BOOTCLASSPATH}"
-		done
+			for jar in /apex/*/javalib/*.jar; do
+				ND_BOOTCLASSPATH="${jar}:${ND_BOOTCLASSPATH}"
+			done
 
-		export BOOTCLASSPATH=${ND_BOOTCLASSPATH}
+			export BOOTCLASSPATH=${ND_BOOTCLASSPATH}
+		fi
 
 		supported_opts=$(${APEX_LD}/bin/dalvikvm --help 2>&1)
 
@@ -602,7 +604,8 @@ backup_services_jar () {
 
 install_services () {
 	ui_print " "
-	for destination in /data/adb/modules/NanoDroid /data/adb/modules/NanoDroid_microG /; do
+	for destination in /data/adb/modules/NanoDroid /data/adb/modules_update/NanoDroid \
+		/data/adb/modules/NanoDroid_microG /data/adb/modules_update/NanoDroid /; do
 		if [ -d ${destination} ]; then
 			install_path="${destination}"
 			break
