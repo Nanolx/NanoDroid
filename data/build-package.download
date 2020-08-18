@@ -173,14 +173,14 @@ grab_apk_from_repo () {
 
 	local apk_url="${repo}/${apk_name}"
 
-	if check_${sumsha256} "${apk_dest}/${4}.apk.gz" "${sha_sum}"; then
+	if check_sha256sum "${apk_dest}/${4}.apk.gz" "${sha_sum}"; then
 		echo -e "\nUp-to-Date from ${repo_p} : ${4}.apk"
 	else	echo -e "\nUpdating from ${repo_p}   : ${4}.apk"
 		mkdir -p "${apk_dest}"
 		rm -f "${apk_dest}/${4}.apk.gz"
 		debug_download no_delete "${apk_dest}/${4}.apk" "${apk_url}"
 
-		if check_${sumsha256} "${apk_dest}/${4}.apk" "${sha_sum}"; then
+		if check_sha256sum "${apk_dest}/${4}.apk" "${sha_sum}"; then
 			echo "	SHA256 hash of ${4}.apk is correct"
 			gzip "${apk_dest}/${4}.apk"
 		else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
