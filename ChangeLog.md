@@ -9,19 +9,25 @@
      * when one selects no apps but still activates "install apps", the installer would install all apps
 
 * Patcher
-  * improved APEX compatibility
   * drop `-Xnodex2oat`from `dalvikvm` flags to avoid crashes on Android 10
      * falsely listed as supported flag by `dalvikvm --help`
 
 * Installer
-  * improved APEX compatibility
-  * update dump_system_privapp_permissions() to fix bootloops with recent Play/GmsCore on Android 10
+  * fix bootloops with recent Play/GmsCore on Android 10 due to changed privapp-permissions
 
-* SysTest, Uninstaller
+* SysTest
+  * fix collecting `dalvikvm` information on some recent ROMs
+
+* Installer, Patcher, SysTest, Uninstaller
   * improved APEX compatibility
+  * improved Android 10 compatibility
 
 * Google Package
   * fix GoogleCalendarSync on SDK 21 - 29 @Spongebob
+
+* build-package Script
+  * Darwin compatibility
+  * BSD compatibility
 
 ### General Changes
 
@@ -29,42 +35,39 @@
   * Installing through Magisk Manager is possible again (atleast 19.0 required, 20.4 highly recommended)
      * please note that you will get an insane amount of messages while flashing
      * that is, because the Installer logs a buttload of information, which TWRP stores in the recovery.log,
-     * but Magisk Manager displays it on-screen instead
+     * but Magisk Manager displays it on-screen instead (this will eventually be sorted out)
   * setup variable `nanodroid_init` is now a list `nanodroid_init="10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"`
      * all listed init scripts will be installed
   * setup variable `nanodroid_utils` is now a list `nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"`
      * all listed utils will be installed
      * the `column` util will always be installed (required by `nanodroid-overlay`)
-  * setup variable `nanodroid_play` has a new value `30` which will install both Play Store and Aurora Store
 
 * Full Package
   * switch from `Oandbackup` to `OAndBackupX`
 
 * Full, microG package
+  * setup variable `nanodroid_play` has new value `30` which will install both Play Store and Aurora Store
   * use own DroidGuard instead of Official, as long as there's no release
 
 * Full, F-Droid package
-  * allow installing official and Aurora F-Droid clients alongside
-     * use `nanodroid_fdroid=3` to do so
+  * setup variable `nanodroid_fdroid` has new value `3` which will install both official and Aurora Store F-Droid clients
      * installs F-Droid priviledged extension and Aurora Services alongside
 
 * Patcher
   * Patching through Magisk Manager is possible (atleast 19.0 required, 20.4 highly recommended)
      * please note that you will get an insane amount of messages while flashing
      * that is, because the Installer logs a buttload of information, which TWRP stores in the recovery.log,
-     * but Magisk Manager displays it on-screen instead
+     * but Magisk Manager displays it on-screen instead (this will eventually be sorted out)
   * remove restriction for Android 10
-  * use Android 7 - 9 patch for Android 10 (user-confirmed working)
+  * use Android 7 - 9 patch for Android 10
   * collect APEX information in log
   * create `BOOTCLASSPATH` on-the-fly and log it
-  * experimental: use newly proposed Haystack patches:
-     * https://github.com/Lanchon/haystack/pull/34
+  * experimental: use newly proposed Haystack patches, see https://github.com/Lanchon/haystack/pull/34
   * various minor improvements
 
 * SysTest
   * check and log LD_CONFIG_FILE
   * log loaded APEX modules
-  * fix collecting `dalvikvm` information on some recent ROMs
 
 * Patcher, Uninstaller
   * drop old code regarding NanoMod (= NanoDroid older than version 16.0)
@@ -76,13 +79,12 @@
 * Documentation
   * minor updates
 
-* build-package Script
-  * Darwin compatibility
-  * BSD compatibility
-
 ### Updates
 
 * automatic
+  * microG GmsCore (0.2.11.202414)
+  * microG Droidguard Helper (0.1.2) [custom build]
+     * note: SafetyNet attestation still does not work with microG!
   * AnySoftKeyboard (1.10.1109)
   * Aurora Droid (1.0.6)
   * Aurora Services (1.0.6)
