@@ -14,7 +14,6 @@
 
 * Installer
   * fix bootloops with recent Play/GmsCore on Android 10 due to changed privapp-permissions
-  * fix installing swipe libraries in cases where `LatinIME` does not have it's libs linked to `/system`
 
 * SysTest
   * fix collecting `dalvikvm` information on some recent ROMs
@@ -25,6 +24,7 @@
 
 * Google Package
   * fix GoogleCalendarSync on SDK 21 - 29 @Spongebob
+  * fix installing swipe libraries in cases where `LatinIME` does not have it's libs linked to `/system`
 
 * build-package Script
   * Darwin compatibility
