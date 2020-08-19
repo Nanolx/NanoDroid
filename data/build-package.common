@@ -44,10 +44,10 @@ check_nanodroid () {
 				;;
 
 				* )
-					debug_message "${file} as non-supported mimetype ${mimetype}"
+					debug_message newline "${file} has non-supported mimetype ${mimetype}"
 					nanodroid_broken_files=1
 					broken_database=(${broken_database[@]} ${file})
-					[ "${BP_DEBUG}" -ne 1 ] && rm -f ${CWD}/${file}
+					[ "${BP_DEBUG}" = '1' ] && rm -f ${CWD}/${file}
 				;;
 			esac
 
@@ -61,10 +61,10 @@ check_nanodroid () {
 				;;
 
 				* )
-					debug_message "compressed ${file} as non-supported mimetype ${mimetype_int}"
+					debug_message newline "compressed ${file} has non-supported mimetype ${mimetype_int}"
 					nanodroid_broken_files=1
 					broken_database=(${broken_database[@]} ${file})
-					[ "${BP_DEBUG}" -ne 1 ] && rm -f ${CWD}/${file}
+					[ "${BP_DEBUG}" = '1' ] && rm -f ${CWD}/${file}
 				;;
 			esac
 		fi
