@@ -1376,6 +1376,9 @@ install_swipe () {
 			SWIPE_SRC="${INSTALLER}/swipe/${ARCH}"
 			SWIPE_DEST="/system/${SWIPE_LIBDIR}"
 
+			APPL_IME="/system/app/LatinIME/${SWIPE_LIBDIR}/${ARCH}"
+			PRODL_IME="/system/product/app/LatinIME/${SWIPE_LIBDIR}/${ARCH}"
+
 			mkdir -p "${MODPATH}${SWIPE_DEST}"
 
 			cp "${SWIPE_SRC}/libjni_keyboarddecoder.so" "${MODPATH}${SWIPE_DEST}" || \
@@ -1388,6 +1391,46 @@ install_swipe () {
 
 			installinfo_add "${SWIPE_DEST}/libjni_keyboarddecoder.so"
 			installinfo_add "${SWIPE_DEST}/libjni_latinimegoogle.so"
+
+			if [ -f "${APPL_IME}/libjni_latinime.so" ]; then
+				echo " swipe: symlinking libjni_latinimegoogle as libjni_latinime in ${APPL_IME}"
+
+				mkdir -p "${MODPATH}${APPL_IME}"
+				ln -sfn "${MODPATH}${SWIPE_DEST}/libjni_latinimegoogle.so" "${MODPATH}${APPL_IME}/libjni_latinime.so"
+				ln -sfn "${MODPATH}${SWIPE_DEST}/libjni_keyboarddecoder.so" "${MODPATH}${APPL_IME}/libjni_keyboarddecoder.so"
+
+				installinfo_add "${MODPATH}${APPL_IME}/libjni_latinime.so"
+				installinfo_add "${MODPATH}${APPL_IME}/libjni_keyboarddecoder.so"
+			elif [ -f "${APPL_IME}/libjni_latinimegoogle.so" ]; then
+				echo " swipe: symlinking libjni_latinimegoogle as libjni_latinimegoogle in ${APPL_IME}"
+
+				mkdir -p "${MODPATH}${APPL_IME}"
+				ln -sfn "${MODPATH}${SWIPE_DEST}/libjni_latinimegoogle.so" "${MODPATH}${APPL_IME}/libjni_latinimegoogle.so"
+				ln -sfn "${MODPATH}${SWIPE_DEST}/libjni_keyboarddecoder.so" "${MODPATH}${APPL_IME}/libjni_keyboarddecoder.so"
+
+				installinfo_add "${MODPATH}${APPL_IME}/libjni_latinimegoogle.so"
+				installinfo_add "${MODPATH}${APPL_IME}/libjni_keyboarddecoder.so"
+			fi
+
+			if [ -f "${PRODL_IME}/libjni_latinime.so" ]; then
+				echo " swipe: symlinking libjni_latinimegoogle as libjni_latinime in ${PRODL_IME}"
+
+				mkdir -p "${MODPATH}${PRODL_IME}"
+				ln -sfn "${MODPATH}${SWIPE_DEST}/libjni_latinimegoogle.so" "${MODPATH}${PRODL_IME}/libjni_latinime.so"
+				ln -sfn "${MODPATH}${SWIPE_DEST}/libjni_keyboarddecoder.so" "${MODPATH}${PRODL_IME}/libjni_keyboarddecoder.so"
+
+				installinfo_add "${MODPATH}${PRODL_IME}/libjni_latinime.so"
+				installinfo_add "${MODPATH}${PRODL_IME}/libjni_keyboarddecoder.so"
+			elif [ -f "${PRODL_IME}/libjni_latinimegoogle.so" ]; then
+				echo " swipe: symlinking libjni_latinimegoogle as libjni_latinimegoogle in ${PRODL_IME}"
+
+				mkdir -p "${MODPATH}${PRODL_IME}"
+				ln -sfn "${MODPATH}${SWIPE_DEST}/libjni_latinimegoogle.so" "${MODPATH}${PRODL_IME}/libjni_latinimegoogle.so"
+				ln -sfn "${MODPATH}${SWIPE_DEST}/libjni_keyboarddecoder.so" "${MODPATH}${PRODL_IME}/libjni_keyboarddecoder.so"
+
+				installinfo_add "${MODPATH}${PRODL_IME}/libjni_latinimegoogle.so"
+				installinfo_add "${MODPATH}${PRODL_IME}/libjni_keyboarddecoder.so"
+			fi
 		fi
 	else	ui_print " << without swipe libraries"
 	fi
