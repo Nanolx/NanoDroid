@@ -14,6 +14,7 @@
 
 * Installer
   * fix bootloops with recent Play/GmsCore on Android 10 due to changed privapp-permissions
+  * fix installing swipe libraries in cases where `LatinIME` does not have it's libs linked to `/system`
 
 * SysTest
   * fix collecting `dalvikvm` information on some recent ROMs
@@ -28,6 +29,7 @@
 * build-package Script
   * Darwin compatibility
   * BSD compatibility
+  * fix `build-package clean` not properly working
 
 ### General Changes
 
@@ -75,6 +77,9 @@
 * Setup Wizard
   * updated for aforementioned changes
   * other minor changes
+
+* build-package Script
+  * a bit more info when `BP_DEBUG=1` is passed over
 
 * Documentation
   * minor updates
