@@ -323,7 +323,7 @@ grab_lib_from_ogapps () {
 		arm64 | x86_64 ) LIBD=lib64 ;;
 	esac
 
-	local lib_url="${repo_ogapps}/${3}/raw/master/${LIBD}/${2}/${1}?inline=false"
+	local lib_url="${repo_ogapps}/${3}/raw/master/${LIBD}/${2}/${1}"
 	local swp_dest="${appsfolder[8]}/${3}"
 
 	if [[ "${4}" == "true" ]]; then
