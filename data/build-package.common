@@ -5,7 +5,7 @@ nanodroid_broken_files=0
 missing_database=""
 
 debug_message () {
-	[ "$BP_DEBUG" != '1' ] && return 0
+	[ "${BP_DEBUG}" != '1' ] && return 0
 	case "$1" in
 		normal)
 			echo "$3$(tput setaf 3)$2$(tput sgr 0)"

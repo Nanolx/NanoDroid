@@ -11,14 +11,14 @@ repo_nanolx="https://nanolx.org/fdroid/repo"
 repo_bromite="https://fdroid.bromite.org/fdroid/repo"
 repo_ogapps="https://gitlab.opengapps.org/opengapps"
 
-USERAGENT='Mozilla/5.0 (X11; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0'
+useragent='Mozilla/5.0 (X11; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0'
 
 if [ "${BP_DEBUG}" = '1' ]; then
-	WGET_OPTS="-v --show-progress"
-	CURL_OPTS="-vSL"
+	wget_opts="-v --show-progress"
+	curl_opts="-vSL"
 else
-	WGET_OPTS="-q"
-	CURL_OPTS="-sSL"
+	wget_opts="-q"
+	curl_opts="-sSL"
 fi
 
 # check dependencies
@@ -34,31 +34,31 @@ debug_download () {
 		index)
 			if [ "${BP_USE_WGET}" = '1' ]; then
 				rm -rf "$2"
-				debug_message normal "wget ${WGET_OPTS} \"$3\" -O \"${2#$CWD/}\"" " "
-				wget ${WGET_OPTS} -U "${USERAGENT}" "$3" -O "$2" || error "$4"
+				debug_message normal "wget ${wget_opts} \"$3\" -O \"${2#$CWD/}\"" " "
+				wget ${wget_opts} -U "${useragent}" "$3" -O "$2" || error "$4"
 			else
-				debug_message normal "curl ${CURL_OPTS} \"${2#$CWD/}\" \"$3\"" " "
-				curl ${CURL_OPTS} -A "${USERAGENT}" -o "$2" "$3" || error "$4"
+				debug_message normal "curl ${curl_opts} \"${2#$CWD/}\" \"$3\"" " "
+				curl ${curl_opts} -A "${useragent}" -o "$2" "$3" || error "$4"
 			fi
 		;;
 		no_delete)
 			if [ "${BP_USE_WGET}" = '1' ]; then
 				rm -rf "$2"
-				debug_message normal "wget ${WGET_OPTS} \"$3\" -O \"${2#$CWD/}\""
-				wget ${WGET_OPTS} -U "${USERAGENT}" "$3" -O "$2"
+				debug_message normal "wget ${wget_opts} \"$3\" -O \"${2#$CWD/}\""
+				wget ${wget_opts} -U "${useragent}" "$3" -O "$2"
 			else
-				debug_message normal "curl ${CURL_OPTS} -SL -o \"${2#$CWD/}\" \"$3\""
-				curl ${CURL_OPTS} -A "${USERAGENT}" -o "$2" "$3"
+				debug_message normal "curl ${curl_opts} -SL -o \"${2#$CWD/}\" \"$3\""
+				curl ${curl_opts} -A "${useragent}" -o "$2" "$3"
 			fi
 		;;
 		delete)
 			if [ "${BP_USE_WGET}" = '1' ]; then
 				rm -rf "$2"
-				debug_message normal "wget ${WGET_OPTS} \"$3\" -O \"${2#$CWD/}\""
-				wget ${WGET_OPTS} -U "${USERAGENT}" "$3" -O "$2" || rm -f "$4"
+				debug_message normal "wget ${wget_opts} \"$3\" -O \"${2#$CWD/}\""
+				wget ${wget_opts} -U "${useragent}" "$3" -O "$2" || rm -f "$4"
 			else
-				debug_message normal "curl ${CURL_OPTS} -SL -o \"${2#$CWD/}\" \"$3\""
-				curl ${CURL_OPTS} -A "${USERAGENT}" -o "$2" "$3" || rm -f "$4"
+				debug_message normal "curl ${curl_opts} -SL -o \"${2#$CWD/}\" \"$3\""
+				curl ${curl_opts} -A "${useragent}" -o "$2" "$3" || rm -f "$4"
 			fi
 		;;
 	esac
@@ -224,8 +224,8 @@ grab_apk_from_url () {
 }
 
 grab_apk_from_github () {
-	[ "$BP_DEBUG" = '1' ] && debug_message normal "curl ${CURL_OPTS} -s -N \"https://api.github.com/repos/${1}/releases\""
-	local apk_url="$(curl -A "${USERAGENT}" -s -N "https://api.github.com/repos/${1}/releases" | \
+	[ "${BP_DEBUG}" = '1' ] && debug_message normal "curl ${curl_opts} -s -N \"https://api.github.com/repos/${1}/releases\""
+	local apk_url="$(curl -A "${useragent}" -s -N "https://api.github.com/repos/${1}/releases" | \
 		gawk -F\" '/browser_download_url.*apk/{print $4 ; exit}')"
 	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
@@ -250,8 +250,8 @@ grab_apk_from_github () {
 }
 
 grab_apk_from_gitlab () {
-	[ "$BP_DEBUG" = '1' ] && debug_message newline "curl ${CURL_OPTS} -s -N \"https://gitlab.com/${1}/-/tags\"" "\n"
-	local apk_url=$(curl -A "${USERAGENT}" -s -N "https://gitlab.com/${1}/-/tags" | grep '.apk' | head -n 1)
+	[ "${BP_DEBUG}" = '1' ] && debug_message newline "curl ${curl_opts} -s -N \"https://gitlab.com/${1}/-/tags\"" "\n"
+	local apk_url=$(curl -A "${useragent}" -s -N "https://gitlab.com/${1}/-/tags" | grep '.apk' | head -n 1)
 	local apk_url=${apk_url%\">*.apk*}
 	local apk_url="https://gitlab.com${apk_url##*a href=\"}"
 	local apk_url="${apk_url/\"*}"
