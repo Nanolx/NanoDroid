@@ -44,9 +44,10 @@ check_nanodroid () {
 				;;
 
 				* )
+					debug_message "${file} as non-supported mimetype ${mimetype}"
 					nanodroid_broken_files=1
 					broken_database=(${broken_database[@]} ${file})
-					rm -f ${CWD}/${file}
+					[ "${BP_DEBUG}" -ne 1 ] && rm -f ${CWD}/${file}
 				;;
 			esac
 
@@ -60,9 +61,10 @@ check_nanodroid () {
 				;;
 
 				* )
+					debug_message "compressed ${file} as non-supported mimetype ${mimetype_int}"
 					nanodroid_broken_files=1
 					broken_database=(${broken_database[@]} ${file})
-					rm -f ${CWD}/${file}
+					[ "${BP_DEBUG}" -ne 1 ] && rm -f ${CWD}/${file}
 				;;
 			esac
 		fi
@@ -70,12 +72,15 @@ check_nanodroid () {
 
 	if [[ ${nanodroid_missing_files} -ne 0 ]]; then
 		echo -e "\nThe following files are missing:\n"
-		printf '%s\n' ${missing_database[@]} | uniq
+		printf '%s\n' ${missing_database[@]} | uniq | sort
 	fi
 
-	if [[ ${nanodroid_broken_files} -ne 0 ]]; then
+	if [[ ${nanodroid_broken_files} -ne 0 && "${BP_DEBUG}" -ne 1 ]]; then
 		echo -e "\nThe following files are broken (and will be removed):\n"
-		printf '%s\n' ${broken_database[@]} | uniq
+		printf '%s\n' ${broken_database[@]} | uniq | sort
+	elif	[[ ${nanodroid_broken_files} -ne 0 && "${BP_DEBUG}" -eq 1 ]]; then
+		echo -e "\nThe following files are broken (and are kept because BP_DEBUG is set):\n"
+		printf '%s\n' ${broken_database[@]} | uniq | sort
 	fi
 
 	if [[ ${nanodroid_missing_files} -eq 0 && ${nanodroid_broken_files} -eq 0 ]]; then
