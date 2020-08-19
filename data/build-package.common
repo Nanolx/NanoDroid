@@ -238,6 +238,11 @@ misc. stuff:
 	dalvik	[jar] [:minsdk]	| prepare a jar file for dalvikvm usage
 	ver	[ver] [:date]	| bump version accross whole project
 	bump			| increment Magisk Module versionCodes by 1
+
+debugging:
+	BP_DEBUG=1		| pass this to display lots of info useful for debugging
+	BP_USE_WGET=1		| pass this to use wget instead of curl to download files
+				| note: curl is still used for some tasks
 "
 
 	exit 0
