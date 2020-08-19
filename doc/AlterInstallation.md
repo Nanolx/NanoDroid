@@ -30,7 +30,13 @@ nanodroid_bash=1
 nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"
 ```
 
-the **microG** package supports the following options (nanodroid_microg is always 1)
+the **microG** package supports the following options
+
+Notes:
+* if `nanodroid_microg=0` it will be silently treated as `1`
+  * not installing microG when flashing the microG package doesn't make sense, so
+* if `nanodroid_play=11` or  `nanodroid_play=31` it will be silently treated as `10` or `30`
+  * you can't install both Play Store and Fake Store at the same time
 
 ```
 nanodroid_play=21
@@ -40,10 +46,20 @@ nanodroid_forcesystem=0
 nanodroid_nlpbackend=1000
 ```
 
-the **F-Droid** (nanodroid_fdroid is always 1) and **Bromite WebView** package supports the following options
+the **F-Droid** (if `nanodroid_fdroid=0` it will be silently treated as `1`) package supports the following options
+
+Note:
+* if `nanodroid_fdroid=0` it will be silently treated as `1`
+  * not installing F-Droid when flashing the F-Droid package doesn't make sense, so
 
 ```
 nanodroid_fdroid=1
+nanodroid_forcesystem=0
+```
+
+the **Bromite WebView** package supports the following options
+
+```
 nanodroid_forcesystem=0
 ```
 
@@ -52,6 +68,7 @@ the **Google** package supports the following options
 ```
 nanodroid_gsync=0
 nanodroid_swipe=0
+nanodroid_forcesystem=0
 ```
 
 where `1` means `on` and `0` means `off`. If no `.nanodroid-setup` is found, the [default settings](.nanodroid-setup) will be used (equals to the example above), if your `.nanodroid-setup` file exists, but is missing entries, those entries will be added, using the default values.
@@ -71,7 +88,7 @@ whether to provide **microG**
       * without Push Messaging support through GCM
       * without the ability to pass SafetyNet attestation
 
-`nanodroid_fdroid=[0|1|2]`
+`nanodroid_fdroid=[0|1|2|3]`
 
 whether to provide **F-Droid**
 
@@ -101,6 +118,10 @@ what app store to use:
   * 0 = without Fake Store
   * 1 = with Fake Store
        * only if Play Store is not going to be installed
+
+Note:
+* if `nanodroid_play=11` or  `nanodroid_play=31` it will be silently treated as `10` or `30`
+  * you can't install both Play Store and Fake Store at the same time
 
 `nanodroid_overlay=[0|1]`
 
