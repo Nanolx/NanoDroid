@@ -35,7 +35,7 @@ the **microG** package supports the following options
 Notes:
 * if `nanodroid_microg=0` it will be silently treated as `1`
   * not installing microG when flashing the microG package doesn't make sense, so
-* if `nanodroid_play=11` or  `nanodroid_play=31` it will be silently treated as `10` or `30`
+* if `nanodroid_play=11` or `nanodroid_play=31` it will be silently treated as `10` or `30`
   * you can't install both Play Store and Fake Store at the same time
 
 ```
@@ -46,7 +46,7 @@ nanodroid_forcesystem=0
 nanodroid_nlpbackend=1000
 ```
 
-the **F-Droid** (if `nanodroid_fdroid=0` it will be silently treated as `1`) package supports the following options
+the **F-Droid** package supports the following options
 
 Note:
 * if `nanodroid_fdroid=0` it will be silently treated as `1`
