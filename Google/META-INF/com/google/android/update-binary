@@ -25,7 +25,7 @@ show_banner
 set_progress 0.1
 
 unpack_zip
-${BOOTMODE} || mount_partitions
+mount_partitions
 
 detect_arch
 setup_busybox

@@ -399,7 +399,7 @@ ui_print "**********************"
 ui_print " "
 
 detect_bootmode
-${BOOTMODE} || mount_partitions
+mount_partitions
 
 ui_print " << Removing installation logs (if any)"
 
