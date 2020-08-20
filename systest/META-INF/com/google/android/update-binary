@@ -19,33 +19,17 @@ detect_outfd
 show_banner
 
 ui_print " || performing tests"
-
 ui_print " "
 ui_print " || storing results in $(dirname ${LOGFILE}):"
 ui_print " ||   as $(basename ${LOGFILE})"
 ui_print " "
 
-mount_partitions
+${BOOTMODE} || mount_partitions
+
 system_test
 store_results
 
-if ! ${BOOTMODE} ; then
-	umount -l /system_root 2>/dev/null
-	umount -l /system 2>/dev/null
-	umount -l /vendor 2>/dev/null
-	umount -l /dev/random 2>/dev/null
-
-	mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
-		umount -l "${apex_mount}" 2>/dev/null
-	done
-
-	mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
-		losetup -d "${apex_loop}" 2>/dev/null
-	done
-
-	rm -rf ${APEX_TMP}/apex
-	rm -rf /apex
-fi
+${BOOTMODE} || umount_partitions
 
 ui_print " > Done!"
 ui_print " "

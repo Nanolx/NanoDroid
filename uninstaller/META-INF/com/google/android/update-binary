@@ -6,11 +6,9 @@ BACKUP_DIR="/data/media/0/nanodroid_backups"
 VERSION=22.6.91.99999999
 
 detect_bootmode () {
+	[ -z ${BOOTMODE} ] && ps | grep zygote | grep -qv grep && BOOTMODE=true
+	[ -z ${BOOTMODE} ] && ps -A 2>/dev/null | grep zygote | grep -qv grep && BOOTMODE=true
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
-	${BOOTMODE} || ps | grep zygote | grep -qv grep && BOOTMODE=true
-	${BOOTMODE} || ps -A 2>/dev/null | grep zygote | grep -qv grep && BOOTMODE=true
-
-	${BOOTMODE} && error "NanoDroid Uninstaller can't be run from Magisk Manager!"
 }
 
 ui_print() {
@@ -239,7 +237,27 @@ mount_partitions () {
 
 	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
-	mount_apex
+	[ -d /system/apex ] && mount_apex
+}
+
+umount_partitions () {
+	umount -l /system_root 2>/dev/null
+	umount -l /system 2>/dev/null
+	umount -l /vendor 2>/dev/null
+	umount -l /dev/random 2>/dev/null
+
+	mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
+		umount -l "${apex_mount}" 2>/dev/null
+	done
+
+	mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
+		losetup -d "${apex_loop}" 2>/dev/null
+	done
+
+	unset ANDROID_RUNTIME_ROOT
+	unset ANDROID_TZDATA_ROOT
+
+	rm -rf /apex
 }
 
 # check for configuration files
@@ -381,7 +399,7 @@ ui_print "**********************"
 ui_print " "
 
 detect_bootmode
-mount_partitions
+${BOOTMODE} || mount_partitions
 
 ui_print " << Removing installation logs (if any)"
 
@@ -409,24 +427,7 @@ rm -f /data/adb/.nanodroid_runtimeclean
 
 ui_print " >> clean up"
 
-umount -l /system_root 2>/dev/null
-umount -l /system 2>/dev/null
-umount -l /vendor 2>/dev/null
-umount -l /dev/random 2>/dev/null
-
-mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
-	umount -l "${apex_mount}" 2>/dev/null
-done
-
-mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
-	losetup -d "${apex_loop}" 2>/dev/null
-done
-
-unset ANDROID_RUNTIME_ROOT
-unset ANDROID_TZDATA_ROOT
-
-rm -rf ${APEX_TMP}/apex
-rm -rf /apex
+${BOOTMODE} || umount_partitions
 
 ui_print " "
 ui_print " > Done!"

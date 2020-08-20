@@ -166,6 +166,23 @@ mount_partitions () {
 	[ -d /system/apex ] && mount_apex
 }
 
+umount_partitions () {
+	umount -l /system_root 2>/dev/null
+	umount -l /system 2>/dev/null
+	umount -l /vendor 2>/dev/null
+	umount -l /dev/random 2>/dev/null
+
+	mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
+		umount -l "${apex_mount}" 2>/dev/null
+	done
+
+	mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
+		losetup -d "${apex_loop}" 2>/dev/null
+	done
+
+	rm -rf /apex
+}
+
 error () {
 	ui_print " "
 	ui_print " !! ${@}"

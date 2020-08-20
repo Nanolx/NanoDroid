@@ -94,11 +94,11 @@ ui_print() {
 }
 
 show_progress() {
-	echo "progress ${1} ${2}" >> /proc/self/fd/${OUTFD}
+	${BOOTMODE} || echo "progress ${1} ${2}" >> /proc/self/fd/${OUTFD}
 }
 
 set_progress() {
-	echo "set_progress ${1}" >> /proc/self/fd/${OUTFD}
+	${BOOTMODE} || echo "set_progress ${1}" >> /proc/self/fd/${OUTFD}
 }
 
 grep_prop() {
@@ -359,6 +359,27 @@ mount_partitions () {
 	[ -d /system/apex ] && mount_apex
 }
 
+umount_partitions () {
+	umount -l /system_root 2>/dev/null
+	umount -l /system 2>/dev/null
+	umount -l /system/vendor 2>/dev/null
+	umount -l /vendor 2>/dev/null
+	umount -l /dev/random 2>/dev/null
+
+	mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
+		umount -l "${apex_mount}" 2>/dev/null
+	done
+
+	mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
+		losetup -d "${apex_loop}" 2>/dev/null
+	done
+
+	rm -rf /apex
+
+	unset ANDROID_RUNTIME_ROOT
+	unset ANDROID_TZDATA_ROOT
+}
+
 detect_mode () {
 	case "${nanodroid_forcesystem}" in
 		1 )
@@ -513,27 +534,7 @@ nanodroid_finalize () {
 	ui_print " Thanks for using NanoDroid "
 	ui_print " "
 
-	if ! ${BOOTMODE}; then
-		umount -l /system_root 2>/dev/null
-		umount -l /system 2>/dev/null
-		umount -l /system/vendor 2>/dev/null
-		umount -l /vendor 2>/dev/null
-		umount -l /dev/random 2>/dev/null
-
-		mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
-			umount -l "${apex_mount}" 2>/dev/null
-		done
-
-		mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
-			losetup -d "${apex_loop}" 2>/dev/null
-		done
-
-		rm -rf ${APEX_TMP}/apex
-		rm -rf /apex
-
-		unset ANDROID_RUNTIME_ROOT
-		unset ANDROID_TZDATA_ROOT
-	fi
+	${BOOTMODE} || umount_partitions
 
 	rm -rf ${INSTALLER}
 }

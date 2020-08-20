@@ -191,7 +191,6 @@ umount_partitions () {
 	unset ANDROID_TZDATA_ROOT
 	unset BOOTCLASSPATH
 
-	rm -rf ${APEX_TMP}/apex
 	rm -rf /apex
 }
 
