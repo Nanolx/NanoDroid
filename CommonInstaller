@@ -1175,7 +1175,7 @@ install_apps () {
 
 		INSTALL_APPS=$(cat "${cfg_apps}")
 		for app in ${INSTALL_APPS}; do
-			if [[ -d /system/app/${app} ]]; then
+			if [[ -d /system/app/${app} && ! -d ${MAGIKSBASE}/modules/${MODID}/system/app/${app} ]]; then
 				ui_print "   ++ app: ${app} already provided by ROM"
 			elif [[ -d "${INSTALLER}/system/app/${app}" ]]; then
 				ui_print "   ++ ${app}"
