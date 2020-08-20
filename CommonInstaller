@@ -97,7 +97,7 @@ detect_bootmode () {
 	[ -z ${BOOTMODE} ] && BOOTMODE=false
 }
 
-ui_print() {
+print_info () {
 	if ${BOOTMODE}; then
 		echo "${@}"
 		decho "${@}"
@@ -192,44 +192,44 @@ detect_outfd () {
 }
 
 show_banner () {
-	ui_print " "
-	ui_print "*****************************"
-	ui_print " NanoDroid                   "
+	print_info " "
+	print_info "*****************************"
+	print_info " NanoDroid                   "
 	case ${MODID} in
 		NanoDroid )
-			ui_print " > Full package              "
+			print_info " > Full package              "
 		;;
 		NanoDroid_microG )
-			ui_print " > microG package            "
+			print_info " > microG package            "
 		;;
 		NanoDroid_FDroid )
-			ui_print " > F-Droid package           "
+			print_info " > F-Droid package           "
 		;;
 		NanoDroid_BromiteWebView )
-			ui_print " > Bromite WebView package   "
+			print_info " > Bromite WebView package   "
 		;;
 		NanoDroid_OsmAnd )
-			ui_print " > OsmAnd package            "
+			print_info " > OsmAnd package            "
 		;;
 		NanoDroid_Google )
-			ui_print " > Google package            "
+			print_info " > Google package            "
 		;;
 	esac
 
 	if [ "${ZIP}" == *${VERSION}* ]; then
-		ui_print " ${VERSION}                  "
+		print_info " ${VERSION}                  "
 	else
-		ui_print " ${VERSION} (snapshot)       "
+		print_info " ${VERSION} (snapshot)       "
 	fi
 
-	ui_print "*****************************"
-	ui_print " "
+	print_info "*****************************"
+	print_info " "
 }
 
 error () {
-	ui_print " !!"
-	ui_print "${@}"
-	ui_print " !!"
+	print_info " !!"
+	print_info "${@}"
+	print_info " !!"
 
 	if is_mounted /data; then
 		[ "${MODE}" = "MAGISK" ] && rm -rf "${MODPATH}"
@@ -419,8 +419,8 @@ detect_mode () {
 		;;
 	esac
 
-	ui_print " > Mode   | ${MODE}            | ${MODE_DETECT}"
-	ui_print " "
+	print_info " > Mode   | ${MODE}            | ${MODE_DETECT}"
+	print_info " "
 
 	case ${MODE} in
 		SYSTEM )
@@ -496,7 +496,7 @@ unpack_zip () {
 	rm -rf ${INSTALLER}
 	mkdir -p ${INSTALLER} || error "failed to prepare environment!"
 
-	ui_print " > prepare installation"
+	print_info " > prepare installation"
 	unzip -oq "${ZIP}" -d "${INSTALLER}" || \
 		error "failed to prepare environment!"
 
@@ -511,10 +511,10 @@ nanodroid_finalize () {
 	case ${MODID} in
 		NanoDroid | NanoDroid_microG )
 			if [ "${nanodroid_overlay}" -eq 1 ]; then
-				ui_print " << with /system applications overlays"
+				print_info " << with /system applications overlays"
 				${NANODROID_BINDIR}/nanodroid-overlay --create
 			else
-				ui_print " << without /system applications overlays"
+				print_info " << without /system applications overlays"
 			fi
 		;;
 	esac
@@ -543,9 +543,9 @@ nanodroid_finalize () {
 		recovery_cleanup_env
 	fi
 
-	ui_print " "
-	ui_print " Thanks for using NanoDroid "
-	ui_print " "
+	print_info " "
+	print_info " Thanks for using NanoDroid "
+	print_info " "
 
 	${BOOTMODE} || umount_partitions
 
@@ -659,10 +659,10 @@ detect_arch () {
 	fi
 
 	if [[ "${SDK_VERSION}" -lt 19 ]]; then
-		ui_print " "
-		ui_print " ++ Installing on pre-KitKat ROM, full"
-		ui_print " ++ compatibility is not garantueed!"
-		ui_print " "
+		print_info " "
+		print_info " ++ Installing on pre-KitKat ROM, full"
+		print_info " ++ compatibility is not garantueed!"
+		print_info " "
 	fi
 
 	if [ ! -d /system/xbin ]; then
@@ -715,12 +715,12 @@ recovery_cleanup_env () {
 ##########################################################################################
 
 magisk_install_setup () {
-	ui_print " "
-	ui_print "******************************"
-	ui_print "Powered by Magisk (@topjohnwu)"
-	ui_print "******************************"
-	ui_print " "
-	ui_print " > setup Magisk environment"
+	print_info " "
+	print_info "******************************"
+	print_info "Powered by Magisk (@topjohnwu)"
+	print_info "******************************"
+	print_info " "
+	print_info " > setup Magisk environment"
 
 	if [ -f /data/adb/magisk/util_functions.sh ]; then
 		. /data/adb/magisk/util_functions.sh
@@ -746,13 +746,13 @@ magisk_install_setup () {
 			# supposed to be installed alongside
 			for dir in NanoDroid_microG NanoDroid_FDroid; do
 				if [ -d ${MAGIKSBASE}/modules/${dir} ]; then
-					ui_print " !! ${dir} module detected - uninstalling!"
+					print_info " !! ${dir} module detected - uninstalling!"
 					rm -rf ${MAGIKSBASE}/modules/${dir}
 					NANODROID_UPGRADE=1
 				fi
 
 				if [ -d ${MAGIKSBASE}/modules_update/${dir} ]; then
-					ui_print " !! ${dir} module detected - uninstalling!"
+					print_info " !! ${dir} module detected - uninstalling!"
 					rm -rf ${MAGIKSBASE}/modules_update/${dir}
 					NANODROID_UPGRADE=1
 				fi
@@ -779,29 +779,29 @@ magisk_install_setup () {
 
 magisk_install_preinst () {
 	if [ -f ${MODPATH}/system.prop ]; then
-		ui_print " << backing up module's system.prop"
+		print_info " << backing up module's system.prop"
 		cp ${MODPATH}/system.prop ${TMPDIR}/system.prop
 	fi
 
 	if [ -f ${MODPATH}/system/framework/services.jar ]; then
-		ui_print " << backing up patched services.jar"
+		print_info " << backing up patched services.jar"
 		cp ${MODPATH}/system/framework/services.jar ${TMPDIR}/services.jar
 	fi
 
 	if [ -d ${MODPATH}/logs ]; then
-		ui_print " << backing up init.d script logs"
+		print_info " << backing up init.d script logs"
 		cp -r ${MODPATH}/logs ${TMPDIR}/logs
 	fi
 
 	if [ -d ${MODPATH}/logcats ]; then
-		ui_print " << backing up logcats"
+		print_info " << backing up logcats"
 		cp -r ${MODPATH}/logcats ${TMPDIR}/logcats
 	fi
 }
 
 magisk_install_postinst () {
 	if [ -f ${TMPDIR}/system.prop ]; then
-		ui_print " << restoring system.prop"
+		print_info " << restoring system.prop"
 		cp ${TMPDIR}/system.prop ${MODPATH}/system.prop
 	fi
 
@@ -812,17 +812,17 @@ magisk_install_postinst () {
 	fi
 
 	if [ -d ${TMPDIR}/logs ]; then
-		ui_print " << restoring init.d script logs"
+		print_info " << restoring init.d script logs"
 		cp -r ${TMPDIR}/logs ${MODPATH}/logs
 	fi
 
 	if [ -d ${TMPDIR}/logcats ]; then
-		ui_print " << restoring logcats"
+		print_info " << restoring logcats"
 		cp -r ${TMPDIR}/logcats ${MODPATH}/logcats
 	fi
 
 	if [ -f ${TMPDIR}/services.jar ]; then
-		ui_print " << restoring patched services.jar"
+		print_info " << restoring patched services.jar"
 		mkdir -p ${MODPATH}/system/framework
 		cp ${TMPDIR}/services.jar ${MODPATH}/system/framework/services.jar
 	fi
@@ -1045,33 +1045,33 @@ install_microg () {
 
 		NLPBACKEND="nlpBackendNominatim"
 
-		ui_print " << with microg"
-		ui_print "   ++ Nominatim geocoder backend"
+		print_info " << with microg"
+		print_info "   ++ Nominatim geocoder backend"
 		${NANODROID_BINDIR}/nanodroid-overlay --add NominatimGeocoderBackend
 		${NANODROID_BINDIR}/nanodroid-overlay --add NominatimNlpBackend
 
 		if [ "${nanodroid_nlpbackend:0:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendDejavu"
-			ui_print "   ++ Déjà Vu location backend"
+			print_info "   ++ Déjà Vu location backend"
 			${NANODROID_BINDIR}/nanodroid-overlay --add DejaVuNlpBackend
 			${NANODROID_BINDIR}/nanodroid-overlay --add DejaVuBackend
 		fi
 
 		if [ "${nanodroid_nlpbackend:1:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendIchnaea"
-			ui_print "   ++ Ichnaea location backend"
+			print_info "   ++ Ichnaea location backend"
 			${NANODROID_BINDIR}/nanodroid-overlay --add IchnaeaNlpBackend
 			${NANODROID_BINDIR}/nanodroid-overlay --add MozillaNlpBackend
 		fi
 
 		if [ "${nanodroid_nlpbackend:2:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendApple"
-			ui_print "   ++ Apple location backend"
+			print_info "   ++ Apple location backend"
 		fi
 
 		if [ "${nanodroid_nlpbackend:3:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendRadiocell"
-			ui_print "   ++ Radiocell location backend"
+			print_info "   ++ Radiocell location backend"
 		fi
 
 		# migrate from Nanolx microG GmsCore to Official microG GmsCore
@@ -1080,7 +1080,7 @@ install_microg () {
 		# migrate from Official DroidGuard to Nanolx DroidGuard
 		detect_migrate_droidguard reverse
 
-		ui_print "   ++ microG GmsCore"
+		print_info "   ++ microG GmsCore"
 		nanodroid_install_apk GmsCore
 
 		if [ "${nanodroid_microg}" -ne 2 ]; then
@@ -1101,17 +1101,17 @@ install_microg () {
 		nanodroid_install_file etc/default-permissions/microg-permissions.xml
 		nanodroid_install_file etc/sysconfig/microg-a5k.xml
 
-	else	ui_print " << without microG"
+	else	print_info " << without microG"
 	fi
 }
 
 install_mapsv1 () {
 	# install mapsv1 if requested
 	if [ "${nanodroid_mapsv1}" -eq 1 ]; then
-		ui_print " << with Maps API version 1"
+		print_info " << with Maps API version 1"
 		nanodroid_install_file etc/permissions/com.google.android.maps.xml
 		nanodroid_install_file framework/com.google.android.maps.jar
-	else	ui_print " << without Maps API version 1"
+	else	print_info " << without Maps API version 1"
 	fi
 }
 
@@ -1119,9 +1119,9 @@ install_gsync () {
 	# install GSync if requested
 	if [ "${nanodroid_gsync}" -eq 1 ]; then
 		if [ "${GSYNC_UNSUPPORTED}" -eq 1 ]; then
-			ui_print " << Google Sync Adapters are unsupported on SDK ${SDK_VERSION}"
+			print_info " << Google Sync Adapters are unsupported on SDK ${SDK_VERSION}"
 		else
-			ui_print " << with Google Sync Adapters (${GSYNC_VER})"
+			print_info " << with Google Sync Adapters (${GSYNC_VER})"
 
 			for app in GoogleCalendarSync GoogleContactsSync GoogleBackupTransport; do
 				nanodroid_install_apk ${app}
@@ -1130,19 +1130,19 @@ install_gsync () {
 			create_privapp_permissions_whitelist GoogleBackupTransport
 			nanodroid_install_file etc/default-permissions/google-sync-permissions.xml
 		fi
-	else	ui_print " << without Google Sync Adapters"
+	else	print_info " << without Google Sync Adapters"
 	fi
 }
 
 install_fdroid_aurora () {
-	ui_print " << with Aurora Droid"
+	print_info " << with Aurora Droid"
 	nanodroid_install_apk AuroraDroid
 	nanodroid_install_apk AuroraServices
 	create_privapp_permissions_whitelist AuroraServices
 }
 
 install_fdroid_fdroid () {
-	ui_print " << with F-Droid"
+	print_info " << with F-Droid"
 	nanodroid_install_apk FDroid
 	nanodroid_install_apk FDroidPrivileged
 
@@ -1163,27 +1163,27 @@ install_fdroid () {
 		install_fdroid_aurora
 	elif [ "${nanodroid_fdroid}" -eq 1 -o "${MODID}" = "NanoDroid_FDroid" ]; then
 		install_fdroid_fdroid
-	else	ui_print " << without F-Droid"
+	else	print_info " << without F-Droid"
 	fi
 }
 
 install_apps () {
 	# install apps if requested
 	if [ "${nanodroid_apps}" -eq 1 ]; then
-		ui_print " << with applications"
+		print_info " << with applications"
 		APP_STRING=" <<>"
 
 		INSTALL_APPS=$(cat "${cfg_apps}")
 		for app in ${INSTALL_APPS}; do
 			if [[ -d /system/app/${app} && ! -d ${MAGIKSBASE}/modules/${MODID}/system/app/${app} ]]; then
-				ui_print "   ++ app: ${app} already provided by ROM"
+				print_info "   ++ app: ${app} already provided by ROM"
 			elif [[ -d "${INSTALLER}/system/app/${app}" ]]; then
-				ui_print "   ++ ${app}"
+				print_info "   ++ ${app}"
 				nanodroid_install_apk ${app}
-			else	ui_print "   ++ app: ${app} missing"
+			else	print_info "   ++ app: ${app} missing"
 			fi
 		done
-	else	ui_print " << without applications"
+	else	print_info " << without applications"
 	fi
 }
 
@@ -1192,7 +1192,7 @@ install_store_play () {
 	STORE_CONFLICT="FakeStore"
 	FAKE_STORE=0
 
-	ui_print " << with Play Store"
+	print_info " << with Play Store"
 	nanodroid_install_apk Phonesky
 
 	create_privapp_permissions_whitelist Phonesky
@@ -1201,7 +1201,7 @@ install_store_play () {
 }
 
 install_store_aurora () {
-	ui_print " << with Aurora Store"
+	print_info " << with Aurora Store"
 	nanodroid_install_apk AuroraStore
 	nanodroid_install_apk AuroraServices
 	create_privapp_permissions_whitelist AuroraServices
@@ -1229,17 +1229,17 @@ install_store () {
 		;;
 
 		* )
-			ui_print " << without App Store"
+			print_info " << without App Store"
 		;;
 	esac
 
 	# Only install Fake Store if requested and Play Store is not installed
 	if [ "${FAKE_STORE}" -eq 1 ]; then
-		ui_print " << with Fake Store"
+		print_info " << with Fake Store"
 		nanodroid_install_apk FakeStore
 
 		create_privapp_permissions_whitelist FakeStore
-	else 	ui_print " << without Fake Store"
+	else 	print_info " << without Fake Store"
 	fi
 
 	if [ ! -z "${STORE_CONFLICT}" ]; then
@@ -1256,7 +1256,7 @@ install_store () {
 
 install_bash () {
 	if [ "${nanodroid_bash}" -eq 1 ]; then
-		ui_print " << with GNU Bash Shell"
+		print_info " << with GNU Bash Shell"
 		nanodroid_install_file etc/bash_logout
 		nanodroid_install_file etc/bashrc
 
@@ -1265,12 +1265,12 @@ install_bash () {
 		nanodroid_install_file xbin/bashbug.${BIN_ARCH} bin
 		nanodroid_install_file xbin/less bin
 		nanodroid_install_file xbin/less.bin.${BIN_ARCH} bin
-	else	ui_print " << without GNU Bash Shell"
+	else	print_info " << without GNU Bash Shell"
 	fi
 }
 
 install_nanodroidscripts () {
-	ui_print " << with NanoDroid Scripts"
+	print_info " << with NanoDroid Scripts"
 
 	for script in npem nutl novl \
 		nanodroid-perm nanodroid-util \
@@ -1292,18 +1292,18 @@ install_nanodroidscripts () {
 
 install_shell_utils () {
 	if [ -n "${nanodroid_utils}" ]; then
-		ui_print " << with Shell Utilities"
+		print_info " << with Shell Utilities"
 
 		for binary in ${nanodroid_utils}; do
 			nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
 		done
-	else	ui_print " << without Shell Utilities"
+	else	print_info " << without Shell Utilities"
 	fi
 }
 
 install_initd () {
 	if [ -n "${nanodroid_init}" ]; then
-		ui_print " << with init scripts"
+		print_info " << with init scripts"
 
 		if [ "${MODE}" = "SYSTEM" ]; then
 			INIT_BASE="${MODPATH}/system/etc/init.d"
@@ -1317,7 +1317,7 @@ install_initd () {
 		for init in ${nanodroid_init}; do
 			installinfo_add "/system/etc/init.d/${init}"
 		done
-	else	ui_print " << without init scripts"
+	else	print_info " << without init scripts"
 	fi
 }
 
@@ -1326,7 +1326,7 @@ install_bromite_webview () {
 		if ! check_bromite_webview_support; then
 			error "ROM does not support Bromite WebView installation!"
 		else
-			ui_print " << with Bromite WebView"
+			print_info " << with Bromite WebView"
 
 			case ${ARCH} in
 				arm | arm64 | x86 ) BROMITE_ARCH=${ARCH} ;;
@@ -1382,7 +1382,7 @@ install_bromite_webview () {
 
 install_osmand () {
 	if [ "${MODID}" = "NanoDroid_OsmAnd" ]; then
-		ui_print " << with OsmAnd"
+		print_info " << with OsmAnd"
 		nanodroid_install_apk OsmAnd
 		nanodroid_install_apk OsmAnd_ContourLines
 	fi
@@ -1391,9 +1391,9 @@ install_osmand () {
 install_swipe () {
 	if [ "${nanodroid_swipe}" -eq 1 ]; then
 		if [ "${SWIPE_UNSUPPORTED}" -eq 1 ]; then
-			ui_print " << Swipe Libraries are unsupported on SDK ${SDK_VERSION}"
+			print_info " << Swipe Libraries are unsupported on SDK ${SDK_VERSION}"
 		else
-			ui_print " << with swipe libraries"
+			print_info " << with swipe libraries"
 
 			SWIPE_SRC="${INSTALLER}/swipe/${ARCH}"
 			SWIPE_DEST="/system/${SWIPE_LIBDIR}"
@@ -1454,13 +1454,13 @@ install_swipe () {
 				installinfo_add "${MODPATH}${PRODL_IME}/libjni_keyboarddecoder.so"
 			fi
 		fi
-	else	ui_print " << without swipe libraries"
+	else	print_info " << without swipe libraries"
 	fi
 }
 
 install_addond () {
 	if [ -d /system/addon.d ]; then
-		ui_print " << System Mode OTA survival"
+		print_info " << System Mode OTA survival"
 
 		cp "${INSTALLER}/CommonAddon" "/system/addon.d/91-nanodroid.sh" || \
 			error "failed to install System Mode OTA survival"
@@ -1468,7 +1468,7 @@ install_addond () {
 		chmod 0755 "/system/addon.d/91-nanodroid.sh"
 		sed -e "s|@MODID@|${MODID}|g" -i "/system/addon.d/91-nanodroid.sh"
 	else
-		ui_print " << ROM does not have addon.d support"
+		print_info " << ROM does not have addon.d support"
 	fi
 }
 
@@ -1765,9 +1765,9 @@ fi
 chown root:sdcard_rw ${nanodroid_logfile}
 chmod 0644 ${nanodroid_logfile}
 
-ui_print " | storing installation logs in ${STORAGE}/nanodroid_logs/"
-ui_print " | NanoDroid log:"
-ui_print " || ""$(basename ${nanodroid_logfile})"
+print_info " | storing installation logs in ${STORAGE}/nanodroid_logs/"
+print_info " | NanoDroid log:"
+print_info " || ""$(basename ${nanodroid_logfile})"
 
 	if [ -d /twres ]; then
 		nanodroid_twrplog="${STORAGE}/nanodroid_logs/${MODID}_${VERSION}_twrp_${curdate}.log"
@@ -1777,9 +1777,9 @@ ui_print " || ""$(basename ${nanodroid_logfile})"
 		chown root:sdcard_rw ${nanodroid_twrplog}
 		chmod 0644 ${nanodroid_twrplog}
 
-		ui_print " | TWRP log:"
-		ui_print " || $(basename ${nanodroid_twrplog})"
-		ui_print " "
+		print_info " | TWRP log:"
+		print_info " || $(basename ${nanodroid_twrplog})"
+		print_info " "
 	fi
 
 }
@@ -1970,11 +1970,11 @@ get_cfg_setup () {
 	if [ "$config_exists" -eq 1 ]; then
 		cfg_setup="${config}"
 		check_cfg_setup
-		ui_print " > Config | nanodroid-setup   | $(dirname ${cfg_setup})"
+		print_info " > Config | nanodroid-setup   | $(dirname ${cfg_setup})"
 	else
 		cfg_setup="${INSTALLER}/.nanodroid-setup"
 		source "${cfg_setup}"
-		ui_print " > Config | nanodroid-setup   | fallback"
+		print_info " > Config | nanodroid-setup   | fallback"
 	fi
 }
 
@@ -1983,10 +1983,10 @@ get_cfg_overlay () {
 	if [ "$config_exists" -eq 1 ]; then
 		cfg_overlay="${config}"
 		check_cfg_overlay
-		ui_print " > Config | nanodroid-overlay | $(dirname ${cfg_overlay})"
+		print_info " > Config | nanodroid-overlay | $(dirname ${cfg_overlay})"
 	else
 		cfg_overlay="${INSTALLER}/.nanodroid-overlay"
-		ui_print " > Config | nanodroid-overlay | fallback"
+		print_info " > Config | nanodroid-overlay | fallback"
 	fi
 }
 
@@ -1995,9 +1995,9 @@ get_cfg_apps () {
 	if [ "$config_exists" -eq 1 ]; then
 		cfg_apps="${config}"
 		check_cfg_apps
-		ui_print " > Config | nanodroid-apps    | $(dirname ${cfg_apps})"
+		print_info " > Config | nanodroid-apps    | $(dirname ${cfg_apps})"
 	else
 		cfg_apps="${INSTALLER}/.nanodroid-apps"
-		ui_print " > Config | nanodroid-apps    | fallback"
+		print_info " > Config | nanodroid-apps    | fallback"
 	fi
 }
