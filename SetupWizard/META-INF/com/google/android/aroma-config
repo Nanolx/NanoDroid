@@ -108,24 +108,24 @@ selectbox(
 
 );
 
-selectbox(
+checkbox(
 	"Google Sync/Swipe",
 	"Google Sync/Swipe",
 	"@customize",
 	"gsync.prop",
 
-	"Select the Google Addons you want", "", 2, #-- Group 1. key = "selected.1"
+	"Select the Google Addons you want", "", 2, #-- Group 1
 	"Google Sync",	"Install Google Contacts & Calendar Sync",		0,
 	"Swipe",	"Install Swipe libraries",				0
 );
 
-selectbox(
+checkbox(
 	"Init Scripts",
 	"Init Scripts",
 	"@customize",
 	"initd.prop",
 
-	"Select the Init Scripts you want", "", 2, #-- Group 1. key = "selected.1"
+	"Select the Init Scripts you want", "", 2, #-- Group 1
 	"sqlite",	"cleanup and compress sqlite databases on boot",	1,
 	"fstrim",	"optmize/trim file systems on boot",			1,
 	"logcat",	"auto record logcats in /data/adb/logcats",		1,
@@ -133,13 +133,13 @@ selectbox(
 	"logscleaner",	"cleanup log files on boot",				0
 );
 
-selectbox(
+checkbox(
 	"Shell Utilities",
 	"Shell Utilities",
 	"@customize",
 	"shellutil.prop",
 
-	"Select the Shell utilities you want", "", 2, #-- Group 1. key = "selected.1"
+	"Select the Shell utilities you want", "", 2, #-- #-- Group 1
 	"findfs",	"---",							1,
 	"findmnt",	"---",							1,
 	"hexdump",	"---",							1,
