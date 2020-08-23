@@ -515,10 +515,6 @@ reset_runtime_permissions () {
 			rm -f "${file}"
 			decho "  ++ resetting permissions: ${file}"
 		done
-
-		if [ "${MODE}" = "SYSTEM" ]; then
-			touch /data/adb/.nanodroid_runtimeclean
-		fi
 	fi
 }
 
@@ -546,6 +542,8 @@ nanodroid_finalize () {
 
 		recovery_cleanup_env
 	fi
+
+	reset_runtime_permissions
 
 	print_info " "
 	print_info " Thanks for using NanoDroid "
