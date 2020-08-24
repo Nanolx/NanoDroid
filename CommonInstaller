@@ -854,7 +854,7 @@ magisk_install_finish () {
 		;;
 	esac
 
-	${BOOTMODE} && touch ${MAGIKSBASE}/modules/${MODID}/update
+	${BOOTMODE} && touch ${MAGIKSBASE}/modules/${MODID}/update 2>/dev/null
 
 	sync
 	nanodroid_storelogs
