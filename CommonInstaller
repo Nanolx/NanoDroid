@@ -763,9 +763,12 @@ magisk_install_setup () {
 
 	[ -d ${MODPATH} ] && NANODROID_UPGRADE=1
 
-	[ "${NANODROID_UPGRADE}" -eq 1 ] && \
-			MODPATH=${MAGISKBASE}/modules_update/${MODID} || \
-			MODPATH=${MAGISKBASE}/modules/${MODID}
+	if [ "${NANODROID_UPGRADE}" -eq 1 ]; then
+		MODPATH=${MAGISKBASE}/modules_update/${MODID}
+		rm -rf ${MODPATH}
+	else
+		MODPATH=${MAGISKBASE}/modules/${MODID}
+	fi
 }
 
 magisk_install_preinst () {
