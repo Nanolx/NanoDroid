@@ -330,7 +330,7 @@ mount_partitions () {
 
 		is_mounted /data || mount /data || error "failed to mount /data!"
 
-		mount -o bind /dev/urandom /dev/random
+		${BOOTMODE} || mount -o bind /dev/urandom /dev/random
 		! is_mounted /system && mount -o rw /system
 		! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
 		! is_mounted /system && error "failed to mount /system!"
