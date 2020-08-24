@@ -74,85 +74,103 @@ mount_apex_loop () {
 
 # taken from Magisk, with modifications for NanoDroid
 mount_apex () {
-	if ${BOOTMODE}; then
-		APEX_LD=/apex/com.android.runtime
-	else
-		APEX_LD=/apex/com.android.runtime
+	APEX_LD=/apex/com.android.runtime
 
-		mkdir -p /apex
+	mkdir -p /apex
 
-		for apex in /system/apex/*; do
-			apex_mount="/apex/$(basename ${apex} .apex)"
-			apex_loop="/dev/loop_apex_$(basename ${apex} .apex)"
+	for apex in /system/apex/*; do
+		apex_mount="/apex/$(basename ${apex} .apex)"
+		apex_loop="/dev/loop_apex_$(basename ${apex} .apex)"
 
-			[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
-			[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
+		[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
+		[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
 
-			mkdir -p "${apex_mount}"
+		mkdir -p "${apex_mount}"
 
-			if [ -f "${apex}" ]; then
-				unzip -oq "${apex}" apex_payload.img -d /apex
-				mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
-			elif [ -d "${apex}" ]; then
-				mount -o bind "${apex}" "${apex_mount}"
-			fi
-		done
+		if [ -f "${apex}" ]; then
+			unzip -oq "${apex}" apex_payload.img -d /apex
+			mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
+		elif [ -d "${apex}" ]; then
+			mount -o bind "${apex}" "${apex_mount}"
+		fi
+	done
 
-		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
-		export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
-	fi
+	export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
+
+	echo " INFO: #10 [APEX_LD] ${APEX_LD}"
+	echo " INFO: #11 [APEX [ALL]] $(ls /system/apex/*)"
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
 mount_partitions () {
-	DEVICE_AB=FALSE
-	VENDOR_COMPAT=FALSE
-	SYSTEM_AS_ROOT=FALSE
+	if ${BOOTMODE}; then
+		APEX_LD=/apex/com.android.runtime
+		build_props=$(find /system /system_root /vendor -type f -name build.prop)
+	else
+		DEVICE_AB=FALSE
+		VENDOR_COMPAT=FALSE
+		SYSTEM_AS_ROOT=FALSE
 
-	SLOT=$(grep_cmdline androidboot.slot_suffix)
-	if [ -z ${SLOT} ]; then
-		SLOT=$(grep_cmdline androidboot.slot)
-		if [ ! -z ${SLOT} ]; then
-			SLOT=_${SLOT}
-			DEVICE_AB=TRUE
+		SLOT=$(grep_cmdline androidboot.slot_suffix)
+		echo " INFO: #1 [SLOT] ${SLOT}"
+		if [ -z ${SLOT} ]; then
+			SLOT=$(grep_cmdline androidboot.slot)
+			echo " INFO: #2 [SLOT] ${SLOT}"
+			if [ ! -z ${SLOT} ]; then
+				SLOT=_${SLOT}
+				echo " INFO: #3 [SLOT] ${SLOT}"
+				DEVICE_AB=TRUE
+			fi
 		fi
+
+		system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
+		echo " INFO: #4 [system_tmp] ${system_tmp}"
+		SYSTEM_BLOCK=$(readlink -f ${system_tmp})
+		echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
+
+		is_mounted /data || mount /data || error "failed to mount /data!"
+
+		${BOOTMODE} || mount -o bind /dev/urandom /dev/random
+		! is_mounted /system && mount -o rw /system
+		! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
+		! is_mounted /system && error "failed to mount /system!"
+
+		if [ -f /system/init.rc ]; then
+			SYSTEM_AS_ROOT=true
+			[ -L /system_root ] && rm -f /system_root
+			mkdir /system_root 2>/dev/null
+			mount --move /system /system_root
+			mount -o bind /system_root/system /system
+		fi
+
+		vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
+		echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
+		VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
+		echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
+
+		! is_mounted /vendor && mount -o ro /vendor || mount -o ro ${VENDOR_BLOCK} /vendor
+
+		if [ -d /system/vendor ]; then
+			### XXX work-around required for some ROMs
+			VENDOR_COMPAT=TRUE
+			ln -sf /system/vendor /vendor >/dev/null
+		fi
+
+		echo " "
+		mount | sed -e '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}'
+		echo " "
+
+		echo " INFO: #8 [prop]"
+		ls -l /system/*.prop
+
+		build_props=$(find /system /system_root /vendor -type f -name build.prop)
+		echo " INFO: #9 [build_props] ${build_props}"
+
+		[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
+
+		[ -d /system/apex ] && mount_apex
 	fi
-
-	system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
-	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
-
-	is_mounted /data || mount /data || error "failed to mount /data!"
-
-	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
-	! is_mounted /system && mount -o rw /system
-	! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
-	! is_mounted /system && error "failed to mount /system!"
-
-	if [ -f /system/init.rc ]; then
-		SYSTEM_AS_ROOT=true
-		[ -L /system_root ] && rm -f /system_root
-		mkdir /system_root 2>/dev/null
-		mount --move /system /system_root
-		mount -o bind /system_root/system /system
-	fi
-
-	vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
-	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
-
-	! is_mounted /vendor && mount -o ro /vendor || mount -o ro ${VENDOR_BLOCK} /vendor
-
-	if [ -d /system/vendor ]; then
-		### XXX work-around required for some ROMs
-		VENDOR_COMPAT=TRUE
-		ln -sf /system/vendor /vendor >/dev/null
-	fi
-
-	ls -l /system/*.prop
-
-	build_props=$(find /system /system_root /vendor -type f -name build.prop)
-	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
-
-	[ -d /system/apex ] && mount_apex
 }
 
 umount_partitions () {
