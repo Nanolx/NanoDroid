@@ -725,27 +725,30 @@ magisk_install_setup () {
 	print_info " "
 	print_info " > setup Magisk environment"
 
+	MAGISKBASE=/data/adb
+	recovery_setup_env
+
 	case ${MODID} in
 		NanoDroid )
 			# check for sub-modules  which are not
 			# supposed to be installed alongside
 			for dir in NanoDroid_microG NanoDroid_FDroid; do
-				if [ -d ${MAGIKSBASE}/modules/${dir} ]; then
+				if [ -d ${MAGISKBASE}/modules/${dir} ]; then
 					print_info " !! ${dir} module detected - uninstalling!"
-					rm -rf ${MAGIKSBASE}/modules/${dir}
+					rm -rf ${MAGISKBASE}/modules/${dir}
 					NANODROID_UPGRADE=1
 				fi
 
-				if [ -d ${MAGIKSBASE}/modules_update/${dir} ]; then
+				if [ -d ${MAGISKBASE}/modules_update/${dir} ]; then
 					print_info " !! ${dir} module detected - uninstalling!"
-					rm -rf ${MAGIKSBASE}/modules_update/${dir}
+					rm -rf ${MAGISKBASE}/modules_update/${dir}
 				fi
 			done
 		;;
 
 		NanoDroid_microG | NanoDroid_FDroid )
 			# check for Full package and abort if found
-			[ -d ${MAGIKSBASE}/modules/NanoDroid -o -d ${MAGIKSBASE}/modules_update/NanoDroid ] && \
+			[ -d ${MAGISKBASE}/modules/NanoDroid -o -d ${MAGISKBASE}/modules_update/NanoDroid ] && \
 				error "${MODID} can't be installed along side the Full package"
 		;;
 
@@ -761,8 +764,8 @@ magisk_install_setup () {
 	[ -d ${MODPATH} ] && NANODROID_UPGRADE=1
 
 	[ "${NANODROID_UPGRADE}" -eq 1 ] && \
-			MODPATH=${MAGIKSBASE}/modules_update/${MODID} || \
-			MODPATH=${MAGIKSBASE}/modules/${MODID}
+			MODPATH=${MAGISKBASE}/modules_update/${MODID} || \
+			MODPATH=${MAGISKBASE}/modules/${MODID}
 }
 
 magisk_install_preinst () {
@@ -1191,7 +1194,7 @@ install_apps () {
 
 		INSTALL_APPS=$(cat "${cfg_apps}")
 		for app in ${INSTALL_APPS}; do
-			if [[ -d /system/app/${app} && ! -d ${MAGIKSBASE}/modules/${MODID}/system/app/${app} ]]; then
+			if [[ -d /system/app/${app} && ! -d ${MAGISKBASE}/modules/${MODID}/system/app/${app} ]]; then
 				print_info "   ++ app: ${app} already provided by ROM"
 			elif [[ -d "${INSTALLER}/system/app/${app}" ]]; then
 				print_info "   ++ ${app}"
