@@ -24,16 +24,11 @@ show_banner
 
 mount_partitions
 
-if [ -f /data/adb/NanoDroid_Patched ]; then
-	ui_print " !! /data/adb/NanoDroid_Patched exists"
-	ui_print " !! if you want to force patching, then"
-	error    " remove this file and try again"
-fi
-
 setup_patcher
 
 detect_sdk
 detect_arch
+detect_mode
 
 if check_fake_package_signature; then
 	error    " ROM has native signature spoofing already!"
