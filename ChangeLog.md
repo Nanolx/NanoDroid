@@ -32,13 +32,16 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
 
 * SysTest
   * fix collecting `dalvikvm` information on some recent ROMs
+  * fix logging block devices for `/system` and `/vendor`
 
 * Installer, Patcher, SysTest, Uninstaller
   * improved APEX compatibility
   * improved Android 10 compatibility
+  * improve detection of block devices for `/system` and `/vendor`
 
 * Installer, Patcher, SysTest
   * also detect whether ROM has `FAKE_PACKAGE_SIGNATURE` permisson on self-patched ROMs
+  * don't pollute logs with magisk mounts
 
 * Google Package
   * fix GoogleCalendarSync on SDK 21 - 29 @Spongebob
@@ -58,6 +61,7 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
   * setup variable `nanodroid_utils` is now a list `nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"`
      * all listed utils will be installed
      * the `column` util will always be installed (required by `nanodroid-overlay`)
+  * various internal improvements
 
 * Full Package
   * switch from `Oandbackup` to `OAndBackupX`
@@ -79,11 +83,14 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
   * collect APEX information in log
   * create `BOOTCLASSPATH` on-the-fly and log it
   * experimental: use newly proposed Haystack patches, see https://github.com/Lanchon/haystack/pull/34
-  * various minor improvements
+  * various internal improvements
 
 * SysTest
   * check and log LD_CONFIG_FILE
   * log loaded APEX modules
+  * log boot slot
+  * don't pollute Magisk Manager with logs, we create a logfile
+  * cosmetic changes to generated logfile
 
 * Patcher, Uninstaller
   * drop old code regarding NanoMod (= NanoDroid older than version 16.0)
