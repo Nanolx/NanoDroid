@@ -22,6 +22,9 @@
   * improved APEX compatibility
   * improved Android 10 compatibility
 
+* Installer, Patcher, SysTest
+  * also detect whether ROM has `FAKE_PACKAGE_SIGNATURE` permisson on self-patched ROMs
+
 * Google Package
   * fix GoogleCalendarSync on SDK 21 - 29 @Spongebob
   * fix installing swipe libraries in cases where `LatinIME` does not have it's libs linked to `/system`

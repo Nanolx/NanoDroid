@@ -783,16 +783,6 @@ magisk_install_preinst () {
 		cp ${MODPATH}/system.prop ${TMPDIR}/system.prop
 	fi
 
-	if [ -f ${MODPATH}/system/framework/services.jar ]; then
-		print_info " << backing up patched services.jar"
-		cp ${MODPATH}/system/framework/services.jar ${TMPDIR}/services.jar
-	fi
-
-	if [ -f ${MODPATH}/system/framework/org.spoofing.apk ]; then
-		print_info " << backing up org.spoofing.apk"
-		cp ${MODPATH}/system/framework/org.spoofing.apk ${TMPDIR}/org.spoofing.apk
-	fi
-
 	if [ -d ${MODPATH}/logs ]; then
 		print_info " << backing up init.d script logs"
 		cp -r ${MODPATH}/logs ${TMPDIR}/logs
@@ -824,18 +814,6 @@ magisk_install_postinst () {
 	if [ -d ${TMPDIR}/logcats ]; then
 		print_info " << restoring logcats"
 		cp -r ${TMPDIR}/logcats ${MODPATH}/logcats
-	fi
-
-	if [ -f ${TMPDIR}/services.jar ]; then
-		print_info " << restoring patched services.jar"
-		mkdir -p ${MODPATH}/system/framework
-		cp ${TMPDIR}/services.jar ${MODPATH}/system/framework/services.jar
-	fi
-
-	if [ -f ${TMPDIR}/org.spoofing.apk ]; then
-		print_info " << restoring org.spoofing.apk"
-		mkdir -p ${MODPATH}/system/framework
-		cp ${TMPDIR}/org.spoofing.apk ${MODPATH}/system/framework/org.spoofing.apk
 	fi
 }
 
