@@ -2,6 +2,21 @@
 
 ## 22.7 (in-dev)
 
+### Important Note
+
+Starting with this release the Patcher will no longer install the patched `services.jar` and the companion
+`org.spoofing.apk` into the NanoDroid or NanoDroid-microG Magisk Modules, instead it will install both files
+into it's own NanoDroidPatcher Magisk Module, which makes it easier to disable or remove the module in case
+it doesn't properly work.
+
+The one-time downside is, that when upgrading the NanoDroid or NanoDroid-microG Magisk Modules the patched
+`services.jar` and `org.spoofing.apk` will **no longer be preserved**! So if you intent to upgrade NanoDroid
+to 22.7 and are on a self-patched ROM, you **have to reflash** the Patcher in order to retain
+`FAKE_PACKAGE_SIGNATURE` permission.
+
+This is only required once, because later on the patched file resides in it's own module. System Mode install
+for the Patcher is of course still supported and will be done if Magisk wasn't found on your device.
+
 ### Bug Fixes
 
 * SetupWizard
@@ -57,6 +72,8 @@
 
 * Patcher
   * Patching through Magisk Manager is possible (atleast 19.0 required, 20.4 highly recommended)
+  * instead of installing patched files into the NanoDroid or NanoDroid_microG Magisk Modules the files will be installed in own NanoDroidPatcher Magisk Module
+     * that is if Magisk was found on the device, else System Mode installation is done, as before
   * remove restriction for Android 10
   * use Android 7 - 9 patch for Android 10
   * collect APEX information in log
