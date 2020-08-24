@@ -7,6 +7,8 @@
 ##########################################################################################
 
 VERSION=22.6.91.99999999
+MAGISKBASE=/data/adb
+MODID=NanoDroidPatcher
 
 ##########################################################################################
 # Generic Functions
@@ -125,7 +127,7 @@ mount_partitions () {
 		fi
 	fi
 
-	system_tmp=$(find /dev/block -type l -name system${SLOT} | head -n 1)
+	system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
 	echo " INFO: #4 [system_tmp] ${system_tmp}"
 	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
 	echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
@@ -145,7 +147,7 @@ mount_partitions () {
 		mount -o bind /system_root/system /system
 	fi
 
-	vendor_tmp=$(find /dev/block -type l -name vendor${SLOT} | head -n 1)
+	vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
 	echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
 	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
 	echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
@@ -159,7 +161,7 @@ mount_partitions () {
 	fi
 
 	echo " "
-	mount | awk '{print $1 " on " $3 " params: " $6}'
+	mount | sed -e '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}'
 	echo " "
 
 	echo " INFO: #8 [prop]"
@@ -251,16 +253,9 @@ detect_outfd () {
 
 detect_mode () {
 	MODE=SYSTEM
+	[ -f /data/adb/magisk/util_functions.sh ] && MODE=MAGISK
 
-	for magisk in /data/adb/magisk/magisk /data/magisk/magisk \
-		/data/.magisk/magisk /data/adb/modules; do
-		if [ -e ${magisk} ]; then
-			MODE=MAGISK
-			break
-		fi
-	done
-
-	ui_print " > Mode   | ${MODE}"
+	ui_print " > installation mode: ${MODE}"
 	ui_print " "
 }
 
@@ -424,24 +419,60 @@ detect_sdk () {
 }
 
 ##########################################################################################
-# by @ale5000
+# check if ROM has native fake signature spoofing support
+# origingally by @ale5000 - revised by me
 ##########################################################################################
 
 check_fake_package_signature () {
 	PERMISSION=android.permission.FAKE_PACKAGE_SIGNATURE
 	PERMISSION_OD=$(echo -n "${PERMISSION}" | od -A n -t x1 | tr -d '\n' | sed -e 's/^ //g;s/ /00/g')
 	HAS_FAKESIGN=false
+	FRAMEWORKRES_PATCH=false
+	SERVICESJAR_PATCH=false
 
 	mkdir -p ${TMPDIR}/sigcheck
 
+	# natively patched ROM: only framework-res.apk patched (old)
+	# natively patched ROM: both framework-res.apk and services.jar patched (new)
+	# self patched ROM: only services.jar patched
+
+	# check framework-res.apk for the patch
 	unzip -oq /system/framework/framework-res.apk AndroidManifest.xml -d "${TMPDIR}/sigcheck" \
 		|| error "failed to unpack framework-res.apk"
 
-	unzip -o /system/framework/services.jar *.dex -d "${TMPDIR}/sigcheck" \
+	if grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/AndroidManifest.xml; then
+		HAS_FAKESIGN=true
+		FRAMEWORKRES_PATCH=true
+	fi
+
+	if od -A n -t x1 "${TMPDIR}"/sigcheck/AndroidManifest.xml | tr -d ' \n' | grep -qF "${PERMISSION_OD}"; then
+		HAS_FAKESIGN=true
+		FRAMEWORKRES_PATCH=true
+	fi
+
+	# check services.jar for the patch
+	unzip -oq /system/framework/services.jar *.dex -d "${TMPDIR}/sigcheck" \
 		|| error "failed to unpack services.jar"
 
-	grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/* && HAS_FAKESIGN=true
-	od -A n -t x1 "${TMPDIR}"/sigcheck/* | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true
+	if grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/*.dex; then
+		HAS_FAKESIGN=true
+		SERVICESJAR_PATCH=true
+	fi
+
+	if od -A n -t x1 "${TMPDIR}"/sigcheck/*.dex | tr -d ' \n' | grep -qF "${PERMISSION_OD}"; then
+		HAS_FAKESIGN=true
+		SERVICESJAR_PATCH=true
+	fi
+
+	# we don't use this anywhere (except in SysTest log),
+	# but may still come in hand in the future
+	if ${FRAMEWORKRES_PATCH} && ! ${SERVICESJAR_PATCH}; then
+		PATCH_TYPE="native_old"
+	elif ${FRAMEWORKRES_PATCH} && ${SERVICESJAR_PATCH}; then
+		PATCH_TYPE="native_new"
+	elif ! ${FRAMEWORKRES_PATCH} && ${SERVICESJAR_PATCH}; then
+		PATCH_TYPE="self_patched"
+	fi
 
 	${HAS_FAKESIGN} && return 0 || return 1
 }
@@ -624,10 +655,10 @@ install_services () {
 	if [ "${MODE}" = "SYSTEM" ]; then
 		backup_services_jar
 	else
-		if [ -d "/data/adb/modules/NanoDroidPatcher" ]; then
-			install_path="/data/adb/modules_update/NanoDroidPatcher"
+		if [ -d "${MAGISKBASE}/modules/NanoDroidPatcher" ]; then
+			install_path="${MAGISKBASE}/modules_update/${MODID}"
 		else
-			install_path="/data/adb/modules/NanoDroidPatcher"
+			install_path="${MAGISKBASE}/modules/${MODID}"
 		fi
 	fi
 
@@ -642,8 +673,12 @@ install_services () {
 	set_perm_data "${install_path}/system/framework/org.spoofing.apk"
 
 	if [ "${MODE}" = "MAGISK" ]; then
-		cp "${BASEDIR}/module.prop" "${install_path}"
-		${BOOTMODE} && touch "/data/adb/modules/NanoDroidPatcher/update" 2>/dev/null
+		cp -af "${BASEDIR}/module.prop" "${install_path}"
+
+		if ${BOOTMODE}; then
+			touch "${MAGISKBASE}/modules/${MODID}/update" 2>/dev/null
+			cp -af "${BASEDIR}/module.prop" "${MAGISKBASE}/${MODID}/module.prop" 2>/dev/null
+		fi
 	fi
 }
 
