@@ -48,14 +48,11 @@ mount_apex_loop () {
 
 	apex_mount="${1}"
 
-	echo " *** mount_apex_loop [apex_mount]: ${apex_mount}"
-
 	while [ ${number} -lt 64 ]; do
 		loop=/dev/block/loop${number}
 		[ -e ${loop} ] || mknod ${loop} b 7 $((number * minorx))
 
 		if losetup "${loop}" /apex/apex_payload.img 2>/dev/null; then
-			echo " *** mount_apex_loop [loop]: ${loop}"
 			if mount -text4 -oro,noatime "${loop}" "${apex_mount}"; then
 				rm -f /apex/apex_payload.img
 				break
@@ -95,9 +92,6 @@ mount_apex () {
 		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
 		export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
 	fi
-
-	echo " INFO: #10 [APEX_LD] ${APEX_LD}"
-	echo " INFO: #11 [APEX [ALL]] $(ls /system/apex/*)"
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
@@ -107,21 +101,16 @@ mount_partitions () {
 	SYSTEM_AS_ROOT=FALSE
 
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
-	echo " INFO: #1 [SLOT] ${SLOT}"
 	if [ -z ${SLOT} ]; then
 		SLOT=$(grep_cmdline androidboot.slot)
-		echo " INFO: #2 [SLOT] ${SLOT}"
 		if [ ! -z ${SLOT} ]; then
 			SLOT=_${SLOT}
-			echo " INFO: #3 [SLOT] ${SLOT}"
 			DEVICE_AB=TRUE
 		fi
 	fi
 
-	system_tmp=$(find /dev/block -type l -name system${SLOT} | head -n 1)
-	echo " INFO: #4 [system_tmp] ${system_tmp}"
+	system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
 	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
-	echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
 
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
@@ -138,10 +127,8 @@ mount_partitions () {
 		mount -o bind /system_root/system /system
 	fi
 
-	vendor_tmp=$(find /dev/block -type l -name vendor${SLOT} | head -n 1)
-	echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
+	vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
 	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
-	echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
 	! is_mounted /vendor && mount -o ro /vendor || mount -o ro ${VENDOR_BLOCK} /vendor
 
@@ -151,16 +138,7 @@ mount_partitions () {
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
 
-	echo " "
-	mount | awk '{print $1 " on " $3 " params: " $6}'
-	echo " "
-
-	echo " INFO: #8 [prop]"
-	ls -l /system/*.prop
-
-	export build_props=$(find /system /system_root /vendor -type f -name build.prop)
-	echo " INFO: #9 [build_props] ${build_props}"
-
+	build_props=$(find /system /system_root /vendor -type f -name build.prop)
 	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
 	[ -d /system/apex ] && mount_apex
@@ -192,24 +170,59 @@ error () {
 
 ##########################################################################################
 # check if ROM has native fake signature spoofing support
-# by @ale5000
+# origingally by @ale5000 - revised by me
 ##########################################################################################
 
 check_fake_package_signature () {
 	PERMISSION=android.permission.FAKE_PACKAGE_SIGNATURE
 	PERMISSION_OD=$(echo -n "${PERMISSION}" | od -A n -t x1 | tr -d '\n' | sed -e 's/^ //g;s/ /00/g')
 	HAS_FAKESIGN=false
+	FRAMEWORKRES_PATCH=false
+	SERVICESJAR_PATCH=false
 
 	mkdir -p ${TMPDIR}/sigcheck
 
+	# natively patched ROM: only framework-res.apk patched (old)
+	# natively patched ROM: both framework-res.apk and services.jar patched (new)
+	# self patched ROM: only services.jar patched
+
+	# check framework-res.apk for the patch
 	unzip -oq /system/framework/framework-res.apk AndroidManifest.xml -d "${TMPDIR}/sigcheck" \
 		|| error "failed to unpack framework-res.apk"
 
-	unzip -o /system/framework/services.jar *.dex -d "${TMPDIR}/sigcheck" \
+	if grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/AndroidManifest.xml; then
+		HAS_FAKESIGN=true
+		FRAMEWORKRES_PATCH=true
+	fi
+
+	if od -A n -t x1 "${TMPDIR}"/sigcheck/AndroidManifest.xml | tr -d ' \n' | grep -qF "${PERMISSION_OD}"; then
+		HAS_FAKESIGN=true
+		FRAMEWORKRES_PATCH=true
+	fi
+
+	# check services.jar for the patch
+	unzip -oq /system/framework/services.jar *.dex -d "${TMPDIR}/sigcheck" \
 		|| error "failed to unpack services.jar"
 
-	grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/* && HAS_FAKESIGN=true
-	od -A n -t x1 "${TMPDIR}"/sigcheck/* | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true
+	if grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/*.dex; then
+		HAS_FAKESIGN=true
+		SERVICESJAR_PATCH=true
+	fi
+
+	if od -A n -t x1 "${TMPDIR}"/sigcheck/*.dex | tr -d ' \n' | grep -qF "${PERMISSION_OD}"; then
+		HAS_FAKESIGN=true
+		SERVICESJAR_PATCH=true
+	fi
+
+	# we don't use this anywhere (except in SysTest log),
+	# but may still come in hand in the future
+	if ${FRAMEWORKRES_PATCH} && ! ${SERVICESJAR_PATCH}; then
+		PATCH_TYPE="native_old"
+	elif ${FRAMEWORKRES_PATCH} && ${SERVICESJAR_PATCH}; then
+		PATCH_TYPE="native_new"
+	elif ! ${FRAMEWORKRES_PATCH} && ${SERVICESJAR_PATCH}; then
+		PATCH_TYPE="self_patched"
+	fi
 
 	${HAS_FAKESIGN} && return 0 || return 1
 }
@@ -373,8 +386,9 @@ store_results () {
 	add_log "DEVICE_AB=${DEVICE_AB}"
 	add_log "VENDOR_COMPAT=${VENDOR_COMPAT}"
 	add_log "SYSTEM_AS_ROOT=${SYSTEM_AS_ROOT}"
-	add_log "SYSTEMBLOCK=${SYSTEMBLOCK}"
-	add_log "VENDORBLOCK=${VENDORBLOCK}"
+	add_log "SYSTEMBLOCK=${SYSTEM_BLOCK}"
+	add_log "VENDORBLOCK=${VENDOR_BLOCK}"
+	add_log "SLOT=${SLOT}"
 	add_log ""
 	mount | sed '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}' >> ${LOGFILE}
 
@@ -414,18 +428,38 @@ store_results () {
 	add_log "Generic System Properties"
 	add_log "========================="
 	add_log ""
+	add_log "build.prop files"
+	add_log ""
+
+	i=0
+	for prop in $(find /system /system_root /vendor -type f -name build.prop); do
+		i=$((i + 1))
+		add_log "[${i}] ${prop}"
+	done
+
+	add_log ""
+	add_log "system properties"
+	add_log ""
+
+	i=0
 	for prop in ro.build.description ro.build.display.id ro.build.flavor ro.build.product \
 		ro.build.tags ro.build.type ro.build.version.sdk ro.build.version.security_patch \
 		ro.product.cpu.abi ro.product.cpu.abilist ro.product.cpu.abilist32 \
 		ro.product.cpu.abilist64 ro.product.model ro.product.vendor.device; do
-		add_log "${prop}=$(grep_prop ${prop})"
+		i=$((i + 1))
+		add_log "[${i}] ${prop}=$(grep_prop ${prop})"
 	done
 
 	add_log ""
 	add_log "Native Signature Spoofing support"
 	add_log "================================="
 	add_log ""
-	check_fake_package_signature && add_log "NATIVE_SIGSPOOF=TRUE" || add_log "NATIVE_SIGSPOOF=FALSE"
+	if check_fake_package_signature; then
+		add_log "NATIVE_SIGSPOOF=TRUE"
+		add_log "PATCH_TYPE=${PATCH_TYPE}"
+	else
+		add_log "NATIVE_SIGSPOOF=FALSE"
+	fi
 
 	add_log ""
 	add_log "Bromite System WebView support"
