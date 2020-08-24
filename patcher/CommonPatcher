@@ -432,16 +432,16 @@ check_fake_package_signature () {
 	PERMISSION_OD=$(echo -n "${PERMISSION}" | od -A n -t x1 | tr -d '\n' | sed -e 's/^ //g;s/ /00/g')
 	HAS_FAKESIGN=false
 
-	FW_RES_DIR="${TMPDIR}/framework-res"
-	FW_RES_FILE="${FW_RES_DIR}/AndroidManifest.xml"
+	mkdir -p ${TMPDIR}/sigcheck
 
-	if [ ! -f ${FW_RES_FILE} ]; then
-		mkdir -p "${FW_RES_DIR}"
-		unzip -oq /system/framework/framework-res.apk -d "${FW_RES_DIR}"
-	fi
+	unzip -oq /system/framework/framework-res.apk AndroidManifest.xml -d "${TMPDIR}/sigcheck" \
+		|| error "failed to unpack framework-res.apk"
 
-	grep -qF "${PERMISSION}" "${FW_RES_FILE}" && HAS_FAKESIGN=true
-	od -A n -t x1 "${FW_RES_FILE}" | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true
+	unzip -o /system/framework/services.jar *.dex -d "${TMPDIR}/sigcheck" \
+		|| error "failed to unpack services.jar"
+
+	grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/* && HAS_FAKESIGN=true
+	od -A n -t x1 "${TMPDIR}"/sigcheck/* | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && HAS_FAKESIGN=true
 
 	${HAS_FAKESIGN} && return 0 || return 1
 }
