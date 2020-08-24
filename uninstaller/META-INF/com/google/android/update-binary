@@ -192,7 +192,7 @@ mount_partitions () {
 		fi
 	fi
 
-	system_tmp=$(find /dev/block -type l -name system${SLOT} | head -n 1)
+	system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
 	echo " INFO: #4 [system_tmp] ${system_tmp}"
 	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
 	echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
@@ -212,7 +212,7 @@ mount_partitions () {
 		mount -o bind /system_root/system /system
 	fi
 
-	vendor_tmp=$(find /dev/block -type l -name vendor${SLOT} | head -n 1)
+	vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
 	echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
 	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
 	echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
