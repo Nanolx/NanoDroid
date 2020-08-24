@@ -436,8 +436,6 @@ detect_mode () {
 					magisk_install_preinst
 				;;
 			esac
-
-			${BOOTMODE} || rm -rf "${MODPATH}"
 		;;
 	esac
 
@@ -733,10 +731,6 @@ magisk_install_setup () {
 	if [ ${MAGISK_VER_CODE} -gt 18100 ]; then
 		MAGIKSBASE=/data/adb
 
-		${BOOTMODE} && \
-			MODPATH=${MAGIKSBASE}/modules_update/${MODID} || \
-			MODPATH=${MAGIKSBASE}/modules/${MODID}
-
 		recovery_setup_env
 	else
 		error "Magisk version 19.0 or newer is required"
@@ -777,6 +771,10 @@ magisk_install_setup () {
 	esac
 
 	[ -d ${MODPATH} -o -d ${OVERLAYPATH} ] && NANODROID_UPGRADE=1
+
+	[ "${NANODROID_UPGRADE}" -eq 1 ] && \
+			MODPATH=${MAGIKSBASE}/modules_update/${MODID} || \
+			MODPATH=${MAGIKSBASE}/modules/${MODID}
 }
 
 magisk_install_preinst () {
