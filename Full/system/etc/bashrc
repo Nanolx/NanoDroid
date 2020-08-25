@@ -40,7 +40,7 @@ whi="\[\033[01;38;5;7m\]"
 export HOSTNAME=$(getprop ro.product.device)
 export PS1="${whi}[ ${blu}\$(whoami) ${whi}@ ${red}${HOSTNAME} ${whi}: ${gre}\w ${whi}] "
 
-resize >/dev/null
+resize &>/dev/null
 clear
 
 cd ${HOME}

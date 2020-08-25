@@ -65,6 +65,14 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
 
 * Full Package
   * switch from `Oandbackup` to `OAndBackupX`
+  * changes to the GNU Bash shell included:
+     * include patches from Debian GNU/Linux
+     * set default `PATH` to `/sbin:/system/sbin:/product/bin:/product/xbin:/apex/com.android.runtime/bin:/system/bin:/system/xbin:/odm/bin:/vendor/bin:/vendor/xbin:.`
+     * set `DEFAULT_UTILS_PATH` to `/sbin:/system/sbin:/product/bin:/product/xbin:/apex/com.android.runtime/bin:/system/bin:/system/xbin:/odm/bin:/vendor/bin:/vendor/xbin:/etc:/apex/com.android.runtime/etc:/system/etc`
+     * set `SYS_BASHRC` to `/system/etc/bashrc`
+     * set `SYS_BASH_LOGOUT` to `/system/etc/bash_logout`
+     * set `SYS_PROFILE` to `/data/adb/bash_profile`
+     * set `DEFAULT_BASHRC` to `/data/adb/bashrc`
 
 * Full, microG package
   * setup variable `nanodroid_play` has new value `30` which will install both Play Store and Aurora Store
@@ -115,7 +123,7 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
   * Aurora Droid (1.0.6)
   * Aurora Services (1.0.6)
   * Aurora Store (3.2.9)
-  * Bromite System WebView (84.0.4147.132)
+  * Bromite System WebView (85.0.4183.82)
   * F-Droid (1.10-alpha0)
   * Frost (2.4.5)
   * K-9 Mail (5.717)
@@ -125,9 +133,9 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
   * Odyssey (1.1.19)
   * Open Camera (1.48.2)
   * OpenLauncher (0.7.3)
-  * OpenVPN (0.7.15)
+  * OpenVPN (0.7.17a)
   * OsmAnd+ (3.7.4)
-  * Privacy Browser (3.4.1)
+  * Privacy Browser (3.5)
   * Simple Calendar (6.10.0)
   * Simple Gallery (6.15.2)
   * SmartPack Kernel Manager (12.8)
@@ -136,8 +144,9 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
   * Twidere (4.1.4)
 
 * manual
+  * GNU Bash (5.1~alpha1)
   * Google Play (20.9.20)
-  * MPV (20200728-nightly)
+  * MPV (20200825-nightly)
 
 * tools
   * sqlite3 (3330000)
