@@ -71,8 +71,8 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
      * set `DEFAULT_UTILS_PATH` to `/sbin:/system/sbin:/product/bin:/product/xbin:/apex/com.android.runtime/bin:/system/bin:/system/xbin:/odm/bin:/vendor/bin:/vendor/xbin:/etc:/apex/com.android.runtime/etc:/system/etc`
      * set `SYS_BASHRC` to `/system/etc/bashrc`
      * set `SYS_BASH_LOGOUT` to `/system/etc/bash_logout`
-     * set `SYS_PROFILE` to `/data/media/0/bash_profile`
-     * set `DEFAULT_BASHRC` to `/data/media/0/bashrc`
+     * set `SYS_PROFILE` to `/sdcard/bash_profile`
+     * set `DEFAULT_BASHRC` to `/sdcard/bashrc`
 
 * Full, microG package
   * setup variable `nanodroid_play` has new value `30` which will install both Play Store and Aurora Store
