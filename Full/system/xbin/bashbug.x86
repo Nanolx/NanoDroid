@@ -1,4 +1,4 @@
-#!/system/bin/sh -
+#!/bin/sh -
 #
 # bashbug - create a bug report and mail it to the bug address
 #
@@ -26,14 +26,14 @@
 # configuration section:
 #	these variables are filled in by the make target in Makefile
 #
-MACHINE="i686"
+MACHINE="x86_64"
 OS="linux-gnu"
 CC="gcc"
-CFLAGS="-g -O2 -Wno-parentheses -Wno-format-security"
-RELEASE="5.0"
+CFLAGS="-m32 "
+RELEASE="5.1"
 PATCHLEVEL="0"
-RELSTATUS="release"
-MACHTYPE="i686-pc-linux-gnu"
+RELSTATUS="alpha"
+MACHTYPE="x86_64-pc-linux-gnu"
 
 PATH=/bin:/usr/bin:/usr/local/bin:$PATH
 export PATH

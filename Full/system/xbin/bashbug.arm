@@ -1,4 +1,4 @@
-#!/system/bin/sh -
+#!/bin/sh -
 #
 # bashbug - create a bug report and mail it to the bug address
 #
@@ -30,9 +30,9 @@ MACHINE="arm"
 OS="linux-gnueabi"
 CC="arm-linux-gnueabi-gcc"
 CFLAGS="-g -O2 -Wno-parentheses -Wno-format-security"
-RELEASE="5.0"
+RELEASE="5.1"
 PATCHLEVEL="0"
-RELSTATUS="release"
+RELSTATUS="alpha"
 MACHTYPE="arm-unknown-linux-gnueabi"
 
 PATH=/bin:/usr/bin:/usr/local/bin:$PATH
