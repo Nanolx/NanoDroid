@@ -18,6 +18,8 @@ MODID=@MODID@
 OUTFD=
 VERSION=22.6.91.99999999
 
+NANODROID_LIST=/data/adb/NanoDroid_FileList
+
 print_google_apps()
 {
 cat <<EOF
@@ -95,12 +97,8 @@ if [ ! -d /system/xbin ]; then
 else	NANODROID_BINDIR=/system/xbin
 fi
 
-if [ -r /data/adb/.nanodroid-list ]; then
-	NANODROID_LIST=/data/adb/.nanodroid-list
-elif [ -r /data/adb/NanoDroid_FileList ]; then
-	NANODROID_LIST=/data/adb/NanoDroid_FileList
-else
-	echo "No installer information found!"
+if [ ! -r ${NANODROID_LIST} ]; then
+	echo "No NanoDroid installer information found!"
 	exit 1
 fi
 
@@ -118,15 +116,20 @@ grep_prop() {
 		head -n 1
 }
 
-set_ldlibrarypath () {
+setup_env () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
 	ABI=$(grep_prop ro.product.cpu.abi | cut -c-3)
 	ABI2=$(grep_prop ro.product.cpu.abi2 | cut -c-3)
 	ABILONG=$(grep_prop ro.product.cpu.abi)
 
-	OLD_LD=${LD_LIBRARY_PATH}
 	OLD_PATH=${PATH}
+	OLD_LD_LIB=${LD_LIBRARY_PATH}
+	OLD_LD_PRE=${LD_PRELOAD}
+	OLD_LD_CFG=${LD_CONFIG_FILE}
+	unset LD_LIBRARY_PATH
+	unset LD_PRELOAD
+	unset LD_CONFIG_FILE
 
 	ARCH=arm
 
@@ -134,16 +137,6 @@ set_ldlibrarypath () {
 	[ "$ABI2" = "x86" ] && ARCH=x86
 	[ "$ABILONG" = "arm64-v8a" ] && ARCH=arm64
 	[ "$ABILONG" = "x86_64" ] && ARCH=x86_64
-
-	case ${ARCH} in
-		arm | x86 )
-			export LD_LIBRARY_PATH=/system/lib:/system/vendor/lib:/vendor/lib
-		;;
-
-		arm64 | x86_64 )
-			export LD_LIBRARY_PATH=/system/lib64:/system/vendor/lib64:/vendor/lib64
-		;;
-	esac
 
 	export PATH=/system/bin:/system/xbin:${PATH}
 }
@@ -167,14 +160,11 @@ detect_outfd
 backup_action () {
 	sleep 5
 
-	mount /data
-
 	ui_print " ++ ${MODID} ${VERSION} addon.d: backup"
 	cat ${NANODROID_LIST} | while read FILE; do
 		echo " + backup: ${FILE}"
 		backup_file "${FILE}"
 	done
-
 	ui_print " ++ ${MODID} ${VERSION} addon.d: backup done"
 }
 
@@ -192,7 +182,7 @@ restore_action () {
 postrestore_action () {
 	sleep 5
 
-	set_ldlibrarypath
+	setup_env
 
 	ui_print " ++ ${MODID} ${VERSION} addon.d: GApps removal"
 	print_google_apps | while read app; do
@@ -207,7 +197,6 @@ postrestore_action () {
 	done
 	ui_print " ++ ${MODID} ${VERSION} addon.d: GApps removal done"
 
-
 	get_config setup
 	if [ "${config_exists}" -eq 1 ]; then
 		source "${config}"
@@ -218,8 +207,10 @@ postrestore_action () {
 		fi
 	fi
 
-	export PATH=${OLD_PATH}
-	export LD_LIBRARY_PATH=${OLD_LD}
+	[ -n ${OLD_PATH} ] && PATH=${OLD_PATH}
+	[ -n ${OLD_LD_LIB} ] && LD_LIBRARY_PATH=${OLD_LD_LIB}
+	[ -n ${OLD_LD_PRE} ] && LD_PRELOAD=${OLD_LD_PRE}
+	[ -n ${OLD_LD_CFG} ] && LD_CONFIG_FILE=${OLD_LD_CFG}
 }
 
 case "${1}" in
@@ -242,4 +233,3 @@ case "${1}" in
 		postrestore_action
 	;;
 esac
-
