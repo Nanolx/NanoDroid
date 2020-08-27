@@ -93,6 +93,9 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
   * experimental: use newly proposed Haystack patches, see https://github.com/Lanchon/haystack/pull/34
   * various internal improvements
 
+* Addon, Patcher Addon
+  * improve System Mode addon.d scripts
+
 * SysTest
   * check and log LD_CONFIG_FILE
   * log loaded APEX modules
