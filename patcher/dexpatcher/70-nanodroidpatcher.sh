@@ -14,16 +14,21 @@
 
 source /tmp/backuptool.functions
 
-if [ ! -f /data/adb/nanodroid_patcher/CommonPatcher ]; then
-	echo " !! failed to load CommonPatcher"
-	exit 1
+OUTFD=
+BASEDIR=/data/adb/nanodroid_patcher
+
+detect_outfd
+
+if [ ! -f ${BASEDIR}/CommonPatcher ]; then
+	ui_print " "
+	ui_print " !! NanoDroid-Patcher environment missing"
+	ui_print " !! guessing, you've wiped /data ?"
+	ui_print " !! re-flash the NanoDroid-Patcher zip"
+	ui_print " "
+	exit 0
 else
 	source "/data/adb/nanodroid_patcher/CommonPatcher"
 fi
-
-setup_environment
-BASEDIR=/data/adb/nanodroid_patcher
-export ANDROID_DATA=${BASEDIR}
 
 NanoDroidPatcher () {
 	sleep 5
@@ -31,11 +36,6 @@ NanoDroidPatcher () {
 	show_banner
 
 	mount_partitions
-
-	[ -f /data/adb/.nanodroid-patcher ] && \
-		rm -f /data/adb/.nanodroid-patcher
-	[ -f /data/adb/NanoDroid_Patched ] && \
-		rm -f /data/adb/NanoDroid_Patched
 
 	for artifact in classes.dex oat dalvik-cache \
 		services.jar services.jar-mod; do
@@ -64,22 +64,6 @@ NanoDroidPatcher () {
 
 	exit 0
 }
-
-##########################################################################################
-# Check environment
-##########################################################################################
-
-OUTFD=
-detect_outfd
-
-if ! test -d /data/adb/nanodroid_patcher ; then
-	ui_print " "
-	ui_print " !! NanoDroid-Patcher environment missing"
-	ui_print " !! guessing, you've wiped /data ?"
-	ui_print " !! re-flash the NanoDroid-Patcher zip"
-	ui_print " "
-	exit 0
-fi
 
 ##########################################################################################
 # Stuffz
