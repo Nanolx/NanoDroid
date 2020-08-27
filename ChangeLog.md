@@ -73,6 +73,9 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
      * set `SYS_BASH_LOGOUT` to `/system/etc/bash_logout`
      * set `SYS_PROFILE` to `/sdcard/bash_profile`
      * set `DEFAULT_BASHRC` to `/sdcard/bashrc`
+   * changes to the MPV build included:
+     * merged youtube-dl support (see [this pull request](https://github.com/mpv-android/mpv-android/pull/58))
+     * merged preference to extend video in the cutout area (see [this pull request](https://github.com/mpv-android/mpv-android/pull/296))
 
 * Full, microG package
   * setup variable `nanodroid_play` has new value `30` which will install both Play Store and Aurora Store
@@ -149,7 +152,7 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
 * manual
   * GNU Bash (5.1~alpha1)
   * Google Play (20.9.20)
-  * MPV (20200825-nightly)
+  * MPV (20200827-nightly)
 
 * tools
   * sqlite3 (3330000)
