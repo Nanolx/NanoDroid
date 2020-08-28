@@ -22,7 +22,7 @@ else
 fi
 
 # check dependencies
-for dep in gawk curl jq gzip; do
+for dep in gawk curl jq gzip grep; do
 	if ! which ${dep} &>/dev/null; then
 		echo "${dep} is not installed!"
 		exit 1
@@ -225,8 +225,7 @@ grab_apk_from_url () {
 
 grab_apk_from_github () {
 	[ "${BP_DEBUG}" = '1' ] && debug_message normal "curl ${curl_opts} -s -N \"https://api.github.com/repos/${1}/releases\""
-	local apk_url="$(curl -A "${useragent}" -s -N "https://api.github.com/repos/${1}/releases" | \
-		gawk -F\" '/browser_download_url.*apk/{print $4 ; exit}')"
+	local apk_url="$(curl -A "${useragent}" -s "https://api.github.com/repos/${1}/releases/latest" | jq -r '.assets[].browser_download_url')"
 	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
 	rm -f "${apk_dest}/${3}.apk.gz"
@@ -236,8 +235,6 @@ grab_apk_from_github () {
 	else	echo -e "\nDownloading from GitHub   : ${3}.apk"
 		mkdir -p "${apk_dest}"
 	fi
-
-
 
 	echo "	Checking SHA256 hash not (yet) supported"
 
@@ -251,10 +248,8 @@ grab_apk_from_github () {
 
 grab_apk_from_gitlab () {
 	[ "${BP_DEBUG}" = '1' ] && debug_message newline "curl ${curl_opts} -s -N \"https://gitlab.com/${1}/-/tags\"" "\n"
-	local apk_url=$(curl -A "${useragent}" -s -N "https://gitlab.com/${1}/-/tags" | grep '.apk' | head -n 1)
-	local apk_url=${apk_url%\">*.apk*}
-	local apk_url="https://gitlab.com${apk_url##*a href=\"}"
-	local apk_url="${apk_url/\"*}"
+	local apk_url="$(curl -A "${useragent}" -s -N "https://gitlab.com/AuroraOSS/AuroraServices/-/tags" | tr '<' '\n' | grep -m 1 -oP '(?<=a href=").*uploads.*apk?(?=")')"
+	local apk_url="https://gitlab.com${apk_url}"
 	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
 	rm -f "${apk_dest}/${3}.apk.gz"
