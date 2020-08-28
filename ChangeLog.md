@@ -133,7 +133,7 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
   * F-Droid (1.10-alpha0)
   * Frost (2.4.5)
   * K-9 Mail (5.717)
-  * KeePassDX (2.8.1)
+  * KeePassDX (2.8.2)
   * NewPipe (0.19.8)
   * OAndBackupX (3.0.0)
   * Odyssey (1.1.19)
@@ -152,7 +152,7 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
 * manual
   * GNU Bash (5.1~alpha1)
   * Google Play (20.9.20)
-  * MPV (20200827-nightly)
+  * MPV (20200828-nightly)
 
 * tools
   * sqlite3 (3330000)
