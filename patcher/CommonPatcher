@@ -8,7 +8,7 @@
 
 VERSION=22.6.91.99999999
 MAGISKBASE=/data/adb
-MODID=NanoDroidPatcher
+MODID=NanoDroid_Patcher
 
 ##########################################################################################
 # Generic Functions

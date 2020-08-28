@@ -5,8 +5,8 @@
 ### Important Note
 
 Starting with this release the Patcher will no longer install the patched `services.jar` and the companion
-`org.spoofing.apk` into the NanoDroid or NanoDroid-microG Magisk Modules, instead it will install both files
-into it's own NanoDroidPatcher Magisk Module, which makes it easier to disable or remove the module in case
+`org.spoofing.apk` into the NanoDroid or NanoDroid_microG Magisk Modules, instead it will install both files
+into it's own NanoDroid_Patcher Magisk Module, which makes it easier to disable or remove the module in case
 it doesn't properly work.
 
 The one-time downside is, that when upgrading the NanoDroid or NanoDroid-microG Magisk Modules the patched
@@ -87,7 +87,7 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
 
 * Patcher
   * Patching through Magisk Manager is possible (atleast 19.0 required, 20.4 highly recommended)
-  * instead of installing patched files into the NanoDroid or NanoDroid_microG Magisk Modules the files will be installed in own NanoDroidPatcher Magisk Module
+  * instead of installing patched files into the NanoDroid or NanoDroid_microG Magisk Modules the files will be installed in own NanoDroid_Patcher Magisk Module
      * that is if Magisk was found on the device, else System Mode installation is done, as before
   * remove restriction for Android 10
   * use Android 7 - 9 patch for Android 10
