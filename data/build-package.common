@@ -164,7 +164,7 @@ increase_version_number () {
 	sed -e "s/^version_code.*/version_code=${1}/g" -i "${CWD}/build-package"
 	sed -e "s/^version_date.*/version_date=${date}/g" -i "${CWD}/build-package"
 
-	for module in Full microG FDroid BromiteWebView OsmAnd Google; do
+	for module in Full microG FDroid BromiteWebView OsmAnd Google patcher/dexpatcher; do
 		sed -e "s/version=.*/version=v${1}.${date}/" -i \
 			"${CWD}/${module}/module.prop"
 	done
@@ -176,7 +176,7 @@ increase_version_number () {
 }
 
 increase_module_version () {
-	for module in Full microG FDroid BromiteWebView OsmAnd Google; do
+	for module in Full microG FDroid BromiteWebView OsmAnd Google patcher/dexpatcher; do
 		eval $(grep versionCode "${CWD}/${module}/module.prop")
 		local versionCode=$((versionCode+1))
 		sed -e "s/versionCode.*/versionCode=${versionCode}/" \
@@ -185,7 +185,6 @@ increase_module_version () {
 }
 
 dalvikize_jar () {
-
 	[ -z "${ANDROID_HOME}" ] && error "ANDROID_HOME is not set!"
 	[ ! -f "${ANDROID_HOME}/build-tools/28.0.3/dx" ] && error "can't find 'dx' binary in \"${ANDROID_HOME}/build-tools/28.0.3\"!"
 	[ ! -z "${2}" ] && local dx_extra_arg="--min-sdk-version=${2}"
@@ -197,7 +196,6 @@ dalvikize_jar () {
 	else
 		error "can't find input file \"${1}\""
 	fi
-
 }
 
 show_help () {
