@@ -187,7 +187,7 @@ check_fake_package_signature () {
 	# self patched ROM: only services.jar patched
 
 	# check framework-res.apk for the patch
-	unzip -oq /system/framework/framework-res.apk AndroidManifest.xml -d "${TMPDIR}/sigcheck" \
+	unzip -oq /system/framework/framework-res.apk -d "${TMPDIR}/sigcheck" \
 		|| error "failed to unpack framework-res.apk"
 
 	if grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/AndroidManifest.xml; then
@@ -201,7 +201,7 @@ check_fake_package_signature () {
 	fi
 
 	# check services.jar for the patch
-	unzip -oq /system/framework/services.jar *.dex -d "${TMPDIR}/sigcheck" \
+	unzip -oq /system/framework/services.jar -d "${TMPDIR}/sigcheck" \
 		|| error "failed to unpack services.jar"
 
 	if grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/*.dex; then
