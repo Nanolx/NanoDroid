@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 22.7 (in-dev)
+## 22.7.20200829 "[The Velvet Machine](https://nealacree.bandcamp.com/album/the-velvet-machine)"
 
 ### Important Note
 
@@ -146,7 +146,7 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
   * Simple Gallery (6.15.2)
   * SmartPack Kernel Manager (12.8)
   * Termux (0.96)
-  * Tor Browser (68.10.1)
+  * Tor Browser (68.12.0)
   * Twidere (4.1.4)
 
 * manual

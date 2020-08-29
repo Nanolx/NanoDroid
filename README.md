@@ -60,7 +60,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 22.6.20200208 "[La Sirena](https://memory-alpha.fandom.com/wiki/La_Sirena)"
+* Stable: 22.7.20200829 "[The Velvet Machine](https://nealacree.bandcamp.com/album/the-velvet-machine)"
 * Beta: ---
 
 ## Downloads
