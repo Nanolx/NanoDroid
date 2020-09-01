@@ -1343,11 +1343,15 @@ install_initd () {
 		fi
 
 		mkdir -p "${INIT_BASE}"
-		cp "${INSTALLER}/system/etc/init.d"/* "${INIT_BASE}/"
-		set_perm_bin "${INIT_BASE}"
 
-		for init in ${nanodroid_init}; do
-			installinfo_add "/system/etc/init.d/${init}"
+		for script in ${nanodroid_init}; do
+			if [ -f "${INSTALLER}/system/etc/init.d/${script}" ]; then
+				cp "${INSTALLER}/system/etc/init.d/${script}" "${INIT_BASE}/"
+				set_perm_bin "${INIT_BASE}/${script}"
+				installinfo_add "/system/etc/init.d/${init}"
+			else
+				ui_print " -- ${script} is not a known init script"
+			fi
 		done
 	else	print_info " << without init scripts"
 	fi
