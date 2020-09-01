@@ -1120,8 +1120,14 @@ install_microg () {
 		create_privapp_permissions_whitelist GmsCore
 
 		nanodroid_install_file etc/permissions/features.xml
-		nanodroid_install_file etc/default-permissions/microg-permissions.xml
 		nanodroid_install_file etc/sysconfig/microg-a5k.xml
+
+		# android.permission.ACCESS_BACKGROUND_LOCATION only on SDK 29+
+		if [ "${SDK_VERSION}" -lt 29 ]; then
+			sed -e '/android.permission.ACCESS_BACKGROUND_LOCATION/d' \
+			-i "${INSTALLER}/system/etc/default-permissions/microg-permissions.xml"
+		fi
+		nanodroid_install_file etc/default-permissions/microg-permissions.xml
 
 	else	print_info " << without microG"
 	fi
