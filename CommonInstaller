@@ -1323,7 +1323,11 @@ install_shell_utils () {
 		print_info " << with Shell Utilities"
 
 		for binary in ${nanodroid_utils}; do
-			nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
+			if [ -f "${INSTALLER}/system/xbin/${binary}.${BIN_ARCH}" ]; then
+				nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
+			else
+				ui_print " -- ${binary} is not a known shell util"
+			fi
 		done
 	else	print_info " << without Shell Utilities"
 	fi
