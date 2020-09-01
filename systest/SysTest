@@ -6,7 +6,7 @@
 #
 ##########################################################################################
 
-VERSION=22.7.20200829
+VERSION=22.8.20200901
 TMPDIR=/dev/tmp
 LOGFILE="/data/media/0/nanodroid_logs/NanoDroid-SysTest-$(date +%Y%m%d-%H.%M.%S).log"
 APEX_LD=/system

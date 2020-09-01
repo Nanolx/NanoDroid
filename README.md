@@ -60,7 +60,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Current Release
 
-* Stable: 22.7.20200829 "[The Velvet Machine](https://nealacree.bandcamp.com/album/the-velvet-machine)"
+* Stable: 22.8.20200901 "[The Beauty And The Bug]"
 * Beta: ---
 
 ## Downloads
