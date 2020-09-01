@@ -1,5 +1,25 @@
 # ChangeLog
 
+## 22.8.20200901 "[The Beauty And The Bug]"
+
+### Bug Fixes
+
+* CommonInstaller
+  * fix flashing when Magisk is not installed (System Mode)
+  * fix `nanodroid_init` setup variable not being respected
+  * fix installation failure when configuration files have Windows CRLF linefeeds instead of Unix LF linefeeds
+  * typos in `nanodroid_init` setup variable will now cause a warning instead of aborting installation
+  * typos in `nanodroid_utils` setup variable will now cause a warning instead of aborting installation
+
+* SetupWizard
+  * fix crash due malfored `aroma-config`
+
+### General Changes
+
+* Full, microG packages
+  * grant `android.permission.ACCESS_BACKGROUND_LOCATION` permisson to microG on SDK version 29 (Android 10) or newer
+
+
 ## 22.7.20200829 "[The Velvet Machine](https://nealacree.bandcamp.com/album/the-velvet-machine)"
 
 ### Important Note
