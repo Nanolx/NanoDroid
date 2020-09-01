@@ -404,18 +404,18 @@ detect_mode () {
 			MODE_DETECT=detected
 			MODE=SYSTEM
 
-			[ -f /data/adb/magisk/util_functions.sh ] && \
-				. /data/adb/magisk/util_functions.sh || \
-				error "Could not load Magisk util_functions.sh"
+			if [ -f /data/adb/magisk/util_functions.sh ]; then
+				. /data/adb/magisk/util_functions.sh
 
-			if [ ${MAGISK_VER_CODE} -ge 19000 ]; then
-				MODE=MAGISK
-			else
-				print_info " "
-				print_info "Magisk 19.0 or newer is required!"
-				print_info "falling back to /system installation!"
-				print_info " "
-				MODE=SYSTEM
+				if [ ${MAGISK_VER_CODE} -ge 19000 ]; then
+					MODE=MAGISK
+				else
+					print_info " "
+					print_info "Magisk 19.0 or newer is required!"
+					print_info "falling back to /system installation!"
+					print_info " "
+					MODE=SYSTEM
+				fi
 			fi
 		;;
 	esac
