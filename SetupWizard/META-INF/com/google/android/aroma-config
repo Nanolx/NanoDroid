@@ -105,8 +105,7 @@ selectbox(
 	"Aurora Store",		"Install alternative Aurora Store",			0,	#-- selected.1 = 3
 	"Fake Store",		"Install Fake Store only",				0,	#-- selected.1 = 4
 	"Aurora + Fake Store",	"Install alternative Aurora Store (and Fake Store)",	1,	#-- selected.1 = 5
-	"PLay + Aurora Store", "Install both Play Store and Aurora Store",		0,	#-- selected.1 = 6
-
+	"PLay + Aurora Store", "Install both Play Store and Aurora Store",		0	#-- selected.1 = 6
 );
 
 checkbox(
