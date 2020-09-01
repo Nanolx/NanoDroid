@@ -253,6 +253,7 @@ get_msc_info () {
 		*70-nanodroidpatcher.sh* ) local msc_type="NanoDroid Framework Patcher addon.d" ;;
 		*org.spoofing.apk*) local msc_type="NanoDroid Framework Patcher spoofing info provider" ;;
 		*patcher*update*  ) local msc_type="NanoDroid Framework Patcher TWRP invoker" ;;
+		*patcher*.prop*      ) local msc_type="NanoDroid Framework Patcher Module Module properties" ;;
 
 		*SetupWizard*update*) local msc_type="NanoDroid SetupWizard AROMA invoker" ;;
 		*SetupWizard*aroma*) local msc_type="NanoDroid SetupWizard AROMA configuration" ;;
