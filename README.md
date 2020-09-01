@@ -72,12 +72,6 @@ On Nanolx the latest stable and current beta releases are available, no previous
 * Stable Downloads [> Nanolx](https://downloads.nanolx.org/NanoDroid/Stable)
 * Beta Downloads [> Nanolx](https://downloads.nanolx.org/NanoDroid/Beta)
 
-### Archive Mirror
-
-On AndroidFileHost all stable releases are available.
-
-* Stable Downloads [> Androidfilehost](https://androidfilehost.com/?w=files&flid=198483)
-
 ### SHA256 Checksum and GPG Signature
 
 Since version 18.3.1 all releases hosted on nanolx.org contain a SHA256 checksum and GPG signature to check their validity. AFH does provide the SHA256 checksum on the downloads summary page, but does not allow to upload a GPG signature.
