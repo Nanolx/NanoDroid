@@ -1831,6 +1831,9 @@ set_prop () {
 
 # check whether '.nanodroid-setup' has all required entries
 check_cfg_setup () {
+	# see https://gitlab.com/Nanolx/NanoDroid/-/issues/147
+	dos2unix "${cfg_setup}" &>/dev/null
+
 	source "${cfg_setup}"
 
 	[ -z "${nanodroid_fdroid}" ] && set_prop nanodroid_fdroid 1
@@ -1932,6 +1935,9 @@ check_cfg_setup () {
 
 # check whether '.nanodroid-apps' is up to date
 check_cfg_apps () {
+	# see https://gitlab.com/Nanolx/NanoDroid/-/issues/147
+	dos2unix "${cfg_apps}" &>/dev/null
+
 	# <= 16.3 has KeePass DX instead of KeePassDroid, migrate
 	grep -q KeePassDroid "${cfg_apps}" && sed -e 's/KeePassDroid/KeePassDX/g' -i "${cfg_apps}"
 
@@ -1981,6 +1987,9 @@ check_cfg_apps () {
 
 # check whether '.nanodroid-overlay' is up to date
 check_cfg_overlay () {
+	# see https://gitlab.com/Nanolx/NanoDroid/-/issues/147
+	dos2unix "${cfg_overlay}" &>/dev/null
+
 	# 22.0 flagged the following for overlay creation which caused issues
 	grep -q "^GmsCore$" "${cfg_overlay}" && sed '/^GmsCore$/d' -i "${cfg_overlay}"
 	grep -q "^GsfProxy$" "${cfg_overlay}" && sed '/^GsfProxy$/d' -i "${cfg_overlay}"
