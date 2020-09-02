@@ -4,6 +4,7 @@
 perm_fake="android.permission.FAKE_PACKAGE_SIGNATURE"
 perm_floc="android.permission.ACCESS_FINE_LOCATION"
 perm_cloc="android.permission.ACCESS_COARSE_LOCATION"
+perm_bloc="android.permission.ACCESS_BACKGROUND_LOCATION"
 perm_calr="android.permission.READ_CALENDAR"
 perm_calw="android.permission.WRITE_CALENDAR"
 perm_conr="android.permission.READ_CONTACTS"
@@ -58,6 +59,8 @@ done
 for app in ${microG} ${nlpIchnaea} ${nlpDejavu} ${nlpApple}; do
 	permissions ${app} ${perm_floc}
 done
+
+permissions ${microG} ${perm_bloc}
 
 # Google Calendar Sync
 permissions ${GCalSync} ${perm_calr}
