@@ -1,5 +1,23 @@
 # ChangeLog
 
+## 22.9 in-dev "[Tiefseequappe]"
+
+### General Changes
+
+* SetupWizard
+  * removed - AROMA works unreliably, not working properly on many devices, not working at all on x86/x86_64
+
+* NanoDroid-Perm Script
+  * running `nanodroid-perm`, respectively `npem` will now grant `android.permission.ACCESS_BACKGROUND_LOCATION` to microG
+
+### Updates
+
+* automatic
+  * Bromite System WebView (85.0.4183.94)
+  * KeePassDX (2.8.3)
+  * OAndBackupX (3.1.0)
+  * Privacy Browser (3.5.1)
+
 ## 22.8.20200901 "[The Beauty And The Bug]"
 
 ### Bug Fixes
