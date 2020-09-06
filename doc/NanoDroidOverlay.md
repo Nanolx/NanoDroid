@@ -55,8 +55,6 @@ on your device, in one of the following directories
 
 See the [default settings](.nanodroid-overlay).
 
-Alternatively you can also use the NanoDroid Setup Wizard package instead of manual creation of the configuration file.
-
 The syntax is pretty simple:
 
 * one app per line

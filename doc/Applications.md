@@ -49,8 +49,6 @@ on your device, in one of the following directories
 
 All applications listed in that file will be installed. See the [default settings](.nanodroid-apps), which are used when no `.nanodroid-apps` configuration file was found. 
 
-Alternatively you can also use the Setup Wizard instead of manual creation of the configuration file (if you've got an arm/arm64 device).
-
 The syntax is pretty simple:
 
 * one app per line

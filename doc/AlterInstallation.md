@@ -73,7 +73,7 @@ nanodroid_forcesystem=0
 
 where `1` means `on` and `0` means `off`. If no `.nanodroid-setup` is found, the [default settings](.nanodroid-setup) will be used (equals to the example above), if your `.nanodroid-setup` file exists, but is missing entries, those entries will be added, using the default values.
 
-Alternatively you can also use the NanoDroid-SetupWizard package instead of manual creation of the configuration file.
+See the [default settings](.nanodroid-setup).
 
 ## Detailed Description
 

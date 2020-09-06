@@ -105,7 +105,6 @@ You can create snapshots from this repository.
      * `build-package fdroid` to create the F-Droid only package
      * `build-package patcher` to create the on-device framework-patcher package
      * `build-package uninstaller` to create the uninstaller package
-     * `build-package setupwizard` to create the Setup Wizard package
      * `build-package bromitewebview` to create the Bromite WebView package
      * `build-package osmand` for the OpenStreetMap (OsmAnd) package
      * `build-package systest` to create the SysTest package
@@ -285,13 +284,6 @@ The microG and F-Droid packages however can be installed in parallel, as they co
 
 Extra packages, flashing through TWRP required (flashing through Magisk Manager is not supported).
 
-* **NanoDroid-setupwizard**: includes
-  * **AROMA** based Setup Wizard to create the configuration files
-  * user can choose where to store the configuration files
-     * `/data/media/0` (fallback)
-     * `/external_sd`
-     * `/data`
-  * **NOTE:** AROMA only works on `arm` and `arm64`, if your device is `x86` or `x86_64`, it won't work
 * **NanoDroid-uninstaller**: includes
   * uninstalls *all* NanoDroid Magisk Modules
   * uninstalls NanoDroid installed in System Mode
@@ -486,17 +478,16 @@ NanoDroid includes a variety of OpenSource applications, check full [> list](doc
 
 ## Installation
 
-### Alter Installation
-
-NanoDroid supports altering the installation settings to a wide degree.
-
-Full [> Details](doc/AlterInstallation.md) on altering installation manually, or use the Setup Wizard (if you've got an arm/arm64 device).
-
 ### Installation Process
 
 #### NanoDroid
 
-* Use Setup Wizard to create configuration files (if you've got an arm/arm64 device), or create manually (see above)
+* Create the setup configuration, if you don't want to stick with the default setup
+   * see [> Alter Installation](doc/AlterInstallation.md) for configuration settings (all packages)
+   * see [> Applications](doc/Applications.md) for which appliations to install (only Full package)
+   * see [> NanoDroid-Overlay](doc/NanoDroid-Overlay.md) for which applications to (pseudo-)debloat (only Full and microG packages)
+      * note: all GApps that conflict with microG will be (pseudo-)debloated regardless of you choice here
+      * see [> GApps Removal List](doc/GAppsRemoval.md) to see which GApps are auto-destroyed
 * Download pre-built zip or create one from this repository
 
 ##### Installing from scratch

@@ -255,10 +255,6 @@ get_msc_info () {
 		*patcher*update*  ) local msc_type="NanoDroid Framework Patcher TWRP invoker" ;;
 		*patcher*.prop*      ) local msc_type="NanoDroid Framework Patcher Module Module properties" ;;
 
-		*SetupWizard*update*) local msc_type="NanoDroid SetupWizard AROMA invoker" ;;
-		*SetupWizard*aroma*) local msc_type="NanoDroid SetupWizard AROMA configuration" ;;
-		*SetupWizard/nano*) local msc_type="NanoDroid SetupWizard Worker" ;;
-
 		*SysTest*         ) local msc_type="NanoDroid System Tester" ;;
 		*systest*update*  ) local msc_type="NanoDroid System Tester TWRP invoker" ;;
 
@@ -326,7 +322,6 @@ get_dst_info () {
 			*BromiteWebView*.zip* ) local dst_pkg="NanoDroid BromiteWebView" ;;
 			*OsmAnd*.zip*         ) local dst_pkg="NanoDroid OsmAnd" ;;
 			*patcher*.zip*        ) local dst_pkg="NanoDroid Framework Patcher" ;;
-			*setupwizard*.zip*    ) local dst_pkg="NanoDroid SetupWizard" ;;
 			*systest*.zip*        ) local dst_pkg="NanoDroid System Tester" ;;
 			*uninstaller*.zip*    ) local dst_pkg="NanoDroid Uninstaller" ;;
 			*Google*.zip*         ) local dst_pkg="NanoDroid Google" ;;

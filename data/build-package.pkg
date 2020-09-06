@@ -95,21 +95,6 @@ mk_pkg_patcher () {
 	progress $!
 }
 
-create_setupwizard_package() {
-	ZIP="NanoDroid-setupwizard-${VERSION}.zip"
-
-	print_package "Setup Wizard"
-
-	zip_add SetupWizard
-
-	sum_sign_package "${ZIP}"
-}
-
-mk_pkg_setupwizard () {
-	create_setupwizard_package &
-	progress $!
-}
-
 create_uninstaller_package() {
 	ZIP="NanoDroid-uninstaller-${VERSION}.zip"
 

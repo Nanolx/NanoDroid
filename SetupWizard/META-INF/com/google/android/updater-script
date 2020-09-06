@@ -1,5 +1,0 @@
-set_progress(0.0);
-package_extract_file("nanodroid-setup", "/tmp/nanodroid-setup");
-set_perm(0, 0, 0777, "/tmp/nanodroid-setup");
-run_program("/tmp/nanodroid-setup");
-set_progress(1.0);

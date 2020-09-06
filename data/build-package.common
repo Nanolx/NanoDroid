@@ -156,7 +156,6 @@ increase_version_number () {
 
 	for file in "CommonAddon" "CommonInstaller" \
 		"systest/SysTest" "patcher/CommonPatcher" \
-		"SetupWizard/nanodroid-setup" \
 		"uninstaller/META-INF/com/google/android/update-binary"; do
 		sed -e "s/^VERSION=.*/VERSION=${1}.${date}/" -i "${CWD}/${file}"
 	done
@@ -168,11 +167,6 @@ increase_version_number () {
 		sed -e "s/version=.*/version=v${1}.${date}/" -i \
 			"${CWD}/${module}/module.prop"
 	done
-
-	sed -e "s/rom_version\",.*/rom_version\",	\"${1}\")\;/" -i \
-		"${CWD}/SetupWizard/META-INF/com/google/android/aroma-config"
-	sed -e "s/rom_date\",.*/rom_date\",	\"${date}\")\;/" -i \
-		"${CWD}/SetupWizard/META-INF/com/google/android/aroma-config"
 }
 
 increase_module_version () {
@@ -223,7 +217,6 @@ create zip files:
 	fdroid			| create FDroid package zip from repo
 	patcher			| create framework patcher zip from repo
 	uninstaller		| create uninstaller zip from repo
-	setupwizard		| create SetupWizard zip from repo
 	bromitewebview		| create Bromite WebView zip from repo
 	osmand			| create OsmAnd package zip from repo
 	google			| create Google package zip from repo

@@ -71,10 +71,6 @@ for opt in ${@}; do
 			mk_pkg_uninstaller
 		;;
 
-		setupwizard )
-			mk_pkg_setupwizard
-		;;
-
 		bromitewebview )
 			check_nanodroid || error "run 'build-package pull' first!"
 			mk_pkg_bromite_webview
@@ -101,7 +97,6 @@ for opt in ${@}; do
 			mk_pkg_fdroid
 			mk_pkg_patcher
 			mk_pkg_uninstaller
-			mk_pkg_setupwizard
 			mk_pkg_bromite_webview
 			mk_pkg_osmand
 			mk_pkg_systest
