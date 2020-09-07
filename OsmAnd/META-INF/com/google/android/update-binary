@@ -30,7 +30,6 @@ detect_arch
 setup_busybox
 
 get_cfg_setup
-get_cfg_overlay
 
 detect_mode
 set_progress 0.2
