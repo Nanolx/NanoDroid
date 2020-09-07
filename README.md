@@ -41,7 +41,6 @@ Table of Contents
          * [F-Droid](#f-droid)
          * [Applications](#applications)
       * [Installation](#installation)
-         * [Alter Installation](#alter-installation)
          * [Installation Process](#installation-process)
             * [NanoDroid](#nanodroid-2)
                * [Installing from scratch](#installing-from-scratch)
