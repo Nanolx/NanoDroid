@@ -338,12 +338,12 @@ case ${opt} in
 	-r | --remove )		overrides_remove "${@}" ;;
 	-s | --show )		overrides_list_non ;;
 	-c | --clear )		overrides_clear ;;
-	-x | --create )		overrides_add "$(cat "${config}")" ;;
+	-x | --create )		overrides_add "$(grep -v '^#' "${config}")" ;;
 	-g | --genconfig )	overrides_genconfig ;;
 
 	-u | --update )
 		overrides_clear
-		overrides_add "$(cat "${config}")"
+		overrides_add "$(grep -v '^#' "${config}")"
 	;;
 
 	* ) show_help ;;
