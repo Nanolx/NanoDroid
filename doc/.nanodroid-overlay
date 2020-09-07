@@ -1,3 +1,24 @@
+##########################################################################################
+#
+# NanoDroid-Overlay configuration file
+#
+# All applications listed here will be (pseudo-)debloated
+#
+# Fileformat:
+# - one app per line
+# - name must be *exactly* (case sensitive!) like *directory* name of system app
+#    - *not* application name or ID!
+# - commented out lines (starting with #) will be ignored
+#
+# Search paths:
+# - /system/app
+# - /system/priv-app
+# - /system/reserve
+# - /system/product/app
+# - /system/product/priv-app
+#
+##########################################################################################
+
 BasicDreams
 Browser
 Calendar
