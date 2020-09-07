@@ -15,31 +15,6 @@ Magisk allows for apps to be magically removed upon runtime, they don't get actu
 
 In System Mode apps can are moved to `/data/media/0/nanodroid_backups/` or restored from there.
 
-## Default Settings
-
-The following applications are debloated by default
-
-* Basic Dreams
-* Calendar
-* CM File Manager
-* crDroid Filemanager and Music Player
-* Eleven, Phonograph (Audio Player)
-* E-Mail + Exchange2
-* Browser, Gello, Slimperience, Via Browser, Jelly (Browser)
-* PhotoTable
-* Sound Recorder, Recorder
-* messaging (SMS & MMS)
-* Wallpaper, WallpaperPickerGoogle (Google Wallpaper application)
-* Wallpaper Backup
-* mGerrit
-* FM Radio
-* Gallery2
-* OmniSwitch
-* Screencast
-* Snap, Snapdragon Camera (Camera)
-* Resurrection Remix Statistics
-* Sim Toolkit
-
 ### Alter the list of pseudo-debloated applications
 
 You can pseudo-debloat applications by adding them to configuration file
@@ -53,12 +28,21 @@ on your device, in one of the following directories
 * `/external_sd` (TWRP path to SD Card (if any))
 * `/data` (fallabck)
 
-See the [default settings](.nanodroid-overlay).
+See the [default settings](.nanodroid-overlay) (contains instructions aswell).
 
 The syntax is pretty simple:
 
-* one app per line
-* name must be an exact match
+* one app per line (no leading spaces)
+* name must be an exact match of the **directory** of the app, **not** the app name or app id
+* commented out lines (starting with #) are ignored
+
+The following paths are searched for matching apps:
+
+* `/system/app`
+* `/system/priv-app`
+* `/system/reserve`
+* `/system/product/app`
+* `/system/product/priv-app`
 
 After you've made your changes, issue the following command on your device, either using `adb shell` or **Termux** as root:
 
@@ -111,3 +95,28 @@ remove existing Overlays
 `-g`, `--genconfig`
 
 (re-)create config file from existing Overlays
+
+## Default Settings
+
+The following applications are debloated by default
+
+* Basic Dreams
+* Calendar
+* CM File Manager
+* crDroid Filemanager and Music Player
+* Eleven, Phonograph (Audio Player)
+* E-Mail + Exchange2
+* Browser, Gello, Slimperience, Via Browser, Jelly (Browser)
+* PhotoTable
+* Sound Recorder, Recorder
+* messaging (SMS & MMS)
+* Wallpaper, WallpaperPickerGoogle (Google Wallpaper application)
+* Wallpaper Backup
+* mGerrit
+* FM Radio
+* Gallery2
+* OmniSwitch
+* Screencast
+* Snap, Snapdragon Camera (Camera)
+* Resurrection Remix Statistics
+* Sim Toolkit
