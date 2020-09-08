@@ -6,11 +6,11 @@ The applications provided by NanoDroid will be
 * magic-mounted as system applications when installed as Magisk Module
 * directly installed as system applications when installed in System Mode
 
-Full list of provided applications
-
+Note:
   * the name inside `{}` brackets is the one you need to put in your `.nanodroid-apps` configuration file, if you want to install that app
      * it must be an **exact** match (case sensitive!)
 
+Full list of included applications:
 * Alarmio (Alarm Clock) {Alarmio} [> F-Droid](https://f-droid.org/packages/me.jfenn.alarmio)
 * Amaze (File Manager) {Amaze} [> F-Droid](https://f-droid.org/packages/com.amaze.filemanager)
 * AnySoftKeyboard {AnysoftKeyboard} [> F-Droid](https://f-droid.org/packages/com.menny.android.anysoftkeyboard)
