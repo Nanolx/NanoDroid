@@ -487,6 +487,14 @@ NanoDroid includes a variety of OpenSource applications, check full [> list](doc
    * see [> NanoDroid-Overlay](doc/NanoDroidOverlay.md) for which applications to (pseudo-)debloat (only Full and microG packages)
       * note: all GApps that conflict with microG will be (pseudo-)debloated regardless of your choice here
       * see [> GApps Removal List](doc/GAppsRemoval.md) to see which GApps are auto-destroyed
+   * the above links contain information on how to create the configuration files and links to the default configuration files
+      * so you can use those to edit the configuration to your liking instead of starting from scratch
+          * alternatively you can grab the configuration files from your downloaded (or created) zip and edit those
+   * your configuration files can be the placed in the following location on your device:
+      * `/data/media/0` (internal storage)
+      * `/external_sd` (TWRP path to SD Card (if any))
+      * directory containing the zip file
+      * `/data` (fallback)
 * Download pre-built zip or create one from this repository
 
 ##### Installing from scratch
