@@ -7,31 +7,35 @@ The applications provided by NanoDroid will be
 * directly installed as system applications when installed in System Mode
 
 Full list of provided applications
-* Alarmio (Alarm Clock) [> F-Droid](https://f-droid.org/packages/me.jfenn.alarmio)
-* Amaze (File Manager) [> F-Droid](https://f-droid.org/packages/com.amaze.filemanager)
-* AnySoftKeyboard [> F-Droid](https://f-droid.org/packages/com.menny.android.anysoftkeyboard)
-* Blokada [> F-Droid](https://f-droid.org/en/packages/org.blokada.alarm)
-* Frost (Facebook client) [> F-Droid](https://f-droid.org/en/packages/com.pitchedapps.frost)
-* Hacker's Keyboard [> F-Droid](https://f-droid.org/de/packages/org.pocketworkstation.pckeyboard)
-* K-9 Mail [> F-Droid](https://f-droid.org/packages/com.fsck.k9)
-* KeyPassDX (Password Safe) [> F-Droid](https://f-droid.org/en/packages/com.kunzisoft.keepass.libre)
-* MPV (Video Player) [> GitHub](https://github.com/mpv-android/mpv-android)
-* New Pipe (YouTube client) [> F-Droid](https://f-droid.org/packages/org.schabi.newpipe)
-* OAndBackupX (App backup and restore) [> F-Droid](https://f-droid.org/de/packages/com.machiav3lli.backup/)
-* Odyssey (Audio player) [> F-Droid](https://f-droid.org/packages/org.gateshipone.odyssey)
-* OpenCamera [> F-Droid](https://f-droid.org/packages/net.sourceforge.opencamera)
-* OpenKeyChain [> F-Droid](https://f-droid.org/packages/org.sufficientlysecure.keychain)
-* OpenLauncher [> F-Droid](https://f-droid.org/packages/com.benny.openlauncher)
-* OpenVPN [> F-Droid](https://f-droid.org/packages/de.blinkt.openvpn)
-* Privacy Browser [> F-Droid](https://f-droid.org/de/packages/com.stoutner.privacybrowser.standard)
-* QKSMS [> F-Droid](https://f-droid.org/packages/com.moez.QKSMS)
-* Simple Calendar Pro [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.calendar.pro)
-* Simple Gallery Pro [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.gallery.pro)
-* SmartPack-Kernel-Manager [> GitHub](https://github.com/SmartPack/SmartPack-Kernel-Manager)
-* Termux [> F-Droid](https://f-droid.org/packages/com.termux)
-* TorBrowser [> Tor](https://www.torproject.org/projects/torbrowser.html.en)
-* Twidere (Twitter client) [> F-Droid](https://f-droid.org/packages/org.mariotaku.twidere)
-* XDA Labs [> XDA](https://forum.xda-developers.com/android/apps-games/labs-t3241866)
+
+  * the name inside `{}` brackets is the one you need to put in your `.nanodroid-apps` configuration file, if you want to install that app
+     * it must be an **exact** match (case sensitive!)
+
+* Alarmio (Alarm Clock) {Alarmio} [> F-Droid](https://f-droid.org/packages/me.jfenn.alarmio)
+* Amaze (File Manager) {Amaze} [> F-Droid](https://f-droid.org/packages/com.amaze.filemanager)
+* AnySoftKeyboard {AnysoftKeyboard} [> F-Droid](https://f-droid.org/packages/com.menny.android.anysoftkeyboard)
+* Blokada {Blokada} [> F-Droid](https://f-droid.org/en/packages/org.blokada.alarm)
+* Frost (Facebook client) {Frost} [> F-Droid](https://f-droid.org/en/packages/com.pitchedapps.frost)
+* Hacker's Keyboard {HackersKeyboard} [> F-Droid](https://f-droid.org/de/packages/org.pocketworkstation.pckeyboard)
+* K-9 Mail {K9Mail} [> F-Droid](https://f-droid.org/packages/com.fsck.k9)
+* KeyPassDX (Password Safe) {KeePassDX} [> F-Droid](https://f-droid.org/en/packages/com.kunzisoft.keepass.libre)
+* MPV (Video Player) {MPV} [> GitHub](https://github.com/mpv-android/mpv-android)
+* New Pipe (YouTube client) {NewPipe} [> F-Droid](https://f-droid.org/packages/org.schabi.newpipe)
+* OAndBackupX (App backup and restore) {OAndBackupX} [> F-Droid](https://f-droid.org/de/packages/com.machiav3lli.backup/)
+* Odyssey (Audio player) {Odyssey} [> F-Droid](https://f-droid.org/packages/org.gateshipone.odyssey)
+* OpenCamera {OpenCamera} [> F-Droid](https://f-droid.org/packages/net.sourceforge.opencamera)
+* OpenKeyChain (GPG for use with K-9 Mail and others) {OpenKeyChain} [> F-Droid](https://f-droid.org/packages/org.sufficientlysecure.keychain)
+* OpenLauncher {OpenLauncher} [> F-Droid](https://f-droid.org/packages/com.benny.openlauncher)
+* OpenVPN {OpenVPN} [> F-Droid](https://f-droid.org/packages/de.blinkt.openvpn)
+* Privacy Browser {PrivacyBrowser} [> F-Droid](https://f-droid.org/de/packages/com.stoutner.privacybrowser.standard)
+* QKSMS {QKSMS} [> F-Droid](https://f-droid.org/packages/com.moez.QKSMS)
+* Simple Calendar Pro {SimpleCalendar} [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.calendar.pro)
+* Simple Gallery Pro {SimpleGallery} [> F-Droid](https://f-droid.org/packages/com.simplemobiletools.gallery.pro)
+* SmartPack-Kernel-Manager {SmartPackKernelManager} [> GitHub](https://github.com/SmartPack/SmartPack-Kernel-Manager)
+* Termux (Terminal Emulator) {Termux} [> F-Droid](https://f-droid.org/packages/com.termux)
+* TorBrowser {TorBrowser} [> Tor](https://www.torproject.org/projects/torbrowser.html.en)
+* Twidere (Twitter client) {Twidere} [> F-Droid](https://f-droid.org/packages/org.mariotaku.twidere)
+* XDA Labs (XDA Forum and App Store) {XDA Labs} [> XDA](https://forum.xda-developers.com/android/apps-games/labs-t3241866)
   * source not (yet) available
 
 ## Alter provided Applications
@@ -47,11 +51,13 @@ on your device, in one of the following directories
 * directory containing the zip file
 * `/data` (fallback)
 
-All applications listed in that file will be installed. See the [default settings](.nanodroid-apps), which are used when no `.nanodroid-apps` configuration file was found. 
+All applications listed in that file will be installed. See the [default configuration](.nanodroid-apps), which is used when no `.nanodroid-apps` configuration file was found.
 
 The syntax is pretty simple:
 
 * one app per line
-* name must be an exact match
+* name must be an exact match (case sensitive!)
+  * see names in `{}` brackets above
+* commented out lines (starting with #) will be ignored
 
 applications managed by other setup variables (F-Droid, microG, PlayStore) are not effected by this file.
