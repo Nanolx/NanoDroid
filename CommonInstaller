@@ -1201,7 +1201,7 @@ install_apps () {
 		print_info " << with applications"
 		APP_STRING=" <<>"
 
-		INSTALL_APPS=$(cat "${cfg_apps}")
+		INSTALL_APPS=$(grep -v "^#" "${cfg_apps}")
 		for app in ${INSTALL_APPS}; do
 			if [[ -d /system/app/${app} && ! -d ${MAGISKBASE}/modules/${MODID}/system/app/${app} ]]; then
 				print_info "   ++ app: ${app} already provided by ROM"
