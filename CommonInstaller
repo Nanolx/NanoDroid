@@ -1201,7 +1201,7 @@ install_apps () {
 		print_info " << with applications"
 		APP_STRING=" <<>"
 
-		grep -v "^#" "${cfg_apps}" | while read app; do
+		grep -E -v '^(#|^[[:space:]]*$)' "${cfg_apps}" | while read app; do
 			if [ -d "${INSTALLER}/system/app/${app}" ]; then
 				print_info "   ++ ${app}"
 				nanodroid_install_apk ${app}
