@@ -1,7 +1,54 @@
+##########################################################################################
+#
+# NanoDroid-Setup configuration file
+#
+# General NanoDroid installation settings
+#
+# Fileformat:
+# - one setting per line
+# - syntax is SETTING=VALUE
+# - missing entries will be set to default value
+#    - https://gitlab.com/Nanolx/NanoDroid/-/blob/master/doc/AlterInstallation.md
+# - commented out lines (starting with #) will be ignored
+#
+##########################################################################################
+
+# nanodroid_microg:	whether to install microG
+# supported packages:	Full, microG
+# supported values:
+#	0 = don't install microG at all (Note: does not effect NanoDroid-microG package)
+#	1 = install microG GmsCore, GsfProxy and DroidGuard Helper and Nominatim Geocoder Backend
+#	2 = install microG GmsCore and Nominatim Geocoder Backend only
 nanodroid_microg=1
+
+# nanodroid_fdroid:	whether to install F-Droid
+# supported packages:	Full, F-Droid
+# supported values:
+#	0 = don't install F-Droid at all (Note: does not effect NanoDroid-FDroid package)
+#	1 = install official F-Droid client (alongside priviledged extension)
+#	2 = install unofficial Aurora F-Droid client (alongside Aurora Services addon)
+#	3 = install both official and Aurora F-Droid clients (alongside their addons)
 nanodroid_fdroid=1
+
+# nanodroid_apps:	whether to install appliations
+# supported packages:	Full
+# supported values:
+#	0 = don't install applications
+#	1 = install applications
+# see:	https://gitlab.com/Nanolx/NanoDroid/-/blob/master/doc/Applications.md
 nanodroid_apps=1
+
+# nanodroid_play:	what app store to install
+# supported packages:	Full, microG
+# supported values:
+#	00 = install no app store
+#	10 = install Google Play (patched with microG (in-)app-purchase support)
+#	01 = install Fake Store
+#	20 = install Aurora Store (alongside Aurora Services addon)
+#	21 = install Aurora Store (alongside Aurora Services addon) and Fake Store
+#	30 = install Google Play (patched with microG (in-)app-purchase support) and Aurora Store (alongside Aurora Services addon)
 nanodroid_play=21
+
 nanodroid_overlay=1
 nanodroid_mapsv1=1
 nanodroid_init="10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"

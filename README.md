@@ -493,6 +493,7 @@ NanoDroid includes a variety of OpenSource applications, check full [> list](doc
    * your configuration files can be the placed in the following location on your device:
       * `/data/media/0` (internal storage)
       * `/external_sd` (TWRP path to SD Card (if any))
+      * `/sdcard1` (internal storage (ORANGEFOX Recovery only!))
       * directory containing the zip file
       * `/data` (fallback)
 * Download pre-built zip or create one from this repository

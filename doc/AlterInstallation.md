@@ -14,72 +14,19 @@ on your device, in one of the following directories
 * directory containing the zip file
 * `/data` (fallback)
 
-create it manually with the following content for the **full** package
-
-```
-nanodroid_microg=1
-nanodroid_fdroid=1
-nanodroid_apps=1
-nanodroid_play=21
-nanodroid_overlay=1
-nanodroid_mapsv1=1
-nanodroid_init="10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"
-nanodroid_forcesystem=0
-nanodroid_nlpbackend=1000
-nanodroid_bash=1
-nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"
-```
-
-the **microG** package supports the following options
-
-Notes:
-* if `nanodroid_microg=0` it will be silently treated as `1`
-  * not installing microG when flashing the microG package doesn't make sense, so
-* if `nanodroid_play=11` or `nanodroid_play=31` it will be silently treated as `10` or `30`
-  * you can't install both Play Store and Fake Store at the same time
-
-```
-nanodroid_play=21
-nanodroid_overlay=0
-nanodroid_mapsv1=1
-nanodroid_forcesystem=0
-nanodroid_nlpbackend=1000
-```
-
-the **F-Droid** package supports the following options
-
-Note:
-* if `nanodroid_fdroid=0` it will be silently treated as `1`
-  * not installing F-Droid when flashing the F-Droid package doesn't make sense, so
-
-```
-nanodroid_fdroid=1
-nanodroid_forcesystem=0
-```
-
-the **Bromite WebView** package supports the following options
-
-```
-nanodroid_forcesystem=0
-```
-
-the **Google** package supports the following options
-
-```
-nanodroid_gsync=0
-nanodroid_swipe=0
-nanodroid_forcesystem=0
-```
-
-where `1` means `on` and `0` means `off`. If no `.nanodroid-setup` is found, the [default settings](.nanodroid-setup) will be used (equals to the example above), if your `.nanodroid-setup` file exists, but is missing entries, those entries will be added, using the default values.
-
-See the [default settings](.nanodroid-setup).
+You can use the [default configuration file](.nanodroid-setup) as a starting point. Below follows the detailed information on what each setting does (also described in the file itself); also which setting is support by what package. If an required entry is missing from your configuration file, the default setting will be added to your configuration file.
 
 ## Detailed Description
 
-`nanodroid_microg=[0|1|2]`
+### nanodroid_microg
 
-whether to provide **microG**
+whether to install **microG**
+
+* supported packages
+  * Full package
+  * microG package
+
+Syntax: `nanodroid_microg=1`, value can be 0, 1 or 2:
 
 * 0 = don't install microG at all (Note: does not effect NanoDroid-microG package)
 * 1 = install microG GmsCore, GsfProxy and DroidGuard Helper and Nominatim Geocoder Backend
@@ -88,40 +35,57 @@ whether to provide **microG**
       * without Push Messaging support through GCM
       * without the ability to pass SafetyNet attestation
 
-`nanodroid_fdroid=[0|1|2|3]`
+### nanodroid_fdroid
 
-whether to provide **F-Droid**
+whether to install **F-Droid**
+
+* supported packages
+  * Full package
+  * F-Droid package
+
+Syntax: `nanodroid_fdroid=1`, value can be 0, 1, 2 or 3:
 
 * 0 = don't install F-Droid at all (Note: does not effect NanoDroid-FDroid package)
-* 1 = install official F-Droid client
-  * alongside priviledged extension
-* 2 = install unofficial Aurora F-Droid client
-  * alongside Aurora Services addon
-* 3 = install both official and Aurora F-Droid clients
-  * alongside their addons
+* 1 = install official F-Droid client (alongside priviledged extension)
+* 2 = install unofficial Aurora F-Droid client (alongside Aurora Services addon)
+* 3 = install both official and Aurora F-Droid clients (alongside their addons)
 
-`nanodroid_apps=[0|1]`
+### nanodroid_apps
 
-whether to provide included applications [> Details](doc/Applications.md)
+whether to install applications
 
-`nanodroid_play=[0|1|2|3][0|1]`
+* supported packages
+  * Full package
 
-what app store to use:
-* 1st item
-  * 0 = No App Store
-  * 1 = Play Store
-  * 2 = Aurora Store
-      * alongside Aurora Services addon
-  * 3 = Play Store and Aurora Store
-      * alongside Aurora Services addon
-* 2nd item
-  * 0 = without Fake Store
-  * 1 = with Fake Store
-       * only if Play Store is not going to be installed
+Syntax: `nanodroid_apps=1`, value can be 0 or 1:
+
+* 0 = don't install applications
+* 1 = install applications
+
+see [> Applications](Applications.md) for detailed information
+
+### nanodroid_play
+
+what app store to install
+
+* supported packages
+  * Full package
+  * microG package
+
+Syntax: `nanodroid_play=21`, this setting is value pair, the first digit declares the app store, the second whether to install Fake store alongside:
+
+* 00 = install no app store
+* 10 = install Google Play (patched with microG (in-)app-purchase support)
+* 01 = install Fake Store
+* 20 = install Aurora Store (alongside Aurora Services addon)
+* 21 = install Aurora Store (alongside Aurora Services addon) and Fake Store
+* 30 = install Google Play (patched with microG (in-)app-purchase support) and Aurora Store (alongside Aurora Services addon)
 
 Note:
 * if `nanodroid_play=11` or  `nanodroid_play=31` it will be silently treated as `10` or `30`
   * you can't install both Play Store and Fake Store at the same time
+
+### nanodroid_overlay
 
 `nanodroid_overlay=[0|1]`
 
