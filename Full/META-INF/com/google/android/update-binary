@@ -4,7 +4,6 @@ umask 022
 OUTFD=${2}
 ZIP=${3}
 
-ZIPDIR=$(dirname "${ZIP}")
 MODID=NanoDroid
 
 mkdir -p /dev/tmp

@@ -1721,7 +1721,6 @@ Installation successful: ${INSTALL_SUCCESS}
 
 ### VALUES ###
 ZIP=${ZIP}
-ZIPDIR=${ZIPDIR}
 TMPDIR=${TMPDIR}
 TMP_LIBDIR=${TMP_LIBDIR}
 INSTALLER=${INSTALLER}
@@ -1822,7 +1821,7 @@ print_info " || ""$(basename ${nanodroid_logfile})"
 ##########################################################################################
 
 # check for configuration files
-config_locations="${STORAGE} /external_sd /sdcard1 ${ZIPDIR} /data"
+config_locations="${STORAGE} /external_sd /sdcard1 /data"
 
 get_config () {
 	config=""
