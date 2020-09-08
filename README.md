@@ -484,7 +484,7 @@ NanoDroid includes a variety of OpenSource applications, check full [> list](doc
 * Create the setup configuration, if you don't want to stick with the default setup
    * see [> Alter Installation](doc/AlterInstallation.md) for configuration settings (all packages)
    * see [> Applications](doc/Applications.md) for which appliations to install (only Full package)
-   * see [> NanoDroid-Overlay](doc/NanoDroid-Overlay.md) for which applications to (pseudo-)debloat (only Full and microG packages)
+   * see [> NanoDroid-Overlay](doc/NanoDroidOverlay.md) for which applications to (pseudo-)debloat (only Full and microG packages)
       * note: all GApps that conflict with microG will be (pseudo-)debloated regardless of your choice here
       * see [> GApps Removal List](doc/GAppsRemoval.md) to see which GApps are auto-destroyed
 * Download pre-built zip or create one from this repository
