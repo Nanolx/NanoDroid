@@ -1,3 +1,17 @@
+##########################################################################################
+#
+# NanoDroid-Apps configuration file
+#
+# All applications listed here will be installed
+#
+# Fileformat:
+# - one app per line
+# - name must be *exactly* (case sensitive!) like given in the NanoDroid documentation
+#    - see: https://gitlab.com/Nanolx/NanoDroid/-/blob/master/doc/Applications.md
+# - commented out lines (starting with #) will be ignored
+#
+##########################################################################################
+
 Alarmio
 Amaze
 AnysoftKeyboard
