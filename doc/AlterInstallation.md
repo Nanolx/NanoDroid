@@ -11,7 +11,6 @@ on your device, in one of the following directories
 * `/data/media/0` (internal storage (TWRP))
 * `/sdcard1` (internal storage (ORANGEFOX))
 * `/external_sd` (TWRP path to SD Card (if any))
-* directory containing the zip file
 * `/data` (fallback)
 
 You can use the [default configuration file](.nanodroid-setup) as a starting point. Below follows the detailed information on what each setting does (also described in the file itself); also which setting is support by what package. If an required entry is missing from your configuration file, the default setting will be added to your configuration file.

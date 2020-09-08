@@ -48,7 +48,6 @@ on your device, in one of the following directories
 
 * `/data/media/0` (internal storage)
 * `/external_sd` (TWRP path to SD Card (if any))
-* directory containing the zip file
 * `/data` (fallback)
 
 All applications listed in that file will be installed. See the [default configuration](.nanodroid-apps), which is used when no `.nanodroid-apps` configuration file was found.
