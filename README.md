@@ -86,8 +86,6 @@ The following applications are custom builds (see [F-Droid Repository](#f-droid-
   * [source](https://github.com/mpv-android/mpv-android)
   * [version code patch](https://nanolx.org/fdroid/mpv.diff)
 
-See the documentation below for more information on those files and what they do.
-
 ## Supported Android Versions
 
 NanoDroid officially supports the following Android versions:
@@ -108,9 +106,7 @@ NanoDroid officially supports the following Android versions:
   * Patcher works if your ROM's services.jar already contains classes.dex
      * [> Deodex Instructions](doc/DeodexServices.md)
 
-earlier versions will never officially be supported (you may still report bugs, though).
-
-Future versions will be officially supported, eventually.
+Earlier versions will never officially be supported (you may still report bugs, though). Future versions will be officially supported, eventually.
 
 ## Recommended Thirdparty Projects
 
@@ -177,7 +173,6 @@ In order to ease updating NanoDroid's custom application builds you can use it's
 ## Details
 
 See the [> Detail information](doc/Details.md) for full details on microG, F-Droid, features and utilities included with NanoDroid.
-
 
 ## Installation
 
