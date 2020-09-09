@@ -1,3 +1,17 @@
+Table of Contents
+=================
+
+   * [NanoDroid-Overlay Script](#nanodroid-overlay-script)
+      * [Purpose](#purpose)
+         * [Pseudo Debloat Feature](#pseudo-debloat-feature)
+         * [Force Debloat Feature](#force-debloat-feature)
+         * [Alter the list of pseudo-debloated applications](#alter-the-list-of-pseudo-debloated-applications)
+      * [Invocation](#invocation)
+      * [Overview](#overview)
+      * [Default Settings](#default-settings)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
 # NanoDroid-Overlay Script
 
 ## Purpose

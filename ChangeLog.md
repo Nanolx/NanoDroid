@@ -10,6 +10,23 @@
 * NanoDroid-Perm Script
   * running `nanodroid-perm`, respectively `npem` will now grant `android.permission.ACCESS_BACKGROUND_LOCATION` to microG
 
+### General Changes
+
+* Installer
+  * drop loading setup files from directory containing the zip (internally `${ZIPDIR}`)
+  * ignore empty and commented out lines in the configuration files (= starting with `#`)
+  * don't load configuration files that aren't required by the package that's going to be flashed
+
+* build-package script
+  * disable `u-patch` for now as we use new patches since 22.7
+
+* Documentation
+  * majorly improved documentation regarding configuring NanoDroid (now there the SetupWizard is gone)
+  * the default configuration files are now more prominently visible in the documentation
+  * the default configuration files are now fully documented inside themselfs
+  * updates and fixes in the documentation
+  * improvements and reorganization of the documentation
+
 ### Updates
 
 * automatic

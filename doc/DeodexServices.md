@@ -1,3 +1,15 @@
+
+Table of Contents
+=================
+
+   * [Deodex services.jar](#deodex-servicesjar)
+      * [Pre-Check](#pre-check)
+      * [Android 9.0 Pie](#android-90-pie)
+      * [VDEX](#vdex)
+      * [ODEX](#odex)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
 # Deodex services.jar
 
 Here you can find instructions on how to manually deodex `services.jar` as preparation for Signature Spoofing support.

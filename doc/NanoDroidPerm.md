@@ -1,3 +1,12 @@
+Table of Contents
+=================
+
+   * [NanoDroid-Perm Script](#nanodroid-perm-script)
+      * [Purpose](#purpose)
+      * [Invocation](#invocation)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
 # NanoDroid-Perm Script
 
 ## Purpose

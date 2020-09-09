@@ -1,61 +1,40 @@
-# NanoDroid
-
-NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, both devices with or without A/B partition scheme, aswell as Magisk Mode (module) installation. It also includes several tools (eg. GNU Bash, tools from util-linux/bsdmainutils and more), scripts and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
-
-Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them, see [Alter Installation](#alter-installation) below.
-
-In order for full microG experience NanoDroid contains a modified Play Store which allows (in-)app-purchases with microG, which would normally not be possible. It also tries to remove all previously installed GApps on it's own. For ROMs without builtin signature spoofing support NanoDroid includes an on-device Patcher which tries to patch your ROM from TWRP.
-
-Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called **NanoDroid**.
-
 Table of Contents
 =================
 
    * [NanoDroid](#nanodroid)
+   * [Table of Contents](#table-of-contents)
       * [Current Release](#current-release)
       * [Downloads](#downloads)
          * [Primary Mirror](#primary-mirror)
-         * [Archive Mirror](#archive-mirror)
          * [SHA256 Checksum and GPG Signature](#sha256-checksum-and-gpg-signature)
          * [Snapshots](#snapshots)
+      * [Custom builds](#custom-builds)
       * [Supported Android Versions](#supported-android-versions)
+      * [Recommended Thirdparty Projects](#recommended-thirdparty-projects)
       * [Support](#support)
       * [ChangeLog](#changelog)
       * [Summary](#summary)
       * [Packages](#packages)
-         * [Modules](#modules)
-            * [Installation Logfiles](#installation-logfiles)
-            * [Parallel Installations](#parallel-installations)
-         * [Extras](#extras)
          * [F-Droid Repository](#f-droid-repository)
       * [Details](#details)
-         * [NanoDroid](#nanodroid-1)
-            * [NanoDroid-Overlay](#nanodroid-overlay)
-            * [NanoDroid-Prop](#nanodroid-prop)
-            * [NanoDroid-Perm](#nanodroid-perm)
-            * [NanoDroid-Util](#nanodroid-util)
-            * [init scripts](#init-scripts)
-            * [Shell Utilities](#shell-utilities)
-            * [GNU Bash and GNU Nano](#gnu-bash-and-gnu-nano)
-         * [microG](#microg)
-         * [F-Droid](#f-droid)
-         * [Applications](#applications)
       * [Installation](#installation)
-         * [Installation Process](#installation-process)
-            * [NanoDroid](#nanodroid-2)
-               * [Installing from scratch](#installing-from-scratch)
-                   * [Stock ROM without GApps, custom ROM with/without OpenGApps](#stock-rom-without-gapps-custom-rom-withwithout-opengapps)
-                   * [Stock ROM with GApps](#stock-rom-with-gapps)
-               * [Upgrade / Installing on a clean ROM](#upgrade-installing-on-a-clean-rom)
-            * [microG](#microg-1)
-               * [Signature Spoofing Support](#signature-spoofing-support)
-               * [microG Setup](#microg-setup)
+      * [microG Setup](#microg-setup)
       * [Issues](#issues)
       * [License &amp; Credits](#license--credits)
       * [TODO](#todo)
       * [FAQ](#faq)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
+# NanoDroid
+
+NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, both devices with or without A/B partition scheme or system-as-root, aswell as Magisk Mode (module) installation. It also includes several tools (eg. GNU Bash, tools from util-linux/bsdmainutils and more) and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
+
+Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them, see [Installation](#installation) below.
+
+In order for full microG experience NanoDroid contains a modified Play Store which allows (in-)app-purchases with microG, which would normally not be possible. It also tries to remove all previously installed GApps on it's own. For ROMs without builtin signature spoofing support NanoDroid includes an on-device Patcher which tries to patch your ROM from either TWRP or Magisk Manager.
+
+Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called **NanoDroid**.
 
 ## Current Release
 
@@ -93,49 +72,9 @@ Additionally you may want to ensure the signing date is close to the release dat
 
 ### Snapshots
 
-You can create snapshots from this repository.
+You can create snapshots from this repository using the `build-package` script.
 
-* on GNU/Linux, MacOS or *BSD clone this repository and use the provided `build-package` script like
-  * download required files:
-     * `build-package pull` to download all required apks and libraries for the Full, microG and F-Droid packages
-  * build packages:
-     * `build-package full` to create the Full package
-     * `build-package microg` to create the microG only package
-     * `build-package fdroid` to create the F-Droid only package
-     * `build-package patcher` to create the on-device framework-patcher package
-     * `build-package uninstaller` to create the uninstaller package
-     * `build-package bromitewebview` to create the Bromite WebView package
-     * `build-package osmand` for the OpenStreetMap (OsmAnd) package
-     * `build-package systest` to create the SysTest package
-     * `build-package google` to create the Google (Sync Adapters & Swipe libraries) package
-     * `build-package all` to create all packages at once
-  * update required files:
-     * `build-package u-microg` to update microG
-     * `build-package u-fdroid` to update F-Droid
-     * `build-package u-apps` to update (most) applications
-     * `build-package u-swipe` to update swipe libraries
-     * `build-package u-gsync` to update Google Sync Adapters
-     * `build-package u-bromite` to update Bromite WebView
-     * `build-package u-osmand` to update OpenStreetMap (OsmAnd)
-     * `build-package u-patch` to update Haystack patches
-     * `build-package pull` to update/re-download everything
-
-for apks downloaded from F-Droid repositories or from APK Mirror, `build-package` checks the SHA256 hash.
-
-The `build-package` script additionally supports the following parameters:
-
-* `check` check if all files were properly downloaded
-* `report` create a package report
-* `clean` remove any untracked files from the repo (e. g. from `build-package pull`)
-* `dalvik [.jar]` prepare a jar file for use with DalvikVM (requires Android SDK)
-* `ver [version] [date]` change project version
-* `bump` increment Magisk module version by 1
-
-## "Secret" parameters
-
-`export BP_DEBUG=1` allows seeing debug messages when repos are fetched and APKs are downloaded
-
-`export BP_USE_WGET=1` tells the script to use wget for downloading indices and APks
+See the [build-package documentation](doc/BuildPackage.md) for more information.
 
 ## Custom builds
 
@@ -229,90 +168,7 @@ NanoDroid includes
 
 ## Packages
 
-### Modules
-
-Module packages, flash through TWRP (starting with version **22.6.91** flashing through Magisk Manager is supported again).
-
-* **NanoDroid**: includes
-  * everything mentioned in the Summary above
-* **NanoDroid-microG**: includes (only)
-  * microG and it's companions
-  * pseudo/force-debloat feature
-  * app store(s)
-  * GApps and location packages auto-removal
-* **NanoDroid-fdroid**: includes (only)
-  * F-Droid and it's privileged extension
-* **NanoDroid-BromiteWebView**: includes (only)
-  * [Bromite WebView](https://www.bromite.org/system_web_view)
-* **NanoDroid-OsmAnd**: includes (only)
-  * [OsmAnd](https://f-droid.org/de/packages/net.osmand.plus/)
-  * [OsmAnd Contour Lines plugin](https://f-droid.org/de/packages/net.osmand.srtmPlugin.paid/)
-* **NanoDroid-Google**: includes (only)
-  * Google Sync Adapters
-  * Swipe libaries
-
-#### Installation Logfiles
-
-The recovery log and installation configuration is stored after installation, regardless with it succeeded or failed.
-
-You'll find the files in
-
-* /data/media/0/nanodroid_logs/MODID_log_INSTALLDATE
-* /data/media/0/nanodroid_logs/MODID_twrp_INSTALLDATE
-
-where MODID is either
-
-* NanoDroid
-* NanoDroid_microG
-* NanoDroid_FDroid
-* NanoDroid_BromiteWebView
-* NanoDroid_OsmAnd
-* NanoDroid_Google
-
-and INSTALLDATE is the date of installation in %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14).
-
-In case of installation errors, issues or questions provide theese files in your report for easier debugging.
-
-#### Parallel Installations
-
-Since the microG and F-Droid packages are subsets of the Full NanoDroid package, they can't be installed alongside.
-
-The microG and F-Droid packages however can be installed in parallel, as they complement each other.
-
-### Extras
-
-Extra packages, flashing through TWRP required (flashing through Magisk Manager is not supported).
-
-* **NanoDroid-uninstaller**: includes
-  * uninstalls *all* NanoDroid Magisk Modules
-  * uninstalls NanoDroid installed in System Mode
-  * uninstalls NanoDroid-Patcher addon.d environment
-  * restores GApps and location services auto-removed during installation (System Mode)
-  * restores `services.jar` patched by NanoDroid-Patcher (System Mode)
-
-Extra packages, flashing trough TWRP recommended, flashing through Magisk Manager is supported.
-
-* **NanoDroid-systest**: includes
-  * system testing script which will create the logfile as `/data/media/0/nanodroid_logs/NanoDroid-SysTest-TESTDATE.log`
-     * TESTDATE is the date of testrun in %Y%m%D_%H.%M.%S format (eg: 20180709_20.34.14).
-  * the following data is collected:
-     * device profile (ROM, manufacturer, device, ABI, builddate, security patch date)
-     * detected LD_LIBRARY_PATH
-     * DalvikVM binary and it's architecture
-     * mounted partitions, whether device is A/B
-     * list of installed GApps
-     * file list of /system/app and /system/priv-app
-     * whether the ROM has native signature spoofing support
-     * whether the ROM supports Bromite WebView installations
-  * use this to provide additional informations when posting issues
-* **NanoDroid-patcher**: includes
-  * on-device framework-patcher for signature spoofing support
-     * on Android up to 8.1 the Patcher will automatically deodex your services.jar
-     * on Android 9 you need to manually deodex your services.jar
-         * see [> Deodex Instructions](doc/DeodexServices.md)
-  * creates the file `/data/adb/NanoDroid_Patched` after successful patching
-  * installs an addon.d script for automatic re-patching after ROM update
-     * addon.d support files reside in `/data/adb/nanodroid-patcher/`
+See the [Packages](doc/Packages.md) summary for information about the available packages.
 
 ### F-Droid Repository
 
@@ -320,417 +176,20 @@ In order to ease updating NanoDroid's custom application builds you can use it's
 
 ## Details
 
-### NanoDroid
+See the [> Detail information](doc/Details.md) for full details on microG, F-Droid, features and utilities included with NanoDroid.
 
-This lists features unique to NanoDroid.
-
-#### NanoDroid-Overlay
-
-The `nanodroid-overlay` script handles the debloat feature
-
-* pseudo-debloat applications in Magisk Mode
-* force-debloat applications in System Mode
-* show the list of debloated apps
-* show the list of non-debloated apps
-* add or remove apps from the list of debloated apps
-
-Full details on the NanoDroid-Overlay Script [> Details](doc/NanoDroidOverlay.md)
-
-#### NanoDroid-Prop
-
-The `nanodroid-prop` script utilizes Magisk's resetprop to alter system properties
-
-* add system properties (Magisk-only)
-  * both on-the-fly and permanently
-* properties set by this script survive NanoDroid updates
-
-Full details on the NanoDroid-Prop Script [> Details](doc/NanoDroidProp.md)
-
-#### NanoDroid-Perm
-
-The `nanodroid-perm` script grants microG and Co. required permissions, if lacking
-
-Full details on the NanoDroid-Perm Script [> Details](doc/NanoDroidPerm.md)
-
-#### NanoDroid-Util
-
-The `nanodroid-util` script contains the following features
-
-* show boot count
-* fix OTA update issues (like non-working navbar)
-* handle `Audio Focus` permission
-  * prevent apps from stealing audio output, for example listen to Music while playing Pokémon Go
-* handle `Read Clipboard` permission
-* modify `Airplane Mode` settings
-  * choose which radios are on or off in Airplane mode
-
-Full details on the NanoDroid-Util Script [> Details](doc/NanoDroidUtil.md)
-
-#### init scripts
-
-The following init scripts are bundled with NanoDroid
-
-* external_sd
-  * symlink SD Card mount point to `/external_sd`
-  * SD Card needs to be inserted upon boot
-* fstrim
-  * trim file systems (may increase speed)
-* logcat
-  * store logcat in /data/adb/logcats
-     * logs older than 7 days are deleted on every reboot
-* logscleaner
-  * clean up system log files older than 7 days
-* sqlite
-  * clean up sqlite databases
-
-When in Magisk Mode the init scripts create their log files in
-
-  `/magisk/NanoDroid/logs/${script}.log.${date}`
-
-When installed to /system your ROM needs to support running scripts in
-
-  `/system/etc/init.d`
-
-or you can use **Kernel Adiutor's** init.d emulation.
-
-#### Shell Utilities
-
-Several utilities from `bsdmainutils` and `util-linux` are included:
-
-[> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils)
-
-* column
-* hexdump
-* ncal
-
-[> util-linux GitHub](https://github.com/karelzak/util-linux)
-
-* findfs
-* findmnt
-* lsblk
-* lscpu
-* lsipc
-* lslocks
-* lsns
-* whereis
-
-Other shell utilities
-
-* less [> Website](http://www.greenwoodsoftware.com/less/)
-  * lessecho
-  * lesskey
-* unzip [> Website](http://www.info-zip.org/UnZip.html)
-
-#### GNU Bash and GNU Nano
-
-NanoDroid includes GNU Bash shell.
-
-* [> GNU Bash Website](https://www.gnu.org/software/bash/bash.html)
-
-### microG
-
-microG is an Open Source replacement for Google Services, full details can be found at the microG homepage [> Website](http://microg.org/)
-
-NanoDroid includes microG as follows
-
-* microG GmsCore [> GitHub](https://github.com/microg/android_packages_apps_GmsCore)
-* with optional **Déjà Vu** location provider backend [> F-Droid](https://f-droid.org/de/packages/org.fitchfamily.android.dejavu/)
-* with optional **Mozilla** location provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=mozilla&fdid=org.microg.nlp.backend.ichnaea)
-* with optional **Apple** location provider backend [> F-Droid](https://f-droid.org/de/packages/org.microg.nlp.backend.apple/)
-* with optional **Radiocells** location provider backend [> F-Droid](https://f-droid.org/en/packages/org.openbmap.unifiedNlp/)
-* with **Nominatim** adress provider backend [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=nominatim&fdid=org.microg.nlp.backend.nominatim)
-* with **microG** GsfProxy [> GitHub](https://github.com/microg/android_packages_apps_GsfProxy)
-* with **microG** DroidGuard Helper [> GitHub](https://github.com/microg/android_packages_apps_RemoteDroidGuard)
-  * required for SafetyNet support
-* support for Maps API version 1
-* support for Google Calendar and Contacts Sync Adapter
-  * disabled by default
-* optional Swipe libraries
-  * disabled by default
-* choose between modified **Play Store** [> APK Mirror](https://www.apkmirror.com/apk/google-inc/google-play-store/) or **Aurora Store** [> F-Droid](https://f-droid.org/de/packages/com.dragons.aurora/)
-  * **Aurora Store** can use system permissions to install packages, so you don't need to enable `Unknown Sources`
-     * go to **Aurora Store** Settings > Installation Method > `Using system permissions`
-  * Play Store is modified to allow (in-)app-purchases with microG
-* GApps and several location services conflict with microG and unified Nlp. Thus they are removed during NanoDroid installation
-  * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
-  * see [> GAppsRemoval](doc/GAppsRemoval.md) for more details
-
-### F-Droid
-
-F-Droid [> Website](http://www.fdroid.org) is an app store for OpenSource applications.
-
-NanoDroid includes both F-Droid and it's Privileged Extension [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged), so you don't need to enable `Unknown Sources`.
-
-Furthermore NanoDroid tells F-Droid to activate the following additional repositories by default:
-
-* NanoDroid companion F-Droid repository [> Link](https://www.nanolx.org/fdroid/repo)
-* BromiteWebView F-Droid repository [> Link](https://www.bromite.org/fdroid)
-* official microG F-Droid repository [> Link](https://microg.org/fdroid.html)
-
-### Google Sync/Swipe Libraries
-
-Google Sync adapters and Swipe Libraries are optionally installable through the **NanoDroid-Google** package.
-
-### Applications
-
-NanoDroid includes a variety of OpenSource applications, check full [> list](doc/Applications.md)
 
 ## Installation
 
-### Installation Process
+See the [Installation](doc/Installation.md) docs for instructions
 
-#### NanoDroid
+## microG Setup
 
-* Create the setup configuration, if you don't want to stick with the default setup
-   * see [> Alter Installation](doc/AlterInstallation.md) for configuration settings (all packages)
-   * see [> Applications](doc/Applications.md) for which appliations to install (only Full package)
-   * see [> NanoDroid-Overlay](doc/NanoDroidOverlay.md) for which applications to (pseudo-)debloat (only Full and microG packages)
-      * note: all GApps that conflict with microG will be (pseudo-)debloated regardless of your choice here
-      * see [> GApps Removal List](doc/GAppsRemoval.md) to see which GApps are auto-destroyed
-   * the above links contain information on how to create the configuration files and links to the default configuration files
-      * so you can use those to edit the configuration to your liking instead of starting from scratch
-          * alternatively you can grab the configuration files from your downloaded (or created) zip and edit those
-   * your configuration files can be the placed in the following location on your device:
-      * `/data/media/0` (internal storage)
-      * `/external_sd` (TWRP path to SD Card (if any))
-      * `/sdcard1` (internal storage (ORANGEFOX Recovery only!))
-      * `/data` (fallback)
-* Download pre-built zip or create one from this repository
-
-##### Installing from scratch
-
-This is the recommended way.
-
-###### Stock ROM without GApps, custom ROM with/without OpenGApps
-
-OpenGApps and GApps-less ROMs don't need further measurements, the Installer takes care of required steps.
-
-* perform full wipe (/system, /data, /cache, Dalvik/ART cache)
-  * recommended, but not required
-* install desired ROM
-  * make sure it does **not** include GApps if you want to use microG
-     * NanoDroid tries to get rid of GApps on it's own, but it may not always work, try without any warranty
-* install **Magisk**
-  * recommended, but not required
-  * if **Magisk** is installed, NanoDroid will be installed as Magisk-Module, else it will install into `/system` directly
-* install desired Kernel (if any)
-* boot into ROM (for **Magisk** module installation only)
-* boot into TWRP again (for **Magisk** module installation only)
-* install **NanoDroid**
-  * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](doc/DeodexServices.md)
-     * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 9.0)
-* reboot into ROM
-
-###### Stock ROM with GApps
-
-Stock ROMs with GApps may not allow to switch from Google GmsCore to microG GmsCore in-place, thus the installation is slightly different.
-
-* perform full wipe (/system, /data, /cache, Dalvik/ART cache)
-  * recommended, but not required
-* install desired ROM
-  * make sure it does **not** include GApps if you want to use microG
-     * NanoDroid tries to get rid of GApps on it's own, but it may not always work, try without any warranty
-* install **Magisk**
-  * recommended, but not required
-  * if **Magisk** is installed, NanoDroid will be installed as Magisk-Module, else it will install into `/system` directly
-* install desired Kernel (if any)
-* mount `/system` read-write and remove the following folders
-  * GApps GmsCore (which can have multiple paths, depending on the ROM):
-     * `/system/priv-app/GmsCore`
-     * `/system/priv-app/GmsCore_update`
-     * `/system/priv-app/PrebuiltGmsCore`
-     * `/system/priv-app/PrebuiltGmsCorePi`
-     * `/system/priv-app/PrebuiltGmsCorePix`
-  * `/system/priv-app/GoogleServicesFramework`
-  * `/system/priv-app/Phonesky`
-* boot into ROM (ignore all those complaints that Play Services are missing)
-  * this is step is required!
-* reboot to TWRP
-* install **NanoDroid**
-  * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](doc/DeodexServices.md)
-     * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 9.0)
-* reboot into ROM
-
-##### Upgrade / Installing on a clean ROM
-
-When upgrading NanoDroid or installing on a known clean ROM (read: GApps free), you may also just
-
-* boot into TWRP
-* install **Magisk**
-  * recommended, but not required
-  * if **Magisk** is installed, NanoDroid will be installed as Magisk-Module, else it will install into `/system` directly
-* install **NanoDroid**
-* reboot
-
-#### microG
-
-##### Signature Spoofing Support
-
-For **microG** to work, your ROM needs to have signature spoofing enabled (or a **deodexed** ROM to patch yourself).
-
-If your ROM does **not** have signature spoofing support, you can manually patch it either
-  * flashing the on-device Patcher zip
-     * it also installs an addon.d script that auto re-patches the ROM upon update
-
-If your ROM is **odexed** read [this instructions](doc/DeodexServices.md) on how to deodex services.jar manually
-
-The Patcher supports installing the patched `services.jar` into the following locations:
-  * NanoDroid Magisk Module
-  * NanoDroid-microG Magisk Module
-  * directly into `/system`
-
-So you can use it regardless whether you're using NanoDroid or not.
-
-##### microG Setup
-
-Once your ROM supports signature spoofing, you need to setup microG like this
-  * go into **microG settings** and set up everything like:
-     * check results in **Self-Check**, grant missing permissions (by tapping on them)
-         * especially the **Battery Optimization** item
-         * if Phonesky (= Fake Store or Play Store) lacks signature spoofing permissions head to Settings > Apps > Permissions > Signature Spoofing and grant it
-             * or manually using `pm grant com.google.gms android.permission.FAKE_PACKAGE_SIGNATURE` as root on-device
-             * likewise `pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE` for Phonesky
-     * enable **Google device registration**
-     * enable **Google Cloud Messaging** (only if you want to receive push messages from your applications)
-     * enable **Google SafetyNet** (required for applications that utilize SafetyNet, for example Pokémon GO, ...)
-     * in **UnifiedNlp Settings** choose either any or all of (whichever you've choosen to be installed)
-         * **Déjà Vu**, **Mozilla**, **Apple**, **Radiocell** as Geolocation backend
-         * **Nominatim** as Address lockup backend
-     * after everything is done, reboot
-     * if you installed **Play Store** open it, setup account and install your apps
+See the [microG setup](doc/microGsetup.md) documentation
 
 ## Issues
 
-List of known issues and their respective fixes or workarounds.
-
-### microG
-
-* Battery Drain
-  * microG fails to register applications to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
-     * do a clean flash of your ROM (, Magisk) and NanoDroid and install your apps after microG setup
-     * uninstall and re-install all your applications (backup application data if required)
-* microG lacks features
-  * if you use AppOps, PrivacyGuard or the like you have to grant microG GmsCore **all** permissions, if you prevent some permissions, some apps or features might not work as expected or not at all. Note: some APIs/features are stubs in microG GmsCore, meaning they exist that apps don't complain, but they do nothing - thus blocking microG GmsCore is pretty much of no benefit.
-* You can't get past the first page of the microG login wizard on KitKat
-  * updating microG to (at least) 0.2.7.17455 will fix the issue
-
-### Updating Play support libraries
-
-* Play Store tries to update itself or the Play Services, both updates fail because you have microG and a modified Play Store installed
-  * you can disable the `GMSCoreUpdateService` service of the Play Store to prevent it from updating
-
-### Google Account
-
-* Can't login to Google Account
-  * there's an issue where logging in with version 74.x of Chrome/Chromium/Bromite or WebView derived from them fails
-  * the fix is to update microG to (at least) version 0.2.7.17455
-
-### Google Play Services are missing
-
-* This misleading error message actually means 'Something is wrong with Play Store'
-  * ensure as mentioned above you properly [setup microG](#microg-setup) and reboot
-  * install either Fake Store or Play Store
-     * grant signature spoofing permission to Fake Store or Play Store
-         * go to System Settings > Apps > Permissions > Signature Spoofing for that
-         * on some ROMs you have to tap on the 3-dot-menu `Show System Apps` to see Fake Store
-             * or manually using `pm grant com.google.gms android.permission.FAKE_PACKAGE_SIGNATURE` as root on-device
-             * likewise `pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE` for Phonesky
-
-### SafetyNet
-
-**Note:** microG's Droid Guard Helper is currently _not_ able to perform SafetyNet Attestation.
-
-* SafetyNet check complain with `Google Play Services are missing`
-  * see [Google Play Services are missing](#google-play-services-are-missing) above
-* SafetyNet check fails after upgrading Magisk to version 18.0
-  * go to Magisk Manager > Magisk Hide and activate it for `microG DroidGuard Helper`
-* Applications crash during SafetyNet check
-  * install microG DroidGuard Helper as user-app (required on some ROMs), as root, on-device, issue:
-      * `pm install -r /system/app/DroidGuard/DroidGuard.apk`
-      * this is done automatically in Magisk Mode (as of version 20.5)
-
-### Play Store
-
-* Play Store giving error RH-01
-  * ensure you rebooted after [microG setup](#microg-setup)
-  * ensure Play Store has signature spoofing permission
-      * go to Settings > Apps > Permissions > Signature Spoofing and grant it
-  * force close Play Store and open it again
-  * go to Settings > Apps > Play Store > Permissions and grant at least the `Phone` permission
-
-### Push Messages
-
-* Apps are not receiving Push messages
-  * go to microG Settings / Google Cloud Messaging and check if it is connected
-  * ensure you don't have an adblocker blocking the domain `mtalk.google.com` it is required for GCM to work
-  * when using Titanium Backup first install the app only (without data) and start it, this will register the app, after that you can restore the data using Titanium Backup
-  * if an app is not shown as registered in microG Settings / Google Cloud Messaging, try uninstalling and re-installing it
-  * when restoring the ROM from a TWRP backup GCM registration for apps is sometimes broken. You may use the following command to reset GMS settings for a given app using it's appname, or if no appname is given for all applications. Apps will re-register when launched afterwards:
-     * `nutl -r APPNAME` (eg.: APPNAME = `com.nianticlabs.pokemongo`) or `nutl -r`
-  * if you can't make any app registering for Google Cloud Messaging, try the following
-     * open the Phone app and dial the following: `*#*#2432546#*#*` (or ` *#*#CHECKIN#*#*`)
-
-### Unified Nlp
-
-**Note:** unified Nlp has known issues on Android 10.
-
-* unified Nlp is not registered in the system
-  * some ROMs with native signature spoofing don't look for `com.google.android.gms` as location provider
-  * tell the developer (or maintainer) of the ROM to fix this
-  * some versions of `com.qualcomm.location` conflict with uNlp, if it's installed and unified Nlp doesn't work, try the following command to get rid of it, as root, on-device:
-     * `novl -a com.qualcomm.location`
-* unified Nlp is registered in the system, but fails to get location
-  * issue the following commands as root, on-device:
-     * `pm grant com.google.android.gms android.permission.ACCESS_FINE_LOCATION`
-     * `pm grant com.google.android.gms android.permission.ACCESS_COARSE_LOCATION`
-  * some versions of `com.qualcomm.location` conflict with uNlp, if it's installed and unified Nlp doesn't work, try the following command to get rid of it, as root, on-device:
-     * `novl -a com.qualcomm.location`
-* Ichnaea (Mozilla) location backend doesn't provide location
-  * if you use Blockada, add the location backend to the whitelist
-  * for any other ad-blocker, whitelist the following domain:
-     * `https://location.services.mozilla.com`
-
-### F-Droid
-
-* On some ROMs (most noticeably MIUI ROMs) F-Droid can't install applications
-  * this is because F-Droid's Priviledged Extension is not compatible with those ROMs, disable it from
-      * F-Droid > Settings > Expert Settings > Privileged Extension
-
-### Alarm Clock not ringing
-
-* Due to changes in Android, to ensure your Alarm Clock is actually waking you up, you need Android to ignore battery optimization for it, to do so:
-  * go to System Settings > Apps > Special Access > Battery Optimization > All Apps
-  * tap on your Alarm Clock, for example `Alarmio` and choose `don't optimize`
-
-### Google Software
-
-* Maps doesn't work when installed a second time
-  * remove your Google Account and re-add it, that'll make Maps work again
-  * remove traces from previous insallations, like
-     * /sdcard/Android/data/com.google.android.apps.maps
-     * /data/system/graphicsstats/1559520000000/com.google.android.apps.maps
-         * where `1559520000000` is the Maps version, so may differ
-
-* Hangouts isn't properly working
-  * as root, on-device, run the following command:
-     * `pm disable com.google.android.talk/com.google.android.apps.hangouts.service.NetworkConnectionCheckingService`
-
-### Other
-
-* Some Stock ROMs do not properly work after first boot since their SetupWizard is disabled by NanoDroid (because it's incompatible with microG)
-  * check `/system/build.prop` or `/vendor/build.prop` if they contain the property `ro.setupwizard.mode` and change it to (you can do this from TWRP via ADB, with the builtin `vi` editor)
-      * `ro.setupwizard.mode=DISABLED`
-      * in Magisk Mode NanoDroid will do this on it's own using Magisk's `resetprop`
-  * if you can access your device via ADB, you can also issue the following command as root, on-device:
-      * `nanodroid-util --fix-update`
-* Applications crash when using WebView (BromiteWebView package)
-  * install Bromite WebView as user-app, as root, on-device, issue:
-      * `pm install -r /system/app/BromiteWebView/BromiteWebView.apk`
-      * this is done automatically in Magisk Mode (as of version 20.5)
-* ROM lags after applying signature spoofing patch
-  * some ROMs already have the patch built-in, if you patch those ROMs (again), it results in heavy lags
-
-Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
+See [the list of known issues](doc/Issues.md) and their respective fixes or workarounds.
 
 ## License & Credits
 

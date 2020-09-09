@@ -1,3 +1,25 @@
+Table of Contents
+=================
+
+   * [Alter Installation](#alter-installation)
+      * [Configuration File](#configuration-file)
+      * [Detailed Description](#detailed-description)
+         * [nanodroid_microg](#nanodroid_microg)
+         * [nanodroid_nlpbackend](#nanodroid_nlpbackend)
+         * [nanodroid_mapsv1](#nanodroid_mapsv1)
+         * [nanodroid_play](#nanodroid_play)
+         * [nanodroid_fdroid](#nanodroid_fdroid)
+         * [nanodroid_apps](#nanodroid_apps)
+         * [nanodroid_overlay](#nanodroid_overlay)
+         * [nanodroid_bash](#nanodroid_bash)
+         * [nanodroid_utils](#nanodroid_utils)
+         * [nanodroid_init](#nanodroid_init)
+         * [nanodroid_gsync](#nanodroid_gsync)
+         * [nanodroid_swipe](#nanodroid_swipe)
+         * [nanodroid_forcesystem](#nanodroid_forcesystem)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
 # Alter Installation
 
 ## Configuration File

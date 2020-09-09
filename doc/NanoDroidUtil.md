@@ -1,3 +1,18 @@
+Table of Contents
+=================
+
+   * [NanoDroid-Util Script](#nanodroid-util-script)
+      * [Purpose](#purpose)
+      * [Invocation](#invocation)
+      * [Feature overview](#feature-overview)
+         * [Fix OTA-Update issues](#fix-ota-update-issues)
+         * [Airplane Mode settings](#airplane-mode-settings)
+         * [Prevent audio focus stealing](#prevent-audio-focus-stealing)
+         * [Prevent clipboard reading](#prevent-clipboard-reading)
+         * [Read boot count](#read-boot-count)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
 # NanoDroid-Util Script
 
 ## Purpose

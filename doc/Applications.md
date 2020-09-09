@@ -1,3 +1,13 @@
+
+Table of Contents
+=================
+
+   * [Applications](#applications)
+      * [Provided Applications](#provided-applications)
+      * [Alter provided Applications](#alter-provided-applications)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
 # Applications
 
 ## Provided Applications
