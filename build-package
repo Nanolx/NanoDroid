@@ -174,7 +174,8 @@ for opt in ${@}; do
 		;;
 
 		u-patch )
-			update_patches
+			#update_patches
+			echo "u-patch is currently disabled as we use new patches from: https://github.com/Lanchon/haystack/pull/34"
 		;;
 
 		check )
