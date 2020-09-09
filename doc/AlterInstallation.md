@@ -34,6 +34,64 @@ Syntax: `nanodroid_microg=1`, value can be 0, 1 or 2:
       * without Push Messaging support through GCM
       * without the ability to pass SafetyNet attestation
 
+### nanodroid_nlpbackend
+
+what uNlp backends to install
+
+* supported packages
+	* Full package
+	* microG package
+
+Syntax: `nanodroid_nlpbackend=1000`
+
+this setting is four digits long, each digit represents one uNlp backend:
+* 0 = for each digit means don't install the backend
+* 1 = for each digit means install the backend
+
+digits represent the following backends:
+* 1st digit = Déjà Vu backend
+* 2nd digit = Ichnaea (Mozilla) backend
+* 3rd digit = Apple backend
+* 4th digit = Radiocells.org backend
+
+examples:
+* nanodroid_nlpbackend=1000 = install Déjà Vu backend
+* nanodroid_nlpbackend=1010 = install Déjà Vu and Apple backends
+
+### nanodroid_mapsv1
+
+whether to provide **microG** Maps API v1
+
+* supported packages
+  * Full package
+  * microG package
+
+Syntax: `nanodroid_mapsv1=1`, value can be or 1:
+
+* 0 = don't install Maps v1 API support
+* 1 = install Maps v1 API support
+
+### nanodroid_play
+
+what app store to install
+
+* supported packages
+  * Full package
+  * microG package
+
+Syntax: `nanodroid_play=21`, this setting is value pair, the first digit declares the app store, the second whether to install Fake store alongside:
+
+* 00 = install no app store
+* 10 = install Google Play (patched with microG (in-)app-purchase support)
+* 01 = install Fake Store
+* 20 = install Aurora Store (alongside Aurora Services addon)
+* 21 = install Aurora Store (alongside Aurora Services addon) and Fake Store
+* 30 = install Google Play (patched with microG (in-)app-purchase support) and Aurora Store (alongside Aurora Services addon)
+
+Note:
+* if `nanodroid_play=11` or  `nanodroid_play=31` it will be silently treated as `10` or `30`
+  * you can't install both Play Store and Fake Store at the same time
+
 ### nanodroid_fdroid
 
 whether to install **F-Droid**
@@ -63,65 +121,117 @@ Syntax: `nanodroid_apps=1`, value can be 0 or 1:
 
 see [> Applications](Applications.md) for detailed information
 
-### nanodroid_play
+### nanodroid_overlay
 
-what app store to install
+whether to utilize the NanoDroid-Overlay to pseudo-debloat `/system` applications in Magisk Mode, or force-debloat on System Mode
+
+Syntax: `nanodroid_overlay=1`, value can be 0 or 1:
+
+* 0 = don't utilize NanoDroid-Overlay
+* 1 = utilize NanoDroid-Overlay
+
+see [> NanoDroid-Overlay](NanoDroidOverlay.md) for detailed information
+
+### nanodroid_bash
+
+whether to install GNU Bash (alongside the less pager)
+
+* supported packages
+  * Full package
+
+Syntax: `nanodroid_bash=1`, value can be 0: 1:
+
+* 0 = don't install GNU Bash
+* 1 = install GNU Bash
+
+### nanodroid_utils
+
+whether and what shell utils to install
+
+* supported packages
+  * Full package
+
+Syntax: `nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"`
+
+this setting is a list of utils, each listed item will be installed, possible values are
+
+```
+findfs
+findmnt
+hexdump
+lessecho
+lesskey
+lsblk
+lscpu
+lsipc
+lslocks
+lsns
+ncal
+whereis
+```
+
+to install no utils, leave empty (`nanodroid_utils=""`), the `""` are mandatory in any case
+
+see [here for more information](../README.md#shell-utilities)
+
+### nanodroid_init
+
+whether and what init scripts to install
+
+* supported packages
+  * Full package
+
+this setting is a list of init scripts, each listed item will be installed, possible values
+
+```
+10_sqlite
+20_fstrim
+30_logcat
+40_external_sd
+50_logscleaner
+```
+
+to install no init scripts, leave empty (`nanodroid_init=""`), the `""` are mandatory in any case
+
+see [here for more information](../README.md#init-scripts)
+
+### nanodroid_gsync
+
+whether to install Google Sync Adapters
+
+* supported packages
+  * Google
+
+Syntax: `nanodroid_gsync=1`, value can be 0 or 1:
+
+* 0 = don't install Google Sync Adapters
+* 1 = install Google Sync Adapters
+
+### nanodroid_swipe
+
+whether to install Swipe libraries
+
+* supported packages
+  * Google
+
+Syntax: `nanodroid_swipe=1`, value can be 0 or 1:
+
+* 0 = don't install Swipe libraries
+* 1 = install Swipe libraries
+
+### nanodroid_forcesystem
+
+force direct /system installation (else NanoDroid will autodetect whether Magisk is installed and will prefer Magisk Module installation)
 
 * supported packages
   * Full package
   * microG package
+  * F-Droid package
+  * Bromite System WebView package
+  * OSM Android
+  * Google package
 
-Syntax: `nanodroid_play=21`, this setting is value pair, the first digit declares the app store, the second whether to install Fake store alongside:
+Syntax: `nanodroid_forcesystem=0`, value can be 0 or 1:
 
-* 00 = install no app store
-* 10 = install Google Play (patched with microG (in-)app-purchase support)
-* 01 = install Fake Store
-* 20 = install Aurora Store (alongside Aurora Services addon)
-* 21 = install Aurora Store (alongside Aurora Services addon) and Fake Store
-* 30 = install Google Play (patched with microG (in-)app-purchase support) and Aurora Store (alongside Aurora Services addon)
-
-Note:
-* if `nanodroid_play=11` or  `nanodroid_play=31` it will be silently treated as `10` or `30`
-  * you can't install both Play Store and Fake Store at the same time
-
-### nanodroid_overlay
-
-`nanodroid_overlay=[0|1]`
-
-whether to populate the overlay to pseudo-debloat `/system` applications (Magisk-only)
-
-`nanodroid_mapsv1=[0|1]`
-
-whether to provide **microG** Maps API v1
-
-`nanodroid_init="10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"`
-
-whether to provide init scripts (the choosen ones, or "" for none)
-
-`nanodroid_gsync=[0|1]`
-
-whether to provide Google Sync Adapters
-
-`nanodroid_swipe=[0|1]`
-
-whether to provide Swipe libraries
-
-`nanodroid_forcesystem=[0|1]`
-
-whether to force system mode installation, regardless whether Magisk is installed
-
-`nanodroid_nlpbackend=[0|1][0|1][0|1][0|1]`
-
-what location backends for microG to install
-* 1st element 0|1 = Déjà Vu location backend
-* 2nd element 0|1 = Ichnaea (Mozilla) location backend
-* 3rd element 0|1 = Apple location backend
-* 4th element 0|1 = Radiocells.org location backend
-
-`nanodroid_bash=[0|1]`
-
-whether to install GNU Bash Shell
-
-`nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"`
-
-whether to install Shell Utils from util-linux and bsdmainutils (the choosen ones, or "" for none)
+* 0 = auto detect installation mode
+* 1 = force /system installation
