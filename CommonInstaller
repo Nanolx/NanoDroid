@@ -664,7 +664,7 @@ detect_arch () {
 	if [[ "${SDK_VERSION}" -lt 19 ]]; then
 		print_info " "
 		print_info " ++ Installing on pre-KitKat ROM, full"
-		print_info " ++ compatibility is not garantueed!"
+		print_info " ++ compatibility is not guaranteed!"
 		print_info " "
 	fi
 
