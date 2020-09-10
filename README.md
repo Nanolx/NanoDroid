@@ -38,7 +38,7 @@ Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called *
 
 ## Current Release
 
-* Stable: 22.8.20200901 "[The Beauty And The Bug]"
+* Stable: 22.9.20200910 "[Tiefseequappe]"
 * Beta: ---
 
 ## Downloads
