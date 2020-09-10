@@ -100,6 +100,7 @@ grab_apps () {
 	grab_apk_from_repo ${fd_ALARMIO[@]}
 	grab_apk_from_repo ${fd_ANYSOFTKEYBOARD[@]}
 	grab_apk_from_repo ${fd_BLOCKADA[@]}
+	grab_apk_from_repo ${fd_FREETOPP[@]}
 	grab_apk_from_repo ${fd_FROST[@]}
 	grab_apk_from_repo ${fd_HACKERSKEYBOARD[@]}
 	grab_apk_from_repo ${fd_KEEPASSDX[@]}

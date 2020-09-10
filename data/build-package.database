@@ -38,6 +38,7 @@ fd_AURORADROID=(fdroid com.aurora.adroid app AuroraDroid)
 fd_ALARMIO=(fdroid me.jfenn.alarmio app Alarmio)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
 fd_BLOCKADA=(fdroid org.blokada.alarm app Blokada)
+fd_FREETOPP=(fdroid org.liberty.android.freeotpplus app FreeOTPPlus)
 fd_FROST=(fdroid com.pitchedapps.frost app Frost)
 fd_HACKERSKEYBOARD=(fdroid org.pocketworkstation.pckeyboard app HackersKeyboard)
 fd_KEEPASSDX=(fdroid com.kunzisoft.keepass.libre app KeePassDX)
@@ -112,6 +113,7 @@ file_database=(
 	${appsfolder[3]}/AuroraStore/AuroraStore.apk.gz
 	${appsfolder[3]}/Blokada/Blokada.apk.gz
 	${appsfolder[3]}/DroidGuard/DroidGuard.apk.gz
+	${appsfolder[3]}/FreeOTPPlus/FreeOTPPlus.apk.gz
 	${appsfolder[3]}/Frost/Frost.apk.gz
 	${appsfolder[3]}/FDroid/FDroid.apk.gz
 	${appsfolder[3]}/HackersKeyboard/HackersKeyboard.apk.gz

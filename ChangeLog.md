@@ -17,6 +17,9 @@
   * ignore empty and commented out lines in the configuration files (= starting with `#`)
   * don't load configuration files that aren't required by the package that's going to be flashed
 
+* Full Package
+  * add FreeOTP+ {FreeOTPPlus} a two factor auth application with import and export function
+
 * build-package script
   * disable `u-patch` for now as we use new patches since 22.7
 
@@ -30,7 +33,10 @@
 ### Updates
 
 * automatic
+  * microG GmsCore (0.2.12.203315)
+  * Blokada (4.8.3)
   * Bromite System WebView (85.0.4183.94)
+  * FreeOTP+ (2.0.11)
   * KeePassDX (2.8.3)
   * OAndBackupX (3.1.0)
   * Privacy Browser (3.5.1)
