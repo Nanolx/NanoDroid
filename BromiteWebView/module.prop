@@ -1,7 +1,7 @@
 id=NanoDroid_BromiteWebView
 name=NanoDroid (Bromite WebView sub module)
-version=v22.9.99999999
-versionCode=18
+version=v22.9.20200910
+versionCode=19
 author=Nanolx
 description=NanoDroid (Bromite WebView sub module)
 minMagisk=1900
