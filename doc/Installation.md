@@ -16,11 +16,11 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 ## Installation Setup
 
 * Create the setup configuration, if you don't want to stick with the default setup
-   * see [> Alter Installation](doc/AlterInstallation.md) for configuration settings (all packages)
-   * see [> Applications](doc/Applications.md) for which appliations to install (only Full package)
-   * see [> NanoDroid-Overlay](doc/NanoDroidOverlay.md) for which applications to (pseudo-)debloat (only Full and microG packages)
+   * see [> Alter Installation](AlterInstallation.md) for configuration settings (all packages)
+   * see [> Applications](Applications.md) for which appliations to install (only Full package)
+   * see [> NanoDroid-Overlay](NanoDroidOverlay.md) for which applications to (pseudo-)debloat (only Full and microG packages)
       * note: all GApps that conflict with microG will be (pseudo-)debloated regardless of your choice here
-      * see [> GApps Removal List](doc/GAppsRemoval.md) to see which GApps are auto-destroyed
+      * see [> GApps Removal List](GAppsRemoval.md) to see which GApps are auto-destroyed
    * the above links contain information on how to create the configuration files and links to the default configuration files
       * so you can use those to edit the configuration to your liking instead of starting from scratch
           * alternatively you can grab the configuration files from your downloaded (or created) zip and edit those
@@ -53,7 +53,7 @@ OpenGApps and GApps-less ROMs don't need further measurements, the Installer tak
 * boot into ROM (for **Magisk** module installation only)
 * boot into TWRP again (for **Magisk** module installation only)
 * install **NanoDroid**
-  * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](doc/DeodexServices.md)
+  * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](DeodexServices.md)
      * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 10.0)
 * reboot into ROM
 
@@ -83,7 +83,7 @@ Stock ROMs with GApps may not allow to switch from Google GmsCore to microG GmsC
   * this is step is required!
 * reboot to TWRP
 * install **NanoDroid**
-  * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](doc/DeodexServices.md)
+  * if you want to use microG make sure the ROM is either pre-patched with signature spoofing support or **deoxeded** so you can patch yourself [see here](DeodexServices.md)
      * you can use the Patcher package to de-odex (up to Android 8.1) and/or patch services.jar (up to Android 10.0)
 * reboot into ROM
 

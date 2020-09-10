@@ -57,7 +57,7 @@ Extra packages, flash through TWRP or Magisk Manager
   * on-device framework-patcher for signature spoofing support
      * on Android up to 8.1 the Patcher will automatically deodex your services.jar
      * on Android 9 to 10 you need to manually deodex your services.jar
-         * see [> Deodex Instructions](doc/DeodexServices.md)
+         * see [> Deodex Instructions](DeodexServices.md)
   * installs an addon.d script for automatic re-patching after ROM update
      * addon.d support files reside in `/data/adb/nanodroid-patcher/`
   * when Magisk is installed it creates the `NanoDroid_Patcher` module and install the patched `services.jar` there

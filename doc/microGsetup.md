@@ -17,7 +17,7 @@ If your ROM does **not** have signature spoofing support, you can manually patch
   * flashing the on-device Patcher zip
      * it also installs an addon.d script that auto re-patches the ROM upon update
 
-If your ROM is **odexed** read [this instructions](doc/DeodexServices.md) on how to deodex services.jar manually
+If your ROM is **odexed** read [this instructions](DeodexServices.md) on how to deodex services.jar manually
 
 The Patcher supports installing the patched `services.jar` into the following locations:
   * NanoDroid Magisk Module

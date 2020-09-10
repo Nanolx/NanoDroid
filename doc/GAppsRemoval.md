@@ -12,7 +12,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 GApps and several location services conflict with microG and unified Nlp. Thus they are removed during NanoDroid installation
 
-  * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
+  * using [> NanoDroid-Overlay](NanoDroidOverlay.md)
 
 the Uninstaller will restore them (or re-flash the ROM)
 

@@ -30,7 +30,7 @@ The `nanodroid-overlay` script handles the debloat feature
 * show the list of non-debloated apps
 * add or remove apps from the list of debloated apps
 
-Full details on the NanoDroid-Overlay Script [> Details](doc/NanoDroidOverlay.md)
+Full details on the NanoDroid-Overlay Script [> Details](NanoDroidOverlay.md)
 
 ## NanoDroid-Prop
 
@@ -40,13 +40,13 @@ The `nanodroid-prop` script utilizes Magisk's resetprop to alter system properti
   * both on-the-fly and permanently
 * properties set by this script survive NanoDroid updates
 
-Full details on the NanoDroid-Prop Script [> Details](doc/NanoDroidProp.md)
+Full details on the NanoDroid-Prop Script [> Details](NanoDroidProp.md)
 
 ## NanoDroid-Perm
 
 The `nanodroid-perm` script grants microG and Co. required permissions, if lacking
 
-Full details on the NanoDroid-Perm Script [> Details](doc/NanoDroidPerm.md)
+Full details on the NanoDroid-Perm Script [> Details](NanoDroidPerm.md)
 
 ## NanoDroid-Util
 
@@ -60,7 +60,7 @@ The `nanodroid-util` script contains the following features
 * modify `Airplane Mode` settings
   * choose which radios are on or off in Airplane mode
 
-Full details on the NanoDroid-Util Script [> Details](doc/NanoDroidUtil.md)
+Full details on the NanoDroid-Util Script [> Details](NanoDroidUtil.md)
 
 ## init scripts
 
@@ -148,8 +148,8 @@ NanoDroid includes microG as follows
      * go to **Aurora Store** Settings > Installation Method > `Using system permissions`
   * Play Store is modified to allow (in-)app-purchases with microG
 * GApps and several location services conflict with microG and unified Nlp. Thus they are removed during NanoDroid installation
-  * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
-  * see [> GAppsRemoval](doc/GAppsRemoval.md) for more details
+  * using [> NanoDroid-Overlay](NanoDroidOverlay.md)
+  * see [> GAppsRemoval](GAppsRemoval.md) for more details
 
 ## F-Droid
 
@@ -169,4 +169,4 @@ Google Sync adapters and Swipe Libraries are optionally installable through the 
 
 ## Applications
 
-NanoDroid includes a variety of OpenSource applications, check full [> list of applications](doc/Applications.md).
+NanoDroid includes a variety of OpenSource applications, check full [> list of applications](Applications.md).
