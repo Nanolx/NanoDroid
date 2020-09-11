@@ -10,8 +10,6 @@
 * NanoDroid-Perm Script
   * running `nanodroid-perm`, respectively `npem` will now grant `android.permission.ACCESS_BACKGROUND_LOCATION` to microG
 
-### General Changes
-
 * Installer
   * drop loading setup files from directory containing the zip (internally `${ZIPDIR}`)
   * ignore empty and commented out lines in the configuration files (= starting with `#`)

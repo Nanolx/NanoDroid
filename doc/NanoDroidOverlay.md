@@ -62,8 +62,6 @@ After you've made your changes, issue the following command on your device, eith
 
 `nanodroid-overlay --update`
 
-This needs to be done in normal environment. If you're in **TWRP** you'll have to manually mount `/magisk` (you may use the `mount-magisk` script from the git repo for this purpose).
-
 ## Invocation
 
 From within a terminal on your device, for example `adb shell` or `Termux` invoke the script using either
