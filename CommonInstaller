@@ -473,7 +473,6 @@ detect_migrate_microg () {
 
 detect_migrate_droidguard () {
 	DROIDGUARD_PATH=$(find /data/app -type d -name 'org.microg.gms.droidguard-*' 2>/dev/null)
-	DROIDGUARD_TYPE="Nanolx"
 
 	if [ ! -z ${DROIDGUARD_PATH} ]; then
 		if ${UNZIP} -l "${MODPATH}/system/papp/DroidGuard/DroidGuard.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
