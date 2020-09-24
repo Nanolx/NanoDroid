@@ -1,5 +1,23 @@
 # ChangeLog
 
+## 22.10 in-dev "[---]"
+
+### Bug Fixes
+
+* Installer
+  * update privapp-permission detection to fix bootloops on Android 11
+
+### General Changes
+
+* Installer
+  * improve functions to auto-detect wether we use official or Nanolx GmsCore/DroidGuard and migrate between, if required
+     * (there's no public Nanolx GmsCore build as of now, I'm using this for internal testing)
+
+* sysconfig
+  * whitelist Aurora Services for `allow-in-power-save-except-idle`
+  * whitelist Aurora Services for `system-user-whitelisted-app`
+  * drop whitelist for Yalp Store (removed from NanoDroid since ages)
+
 ## 22.9.20200910 "[Tiefseequappe]"
 
 ### General Changes
