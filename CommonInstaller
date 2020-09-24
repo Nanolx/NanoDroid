@@ -987,7 +987,7 @@ dump_system_privapp_permissions () {
 	# XXX this looks shitty
 	"${AAPT}" dump xmltree /system/framework/framework-res.apk AndroidManifest.xml | \
 		tr -d '\n' | sed -e 's/E:/\n/g' | \
-		grep '(type 0x11)0x[137]2' | \
+		grep '(type 0x11)0x[1357]2' | \
 		awk -F\" '{print $2}' | sort > "${SYS_LIST}"
 
 	"${AAPT}" dump xmltree /system/framework/framework-res.apk AndroidManifest.xml | \
