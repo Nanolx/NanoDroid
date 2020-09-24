@@ -57,6 +57,17 @@ The `build-package` script additionally supports the following parameters:
 * `ver [version] [date]` change project version (if no date is given `99999999` will be used)
 * `bump` increment Magisk module version by 1
 
+## Sideloading custom APKs
+
+If you want to use custom APKs in your build, place them into the `local` directory in the root of the NanoDroid tree.
+
+The name of your APK must match the targetname in the NanoDroid package, e. g. `GmsCore` for a custom microG build or `Phonesky` for a custom Play Store build.
+
+See the `file_database` in [build-package.database](../data/build-package.database).
+
+Note: sideloading libraries is currently not supported!
+
+
 ## "Secret" parameters
 
 * `export BP_DEBUG=1` allows seeing debug messages when repos are fetched and APKs are downloaded
