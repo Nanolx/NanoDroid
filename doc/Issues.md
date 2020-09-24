@@ -99,6 +99,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
   * issue the following commands as root, on-device:
      * `pm grant com.google.android.gms android.permission.ACCESS_FINE_LOCATION`
      * `pm grant com.google.android.gms android.permission.ACCESS_COARSE_LOCATION`
+     * for Android 10 and newer, additionally: `pm grant com.google.android.gms android.permission.ACCESS_BACKGROUND_LOCATION`
   * some versions of `com.qualcomm.location` conflict with uNlp, if it's installed and unified Nlp doesn't work, try the following command to get rid of it, as root, on-device:
      * `novl -a com.qualcomm.location`
 * Ichnaea (Mozilla) location backend doesn't provide location
