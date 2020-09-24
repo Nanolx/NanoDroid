@@ -112,6 +112,15 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
   * this is because F-Droid's Priviledged Extension is not compatible with those ROMs, disable it from
       * F-Droid > Settings > Expert Settings > Privileged Extension
 
+## Aurora Store / Aurora Droid
+
+* If Aurora Store or Aurora Droid can't download/install applications check the following things:
+  * go to System Settings > Apps > Aurora Store > allow "install unknown apps"
+  * go to System Settings > Apps > Aurora Droid > allow "install unknown apps"
+  * go to System Settings > Apps > Aurora Services > allow "install unknown apps"
+     * if you use Aurora Services as installation method
+  * also ensure Storage permission is granted for them
+
 ## Alarm Clock not ringing
 
 * Due to changes in Android, to ensure your Alarm Clock is actually waking you up, you need Android to ignore battery optimization for it, to do so:
