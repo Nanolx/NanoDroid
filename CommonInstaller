@@ -448,15 +448,15 @@ detect_mode () {
 }
 
 detect_migrate_microg () {
-	GMSCORE_PATH=$(find /data/app -type d -name 'com.google.android.gms-*' 2>/dev/null)
+	GMSCORE_PATH=$(find /data/app -type d -name 'com.google.android.gms-*' &>/dev/null)
 
 	if [ ! -z ${GMSCORE_PATH} ]; then
-		if ${UNZIP} -l "${MODPATH}/system/priv-app/GmsCore/GmsCore.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
+		if ${UNZIP} -l "${MODPATH}/system/priv-app/GmsCore/GmsCore.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
 			GMSCORE_BUILD=Nanolx
 		else	GMSCORE_BUILD=Official
 		fi
 
-		if ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
+		if ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
 			GMSCORE_LOCAL=Nanolx
 		else	GMSCORE_LOCAL=Official
 		fi
@@ -472,15 +472,15 @@ detect_migrate_microg () {
 }
 
 detect_migrate_droidguard () {
-	DROIDGUARD_PATH=$(find /data/app -type d -name 'org.microg.gms.droidguard-*' 2>/dev/null)
+	DROIDGUARD_PATH=$(find /data/app -type d -name 'org.microg.gms.droidguard-*' &>/dev/null)
 
 	if [ ! -z ${DROIDGUARD_PATH} ]; then
-		if ${UNZIP} -l "${MODPATH}/system/papp/DroidGuard/DroidGuard.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
+		if ${UNZIP} -l "${MODPATH}/system/papp/DroidGuard/DroidGuard.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
 			DROIDGUARD_BUILD=Nanolx
 		else	DROIDGUARD_BUILD=Official
 		fi
 
-		if ${UNZIP} -l "${DROIDGUARD_PATH}/base.apk" | grep META-INF/NANOLX.RSA 2>/dev/null; then
+		if ${UNZIP} -l "${DROIDGUARD_PATH}/base.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
 			DROIDGUARD_LOCAL=Nanolx
 		else	DROIDGUARD_LOCAL=Official
 		fi
