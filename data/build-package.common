@@ -4,6 +4,8 @@ nanodroid_missing_files=0
 nanodroid_broken_files=0
 missing_database=""
 
+sideload=${CWD}/local
+
 debug_message () {
 	[ "${BP_DEBUG}" != '1' ] && return 0
 	case "$1" in

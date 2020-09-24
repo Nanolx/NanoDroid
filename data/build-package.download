@@ -29,6 +29,73 @@ for dep in gawk curl jq gzip grep; do
 	fi
 done
 
+gzip_apk () {
+	[ -f "${1}" ] && \
+		gzip -f "${1}" || \
+		echo "error downloading ${1}"
+}
+
+msg_download_info () {
+	case ${1} in
+		sideload)
+				echo -e "\nSideloading APK           : ${2} ${3}"
+				echo "	Checking SHA256 hash not supported"
+		;;
+
+		github)
+			if [ -f "${2}.gz" ]; then
+				echo -e "\nUpdating from GitHub      : $(basename ${2})"
+			else	echo -e "\nDownloading from GitHub   : $(basename ${2})"
+			fi
+				echo "	Checking SHA256 hash not supported"
+		;;
+
+		gitlab)
+			if [ -f "${2}.gz" ]; then
+				echo -e "\nUpdating from GitLab      : $(basename ${2})"
+			else	echo -e "\nDownloading from GitLab   : $(basename ${2})"
+			fi
+				echo "	Checking SHA256 hash not supported"
+		;;
+
+		opengapps)
+			if [ -f "${2}.gz" ]; then
+				echo -e "\nUpdating from OpenGApps   : $(basename ${2}) ${3}"
+			else	echo -e "\nDownloading from OpenGApps: $(basename ${2}) ${3}"
+			fi
+				echo "	Checking SHA256 hash not supported"
+		;;
+
+		url)
+			if [ -f "${2}.gz" ]; then
+				echo -e "\nUpdating from URL         : $(basename ${2})"
+			else	echo -e "\nDownloading from URL      : $(basename ${2})"
+			fi
+				echo "	Checking SHA256 hash not supported"
+		;;
+	esac
+}
+
+download_apk_common () {
+	local apk_dest="${1}"
+	local apk_name="${2}"
+	local apk_url="${3}"
+	local msg_type="${4}"
+	[ -n "${5}" ] && local sdk_ver="[${5}]"
+
+	mkdir -p "${apk_dest}"
+
+	if [ -f "${sideload}/${apk_name}.apk" ]; then
+		msg_download_info "${msg_type}" "${apk_dest}/${apk_name}.apk" "${sdk_ver}"
+		cp "${sideload}/${apk_name}.apk" "${apk_dest}/${apk_name}.apk"
+	else
+		msg_download_info "${msg_type}" "${apk_dest}/${apk_name}.apk" "${sdk_ver}"
+		debug_download delete "${apk_dest}/${apk_name}.apk" "${apk_url}" "${apk_dest}/${apk_name}.apk"
+	fi
+
+	gzip_apk "${apk_dest}/${apk_name}.apk"
+}
+
 debug_download () {
 	case $1 in
 		index)
@@ -183,20 +250,28 @@ grab_apk_from_repo () {
 
 	local apk_url="${repo}/${apk_name}"
 
-	if check_sha256sum "${apk_dest}/${4}.apk.gz" "${sha_sum}"; then
-		echo -e "\nUp-to-Date from ${repo_p} : ${4}.apk"
-	else	echo -e "\nUpdating from ${repo_p}   : ${4}.apk"
+	if [ -f "${sideload}/${4}.apk" ]; then
+		echo -e "\nSideloading APK           : ${4}.apk"
 		mkdir -p "${apk_dest}"
 		rm -f "${apk_dest}/${4}.apk.gz"
-		debug_download no_delete "${apk_dest}/${4}.apk" "${apk_url}"
+		cp "${sideload}/${4}.apk" "${apk_dest}/${4}.apk"
+		gzip "${apk_dest}/${4}.apk"
+	else
+		if check_sha256sum "${apk_dest}/${4}.apk.gz" "${sha_sum}"; then
+			echo -e "\nUp-to-Date from ${repo_p} : ${4}.apk"
+		else	echo -e "\nUpdating from ${repo_p}   : ${4}.apk"
+			mkdir -p "${apk_dest}"
+			rm -f "${apk_dest}/${4}.apk.gz"
+			debug_download no_delete "${apk_dest}/${4}.apk" "${apk_url}"
 
-		if check_sha256sum "${apk_dest}/${4}.apk" "${sha_sum}"; then
-			echo "	SHA256 hash of ${4}.apk is correct"
-			gzip "${apk_dest}/${4}.apk"
-		else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
-			\n	expected	: ${sha_sum}\
-			\n	got		: ${in_checksum}"
-			rm -f "${apk_dest}/${4}.apk"
+			if check_sha256sum "${apk_dest}/${4}.apk" "${sha_sum}"; then
+				echo "	SHA256 hash of ${4}.apk is correct"
+				gzip "${apk_dest}/${4}.apk"
+			else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
+				\n	expected	: ${sha_sum}\
+				\n	got		: ${in_checksum}"
+				rm -f "${apk_dest}/${4}.apk"
+			fi
 		fi
 	fi
 }
@@ -205,22 +280,7 @@ grab_apk_from_url () {
 	local apk_url="${1}"
 	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
-	rm -f "${apk_dest}/${3}.apk.gz"
-
-	if [[ -f "${apk_dest}/${3}.apk" ]]; then
-		echo -e "\nUpdating from URL         : ${3}.apk"
-	else    echo -e "\nDownloading from URL      : ${3}.apk"
-		mkdir -p "${apk_dest}"
-	fi
-
-	echo "  Checking SHA256 hash not (yet) supported"
-
-	debug_download delete "${apk_dest}/${3}.apk" "${apk_url}" "${apk_dest}/${3}.apk"
-
-	if [[ -f "${apk_dest}/${3}.apk" ]]; then
-		gzip "${apk_dest}/${3}.apk"
-	else	echo "error downloading ${3}"
-	fi
+	download_apk_common "${apk_dest}" "${3}" "${apk_url}" url
 }
 
 grab_apk_from_github () {
@@ -228,22 +288,7 @@ grab_apk_from_github () {
 	local apk_url="$(curl -A "${useragent}" -s "https://api.github.com/repos/${1}/releases/latest" | jq -r '.assets[].browser_download_url')"
 	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
-	rm -f "${apk_dest}/${3}.apk.gz"
-
-	if [[ -f "${apk_dest}/${3}.apk" ]]; then
-		echo -e "\nUpdating from GitHub      : ${3}.apk"
-	else	echo -e "\nDownloading from GitHub   : ${3}.apk"
-		mkdir -p "${apk_dest}"
-	fi
-
-	echo "	Checking SHA256 hash not (yet) supported"
-
-	debug_download delete "${apk_dest}/${3}.apk" "${apk_url}" "${apk_dest}/${3}.apk"
-
-	if [[ -f "${apk_dest}/${3}.apk" ]]; then
-		gzip "${apk_dest}/${3}.apk"
-	else	echo "error downloading ${3}"
-	fi
+	download_apk_common "${apk_dest}" "${3}" "${apk_url}" github
 }
 
 grab_apk_from_gitlab () {
@@ -252,22 +297,7 @@ grab_apk_from_gitlab () {
 	local apk_url="https://gitlab.com${apk_url}"
 	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
-	rm -f "${apk_dest}/${3}.apk.gz"
-
-	if [[ -f "${apk_dest}/${3}.apk" ]]; then
-		echo -e "\nUpdating from GitLab      : ${3}.apk"
-	else	echo -e "\nDownloading from GitLab   : ${3}.apk"
-		mkdir -p "${apk_dest}"
-	fi
-
-	echo "	Checking SHA256 hash not (yet) supported"
-
-	debug_download delete "${apk_dest}/${3}.apk" "${apk_url}" "${apk_dest}/${3}.apk"
-
-	if [[ -f "${apk_dest}/${3}.apk" ]]; then
-		gzip "${apk_dest}/${3}.apk"
-	else	echo "error downloading ${3}"
-	fi
+	download_apk_common "${apk_dest}" "${3}" "${apk_url}" gitlab
 }
 
 grab_apk_from_ogapps () {
@@ -287,8 +317,7 @@ grab_apk_from_ogapps () {
 			# use SDK 21 Calendar Syncadapter for SDK 21 - 29
 			if [ "${4}" -eq 19 ]; then
 				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/15/nodpi/2015080710.apk"
-			else
-				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/21/nodpi/2016267990.apk"
+			else	local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/21/nodpi/2016267990.apk"
 			fi
 		;;
 
@@ -300,26 +329,14 @@ grab_apk_from_ogapps () {
 			# Use SDK 28 Backuptransport on SDK 29 aswell
 			if [ "${4}" -eq 29 ]; then
 				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/28/nodpi/28.apk"
-			else
-				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
+			else	local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
 			fi
 		;;
 	esac
 
 	apk_dest="${appsfolder[6]}/${api_letter}/${2}/${3}"
 
-	if [[ -f "${apk_dest}/${3}.apk.gz" ]]; then
-		echo -e "\nUpdating from OpenGApps   : ${3}.apk [${api_letter}]"
-		rm -f "${apk_dest}/${3}.apk.gz"
-	else	echo -e "\nDownloading from OpenGApps: ${3}.apk [${api_letter}]"
-		mkdir -p "${apk_dest}"
-	fi
-
-	echo "	Checking SHA256 hash not (yet) supported"
-
-	debug_download delete "${apk_dest}/${3}.apk" "${apk_url}" "${apk_dest}/${3}.apk"
-
-	[ -f "${apk_dest}/${3}.apk" ] && gzip "${apk_dest}/${3}.apk"
+	download_apk_common "${apk_dest}" "${3}" "${apk_url}" opengapps "${4}"
 }
 
 grab_lib_from_ogapps () {

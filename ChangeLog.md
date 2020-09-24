@@ -13,6 +13,11 @@
   * improve functions to auto-detect wether we use official or Nanolx GmsCore/DroidGuard and migrate between, if required
      * (there's no public Nanolx GmsCore build as of now, I'm using this for internal testing)
 
+* build-package
+  * allow side-loading custom APKs from `local` directory inside the NanoDroid tree
+    * side-loading libraries is currently not supported
+  * simplify functions for downloading APKs from github, gitlab, url and oepngapps
+
 * sysconfig
   * whitelist Aurora Services for `allow-in-power-save-except-idle`
   * whitelist Aurora Services for `system-user-whitelisted-app`
