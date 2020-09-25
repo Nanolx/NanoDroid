@@ -36,7 +36,7 @@ gzip_apk () {
 }
 
 msg_no_checksum () {
-	echo "	Checking SHA256 hash not supported"
+	echo -e "\tChecking SHA256 hash not supported"
 }
 
 msg_apk_update () {
@@ -81,7 +81,7 @@ download_apk_common () {
 	mkdir -p "${apk_dest}"
 
 	if [ -f "${sideload}/${apk_name}.apk" ]; then
-		msg_download_info "${msg_type}" "${apk_dest}/${apk_name}.apk" "${sdk_ver}"
+		msg_download_info sideload "${apk_dest}/${apk_name}.apk" "${sdk_ver}"
 		cp "${sideload}/${apk_name}.apk" "${apk_dest}/${apk_name}.apk"
 	else
 		msg_download_info "${msg_type}" "${apk_dest}/${apk_name}.apk" "${sdk_ver}"
