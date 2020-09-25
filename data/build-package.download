@@ -35,43 +35,38 @@ gzip_apk () {
 		echo "error downloading ${1}"
 }
 
+msg_no_checksum () {
+	echo "	Checking SHA256 hash not supported"
+}
+
+msg_apk_update () {
+	if [ -f "${1}.gz" ]; then
+		echo -e "\nUpdating from ${2}        : $(basename ${1}) ${3}"
+	else	echo -e "\nDownloading from ${2}     : $(basename ${1}) ${3}"
+	fi
+}
+
 msg_download_info () {
 	case ${1} in
 		sideload)
-				echo -e "\nSideloading APK           : ${2} ${3}"
-				echo "	Checking SHA256 hash not supported"
+			echo -e "\nSideloading APK           : ${2} ${3}"
+			msg_no_checksum
 		;;
-
 		github)
-			if [ -f "${2}.gz" ]; then
-				echo -e "\nUpdating from GitHub      : $(basename ${2})"
-			else	echo -e "\nDownloading from GitHub   : $(basename ${2})"
-			fi
-				echo "	Checking SHA256 hash not supported"
+			msg_apk_update "${2}" "GitHub"
+			msg_no_checksum
 		;;
-
 		gitlab)
-			if [ -f "${2}.gz" ]; then
-				echo -e "\nUpdating from GitLab      : $(basename ${2})"
-			else	echo -e "\nDownloading from GitLab   : $(basename ${2})"
-			fi
-				echo "	Checking SHA256 hash not supported"
+			msg_apk_update "${2}" "GitLab"
+			msg_no_checksum
 		;;
-
 		opengapps)
-			if [ -f "${2}.gz" ]; then
-				echo -e "\nUpdating from OpenGApps   : $(basename ${2}) ${3}"
-			else	echo -e "\nDownloading from OpenGApps: $(basename ${2}) ${3}"
-			fi
-				echo "	Checking SHA256 hash not supported"
+			msg_apk_update "${2}" "OpenGApps" "${3}"
+			msg_no_checksum
 		;;
-
 		url)
-			if [ -f "${2}.gz" ]; then
-				echo -e "\nUpdating from URL         : $(basename ${2})"
-			else	echo -e "\nDownloading from URL      : $(basename ${2})"
-			fi
-				echo "	Checking SHA256 hash not supported"
+			msg_apk_update "${2}" "URL"
+			msg_no_checksum
 		;;
 	esac
 }
