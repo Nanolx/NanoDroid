@@ -139,7 +139,7 @@ index_update_required () {
 check_sha256sum () {
 	local input="${1}"
 
-	in_checksum=""
+	local in_checksum=""
 	local ex_checksum="${2}"
 
 	case ${input} in
@@ -194,22 +194,18 @@ grab_apk_from_repo () {
 			local repo=${repo_fdroid}
 			local repo_p="F-Droid"
 		;;
-
 		guardian )
 			local repo=${repo_guardian}
 			local repo_p="Guardian Project"
 		;;
-
 		microg )
 			local repo=${repo_microg}
 			local repo_p="microG"
 		;;
-
 		nanolx )
 			local repo=${repo_nanolx}
 			local repo_p="Nanolx"
 		;;
-
 		bromite )
 			local repo=${repo_bromite}
 			local repo_p="Bromite"
