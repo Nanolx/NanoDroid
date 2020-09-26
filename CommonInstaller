@@ -447,49 +447,34 @@ detect_mode () {
 		NANODROID_BINDIR="${MODPATH}/system/xbin"
 }
 
-detect_migrate_microg () {
-	GMSCORE_PATH=$(find /data/app -type d -name 'com.google.android.gms-*' &>/dev/null)
+detect_migrate_apk () {
+	local app_id="${1}"
+	local app_name="${2}"
 
-	if [ ! -z ${GMSCORE_PATH} ]; then
-		if ${UNZIP} -l "${MODPATH}/system/priv-app/GmsCore/GmsCore.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
-			GMSCORE_BUILD=Nanolx
-		else	GMSCORE_BUILD=Official
+	USER_PATH=$(find /data/app -type d -name "${app_id}-*" &>/dev/null)
+
+	if [ ! -z ${USER_PATH} ]; then
+		if ${UNZIP} -l "${MODPATH}/system/priv-app/${app_name}/${app_name}.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
+			BUILD_INST=Nanolx
+		else	BUILD_INST=Official
 		fi
 
-		if ${UNZIP} -l "${GMSCORE_PATH}/base.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
-			GMSCORE_LOCAL=Nanolx
-		else	GMSCORE_LOCAL=Official
+		if ${UNZIP} -l "${USER_PATH}/base.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
+			BUILD_USER=Nanolx
+		else	BUILD_USER=Official
 		fi
 
-		if [ "${GMSCORE_LOCAL}" != "${GMSCORE_BUILD}" ]; then
-			decho "    + Removing ${GMSCORE_LOCAL} microG GmsCore in favor of ${GMSCORE_BUILD} microG GmsCore"
-			rm -rf "${GMSCORE_PATH}"
+		if [ "${BUILD_INST}" != "${BUILD_USER}" ]; then
+			decho "    + Removing ${BUILD_USER} ${app_name} in favor of ${BUILD_INST} ${app_name}"
+			rm -rf "${USER_PATH}"
 
-			decho "    + Resetting GCM/FCM connection of all apps to allow re-registration"
-			find /data/data/*/shared_prefs -name com.google.android.gms.*.xml -delete
-		fi
-	fi
-}
-
-detect_migrate_droidguard () {
-	DROIDGUARD_PATH=$(find /data/app -type d -name 'org.microg.gms.droidguard-*' &>/dev/null)
-
-	if [ ! -z ${DROIDGUARD_PATH} ]; then
-		if ${UNZIP} -l "${MODPATH}/system/papp/DroidGuard/DroidGuard.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
-			DROIDGUARD_BUILD=Nanolx
-		else	DROIDGUARD_BUILD=Official
-		fi
-
-		if ${UNZIP} -l "${DROIDGUARD_PATH}/base.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
-			DROIDGUARD_LOCAL=Nanolx
-		else	DROIDGUARD_LOCAL=Official
-		fi
-
-		if [ "${DROIDGUARD_LOCAL}" != "${DROIDGUARD_TYPE}" ]; then
-			decho "    + Removing ${DROIDGUARD_LOCAL} DroidGuard in favor of ${DROIDGUARD_BUILD} DroidGuard"
-			rm -rf "${DROIDGUARD_PATH}"
+			if [ "${app_id}" = "com.google.android.gms" ]; then
+				decho "    + Resetting GCM/FCM connection of all apps to allow re-registration"
+				find /data/data/*/shared_prefs -name com.google.android.gms.*.xml -delete
+			fi
 		fi
 	fi
+
 }
 
 unpack_zip () {
@@ -1101,15 +1086,14 @@ install_microg () {
 
 		print_info "   ++ microG GmsCore"
 		nanodroid_install_apk GmsCore
-		detect_migrate_microg
+		detect_migrate_apk com.google.android.gms GmsCore
 
 		if [ "${nanodroid_microg}" -ne 2 ]; then
 			for app in GsfProxy DroidGuard; do
 				nanodroid_install_apk ${app}
 			done
 
-			detect_migrate_droidguard
-
+			detect_migrate_apk org.microg.gms.droidguard DroidGuard
 			${NANODROID_BINDIR}/nanodroid-overlay --add GmsDroidGuard
 		fi
 
