@@ -212,6 +212,7 @@ update contents:
 	u-swipe			| update swipe libraries
 	u-gsync			| update Google Sync Adapters
 	u-patch			| download Haystack patches
+				| currently disabled as we use new Haystack patches
 
 create zip files:
 	full			| create Full package zip from repo
