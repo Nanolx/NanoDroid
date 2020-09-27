@@ -71,8 +71,26 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
   * ensure you rebooted after [microG setup](#microg-setup)
   * ensure Play Store has signature spoofing permission
       * go to Settings > Apps > Permissions > Signature Spoofing and grant it
+  * go to Settings > Apps > Play Store > Permissions and grant at least the `Phone`  and `Storage` permission
   * force close Play Store and open it again
-  * go to Settings > Apps > Play Store > Permissions and grant at least the `Phone` permission
+
+* Play Store not installing split APKs / extra data
+  * several huge applications (mostly games) have a rather small base APK and additional addon-data downloaded, if Play Store fails to install those
+  * go to Settings > Apps > Play Store > Permissions and grant at least the `Phone`  and `Storage` permission
+  * force close Play Store and open it again
+
+* Play Store does not show bought apps as bought
+  * this is a rare corner-case that sometimes happens on Android 10 (onwards), it's ususally fixed by issueing the following command as root on your device (or via adb shell):
+```find /data/system/users -type f -name 'runtime-permissions.xml' 2>/dev/null | while read file; do
+	rm -f "${file}"
+done
+```
+  * (alternatively remove `runtime-permissions.xml` from file manager as root or via TWRP file manager)
+  * reboot your device
+  * ensure Play Store has signature spoofing permission
+      * go to Settings > Apps > Permissions > Signature Spoofing and grant it
+  * go to Settings > Apps > Play Store > Permissions and grant at least the `Phone`  and `Storage` permission
+  * force close close Play Store and open it again
 
 ## Push Messages
 
