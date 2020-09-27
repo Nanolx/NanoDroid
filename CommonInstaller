@@ -1053,6 +1053,19 @@ install_microg () {
 		gapps_solve_conflicts
 		gapps_destroy_artifacts
 
+		print_info "   ++ microG GmsCore"
+		nanodroid_install_apk GmsCore
+		detect_migrate_apk com.google.android.gms GmsCore
+
+		if [ "${nanodroid_microg}" -ne 2 ]; then
+			for app in GsfProxy DroidGuard; do
+				nanodroid_install_apk ${app}
+			done
+
+			detect_migrate_apk org.microg.gms.droidguard DroidGuard
+			${NANODROID_BINDIR}/nanodroid-overlay --add GmsDroidGuard
+		fi
+
 		NLPBACKEND="nlpBackendNominatim"
 
 		print_info " << with microg"
@@ -1082,19 +1095,6 @@ install_microg () {
 		if [ "${nanodroid_nlpbackend:3:1}" -eq 1 ]; then
 			NLPBACKEND="${NLPBACKEND} nlpBackendRadiocell"
 			print_info "   ++ Radiocell location backend"
-		fi
-
-		print_info "   ++ microG GmsCore"
-		nanodroid_install_apk GmsCore
-		detect_migrate_apk com.google.android.gms GmsCore
-
-		if [ "${nanodroid_microg}" -ne 2 ]; then
-			for app in GsfProxy DroidGuard; do
-				nanodroid_install_apk ${app}
-			done
-
-			detect_migrate_apk org.microg.gms.droidguard DroidGuard
-			${NANODROID_BINDIR}/nanodroid-overlay --add GmsDroidGuard
 		fi
 
 		for app in ${NLPBACKEND}; do
