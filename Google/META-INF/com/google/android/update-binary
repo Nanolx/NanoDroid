@@ -15,26 +15,7 @@ else
 	source "/dev/tmp/CommonInstaller"
 fi
 
-detect_bootmode
-detect_outfd
-#check_space
-show_progress 1.0 0
-
-show_banner
-set_progress 0.1
-
-unpack_zip
-mount_partitions
-
-detect_arch
-setup_busybox
-
-set_progress 0.2
-
-get_cfg_setup
-
-detect_mode
-set_progress 0.3
+setup_installer 1
 
 install_gsync
 set_progress 0.5
