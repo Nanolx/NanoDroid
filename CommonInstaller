@@ -673,11 +673,12 @@ setup_busybox () {
 	${INSTALLER}/busybox.${BIN_ARCH} --install -s ${INSTALLER}/busybox/
 }
 
-# Taken from Magisk, used for System Mode installation
+# Taken from Magisk
 recovery_setup_env () {
-	if ${BOOTMODE}; then
-		PATH=${INSTALLER}/busybox:/system/bin:/vendor/bin
-	else
+	OLD_PATH=${PATH}
+	PATH=${INSTALLER}/busybox:/system/bin:/vendor/bin
+
+	if ! ${BOOTMODE}; then
 		OLD_PATH=${PATH}
 		OLD_LD_LIB=${LD_LIBRARY_PATH}
 		OLD_LD_PRE=${LD_PRELOAD}
@@ -685,11 +686,10 @@ recovery_setup_env () {
 		unset LD_LIBRARY_PATH
 		unset LD_PRELOAD
 		unset LD_CONFIG_FILE
-		PATH=${INSTALLER}/busybox:/system/bin:/vendor/bin
 	fi
 }
 
-# Taken from Magisk, used for System Mode installation
+# Taken from Magisk
 recovery_cleanup_env () {
 	if ${BOOTMODE}; then
 		[ -n ${OLD_PATH} ] && PATH=${OLD_PATH}
