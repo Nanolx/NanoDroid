@@ -22,9 +22,10 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 ## microG
 
 * Battery Drain
-  * microG fails to register applications to GCM (Google Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain either
-     * do a clean flash of your ROM (, Magisk) and NanoDroid and install your apps after microG setup
-     * uninstall and re-install all your applications (backup application data if required)
+  * microG fails to register applications to GCM/FCM (Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain issue the following command as root on your device (or via adb shell):
+  * `find /data/data/*/shared_prefs -name com.google.android.gms.*.xml -delete`
+      * alternatively `nutl -r`
+      * this will force un-register all your applications from GCM/FCM and they'll re-register on next start
 * microG lacks features
   * if you use AppOps, PrivacyGuard or the like you have to grant microG GmsCore **all** permissions, if you prevent some permissions, some apps or features might not work as expected or not at all. Note: some APIs/features are stubs in microG GmsCore, meaning they exist that apps don't complain, but they do nothing - thus blocking microG GmsCore is pretty much of no benefit.
 * You can't get past the first page of the microG login wizard on KitKat
@@ -81,7 +82,8 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 * Play Store does not show bought apps as bought
   * this is a rare corner-case that sometimes happens on Android 10 (onwards), it's ususally fixed by issueing the following command as root on your device (or via adb shell):
-```find /data/system/users -type f -name 'runtime-permissions.xml' 2>/dev/null | while read file; do
+```
+find /data/system/users -type f -name 'runtime-permissions.xml' 2>/dev/null | while read file; do
 	rm -f "${file}"
 done
 ```
@@ -97,10 +99,9 @@ done
 * Apps are not receiving Push messages
   * go to microG Settings / Google Cloud Messaging and check if it is connected
   * ensure you don't have an adblocker blocking the domain `mtalk.google.com` it is required for GCM to work
-  * when using Titanium Backup first install the app only (without data) and start it, this will register the app, after that you can restore the data using Titanium Backup
-  * if an app is not shown as registered in microG Settings / Google Cloud Messaging, try uninstalling and re-installing it
-  * when restoring the ROM from a TWRP backup GCM registration for apps is sometimes broken. You may use the following command to reset GMS settings for a given app using it's appname, or if no appname is given for all applications. Apps will re-register when launched afterwards:
-     * `nutl -r APPNAME` (eg.: APPNAME = `com.nianticlabs.pokemongo`) or `nutl -r`
+  * when using Titanium Backup or OAndBackupX first install the app only (without data) and start it, this will register the app, afterwards restore it's data
+  * when restoring the ROM from a TWRP backup GCM registration for apps is sometimes broken. You may use the following command to reset GCM/FCM connection(s). App(s) will re-register when launched afterwards:
+     * `nutl -r APPID` (eg.: APPID = `com.nianticlabs.pokemongo`) or `nutl -r` (for all applications)
   * if you can't make any app registering for Google Cloud Messaging, try the following
      * open the Phone app and dial the following: `*#*#2432546#*#*` (or ` *#*#CHECKIN#*#*`)
 
