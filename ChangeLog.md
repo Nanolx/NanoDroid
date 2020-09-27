@@ -10,18 +10,23 @@
 ### General Changes
 
 * Installer
-  * improve functions to auto-detect wether we use official or Nanolx GmsCore/DroidGuard and migrate between, if required
+  * improve function to auto-detect wether we use official or Nanolx GmsCore/DroidGuard and migrate between, if required
      * (there's no public Nanolx GmsCore build as of now, I'm using this for internal testing)
 
 * build-package
   * allow side-loading custom APKs from `local` directory inside the NanoDroid tree
     * side-loading libraries is currently not supported
   * simplify functions for downloading APKs from github, gitlab, url and oepngapps
+  * use Android build-tools version 29.0.3 of `dx` utility (for `build-package dalvik`)
 
 * sysconfig
   * whitelist Aurora Services for `allow-in-power-save-except-idle`
   * whitelist Aurora Services for `system-user-whitelisted-app`
   * drop whitelist for Yalp Store (removed from NanoDroid since ages)
+
+* Documentation
+  * update and improve Issues section
+  * some minor improvements
 
 ## 22.9.20200910 "[Tiefseequappe]"
 
