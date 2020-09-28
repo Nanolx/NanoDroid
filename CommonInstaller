@@ -9,6 +9,8 @@ STORAGE=/data/media/0
 curdate=$(date +%Y%m%d_%H.%M.%S)
 nanodroid_logfile="${STORAGE}/nanodroid_logs/${MODID}_${VERSION}_log_${curdate}.log"
 
+config_locations="${STORAGE} /external_sd /sdcard1 /data"
+
 ##########################################################################################
 # NanoDroid Installer Setup Function
 ##########################################################################################
@@ -1884,9 +1886,6 @@ print_info " || ""$(basename ${nanodroid_logfile})"
 ##########################################################################################
 # NanoDroid Configuration File Handling
 ##########################################################################################
-
-# check for configuration files
-config_locations="${STORAGE} /external_sd /sdcard1 /data"
 
 get_config () {
 	config=""
