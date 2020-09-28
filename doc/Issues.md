@@ -11,6 +11,7 @@ Table of Contents
       * [Push Messages](#push-messages)
       * [Unified Nlp](#unified-nlp)
       * [F-Droid](#f-droid)
+      * [Aurora Store / Aurora Droid](#aurora-store--aurora-droid)
       * [Alarm Clock not ringing](#alarm-clock-not-ringing)
       * [Google Software](#google-software)
       * [Other](#other)

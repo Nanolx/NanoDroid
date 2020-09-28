@@ -5,6 +5,7 @@ Table of Contents
    * [build-package](#build-package)
       * [Basic Instructions](#basic-instructions)
       * [Additional Features](#additional-features)
+      * [Sideloading custom APKs](#sideloading-custom-apks)
       * ["Secret" parameters](#secret-parameters)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
