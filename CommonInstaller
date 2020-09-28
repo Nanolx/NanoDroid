@@ -11,6 +11,8 @@ nanodroid_logfile="${STORAGE}/nanodroid_logs/${MODID}_${VERSION}_log_${curdate}.
 
 config_locations="${STORAGE} /external_sd /sdcard1 /data"
 
+privapp_patterns=("(type 0x11)0x[1357]2" "(type 0x11)0xc212" "(type 0x11)0x[02]" "(type 0x11)0x[13]02" "(type 0x11)0x1[01]2" "(type 0x11)0x1001")
+
 ##########################################################################################
 # NanoDroid Installer Setup Function
 ##########################################################################################
@@ -475,78 +477,57 @@ check_bromite_webview_support () {
 ##########################################################################################
 
 dump_system_privapp_permissions () {
-	SYS_LIST="${TMPDIR}/privapp-permissions.list"
+	local sys_list="${TMPDIR}/privapp-permissions.list"
+	local tmp_list="${TMPDIR}/privapp-permissions.dump"
 
-	# XXX this looks shitty
-	"${AAPT}" dump xmltree /system/framework/framework-res.apk AndroidManifest.xml | \
-		tr -d '\n' | sed -e 's/E:/\n/g' | \
-		grep '(type 0x11)0x[1357]2' | \
-		awk -F\" '{print $2}' | sort > "${SYS_LIST}"
+	rm -f "${sys_list}"
 
 	"${AAPT}" dump xmltree /system/framework/framework-res.apk AndroidManifest.xml | \
-		tr -d '\n' | sed -e 's/E:/\n/g' | \
-		grep '(type 0x11)0xc212' | \
-		awk -F\" '{print $2}' | sort >> "${SYS_LIST}"
+		tr -d '\n' | sed -e 's/E:/\n/g' > "${tmp_list}"
 
-	"${AAPT}" dump xmltree /system/framework/framework-res.apk AndroidManifest.xml | \
-		tr -d '\n' | sed -e 's/E:/\n/g' | \
-		grep '(type 0x11)0x[02]' | \
-		awk -F\" '{print $2}' | sort >> "${SYS_LIST}"
-
-	"${AAPT}" dump xmltree /system/framework/framework-res.apk AndroidManifest.xml | \
-		tr -d '\n' | sed -e 's/E:/\n/g' | \
-		grep '(type 0x11)0x[13]02' | \
-		awk -F\" '{print $2}' | sort >> "${SYS_LIST}"
-
-	"${AAPT}" dump xmltree /system/framework/framework-res.apk AndroidManifest.xml | \
-		tr -d '\n' | sed -e 's/E:/\n/g' | \
-		grep '(type 0x11)0x1[01]2' | \
-		awk -F\" '{print $2}' | sort >> "${SYS_LIST}"
-
-	"${AAPT}" dump xmltree /system/framework/framework-res.apk AndroidManifest.xml | \
-		tr -d '\n' | sed -e 's/E:/\n/g' | \
-		grep '(type 0x11)0x1001' | \
-		awk -F\" '{print $2}' | sort >> "${SYS_LIST}"
+	for pattern in "${privapp_patterns[@]}"; do
+		grep "${pattern}" "${tmp_list}" | \
+		awk -F\" '{print $2}' | >> "${sys_list}"
+	done
 
 	# XXX pre-patched custom ROM
 	check_fake_package_signature && \
-		echo "android.permission.FAKE_PACKAGE_SIGNATURE" >> "${SYS_LIST}"
+		echo "android.permission.FAKE_PACKAGE_SIGNATURE" >> "${sys_list}"
 }
 
 create_privapp_permissions_whitelist () {
-	APK="${MODPATH}/system/priv-app/${1}/${1}.apk"
-	APK_NAME="$("${AAPT}" dump badging "${APK}" | awk -F \' '/^package: name/{print $2}')"
-	APK_LIST="${TMPDIR}/${APK_NAME}.list"
+	local apk="${MODPATH}/system/priv-app/${1}/${1}.apk"
+	local apk_name="$("${AAPT}" dump badging "${apk}" | awk -F \' '/^package: name/{print $2}')"
+	local apk_list="${TMPDIR}/${apk_name}.list"
 
-	SYS_LIST="${TMPDIR}/privapp-permissions.list"
+	local sys_list="${TMPDIR}/privapp-permissions.list"
 
-	APP_WHITELIST="${TMPDIR}/${APK_NAME}.xml"
-	INST_WHITELIST="/system/etc/permissions/${APK_NAME}.xml"
+	local app_whitelist="${TMPDIR}/${apk_name}.xml"
+	local inst_whitelist="/system/etc/permissions/${apk_name}.xml"
 
-	[ ! -f "${SYS_LIST}" ] && dump_system_privapp_permissions
+	[ ! -f "${sys_list}" ] && dump_system_privapp_permissions
 
-	"${AAPT}" dump permissions "${APK}" | \
-		awk -F \' '/^uses-permission:/{print $2}' | \
-		sort > "${APK_LIST}"
+	"${AAPT}" dump permissions "${apk}" | \
+		awk -F \' '/^uses-permission:/{print $2}' > "${apk_list}"
 
 	echo '<?xml version="1.0" encoding="utf-8"?>
 <permissions>
-    <privapp-permissions package="'${APK_NAME}'">' > "${APP_WHITELIST}"
+    <privapp-permissions package="'${apk_name}'">' > "${app_whitelist}"
 
-	cat "${APK_LIST}" | while read perm; do
-		if grep -q "${perm}" "${SYS_LIST}"; then
-			decho "  ++ package ${APK_NAME} needs privapp-whitelist ${perm}"
-			echo '        <permission name="'${perm}'" />' >> "${APP_WHITELIST}"
+	cat "${apk_list}" | while read perm; do
+		if grep -q "${perm}" "${sys_list}"; then
+			decho "  ++ package ${apk_Name} needs privapp-whitelist ${perm}"
+			echo '        <permission name="'${perm}'" />' >> "${app_whitelist}"
 		fi
 	done
 
 	echo '    </privapp-permissions>
-</permissions>' >> "${APP_WHITELIST}"
+</permissions>' >> "${app_whitelist}"
 
 	mkdir -p "${MODPATH}/system/etc/permissions/"
-	cp "${APP_WHITELIST}" "${MODPATH}/${INST_WHITELIST}"
-	set_perm_data "${MODPATH}/${INST_WHITELIST}"
-	installinfo_add "${INST_WHITELIST}"
+	cp "${app_whitelist}" "${MODPATH}/${inst_whitelist}"
+	set_perm_data "${MODPATH}/${inst_whitelist}"
+	installinfo_add "${inst_whitelist}"
 }
 
 ##########################################################################################
