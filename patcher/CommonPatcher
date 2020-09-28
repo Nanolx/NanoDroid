@@ -423,7 +423,7 @@ detect_sdk () {
 check_fake_package_signature () {
 	PERMISSION=android.permission.FAKE_PACKAGE_SIGNATURE
 	PERMISSION_OD=$(echo -n "${PERMISSION}" | od -A n -t x1 | tr -d '\n' | sed -e 's/^ //g;s/ /00/g')
-	HAS_FAKESIGN=false
+	PATCH_TYPE=""
 	FRAMEWORKRES_PATCH=false
 	SERVICESJAR_PATCH=false
 
@@ -437,29 +437,15 @@ check_fake_package_signature () {
 	unzip -oq /system/framework/framework-res.apk -d "${TMPDIR}/sigcheck" \
 		|| error "failed to unpack framework-res.apk"
 
-	if grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/AndroidManifest.xml; then
-		HAS_FAKESIGN=true
-		FRAMEWORKRES_PATCH=true
-	fi
-
-	if od -A n -t x1 "${TMPDIR}"/sigcheck/AndroidManifest.xml | tr -d ' \n' | grep -qF "${PERMISSION_OD}"; then
-		HAS_FAKESIGN=true
-		FRAMEWORKRES_PATCH=true
-	fi
+	grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/AndroidManifest.xml && FRAMEWORKRES_PATCH=true
+	od -A n -t x1 "${TMPDIR}"/sigcheck/AndroidManifest.xml | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && FRAMEWORKRES_PATCH=true
 
 	# check services.jar for the patch
 	unzip -oq /system/framework/services.jar -d "${TMPDIR}/sigcheck" \
 		|| error "failed to unpack services.jar"
 
-	if grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/*.dex; then
-		HAS_FAKESIGN=true
-		SERVICESJAR_PATCH=true
-	fi
-
-	if od -A n -t x1 "${TMPDIR}"/sigcheck/*.dex | tr -d ' \n' | grep -qF "${PERMISSION_OD}"; then
-		HAS_FAKESIGN=true
-		SERVICESJAR_PATCH=true
-	fi
+	grep -qF "${PERMISSION}" "${TMPDIR}"/sigcheck/*.dex && SERVICESJAR_PATCH=true
+	od -A n -t x1 "${TMPDIR}"/sigcheck/*.dex | tr -d ' \n' | grep -qF "${PERMISSION_OD}" && SERVICESJAR_PATCH=true
 
 	# we don't use this anywhere (except in SysTest log),
 	# but may still come in hand in the future
@@ -471,7 +457,7 @@ check_fake_package_signature () {
 		PATCH_TYPE="self_patched"
 	fi
 
-	${HAS_FAKESIGN} && return 0 || return 1
+	[ -n "${PATCH_TYPE}" ] && return 0 || return 1
 }
 
 ##########################################################################################
