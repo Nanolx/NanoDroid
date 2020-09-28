@@ -487,7 +487,7 @@ dump_system_privapp_permissions () {
 
 	for pattern in "${privapp_patterns[@]}"; do
 		grep "${pattern}" "${tmp_list}" | \
-		awk -F\" '{print $2}' | >> "${sys_list}"
+		awk -F\" '{print $2}' >> "${sys_list}"
 	done
 
 	# XXX pre-patched custom ROM
