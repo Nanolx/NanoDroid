@@ -10,8 +10,10 @@ curdate=$(date +%Y%m%d_%H.%M.%S)
 nanodroid_logfile="${STORAGE}/nanodroid_logs/${MODID}_${VERSION}_log_${curdate}.log"
 
 config_locations="${STORAGE} /external_sd /sdcard1 /data"
-
 privapp_patterns=("(type 0x11)0x[1357]2" "(type 0x11)0xc212" "(type 0x11)0x[02]" "(type 0x11)0x[13]02" "(type 0x11)0x1[01]2" "(type 0x11)0x1001")
+
+nanodroid_all_init='"10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"'
+nanodroid_all_utils='"findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"'
 
 ##########################################################################################
 # NanoDroid Installer Setup Function
@@ -1897,7 +1899,6 @@ check_cfg_setup () {
 	[ -z "${nanodroid_fdroid}" ] && set_prop nanodroid_fdroid 1
 	[ -z "${nanodroid_microg}" ] && set_prop nanodroid_microg 1
 	[ -z "${nanodroid_apps}" ] && set_prop nanodroid_apps 1
-
 	[ -z "${nanodroid_play}" ] && set_prop nanodroid_play 10
 
 	# in NanoDroid 20.3 nanodroid_play has changed
@@ -1930,9 +1931,7 @@ check_cfg_setup () {
 	[ -z "${nanodroid_gsync}" ] && set_prop nanodroid_gsync 0
 	[ -z "${nanodroid_forcesystem}" ] && set_prop nanodroid_forcesystem 0
 	[ -z "${nanodroid_swipe}" ] && set_prop nanodroid_swipe 0
-
 	[ -z "${nanodroid_bash}" ] && set_prop nanodroid_bash 1
-
 	[ -z "${nanodroid_nlpbackend}" ] && set_prop nanodroid_nlpbackend 1000
 
 	# in NanoDroid 20.3 nanodroid_nlpbackend has changed
@@ -1956,9 +1955,7 @@ check_cfg_setup () {
 		set_prop nanodroid_nlpbackend "${tmp_prop}"
 	fi
 
-	nanodroid_all_init='"10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"'
-
-	[ -z "${nanodroid_init}" ] && set_prop nanodroid_init "${nanodroid_all_init}"
+	[ -z "${nanodroid_init+x}" ] && set_prop nanodroid_init "${nanodroid_all_init}"
 
 	# in NanoDroid 22.7 nanodroid_init has changed
 	if [ "${#nanodroid_init}" -eq 1 ]; then
@@ -1966,9 +1963,7 @@ check_cfg_setup () {
 		set_prop nanodroid_init "${nanodroid_all_init}"
 	fi
 
-	nanodroid_all_utils='"findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"'
-
-	[ -z "${nanodroid_utils}" ] && set_prop nanodroid_utils "${nanodroid_all_utils}"
+	[ -z "${nanodroid_utils+x}" ] && set_prop nanodroid_utils "${nanodroid_all_utils}"
 
 	# in NanoDroid 22.7 nanodroid_util has changed
 	if [ "${#nanodroid_utils}" -eq 1 ]; then
