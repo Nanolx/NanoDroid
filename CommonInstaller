@@ -1033,6 +1033,7 @@ install_microg () {
 		gapps_solve_conflicts
 		gapps_destroy_artifacts
 
+		print_info " << with microg"
 		print_info "   ++ microG GmsCore"
 		nanodroid_install_apk GmsCore
 		detect_migrate_apk com.google.android.gms GmsCore
@@ -1047,8 +1048,6 @@ install_microg () {
 		fi
 
 		NLPBACKEND="nlpBackendNominatim"
-
-		print_info " << with microg"
 		print_info "   ++ Nominatim geocoder backend"
 		${NANODROID_BINDIR}/nanodroid-overlay --add NominatimGeocoderBackend
 		${NANODROID_BINDIR}/nanodroid-overlay --add NominatimNlpBackend
