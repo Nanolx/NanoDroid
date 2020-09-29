@@ -10,6 +10,11 @@
       * note: missing `nanodroid_utils` will still make the default value used, as desired
   * fix that empty `nanodroid_init=""` setup variable will get overriden with default value
      * note: missing `nanodroid_init` will still make the default value used, as desired
+  * ensure we mount `system_${SLOT}` instead of `system`
+     * fixes issue with mounting `/system` on some devices in TWRP
+  * ensure we mount `vendor_${SLOT}` instead of `vendor`
+     * fixes issue with mounting `/vendor` on some devices in TWRP
+  * only create `/system/vendor -> /vendor` compat link needed on some devices if there's no `vendor_${SLOT}` partition
 
 ### General Changes
 
