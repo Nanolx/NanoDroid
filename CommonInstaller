@@ -269,8 +269,8 @@ mount_partitions () {
 		! is_mounted /vendor && mount -o ro /vendor
 		! is mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
 
-		if [ -d /system/vendor -a ! is_mounted /vendor ]; then
-			### XXX work-around required for some ROMs
+		if [[ ! $(is_mounted /vendor) && -a /system/vendor ]]; then
+			### XXX work-around required for some devices
 			VENDOR_COMPAT=TRUE
 			ln -sf /system/vendor /vendor >/dev/null
 		fi
