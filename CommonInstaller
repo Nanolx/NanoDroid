@@ -248,9 +248,10 @@ mount_partitions () {
 		is_mounted /data || mount /data || error "failed to mount /data!"
 
 		mount -o bind /dev/urandom /dev/random
-		! is_mounted /system && mount -o rw system${SLOT}
+
+		! is_mounted /system && mount -o rw /system
 		! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
-		! is_mounted /system && error "failed to mount /system!"
+		! is_mounted /system && mount -o rw /system_root
 
 		if [ -f /system/init.rc ]; then
 			SYSTEM_AS_ROOT=true
@@ -265,7 +266,8 @@ mount_partitions () {
 		VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
 		echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
-		! is_mounted /vendor && mount -o ro vendor${SLOT} || mount -o ro ${VENDOR_BLOCK} /vendor
+		! is_mounted /vendor && mount -o ro /vendor
+		! is mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
 
 		if [ -d /system/vendor -a ! is_mounted /vendor ]; then
 			### XXX work-around required for some ROMs
