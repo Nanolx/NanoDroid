@@ -10,6 +10,8 @@
       * note: missing `nanodroid_utils` will still make the default value used, as desired
   * fix that empty `nanodroid_init=""` setup variable will get overriden with default value
      * note: missing `nanodroid_init` will still make the default value used, as desired
+
+* Installer, Patcher, SysTest, Uninstaller
   * try to mount `/system_root` if direct/block mounting of `/system` fails
      * fixes issue with mounting `/system` on some devices in TWRP
   * ensure we mount `/vendor` block device if direct mounting fails
