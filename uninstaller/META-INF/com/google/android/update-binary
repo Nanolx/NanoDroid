@@ -200,9 +200,10 @@ mount_partitions () {
 	is_mounted /data || mount /data || error "failed to mount /data!"
 
 	mount -o bind /dev/urandom /dev/random
+
 	! is_mounted /system && mount -o rw /system
 	! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
-	! is_mounted /system && error "failed to mount /system!"
+	! is_mounted /system && mount -o rw /system_root
 
 	if [ -f /system/init.rc ]; then
 		SYSTEM_AS_ROOT=true
@@ -217,22 +218,23 @@ mount_partitions () {
 	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
 	echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
-	! is_mounted /vendor && mount -o ro /vendor || mount -o ro ${VENDOR_BLOCK} /vendor
+	! is_mounted /vendor && mount -o ro /vendor
+	! is mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
 
-	if [ -d /system/vendor ]; then
-		### XXX work-around required for some ROMs
+	if [[ ! $(is_mounted /vendor) && -a /system/vendor ]]; then
+		### XXX work-around required for some devices
 		VENDOR_COMPAT=TRUE
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
 
 	echo " "
-	mount | awk '{print $1 " on " $3 " params: " $6}'
+	mount | sed -e '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}'
 	echo " "
 
 	echo " INFO: #8 [prop]"
 	ls -l /system/*.prop
 
-	export build_props=$(find /system /system_root /vendor -type f -name build.prop)
+	build_props=$(find /system /system_root /vendor -type f -name build.prop)
 	echo " INFO: #9 [build_props] ${build_props}"
 
 	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"

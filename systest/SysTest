@@ -101,47 +101,66 @@ mount_partitions () {
 	SYSTEM_AS_ROOT=FALSE
 
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
+	echo " INFO: #1 [SLOT] ${SLOT}"
 	if [ -z ${SLOT} ]; then
 		SLOT=$(grep_cmdline androidboot.slot)
+		echo " INFO: #2 [SLOT] ${SLOT}"
 		if [ ! -z ${SLOT} ]; then
 			SLOT=_${SLOT}
+			echo " INFO: #3 [SLOT] ${SLOT}"
 			DEVICE_AB=TRUE
 		fi
 	fi
 
 	system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
+	echo " INFO: #4 [system_tmp] ${system_tmp}"
 	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
-
-	is_mounted /data || mount /data || error "failed to mount /data!"
-
-	${BOOTMODE} || mount -o bind /dev/urandom /dev/random
-	! is_mounted /system && mount -o rw /system
-	! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
-	! is_mounted /system && error "failed to mount /system!"
-
-	if [ -f /system/init.rc ]; then
-		SYSTEM_AS_ROOT=true
-		[ -L /system_root ] && rm -f /system_root
-		mkdir /system_root 2>/dev/null
-		mount --move /system /system_root
-		mount -o bind /system_root/system /system
-	fi
+	echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
 
 	vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
+	echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
 	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
+	echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
-	! is_mounted /vendor && mount -o ro /vendor || mount -o ro ${VENDOR_BLOCK} /vendor
+	if ${BOOTMODE}; then
+		APEX_LD=/apex/com.android.runtime
+		build_props=$(find /system /system_root /vendor -type f -name build.prop)
 
-	if [ -d /system/vendor ]; then
-		### XXX work-around required for some ROMs
-		VENDOR_COMPAT=TRUE
-		ln -sf /system/vendor /vendor >/dev/null
+		if [[ ! $(is_mounted /vendor) && -a /system/vendor ]]; then
+			VENDOR_COMPAT=TRUE
+		fi
+	else
+		is_mounted /data || mount /data || error "failed to mount /data!"
+
+		mount -o bind /dev/urandom /dev/random
+
+		! is_mounted /system && mount -o rw /system
+		! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
+		! is_mounted /system && mount -o rw /system_root
+
+		if [ -f /system/init.rc ]; then
+			SYSTEM_AS_ROOT=true
+			[ -L /system_root ] && rm -f /system_root
+			mkdir /system_root 2>/dev/null
+			mount --move /system /system_root
+			mount -o bind /system_root/system /system
+		fi
+
+		! is_mounted /vendor && mount -o ro /vendor
+		! is mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
+
+		if [[ ! $(is_mounted /vendor) && -a /system/vendor ]]; then
+			### XXX work-around required for some devices
+			VENDOR_COMPAT=TRUE
+			ln -sf /system/vendor /vendor >/dev/null
+		fi
+
+		build_props=$(find /system /system_root /vendor -type f -name build.prop)
+
+		[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
+
+		[ -d /system/apex ] && mount_apex
 	fi
-
-	build_props=$(find /system /system_root /vendor -type f -name build.prop)
-	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
-
-	[ -d /system/apex ] && mount_apex
 }
 
 umount_partitions () {
