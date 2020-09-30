@@ -122,6 +122,8 @@ mount_partitions () {
 	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
 	echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
+	SYSTEM_AS_ROOT=$(grep_prop ro.build.system_root_image)
+
 	if ${BOOTMODE}; then
 		APEX_LD=/apex/com.android.runtime
 		build_props=$(find /system /system_root /vendor -type f -name build.prop)
@@ -139,7 +141,6 @@ mount_partitions () {
 		! is_mounted /system && mount -o rw /system_root
 
 		if [ -f /system/init.rc ]; then
-			SYSTEM_AS_ROOT=true
 			[ -L /system_root ] && rm -f /system_root
 			mkdir /system_root 2>/dev/null
 			mount --move /system /system_root
