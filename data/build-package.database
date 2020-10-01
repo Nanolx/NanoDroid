@@ -79,6 +79,7 @@ gh_SMARTPACKKERNELMANAGER=(SmartPack/SmartPack-Kernel-Manager app SmartPackKerne
 ###
 
 gl_AURORASERVICES=(AuroraOSS/AuroraServices priv-app AuroraServices)
+gl_AURORAWARDEN=(AuroraOSS/AppWarden app Warden)
 
 ###
 # URL
@@ -140,6 +141,7 @@ file_database=(
 	${appsfolder[3]}/Termux/Termux.apk.gz
 	${appsfolder[3]}/TorBrowser/TorBrowser.apk.gz
 	${appsfolder[3]}/Twidere/Twidere.apk.gz
+	${appsfolder[3]}/Warden/Warden.apk.gz
 	${appsfolder[3]}/XDALabs/XDALabs.apk.gz
 
 	${appsfolder[4]}/AuroraServices/AuroraServices.apk.gz

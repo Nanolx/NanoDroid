@@ -24,6 +24,9 @@
   * improve function to auto-detect wether we use official or Nanolx GmsCore/DroidGuard and migrate between, if required
      * (there's no public Nanolx GmsCore build as of now, I'm using this for internal testing)
 
+* Full package
+  * add `Warden` an app management utility that let's you disable Services and Trackers
+
 * build-package
   * allow side-loading custom APKs from `local` directory inside the NanoDroid tree
     * side-loading libraries is currently not supported
