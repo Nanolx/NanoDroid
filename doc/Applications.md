@@ -46,7 +46,7 @@ Full list of included applications:
 * Termux (Terminal Emulator) {Termux} [> F-Droid](https://f-droid.org/packages/com.termux)
 * TorBrowser {TorBrowser} [> Tor](https://www.torproject.org/projects/torbrowser.html.en)
 * Twidere (Twitter client) {Twidere} [> F-Droid](https://f-droid.org/packages/org.mariotaku.twidere)
-* Warden (Disable Services and Tracakers) {Warden} [> GitLab](https://gitlab.com/AuroraOSS/AppWarden)
+* Warden (Disable Services and Trackers) {Warden} [> GitLab](https://gitlab.com/AuroraOSS/AppWarden)
 * XDA Labs (XDA Forum and App Store) {XDALabs} [> XDA](https://forum.xda-developers.com/android/apps-games/labs-t3241866)
   * source not (yet) available
 

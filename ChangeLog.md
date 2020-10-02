@@ -12,8 +12,7 @@
      * note: missing `nanodroid_init` will still make the default value used, as desired
 
 * Installer, Patcher, SysTest, Uninstaller
-  * try to mount `/system_root` if direct/block mounting of `/system` fails
-     * fixes issue with mounting `/system` on some devices in TWRP
+  * improve detection of system-as-root devices and fix issues mount `/system`
   * ensure we mount `/vendor` block device if direct mounting fails
      * fixes issue with mounting `/vendor` on some devices in TWRP
   * only create `/system/vendor -> /vendor` compat link needed on some devices if there's no `vendor_${SLOT}` partition
@@ -29,9 +28,10 @@
 
 * build-package
   * allow side-loading custom APKs from `local` directory inside the NanoDroid tree
-    * side-loading libraries is currently not supported
+     * side-loading libraries is currently not supported
   * simplify functions for downloading APKs from github, gitlab, url and oepngapps
-  * use Android build-tools version 29.0.3 of `dx` utility (for `build-package dalvik`)
+  * use Android build-tools version 29.0.3 when calling `dx` utility
+     * for `build-package dalvik`
 
 * sysconfig
   * whitelist Aurora Services for `allow-in-power-save-except-idle`
