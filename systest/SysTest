@@ -101,26 +101,19 @@ mount_partitions () {
 	SYSTEM_AS_ROOT=FALSE
 
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
-	echo " INFO: #1 [SLOT] ${SLOT}"
 	if [ -z ${SLOT} ]; then
 		SLOT=$(grep_cmdline androidboot.slot)
-		echo " INFO: #2 [SLOT] ${SLOT}"
 		if [ ! -z ${SLOT} ]; then
 			SLOT=_${SLOT}
-			echo " INFO: #3 [SLOT] ${SLOT}"
 			DEVICE_AB=TRUE
 		fi
 	fi
 
 	system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
-	echo " INFO: #4 [system_tmp] ${system_tmp}"
 	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
-	echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
 
 	vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
-	echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
 	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
-	echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
 	if ${BOOTMODE}; then
 		APEX_LD=/apex/com.android.runtime
