@@ -29,7 +29,6 @@ set_progress 0.75
 
 install_initd
 install_bash
-install_shell_utils
 set_progress 0.9
 
 nanodroid_finalize
