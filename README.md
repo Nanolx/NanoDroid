@@ -156,8 +156,7 @@ NanoDroid includes
 * on-device framework-patcher for microG support (signature spoofing)
   * with automatic de-odexing up to Android 8.1
 * additional components
-  * GNU Bash shell
-  * several utilities from `util-linux`, `bsdmainutils` and more
+  * GNU Bash shell (with Less pager)
   * Addon.d support for System Mode installation
      * restores NanoDroid after ROM update
      * re-debloates GApps, if required

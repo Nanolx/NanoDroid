@@ -12,7 +12,6 @@ Table of Contents
          * [nanodroid_apps](#nanodroid_apps)
          * [nanodroid_overlay](#nanodroid_overlay)
          * [nanodroid_bash](#nanodroid_bash)
-         * [nanodroid_utils](#nanodroid_utils)
          * [nanodroid_init](#nanodroid_init)
          * [nanodroid_gsync](#nanodroid_gsync)
          * [nanodroid_swipe](#nanodroid_swipe)
@@ -165,36 +164,6 @@ Syntax: `nanodroid_bash=1`, value can be 0: 1:
 
 * 0 = don't install GNU Bash
 * 1 = install GNU Bash
-
-### nanodroid_utils
-
-whether and what shell utils to install
-
-* supported packages
-  * Full package
-
-Syntax: `nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"`
-
-this setting is a list of utils, each listed item will be installed, possible values are
-
-```
-findfs
-findmnt
-hexdump
-lessecho
-lesskey
-lsblk
-lscpu
-lsipc
-lslocks
-lsns
-ncal
-whereis
-```
-
-to install no utils, leave empty (`nanodroid_utils=""`), the `""` are mandatory in any case
-
-see [here for more information](../README.md#shell-utilities)
 
 ### nanodroid_init
 

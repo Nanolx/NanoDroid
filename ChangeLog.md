@@ -25,6 +25,8 @@
 
 * Full package
   * add `Warden` an app management utility that let's you disable Services and Trackers
+  * drop shell utilites from the package
+     * except `lesskey` and `lessecho`, they'll be installed together with `bash` and `less` if `nanodroid_bash=1`
 
 * build-package
   * allow side-loading custom APKs from `local` directory inside the NanoDroid tree

@@ -86,25 +86,6 @@ nanodroid_overlay=1
 #	1 = install GNU Bash
 nanodroid_bash=1
 
-# nanodroid_utils:	whether and what shell utils to install
-# supported packages:	Full
-# for more information:	https://gitlab.com/Nanolx/NanoDroid#shell-utilities
-# this setting is a list of utils, each listed item will be installed, possible values
-#	findfs
-#	findmnt
-#	hexdump
-#	lessecho
-#	lesskey
-#	lsblk
-#	lscpu
-#	lsipc
-#	lslocks
-#	lsns
-#	ncal
-#	whereis
-# leave empty (nanodroid_utils="") to install no utils, "" are mandatory in any case
-nanodroid_utils="findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"
-
 # nanodroid_init:	whether and what init scripts to install
 # supported packages:	Full
 # for more information:	https://gitlab.com/Nanolx/NanoDroid#init-scripts

@@ -13,7 +13,6 @@ config_locations="${STORAGE} /external_sd /sdcard1 /data"
 privapp_patterns=("(type 0x11)0x[1357]2" "(type 0x11)0xc212" "(type 0x11)0x[02]" "(type 0x11)0x[13]02" "(type 0x11)0x1[01]2" "(type 0x11)0x1001")
 
 nanodroid_all_init='"10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"'
-nanodroid_all_utils='"findfs findmnt hexdump lessecho lesskey lsblk lscpu lsipc lslocks lsns ncal whereis"'
 
 ##########################################################################################
 # NanoDroid Installer Setup Function
@@ -1250,8 +1249,12 @@ install_bash () {
 		nanodroid_install_file xbin/bash bin
 		nanodroid_install_file xbin/bash.bin.${BIN_ARCH} bin
 		nanodroid_install_file xbin/bashbug.${BIN_ARCH} bin
+
+		print_info " << with Less Pager"
 		nanodroid_install_file xbin/less bin
 		nanodroid_install_file xbin/less.bin.${BIN_ARCH} bin
+		nanodroid_install_file xbin/lessecho.${BIN_ARCH} bin
+		nanodroid_install_file xbin/lesskey.${BIN_ARCH} bin
 	else	print_info " << without GNU Bash Shell"
 	fi
 }
@@ -1278,25 +1281,6 @@ install_nanodroidscripts () {
 		done
 
 		nanodroid_substitute xbin/nanodroid-prop
-	fi
-}
-
-##########################################################################################
-# Install Shell Utilities
-##########################################################################################
-
-install_shell_utils () {
-	if [ -n "${nanodroid_utils}" ]; then
-		print_info " << with Shell Utilities"
-
-		for binary in ${nanodroid_utils}; do
-			if [ -f "${INSTALLER}/system/xbin/${binary}.${BIN_ARCH}" ]; then
-				nanodroid_install_file xbin/${binary}.${BIN_ARCH} bin
-			else
-				ui_print " -- ${binary} is not a known shell util"
-			fi
-		done
-	else	print_info " << without Shell Utilities"
 	fi
 }
 
@@ -1962,14 +1946,6 @@ check_cfg_setup () {
 		set_prop nanodroid_init "${nanodroid_all_init}"
 	fi
 
-	[ -z "${nanodroid_utils+x}" ] && set_prop nanodroid_utils "${nanodroid_all_utils}"
-
-	# in NanoDroid 22.7 nanodroid_util has changed
-	if [ "${#nanodroid_utils}" -eq 1 ]; then
-		sed -e '/^nanodroid_utils/d' -i "${cfg_setup}"
-		set_prop nanodroid_utils "${nanodroid_all_utils}"
-	fi
-
 	# in NanoDroid 21.0.90 nanodroid_override was dropped
 	sed -e '/^nanodroid_override/d' -i "${cfg_setup}"
 
@@ -1981,6 +1957,9 @@ check_cfg_setup () {
 
 	# in NanoDroid 22.6 nanodroid_zelda was dropped
 	sed -e '/^nanodroid_zelda/d' -i "${cfg_setup}"
+
+	# in NanoDroid 23.0 nanodroid_utils was dropped
+	sed -e '/^nanodroid_uitls/d' -i "${cfg_setup}"
 
 	source "${cfg_setup}"
 }

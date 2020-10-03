@@ -7,7 +7,6 @@ Table of Contents
       * [NanoDroid-Perm](#nanodroid-perm)
       * [NanoDroid-Util](#nanodroid-util)
       * [init scripts](#init-scripts)
-      * [Shell Utilities](#shell-utilities)
       * [GNU Bash](#gnu-bash)
       * [microG](#microg)
       * [F-Droid](#f-droid)
@@ -89,39 +88,15 @@ When installed to /system your ROM needs to support running scripts in
 
 or you can use **Kernel Adiutor's** init.d emulation.
 
-## Shell Utilities
-
-Several utilities from `bsdmainutils` and `util-linux` are included:
-
-[> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils)
-
-* column
-* hexdump
-* ncal
-
-[> util-linux GitHub](https://github.com/karelzak/util-linux)
-
-* findfs
-* findmnt
-* lsblk
-* lscpu
-* lsipc
-* lslocks
-* lsns
-* whereis
-
-Other shell utilities
-
-* less [> Website](http://www.greenwoodsoftware.com/less/)
-  * lessecho
-  * lesskey
-* unzip [> Website](http://www.info-zip.org/UnZip.html)
-
 ## GNU Bash
 
 NanoDroid includes GNU Bash shell.
 
 * [> GNU Bash Website](https://www.gnu.org/software/bash/bash.html)
+
+The [> less](http://www.greenwoodsoftware.com/less/) Pager will be installed alongside.
+
+The `column` utility from [> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils) is included to beautify the output of the `nanodroid-overlay` script.
 
 ## microG
 
