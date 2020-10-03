@@ -12,7 +12,7 @@
      * note: missing `nanodroid_init` will still make the default value used, as desired
 
 * Installer, Patcher, SysTest, Uninstaller
-  * improve detection of system-as-root devices and fix issues mount `/system`
+  * improve detection of system-as-root devices and fix issues mounting `/system`
   * ensure we mount `/vendor` block device if direct mounting fails
      * fixes issue with mounting `/vendor` on some devices in TWRP
   * only create `/system/vendor -> /vendor` compat link needed on some devices if there's no `vendor_${SLOT}` partition
@@ -41,6 +41,11 @@
 * Documentation
   * update and improve Issues section
   * some minor improvements
+
+## Updates
+
+* manual
+  * GNU Bash (5.1-beta1)
 
 ## 22.9.20200910 "[Tiefseequappe]"
 
