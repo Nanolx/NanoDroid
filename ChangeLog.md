@@ -55,6 +55,17 @@
 
 ## Updates
 
+* automatic
+  * Bromite System WebView (86.0.4240.70)
+  * FreeOTP+ (2.1)
+  * K-9 Mail (5.718)
+  * KeePassDX (2.8.5)
+  * OAndBackupX (3.2.0)
+  * OpenVPN (0.7.21)
+  * Simple Calendar (6.10.3)
+  * Simple Gallery (6.16.1)
+  * Termux (0.99)
+
 * manual
   * GNU Bash (5.1-beta1)
 
