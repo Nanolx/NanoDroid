@@ -19,7 +19,18 @@
 
 * Installer
   * improve function to auto-detect wether we use official or Nanolx GmsCore/DroidGuard and migrate between, if required
-     * (there's no public Nanolx GmsCore build as of now, I'm using this for internal testing)
+     * (there's no public Nanolx microG GmsCore build, I'm using this for internal testing)
+  * simplify function for checking whether ROM has builtin or selfpatched support for `android.permission.FAKE_PACKAGE_SIGNATURE`
+  * simplify and speed-up function for on-the-fly creation of privapp-permission whitelists
+  * simplify function for linking swipe libraries
+  * new `setup_installer()` function to reduce amount of code in each module's `update-binary`
+  * re-order functions and make the `CommonInstaller` file better readable
+
+* Patcher, SysTest, Uninstaller
+  * update functions from Installer
+
+* SysTest
+  * minor internal improvements
 
 * Full package
   * add `Warden` an app management utility that let's you disable Services and Trackers
