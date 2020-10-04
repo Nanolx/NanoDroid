@@ -40,7 +40,7 @@
 * build-package
   * allow side-loading custom APKs from `local` directory inside the NanoDroid tree
      * side-loading libraries is currently not supported
-  * simplify functions for downloading APKs from github, gitlab, url and oepngapps
+  * simplify functions for downloading APKs from github, gitlab, url and opengapps
   * use Android build-tools version 29.0.3 when calling `dx` utility
      * for `build-package dalvik`
 
@@ -59,7 +59,7 @@
   * Bromite System WebView (86.0.4240.70)
   * FreeOTP+ (2.1)
   * K-9 Mail (5.718)
-  * KeePassDX (2.8.5)
+  * KeePassDX (2.8.7)
   * OAndBackupX (3.2.0)
   * OpenVPN (0.7.21)
   * Simple Calendar (6.10.3)
