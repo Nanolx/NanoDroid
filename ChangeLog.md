@@ -57,6 +57,7 @@
 
 * automatic
   * Bromite System WebView (86.0.4240.70)
+  * F-Droid (1.10-alpha1)
   * FreeOTP+ (2.1)
   * K-9 Mail (5.718)
   * KeePassDX (2.8.7)
