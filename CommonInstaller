@@ -1077,8 +1077,6 @@ install_microg () {
 			nanodroid_install_apk ${app}
 		done
 
-		create_privapp_permissions_whitelist GmsCore
-
 		nanodroid_install_file etc/permissions/features.xml
 		nanodroid_install_file etc/sysconfig/microg-a5k.xml
 
@@ -1130,7 +1128,6 @@ install_fdroid_aurora () {
 	print_info " << with Aurora Droid"
 	nanodroid_install_apk AuroraDroid
 	nanodroid_install_apk AuroraServices
-	create_privapp_permissions_whitelist AuroraServices
 }
 
 install_fdroid_fdroid () {
@@ -1140,7 +1137,6 @@ install_fdroid_fdroid () {
 
 	${NANODROID_BINDIR}/nanodroid-overlay --add FDroidPriv
 
-	create_privapp_permissions_whitelist FDroidPrivileged
 	nanodroid_install_file etc/org.fdroid.fdroid/additional_repos.xml
 }
 
@@ -1199,20 +1195,16 @@ install_store () {
 	if [ "${FAKE_STORE}" -eq 1 ]; then
 		print_info " << with Fake Store"
 		nanodroid_install_apk FakeStore
-
-		create_privapp_permissions_whitelist FakeStore
 	else 	print_info " << without Fake Store"
 	fi
 
-	if [ ! -z "${STORE_CONFLICT}" ]; then
-		${NANODROID_BINDIR}/nanodroid-overlay --add ${STORE_CONFLICT}
+	[ -n "${STORE_CONFLICT}" ] && ${NANODROID_BINDIR}/nanodroid-overlay --add ${STORE_CONFLICT}
 
-		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
-			rm -rf /data/data/com.android.vending
-			rm -rf /data/user/*/com.android.vending
-			rm -rf /data/user_de/*/com.android.vending
-			rm -rf /data/app/com.android.vending-*
-		fi
+	if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
+		rm -rf /data/data/com.android.vending
+		rm -rf /data/user/*/com.android.vending
+		rm -rf /data/user_de/*/com.android.vending
+		rm -rf /data/app/com.android.vending-*
 	fi
 }
 
@@ -1222,9 +1214,8 @@ install_store_play () {
 	FAKE_STORE=0
 
 	print_info " << with Play Store"
+	${NANODROID_BINDIR}/nanodroid-overlay --remove Phonesky
 	nanodroid_install_apk Phonesky
-
-	create_privapp_permissions_whitelist Phonesky
 
 	nanodroid_install_file etc/default-permissions/phonesky-permissions.xml
 }
@@ -1233,7 +1224,6 @@ install_store_aurora () {
 	print_info " << with Aurora Store"
 	nanodroid_install_apk AuroraStore
 	nanodroid_install_apk AuroraServices
-	create_privapp_permissions_whitelist AuroraServices
 }
 
 ##########################################################################################
@@ -1403,7 +1393,6 @@ install_gsync () {
 				nanodroid_install_apk ${app}
 			done
 
-			create_privapp_permissions_whitelist GoogleBackupTransport
 			nanodroid_install_file etc/default-permissions/google-sync-permissions.xml
 		fi
 	else	print_info " << without Google Sync Adapters"
@@ -1622,6 +1611,8 @@ nanodroid_install_apk () {
 	installinfo_add "${dest}/${dest_apk}"
 
 	nanodroid_install_lib "${dest}/${dest_apk}" "${2}"
+
+	[[ "${dir}" == *priv-app* ]] && create_privapp_permissions_whitelist ${app}
 
 	set_perm_data -r "${dest}"
 }
