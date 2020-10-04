@@ -8,6 +8,7 @@
   * update privapp-permission detection to fix bootloops on Android 11
   * fix that empty `nanodroid_init=""` setup variable will get overriden with default value
      * note: missing `nanodroid_init` will still make the default value used, as desired
+  * improve handling of conflict between `Fake Store` and `Play Store`
 
 * Installer, Patcher, SysTest, Uninstaller
   * improve detection of system-as-root devices and fix issues mounting `/system`
