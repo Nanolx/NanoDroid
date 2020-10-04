@@ -12,9 +12,9 @@
 # 
 ##########################################################################################
 
-source /tmp/backuptool.functions
+source /tmp/backuptool.functions || source /postinstall/tmp/backuptool.functions
 
-MODID=@MODID@
+MODID=NanoDroid
 OUTFD=
 VERSION=23.0.99999999
 
@@ -78,29 +78,10 @@ get_config () {
 	done
 }
 
-is_mounted() {
-	if [ -n "$2" ]; then
-		cat /proc/mounts | grep $1 | grep $2, >/dev/null
-	else
-		cat /proc/mounts | grep $1 >/dev/null
-	fi
+is_mounted () {
+	grep -q "$(readlink -f ${1})" /proc/mounts 2>/dev/null
 	return $?
 }
-
-if (is_mounted /data); then
-	mount -orw,remount /data >/dev/null
-else	mount -orw /data >/dev/null
-fi
-
-if [ ! -d /system/xbin ]; then
-	NANODROID_BINDIR=/system/bin
-else	NANODROID_BINDIR=/system/xbin
-fi
-
-if [ ! -r ${NANODROID_LIST} ]; then
-	echo "No NanoDroid installer information found!"
-	exit 1
-fi
 
 ui_print () {
 	echo -n -e "ui_print ${1}\n" >> /proc/self/fd/${OUTFD}
@@ -108,37 +89,27 @@ ui_print () {
 }
 
 grep_prop() {
-	REGEX="${1}"
-	shift
-	FILES="${@}"
-	[ -z "${@}" ] && FILES='/system/build.prop'
-	sed -n "s/^${REGEX}=//p" ${FILES} | \
-		head -n 1
+	sed -n "s/^${1}=//p" ${build_props} ${2} | head -n 1
 }
 
+
 setup_env () {
-	SDK_VERSION=$(grep_prop ro.build.version.sdk)
+	detect_outfd
 
-	ABI=$(grep_prop ro.product.cpu.abi | cut -c-3)
-	ABI2=$(grep_prop ro.product.cpu.abi2 | cut -c-3)
-	ABILONG=$(grep_prop ro.product.cpu.abi)
+	is_mounted /data || mount -oro /data
 
-	OLD_PATH=${PATH}
-	OLD_LD_LIB=${LD_LIBRARY_PATH}
-	OLD_LD_PRE=${LD_PRELOAD}
-	OLD_LD_CFG=${LD_CONFIG_FILE}
-	unset LD_LIBRARY_PATH
-	unset LD_PRELOAD
-	unset LD_CONFIG_FILE
+	PATH=/system/bin:/system/xbin:${PATH}
 
-	ARCH=arm
+	if [ ! -d /system/xbin ]; then
+		NANODROID_BINDIR=/system/bin
+	else	NANODROID_BINDIR=/system/xbin
+	fi
 
-	[ "$ABI" = "x86" ] && ARCH=x86
-	[ "$ABI2" = "x86" ] && ARCH=x86
-	[ "$ABILONG" = "arm64-v8a" ] && ARCH=arm64
-	[ "$ABILONG" = "x86_64" ] && ARCH=x86_64
+	if [ ! -r ${NANODROID_LIST} ]; then
+		echo "No NanoDroid installer information found!"
+		exit 1
+	fi
 
-	export PATH=/system/bin:/system/xbin:${PATH}
 }
 
 detect_outfd () {
@@ -154,8 +125,6 @@ detect_outfd () {
 		done
 	fi
 }
-
-detect_outfd
 
 backup_action () {
 	sleep 5
@@ -206,11 +175,6 @@ postrestore_action () {
 			ui_print " ++ ${MODID} ${VERSION} addon.d: creating Overlays done"
 		fi
 	fi
-
-	[ -n ${OLD_PATH} ] && PATH=${OLD_PATH}
-	[ -n ${OLD_LD_LIB} ] && LD_LIBRARY_PATH=${OLD_LD_LIB}
-	[ -n ${OLD_LD_PRE} ] && LD_PRELOAD=${OLD_LD_PRE}
-	[ -n ${OLD_LD_CFG} ] && LD_CONFIG_FILE=${OLD_LD_CFG}
 }
 
 case "${1}" in

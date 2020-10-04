@@ -1471,7 +1471,6 @@ install_addond () {
 			error "failed to install System Mode OTA survival"
 
 		chmod 0755 "/system/addon.d/91-nanodroid.sh"
-		sed -e "s|@MODID@|${MODID}|g" -i "/system/addon.d/91-nanodroid.sh"
 	else
 		print_info " << ROM does not have addon.d support"
 	fi
