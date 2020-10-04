@@ -69,6 +69,7 @@
 
 * manual
   * GNU Bash (5.1-beta1)
+  * MPV (201004-nightly)
 
 ## 22.9.20200910 "[Tiefseequappe]"
 
