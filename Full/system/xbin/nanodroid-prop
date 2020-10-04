@@ -43,13 +43,13 @@ case ${1} in
 	;;
 
 	-A | --add-prop )
-		if [ ! -z ${2} -a ! -z ${3} ]; then
+		if [ -n ${2} -a -n ${3} ]; then
 			add_prop "${2}" "${3}"
 		fi
 	;;
 
 	-R | --remove-prop )
-		if [ ! -z ${2} ]; then
+		if [ -n ${2} ]; then
 			remove_prop "${2}"
 		fi
 	;;

@@ -183,7 +183,7 @@ increase_module_version () {
 dalvikize_jar () {
 	[ -z "${ANDROID_HOME}" ] && error "ANDROID_HOME is not set!"
 	[ ! -f "${ANDROID_HOME}/build-tools/29.0.3/dx" ] && error "can't find 'dx' binary in \"${ANDROID_HOME}/build-tools/29.0.3\"!"
-	[ ! -z "${2}" ] && local dx_extra_arg="--min-sdk-version=${2}"
+	[ -n "${2}" ] && local dx_extra_arg="--min-sdk-version=${2}"
 
 	if [ -f "${1}" ]; then
 		${ANDROID_HOME}/build-tools/29.0.3/dx --dex \

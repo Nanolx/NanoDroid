@@ -79,7 +79,7 @@ get_config () {
 }
 
 is_mounted() {
-	if [ ! -z "$2" ]; then
+	if [ -n "$2" ]; then
 		cat /proc/mounts | grep $1 | grep $2, >/dev/null
 	else
 		cat /proc/mounts | grep $1 >/dev/null

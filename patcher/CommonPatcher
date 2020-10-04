@@ -38,7 +38,7 @@ ui_print() {
 }
 
 is_mounted () {
-	if [ ! -z "$2" ]; then
+	if [ -n "$2" ]; then
 		cat /proc/mounts | grep $1 | grep $2, >/dev/null
 	else
 		cat /proc/mounts | grep $1 >/dev/null
@@ -116,7 +116,7 @@ mount_partitions () {
 		if [ -z ${SLOT} ]; then
 			SLOT=$(grep_cmdline androidboot.slot)
 			echo " INFO: #2 [SLOT] ${SLOT}"
-			if [ ! -z ${SLOT} ]; then
+			if [ -n ${SLOT} ]; then
 				SLOT=_${SLOT}
 				echo " INFO: #3 [SLOT] ${SLOT}"
 				DEVICE_AB=TRUE
@@ -205,7 +205,7 @@ set_perm () {
 	chown ${2}:${3} ${1} || error "failed change owner for ${1}"
 	chmod ${4} ${1} || error "failed to change mode for ${1}"
 
-	if [ ! -z "${5}" ]; then
+	if [ -n "${5}" ]; then
 		chcon ${5} ${1} 2>/dev/null
 	else	chcon 'u:object_r:system_file:s0' ${1} 2>/dev/null
 	fi

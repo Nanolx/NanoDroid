@@ -30,7 +30,7 @@ ui_print() {
 }
 
 is_mounted () {
-	if [ ! -z "$2" ]; then
+	if [ -n "$2" ]; then
 		cat /proc/mounts | grep $1 | grep $2, >/dev/null
 	else
 		cat /proc/mounts | grep $1 >/dev/null
@@ -103,7 +103,7 @@ mount_partitions () {
 	SLOT=$(grep_cmdline androidboot.slot_suffix)
 	if [ -z ${SLOT} ]; then
 		SLOT=$(grep_cmdline androidboot.slot)
-		if [ ! -z ${SLOT} ]; then
+		if [ -n ${SLOT} ]; then
 			SLOT=_${SLOT}
 			DEVICE_AB=TRUE
 		fi

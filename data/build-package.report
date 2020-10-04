@@ -188,7 +188,7 @@ get_etc_info () {
 	| Origin:	${etc_path}
 	| SHA256:	${etc_sha}" >> ${report_file}
 
-	if [ ! -z "${etc_pkgs}" ]; then
+	if [ -n "${etc_pkgs}" ]; then
 		echo -e "	| Packages:\n$(printf "\t|- %s\n" ${etc_pkgs})\n" >> ${report_file}
 	else	echo "" >> ${report_file}
 	fi

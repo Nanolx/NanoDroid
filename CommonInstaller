@@ -168,7 +168,7 @@ set_perm () {
 	chown ${2}:${3} ${1} || error "failed change owner for ${1}"
 	chmod ${4} ${1} || error "failed to change mode for ${1}"
 
-	if [ ! -z "${5}" ]; then
+	if [ -n "${5}" ]; then
 		chcon ${5} ${1} 2>/dev/null
 	else	chcon 'u:object_r:system_file:s0' ${1} 2>/dev/null
 	fi
@@ -232,7 +232,7 @@ mount_partitions () {
 		if [ -z ${SLOT} ]; then
 			SLOT=$(grep_cmdline androidboot.slot)
 			echo " INFO: #2 [SLOT] ${SLOT}"
-			if [ ! -z ${SLOT} ]; then
+			if [ -n ${SLOT} ]; then
 				SLOT=_${SLOT}
 				echo " INFO: #3 [SLOT] ${SLOT}"
 				DEVICE_AB=TRUE
@@ -389,7 +389,7 @@ detect_migrate_apk () {
 
 	USER_PATH=$(find /data/app -type d -name "${app_id}-*" &>/dev/null)
 
-	if [ ! -z ${USER_PATH} ]; then
+	if [ -n ${USER_PATH} ]; then
 		if ${UNZIP} -l "${MODPATH}/system/priv-app/${app_name}/${app_name}.apk" | grep META-INF/NANOLX.RSA &>/dev/null; then
 			BUILD_INST=Nanolx
 		else	BUILD_INST=Official
@@ -969,7 +969,7 @@ magisk_install_postinst () {
 	fi
 
 	if [ "${nanodroid_microg}" -ne 0 -o "${MODID}" = "NanoDroid_microG" ]; then
-		if [ ! -z $(grep_prop ro.setupwizard.mode) ]; then
+		if [ -n $(grep_prop ro.setupwizard.mode) ]; then
 			echo "ro.setupwizard.mode=DISABLED" >> ${MODPATH}/system.prop
 		fi
 	fi
@@ -1592,7 +1592,7 @@ nanodroid_install_apk () {
 		fi
 	fi
 
-	if [ ! -z "${alias}" ]; then
+	if [ -n "${alias}" ]; then
 		dest_apk=${alias}.apk
 	else	dest_apk=${app}.apk
 	fi
@@ -1768,7 +1768,7 @@ VENDORBLOCK=${VENDORBLOCK}
 
 df 2>/dev/null | sed '/^\//d' >> ${nanodroid_logfile}
 
-if [ ! -z "${cfg_setup}" ]; then
+if [ -n "${cfg_setup}" ]; then
 
 echo "
 ### SETUP ###
@@ -1780,7 +1780,7 @@ cat "${cfg_setup}" >> ${nanodroid_logfile}
 
 fi
 
-if [ ! -z "${cfg_apps}" ]; then
+if [ -n "${cfg_apps}" ]; then
 
 echo "
 ### APPS ###
@@ -1792,7 +1792,7 @@ cat "${cfg_apps}" >> ${nanodroid_logfile}
 
 fi
 
-if [ ! -z "${cfg_overlay}" ]; then
+if [ -n "${cfg_overlay}" ]; then
 
 echo "
 ### OVERLAY ###
