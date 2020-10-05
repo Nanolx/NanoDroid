@@ -134,6 +134,11 @@ mount_partitions () {
 
 		SYSTEM_AS_ROOT=$(grep_prop ro.build.ab_update /default.prop)
 		if [ -d /system_root -o ${SYSTEM_AS_ROOT} ]; then
+			[ -L /system_root ] && mv /system_root /system_root_link
+			if [ ! -d /system_root ]; then
+				rm -rf /system_root
+				mkdir -p /system_root
+			fi
 			! is_mounted /system_root && mount -o rw /system_root
 			! is_mounted /system_root && mount -o rw ${SYSTEM_BLOCK} /system_root
 			mount -o bind /system_root/system /system
@@ -148,7 +153,7 @@ mount_partitions () {
 		echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
 		! is_mounted /vendor && mount -o ro /vendor
-		! is mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
+		! is_mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
 
 		if [[ ! $(is_mounted /vendor) && -d /system/vendor ]]; then
 			### XXX work-around required for some devices
