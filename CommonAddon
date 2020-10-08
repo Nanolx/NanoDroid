@@ -18,7 +18,7 @@ MODID=NanoDroid
 OUTFD=
 VERSION=23.0.99999999
 
-NANODROID_LIST=/data/adb/NanoDroid_FileList
+NANODROID_LIST=/system/addon.d/NanoDroid_FileList
 
 print_google_apps()
 {

@@ -3,7 +3,8 @@
 VERSION=23.0.99999999
 NANODROID_UPGRADE=0
 INSTALL_SUCCESS=TRUE
-NANODROID_LIST=/data/adb/NanoDroid_FileList
+NANODROID_LIST=/system/addon.d/NanoDroid_FileList
+NANODROID_LIST_OLD=/data/adb/NanoDroid_FileList
 
 STORAGE=/data/media/0
 curdate=$(date +%Y%m%d_%H.%M.%S)
@@ -773,6 +774,8 @@ detect_mode () {
 			installer_setup_env
 			unset MODPATH
 
+			mkdir -p /system/addon.d
+			[ -f "${NANODROID_LIST_OLD}" ] && mv "${NANODROID_LIST_OLD}" "${NANODROID_LIST}"
 			[ -f "${NANODROID_LIST}" ] &&  NANODROID_UPGRADE=1
 		;;
 
@@ -1469,16 +1472,12 @@ link_swipe_libs () {
 ##########################################################################################
 
 install_addond () {
-	if [ -d /system/addon.d ]; then
-		print_info " << System Mode OTA survival"
+	print_info " << System Mode OTA survival"
 
-		cp "${INSTALLER}/CommonAddon" "/system/addon.d/91-nanodroid.sh" || \
-			error "failed to install System Mode OTA survival"
+	cp "${INSTALLER}/CommonAddon" "/system/addon.d/91-nanodroid.sh" || \
+		error "failed to install System Mode OTA survival"
 
-		chmod 0755 "/system/addon.d/91-nanodroid.sh"
-	else
-		print_info " << ROM does not have addon.d support"
-	fi
+	chmod 0755 "/system/addon.d/91-nanodroid.sh"
 }
 
 ##########################################################################################
