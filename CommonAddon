@@ -52,17 +52,6 @@ WhisperPush
 EOF
 }
 
-print_google_data ()
-{
-cat <<EOF
-com.amap.android.location
-com.baidu.location
-com.google.android.location
-org.microg.nlp
-org.microg.unifiednlp
-EOF
-}
-
 # check for configuration files
 config_locations="/data/media/0 /external_sd /sdcard1 /data"
 
@@ -158,12 +147,6 @@ postrestore_action () {
 		${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
 	done
 
-	print_google_data | while read app; do
-		rm -rf /data/data/${app}
-		rm -rf /data/user/*/${app}
-		rm -rf /data/user_de/*/${app}
-		rm -rf /data/app/${app}-*
-	done
 	ui_print " ++ ${MODID} ${VERSION} addon.d: GApps removal done"
 
 	get_config setup
