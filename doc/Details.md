@@ -96,8 +96,6 @@ NanoDroid includes GNU Bash shell.
 
 The [> less](http://www.greenwoodsoftware.com/less/) Pager will be installed alongside.
 
-The `column` utility from [> bsdmainutils Launchpad](https://launchpad.net/ubuntu/+source/bsdmainutils) is included to beautify the output of the `nanodroid-overlay` script.
-
 ## microG
 
 microG is an Open Source replacement for Google Services, full details can be found at the microG homepage [> Website](http://microg.org/)

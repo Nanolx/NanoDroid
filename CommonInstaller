@@ -1270,7 +1270,6 @@ install_nanodroidscripts () {
 		nanodroid_install_file xbin/${script} bin
 	done
 
-	nanodroid_install_file xbin/column.${BIN_ARCH} bin
 	nanodroid_substitute xbin/nanodroid-overlay
 
 	if [ "${MODE}" = "MAGISK" ]; then
