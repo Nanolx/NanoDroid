@@ -131,8 +131,9 @@ overrides_list () {
 			if [ -d ${path} ]; then
 				echo "Overrides for ${path}:"
 				for app in $(find "${OVERLAY_PATH}/${path}" -name "*.replace"); do
-					echo "  * $(basename $(dirname "${app}"))"
+					app_int="\n  * $(basename $(dirname "${app}"))${app_int}"
 				done
+				echo -e "${app_int}" | sort
 			fi
 		done
 	else
@@ -146,8 +147,9 @@ overrides_list_non () {
 			if [ -d ${path} ]; then
 				echo "Non-Overriden apps for ${path}:"
 				for app in $(find "${path}" -mindepth 1 -maxdepth 1 -type d); do
-					[ ! -d ${OVERLAY_PATH}/${app} ] && echo "  * $(basename ${app})"
+					[ ! -d ${OVERLAY_PATH}/${app} ] &&  app_int="\n  * $(basename ${app})${app_int}"
 				done
+				echo -e "${app_int}" | sort
 			fi
 		done
 	else
@@ -155,8 +157,9 @@ overrides_list_non () {
 			if [ -d ${path} ]; then
 				echo "Non-Overriden apps for ${path}:"
 				for app in $(find "${path}" -mindepth 1 -maxdepth 1 -type d); do
-					echo "  * $(basename ${app})"
+					app_int="\n  * $(basename ${app})${app_int}"
 				done
+				echo -e "${app_int}" | sort
 			fi
 		done
 	fi
