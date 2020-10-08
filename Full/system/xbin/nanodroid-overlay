@@ -2,7 +2,6 @@
 
 export MODID=@MODID@
 export MODE=@MODE@
-export SYS_REMOUNT=0
 
 error () {
 	echo "!! ${@}"
@@ -11,7 +10,6 @@ error () {
 
 if [ "${MODE}" = "SYSTEM" ]; then
 	OVERLAY_PATH=""
-	[ ! -d /twres ] && SYS_REMOUNT=1
 else
 	if [ -d "/data/adb/modules_update/${MODID}" ]; then
 		OVERLAY_PATH="/data/adb/modules_update/${MODID}"
@@ -19,19 +17,6 @@ else
 		OVERLAY_PATH="/data/adb/modules/${MODID}"
 	else
 		error "couldn't find NanoDroid!"
-	fi
-fi
-
-# select storage path
-if [ -n ${EXTERNAL_STORAGE} ]; then
-	STORAGE="${EXTERNAL_STORAGE}"
-else
-	if [ -w /sdcard ]; then
-		STORAGE="/sdcard"
-	elif [ -w /storage/self/primary ]; then
-		STORAGE="/storage/self/primary"
-	elif [ -w /data/media/0 ]; then
-		STORAGE="/data/media/0"
 	fi
 fi
 
@@ -50,7 +35,7 @@ show_help () {
 Magisk Mode: Manages Overlays (Pseudo Debloat feature)
 System Mode: Manages Moved-Outs (Force Debloat feature)
 
-Options:
+Options Magisk Mode:
 -a | --add		[appname]	add override for app [appname]
 -r | --remove		[appname]	remove override for app [appname]
 -s | --show				show non-overriden /system applications
@@ -59,14 +44,18 @@ Options:
 -u | --update				update all overrides (= clear + create)
 -c | --clear				remove all overrides
 -g | --genconfig			(re-)create configuration from existing overrides
+
+Options System Mode:
+-a | --add		[appname]	add override for app [appname]
+-r | --remove		[appname]	remove override for app [appname] from configuration
+-s | --show				show non-overriden /system applications
+-x | --create				create all overrides
 "
 
 	exit 0
 }
 
 test "$(whoami)" != "root" && error "not running as root"
-
-SYS_BACKUP_PATH="${STORAGE}/nanodroid_backups/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
 
 get_config () {
 	config=""
@@ -84,211 +73,98 @@ overrides_add_intern () {
 	sysdir=${1}
 	app=${2}
 
-	if [[ ${NO_MAGISK} -eq 0 ]]; then
+	if [ "${MODE}" = "MAGISK" ]; then
 		echo "  creating overlay: ${app}"
 		mkdir -p "${OVERLAY_PATH}/system/${sysdir}/${app}"
 		touch "${OVERLAY_PATH}/system/${sysdir}/${app}/.replace"
 	else
-		mkdir -p "${SYS_BACKUP_PATH}/${sysdir}"
-		echo "  moving to ${STORAGE}/nanodroid_backups: ${app}"
-		rm -rf "${SYS_BACKUP_PATH}/${sysdir}/${app}"
-		mv "/system/${sysdir}/${app}" "${SYS_BACKUP_PATH}/${sysdir}/"
+		echo "  removing app: ${app}"
+		rm -rf "/system/${sysdir}/${app}"
 	fi
 
 	grep -q "^${app}$" "${config}" 2>/dev/null || echo "${app}" >> "${config}"
 }
 
 overrides_add () {
-	[[ ${SYS_REMOUNT} -eq 1 ]] && mount -orw,remount /system
+	[ "${MODE}" = "SYSTEM" ] && mount -orw,remount /system
 
 	for app in ${@}; do
-		[ -d /system/app/${app} ] && overrides_add_intern app ${app}
-		[ -d /system/priv-app/${app} ] && overrides_add_intern priv-app ${app}
-		[ -d /system/reserve/${app} ] && overrides_add_intern reserve ${app}
-		[ -d /system/product/app/${app} ] && overrides_add_intern product/app ${app}
-		[ -d /system/product/priv-app/${app} ] && overrides_add_intern product/priv-app ${app}
+		for path in ${app_locations}; do
+			[ -d ${path}/${app} ] && overrides_add_intern app ${app}
+		done
 	done
 
-	[[ ${SYS_REMOUNT} -eq 1 ]] && mount -oro,remount /system
+	[ "${MODE}" = "SYSTEM" ] && mount -oro,remount /system
 }
 
 overrides_remove_intern () {
 	sysdir=${1}
 	app=${2}
 
-	if [[ ${NO_MAGISK} -eq 0 ]]; then
+	if [ "${MODE}" = "MAGISK" ]; then
 		echo "  removing overlay: ${app}"
 		rm -rf "${OVERLAY_PATH}/system/${sysdir}/${app}"
 	else
-		if [[ -d /system/${sysdir}/${app} ]]; then
-			echo "  removing old backup: ${app}"
-			rm -rf "${SYS_BACKUP_PATH}/${sysdir}/${app}"
-		else
-			echo "  reinstalling: ${app}"
-			mv "${SYS_BACKUP_PATH}/${sysdir}/${app}" "/system/${sysdir}/"
-		fi
+		echo "  overrides_remove() does nothing in System Mode!"
 	fi
 
 	sed -e "/^${app}$/d" -i "${config}"
 }
 
 overrides_remove () {
-	[[ ${SYS_REMOUNT} -eq 1 ]] && mount -orw,remount /system
-
 	for app in ${@}; do
-		if [[ ${NO_MAGISK} -eq 0 ]]; then
-			[ -f ${OVERLAY_PATH}/system/app/${app}/.replace ] && overrides_remove_intern app ${app}
-			[ -f ${OVERLAY_PATH}/system/priv-app/${app}/.replace ] && overrides_remove_intern priv-app ${app}
-			[ -f ${OVERLAY_PATH}/system/reserve/${app}/.replace ] && overrides_remove_intern reserve ${app}
-			[ -f ${OVERLAY_PATH}/system/product/app/${app}/.replace ] && overrides_remove_intern product/app ${app}
-			[ -f ${OVERLAY_PATH}/system/product/priv-app/${app}/.replace ] && overrides_remove_intern product/priv-app ${app}
+		if [ "${MODE}" = "MAGISK" ]; then
+			for path in ${app_locations}; do
+				[ -f ${OVERLAY_PATH}/${path}/${app}/.replace ] && overrides_add_intern app ${app}
+			done
 		else
-			[ -d ${STORAGE}/nanodroid_backups/app/${app} ] && overrides_remove_intern app ${app}
-			[ -d ${STORAGE}/nanodroid_backups/priv-app/${app} ] && overrides_remove_intern priv-app ${app}
-			[ -d ${STORAGE}/nanodroid_backups/reserve/${app} ] && overrides_remove_intern reserve ${app}
-			[ -d ${STORAGE}/nanodroid_backups/product/app/${app} ] && overrides_remove_intern prodcut/app ${app}
-			[ -d ${STORAGE}/nanodroid_backups/product/priv-app/${app} ] && overrides_remove_intern prodcut/priv-app ${app}
+			# only remove entry from config file (if it exists)
+			overrides_remove_intern app ${app}
 		fi
 	done
 
-	[[ ${SYS_REMOUNT} -eq 1 ]] && mount -oro,remount /system
 }
 
 overrides_list () {
-	if [[ ${NO_MAGISK} -eq 0 ]]; then
-		echo "Overrides for /system/app:"
-		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace"); do
-			echo "  * $(basename $(dirname "${app}"))"
+	if [ "${MODE}" = "MAGISK" ]; then
+		for path in ${app_locations}; do
+			if [ -d ${path} ]; then
+				echo "Overrides for ${path}:"
+				for app in $(find "${OVERLAY_PATH}/${path}" -name "*.replace"); do
+					echo "  * $(basename $(dirname "${app}"))"
+				done
+			fi
 		done
-
-		echo "Overrides for /system/priv-app:"
-		for app in $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace"); do
-			echo "  * $(basename $(dirname "${app}"))"
-		done
-
-		if [ -d /system/reserve ]; then
-			echo "Overrides for /system/reserve:"
-			for app in $(find "${OVERLAY_PATH}/system/reserve" -name "*.replace"); do
-				echo "  * $(basename $(dirname "${app}"))"
-			done
-		fi
-
-		if [ -d /system/product/app ]; then
-			echo "Overrides for /system/product/app:"
-			for app in $(find "${OVERLAY_PATH}/system/product/app" -name "*.replace"); do
-				echo "  * $(basename $(dirname "${app}"))"
-			done
-		fi
-
-		if [ -d /system/product/priv-app ]; then
-			echo "Overrides for /system/product/priv-app:"
-			for app in $(find "${OVERLAY_PATH}/system/product/priv-app" -name "*.replace"); do
-				echo "  * $(basename $(dirname "${app}"))"
-			done
-		fi
 	else
-		echo "Moved-Out apps from /system/app:"
-		for app in $(find "${SYS_BACKUP_PATH}/app" -mindepth 1 -maxdepth 1 -type d); do
-			echo "  * $(basename $(dirname "${app}"))"
-		done
-
-		echo "Moved-Out apps from /system/priv-app:"
-		for app in $(find "${SYS_BACKUP_PATH}/priv-app" -mindepth 1 -maxdepth 1 -type d); do
-			echo "  * $(basename $(dirname "${app}"))"
-		done
-
-		if [ -d /system/reserve ]; then
-			echo "Moved-Out apps from /system/reserve:"
-			for app in $(find "${SYS_BACKUP_PATH}/reserve" -mindepth 1 -maxdepth 1 -type d); do
-				echo "  * $(basename $(dirname "${app}"))"
-			done
-		fi
-
-		if [ -d /system/product/app ]; then
-			echo "Moved-Out apps from /system/product/app:"
-			for app in $(find "${SYS_BACKUP_PATH}/product/app" -mindepth 1 -maxdepth 1 -type d); do
-				echo "  * $(basename $(dirname "${app}"))"
-			done
-		fi
-
-		if [ -d /system/product/priv-app ]; then
-			echo "Moved-Out apps from /system/product/priv-app:"
-			for app in $(find "${SYS_BACKUP_PATH}/product/priv-app" -mindepth 1 -maxdepth 1 -type d); do
-				echo "  * $(basename $(dirname "${app}"))"
-			done
-		fi
+		echo "  overrides_list() does nothing in System Mode!"
 	fi
 }
 
 overrides_list_non () {
-	if [[ ${NO_MAGISK} -eq 0 ]]; then
-		echo "non-overriden apps from /system/app:"
-		for app in $(find "/system/app" -mindepth 1 -maxdepth 1 -type d); do
-			[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
+	if [ "${MODE}" = "MAGISK" ]; then
+		for path in ${app_locations}; do
+			if [ -d ${path} ]; then
+				echo "Non-Overriden apps for ${path}:"
+				for app in $(find "${path}" -mindepth 1 -maxdepth 1 -type d); do
+					[ ! -d ${OVERLAY_PATH}/${app} ] && echo "  * $(basename ${app})"
+				done
+			fi
 		done
-
-		echo "non-overriden apps from /system/priv-app:"
-		for app in $(find "/system/priv-app" -mindepth 1 -maxdepth 1 -type d); do
-			[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
-		done
-
-		if [ -d /system/reserve ]; then
-			echo "non-overriden apps from /system/reserve:"
-			for app in $(find "/system/reserve" -mindepth 1 -maxdepth 1 -type d); do
-				[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
-			done
-		fi
-
-		if [ -d /system/product/app ]; then
-			echo "non-overriden apps from /system/product/app:"
-			for app in $(find "/system/product/app" -mindepth 1 -maxdepth 1 -type d); do
-				[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
-			done
-		fi
-
-		if [ -d /system/product/priv-app ]; then
-			echo "non-overriden apps from /system/product/priv-app:"
-			for app in $(find "/system/product/priv-app" -mindepth 1 -maxdepth 1 -type d); do
-				[[ ! -d ${OVERLAY_PATH}/${app} ]] && echo "  * $(basename ${app})"
-			done
-		fi
 	else
-		echo "non-moved-out apps from /system/app:"
-		for app in $(find "/system/app" -mindepth 1 -maxdepth 1  -type d); do
-			echo "  * $(basename ${app})"
+		for path in ${app_locations}; do
+			if [ -d ${path} ]; then
+				echo "Non-Overriden apps for ${path}:"
+				for app in $(find "${path}" -mindepth 1 -maxdepth 1 -type d); do
+					echo "  * $(basename ${app})"
+				done
+			fi
 		done
-
-		echo "non-moved-out apps from /system/priv-app:"
-		for app in $(find "/system/priv-app" -mindepth 1 -maxdepth 1  -type d); do
-			echo "  * $(basename ${app})"
-		done
-
-		if [ -d /system/reserve ]; then
-			echo "non-moved-out apps from /system/reserve:"
-			for app in $(find "/system/reserve" -mindepth 1 -maxdepth 1  -type d); do
-				echo "  * $(basename ${app})"
-			done
-		fi
-
-		if [ -d /system/product/app ]; then
-			echo "non-moved-out apps from /system/product/app:"
-			for app in $(find "/system/product/app" -mindepth 1 -maxdepth 1  -type d); do
-				echo "  * $(basename ${app})"
-			done
-		fi
-
-		if [ -d /system/product/priv-app ]; then
-			echo "non-moved-out apps from /system/product/priv-app:"
-			for app in $(find "/system/product/priv-app" -mindepth 1 -maxdepth 1  -type d); do
-				echo "  * $(basename ${app})"
-			done
-		fi
 	fi
 
 }
 
 overrides_clear () {
-	if [[ ${NO_MAGISK} -eq 0 ]]; then
+	if [ "${MODE}" = "MAGISK" ]; then
 		echo "  removing Overlays from ${OVERLAY_PATH}"
 		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace" 2>/dev/null) \
 			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace" 2>/dev/null) \
@@ -304,9 +180,8 @@ overrides_clear () {
 }
 
 overrides_genconfig () {
-	if [[ ${NO_MAGISK} -eq 0 ]]; then
+	if [ "${MODE}" = "MAGISK" ]; then
 		rm -f ${config}
-		export config="/data/.nanodroid-overlay"
 		touch ${config}
 
 		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace" 2>/dev/null) \
@@ -324,8 +199,10 @@ overrides_genconfig () {
 }
 
 # check for configuration files
-config_locations="/data/media/0 /external_sd /sdcard1 /data /dev/tmp/install"
+config_locations="/data/media/0 /external_sd /sdcard1 /data"
 get_config .nanodroid-overlay
+
+app_locations="/system/app /system/priv-app /system/reserve /system/product/app /system/product/priv-app"
 
 [[ -f ${config} ]] && export config || config=${STORAGE}/.nanodroid-overlay
 
@@ -342,7 +219,7 @@ case ${opt} in
 	-g | --genconfig )	overrides_genconfig ;;
 
 	-u | --update )
-		overrides_clear
+		[ "${MODE}" = "MAGISK" ] && overrides_clear
 		overrides_add "$(grep -E -v '^(#|[[:space:]]*$)' "${config}")"
 	;;
 
