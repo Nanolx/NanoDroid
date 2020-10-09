@@ -15,20 +15,9 @@
 source /tmp/backuptool.functions
 
 OUTFD=
-BASEDIR=/data/adb/nanodroid_patcher
+BASEDIR=/system/addon.d/nanodroid_patcher
 
 detect_outfd
-
-if [ ! -f ${BASEDIR}/CommonPatcher ]; then
-	ui_print " "
-	ui_print " !! NanoDroid-Patcher environment missing"
-	ui_print " !! guessing, you've wiped /data ?"
-	ui_print " !! re-flash the NanoDroid-Patcher zip"
-	ui_print " "
-	exit 0
-else
-	source "/data/adb/nanodroid_patcher/CommonPatcher"
-fi
 
 NanoDroidPatcher () {
 	sleep 5
@@ -36,11 +25,6 @@ NanoDroidPatcher () {
 	show_banner
 
 	mount_partitions
-
-	for artifact in classes.dex oat dalvik-cache \
-		services.jar services.jar-mod; do
-		rm -rf ${BASEDIR}/${artifact}
-	done
 
 	detect_sdk
 	detect_arch
@@ -55,6 +39,11 @@ NanoDroidPatcher () {
 	install_services
 
 	umount_partitions
+
+	for artifact in classes.dex oat dalvik-cache \
+		services.jar services.jar-mod; do
+		rm -rf ${BASEDIR}/${artifact}
+	done
 
 	ui_print " "
 	ui_print " > Done!"

@@ -10,6 +10,11 @@ VERSION=23.0.99999999
 MAGISKBASE=/data/adb
 MODID=NanoDroid_Patcher
 
+TMPDIR=/dev/tmp/install
+APEX_LD=/system
+
+PATCHER_ADDOND_DATA=/system/addon.d/nanodroid_patcher
+
 ##########################################################################################
 # Generic Functions
 ##########################################################################################
@@ -23,13 +28,6 @@ show_banner () {
 	ui_print " ${VERSION}                     "
 	ui_print "********************************"
 	ui_print " "
-}
-
-setup_environment () {
-	TMPDIR=/dev/tmp/install
-	APEX_LD=/system
-
-	export PATCHER_ADDOND_DATA=/data/adb/nanodroid_patcher
 }
 
 ui_print() {
@@ -623,23 +621,12 @@ patch_services () {
 			error "zip failed"
 }
 
-backup_services_jar () {
-	ui_print " << backing up services.jar to: /data/media/0/nanodroid_backups"
-	services_name="services.jar_$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
-
-	mkdir -p /data/media/0/nanodroid_backups
-	cp /system/framework/services.jar "/data/media/0/nanodroid_backups/${services_name}" || \
-		error "failed to backup services.jar"
-}
-
 install_services () {
 	install_path=""
 	ui_print " "
 
-	if [ "${MODE}" = "SYSTEM" ]; then
-		backup_services_jar
-	else
-		if [ -d "${MAGISKBASE}/modules/NanoDroidPatcher" ]; then
+	if [ "${MODE}" = "MAGISK" ]; then
+		if [ -d "${MAGISKBASE}/modules/${MODID}" ]; then
 			install_path="${MAGISKBASE}/modules_update/${MODID}"
 		else
 			install_path="${MAGISKBASE}/modules/${MODID}"
@@ -692,7 +679,6 @@ install_addond () {
 		chmod 0755 ${PATCHER_ADDOND_DATA}/$(basename "${file}")
 	done
 
-	mkdir -p /system/addon.d/
 	cp "${BASEDIR}/70-nanodroidpatcher.sh" /system/addon.d/
 	chmod 0755 /system/addon.d/70-nanodroidpatcher.sh
 }
