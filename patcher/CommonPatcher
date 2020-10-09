@@ -131,7 +131,7 @@ mount_partitions () {
 		mount -o bind /dev/urandom /dev/random
 
 		SYSTEM_AS_ROOT=$(grep_prop ro.build.ab_update /default.prop)
-		if [ -d /system_root -o ${SYSTEM_AS_ROOT} ]; then
+		if [ -e /system_root -o ${SYSTEM_AS_ROOT} ]; then
 			[ -L /system_root ] && mv /system_root /system_root_link
 			if [ ! -d /system_root ]; then
 				rm -rf /system_root
