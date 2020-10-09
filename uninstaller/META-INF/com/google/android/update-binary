@@ -225,13 +225,6 @@ mount_partitions () {
 		ln -sf /system/vendor /vendor >/dev/null
 	fi
 
-	echo " "
-	mount | sed -e '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}'
-	echo " "
-
-	echo " INFO: #8 [prop]"
-	ls -l /system/*.prop
-
 	build_props=$(find /system /system_root /vendor -type f -name build.prop)
 	echo " INFO: #9 [build_props] ${build_props}"
 
@@ -264,130 +257,14 @@ umount_partitions () {
 config_locations="/data/media/0 /external_sd /sdcard1 /data $(dirname ${ZIP}))"
 config_files=".nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 
-restore_apps () {
-	backup_path="${BACKUP_DIR}/$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
-
-	if [ -d ${backup_path}/app/ ]; then
-		for app in ${backup_path}/app/*; do
-			_app=$(basename ${app})
-			if [ -d /system/app/${_app} ]; then
-				ui_print " << removing backup: app:{_app}"
-				rm -rf "${app}"
-			else
-				ui_print " << restoring: app:${_app}"
-				mv "${app}" "/system/app/${_app}"
-				set_perm_data -r "/system/app/${_app}"
-			fi
-		done
-
-		rmdir ${backup_path}/app
-	fi
-
-	if [ -d ${backup_path}/priv-app/ ]; then
-		for app in ${backup_path}/priv-app/*; do
-			_app=$(basename ${app})
-			if [ -d /system/priv-app/${_app} ]; then
-				ui_print " << removing backup: priv-app:{_app}"
-				rm -rf "${app}"
-			else
-				ui_print " << restoring: priv-app:${_app}"
-				mv "${app}" "/system/priv-app/${_app}"
-				set_perm_data -r "/system/priv-app/${_app}"
-			fi
-		done
-
-		rmdir ${backup_path}/priv-app
-	fi
-
-	if [ -d ${backup_path}/reserve/ ]; then
-		for app in ${backup_path}/reserve/*; do
-			_app=$(basename ${app})
-			if [ -d /system/reserve/${_app} ]; then
-				ui_print " << removing backup: reserve:{_app}"
-				rm -rf "${app}"
-			else
-				ui_print " << restoring: reserve:${_app}"
-				mv "${app}" "/system/reserve/${_app}"
-				set_perm_data -r "/system/reserve/${_app}"
-			fi
-		done
-
-		rmdir ${backup_path}/reserve
-	fi
-
-	if [ -d ${backup_path}/product/app/ ]; then
-		for app in ${backup_path}/product/app/*; do
-			_app=$(basename ${app})
-			if [ -d /system/product/app/${_app} ]; then
-				ui_print " << removing backup: product/app:{_app}"
-				rm -rf "${app}"
-			else
-				ui_print " << restoring: product/app:${_app}"
-				mv "${app}" "/system/product/app/${_app}"
-				set_perm_data -r "/system/product/app/${_app}"
-			fi
-		done
-
-		rmdir ${backup_path}/product/app
-	fi
-
-	if [ -d ${backup_path}/product/priv-app/ ]; then
-		for app in ${backup_path}/product/priv-app/*; do
-			_app=$(basename ${app})
-			if [ -d /system/product/priv-app/${_app} ]; then
-				ui_print " << removing backup: product/priv-app:{_app}"
-				rm -rf "${app}"
-			else
-				ui_print " << restoring: product/priv-app:${_app}"
-				mv "${app}" "/system/product/priv-app/${_app}"
-				set_perm_data -r "/system/product/priv-app/${_app}"
-			fi
-		done
-
-		rmdir ${backup_path}/product/priv-app
-	fi
-}
-
 system_mode_uninstall () {
 	ui_print " << uninstalling: NanoDroid (System)"
 	ui_print " << using: ${1}"
 	system_list=${1}
 
-	if test -h /system/fonts/Roboto-Regular.ttf; then
-		CUSTOM_FONT="$(basename $(readlink /system/fonts/Roboto-Regular.ttf) .ttf)"
-		ui_print " << Detected NanoDroid-Font (${CUSTOM_FONT})"
-		ui_print "  < Restoring original Font"
-
-		${NANODROID_BINDIR}/nanodroid-font -r
-	fi
-
-	restore_apps
 	xargs rm < ${system_list} || error "failed to remove files"
 
-	# remove empty directories
-	# (find -empty not available on Android)
-	for dir in app priv-app; do
-		find /system/${dir} -type d | xargs rmdir -p
-	done
-
 	rm -f "${system_list}"
-}
-
-patcher_uninstall () {
-	if [ -f /data/adb/NanoDroid_Patched ]; then
-		services_name="services.jar_$(grep_prop ro.build.flavor)_$(grep_prop ro.build.id)"
-
-		if [ -f ${BACKUP_DIR}/${services_name} ]; then
-			ui_print " << restoring: unpatched services.jar"
-			mv "${BACKUP_DIR}/${services_name}" /system/framework/services.jar
-			set_perm_data /system/framework/services.jar
-		else	ui_print " << can't restore unpatched services.jar"
-		fi
-	fi
-
-	[ -d /data/adb/nanodroid_patcher ] && rm -rf /data/adb/nanodroid_patcher
-	[ -f /system/addon.d/70-nanodroidpatcher.sh ] && rm -f ${addonsh}
-	[ -f /data/adb/NanoDroid_Patched ] && rm -f ${pfile}
 }
 
 ui_print " "
@@ -403,27 +280,26 @@ mount_partitions
 
 ui_print " << Removing installation logs (if any)"
 
-# old format
-rm -f /data/adb/NanoDroid_log*
-rm -f /data/adb/NanoDroid_twrp*
-
 # new format
 rm -rf /data/media/0/nanodroid_logs
 
 # System Mode uninstallation
 [ -f /data/adb/NanoDroid_FileList ] && system_mode_uninstall /data/adb/NanoDroid_FileList
+[ -f /system/addon.d/NanoDroid_FileList ] && system_mode_uninstall /data/adb/NanoDroid_FileList
 
-patcher_uninstall
+# remove Patcher
+rm -rf /data/adb/nanodroid_patcher
+rm -f /system/addon.d/70-nanodroidpatcher.sh
+rm -f /data/adb/NanoDroid_Patched
 
 for module in NanoDroid NanoDroid_microG NanoDroid_FDroid \
-	NanoDroid_BromiteWebView NanoDroid_OsmAnd NanoDroid_Google; do
+	NanoDroid_BromiteWebView NanoDroid_OsmAnd \
+	NanoDroid_Google NanoDroid_Pather; do
 	if [ -d /data/adb/modules/${module} ]; then
 		ui_print " << uninstalling: ${module}"
 		rm -rf /data/adb/modules/${module}
 	fi
 done
-
-rm -f /data/adb/.nanodroid_runtimeclean
 
 ui_print " >> clean up"
 
