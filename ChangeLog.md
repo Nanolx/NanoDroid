@@ -69,6 +69,11 @@
   * drop shell utilites from the package
      * except `lesskey` and `lessecho`, they'll be installed together with `bash` and `less` if `nanodroid_bash=1`
 
+* Installer, build-package
+  * compress APKs using `zstd` instead of `gzip`
+     * provides better performance on low end devices
+     * if you checked-out NanoDroid's source tree all old gzip'ed APKs will be removed
+
 * build-package
   * allow side-loading custom APKs from `local` directory inside the NanoDroid tree
      * side-loading libraries is currently not supported
