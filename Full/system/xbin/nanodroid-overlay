@@ -128,7 +128,7 @@ overrides_remove () {
 overrides_list () {
 	if [ "${MODE}" = "MAGISK" ]; then
 		for path in ${app_locations}; do
-			if [ -d ${path} ]; then
+			if [ -d ${OVERLAY_PATH}/${path} ]; then
 				echo "Overrides for ${path}:"
 				for app in $(find "${OVERLAY_PATH}/${path}" -name "*.replace"); do
 					app_int="\n  * $(basename $(dirname "${app}"))${app_int}"
