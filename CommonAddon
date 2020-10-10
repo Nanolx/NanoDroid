@@ -89,10 +89,7 @@ setup_env () {
 
 	PATH=/system/bin:/system/xbin:${PATH}
 
-	if [ ! -d /system/xbin ]; then
-		NANODROID_BINDIR=/system/bin
-	else	NANODROID_BINDIR=/system/xbin
-	fi
+	NANODROID_BINDIR=/system/bin
 
 	if [ ! -r ${NANODROID_LIST} ]; then
 		echo "No NanoDroid installer information found!"

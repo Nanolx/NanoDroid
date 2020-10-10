@@ -727,12 +727,6 @@ detect_arch () {
 		print_info " "
 	fi
 
-	if [ ! -d /system/xbin ]; then
-		ROM_NO_XBIN=1
-		decho " ++ ROM has no /system/xbin, using /system/bin instead"
-	else	ROM_NO_XBIN=0
-	fi
-
 	[ ! -d /data/adb ] && mkdir /data/adb
 }
 
@@ -791,9 +785,7 @@ detect_mode () {
 		;;
 	esac
 
-	[ "${ROM_NO_XBIN}" -eq 1 ] && \
-		NANODROID_BINDIR="${MODPATH}/system/bin" || \
-		NANODROID_BINDIR="${MODPATH}/system/xbin"
+	NANODROID_BINDIR="${MODPATH}/system/bin"
 }
 
 ##########################################################################################
@@ -1514,9 +1506,6 @@ nanodroid_install_file () {
 
 	[ -z "${source}" ] && error "file: ${file} not found"
 
-	# if /system/xbin does not exist, use /system/bin
-	[ "${dir}" = "xbin" -a "${ROM_NO_XBIN}" -eq 1 ] && xdir="bin" || xdir="${dir}"
-
 	# strip off .${BIN_ARCH} from final filename (if any)
 	xfile=$(basename ${file} .${BIN_ARCH})
 
@@ -1698,9 +1687,6 @@ nanodroid_substitute () {
 	dir="$(dirname "${1}")"
 	file="$(basename "${1}")"
 
-	# if /system/xbin does not exist, use /system/bin
-	[ "${dir}" = "xbin" -a "${ROM_NO_XBIN}" -eq 1 ] && dir="bin"
-
 	target="${MODPATH}/system/${dir}/${file}"
 
 	[ ! -f "${target}" ] && error "file: ${file} not found"
@@ -1745,7 +1731,6 @@ MODPATH=${MODPATH}
 SWIPE_LIBDIR=${SWIPE_LIBDIR}
 MODE=${MODE}
 MAGISK_VER_CODE=${MAGISK_VER_CODE}
-ROM_NO_XBIN=${ROM_NO_XBIN}
 NANODROID_UPGRADE=${NANODROID_UPGRADE}
 NANODROID_BINDIR=${NANODROID_BINDIR}
 HAS_FAKESIGN=${HAS_FAKESIGN}
