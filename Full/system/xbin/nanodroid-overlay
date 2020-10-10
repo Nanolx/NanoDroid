@@ -129,6 +129,7 @@ overrides_list () {
 	if [ "${MODE}" = "MAGISK" ]; then
 		for path in ${app_locations}; do
 			if [ -d ${OVERLAY_PATH}/${path} ]; then
+				app_int=""
 				echo "Overrides for ${path}:"
 				for app in $(find "${OVERLAY_PATH}/${path}" -name "*.replace"); do
 					app_int="\n  * $(basename $(dirname "${app}"))${app_int}"
@@ -145,6 +146,7 @@ overrides_list_non () {
 	if [ "${MODE}" = "MAGISK" ]; then
 		for path in ${app_locations}; do
 			if [ -d ${path} ]; then
+				app_int=""
 				echo "Non-Overriden apps for ${path}:"
 				for app in $(find "${path}" -mindepth 1 -maxdepth 1 -type d); do
 					[ ! -d ${OVERLAY_PATH}/${app} ] &&  app_int="\n  * $(basename ${app})${app_int}"
