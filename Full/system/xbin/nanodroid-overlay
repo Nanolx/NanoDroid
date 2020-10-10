@@ -75,11 +75,11 @@ overrides_add_intern () {
 
 	if [ "${MODE}" = "MAGISK" ]; then
 		echo "  creating overlay: ${app}"
-		mkdir -p "${OVERLAY_PATH}/system/${sysdir}/${app}"
-		touch "${OVERLAY_PATH}/system/${sysdir}/${app}/.replace"
+		mkdir -p "${OVERLAY_PATH}/${sysdir}/${app}"
+		touch "${OVERLAY_PATH}/${sysdir}/${app}/.replace"
 	else
 		echo "  removing app: ${app}"
-		rm -rf "/system/${sysdir}/${app}"
+		rm -rf "${sysdir}/${app}"
 	fi
 
 	grep -q "^${app}$" "${config}" 2>/dev/null || echo "${app}" >> "${config}"
@@ -103,7 +103,7 @@ overrides_remove_intern () {
 
 	if [ "${MODE}" = "MAGISK" ]; then
 		echo "  removing overlay: ${app}"
-		rm -rf "${OVERLAY_PATH}/system/${sysdir}/${app}"
+		rm -rf "${OVERLAY_PATH}/${sysdir}/${app}"
 	else
 		echo "  overrides_remove() does nothing in System Mode!"
 	fi
