@@ -649,10 +649,9 @@ detect_arch () {
 	esac
 
 	UNZIP="${INSTALLER}/unzip.${BIN_ARCH}"
-	chmod +x "${UNZIP}"
-
 	AAPT="${INSTALLER}/aapt.${BIN_ARCH}"
-	chmod +x "${AAPT}"
+	ZSTD="${INSTALLER}/zstd.${BIN_ARCH}"
+	chmod +x "${UNZIP}" "${AAPT}" "${ZSTD}"
 
 	case ${SDK_VERSION} in
 		19 )		GSYNC_VER=K	;;
@@ -1260,14 +1259,14 @@ install_nanodroidscripts () {
 		nanodroid_install_file bin/${script} bin
 	done
 
-	nanodroid_substitute xbin/nanodroid-overlay
+	nanodroid_substitute bin/nanodroid-overlay
 
 	if [ "${MODE}" = "MAGISK" ]; then
 		for script in nprp nanodroid-prop; do
 			nanodroid_install_file bin/${script} bin
 		done
 
-		nanodroid_substitute xbin/nanodroid-prop
+		nanodroid_substitute bin/nanodroid-prop
 	fi
 }
 
@@ -1491,16 +1490,16 @@ nanodroid_install_file () {
 
 	decho "    installing file: ${xfile}"
 
-	mkdir -p "${MODPATH}/system/${xdir}/"
-	cp "${source}" "${MODPATH}/system/${xdir}/${xfile}" || \
+	mkdir -p "${MODPATH}/system/${dir}/"
+	cp "${source}" "${MODPATH}/system/${dir}/${xfile}" || \
 		error "failed to install ${xfile}"
 
 	case ${2} in
-		bin ) set_perm_bin "${MODPATH}/system/${xdir}/${xfile}" ;;
-		*   ) set_perm_data "${MODPATH}/system/${xdir}/${xfile}" ;;
+		bin ) set_perm_bin "${MODPATH}/system/${dir}/${xfile}" ;;
+		*   ) set_perm_data "${MODPATH}/system/${dir}/${xfile}" ;;
 	esac
 
-	installinfo_add "/system/${xdir}/${xfile}"
+	installinfo_add "/system/${dir}/${xfile}"
 }
 
 ##########################################################################################
@@ -1544,7 +1543,7 @@ nanodroid_install_apk () {
 
 	for sdir in system/app system/priv-app \
 		gsync/${GSYNC_VER}/app gsync/${GSYNC_VER}/priv-app; do
-		if [ -f "${INSTALLER}/${sdir}/${app}/${app}.apk.gz" ]; then
+		if [ -f "${INSTALLER}/${sdir}/${app}/${app}.apk.zst" ]; then
 			source="${INSTALLER}/${sdir}/${app}/${app}.apk"
 			dir=system/$(basename ${sdir})
 			break
@@ -1574,11 +1573,11 @@ nanodroid_install_apk () {
 	decho "    installing app: ${app}"
 	decho "      from: ${source}"
 	decho "      into: ${dest} [${dest_apk}]"
-	cp "${source}.gz" "${dest}/${dest_apk}.gz" || \
+	cp "${source}.zst" "${dest}/${dest_apk}.zst" || \
 		error "failed to install ${source} to ${dest}"
 
-	gzip -fd "${dest}/${dest_apk}.gz" || \
-		error "failed to decompress ${dest}/${dest_apk}.gz"
+	${ZSTD} -fd "${dest}/${dest_apk}.zst" || \
+		error "failed to decompress ${dest}/${dest_apk}.zst"
 
 	installinfo_add "${dest}/${dest_apk}"
 
