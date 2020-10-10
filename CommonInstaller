@@ -11,7 +11,6 @@ curdate=$(date +%Y%m%d_%H.%M.%S)
 nanodroid_logfile="${STORAGE}/nanodroid_logs/${MODID}_${VERSION}_log_${curdate}.log"
 
 config_locations="${STORAGE} /external_sd /sdcard1 /data"
-privapp_patterns=("(type 0x11)0x[1357]2" "(type 0x11)0xc212" "(type 0x11)0x[02]" "(type 0x11)0x[13]02" "(type 0x11)0x1[01]2" "(type 0x11)0x1001")
 
 nanodroid_all_init='"10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"'
 
@@ -492,7 +491,9 @@ dump_system_privapp_permissions () {
 	"${AAPT}" dump xmltree /system/framework/framework-res.apk AndroidManifest.xml | \
 		tr -d '\n' | sed -e 's/E:/\n/g' > "${tmp_list}"
 
-	for pattern in "${privapp_patterns[@]}"; do
+	for pattern in	"(type 0x11)0x[1357]2" "(type 0x11)0xc212" \
+			"(type 0x11)0x[02]" "(type 0x11)0x[13]02"  \
+			"(type 0x11)0x1[01]2" "(type 0x11)0x1001"; do
 		grep "${pattern}" "${tmp_list}" | \
 		awk -F\" '{print $2}' >> "${sys_list}"
 	done
@@ -1614,7 +1615,7 @@ nanodroid_install_apk () {
 
 	nanodroid_install_lib "${dest}/${dest_apk}" "${2}"
 
-	[[ "${dir}" == *priv-app* ]] && create_privapp_permissions_whitelist ${app}
+	[ "${dir}" == "system/priv-app" ] && create_privapp_permissions_whitelist ${app}
 
 	set_perm_data -r "${dest}"
 }
