@@ -209,6 +209,8 @@ Additional credits go to
   * https://github.com/anestisb/vdexExtractor
 * JesusFreke for smali/baksmali
   * https://github.com/JesusFreke/smali
+* Zackptg5 for zstd binaries
+  * https://github.com/Zackptg5/Cross-Compiled-Binaries-Android
 
 Special Thanks to the contributors (starting with most recent contribution)
 
