@@ -1233,19 +1233,16 @@ install_store_aurora () {
 
 install_bash () {
 	if [ "${nanodroid_bash}" -eq 1 ]; then
-		print_info " << with GNU Bash Shell"
-		nanodroid_install_file etc/bash_logout
-		nanodroid_install_file etc/bashrc
+		print_info " << with GNU Bash Shell and Less Pager"
+		for file in etc/bash_logout etc/bashrc; do
+			nanodroid_install_file ${file}
+		done
 
-		nanodroid_install_file xbin/bash bin
-		nanodroid_install_file xbin/bash.bin.${BIN_ARCH} bin
-		nanodroid_install_file xbin/bashbug.${BIN_ARCH} bin
-
-		print_info " << with Less Pager"
-		nanodroid_install_file xbin/less bin
-		nanodroid_install_file xbin/less.bin.${BIN_ARCH} bin
-		nanodroid_install_file xbin/lessecho.${BIN_ARCH} bin
-		nanodroid_install_file xbin/lesskey.${BIN_ARCH} bin
+		for file in  bin/bash bin/bash.bin.${BIN_ARCH} \
+			bin/bashbug.${BIN_ARCH} bin/less bin/less.bin.${BIN_ARCH} \
+			bin/lessecho.${BIN_ARCH} bin/lesskey.${BIN_ARCH}; do
+			nanodroid_install_file ${file} bin
+		done
 	else	print_info " << without GNU Bash Shell"
 	fi
 }
@@ -1260,14 +1257,14 @@ install_nanodroidscripts () {
 	for script in npem nutl novl \
 		nanodroid-perm nanodroid-util \
 		nanodroid-overlay; do
-		nanodroid_install_file xbin/${script} bin
+		nanodroid_install_file bin/${script} bin
 	done
 
 	nanodroid_substitute xbin/nanodroid-overlay
 
 	if [ "${MODE}" = "MAGISK" ]; then
 		for script in nprp nanodroid-prop; do
-			nanodroid_install_file xbin/${script} bin
+			nanodroid_install_file bin/${script} bin
 		done
 
 		nanodroid_substitute xbin/nanodroid-prop
