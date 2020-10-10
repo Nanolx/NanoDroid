@@ -16,6 +16,15 @@
      * fixes issue with mounting `/vendor` on some devices in TWRP
   * only create `/system/vendor -> /vendor` compat link needed on some devices if there's no `vendor_${SLOT}` partition
 
+* Patcher
+  * fix check whether we're updating the Magisk Module
+
+* Uninstaller
+  * fix that NanoDroid-Patcher Magisk module wouldn't have been uninstalled
+
+* NanoDroid-Overlay script
+  * `--genconfig` no longer forcefully sets config to `/data/.nanodroid-overlay`
+
 ### General Changes
 
 * Installer
@@ -26,12 +35,31 @@
   * simplify function for linking swipe libraries
   * new `setup_installer()` function to reduce amount of code in each module's `update-binary`
   * re-order functions and make the `CommonInstaller` file better readable
+  * store System Mode file list in `/system/addon.d` instead of `/data/adb`
+    * allows for full compat with recoveries that can't decrypt `/data`
 
 * Patcher, SysTest, Uninstaller
   * update functions from Installer
 
 * SysTest
   * minor internal improvements
+
+* NanoDroid-Overlay script
+  * in system mode the script now only removes apps, no longer backs them up and restores them
+     * allows for full compat with recoveries that can't decrypt `/data`
+  * major code clean-up and simplification
+
+* Patcher, Patcher Addon.d
+  * install Patcher environment into `/system/addon.d` no longer `/data/adb`
+    * allows for full compat with recoveries that can't decrypt `/data`
+
+* Uninstaller
+  * update for changes to `nanodroid-overlay`
+  * update for changes to Patcher
+  * update for new location of System Mode file list
+     * both new and old locations are supported
+  * drop support for uninstalling ancient NanoDroid versions
+  * simplify code
 
 * Full package
   * add `Warden` an app management utility that let's you disable Services and Trackers
@@ -57,16 +85,18 @@
 ## Updates
 
 * automatic
-  * Bromite System WebView (86.0.4240.70)
+  * Blokada (4.8.4)
+  * Bromite System WebView (86.0.4240.73)
   * F-Droid (1.10-alpha1)
   * FreeOTP+ (2.1)
   * K-9 Mail (5.718)
   * KeePassDX (2.8.7)
+  * NewPipe (0.20.0)
   * OAndBackupX (3.2.0)
   * OpenVPN (0.7.21)
   * Simple Calendar (6.10.3)
   * Simple Gallery (6.16.1)
-  * Termux (0.99)
+  * Termux (0.101)
 
 * manual
   * GNU Bash (5.1-beta1)
