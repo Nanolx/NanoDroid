@@ -90,7 +90,7 @@ overrides_add () {
 
 	for app in ${@}; do
 		for path in ${app_locations}; do
-			[ -d ${path}/${app} ] && overrides_add_intern app ${app}
+			[ -d ${path}/${app} ] && overrides_add_intern ${path} ${app}
 		done
 	done
 
@@ -115,7 +115,7 @@ overrides_remove () {
 	for app in ${@}; do
 		if [ "${MODE}" = "MAGISK" ]; then
 			for path in ${app_locations}; do
-				[ -f ${OVERLAY_PATH}/${path}/${app}/.replace ] && overrides_add_intern app ${app}
+				[ -f ${OVERLAY_PATH}/${path}/${app}/.replace ] && overrides_remove_intern ${path} ${app}
 			done
 		else
 			# only remove entry from config file (if it exists)
