@@ -22,16 +22,16 @@ else
 fi
 
 # check dependencies
-for dep in gawk curl jq gzip grep; do
+for dep in gawk curl jq zstd grep; do
 	if ! which ${dep} &>/dev/null; then
 		echo "${dep} is not installed!"
 		exit 1
 	fi
 done
 
-gzip_apk () {
+zstd_apk () {
 	[ -f "${1}" ] && \
-		gzip -f "${1}" || \
+		zstd -1f --rm "${1}" || \
 		echo "error downloading ${1}"
 }
 
@@ -40,7 +40,7 @@ msg_no_checksum () {
 }
 
 msg_apk_update () {
-	if [ -f "${1}.gz" ]; then
+	if [ -f "${1}.zst" ]; then
 		echo -e "\nUpdating from ${2}        : $(basename ${1}) ${3}"
 	else	echo -e "\nDownloading from ${2}     : $(basename ${1}) ${3}"
 	fi
@@ -88,7 +88,7 @@ download_apk_common () {
 		debug_download delete "${apk_dest}/${apk_name}.apk" "${apk_url}" "${apk_dest}/${apk_name}.apk"
 	fi
 
-	gzip_apk "${apk_dest}/${apk_name}.apk"
+	zstd_apk "${apk_dest}/${apk_name}.apk"
 }
 
 debug_download () {
@@ -143,8 +143,8 @@ check_sha256sum () {
 	local ex_checksum="${2}"
 
 	case ${input} in
-		*.gz )
-			in_checksum=$(gzip -dc ${input} 2>/dev/null | ${sumsha256} | gawk '{print $1}')
+		*.zst )
+			in_checksum=$(zstd -dcf ${input} 2>/dev/null | ${sumsha256} | gawk '{print $1}')
 		;;
 
 		* )
@@ -244,20 +244,20 @@ grab_apk_from_repo () {
 	if [ -f "${sideload}/${4}.apk" ]; then
 		echo -e "\nSideloading APK           : ${4}.apk"
 		mkdir -p "${apk_dest}"
-		rm -f "${apk_dest}/${4}.apk.gz"
+		rm -f "${apk_dest}/${4}.apk.zst"
 		cp "${sideload}/${4}.apk" "${apk_dest}/${4}.apk"
-		gzip "${apk_dest}/${4}.apk"
+		zstd_apk "${apk_dest}/${4}.apk"
 	else
-		if check_sha256sum "${apk_dest}/${4}.apk.gz" "${sha_sum}"; then
+		if check_sha256sum "${apk_dest}/${4}.apk.zst" "${sha_sum}"; then
 			echo -e "\nUp-to-Date from ${repo_p} : ${4}.apk"
 		else	echo -e "\nUpdating from ${repo_p}   : ${4}.apk"
 			mkdir -p "${apk_dest}"
-			rm -f "${apk_dest}/${4}.apk.gz"
+			rm -f "${apk_dest}/${4}.apk.zst"
 			debug_download no_delete "${apk_dest}/${4}.apk" "${apk_url}"
 
 			if check_sha256sum "${apk_dest}/${4}.apk" "${sha_sum}"; then
 				echo "	SHA256 hash of ${4}.apk is correct"
-				gzip "${apk_dest}/${4}.apk"
+				zstd_apk "${apk_dest}/${4}.apk"
 			else	echo -e "	SHA256 hash of ${4}.apk is wrong!\
 				\n	expected	: ${sha_sum}\
 				\n	got		: ${in_checksum}"

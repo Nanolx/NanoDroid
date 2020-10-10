@@ -19,15 +19,18 @@ debug_message () {
 }
 
 check_nanodroid () {
+	# check for gzip'ed APKs (we switched to ZStd with NanoDroid 23.0) and remove them
+	find Full/ -type f -name '*.apk.gz' | xargs rm -fv
+
 	for file in ${file_database[@]}; do
 		if [[ ! -f ${CWD}/${file} ]]; then
 			nanodroid_missing_files=1
 			missing_database=(${missing_database[@]} ${file})
 		else
 			case ${file} in
-				*.gz )
+				*.zst )
 					mimetype=$(file -b --mime-type ${CWD}/${file})
-					mimetype_int=$(gzip -dc ${CWD}/${file} | file -b --mime-type - )
+					mimetype_int=$(zstd -dcf ${CWD}/${file} 2>/dev/null | file -b --mime-type - )
 				;;
 
 				*.so* )
@@ -41,7 +44,7 @@ check_nanodroid () {
 					# library
 				;;
 
-				application/gzip )
+				application/zstd )
 					# APK
 				;;
 
@@ -58,7 +61,7 @@ check_nanodroid () {
 					# library
 				;;
 
-				application/java-archive | application/zip )
+				*application/java-archive* | *application/zip* )
 					# APK
 				;;
 
