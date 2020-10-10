@@ -38,6 +38,9 @@
   * store System Mode file list in `/system/addon.d` instead of `/data/adb`
     * allows for full compat with recoveries that can't decrypt `/data`
 
+* Full, microG packages
+  * move all utilities from `/system/xbin` to `/system/bin`
+
 * Patcher, SysTest, Uninstaller
   * update functions from Installer
 
