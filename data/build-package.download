@@ -31,7 +31,7 @@ done
 
 zstd_apk () {
 	[ -f "${1}" ] && \
-		zstd -1f --rm "${1}" || \
+		zstd -1fq --rm "${1}" || \
 		echo "error downloading ${1}"
 }
 
