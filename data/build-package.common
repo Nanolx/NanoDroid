@@ -40,11 +40,11 @@ check_nanodroid () {
 			esac
 
 			case ${mimetype} in
-				application/x-sharedlib )
+				*application/*sharedlib* )
 					# library
 				;;
 
-				application/zstd )
+				*application/*zstd* )
 					# APK
 				;;
 
