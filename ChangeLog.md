@@ -93,22 +93,25 @@
 ## Updates
 
 * automatic
+  * Amaze (3.5.0)
   * Blokada (4.8.4)
-  * Bromite System WebView (86.0.4240.73)
+  * Bromite System WebView (86.0.4240.92)
   * F-Droid (1.10-alpha1)
   * FreeOTP+ (2.1)
   * K-9 Mail (5.718)
   * KeePassDX (2.8.7)
   * NewPipe (0.20.0)
   * OAndBackupX (3.2.0)
+  * Odyssey (1.1.20)
   * OpenVPN (0.7.21)
   * Simple Calendar (6.10.3)
-  * Simple Gallery (6.16.1)
+  * Simple Gallery (6.16.2)
+  * SmartPack Kernel Manager (13.8)
   * Termux (0.101)
 
 * manual
-  * GNU Bash (5.1-beta1)
-  * MPV (201004-nightly)
+  * GNU Bash (5.1-rc1)
+  * MPV (201016-nightly)
 
 ## 22.9.20200910 "[Tiefseequappe]"
 
