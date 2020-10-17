@@ -221,9 +221,7 @@ is_mounted () {
 ##########################################################################################
 
 mount_partitions () {
-	if ${BOOTMODE}; then
-		build_props=$(find /system /system_root /vendor -type f -name build.prop)
-	else
+	if ! ${BOOTMODE}; then
 		DEVICE_AB=FALSE
 		VENDOR_COMPAT=FALSE
 		SYSTEM_AS_ROOT=FALSE
@@ -278,23 +276,25 @@ mount_partitions () {
 			ln -sf /system/vendor /vendor >/dev/null
 		fi
 
-		build_props=$(find /system /system_root /vendor -type f -name build.prop)
+		echo " "
+		mount | sed -e '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}'
+		echo " "
+
+		echo " INFO: #8 [prop]"
+		ls -l /system/*.prop
 
 		[ -d /system/apex ] && mount_apex
 	fi
 
-	echo " "
-	mount | sed -e '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}'
-	echo " "
-
-	echo " INFO: #8 [prop]"
-	ls -l /system/*.prop
-
-	echo " INFO: #9 [build_props] ${build_props}"
+	build_props=$(find /system /system_root /vendor -type f -name build.prop)
 	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
-	[ -d /apex/com.android.art ] && export ANDROID_ART_ROOT=/apex/com.android.art
-	export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+	if [ -d /apex/com.android.art ]; then
+		export ANDROID_ART_ROOT=/apex/com.android.art
+		export ANDROID_RUNTIME_ROOT=${ANDROID_ART_ROOT}
+	elif [ -d /apex/com.android.runtime ]; then
+		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+	fi
 
 	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
 	export ANDROID_I18N_ROOT /apex/com.android.i18n

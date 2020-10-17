@@ -101,9 +101,7 @@ mount_apex () {
 
 # taken from Magisk, with minor modifications for NanoDroid
 mount_partitions () {
-	if ${BOOTMODE}; then
-		build_props=$(find /system /system_root /vendor -type f -name build.prop)
-	else
+	if ! ${BOOTMODE}; then
 		DEVICE_AB=FALSE
 		VENDOR_COMPAT=FALSE
 		SYSTEM_AS_ROOT=FALSE
@@ -165,16 +163,18 @@ mount_partitions () {
 		echo " INFO: #8 [prop]"
 		ls -l /system/*.prop
 
-		build_props=$(find /system /system_root /vendor -type f -name build.prop)
-		echo " INFO: #9 [build_props] ${build_props}"
-
-		[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
-
 		[ -d /system/apex ] && mount_apex
 	fi
 
-	[ -d /apex/com.android.art ] && export ANDROID_ART_ROOT=/apex/com.android.art
-	export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+	build_props=$(find /system /system_root /vendor -type f -name build.prop)
+	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
+
+	if [ -d /apex/com.android.art ]; then
+		export ANDROID_ART_ROOT=/apex/com.android.art
+		export ANDROID_RUNTIME_ROOT=${ANDROID_ART_ROOT}
+	elif [ -d /apex/com.android.runtime ]; then
+		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+	fi
 
 	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
 	export ANDROID_I18N_ROOT /apex/com.android.i18n
