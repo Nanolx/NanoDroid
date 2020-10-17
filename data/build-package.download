@@ -276,7 +276,7 @@ grab_apk_from_url () {
 
 grab_apk_from_github () {
 	[ "${BP_DEBUG}" = '1' ] && debug_message normal "curl ${curl_opts} -s -N \"https://api.github.com/repos/${1}/releases\""
-	local apk_url="$(curl -A "${useragent}" -s "https://api.github.com/repos/${1}/releases/latest" | jq -r '.assets[].browser_download_url')"
+	local apk_url="$(curl -A "${useragent}" -s "https://api.github.com/repos/${1}/releases/latest" | jq -r '.assets[0].browser_download_url')"
 	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
 	download_apk_common "${apk_dest}" "${3}" "${apk_url}" github
