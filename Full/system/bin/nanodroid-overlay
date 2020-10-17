@@ -3,16 +3,18 @@
 export MODID=@MODID@
 export MODE=@MODE@
 
+OVERLAY_PATH=""
+
 [ -f /dev/tmp/install/CommonInstaller ] && MODE=INSTALL
+[ -f /tmp/backuptool.functions ] && MODE=INSTALL
+[ -f /postinstall/tmp/backuptool.functions ] && MODE=INSTALL
 
 error () {
 	echo "!! ${@}"
 	exit 1
 }
 
-if [ "${MODE}" = "SYSTEM" ]; then
-	OVERLAY_PATH=""
-else
+if [ "${MODE}" = "MAGISK" ]; then
 	if [ -d "/data/adb/modules_update/${MODID}" ]; then
 		OVERLAY_PATH="/data/adb/modules_update/${MODID}"
 	elif [ -d "/data/adb/modules/${MODID}" ]; then
