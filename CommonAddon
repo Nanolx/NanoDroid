@@ -99,17 +99,13 @@ setup_env () {
 }
 
 detect_outfd () {
-	if [ -z $OUTFD ] || readlink /proc/$$/fd/$OUTFD | grep -q /tmp; then
-		# We will have to manually find out OUTFD
-		for FD in `ls /proc/$$/fd`; do
-			if readlink /proc/$$/fd/$FD | grep -q pipe; then
-				if ps | grep -v grep | grep -q " 3 $FD "; then
-					OUTFD=$FD
-					break
-				fi
-			fi
-		done
-	fi
+	# taken from Magisk
+	# update-binary|updater <RECOVERY_API_VERSION> <OUTFD> <ZIPFILE>
+	OUTFD=$(ps | grep -v 'grep' | grep -oE 'update(.*) 3 [0-9]+' | cut -d" " -f3)
+	[ -z $OUTFD ] && OUTFD=$(ps -Af | grep -v 'grep' | grep -oE 'update(.*) 3 [0-9]+' | cut -d" " -f3)
+	# update_engine_sideload --payload=file://<ZIPFILE> --offset=<OFFSET> --headers=<HEADERS> --status_fd=<OUTFD>
+	[ -z $OUTFD ] && OUTFD=$(ps | grep -v 'grep' | grep -oE 'status_fd=[0-9]+' | cut -d= -f2)
+	[ -z $OUTFD ] && OUTFD=$(ps -Af | grep -v 'grep' | grep -oE 'status_fd=[0-9]+' | cut -d= -f2)
 }
 
 backup_action () {
