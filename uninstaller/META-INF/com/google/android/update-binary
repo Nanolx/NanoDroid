@@ -312,7 +312,7 @@ rm -rf /data/media/0/nanodroid_logs
 
 # System Mode uninstallation
 [ -f /data/adb/NanoDroid_FileList ] && system_mode_uninstall /data/adb/NanoDroid_FileList
-[ -f /system/addon.d/NanoDroid_FileList ] && system_mode_uninstall /data/adb/NanoDroid_FileList
+[ -f /system/addon.d/NanoDroid_FileList ] && system_mode_uninstall /system/addon.d/NanoDroid_FileList
 
 # remove Patcher
 rm -rf /data/adb/nanodroid_patcher
