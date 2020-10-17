@@ -20,6 +20,7 @@
     <allow-in-power-save package="com.google.android.gms" />
     <allow-in-data-usage-save package="com.google.android.gms" />
     <allow-unthrottled-location package="com.google.android.gms" />
+    <allow-ignore-location-settings package="com.google.android.gms" />
 
     <!-- Ensure app store applications has internet access to manage updates. -->
     <allow-in-power-save-except-idle package="com.android.vending" />

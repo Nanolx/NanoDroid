@@ -1085,14 +1085,7 @@ install_microg () {
 			nanodroid_install_apk ${app}
 		done
 
-		nanodroid_install_file etc/permissions/features.xml
 		nanodroid_install_file etc/sysconfig/microg-a5k.xml
-
-		# android.permission.ACCESS_BACKGROUND_LOCATION only on SDK 29+
-		if [ "${SDK_VERSION}" -lt 29 ]; then
-			sed -e '/android.permission.ACCESS_BACKGROUND_LOCATION/d' \
-			-i "${INSTALLER}/system/etc/default-permissions/microg-permissions.xml"
-		fi
 		nanodroid_install_file etc/default-permissions/microg-permissions.xml
 
 	else	print_info " << without microG"
@@ -1584,7 +1577,7 @@ nanodroid_install_apk () {
 	cp "${source}.zst" "${dest}/${dest_apk}.zst" || \
 		error "failed to install ${source} to ${dest}"
 
-	${ZSTD} -fd "${dest}/${dest_apk}.zst" || \
+	${ZSTD} -fd --rm "${dest}/${dest_apk}.zst" || \
 		error "failed to decompress ${dest}/${dest_apk}.zst"
 
 	installinfo_add "${dest}/${dest_apk}"
