@@ -740,6 +740,10 @@ detect_arch () {
 detect_mode () {
 	case "${nanodroid_forcesystem}" in
 		1 )
+			if ${BOOTMODE}; then
+				print_info "nanodroid_forcesystem set to true"
+				error "can't install to /system from Magisk Manager"
+			fi
 			MODE_DETECT=forced
 			MODE=SYSTEM
 		;;
