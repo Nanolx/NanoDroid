@@ -3,6 +3,8 @@
 export MODID=@MODID@
 export MODE=@MODE@
 
+[ -f /dev/tmp/install/CommonInstaller ] && MODE=INSTALL
+
 error () {
 	echo "!! ${@}"
 	exit 1

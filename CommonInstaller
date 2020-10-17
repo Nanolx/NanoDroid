@@ -254,6 +254,7 @@ mount_partitions () {
 				rm -rf /system_root
 				mkdir -p /system_root
 			fi
+			is_mounted /system_root && mount -o rw,remount /system_root
 			! is_mounted /system_root && mount -o rw /system_root
 			! is_mounted /system_root && mount -o rw ${SYSTEM_BLOCK} /system_root
 			mount -o bind /system_root/system /system
@@ -751,19 +752,22 @@ detect_mode () {
 		0 | *)
 			MODE_DETECT=detected
 			MODE=SYSTEM
+			MAGISK_VER_CODE=0
 
 			if [ -f /data/adb/magisk/util_functions.sh ]; then
 				. /data/adb/magisk/util_functions.sh
+			elif [ -f /data/magisk/util_functions.sh ]; then
+				. /data/magisk/util_functions.sh
+			fi
 
-				if [ ${MAGISK_VER_CODE} -ge 19000 ]; then
-					MODE=MAGISK
-				else
-					print_info " "
-					print_info "Magisk 19.0 or newer is required!"
-					print_info "falling back to /system installation!"
-					print_info " "
-					MODE=SYSTEM
-				fi
+			if [ ${MAGISK_VER_CODE} -ge 19000 ]; then
+				MODE=MAGISK
+			else
+				print_info " "
+				print_info "Magisk 19.0 or newer is required!"
+				print_info "falling back to /system installation!"
+				print_info " "
+				MODE=SYSTEM
 			fi
 		;;
 	esac
