@@ -31,9 +31,9 @@ creating NanoDroid report:
 		    $(find ${CWD} -mindepth 2 -type f | sort); do
 		case ${file} in
 			*NanoDroid*.zip* ) get_dst_info ${file} ;;
-			*.apk.gz ) get_apk_info ${file} ;;
+			*.apk.zst ) get_apk_info ${file} ;;
 			*.so*    ) get_lib_info ${file} ;;
-			*xbin*   ) get_bin_info ${file} ;;
+			*/bin*   ) get_bin_info ${file} ;;
 			*tools*  ) get_bin_info ${file} ;;
 			*etc*    ) get_etc_info ${file} ;;
 			*.dex*   ) get_dex_info ${file} ;;
@@ -54,7 +54,7 @@ get_apk_info () {
 
 	APK=${CWD}/_report.apk
 
-	gzip -dc ${1} > ${APK}
+	zstd -dcqf ${1} > ${APK}
 
 	apk_file=$(basename ${1})
 	apk_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
@@ -63,7 +63,7 @@ get_apk_info () {
 	apk_code=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^package: name/{print $4}')
 	apk_perm=$(aapt dump badging ${APK} 2>/dev/null | gawk -F \' '/^uses-permission:/{print $2}' | sort)
 	apk_sha=$(${sumsha256} ${APK} | gawk '{print $1}')
-	gzip_sha=$(${sumsha256} ${1} | gawk '{print $1}')
+	zstd_sha=$(${sumsha256} ${1} | gawk '{print $1}')
 
 	case ${1} in
 		*gsync/K* ) APK_TYPE="Google Sync Adapters [KitKat]" ;;
@@ -84,7 +84,7 @@ get_apk_info () {
 	| Version:	${apk_version}
 	| VersionCode:	${apk_code}
 	| SHA256 APK:	${apk_sha}
-	| SHA256 GZip:	${gzip_sha}" >> ${report_file}
+	| SHA256 ZStd:	${zstd_sha}" >> ${report_file}
 
 	if [ -z "${apk_perm}" ]; then
 		echo -e "	| Permissions:	none requested\n" >> ${report_file}
@@ -115,6 +115,7 @@ get_lib_info () {
 		*26* ) local lib_code="26 [Oreo] {26}" ;;
 		*27* ) local lib_code="27 [Oreo]" ;;
 		*28* ) local lib_code="28 [Pie]" ;;
+		*29* ) local lib_code="29 [Q]" ;;
 		*    ) local lib_code="Generic" ;;
 	esac
 
@@ -141,7 +142,7 @@ get_bin_info () {
 	local bin_path=$(dirname ${1} | sed -e 's/.*NanoDroid/NanoDroid/')
 
 	case ${bin_path} in
-		*xbin* ) local bin_type="Android User Utility" ;;
+		*bin* ) local bin_type="Android User Utility" ;;
 		*tools*) local bin_type="Android Installer Utility" ;;
 	esac
 
@@ -281,6 +282,7 @@ get_msc_info () {
 		*.git*            ) local msc_type="exclude" ;;
 		*NanoDroid-Report*) local msc_type="exclude" ;;
 		*NanoDroid/dist*  ) local msc_type="exclude" ;;
+		*/local*          ) local msc_type="exclude" ;;
 
 		*                 ) local msc_type="unknown" ;;
 	esac
