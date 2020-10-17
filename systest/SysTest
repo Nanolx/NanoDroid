@@ -9,7 +9,6 @@
 VERSION=23.0.99999999
 TMPDIR=/dev/tmp
 LOGFILE="/data/media/0/nanodroid_logs/NanoDroid-SysTest-$(date +%Y%m%d-%H.%M.%S).log"
-APEX_LD=/system
 
 ##########################################################################################
 # Generic Functions
@@ -65,33 +64,29 @@ mount_apex_loop () {
 
 # taken from Magisk, with modifications for NanoDroid
 mount_apex () {
-	if ${BOOTMODE}; then
-		APEX_LD=/apex/com.android.runtime
-	else
-		APEX_LD=/apex/com.android.runtime
+	mkdir -p /apex
 
-		mkdir -p /apex
+	for apex in /system/apex/*; do
+		apex_mount="/apex/$(basename ${apex} .apex)"
+		apex_loop="/dev/loop_apex_$(basename ${apex} .apex)"
 
-		for apex in /system/apex/*; do
-			apex_mount="/apex/$(basename ${apex} .apex)"
-			apex_loop="/dev/loop_apex_$(basename ${apex} .apex)"
+		[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
+		[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
+		[ "${apex_mount}" == /apex/com.android.art.release ] && apex_mount=/apex/com.android.art
+		[ "${apex_mount}" == /apex/com.android.art.debug ] && apex_mount=/apex/com.android.art
 
-			[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
-			[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
+		mkdir -p "${apex_mount}"
 
-			mkdir -p "${apex_mount}"
+		APEX_LD="${apex_mount}/lib:${APEX_LD}"
+		APEX_LD_64="${apex_mount}/lib64:${APEX_LD_64}"
 
-			if [ -f "${apex}" ]; then
-				unzip -oq "${apex}" apex_payload.img -d /apex
-				mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
-			elif [ -d "${apex}" ]; then
-				mount -o bind "${apex}" "${apex_mount}"
-			fi
-		done
-
-		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
-		export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
-	fi
+		if [ -f "${apex}" ]; then
+			unzip -oq "${apex}" apex_payload.img -d /apex
+			mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
+		elif [ -d "${apex}" ]; then
+			mount -o bind "${apex}" "${apex_mount}"
+		fi
+	done
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
@@ -116,7 +111,6 @@ mount_partitions () {
 	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
 
 	if ${BOOTMODE}; then
-		APEX_LD=/apex/com.android.runtime
 		build_props=$(find /system /system_root /vendor -type f -name build.prop)
 
 		if [[ ! $(is_mounted /vendor) && -a /system/vendor ]]; then
@@ -153,12 +147,21 @@ mount_partitions () {
 			ln -sf /system/vendor /vendor >/dev/null
 		fi
 
-		build_props=$(find /system /system_root /vendor -type f -name build.prop)
-
-		[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
-
 		[ -d /system/apex ] && mount_apex
 	fi
+
+	build_props=$(find /system /system_root /vendor -type f -name build.prop)
+	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
+
+	if [ -d /apex/com.android.art ]; then
+		export ANDROID_ART_ROOT=/apex/com.android.art
+		export ANDROID_RUNTIME_ROOT=${ANDROID_ART_ROOT}
+	elif [ -d /apex/com.android.runtime ]; then
+		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+	fi
+
+	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
+	export ANDROID_I18N_ROOT /apex/com.android.i18n
 }
 
 umount_partitions () {
@@ -167,21 +170,24 @@ umount_partitions () {
 	umount -l /vendor 2>/dev/null
 	umount -l /dev/random 2>/dev/null
 
-	mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
+	mount | awk '/ \/apex/{print $1 " " $3}' | while read apex_loop apex_mount; do
 		umount -l "${apex_mount}" 2>/dev/null
-	done
-
-	mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
 		losetup -d "${apex_loop}" 2>/dev/null
 	done
 
 	rm -rf /apex
+
+	unset ANDROID_RUNTIME_ROOT
+	unset ANDROID_TZDATA_ROOT
 }
 
 error () {
 	ui_print " "
 	ui_print " !! ${@}"
 	ui_print " "
+
+	${BOOTMODE} || umount_partitions
+
 	exit 1
 }
 
@@ -316,35 +322,22 @@ system_test () {
 
 	chmod 0755 "${FILE}" "${AAPT}"
 
-	DALVIKVM_BIN=$(ls -l ${APEX_LD}/bin/dalvikvm | awk '{print $NF}')
-	DALVIKVM_ARCH=$("${FILE}" -m "${TMPDIR}/magic.mgc" -L ${APEX_LD}/bin/dalvikvm)
+	DALVIKVM_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
 
-	case ${DALVIKVM_BIN} in
-		*dalvikvm32* )
-			export LD="${APEX_LD}/lib:/system/lib:/vendor/lib:/system/vendor/lib:/product/lib:/system/product/lib"
+	case ${DALVIKVM_ARCH} in
+		*32-bit* )
+			export LD_LIBRARY_PATH="/system/lib:/vendor/lib:/system/vendor/lib:/product/lib:/system/product/lib:${APEX_LD}"
 		;;
 
-		*dalvikvm64* )
-			export LD="${APEX_LD}/lib64:/system/lib64:/vendor/lib64:/system/vendor/lib64:/product/lib64:/system/product/lib64"
-		;;
-
-		*dalvikvm* )
-			case ${DALVIKVM_ARCH} in
-				*32-bit* )
-					export LD="${APEX_LD}/lib:/system/lib:/vendor/lib:/system/vendor/lib:/product/lib:/system/product/lib"
-				;;
-
-				*64-bit* )
-					export LD="${APEX_LD}/lib64:/system/lib64:/vendor/lib64:/system/vendor/lib64:/product/lib64:/system/product/lib64"
-				;;
-			esac
+		*64-bit* )
+			export LD_LIBRARY_PATH="/system/lib64:/vendor/lib64:/system/vendor/lib64:/product/lib64:/system/product/lib64:${APEX_LD_64}"
 		;;
 	esac
 
-	if [ -f ${APEX_LD}/etc/ld.config.txt ]; then
-		export LD_FILE="${APEX_LD}/etc/ld.config.txt"
-	elif [ -f ${APEX_LD}/etc/ld.config.${SDK_VERSION}.txt ]; then
-		export LD_FILE="${APEX_LD}/etc/ld.config.${SDK_VERSION}.txt"
+	if [ -f ${ANDROID_RUNTIME_ROOT}/etc/ld.config.txt ]; then
+		export LD_CONFIG_FILE="${ANDROID_RUNTIME_ROOT}/etc/ld.config.txt"
+	elif [ -f ${ANDROID_RUNTIME_ROOT}/etc/ld.config.${SDK_VERSION}.txt ]; then
+		export LD_CONFIG_FILE="${ANDROID_RUNTIME_ROOT}/etc/ld.config.${SDK_VERSION}.txt"
 	fi
 
 	SERVICES_JAR_DEX=$(unzip -lq /system/framework/services.jar | grep classes.dex)

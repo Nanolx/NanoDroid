@@ -104,10 +104,133 @@ error () {
 	ui_print " !!"
 	ui_print " !! ${@}"
 	ui_print " !!"
+
+	${BOOTMODE} || umount_partitions
+
 	exit 1
 }
 
-# taken from Magisk, with modifications for NanoDroid
+
+##########################################################################################
+# taken from Magisk, with minor modifications for NanoDroid
+# mount partitions
+##########################################################################################
+
+mount_partitions () {
+	if ! ${BOOTMODE}; then
+		DEVICE_AB=FALSE
+		VENDOR_COMPAT=FALSE
+		SYSTEM_AS_ROOT=FALSE
+
+		SLOT=$(grep_cmdline androidboot.slot_suffix)
+		echo " INFO: #1 [SLOT] ${SLOT}"
+		if [ -z ${SLOT} ]; then
+			SLOT=$(grep_cmdline androidboot.slot)
+			echo " INFO: #2 [SLOT] ${SLOT}"
+			if [ -n ${SLOT} ]; then
+				SLOT=_${SLOT}
+				echo " INFO: #3 [SLOT] ${SLOT}"
+				DEVICE_AB=TRUE
+			fi
+		fi
+
+		system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
+		echo " INFO: #4 [system_tmp] ${system_tmp}"
+		SYSTEM_BLOCK=$(readlink -f ${system_tmp})
+		echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
+
+		is_mounted /data || mount /data || error "failed to mount /data!"
+
+		mount -o bind /dev/urandom /dev/random
+
+		SYSTEM_AS_ROOT=$(grep_prop ro.build.ab_update /default.prop)
+		if [ -e /system_root -o ${SYSTEM_AS_ROOT} ]; then
+			[ -L /system_root ] && mv /system_root /system_root_link
+			if [ ! -d /system_root ]; then
+				rm -rf /system_root
+				mkdir -p /system_root
+			fi
+			! is_mounted /system_root && mount -o rw /system_root
+			! is_mounted /system_root && mount -o rw ${SYSTEM_BLOCK} /system_root
+			mount -o bind /system_root/system /system
+		else
+			! is_mounted /system && mount -o rw /system
+			! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
+		fi
+
+		vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
+		echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
+		VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
+		echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
+
+		! is_mounted /vendor && mount -o ro /vendor
+		! is_mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
+
+		if [[ ! $(is_mounted /vendor) && -d /system/vendor ]]; then
+			### XXX work-around required for some devices
+			VENDOR_COMPAT=TRUE
+			ln -sf /system/vendor /vendor >/dev/null
+		fi
+
+		echo " "
+		mount | sed -e '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}'
+		echo " "
+
+		echo " INFO: #8 [prop]"
+		ls -l /system/*.prop
+
+		[ -d /system/apex ] && mount_apex
+	fi
+
+	build_props=$(find /system /system_root /vendor -type f -name build.prop)
+	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
+
+	if [ -d /apex/com.android.art ]; then
+		export ANDROID_ART_ROOT=/apex/com.android.art
+		export ANDROID_RUNTIME_ROOT=${ANDROID_ART_ROOT}
+	elif [ -d /apex/com.android.runtime ]; then
+		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+	fi
+
+	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
+	export ANDROID_I18N_ROOT /apex/com.android.i18n
+}
+
+##########################################################################################
+# taken from Magisk, with minor modifications for NanoDroid
+# mount APEX directories or images
+##########################################################################################
+
+mount_apex () {
+	mkdir -p /apex
+
+	for apex in /system/apex/*; do
+		apex_mount="/apex/$(basename ${apex} .apex)"
+		apex_loop="/dev/loop_apex_$(basename ${apex} .apex)"
+
+		[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
+		[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
+		[ "${apex_mount}" == /apex/com.android.art.release ] && apex_mount=/apex/com.android.art
+		[ "${apex_mount}" == /apex/com.android.art.debug ] && apex_mount=/apex/com.android.art
+
+		mkdir -p "${apex_mount}"
+
+		if [ -f "${apex}" ]; then
+			unzip -oq "${apex}" apex_payload.img -d /apex
+			mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
+		elif [ -d "${apex}" ]; then
+			mount -o bind "${apex}" "${apex_mount}"
+		fi
+	done
+
+	echo " INFO: #10 [APEX [ALL]] $(ls /system/apex/*)"
+}
+
+##########################################################################################
+# taken from Magisk, with minor modifications for NanoDroid
+# helper function for mounting APEX directories or images
+##########################################################################################
+
 mount_apex_loop () {
 	local number=0
 	local minorx=1
@@ -135,122 +258,26 @@ mount_apex_loop () {
 	done
 }
 
-# taken from Magisk, with modifications for NanoDroid
-mount_apex () {
-	if ${BOOTMODE}; then
-		APEX_LD=/apex/com.android.runtime
-	else
-		APEX_LD=/apex/com.android.runtime
-
-		mkdir -p /apex
-
-		for apex in /system/apex/*; do
-			apex_mount="/apex/$(basename ${apex} .apex)"
-			apex_loop="/dev/loop_apex_$(basename ${apex} .apex)"
-
-			[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
-			[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
-
-			mkdir -p "${apex_mount}"
-
-			if [ -f "${apex}" ]; then
-				unzip -oq "${apex}" apex_payload.img -d /apex
-				mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
-			elif [ -d "${apex}" ]; then
-				mount -o bind "${apex}" "${apex_mount}"
-			fi
-		done
-
-		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
-		export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
-	fi
-
-	echo " INFO: #10 [APEX_LD] ${APEX_LD}"
-	echo " INFO: #11 [APEX [ALL]] $(ls /system/apex/*)"
-}
-
-# taken from Magisk, with minor modifications for NanoDroid
-mount_partitions () {
-	DEVICE_AB=FALSE
-	VENDOR_COMPAT=FALSE
-	SYSTEM_AS_ROOT=FALSE
-
-	SLOT=$(grep_cmdline androidboot.slot_suffix)
-	echo " INFO: #1 [SLOT] ${SLOT}"
-	if [ -z ${SLOT} ]; then
-		SLOT=$(grep_cmdline androidboot.slot)
-		echo " INFO: #2 [SLOT] ${SLOT}"
-		if [ -n ${SLOT} ]; then
-			SLOT=_${SLOT}
-			echo " INFO: #3 [SLOT] ${SLOT}"
-			DEVICE_AB=TRUE
-		fi
-	fi
-
-	system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
-	echo " INFO: #4 [system_tmp] ${system_tmp}"
-	SYSTEM_BLOCK=$(readlink -f ${system_tmp})
-	echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
-
-	is_mounted /data || mount /data || error "failed to mount /data!"
-
-	mount -o bind /dev/urandom /dev/random
-
-	SYSTEM_AS_ROOT=$(grep_prop ro.build.ab_update /default.prop)
-	if [ -e /system_root -o ${SYSTEM_AS_ROOT} ]; then
-		[ -L /system_root ] && mv /system_root /system_root_link
-		if [ ! -d /system_root ]; then
-			rm -rf /system_root
-			mkdir -p /system_root
-		fi
-		! is_mounted /system_root && mount -o rw /system_root
-		! is_mounted /system_root && mount -o rw ${SYSTEM_BLOCK} /system_root
-		mount -o bind /system_root/system /system
-	else
-		! is_mounted /system && mount -o rw /system
-		! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
-	fi
-
-	vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
-	echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
-	VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
-	echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
-
-	! is_mounted /vendor && mount -o ro /vendor
-	! is_mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
-
-	if [[ ! $(is_mounted /vendor) && -d /system/vendor ]]; then
-		### XXX work-around required for some devices
-		VENDOR_COMPAT=TRUE
-		ln -sf /system/vendor /vendor >/dev/null
-	fi
-
-	build_props=$(find /system /system_root /vendor -type f -name build.prop)
-	echo " INFO: #9 [build_props] ${build_props}"
-
-	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
-
-	[ -d /system/apex ] && mount_apex
-}
+##########################################################################################
+# unmount partitions
+##########################################################################################
 
 umount_partitions () {
 	umount -l /system_root 2>/dev/null
 	umount -l /system 2>/dev/null
+	umount -l /system/vendor 2>/dev/null
 	umount -l /vendor 2>/dev/null
 	umount -l /dev/random 2>/dev/null
 
-	mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
+	mount | awk '/ \/apex/{print $1 " " $3}' | while read apex_loop apex_mount; do
 		umount -l "${apex_mount}" 2>/dev/null
-	done
-
-	mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
 		losetup -d "${apex_loop}" 2>/dev/null
 	done
 
+	rm -rf /apex
+
 	unset ANDROID_RUNTIME_ROOT
 	unset ANDROID_TZDATA_ROOT
-
-	rm -rf /apex
 }
 
 # check for configuration files
