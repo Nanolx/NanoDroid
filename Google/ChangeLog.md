@@ -1,1 +1,1 @@
-../tools/ChangeLog.md
+../ChangeLog.md
