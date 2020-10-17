@@ -545,11 +545,15 @@ create_privapp_permissions_whitelist () {
 reset_runtime_permissions () {
 	# required on Android 10, else all apps bundled with NanoDroid will not
 	# show a permission prompt for android.permission.WRITE_EXTERNAL_STORAGE
-	if [ "${SDK_VERSION}" -ge 29 -a "${NANODROID_UPGRADE}" -eq 0 ]; then
-		find /data/system/users -type f -name 'runtime-permissions.xml' 2>/dev/null | while read file; do
-			rm -f "${file}"
-			decho "  ++ resetting permissions: ${file}"
-		done
+	if [ "${SDK_VERSION}" -ge 29 ]; then
+		if ${BOOTMODE}; then
+			pm reset-permissions
+		else
+			find /data/system/users -type f -name 'runtime-permissions.xml' 2>/dev/null | while read file; do
+				rm -f "${file}"
+				decho "  ++ resetting permissions: ${file}"
+			done
+		fi
 	fi
 }
 
@@ -816,7 +820,7 @@ nanodroid_finalize () {
 		installer_cleanup_env
 	fi
 
-	reset_runtime_permissions
+	[ "${NANODROID_UPGRADE}" -eq 0 ] && reset_runtime_permissions
 
 	print_info " "
 	print_info " Thanks for using NanoDroid "
