@@ -763,10 +763,6 @@ detect_mode () {
 			if [ ${MAGISK_VER_CODE} -ge 19000 ]; then
 				MODE=MAGISK
 			else
-				print_info " "
-				print_info "Magisk 19.0 or newer is required!"
-				print_info "falling back to /system installation!"
-				print_info " "
 				MODE=SYSTEM
 			fi
 		;;
