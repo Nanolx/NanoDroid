@@ -81,23 +81,6 @@ grep_prop() {
 	sed -n "s/^${1}=//p" ${build_props} ${2} | head -n 1
 }
 
-
-setup_env () {
-	detect_outfd
-
-	is_mounted /data || mount -oro /data
-
-	PATH=/system/bin:/system/xbin:${PATH}
-
-	NANODROID_BINDIR=/system/bin
-
-	if [ ! -r ${NANODROID_LIST} ]; then
-		echo "No NanoDroid installer information found!"
-		exit 1
-	fi
-
-}
-
 detect_outfd () {
 	# taken from Magisk
 	# update-binary|updater <RECOVERY_API_VERSION> <OUTFD> <ZIPFILE>
@@ -109,8 +92,6 @@ detect_outfd () {
 }
 
 backup_action () {
-	sleep 5
-
 	ui_print " ++ ${MODID} ${VERSION} addon.d: backup"
 	cat ${NANODROID_LIST} | while read FILE; do
 		echo " + backup: ${FILE}"
@@ -120,8 +101,6 @@ backup_action () {
 }
 
 restore_action () {
-	sleep 5
-
 	ui_print " ++ ${MODID} ${VERSION} addon.d: restore"
 	cat ${NANODROID_LIST} | while read FILE; do
 		echo " + restore: ${FILE}"
@@ -131,13 +110,9 @@ restore_action () {
 }
 
 postrestore_action () {
-	sleep 5
-
-	setup_env
-
 	ui_print " ++ ${MODID} ${VERSION} addon.d: GApps removal"
 	print_google_apps | while read app; do
-		${NANODROID_BINDIR}/nanodroid-overlay --add ${app}
+		/system/bin/nanodroid-overlay --add ${app}
 	done
 
 	ui_print " ++ ${MODID} ${VERSION} addon.d: GApps removal done"
@@ -147,11 +122,18 @@ postrestore_action () {
 		source "${config}"
 		if [ "${nanodroid_overlay}" -eq 1 ]; then
 			ui_print " ++ ${MODID} ${VERSION} addon.d: creating Overlays"
-			${NANODROID_BINDIR}/nanodroid-overlay --create
+			/system/bin/nanodroid-overlay --create
 			ui_print " ++ ${MODID} ${VERSION} addon.d: creating Overlays done"
 		fi
 	fi
 }
+
+detect_outfd
+
+if [ ! -r ${NANODROID_LIST} ]; then
+	echo "No NanoDroid installer information found!"
+	exit 1
+fi
 
 case "${1}" in
 	backup)
