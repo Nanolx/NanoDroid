@@ -297,7 +297,7 @@ mount_partitions () {
 	fi
 
 	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
-	export ANDROID_I18N_ROOT /apex/com.android.i18n
+	export ANDROID_I18N_ROOT=/apex/com.android.i18n
 }
 
 ##########################################################################################
