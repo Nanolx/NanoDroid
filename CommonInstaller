@@ -99,6 +99,8 @@ error () {
 		nanodroid_storelogs
 	fi
 
+	${BOOTMODE} || umount_partitions
+
 	exit 1
 }
 
@@ -220,7 +222,6 @@ is_mounted () {
 
 mount_partitions () {
 	if ${BOOTMODE}; then
-		APEX_LD=/apex/com.android.runtime
 		build_props=$(find /system /system_root /vendor -type f -name build.prop)
 	else
 		DEVICE_AB=FALSE
@@ -277,20 +278,26 @@ mount_partitions () {
 			ln -sf /system/vendor /vendor >/dev/null
 		fi
 
-		echo " "
-		mount | sed -e '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}'
-		echo " "
-
-		echo " INFO: #8 [prop]"
-		ls -l /system/*.prop
-
 		build_props=$(find /system /system_root /vendor -type f -name build.prop)
-		echo " INFO: #9 [build_props] ${build_props}"
-
-		[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
 
 		[ -d /system/apex ] && mount_apex
 	fi
+
+	echo " "
+	mount | sed -e '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}'
+	echo " "
+
+	echo " INFO: #8 [prop]"
+	ls -l /system/*.prop
+
+	echo " INFO: #9 [build_props] ${build_props}"
+	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
+
+	[ -d /apex/com.android.art ] && export ANDROID_ART_ROOT=/apex/com.android.art
+	export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+
+	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
+	export ANDROID_I18N_ROOT /apex/com.android.i18n
 }
 
 ##########################################################################################
@@ -299,8 +306,6 @@ mount_partitions () {
 ##########################################################################################
 
 mount_apex () {
-	APEX_LD=/apex/com.android.runtime
-
 	mkdir -p /apex
 
 	for apex in /system/apex/*; do
@@ -309,6 +314,8 @@ mount_apex () {
 
 		[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
 		[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
+		[ "${apex_mount}" == /apex/com.android.art.release ] && apex_mount=/apex/com.android.art
+		[ "${apex_mount}" == /apex/com.android.art.debug ] && apex_mount=/apex/com.android.art
 
 		mkdir -p "${apex_mount}"
 
@@ -320,11 +327,7 @@ mount_apex () {
 		fi
 	done
 
-	export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
-	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
-
-	echo " INFO: #10 [APEX_LD] ${APEX_LD}"
-	echo " INFO: #11 [APEX [ALL]] $(ls /system/apex/*)"
+	echo " INFO: #10 [APEX [ALL]] $(ls /system/apex/*)"
 }
 
 ##########################################################################################
@@ -370,11 +373,8 @@ umount_partitions () {
 	umount -l /vendor 2>/dev/null
 	umount -l /dev/random 2>/dev/null
 
-	mount | awk '/ \/apex/{print $3}' | while read apex_mount; do
+	mount | awk '/ \/apex/{print $1 " " $3}' | while read apex_loop apex_mount; do
 		umount -l "${apex_mount}" 2>/dev/null
-	done
-
-	mount | awk '/ \/apex/{print $1}' | while read apex_loop; do
 		losetup -d "${apex_loop}" 2>/dev/null
 	done
 
