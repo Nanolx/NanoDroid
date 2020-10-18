@@ -26,12 +26,8 @@ grep_cmdline() {
 		sed -n "${REGEX}" 2>/dev/null
 }
 
-is_mounted() {
-	if [ -n "$2" ]; then
-		cat /proc/mounts | grep $1 | grep $2, >/dev/null
-	else
-		cat /proc/mounts | grep $1 >/dev/null
-	fi
+is_mounted () {
+	grep -q " $(readlink -f ${1}) " /proc/mounts 2>/dev/null
 	return $?
 }
 
