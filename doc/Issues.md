@@ -32,11 +32,6 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 * You can't get past the first page of the microG login wizard on KitKat
   * updating microG to (at least) 0.2.7.17455 will fix the issue
 
-## Updating Play support libraries
-
-* Play Store tries to update itself or the Play Services, both updates fail because you have microG and a modified Play Store installed
-  * you can disable the `GMSCoreUpdateService` service of the Play Store to prevent it from updating
-
 ## Google Account
 
 * Can't login to Google Account
@@ -69,6 +64,8 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Play Store
 
+### Play Store not opening (error RH-01)
+
 * Play Store giving error RH-01
   * ensure you rebooted after [microG setup](#microg-setup)
   * ensure Play Store has signature spoofing permission
@@ -76,24 +73,30 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
   * go to Settings > Apps > Play Store > Permissions and grant at least the `Phone`  and `Storage` permission
   * force close Play Store and open it again
 
-* Play Store not installing split APKs / extra data
-  * several huge applications (mostly games) have a rather small base APK and additional addon-data downloaded, if Play Store fails to install those
+### Updating Play support libraries#
+
+* Play Store tries to update itself or the Play Services, both updates fail because you have microG and a modified Play Store installed
+  * you can disable the `GMSCoreUpdateService` service of the Play Store to prevent it from updating
+
+### Can't install split APKs / extra data
+
+* several huge applications (mostly games) have a rather small base APK and additional addon-data downloaded, if Play Store fails to install those
   * go to Settings > Apps > Play Store > Permissions and grant at least the `Phone`  and `Storage` permission
   * force close Play Store and open it again
 
-* Play Store does not show bought apps as bought
-  * this is a rare corner-case that sometimes happens on Android 10 (onwards), it's ususally fixed by issueing the following command as root on your device (or via adb shell):
-```
-find /data/system/users -type f -name 'runtime-permissions.xml' 2>/dev/null | while read file; do
-	rm -f "${file}"
-done
-```
-  * (alternatively remove `runtime-permissions.xml` from file manager as root or via TWRP file manager)
-  * reboot your device
-  * ensure Play Store has signature spoofing permission
-      * go to Settings > Apps > Permissions > Signature Spoofing and grant it
-  * go to Settings > Apps > Play Store > Permissions and grant at least the `Phone`  and `Storage` permission
-  * force close close Play Store and open it again
+### Play Store does not show bought apps as bought
+
+If your Play Store doesn't show already bought apps as bought, you need to register the device ID to your Google Account, doing so will eliminate the "uncertified" status of Play Store and thus will allow you to re-download your already bought apps. Also remote installations using `https://play.google.com` will be working again afterwards.
+* Download the `Device ID` applicaton from [Play Store](https://play.google.com/store/apps/details?id=com.evozi.deviceid)
+* Open `Device ID` and note/copy the `Google Service Framework (GSF)` ID
+* Navigate to `https://www.google.com/android/uncertified/` and login using your Google Account
+* Enter the `Google Service Framework (GSF)` ID into the `Android ID` box and tap register
+* Clean Play Store Cache (Settings > Apps > Play Store > Storage > Clean Cache)
+* Reboot your device - the status of your bought apps is now restored
+
+### Play Store web interface can't install apps on my device
+
+See "Play Store does not show bought apps as bought" above, same fix.
 
 ## Push Messages
 
