@@ -87,10 +87,9 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 ### Play Store does not show bought apps as bought
 
 If your Play Store doesn't show already bought apps as bought, you need to register the device ID to your Google Account, doing so will eliminate the "uncertified" status of Play Store and thus will allow you to re-download your already bought apps. Also remote installations using `https://play.google.com` will be working again afterwards.
-* Download the `Device ID` applicaton from [Play Store](https://play.google.com/store/apps/details?id=com.evozi.deviceid)
-* Open `Device ID` and note/copy the `Google Service Framework (GSF)` ID
+* Go to microG Settings > Google Device Registration and note the `Android ID`
 * Navigate to `https://www.google.com/android/uncertified/` and login using your Google Account
-* Enter the `Google Service Framework (GSF)` ID into the `Android ID` box and tap register
+* Enter the ID shown in microG settings into the `Android ID` box and tap register
 * Clean Play Store Cache (Settings > Apps > Play Store > Storage > Clean Cache)
 * Reboot your device - the status of your bought apps is now restored
 
