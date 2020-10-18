@@ -9,6 +9,12 @@ OVERLAY_PATH=""
 [ -f /tmp/backuptool.functions ] && MODE=INSTALL
 [ -f /postinstall/tmp/backuptool.functions ] && MODE=INSTALL
 
+# detect whether we need to remount /system or / in system mode
+if grep -q " $(readlink -f /system) " /proc/mounts 2>/dev/null; then
+	remount_point=/system
+else	remount_point=/
+fi
+
 error () {
 	echo "!! ${@}"
 	exit 1
@@ -59,7 +65,9 @@ Options System Mode:
 	exit 0
 }
 
-test "$(whoami)" != "root" && error "not running as root"
+if [ "${MODE}" != "INSTALL" ]; then
+	test "$(whoami)" != "root" && error "not running as root"
+fi
 
 get_config () {
 	config=""
@@ -90,7 +98,7 @@ overrides_add_intern () {
 }
 
 overrides_add () {
-	[ "${MODE}" = "SYSTEM" ] && mount -orw,remount /system
+	[ "${MODE}" = "SYSTEM" ] && mount -orw,remount ${remount_point}
 
 	for app in ${@}; do
 		for path in ${app_locations}; do
@@ -98,7 +106,7 @@ overrides_add () {
 		done
 	done
 
-	[ "${MODE}" = "SYSTEM" ] && mount -oro,remount /system
+	[ "${MODE}" = "SYSTEM" ] && mount -oro,remount ${remount_point}
 }
 
 overrides_remove_intern () {
