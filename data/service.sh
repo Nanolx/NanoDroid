@@ -23,6 +23,20 @@ run_initscripts () {
 	done
 }
 
+install_gmscore () {
+	# wait until boot completed
+	until [ $(getprop sys.boot_completed). = 1. ]; do sleep 1; done
+
+	if [ $(getprop ro.system.build.version.sdk) -ge 29 ]; then
+		# microG GmsCore needs to be installed as user app for all permissions to be granted
+		# see https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711088518
+		if [ -f "${MODDIR}/system/priv-app/GmsCore/GmsCore.apk" ]; then
+			pm list packages -f | grep -q /data.*com.google.android.gms || \
+				pm install -r "${MODDIR}/system/app/GmsCore/GmsCore.apk" &
+		fi
+	fi
+}
+
 install_droidguardhelper () {
 	# wait until boot completed
 	until [ $(getprop sys.boot_completed). = 1. ]; do sleep 1; done
@@ -52,10 +66,12 @@ case ${MODULE} in
 	NanoDroid )
 		run_initscripts &
 		install_droidguardhelper &
+		install_gmscore &
 	;;
 
 	NanoDroid_microG )
 		install_droidguardhelper &
+		install_gmscore &
 	;;
 
 	NanoDroid_FDroid )
