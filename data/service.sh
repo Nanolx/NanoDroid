@@ -74,15 +74,11 @@ case ${MODULE} in
 		install_gmscore &
 	;;
 
-	NanoDroid_FDroid )
-		exit 0
-	;;
-
 	NanoDroid_BromiteWebView )
 		install_bromitewebview &
 	;;
 
-	NanoDroid_OsmAnd )
+	* )
 		exit 0
 	;;
 esac
