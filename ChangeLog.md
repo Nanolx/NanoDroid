@@ -6,15 +6,24 @@
 
 * Installer
   * update privapp-permission detection to fix bootloops on Android 11
+  * update APEX mount code for new `com.android.art.runtime` in Android 11
   * fix that empty `nanodroid_init=""` setup variable will get overriden with default value
      * note: missing `nanodroid_init` will still make the default value used, as desired
   * improve handling of conflict between `Fake Store` and `Play Store`
+  * when `nanodroid_forcesystem=1` is given, but we flash from Magisk Manager stop
+     * when you want `/system` installation, install from TWRP
+  * fix creating Uninstaller/Addon.d information for installed init scripts
+  * look for configuraiton files in `/sdcard` explicitely (in certain occasions `/data/media/0` might not be available, still `/sdcard` is)
+  * when flashing NanoDroid directly after Magisk (without booting into ROM first), the installer previously wouldn't find Magisk, thus falling back to `/system` installation
 
 * Installer, Patcher, SysTest, Uninstaller
   * improve detection of system-as-root devices and fix issues mounting `/system`
   * ensure we mount `/vendor` block device if direct mounting fails
      * fixes issue with mounting `/vendor` on some devices in TWRP
   * only create `/system/vendor -> /vendor` compat link needed on some devices if there's no `vendor_${SLOT}` partition
+
+* Addon.d
+  * several fixes and improvements
 
 * Patcher
   * fix check whether we're updating the Magisk Module
@@ -24,6 +33,22 @@
 
 * NanoDroid-Overlay script
   * `--genconfig` no longer forcefully sets config to `/data/.nanodroid-overlay`
+  * fix running `nanodroid-overlay` during addon.d
+  * fix read-write remounting `/system` for system mode debloating in when there's no `/system` but `/` to handle instead
+
+* build-package
+  * fix downloading APK from GitHub when release tag has multiple APKs
+  * make mime-type checking more robust
+
+* service.sh
+  * microG GmsCore may need to be installed as user app for all permissions to be granted, now `service.sh` does the job
+     * this is not required in `/system` mode
+     * see microG [issue 1100](https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711088518)
+
+* nanodroid-perm
+  * pass microG GmsCore userId to `pm` when granting restricted permissions
+    * `android.permission.ACCESS_BACKGROUND_LOCATION` and `android.permission.RECEIVE_SMS` on Android 10+
+    * see microG [issue 1100](https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711141077)
 
 ### General Changes
 
@@ -37,6 +62,9 @@
   * re-order functions and make the `CommonInstaller` file better readable
   * store System Mode file list in `/system/addon.d` instead of `/data/adb`
     * allows for full compat with recoveries that can't decrypt `/data`
+  * when newly flashing NanoDroid from Magisk Manager use `pm` to reset runtime permissions for better compat
+    * when flashing from TWRP the runtime-permissions.xml is still removed
+    * this is in both cases not done on NanoDroid upgrades
 
 * Full, microG packages
   * move all utilities from `/system/xbin` to `/system/bin`
@@ -50,7 +78,11 @@
 * NanoDroid-Overlay script
   * in system mode the script now only removes apps, no longer backs them up and restores them
      * allows for full compat with recoveries that can't decrypt `/data`
+  * somewhat nicer output
   * major code clean-up and simplification
+
+* NanoDroid-Perm script
+  * add newly required `android.permission.RECEIVE_SMS` restricted permission for microG GmsCore
 
 * Patcher, Patcher Addon.d
   * install Patcher environment into `/system/addon.d` no longer `/data/adb`
@@ -69,17 +101,14 @@
   * drop shell utilites from the package
      * except `lesskey` and `lessecho`, they'll be installed together with `bash` and `less` if `nanodroid_bash=1`
 
-* Installer, build-package
-  * compress APKs using `zstd` instead of `gzip`
-     * provides better performance on low end devices
-     * if you checked-out NanoDroid's source tree all old gzip'ed APKs will be removed
-
 * build-package
   * allow side-loading custom APKs from `local` directory inside the NanoDroid tree
      * side-loading libraries is currently not supported
   * simplify functions for downloading APKs from github, gitlab, url and opengapps
   * use Android build-tools version 29.0.3 when calling `dx` utility
      * for `build-package dalvik`
+  * compress APKs using ZStandard instead of GZip
+     * better performance on low-end devices
 
 * sysconfig
   * whitelist Aurora Services for `allow-in-power-save-except-idle`
@@ -93,21 +122,22 @@
 ## Updates
 
 * automatic
+  * microG GmsCore (0.2.13.203915)
   * Amaze (3.5.0)
-  * Blokada (4.8.4)
-  * Bromite System WebView (86.0.4240.92)
+  * Blokada (4.8.5)
+  * Bromite System WebView (86.0.4240.99)
   * F-Droid (1.10-alpha1)
   * FreeOTP+ (2.1)
   * K-9 Mail (5.718)
   * KeePassDX (2.8.7)
-  * NewPipe (0.20.0)
+  * NewPipe (0.20.1)
   * OAndBackupX (3.2.0)
   * Odyssey (1.1.20)
   * OpenVPN (0.7.21)
   * Simple Calendar (6.10.3)
-  * Simple Gallery (6.16.2)
+  * Simple Gallery (6.16.3)
   * SmartPack Kernel Manager (13.8)
-  * Termux (0.101)
+  * Termux (0.102)
 
 * manual
   * GNU Bash (5.1-rc1)
