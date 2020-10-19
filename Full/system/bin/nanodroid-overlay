@@ -221,7 +221,7 @@ get_config .nanodroid-overlay
 
 app_locations="/system/app /system/priv-app /system/reserve /system/product/app /system/product/priv-app"
 
-[[ -f ${config} ]] && export config || config=${STORAGE}/.nanodroid-overlay
+[[ -f ${config} ]] && export config || config=/data/media/0/.nanodroid-overlay
 
 opt=${1}
 [[ -z ${opt} ]] && show_help || shift
