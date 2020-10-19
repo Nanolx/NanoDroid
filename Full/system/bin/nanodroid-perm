@@ -10,6 +10,7 @@ perm_calw="android.permission.WRITE_CALENDAR"
 perm_conr="android.permission.READ_CONTACTS"
 perm_conw="android.permission.WRITE_CONTACTS"
 perm_gacc="android.permission.GET_ACCOUNTS"
+perm_rsms="android.permission.RECEIVE_SMS"
 
 # Packages
 microG="com.google.android.gms"
@@ -21,6 +22,9 @@ nlpDejavu="org.fitchfamily.android.dejavu"
 nlpApple="org.microg.nlp.backend.apple"
 nlpBmap="org.openbmap.unifiedNlp"
 
+# GmsCore userId
+gms_uid=$(dumpsys package com.google.android.gms | awk -F= '/userId/{print $2; exit}')
+
 check_package () {
 	[[ $(grep "^${1} " /data/system/packages.list) ]] && return 0 || return 1
 }
@@ -30,14 +34,18 @@ check_permission () {
 }
 
 grant_permission () {
-	pm grant ${1} ${2} 2>/dev/null
+	if [ -n "${3}" ]; then
+		pm grant --user ${3} ${1} ${2} 2>/dev/null
+	else
+		pm grant ${1} ${2} 2>/dev/null
+	fi
 }
 
 permissions () {
 	if check_package ${1}; then
 		echo "package ${1} found"
 		if ! check_permission ${1} ${2}; then
-			grant_permission ${1} ${2} && \
+			grant_permission ${1} ${2} ${3} && \
 				echo "permission ${2} granted" || \
 				echo "failed to grant permission ${2}"
 		else	echo "already has permission ${2}"
@@ -60,7 +68,9 @@ for app in ${microG} ${nlpIchnaea} ${nlpDejavu} ${nlpApple}; do
 	permissions ${app} ${perm_floc}
 done
 
-permissions ${microG} ${perm_bloc}
+# Restricted permissions
+permissions ${microG} ${perm_bloc} ${gms_uid}
+permissions ${microG} ${perm_rsms} ${gms_uid}
 
 # Google Calendar Sync
 permissions ${GCalSync} ${perm_calr}
