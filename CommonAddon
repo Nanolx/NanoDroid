@@ -16,7 +16,7 @@ source /tmp/backuptool.functions || source /postinstall/tmp/backuptool.functions
 
 MODID=NanoDroid
 OUTFD=
-VERSION=23.0.99999999
+VERSION=22.90.99999999
 
 NANODROID_LIST=/system/addon.d/NanoDroid_FileList
 

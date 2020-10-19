@@ -1,6 +1,10 @@
 # ChangeLog
 
-## 23.0 in-dev "[---]"
+## 23.0 in-dev "[All Aboard](https://www.discogs.com/Francesco-Zeta-All-Aboard/release/15998163)"
+
+### Note
+
+If you use Google Play, but it doesn't show your bought apps as bought, [check this Issue entry for a fix](https://gitlab.com/Nanolx/NanoDroid/-/blob/master/doc/Issues.md#play-store-does-not-show-bought-apps-as-bought)
 
 ### Bug Fixes
 
