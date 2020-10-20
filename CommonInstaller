@@ -153,7 +153,7 @@ detect_bootmode () {
 ##########################################################################################
 
 grep_prop() {
-	sed -n "s/^${1}=//p" ${build_props} ${2} | head -n 1
+	sed -n "s/^${1}=//p" /system/build.prop ${2} | head -n 1
 }
 
 grep_cmdline() {
@@ -238,29 +238,33 @@ mount_partitions () {
 			fi
 		fi
 
+		is_mounted /data || mount /data || error "failed to mount /data!"
+
+		mount -o bind /dev/urandom /dev/random
+
 		system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
 		echo " INFO: #4 [system_tmp] ${system_tmp}"
 		SYSTEM_BLOCK=$(readlink -f ${system_tmp})
 		echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
 
-		is_mounted /data || mount /data || error "failed to mount /data!"
-
-		mount -o bind /dev/urandom /dev/random
-
 		SYSTEM_AS_ROOT=$(grep_prop ro.build.ab_update /default.prop)
-		if [ -e /system_root -o ${SYSTEM_AS_ROOT} ]; then
-			[ -L /system_root ] && mv /system_root /system_root_link
-			if [ ! -d /system_root ]; then
-				rm -rf /system_root
-				mkdir -p /system_root
+		if [ -L /system_root ]; then
+			mv /system_root /system_root_link
+			mkdir -p /system_root
+		fi
+
+		if [ -d /system_root ]; then
+			mount -o rw /system_root || mount -orw ${SYSTEM_BLOCK} /system_root
+			if [ -d /system_root/system ]; then
+				mkdir -p /system
+				mount -o bind /system_root/system /system
 			fi
-			is_mounted /system_root && mount -o rw,remount /system_root
-			! is_mounted /system_root && mount -o rw /system_root
-			! is_mounted /system_root && mount -o rw ${SYSTEM_BLOCK} /system_root
-			mount -o bind /system_root/system /system
-		else
-			! is_mounted /system && mount -o rw /system
-			! is_mounted /system && mount -o rw ${SYSTEM_BLOCK} /system
+		elif [ -d /system ]; then
+			mount -o rw /system || mount -o rw ${SYSTEM_BLOCK} /system
+			if [ -d /system/system ]; then
+				mkdir -p /system
+				mount -o bind /system/system
+			fi
 		fi
 
 		vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
@@ -287,8 +291,7 @@ mount_partitions () {
 		[ -d /system/apex ] && mount_apex
 	fi
 
-	build_props=$(find /system /system_root /vendor -type f -name build.prop)
-	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
+	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
 	if [ -d /apex/com.android.art ]; then
 		export ANDROID_ART_ROOT=/apex/com.android.art
