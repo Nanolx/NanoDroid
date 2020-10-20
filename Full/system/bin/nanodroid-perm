@@ -25,6 +25,11 @@ nlpBmap="org.openbmap.unifiedNlp"
 # GmsCore userId
 gms_uid=$(dumpsys package com.google.android.gms | awk -F= '/userId/{print $2; exit}')
 
+error () {
+	echo "!! ${@}"
+	exit 1
+}
+
 check_package () {
 	[[ $(grep "^${1} " /data/system/packages.list) ]] && return 0 || return 1
 }
