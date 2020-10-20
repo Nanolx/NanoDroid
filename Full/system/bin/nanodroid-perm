@@ -31,7 +31,7 @@ error () {
 }
 
 check_package () {
-	[[ $(grep "^${1} " /data/system/packages.list) ]] && return 0 || return 1
+	pm list packages | grep -q "^package:${1}$" && return 0 || return 1
 }
 
 check_permission () {
@@ -58,7 +58,7 @@ permissions () {
 	fi
 }
 
-[[ $(whoami) != "root" ]] && error "not running as root"
+[[ $(whoami) = "root" ]] || [[ $(whoami) = "shell" ]] || error "not running as either ADB or root"
 
 # Fake Package Signature
 permissions ${microG} ${perm_fake}
