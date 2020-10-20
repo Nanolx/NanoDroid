@@ -96,6 +96,22 @@ mount_apex () {
 }
 
 # taken from Magisk, with minor modifications for NanoDroid
+find_block () {
+	unset tmp
+	tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name ${1}${SLOT} | head -n 1)
+	[ -z ${tmp} ] && tmp=$(find /dev \( -type b -o -type c -o -type l \) -maxdepth 1 -iname ${1}${SLOT} | head -n 1)
+	if [ -z ${tmp} ]; then
+		for uevent in /sys/dev/block/*/uevent; do
+			partname=$(awk -F= '/PARTNAME/{print $2}' ${uevent})
+			if [ "${1}${SLOT}" = "${partname}" ]; then
+				tmp="/dev/block/$(awk -F= '/DEVNAME/{print $2}' ${uevent})"
+				break
+			fi
+		done
+	fi
+	readlink -f ${tmp}
+}
+
 mount_partitions () {
 	if ! ${BOOTMODE}; then
 		DEVICE_AB=FALSE
@@ -118,34 +134,26 @@ mount_partitions () {
 
 		mount -o bind /dev/urandom /dev/random
 
-		system_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name system${SLOT} | head -n 1)
-		echo " INFO: #4 [system_tmp] ${system_tmp}"
-		SYSTEM_BLOCK=$(readlink -f ${system_tmp})
+		SYSTEM_BLOCK=$(find_block system)
 		echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
 
-		SYSTEM_AS_ROOT=$(grep_prop ro.build.ab_update /default.prop)
-		if [ -L /system_root ]; then
-			mv /system_root /system_root_link
-			mkdir -p /system_root
+		mkdir -p /system /system_root
+		mount -o rw ${SYSTEM_BLOCK} /system
+
+		if [ -f /system/build.prop ]; then
+			SYSTEM=/system
+		elif [ -f /system/system/build.prop -o -f /system/init -o -L /system/init ]; then
+			SYSTEM_AS_ROOT=true
+			SYSTEM=/system/system
+			if ! mount --move /system /system_root; then
+				umount /system
+				umount -l /system
+				moun -o rw ${SYSTEM_BLOCK} /system_root
+			fi
+			mount -o bind /system_root/system /system
 		fi
 
-		if [ -d /system_root ]; then
-			mount -o rw /system_root || mount -orw ${SYSTEM_BLOCK} /system_root
-			if [ -d /system_root/system ]; then
-				mkdir -p /system
-				mount -o bind /system_root/system /system
-			fi
-		elif [ -d /system ]; then
-			mount -o rw /system || mount -o rw ${SYSTEM_BLOCK} /system
-			if [ -d /system/system ]; then
-				mkdir -p /system
-				mount -o bind /system/system
-			fi
-		fi
-
-		vendor_tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name vendor${SLOT} | head -n 1)
-		echo " INFO: #6 [vendor_tmp] ${vendor_tmp}"
-		VENDOR_BLOCK=$(readlink -f ${vendor_tmp})
+		VENDOR_BLOCK=$(find_block vendor)
 		echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
 		! is_mounted /vendor && mount -o ro /vendor
