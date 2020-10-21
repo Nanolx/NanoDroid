@@ -90,8 +90,8 @@ mount_apex () {
 find_block () {
 	unset tmp
 	tmp=$(find /dev/block \( -type b -o -type c -o -type l \) -name ${1}${SLOT} | head -n 1)
-	[ -z ${tmp} ] && tmp=$(find /dev \( -type b -o -type c -o -type l \) -maxdepth 1 -iname ${1}${SLOT} | head -n 1)
-	if [ -z ${tmp} ]; then
+	[ -z "${tmp}" ] && tmp=$(find /dev \( -type b -o -type c -o -type l \) -maxdepth 1 -iname ${1}${SLOT} | head -n 1)
+	if [ -z "${tmp}" ]; then
 		for uevent in /sys/dev/block/*/uevent; do
 			partname=$(awk -F= '/PARTNAME/{print $2}' ${uevent})
 			if [ "${1}${SLOT}" = "${partname}" ]; then
@@ -100,7 +100,7 @@ find_block () {
 			fi
 		done
 	fi
-	readlink -f ${tmp}
+	readlink -f "${tmp}"
 }
 
 mount_partitions () {
