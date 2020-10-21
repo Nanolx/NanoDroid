@@ -87,6 +87,8 @@ If you use Google Play, but it doesn't show your bought apps as bought, [check t
 
 * NanoDroid-Perm script
   * add newly required `android.permission.RECEIVE_SMS` restricted permission for microG GmsCore
+  * when granting microG GmsCore restricted permissions, pass it's userId to `pm` for better compat
+  * allow running `nanodroid-perm` via `adb` @FriendlyNeighborhoodShane
 
 * Patcher, Patcher Addon.d
   * install Patcher environment into `/system/addon.d` no longer `/data/adb`
