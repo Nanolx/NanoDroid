@@ -33,6 +33,15 @@ setup_installer () {
 	setup_busybox
 	set_progress 0.2
 
+	if ${BOOTMODE}; then
+		media_rw=$(grep "^/dev/block.*/mnt/media_rw" /proc/mounts \
+		| cut -d " " -f 2 \
+		| cut -d "/" -f 4)
+		ext_storage="/storage/${media_rw}"
+
+		[ -r "${ext_storage}" ] && config_locations="${ext_storage} ${config_locations}"
+	fi
+
 	[ -n "${1}" ] && get_cfg_setup
 	[ -n "${2}" ] && get_cfg_overlay
 	[ -n "${3}" ] && get_cfg_apps
