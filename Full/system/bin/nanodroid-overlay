@@ -5,9 +5,9 @@ export MODE=@MODE@
 
 OVERLAY_PATH=""
 
-[ -f /dev/tmp/install/CommonInstaller ] && MODE=INSTALL
-[ -f /tmp/backuptool.functions ] && MODE=INSTALL
-[ -f /postinstall/tmp/backuptool.functions ] && MODE=INSTALL
+[ -f /dev/tmp/install/CommonInstaller ] && MODE=${MODE}_INSTALL
+[ -f /tmp/backuptool.functions ] && MODE=${MODE}_INSTALL
+[ -f /postinstall/tmp/backuptool.functions ] && MODE=${MODE}_INSTALL
 
 # detect whether we need to remount /system or / in system mode
 if grep -q " $(readlink -f /system) " /proc/mounts 2>/dev/null; then
@@ -20,7 +20,7 @@ error () {
 	exit 1
 }
 
-if [ "${MODE}" = "MAGISK" ]; then
+if [ "${MODE}" = "MAGISK" -o "${MODE}" = "MAGISK_INSTALL" ]; then
 	if [ -d "/data/adb/modules_update/${MODID}" ]; then
 		OVERLAY_PATH="/data/adb/modules_update/${MODID}"
 	elif [ -d "/data/adb/modules/${MODID}" ]; then
@@ -65,7 +65,7 @@ Options System Mode:
 	exit 0
 }
 
-if [ "${MODE}" != "INSTALL" ]; then
+if [ "${MODE}" != "SYSTEM_INSTALL" -a "${MODE}" != "MAGISK_INSTALL" ]; then
 	test "$(whoami)" != "root" && error "not running as root"
 fi
 
@@ -85,7 +85,7 @@ overrides_add_intern () {
 	sysdir=${1}
 	app=${2}
 
-	if [ "${MODE}" = "MAGISK" ]; then
+	if [ "${MODE}" = "MAGISK" -o "${MODE}" = "MAGISK_INSTALL" ]; then
 		echo "  creating overlay: ${app}"
 		mkdir -p "${OVERLAY_PATH}/${sysdir}/${app}"
 		touch "${OVERLAY_PATH}/${sysdir}/${app}/.replace"
@@ -113,7 +113,7 @@ overrides_remove_intern () {
 	sysdir=${1}
 	app=${2}
 
-	if [ "${MODE}" = "MAGISK" ]; then
+	if [ "${MODE}" = "MAGISK" -o "${MODE}" = "MAGISK_INSTALL" ]; then
 		echo "  removing overlay: ${app}"
 		rm -rf "${OVERLAY_PATH}/${sysdir}/${app}"
 	else
@@ -125,7 +125,7 @@ overrides_remove_intern () {
 
 overrides_remove () {
 	for app in ${@}; do
-		if [ "${MODE}" = "MAGISK" ]; then
+		if [ "${MODE}" = "MAGISK" -o "${MODE}" = "MAGISK_INSTALL" ]; then
 			for path in ${app_locations}; do
 				[ -f ${OVERLAY_PATH}/${path}/${app}/.replace ] && overrides_remove_intern ${path} ${app}
 			done
@@ -138,7 +138,7 @@ overrides_remove () {
 }
 
 overrides_list () {
-	if [ "${MODE}" = "MAGISK" ]; then
+	if [ "${MODE}" = "MAGISK" -o "${MODE}" = "MAGISK_INSTALL" ]; then
 		for path in ${app_locations}; do
 			if [ -d ${OVERLAY_PATH}/${path} ]; then
 				app_int=""
@@ -155,7 +155,7 @@ overrides_list () {
 }
 
 overrides_list_non () {
-	if [ "${MODE}" = "MAGISK" ]; then
+	if [ "${MODE}" = "MAGISK" -o "${MODE}" = "MAGISK_INSTALL" ]; then
 		for path in ${app_locations}; do
 			if [ -d ${path} ]; then
 				app_int=""
@@ -181,7 +181,7 @@ overrides_list_non () {
 }
 
 overrides_clear () {
-	if [ "${MODE}" = "MAGISK" ]; then
+	if [ "${MODE}" = "MAGISK" -o "${MODE}" = "MAGISK_INSTALL" ]; then
 		echo "  removing Overlays from ${OVERLAY_PATH}"
 		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace" 2>/dev/null) \
 			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace" 2>/dev/null) \
@@ -197,7 +197,7 @@ overrides_clear () {
 }
 
 overrides_genconfig () {
-	if [ "${MODE}" = "MAGISK" ]; then
+	if [ "${MODE}" = "MAGISK" -o "${MODE}" = "MAGISK_INSTALL" ]; then
 		rm -f ${config}
 		touch ${config}
 
