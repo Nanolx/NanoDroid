@@ -759,6 +759,8 @@ detect_arch () {
 ##########################################################################################
 
 detect_mode () {
+	[ -f "${NANODROID_LIST_OLD}" ] && mv "${NANODROID_LIST_OLD}" "${NANODROID_LIST}"
+
 	case "${nanodroid_forcesystem}" in
 		1 )
 			if ${BOOTMODE}; then
@@ -799,7 +801,6 @@ detect_mode () {
 			unset MODPATH
 
 			mkdir -p /system/addon.d
-			[ -f "${NANODROID_LIST_OLD}" ] && mv "${NANODROID_LIST_OLD}" "${NANODROID_LIST}"
 			[ -f "${NANODROID_LIST}" ] &&  NANODROID_UPGRADE=1
 		;;
 
