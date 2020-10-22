@@ -252,7 +252,7 @@ mount_partitions () {
 		SYSTEM_AS_ROOT=FALSE
 
 		SLOT=$(grep_cmdline androidboot.slot_suffix)
-		echo " INFO: #1 [SLOT] ${SLOT}"
+		decho " INFO: #1 [SLOT] ${SLOT}"
 		if [ -z ${SLOT} ]; then
 			SLOT=$(grep_cmdline androidboot.slot)
 			echo " INFO: #2 [SLOT] ${SLOT}"
@@ -263,12 +263,12 @@ mount_partitions () {
 			fi
 		fi
 
-		is_mounted /data || mount /data || error "failed to mount /data!"
+		is_mounted /data || mount /data || decho "failed to mount /data!"
 
 		mount -o bind /dev/urandom /dev/random
 
 		SYSTEM_BLOCK=$(find_block system)
-		echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
+		decho " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
 
 		mkdir -p /system /system_root
 		mount -o rw ${SYSTEM_BLOCK} /system
@@ -287,7 +287,7 @@ mount_partitions () {
 		fi
 
 		VENDOR_BLOCK=$(find_block vendor)
-		echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
+		decho " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
 		! is_mounted /vendor && mount -o ro /vendor
 		! is_mounted /vendor && mount -o ro ${VENDOR_BLOCK} /vendor
@@ -298,11 +298,7 @@ mount_partitions () {
 			ln -sf /system/vendor /vendor >/dev/null
 		fi
 
-		echo " "
-		mount | sed -e '/magisk/d' | awk '{print $1 " on " $3 " params: " $6}'
-		echo " "
-
-		echo " INFO: #8 [prop]"
+		decho " INFO: #8 [prop]"
 		ls -l /system/*.prop
 
 		[ -d /system/apex ] && mount_apex
@@ -365,14 +361,14 @@ mount_apex_loop () {
 
 	apex_mount="${1}"
 
-	echo " *** mount_apex_loop [apex_mount]: ${apex_mount}"
+	decho " *** mount_apex_loop [apex_mount]: ${apex_mount}"
 
 	while [ ${number} -lt 64 ]; do
 		loop=/dev/block/loop${number}
 		[ -e ${loop} ] || mknod ${loop} b 7 $((number * minorx))
 
 		if losetup "${loop}" /apex/apex_payload.img 2>/dev/null; then
-			echo " *** mount_apex_loop [loop]: ${loop}"
+			decho " *** mount_apex_loop [loop]: ${loop}"
 			if mount -text4 -oro,noatime "${loop}" "${apex_mount}"; then
 				rm -f /apex/apex_payload.img
 				break
