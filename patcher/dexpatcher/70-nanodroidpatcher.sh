@@ -12,20 +12,25 @@
 # 
 ##########################################################################################
 
-source /tmp/backuptool.functions
+source /tmp/backuptool.functions || source /postinstall/tmp/backuptool.functions
 
 OUTFD=
 BASEDIR=/system/addon.d/nanodroid_patcher
 
-detect_outfd
+detect_outfd () {
+	# taken from Magisk
+	# update-binary|updater <RECOVERY_API_VERSION> <OUTFD> <ZIPFILE>
+	OUTFD=$(ps | grep -v 'grep' | grep -oE 'update(.*) 3 [0-9]+' | cut -d" " -f3)
+	[ -z $OUTFD ] && OUTFD=$(ps -Af | grep -v 'grep' | grep -oE 'update(.*) 3 [0-9]+' | cut -d" " -f3)
+	# update_engine_sideload --payload=file://<ZIPFILE> --offset=<OFFSET> --headers=<HEADERS> --status_fd=<OUTFD>
+	[ -z $OUTFD ] && OUTFD=$(ps | grep -v 'grep' | grep -oE 'status_fd=[0-9]+' | cut -d= -f2)
+	[ -z $OUTFD ] && OUTFD=$(ps -Af | grep -v 'grep' | grep -oE 'status_fd=[0-9]+' | cut -d= -f2)
+}
 
 NanoDroidPatcher () {
-	sleep 5
+	detect_outfd
 
 	show_banner
-
-	mount_partitions
-
 	detect_sdk
 	detect_arch
 
@@ -37,8 +42,6 @@ NanoDroidPatcher () {
 	detect_odex
 	patch_services
 	install_services
-
-	umount_partitions
 
 	for artifact in classes.dex oat dalvik-cache \
 		services.jar services.jar-mod; do
