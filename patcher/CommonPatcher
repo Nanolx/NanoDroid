@@ -481,6 +481,9 @@ setup_patcher () {
 		chmod 0755 "${BASEDIR}/${bin}" || \
 			error "failed to prepare environment"
 	done
+
+	BASEDIR="${TMPDIR}/dexpatcher"
+
 }
 
 call_dalvikvm  () {
