@@ -774,16 +774,18 @@ detect_mode () {
 			MODE=SYSTEM
 			MAGISK_VER_CODE=0
 
-			if [ -f /data/adb/magisk/util_functions.sh ]; then
-				. /data/adb/magisk/util_functions.sh
-			elif [ -f /data/magisk/util_functions.sh ]; then
-				. /data/magisk/util_functions.sh
-			fi
+			if [ ! -f "${NANODROID_LIST}" ]; then
+				if [ -f /data/adb/magisk/util_functions.sh ]; then
+					. /data/adb/magisk/util_functions.sh
+				elif [ -f /data/magisk/util_functions.sh ]; then
+					. /data/magisk/util_functions.sh
+				fi
 
-			if [ ${MAGISK_VER_CODE} -ge 19000 ]; then
-				MODE=MAGISK
-			else
-				MODE=SYSTEM
+				if [ ${MAGISK_VER_CODE} -ge 19000 ]; then
+					MODE=MAGISK
+				else
+					MODE=SYSTEM
+				fi
 			fi
 		;;
 	esac
