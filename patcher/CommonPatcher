@@ -130,7 +130,7 @@ mount_partitions () {
 			fi
 		fi
 
-		is_mounted /data || mount /data || error "failed to mount /data!"
+		is_mounted /data || mount /data || echo "failed to mount /data!"
 
 		mount -o bind /dev/urandom /dev/random
 
@@ -481,8 +481,6 @@ setup_patcher () {
 		chmod 0755 "${BASEDIR}/${bin}" || \
 			error "failed to prepare environment"
 	done
-
-	mkdir -p /data/adb/
 }
 
 call_dalvikvm  () {
