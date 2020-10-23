@@ -1,7 +1,7 @@
 id=NanoDroid_Patcher
 name=NanoDroid Patcher
-version=v22.91.99999999
-versionCode=3
+version=v23.0.20201023
+versionCode=4
 author=Nanolx
 description=NanoDroid Patcher: module contaning microG-read services.jar and org.spoofing.apk support app
 minMagisk=1900

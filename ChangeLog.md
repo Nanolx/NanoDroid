@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 23.0 in-dev "[All Aboard](https://www.discogs.com/Francesco-Zeta-All-Aboard/release/15998163)"
+## 23.0.20201023 "[All Aboard](https://www.discogs.com/Francesco-Zeta-All-Aboard/release/15998163)"
 
 ### Note
 
@@ -55,6 +55,10 @@ If you use Google Play, but it doesn't show your bought apps as bought, [check t
     * see microG [issue 1100](https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711141077)
 
 ### General Changes
+
+* Installer, SysTest, Patcher, Uninstaller
+  * NanoDroid can now be flashed from TWRP, even if `/data` couldn't be mounted
+     * in this case configuration files can be read from `/tmp`
 
 * Installer
   * improve function to auto-detect wether we use official or Nanolx GmsCore/DroidGuard and migrate between, if required
