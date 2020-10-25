@@ -474,6 +474,8 @@ setup_patcher () {
 	unzip -oq "${ZIP}" -d ${TMPDIR} || \
 		error "failed to prepare environment"
 
+	BASEDIR="${TMPDIR}/dexpatcher"
+
 	for bin in zip.arm zip.x86 \
 		vdexExtractor.arm vdexExtractor.x86 \
 		vdexExtractor.arm64 vdexExtractor.x86_64 \
@@ -481,8 +483,6 @@ setup_patcher () {
 		chmod 0755 "${BASEDIR}/${bin}" || \
 			error "failed to prepare environment"
 	done
-
-	BASEDIR="${TMPDIR}/dexpatcher"
 
 }
 
