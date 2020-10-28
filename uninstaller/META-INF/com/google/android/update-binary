@@ -139,7 +139,7 @@ mount_partitions () {
 		if [ -z ${SLOT} ]; then
 			SLOT=$(grep_cmdline androidboot.slot)
 			echo " INFO: #2 [SLOT] ${SLOT}"
-			if [ -n ${SLOT} ]; then
+			if [ ! -z ${SLOT} ]; then
 				SLOT=_${SLOT}
 				echo " INFO: #3 [SLOT] ${SLOT}"
 				DEVICE_AB=TRUE
