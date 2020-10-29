@@ -38,7 +38,7 @@ Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called *
 
 ## Current Release
 
-* Stable: 22.9.20200910 "[Tiefseequappe]"
+* Stable: 23.0.1.20201029 "[FCK 2020](https://www.discogs.com/de/Scooter-FCK-2020/release/16102123)"
 * Beta: ---
 
 ## Downloads
