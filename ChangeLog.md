@@ -1,5 +1,22 @@
 # ChangeLog
 
+## 23.0.1.20201029 "[FCK 2020](https://www.discogs.com/de/Scooter-FCK-2020/release/16102123)"
+
+### Bug Fixes
+
+* Installer, SysTest, Patcher, Uninstaller
+  * fix a logical issue preventing mounting of `/system` on some non-A/B devices
+
+* Patcher
+  * fix `BASEDIR` being declared to late
+
+### Updates
+
+* automatic
+  * F-Droid (1.10)
+  * Simple Calendar (6.11.0)
+  * Simple Gallery (6.16.4)
+
 ## 23.0.20201023 "[All Aboard](https://www.discogs.com/Francesco-Zeta-All-Aboard/release/15998163)"
 
 ### Note
