@@ -290,7 +290,7 @@ umount_partitions () {
 }
 
 # check for configuration files
-config_locations="/data/media/0 /external_sd /sdcard1 /data $(dirname ${ZIP}))"
+config_locations="/data/media/0 /external_sd /sdcard1 /data $(dirname ${ZIP})) /system/addon.d /tmp"
 config_files=".nanodroid-setup .nanodroid-apps .nanodroid-overlay"
 
 system_mode_uninstall () {
