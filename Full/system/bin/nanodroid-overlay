@@ -216,7 +216,7 @@ overrides_genconfig () {
 }
 
 # check for configuration files
-config_locations="/data/media/0 /external_sd /sdcard1 /data /tmp"
+config_locations="/data/media/0 /external_sd /sdcard1 /data /tmp /system/addon.d"
 media_rw=$(grep "^/dev/block.*/mnt/media_rw" /proc/mounts \
 	| cut -d " " -f 2 \
 	| cut -d "/" -f 4)
