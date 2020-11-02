@@ -121,7 +121,7 @@ detect_outfd
 
 if [ ! -r ${NANODROID_LIST} ]; then
 	echo "No NanoDroid installer information found!"
-	exit 1
+	exit 0
 fi
 
 case "${1}" in
