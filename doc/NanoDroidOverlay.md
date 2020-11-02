@@ -41,6 +41,8 @@ on your device, in one of the following directories
 * `/sdcard1` (internal storage (ORANGEFOX))
 * `/external_sd` (TWRP path to SD Card (if any))
 * `/data` (fallabck)
+* `/system/addon.d/` (fallback if TWRP can't mount `/data`)
+* `/tmp` (fallback if TWRP can't mount `/data`)
 
 See the [default settings](.nanodroid-overlay) (contains instructions aswell).
 

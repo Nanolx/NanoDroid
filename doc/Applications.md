@@ -58,9 +58,13 @@ You can control what applications to install using the file
 
 on your device, in one of the following directories
 
-* `/data/media/0` (internal storage)
+
+* `/data/media/0` (internal storage (TWRP))
+* `/sdcard1` (internal storage (ORANGEFOX))
 * `/external_sd` (TWRP path to SD Card (if any))
 * `/data` (fallback)
+* `/system/addon.d/` (fallback if TWRP can't mount `/data`)
+* `/tmp` (fallback if TWRP can't mount `/data`)
 
 All applications listed in that file will be installed. See the [default configuration](.nanodroid-apps), which is used when no `.nanodroid-apps` configuration file was found.
 

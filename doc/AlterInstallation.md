@@ -33,6 +33,8 @@ on your device, in one of the following directories
 * `/sdcard1` (internal storage (ORANGEFOX))
 * `/external_sd` (TWRP path to SD Card (if any))
 * `/data` (fallback)
+* `/system/addon.d/` (fallback if TWRP can't mount `/data`)
+* `/tmp` (fallback if TWRP can't mount `/data`)
 
 You can use the [default configuration file](.nanodroid-setup) as a starting point. Below follows the detailed information on what each setting does (also described in the file itself); also which setting is support by what package. If an required entry is missing from your configuration file, the default setting will be added to your configuration file.
 
