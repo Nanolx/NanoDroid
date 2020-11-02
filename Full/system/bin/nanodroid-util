@@ -70,7 +70,7 @@ case ${1} in
 		update_fix
 	;;
 
-	-P | --airplane-mode )
+	-a | -P | --airplane-mode )
 		airplane_mode
 	;;
 
@@ -94,15 +94,20 @@ case ${1} in
 		reset_gms_data "${2}"
 	;;
 
+	-R | --reset-permissions )
+		pm reset-permissions
+	;;
+
 	* )
 	echo "nanodroid-util
 
 Misc. Functions
 -f | --fix-update			fix navbar, lockscreen, statusbar after OTA update
--P | --airplane-mode			change airplane mode settings
+-a | --airplane-mode			change airplane mode settings
 -F | --audio-focus			prevent an app from stealing audio focus
 -b | --boot-count			read boot counts (Android 7+)
 -B | --read-clipboard			prevent an app from reading the clipboard
--r | --reset-gms-data			reset GMS data for given app (or all if none)"
+-r | --reset-gms-data			reset GMS data for given app (or all if none)
+-R | --reset-permissions		reset runtime permissions"
 	;;
 esac
