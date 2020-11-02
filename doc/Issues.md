@@ -3,18 +3,26 @@ Table of Contents
 
    * [Issues](#issues)
       * [microG](#microg)
-      * [Updating Play support libraries](#updating-play-support-libraries)
       * [Google Account](#google-account)
       * [Google Play Services are missing](#google-play-services-are-missing)
       * [SafetyNet](#safetynet)
       * [Play Store](#play-store)
+         * [Play Store not opening (error RH-01)](#play-store-not-opening-error-rh-01)
+         * [Updating Play support libraries#](#updating-play-support-libraries)
+         * [Can't install split APKs / extra data](#cant-install-split-apks--extra-data)
+         * [Play Store does not show bought apps as bought](#play-store-does-not-show-bought-apps-as-bought)
+         * [Play Store web interface can't install apps on my device](#play-store-web-interface-cant-install-apps-on-my-device)
       * [Push Messages](#push-messages)
       * [Unified Nlp](#unified-nlp)
       * [F-Droid](#f-droid)
       * [Aurora Store / Aurora Droid](#aurora-store--aurora-droid)
-      * [Alarm Clock not ringing](#alarm-clock-not-ringing)
       * [Google Software](#google-software)
       * [Other](#other)
+         * [Alarm Clock not ringing](#alarm-clock-not-ringing)
+         * [Issues with ROM Sup Wizard](#issues-with-rom-sup-wizard)
+         * [Applications crash with Bromite WebView](#applications-crash-with-bromite-webview)
+         * [ROM lags after applying signature spoofing patch](#rom-lags-after-applying-signature-spoofing-patch)
+         * [Applications can't access storage / permission issues](#applications-cant-access-storage--permission-issues)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
@@ -144,12 +152,6 @@ See "Play Store does not show bought apps as bought" above, same fix.
      * if you use Aurora Services as installation method
   * also ensure Storage permission is granted for them
 
-## Alarm Clock not ringing
-
-* Due to changes in Android, to ensure your Alarm Clock is actually waking you up, you need Android to ignore battery optimization for it, to do so:
-  * go to System Settings > Apps > Special Access > Battery Optimization > All Apps
-  * tap on your Alarm Clock, for example `Alarmio` and choose `don't optimize`
-
 ## Google Software
 
 * Maps doesn't work when installed a second time
@@ -165,17 +167,37 @@ See "Play Store does not show bought apps as bought" above, same fix.
 
 ## Other
 
+### Alarm Clock not ringing
+
+* Due to changes in Android, to ensure your Alarm Clock is actually waking you up, you need Android to ignore battery optimization for it, to do so:
+  * go to System Settings > Apps > Special Access > Battery Optimization > All Apps
+  * tap on your Alarm Clock, for example `Alarmio` and choose `don't optimize`
+
+### Issues with ROM Sup Wizard
+
 * Some Stock ROMs do not properly work after first boot since their SetupWizard is disabled by NanoDroid (because it's incompatible with microG)
   * check `/system/build.prop` or `/vendor/build.prop` if they contain the property `ro.setupwizard.mode` and change it to (you can do this from TWRP via ADB, with the builtin `vi` editor)
       * `ro.setupwizard.mode=DISABLED`
       * in Magisk Mode NanoDroid will do this on it's own using Magisk's `resetprop`
   * if you can access your device via ADB, you can also issue the following command as root, on-device:
       * `nanodroid-util --fix-update`
-* Applications crash when using WebView (BromiteWebView package)
-  * install Bromite WebView as user-app, as root, on-device, issue:
-      * `pm install -r /system/app/BromiteWebView/BromiteWebView.apk`
-      * this is done automatically in Magisk Mode (as of version 20.5)
-* ROM lags after applying signature spoofing patch
-  * some ROMs already have the patch built-in, if you patch those ROMs (again), it results in heavy lags
+
+### Applications crash with Bromite WebView
+
+* install Bromite WebView as user-app, as root, on-device, issue:
+  * `pm install -r /system/app/BromiteWebView/BromiteWebView.apk`
+  * this is done automatically in Magisk Mode (as of version 20.5)
+
+### ROM lags after applying signature spoofing patch
+
+* some ROMs already have the patch built-in, if you patch those ROMs (again), it results in heavy lags
+  * recent Patcher versions check whether the ROM has the patch already applied and disallow double-patching
+
+### Applications can't access storage / permission issues
+
+* if your Applications can't access storage or have other permission issues, do the following:
+  * from TWRP remove the file `/data/system/users/0/runtime-permissons.xml`
+  * or run the following command as root while in ROM: `pm reset-permissions`
+* and reboot
 
 Additional helpful information in the microG [> Wiki](https://github.com/microg/android_packages_apps_GmsCore/wiki/Helpful-Information).
