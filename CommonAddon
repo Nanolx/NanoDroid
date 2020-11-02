@@ -52,21 +52,6 @@ WhisperPush
 EOF
 }
 
-# check for configuration files
-config_locations="/data/media/0 /external_sd /sdcard1 /data"
-
-get_config () {
-	config=""
-	config_exists=0
-	for path in ${config_locations}; do
-		if test -r "${path}/.nanodroid-${1}"; then
-			config="${path}/.nanodroid-${1}"
-			config_exists=1
-			return
-		fi
-	done
-}
-
 is_mounted () {
 	grep -q "$(readlink -f ${1})" /proc/mounts 2>/dev/null
 	return $?
@@ -97,6 +82,10 @@ backup_action () {
 		echo " + backup: ${FILE}"
 		backup_file "${FILE}"
 	done
+
+	for file in .nanodroid-apps .nanodroid-overlay .nanodroid-setup; do
+		[ -f /system/addon.d/${file} ] && backup_file /system/addon.d/${file}
+	done
 	ui_print " ++ ${MODID} ${VERSION} addon.d: backup done"
 }
 
@@ -105,6 +94,10 @@ restore_action () {
 	cat ${NANODROID_LIST} | while read FILE; do
 		echo " + restore: ${FILE}"
 		restore_file "${FILE}"
+	done
+
+	for file in .nanodroid-apps .nanodroid-overlay .nanodroid-setup; do
+		restore_file /system/addon.d/${file}
 	done
 	ui_print " ++ ${MODID} ${VERSION} addon.d: restore done"
 }
@@ -117,14 +110,10 @@ postrestore_action () {
 
 	ui_print " ++ ${MODID} ${VERSION} addon.d: GApps removal done"
 
-	get_config setup
-	if [ "${config_exists}" -eq 1 ]; then
-		source "${config}"
-		if [ "${nanodroid_overlay}" -eq 1 ]; then
-			ui_print " ++ ${MODID} ${VERSION} addon.d: creating Overlays"
-			/system/bin/nanodroid-overlay --create
-			ui_print " ++ ${MODID} ${VERSION} addon.d: creating Overlays done"
-		fi
+	if [ -f /system/addon.d/.nanodroid-overlay ]; then
+		ui_print " ++ ${MODID} ${VERSION} addon.d: creating Overlays"
+		/system/bin/nanodroid-overlay --create
+		ui_print " ++ ${MODID} ${VERSION} addon.d: creating Overlays done"
 	fi
 }
 
