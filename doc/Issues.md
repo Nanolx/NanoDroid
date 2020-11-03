@@ -3,7 +3,11 @@ Table of Contents
 
    * [Issues](#issues)
       * [microG](#microg)
-      * [Google Account](#google-account)
+         * [Battery Drain](#battery-drain)
+         * [microG lacks features](#microg-lacks-features)
+         * [permissions not granted on Android 10 or newer](#permissions-not-granted-on-android-10-or-newer)
+         * [can't login to Google account on KitKat](#cant-login-to-google-account-on-kitkat)
+         * [can't login to Goggle account with version 74.x of Chrome/WebView](#cant-login-to-goggle-account-with-version-74x-of-chromewebview)
       * [Google Play Services are missing](#google-play-services-are-missing)
       * [SafetyNet](#safetynet)
       * [Play Store](#play-store)
@@ -30,21 +34,31 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## microG
 
-* Battery Drain
-  * microG fails to register applications to GCM/FCM (Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain issue the following command as root on your device (or via adb shell):
+### Battery Drain
+
+* microG fails to register applications to GCM/FCM (Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain issue the following command as root on your device (or via adb shell):
   * `find /data/data/*/shared_prefs -name com.google.android.gms.*.xml -delete`
       * alternatively `nutl -r`
       * this will force un-register all your applications from GCM/FCM and they'll re-register on next start
-* microG lacks features
-  * if you use AppOps, PrivacyGuard or the like you have to grant microG GmsCore **all** permissions, if you prevent some permissions, some apps or features might not work as expected or not at all. Note: some APIs/features are stubs in microG GmsCore, meaning they exist that apps don't complain, but they do nothing - thus blocking microG GmsCore is pretty much of no benefit.
-* You can't get past the first page of the microG login wizard on KitKat
-  * updating microG to (at least) 0.2.7.17455 will fix the issue
 
-## Google Account
+### microG lacks features
 
-* Can't login to Google Account
-  * there's an issue where logging in with version 74.x of Chrome/Chromium/Bromite or WebView derived from them fails
-  * the fix is to update microG to (at least) version 0.2.7.17455
+* if you use AppOps, PrivacyGuard or the like you have to grant microG GmsCore **all** permissions, if you prevent some permissions, some apps or features might not work as expected or not at all. Note: some APIs/features are stubs in microG GmsCore, meaning they exist that apps don't complain, but they do nothing - thus blocking microG GmsCore is pretty much of no benefit.
+
+### permissions not granted on Android 10 or newer
+
+* in Magisk Mode it might happen on some ROMs that microG is not granted the `RECEIVE_SMS` and `ACCESS_BACKGROUND_LOCATION` permissions, the fix is to install microG as user-app addtionally to system-app, this is done automatically starting with version 23.0 of NanoDroid (and **not** required in System Mode installation), to do so issue the following command on-device as root (via adb shell or Termux):
+  * Full package: `pm install -r /data/adb/modules/NanoDroid/system/priv-app/GmsCore/GmsCore.apk`
+  * microG package: `pm install -r /data/adb/modules/NanoDroid_microG/system/priv-app/GmsCore/GmsCore.apk`
+* see [microG issue #1100](https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711088518) and [microG issue #1100](https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711141077) for background information
+
+### can't login to Google account on KitKat
+
+* updating microG to (at least) 0.2.7.17455 will fix the issue
+
+### can't login to Goggle account with version 74.x of Chrome/WebView
+
+* updating microG to (at least) 0.2.7.17455 will fix the issue
 
 ## Google Play Services are missing
 
