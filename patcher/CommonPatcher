@@ -381,8 +381,8 @@ detect_arch () {
 detect_sdk () {
 	SDK_VERSION=$(grep_prop ro.build.version.sdk)
 
-	[ "${SDK_VERSION}" -gt 29 ] && \
-		error "Android versions beyond Android 10 are not yet supported"
+	[ "${SDK_VERSION}" -gt 30 ] && \
+		error "Android versions beyond Android 11 are not yet supported"
 
 	[ "${SDK_VERSION}" -lt 16 ] && \
 		error "Android versions before Jelly Bean are not supported"
