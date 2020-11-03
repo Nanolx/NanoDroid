@@ -46,7 +46,7 @@ fix issues with the navigation bar, status bar or lock screen after applying an 
 
 ### Airplane Mode settings
 
-`-P`, `--airplane-mode`
+`-a`, `--airplane-mode`
 
 change Airplane Mode settings, this is interactive, user will be given instructions what to do. This allows to change which radios are disabled by Airplane Mode **and additionally** it instructs Android that it does **not** allow re-activation of **those** radios until Airplane Mode is switched off
 
@@ -69,3 +69,23 @@ many apps have the permission to read the clipboard for no reason, with this you
 `-b`, `--boot-count`
 
 show how often the device was booted; requires Android 7.0 or newer
+
+### Reset GCM Connection
+
+You can reset GCM connection of all apps using
+
+`-r`, `--reset-gms-data`
+
+or for a single app using
+
+`-r [appid]`, `--reset-gms-data [appid]`
+
+this is especially useful when the ROM in use previously had GApps installed and now you're not receving any push messages anymore.
+
+### Reset Permissions
+
+In a rare corner case applications are not granted permission to access camera or storage, despite the user granted the corresponding permission, using
+
+`-R`, `--reset-permissions`
+
+followed by a reboot will fix this issue.
