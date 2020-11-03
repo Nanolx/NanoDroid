@@ -1,5 +1,29 @@
 # ChangeLog
 
+## 23.1 in-dev
+
+## Bug Fixes
+
+* Installer, Addon
+  * read configuration files from `/system/addon.d` (fallback if TWRP can't mount `/data`)
+  * read configuration files from `/tmp` (fallback if TWRP can't mount `/data`)
+
+## General Changes
+
+* Addon
+  * simplify addon.d and remove unused functions
+
+* NanoDroid-Overlay
+  * read configuration files from `/system/addon.d` (fallback if TWRP can't mount `/data`)
+  * read configuration files from `/tmp` (fallback if TWRP can't mount `/data`)
+
+* NanoDroid-Util
+  * add `-R`, `--reset-permissions` switch
+
+* Documentation
+  * re-structure and update Issues section
+  * minor updates
+
 ## 23.0.1.20201029 "[FCK 2020](https://www.discogs.com/de/Scooter-FCK-2020/release/16102123)"
 
 ### Bug Fixes
