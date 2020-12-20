@@ -76,7 +76,7 @@ print_info () {
 	if ${BOOTMODE}; then
 		echo "${@}"
 		decho "${@}"
-	else 
+	else
 		echo -n -e "ui_print ${@}\n" >> /proc/self/fd/${OUTFD}
 		echo -n -e "ui_print\n" >> /proc/self/fd/${OUTFD}
 	fi
@@ -2029,11 +2029,14 @@ check_cfg_apps () {
 	# >= 22.6 no longer ships Substratum, remove
 	grep -q Substratum "${cfg_apps}" && sed -e '/Substratum/d' -i "${cfg_apps}"
 
-	# >= 22.6 no longer ship Orbot, remove
+	# >= 22.6 no longer ships Orbot, remove
 	grep -q Orbot "${cfg_apps}" && sed -e '/Orbot/d' -i "${cfg_apps}"
 
 	# >= 22.7 has OAndBackupX instead of Oandbackup
 	grep -q Oandbackup "${cfg_apps}" && sed -e 's/Oandbackup/OAndBackupX/g' -i "${cfg_apps}"
+
+	# >= 23.1 no longer ships XDA Labs, remove
+	grep -q XDALabs "${cfg_apps}" && sed -e '/XDALabs/d' -i "${cfg_apps}"
 
 }
 

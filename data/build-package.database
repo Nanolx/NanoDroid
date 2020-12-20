@@ -85,7 +85,7 @@ gl_AURORAWARDEN=(AuroraOSS/AppWarden app Warden)
 # URL
 ###
 
-raw_XDALABS=(https://labs.xda-developers.com/latest app XDALabs)
+#raw_XDALABS=(https://labs.xda-developers.com/latest app XDALabs)
 
 ###
 # Bromite WebView
@@ -142,7 +142,6 @@ file_database=(
 	${appsfolder[3]}/TorBrowser/TorBrowser.apk.zst
 	${appsfolder[3]}/Twidere/Twidere.apk.zst
 	${appsfolder[3]}/Warden/Warden.apk.zst
-	${appsfolder[3]}/XDALabs/XDALabs.apk.zst
 
 	${appsfolder[4]}/AuroraServices/AuroraServices.apk.zst
 	${appsfolder[4]}/FakeStore/FakeStore.apk.zst

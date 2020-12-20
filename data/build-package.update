@@ -127,9 +127,6 @@ grab_apps () {
 
 	# GitLab
 	grab_apk_from_gitlab ${gl_AURORAWARDEN[@]}
-
-	# URL
-	grab_apk_from_url ${raw_XDALABS[@]}
 }
 
 update_apps () {
