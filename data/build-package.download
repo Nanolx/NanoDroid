@@ -11,7 +11,7 @@ repo_nanolx="https://nanolx.org/fdroid/repo"
 repo_bromite="https://fdroid.bromite.org/fdroid/repo"
 repo_ogapps="https://gitlab.opengapps.org/opengapps"
 
-useragent='Mozilla/5.0 (X11; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0'
+useragent='Mozilla/5.0 (X11; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0'
 
 if [ "${BP_DEBUG}" = '1' ]; then
 	wget_opts="-v --show-progress"
@@ -284,7 +284,8 @@ grab_apk_from_github () {
 
 grab_apk_from_gitlab () {
 	[ "${BP_DEBUG}" = '1' ] && debug_message newline "curl ${curl_opts} -s -N \"https://gitlab.com/${1}/-/tags\"" "\n"
-	local apk_url="$(curl -A "${useragent}" -s -N "https://gitlab.com/AuroraOSS/AuroraServices/-/tags" | tr '<' '\n' | grep -m 1 -oP '(?<=a href=").*uploads.*apk?(?=")')"
+	local apk_tag="$(curl -A "${useragent}" -s -N "https://gitlab.com/${1}/-/tags" | grep -m1 ref-name | sed 's/.*\">//;s/<\/.*//')"
+	local apk_url="$(curl -A "${useragent}" -s -N "https://gitlab.com/${1}/-/tags/${apk_tag}" | tr '<' '\n' | gawk -F \" '/uploads.*apk/{print $2}')"
 	local apk_url="https://gitlab.com${apk_url}"
 	local apk_dest="${appsfolder[2]}/${2}/${3}"
 
