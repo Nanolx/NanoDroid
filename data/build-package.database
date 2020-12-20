@@ -54,6 +54,7 @@ fd_PRIVACY_BROWSER=(fdroid com.stoutner.privacybrowser.standard app PrivacyBrows
 fd_QKSMS=(fdroid com.moez.QKSMS app QKSMS)
 fd_SIMPLECALENDAR=(fdroid com.simplemobiletools.calendar.pro app SimpleCalendar)
 fd_SIMPLEGALLERY=(fdroid com.simplemobiletools.gallery.pro app SimpleGallery)
+fd_SMARTPACK=(fdroid com.smartpack.kernelmanager app SmartPackKernelManager)
 fd_TERMUX=(fdroid com.termux app Termux)
 fd_TWIDERE=(fdroid org.mariotaku.twidere app Twidere)
 
@@ -72,7 +73,6 @@ og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
 ###
 
 gh_AMAZE=(TeamAmaze/AmazeFileManager app Amaze)
-gh_SMARTPACKKERNELMANAGER=(SmartPack/SmartPack-Kernel-Manager app SmartPackKernelManager)
 
 ###
 # GitLab
