@@ -37,7 +37,7 @@ fd_AURORADROID=(fdroid com.aurora.adroid app AuroraDroid)
 
 fd_ALARMIO=(fdroid me.jfenn.alarmio app Alarmio)
 fd_ANYSOFTKEYBOARD=(fdroid com.menny.android.anysoftkeyboard app AnysoftKeyboard)
-fd_BLOCKADA=(fdroid org.blokada.alarm app Blokada)
+fd_BLOCKADA=(fdroid org.blokada.fem.fdroid app Blokada)
 fd_FREETOPP=(fdroid org.liberty.android.freeotpplus app FreeOTPPlus)
 fd_FROST=(fdroid com.pitchedapps.frost app Frost)
 fd_HACKERSKEYBOARD=(fdroid org.pocketworkstation.pckeyboard app HackersKeyboard)
