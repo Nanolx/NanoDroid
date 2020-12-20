@@ -24,6 +24,23 @@
   * re-structure and update Issues section
   * minor updates
 
+### Updates
+
+* automatic
+  * microG GmsCore (0.2.15.204713)
+  * Amaze (3.5.2)
+  * FreeOTP+ (2.2.13)
+  * KeePassDX (2.9.4)
+  * NewPipe (0.20.6)
+  * Open Camera (1.48.3)
+  * OSM Android (3.8.5)
+  * Privacy Browser (3.6.1)
+  * Simple Calendar (6.11.3)
+  * Simple Gallery (6.18.0)
+  * Termux (0.103)
+  * Tor Browser (10.0.07)
+  * Twidere (4.1.6)
+
 ## 23.0.1.20201029 "[FCK 2020](https://www.discogs.com/de/Scooter-FCK-2020/release/16102123)"
 
 ### Bug Fixes
@@ -1295,7 +1312,7 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
 * tools
   * GNU Bash (5.0-0)
   * GNU Nano (3.2)
-  
+
 ## 20.4.20181230 "Constitution"
 
 ### Notes
@@ -1342,7 +1359,7 @@ for the Patcher is of course still supported and will be done if Magisk wasn't f
   * remove old code regarding Magisk
   * when creating a backup of `services.jar` append `ro.build.flavor` and `ro.build.id`
   * if the ROM has native signature spoofing support don't do anything
-     * function to detect whether ROM is pre-patched @ale5000 
+     * function to detect whether ROM is pre-patched @ale5000
   * re-add UnifiedNlp patch by Tom Vincent
 
 * Patcher addon.d
