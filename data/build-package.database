@@ -43,7 +43,6 @@ fd_FROST=(fdroid com.pitchedapps.frost app Frost)
 fd_HACKERSKEYBOARD=(fdroid org.pocketworkstation.pckeyboard app HackersKeyboard)
 fd_KEEPASSDX=(fdroid com.kunzisoft.keepass.libre app KeePassDX)
 fd_K9MAIL=(fdroid com.fsck.k9 app K9Mail)
-fd_NEWPIPE=(fdroid org.schabi.newpipe app NewPipe)
 fd_OANDBACKUPX=(fdroid com.machiav3lli.backup app OAndBackupX)
 fd_ODYSSEY=(fdroid org.gateshipone.odyssey app Odyssey)
 fd_OPENCAMERA=(fdroid net.sourceforge.opencamera app OpenCamera)
@@ -73,6 +72,7 @@ og_BTRANSP=(com.google.android.backuptransport priv-app GoogleBackupTransport)
 ###
 
 gh_AMAZE=(TeamAmaze/AmazeFileManager app Amaze)
+gh_NEWPIPE=(TeamNewPipe/NewPipe app NewPipe)
 
 ###
 # GitLab
