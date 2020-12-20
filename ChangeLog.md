@@ -20,6 +20,12 @@
 * NanoDroid-Util
   * add `-R`, `--reset-permissions` switch
 
+* Full package
+  * no longer ship `XDA Labs`
+  * grab `NewPipe` from Github instead of F-Droid
+     * F-Droid build is outdated
+  * grab `SmartPack Kernel Manager` from F-Droid instead of Github
+
 * Documentation
   * re-structure and update Issues section
   * minor updates
