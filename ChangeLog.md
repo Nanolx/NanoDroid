@@ -21,6 +21,7 @@
   * add `-R`, `--reset-permissions` switch
 
 * Full package
+  * move from `Blokada` v4 to v5
   * no longer ship `XDA Labs`
   * grab `NewPipe` from Github instead of F-Droid
      * F-Droid build is outdated
