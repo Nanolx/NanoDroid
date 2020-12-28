@@ -10,6 +10,7 @@ repo_microg="https://microg.org/fdroid/repo"
 repo_nanolx="https://nanolx.org/fdroid/repo"
 repo_bromite="https://fdroid.bromite.org/fdroid/repo"
 repo_ogapps="https://gitlab.opengapps.org/opengapps"
+repo_newpipe="https://archive.newpipe.net/fdroid/repo"
 
 useragent='Mozilla/5.0 (X11; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0'
 
@@ -186,6 +187,9 @@ update_indices () {
 
 	echo " ++ Bromite"
 	update_index "$repofolder/$(awk -F/ '{print $3}' <<< ${repo_bromite}).index-v1.jar" "${repo_bromite}"
+
+	echo " ++ NewPipe"
+	update_index "$repofolder/$(awk -F/ '{print $3}' <<< ${repo_newpipe}).index-v1.jar" "${repo_newpipe}"
 }
 
 grab_apk_from_repo () {
@@ -209,6 +213,10 @@ grab_apk_from_repo () {
 		bromite )
 			local repo=${repo_bromite}
 			local repo_p="Bromite"
+		;;
+		newpipe )
+			local repo=${repo_newpipe}
+			local repo_p="NewPipe"
 		;;
 	esac
 

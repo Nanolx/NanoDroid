@@ -23,7 +23,7 @@
 * Full package
   * move from `Blokada` v4 to v5
   * no longer ship `XDA Labs`
-  * grab `NewPipe` from Github instead of F-Droid
+  * grab `NewPipe` from NewPipe repo instead of F-Droid
      * F-Droid build is outdated
   * grab `SmartPack Kernel Manager` from F-Droid instead of Github
 

@@ -120,10 +120,10 @@ grab_apps () {
 	grab_apk_from_repo ${fd_TERMUX[@]}
 	grab_apk_from_repo ${fd_TWIDERE[@]}
 	grab_apk_from_repo ${gd_TORBROWSER[@]}
+	grab_apk_from_repo ${np_NEWPIPE[@]}
 
 	# GitHub
 	grab_apk_from_github ${gh_AMAZE[@]}
-	grab_apk_from_github ${gh_NEWPIPE[@]}
 
 	# GitLab
 	grab_apk_from_gitlab ${gl_AURORAWARDEN[@]}
