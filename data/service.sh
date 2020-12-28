@@ -32,7 +32,7 @@ install_gmscore () {
 		# see https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711088518
 		if [ -f "${MODDIR}/system/priv-app/GmsCore/GmsCore.apk" ]; then
 			pm list packages -f | grep -q /data.*com.google.android.gms || \
-				pm install -r "${MODDIR}/system/app/GmsCore/GmsCore.apk" &
+				pm install -r "${MODDIR}/system/priv-app/GmsCore/GmsCore.apk" &
 		fi
 	fi
 }
