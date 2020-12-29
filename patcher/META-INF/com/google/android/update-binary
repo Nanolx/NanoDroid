@@ -18,6 +18,7 @@ detect_outfd
 
 show_banner
 
+setup_busybox
 mount_partitions
 
 setup_patcher

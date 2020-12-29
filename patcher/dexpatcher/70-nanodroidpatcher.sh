@@ -3,13 +3,13 @@
 # ADDOND_VERSION=2
 #
 ##########################################################################################
-# 
+#
 # NanoDroid Patcher survival script
 # by Nanolx
-# 
+#
 # Inspired by 99-flashafterupdate.sh of osm0sis @ xda-developers
 # Forked from 99-magisk.sh of topjohnwu @ xda-developers
-# 
+#
 ##########################################################################################
 
 source /tmp/backuptool.functions || source /postinstall/tmp/backuptool.functions
@@ -31,6 +31,7 @@ NanoDroidPatcher () {
 	detect_outfd
 
 	show_banner
+	setup_busybox
 	detect_sdk
 	detect_arch
 

@@ -1,6 +1,6 @@
 #!/sbin/sh
 ##########################################################################################
-# 
+#
 # NanoDroid Patcher (Haystack Frontend)
 # by Nanolx
 #
@@ -309,6 +309,32 @@ detect_odex () {
 		error "Android 9 or newer is only supported on de-odexed ROMs currently"
 }
 
+##########################################################################################
+# Setup Busybox
+##########################################################################################
+
+setup_busybox () {
+	if [[ "$(uname -m)" == a* ]]; then
+		local bb_arch=arm
+	else	local bb_arch=x86
+	fi
+
+	if [ -f ${TMPDIR}/busybox.${bb_arch} ]; then
+		BUSY=${TMPDIR}/busybox.${bb_arch}
+	else	BUSY=${BASEDIR}/busybox.${bb_arch}
+	fi
+
+	chmod 0755 ${BUSY}
+
+	rm -rf ${BASEDIR}/busybox
+	mkdir -p ${BASEDIR}/busybox
+
+	ln -sf ${BUSY} ${BASEDIR}/busybox/busybox
+	${BUSY} --install -s ${BASEDIR}/busybox/
+
+	export PATH="${BASEDIR}/busybox:/system/bin:/system/xbin"
+}
+
 detect_arch () {
 	ABI=$(grep_prop ro.product.cpu.abi | cut -c-3)
 	ABI2=$(grep_prop ro.product.cpu.abi2 | cut -c-3)
@@ -325,34 +351,14 @@ detect_arch () {
 		arm | arm64 )
 				ZIPB=${BASEDIR}/zip.arm
 				FILE=${BASEDIR}/file.arm
-
-				if [ -f ${TMPDIR}/busybox.arm ]; then
-					BUSY=${TMPDIR}/busybox.arm
-				else	BUSY=${BASEDIR}/busybox.arm
-				fi
 		;;
 		x86 | x86_64 )
 				ZIPB=${BASEDIR}/zip.x86
 				FILE=${BASEDIR}/file.x86
-
-				if [ -f ${TMPDIR}/busybox.x86 ]; then
-					BUSY=${TMPDIR}/busybox.x86
-				else	BUSY=${BASEDIR}/busybox.x86
-				fi
 		;;
 	esac
 
 	V_EX=${BASEDIR}/vdexExtractor.${ARCH}
-
-	chmod 0755 ${BUSY}
-
-	rm -rf ${BASEDIR}/busybox
-	mkdir -p ${BASEDIR}/busybox
-
-	ln -sf ${BUSY} ${BASEDIR}/busybox/busybox
-	${BUSY} --install -s ${BASEDIR}/busybox/
-
-	export PATH="${BASEDIR}/busybox:/system/bin:/system/xbin"
 
 	DALVIKVM_ARCH=$("${FILE}" -m "${BASEDIR}/magic.mgc" -L /system/bin/dalvikvm)
 
@@ -577,7 +583,7 @@ deodex_odex () {
 		-o "${BASEDIR}/services.jar-deodex/classes.dex" \
 		"${BASEDIR}/services.jar-deodex" || \
 		  error "failed to rebuild classes.dex"
-  
+
 	${ZIPB} -j "${BASEDIR}/services.jar" \
 		"${BASEDIR}/services.jar-deodex"/classes*.dex || \
 			error "zip failed"
