@@ -8,6 +8,16 @@
   * read configuration files from `/system/addon.d` (fallback if TWRP can't mount `/data`)
   * read configuration files from `/tmp` (fallback if TWRP can't mount `/data`)
 
+* Uninstaller
+  * make use of bundled `busybox` at all
+
+* CommonInstaller, Uninstaller, SysTest, Patcher
+  * setup bundled `busybox` before mounting partitions
+     * should fix segmentation faults reported on Sammy devices
+
+* Full, microG packages
+  * fix that (in Magisk Mode) GmsCore was not automatically ensured to be a user app
+
 ## General Changes
 
 * Addon
@@ -34,16 +44,19 @@
 ### Updates
 
 * automatic
-  * microG GmsCore (0.2.15.204713)
+  * microG GmsCore (0.2.16.204713)
   * Amaze (3.5.2)
+  * Blokada (5.6.0)
+  * Bromite System WebView (87.0.4280.131)
   * FreeOTP+ (2.2.13)
-  * KeePassDX (2.9.4)
-  * NewPipe (0.20.6)
+  * KeePassDX (2.9.6)
+  * NewPipe (0.20.8)
   * Open Camera (1.48.3)
   * OSM Android (3.8.5)
   * Privacy Browser (3.6.1)
   * Simple Calendar (6.11.3)
-  * Simple Gallery (6.18.0)
+  * Simple Gallery (6.18.0)+
+  * SmartPack-KernelManager (15.4)
   * Termux (0.103)
   * Tor Browser (10.0.07)
   * Twidere (4.1.6)
