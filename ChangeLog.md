@@ -20,6 +20,9 @@
 
 ## General Changes
 
+* CommonInstaller
+  * resturctured, consolidated and cleaned-up code
+
 * Addon
   * simplify addon.d and remove unused functions
 
@@ -58,7 +61,7 @@
   * OSM Android (3.8.5)
   * Privacy Browser (3.6.1)
   * Simple Calendar (6.11.3)
-  * Simple Gallery (6.18.0)+
+  * Simple Gallery (6.18.0)
   * SmartPack-KernelManager (15.4)
   * Termux (0.103)
   * Tor Browser (10.0.07)
