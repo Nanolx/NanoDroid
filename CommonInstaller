@@ -873,15 +873,15 @@ setup_busybox () {
 
 	chmod 0755 ${INSTALLER}/busybox.${bb_arch}
 	${INSTALLER}/busybox.${bb_arch} --install -s ${INSTALLER}/busybox/
+
+	OLD_PATH=${PATH}
+	PATH=${INSTALLER}/busybox:/system/bin:/vendor/bin
 }
 
 ##########################################################################################
 # Move envvars out of the way
 ##########################################################################################
 installer_setup_env () {
-	OLD_PATH=${PATH}
-	PATH=${INSTALLER}/busybox:/system/bin:/vendor/bin
-
 	if ! ${BOOTMODE}; then
 		OLD_PATH=${PATH}
 		OLD_LD_LIB=${LD_LIBRARY_PATH}
