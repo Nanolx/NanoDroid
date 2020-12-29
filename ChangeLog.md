@@ -37,6 +37,9 @@
      * F-Droid build is outdated
   * grab `SmartPack Kernel Manager` from F-Droid instead of Github
 
+* Full, F-Droid package
+  * add `NewPipe` repo to F-Droid's `additional_repos.xml` @Vavun
+
 * Documentation
   * re-structure and update Issues section
   * minor updates
