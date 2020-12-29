@@ -28,9 +28,9 @@ setup_installer () {
 	set_progress 0.1
 
 	unpack_zip
+	setup_busybox
 	mount_partitions
 	detect_arch
-	setup_busybox
 	set_progress 0.2
 
 	if ${BOOTMODE}; then
@@ -863,11 +863,16 @@ nanodroid_finalize () {
 ##########################################################################################
 
 setup_busybox () {
-	mkdir -p ${INSTALLER}/busybox
-	ln -s ${INSTALLER}/busybox.${BIN_ARCH} ${INSTALLER}/busybox/busybox
+	if [[ "$(uname -m)" == a* ]]; then
+		local bb_arch=arm
+	else	local bb_arch=x86
+	fi
 
-	chmod 0755 ${INSTALLER}/busybox.${BIN_ARCH}
-	${INSTALLER}/busybox.${BIN_ARCH} --install -s ${INSTALLER}/busybox/
+	mkdir -p ${INSTALLER}/busybox
+	ln -s ${INSTALLER}/busybox.${bb_arch} ${INSTALLER}/busybox/busybox
+
+	chmod 0755 ${INSTALLER}/busybox.${bb_arch}
+	${INSTALLER}/busybox.${bb_arch} --install -s ${INSTALLER}/busybox/
 }
 
 ##########################################################################################
