@@ -1,6 +1,6 @@
 #!/sbin/sh
 ##########################################################################################
-# 
+#
 # NanoDroid System Testing Script
 # by Nanolx
 #
@@ -296,6 +296,22 @@ grep_cmdline() {
 		sed -n "${REGEX}" 2>/dev/null
 }
 
+setup_busybox () {
+	if [[ "$(uname -m)" == a* ]]; then
+		local bb_arch=arm
+	else	local bb_arch=x86
+	fi
+
+	mkdir -p ${TMPDIR}/busybox
+	ln -s ${TMPDIR}/busybox.${bb_arch} ${TMPDIR}/busybox/busybox
+
+	chmod 0755 ${TMPDIR}/busybox.${bb_arch}
+	${TMPDIR}/busybox.${bb_arch} --install -s ${TMPDIR}/busybox/
+
+	OLD_PATH=${PATH}
+	export PATH=${TMPDIR}/busybox:/system/bin:/vendor/bin
+}
+
 system_test () {
 	ABI=$(grep_prop ro.product.cpu.abi | cut -c-3)
 	ABI2=$(grep_prop ro.product.cpu.abi2 | cut -c-3)
@@ -310,26 +326,14 @@ system_test () {
 
 	case ${ARCH} in
 		arm | arm64 )
-				BB=${TMPDIR}/busybox.arm
 				FILE=${TMPDIR}/file.arm
 				AAPT=${TMPDIR}/aapt.arm
 		;;
 		x86 | x86_64 )
-				BB=${TMPDIR}/busybox.x86
 				FILE=${TMPDIR}/file.x86
 				AAPT=${TMPDIR}/aapt.x86
 		;;
 	esac
-
-	OLD_PATH=${PATH}
-
-	mkdir -p ${TMPDIR}/busybox
-	ln -s ${BB} ${TMPDIR}/busybox/busybox
-
-	chmod 0755 ${BB}
-	${BB} --install -s ${TMPDIR}/busybox/
-
-	export PATH="${TMPDIR}/busybox:${PATH}"
 
 	chmod 0755 "${FILE}" "${AAPT}"
 

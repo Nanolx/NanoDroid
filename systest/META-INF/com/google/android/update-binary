@@ -24,6 +24,7 @@ ui_print " || storing results in $(dirname ${LOGFILE}):"
 ui_print " ||   as $(basename ${LOGFILE})"
 ui_print " "
 
+setup_busybox
 mount_partitions
 
 system_test
