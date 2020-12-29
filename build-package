@@ -5,7 +5,7 @@ version_date=20201029
 
 build_date=$(LANG='en_US' date +"%Y%m%d")
 
-VERSION=${version_code}.${build_date}
+VERSION="${version_code}.${version_date} [build ${build_date}]"
 CWD=$(readlink -fn "${BASH_SOURCE[0]}")
 CWD=$(dirname "${CWD}")
 
