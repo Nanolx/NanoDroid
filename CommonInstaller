@@ -875,7 +875,7 @@ setup_busybox () {
 	${INSTALLER}/busybox.${bb_arch} --install -s ${INSTALLER}/busybox/
 
 	OLD_PATH=${PATH}
-	PATH=${INSTALLER}/busybox:/system/bin:/vendor/bin
+	export PATH=${INSTALLER}/busybox:/system/bin:/vendor/bin
 }
 
 ##########################################################################################
