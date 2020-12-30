@@ -32,7 +32,7 @@ CC="gcc"
 CFLAGS="-m32 "
 RELEASE="5.1"
 PATCHLEVEL="0"
-RELSTATUS="rc1"
+RELSTATUS="release"
 MACHTYPE="i686-pc-linux-gnu"
 
 PATH=/bin:/usr/bin:/usr/local/bin:$PATH

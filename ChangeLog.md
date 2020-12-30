@@ -67,6 +67,9 @@
   * Tor Browser (10.0.07)
   * Twidere (4.1.6)
 
+* manual
+  * GNU Bash (5.1.0-1 w/ Debian patches)
+
 ## 23.0.1.20201029 "[FCK 2020](https://www.discogs.com/de/Scooter-FCK-2020/release/16102123)"
 
 ### Bug Fixes
