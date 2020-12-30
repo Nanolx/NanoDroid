@@ -2,6 +2,10 @@
 
 ## 23.1 in-dev
 
+NOTE: There's now a new git repository as central place/navigational point for all custom builds from NanoDroid:
+
+* https://gitlab.com/Nanolx/nanodroid-patches
+
 ## Bug Fixes
 
 * Installer, Addon
@@ -69,6 +73,7 @@
 
 * manual
   * GNU Bash (5.1.0-1 w/ Debian patches)
+  * SQLite3 (3.34.0)
 
 ## 23.0.1.20201029 "[FCK 2020](https://www.discogs.com/de/Scooter-FCK-2020/release/16102123)"
 
