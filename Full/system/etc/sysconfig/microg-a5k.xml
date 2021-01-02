@@ -51,7 +51,15 @@
     <system-user-whitelisted-app package="org.microg.gms.droidguard" />
     <system-user-whitelisted-app package="org.fdroid.fdroid.privileged" />
     <system-user-whitelisted-app package="com.aurora.services" />
+    <system-user-whitelisted-app package="com.android.vending" />
 
     <!-- Third party apps allowed to access the entire private API  -->
     <hidden-api-whitelisted-app package="com.google.android.gms" />
+
+    <!-- Specify the explicit set of other applications whose app data
+         directories are accessible by other applications. -->
+    <app-data-isolation-whitelisted-app package="com.google.android.gms" />
+
+    <!-- Whitelist of packages that eligible for rollback -->
+    <rollback-whitelisted-app package="com.android.vending" />
 </config>
