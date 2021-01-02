@@ -81,10 +81,11 @@ See the [build-package documentation](doc/BuildPackage.md) for more information.
 The following applications are custom builds (see [F-Droid Repository](#f-droid-repository) below):
 
 * Play Store (reason: re-signed and modified to support (in-)app-purchases with microG GmsCore)
-  * [microG (in-)app-purchase support patch](https://gitlab.com/Nanolx/microg-phonesky-iap-support)
 * MPV (reason: infrequent updates)
-  * [source](https://github.com/mpv-android/mpv-android)
-  * [version code patch](https://nanolx.org/fdroid/mpv.diff)
+
+The git repository as central place/navigational point for all custom builds from NanoDroid is located here:
+
+* https://gitlab.com/Nanolx/nanodroid-patches
 
 ## Supported Android Versions
 
