@@ -118,4 +118,4 @@ where `MODID` is either
 
 and `INSTALLDATE` is the date of installation in `%Y%m%D_%H.%M.%S` format (eg: `20180709_20.34.14`).
 
-In case of installation errors, issues or questions provide theese files in your report for easier debugging.
+In case of installation errors, issues or questions provide these files in your report for easier debugging.
