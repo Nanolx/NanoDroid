@@ -31,7 +31,7 @@ OS="linux-gnueabi"
 CC="arm-linux-gnueabi-gcc"
 CFLAGS="-g -O2 -Wno-parentheses -Wno-format-security"
 RELEASE="5.1"
-PATCHLEVEL="0"
+PATCHLEVEL="4"
 RELSTATUS="release"
 MACHTYPE="arm-unknown-linux-gnueabi"
 

@@ -73,7 +73,7 @@ NOTE: There's now a new git repository as central place/navigational point for a
   * Twidere (4.1.6)
 
 * manual
-  * GNU Bash (5.1.0-1 w/ Debian patches)
+  * GNU Bash (5.1.04[4]-2 w/ Debian patches)
   * SQLite3 (3.34.0)
 
 ## 23.0.1.20201029 "[FCK 2020](https://www.discogs.com/de/Scooter-FCK-2020/release/16102123)"

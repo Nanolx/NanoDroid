@@ -31,7 +31,7 @@ OS="linux-gnu"
 CC="gcc"
 CFLAGS="-m32 "
 RELEASE="5.1"
-PATCHLEVEL="0"
+PATCHLEVEL="4"
 RELSTATUS="release"
 MACHTYPE="i686-pc-linux-gnu"
 
