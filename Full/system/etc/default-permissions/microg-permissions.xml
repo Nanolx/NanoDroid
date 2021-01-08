@@ -41,6 +41,8 @@
         <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="false"/>
         <permission name="android.permission.ACCESS_BACKGROUND_LOCATION" fixed="false"/>
         <permission name="org.microg.permission.FORCE_COARSE_LOCATION" fixed="false"/>
+        <!-- SMS -->
+        <permission name="android.permission.RECEIVE_SMS" fixed="false"/>
         <!-- Storage -->
         <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="false"/>
         <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="false"/>
