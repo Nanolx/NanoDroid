@@ -1,8 +1,8 @@
 # ChangeLog
 
-## 23.1 in-dev
+## 23.1.20210109 "[Ni'Var](https://memory-alpha.fandom.com/wiki/Ni%27Var)"
 
-NOTE: There's now a new git repository as central place/navigational point for all custom builds from NanoDroid:
+NOTE: There's now a git repository as central place/navigational point for all custom builds from NanoDroid:
 
 * https://gitlab.com/Nanolx/nanodroid-patches
 
