@@ -44,6 +44,10 @@ NOTE: There's now a new git repository as central place/navigational point for a
      * F-Droid build is outdated
   * grab `SmartPack Kernel Manager` from F-Droid instead of Github
 
+* Full, microG package
+  * add `android.permission.RECEIVE_SMS` to default granted microG permissions @Vavun
+  * merge sysconfig changes for Android 11 from experimental OpenGApps
+
 * Full, F-Droid package
   * add `NewPipe` repo to F-Droid's `additional_repos.xml` @Vavun
 
@@ -58,15 +62,17 @@ NOTE: There's now a new git repository as central place/navigational point for a
   * Amaze (3.5.2)
   * Blokada (5.6.0)
   * Bromite System WebView (87.0.4280.131)
+  * F-Droid (1.11)
   * FreeOTP+ (2.2.13)
-  * KeePassDX (2.9.7)
+  * KeePassDX (2.9.8)
   * NewPipe (0.20.8)
   * Open Camera (1.48.3)
   * OpenLauncher (0.7.4)
   * OSM Android (3.8.5)
   * Privacy Browser (3.6.1)
+  * QKSMS (3.9.0)
   * Simple Calendar (6.11.3)
-  * Simple Gallery (6.18.0)
+  * Simple Gallery (6.18.1)
   * SmartPack-KernelManager (15.4)
   * Termux (0.104)
   * Tor Browser (10.0.07)
