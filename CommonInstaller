@@ -299,7 +299,7 @@ mount_partitions () {
 			if ! mount --move /system /system_root; then
 				umount /system
 				umount -l /system
-				moun -o rw ${SYSTEM_BLOCK} /system_root
+				mount -o rw ${SYSTEM_BLOCK} /system_root
 			fi
 			mount -o bind /system_root/system /system
 		fi
