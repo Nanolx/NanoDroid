@@ -1,5 +1,17 @@
 # ChangeLog
 
+## 23.1.1 in-dev
+
+## Bug Fixes
+
+* Installer, Uninstaller, SysTest, Patcher
+  * fix bugs regarding mounting `/system` from TWRP
+
+## General Changes
+
+* Installer, Uninstaller, SysTest, Patcher
+  * improve mounting code `/system` from TWRP
+
 ## 23.1.20210109 "[Ni'Var](https://memory-alpha.fandom.com/wiki/Ni%27Var)"
 
 NOTE: There's now a git repository as central place/navigational point for all custom builds from NanoDroid:
