@@ -18,10 +18,9 @@ detect_outfd
 
 show_banner
 
+setup_patcher
 setup_busybox
 mount_partitions
-
-setup_patcher
 
 detect_sdk
 detect_arch
