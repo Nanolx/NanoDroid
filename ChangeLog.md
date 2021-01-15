@@ -7,6 +7,9 @@
 * Installer, Uninstaller, SysTest, Patcher
   * fix bugs regarding mounting `/system` from TWRP
 
+* Patcher
+  * fix a regression causing Patcher not to be properly executed
+
 ## General Changes
 
 * Installer, Uninstaller, SysTest, Patcher
