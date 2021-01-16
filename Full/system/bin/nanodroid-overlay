@@ -239,7 +239,11 @@ case ${opt} in
 	-r | --remove )		overrides_remove "${@}" ;;
 	-s | --show )		overrides_list_non ;;
 	-c | --clear )		overrides_clear ;;
-	-x | --create )		overrides_add "$(grep -E -v '^(#|[[:space:]]*$)' "${config}")" ;;
+	-x | --create )
+		if [ -f "${config}" ]; then
+			overrides_add "$(grep -E -v '^(#|[[:space:]]*$)' "${config}")"
+		fi
+	;;
 	-g | --genconfig )	overrides_genconfig ;;
 
 	-u | --update )
