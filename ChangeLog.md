@@ -15,6 +15,18 @@
 * Installer, Uninstaller, SysTest, Patcher
   * improve mounting code `/system` from TWRP
 
+* NanoDroid-Overlay
+  * check whether configuration file exists before doing anything (`-x`/`--create`)
+
+## Updates
+
+* automatic
+  * microG GmsCore (0.2.17.204714)
+  * Amaze (3.5.3)
+  * K-9 Mail (5.726)
+  * Simple Calendar (6.11.4)
+  * Tor Brower (10.0.8)
+
 ## 23.1.20210109 "[Ni'Var](https://memory-alpha.fandom.com/wiki/Ni%27Var)"
 
 NOTE: There's now a git repository as central place/navigational point for all custom builds from NanoDroid:
