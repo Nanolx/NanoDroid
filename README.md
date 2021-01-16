@@ -38,7 +38,7 @@ Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called *
 
 ## Current Release
 
-* Stable: 23.1.20210109 "[Ni'Var](https://memory-alpha.fandom.com/wiki/Ni%27Var)"
+* Stable: 23.1.1.20210116 "[Zora](https://memory-alpha.fandom.com/wiki/Zora_(artificial_intelligence))"
 * Beta: ---
 
 ## Downloads

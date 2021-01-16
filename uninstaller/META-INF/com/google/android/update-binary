@@ -3,7 +3,7 @@
 OUTFD=$2
 ZIP=$3
 BACKUP_DIR="/data/media/0/nanodroid_backups"
-VERSION=23.1.20210109
+VERSION=23.1.1.20210116
 
 detect_bootmode () {
 	[ -z ${BOOTMODE} ] && ps | grep zygote | grep -qv grep && BOOTMODE=true

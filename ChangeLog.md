@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 23.1.1 in-dev
+## 23.1.1.20210116 "[Zora](https://memory-alpha.fandom.com/wiki/Zora_(artificial_intelligence))"
 
 ## Bug Fixes
 
