@@ -1,7 +1,7 @@
 id=NanoDroid_microG
 name=NanoDroid (microG sub module)
-version=v23.1.1.20210116
-versionCode=86
+version=v23.1.2.20210117
+versionCode=87
 author=Nanolx
 description=NanoDroid (microG sub module)
 minMagisk=1900

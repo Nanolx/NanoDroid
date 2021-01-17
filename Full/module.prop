@@ -1,7 +1,7 @@
 id=NanoDroid
 name=NanoDroid
-version=v23.1.1.20210116
-versionCode=87
+version=v23.1.2.20210117
+versionCode=88
 author=Nanolx
 description=NanoDroid: microG, FLOSS apps, pseudo-debloat, Zelda ringtones, Shell utilities and more.
 minMagisk=1900
