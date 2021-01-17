@@ -8,7 +8,7 @@
   * fix critial bug when running from TWRP that comes with busybox instead of toolbox
 
 * Patcher
-  * fix checking debugging applicable debugging flags in TWRP that comes with busybox instead of toolbox
+  * fix checking applicable debugging flags in TWRP that comes with busybox instead of toolbox
 
 ## 23.1.1.20210116 "[Zora](https://memory-alpha.fandom.com/wiki/Zora_(artificial_intelligence))"
 
