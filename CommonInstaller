@@ -77,16 +77,16 @@ print_info () {
 		echo "${@}"
 		decho "${@}"
 	else
-		echo -n -e "ui_print ${@}\n" >> /proc/self/fd/${OUTFD}
-		echo -n -e "ui_print\n" >> /proc/self/fd/${OUTFD}
+		echo -e "ui_print ${@}" >> /proc/self/fd/${OUTFD}
+		echo -e "ui_print" >> /proc/self/fd/${OUTFD}
 	fi
 }
 
-show_progress() {
+show_progress () {
 	${BOOTMODE} || echo "progress ${1} ${2}" >> /proc/self/fd/${OUTFD}
 }
 
-set_progress() {
+set_progress () {
 	${BOOTMODE} || echo "set_progress ${1}" >> /proc/self/fd/${OUTFD}
 }
 
@@ -161,11 +161,11 @@ detect_bootmode () {
 # Taken from Magisk, grep build_props / /proc/cmdline for value
 ##########################################################################################
 
-grep_prop() {
+grep_prop () {
 	sed -n "s/^${1}=//p" /system/build.prop ${2} | head -n 1
 }
 
-grep_cmdline() {
+grep_cmdline () {
 	local REGEX="s/^${1}=//p"
 	sed -E 's/ +/\n/g' /proc/cmdline | \
 		sed -n "${REGEX}" 2>/dev/null
@@ -185,7 +185,7 @@ set_perm () {
 	fi
 }
 
-set_perm_recursive() {
+set_perm_recursive () {
 	find ${1} -type d 2>/dev/null | while read dir; do
 		set_perm ${dir} ${2} ${3} ${4} ${6}
 	done
@@ -234,13 +234,13 @@ toupper() {
 }
 
 find_block () {
-	local block tmp partname devname device
+	local block partname devname device
 
 	block=${1}${SLOT}
 	device=$(find /dev/block \( -type b -o -type c -o -type l \) -name ${block} | head -n 1)
 
-	if [ ! -z ${device} ]; then
-		readlink -f ${device}
+	if [ -n "$device" ]; then
+		readlink -f "$device"
 		return 0
 	fi
 
@@ -254,8 +254,8 @@ find_block () {
 	done
 
 	device=$(find /dev \( -type b -o -type c -o -type l \) -maxdepth 1 -iname ${block} | head -n 1)
-	if [ ! -z ${device} ]; then
-		readlink -f ${device}
+	if [ -n "$device" ]; then
+		readlink -f "$device"
 		return 0
 	fi
 
@@ -1505,8 +1505,8 @@ install_addond () {
 
 installinfo_add () {
 	if [ "${MODE}" = "SYSTEM" ]; then
-		for file in ${@}; do
-			echo ${file} >> ${NANODROID_LIST}
+		for file in "${@}"; do
+			echo "${file}" >> ${NANODROID_LIST}
 		done
 	fi
 }
@@ -1530,7 +1530,7 @@ nanodroid_install_file () {
 	[ -z "${source}" ] && error "file: ${file} not found"
 
 	# strip off .${BIN_ARCH} from final filename (if any)
-	xfile=$(basename ${file} .${BIN_ARCH})
+	xfile=$(basename "${file}" .${BIN_ARCH})
 
 	decho "    installing file: ${xfile}"
 
@@ -1627,7 +1627,7 @@ nanodroid_install_apk () {
 
 	nanodroid_install_lib "${dest}/${dest_apk}" "${2}"
 
-	[ "${dir}" == "system/priv-app" ] && create_privapp_permissions_whitelist ${app}
+	[ "${dir}" = "system/priv-app" ] && create_privapp_permissions_whitelist "$app"
 
 	set_perm_data -r "${dest}"
 }
@@ -1638,7 +1638,7 @@ nanodroid_install_apk () {
 
 nanodroid_install_lib () {
 	apk="${1}"
-	dest="$(dirname ${1})"
+	dest="$(dirname "$1")"
 	multilib="${2}"
 
 	unset libd

@@ -47,7 +47,7 @@ done
 
 [[ -z ${1} ]] && show_help
 
-for opt in ${@}; do
+for opt in "$@"; do
 	case ${opt} in
 		full)
 			check_nanodroid || error "run 'build-package pull' first!"
