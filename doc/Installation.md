@@ -1,13 +1,13 @@
 Table of Contents
 =================
 
-   * [Installation](#installation)
-      * [Installation Setup](#installation-setup)
-      * [Parallel Installations](#parallel-installations)
-      * [Installation on Stock ROM without GApps, custom ROM with/without OpenGApps](#installation-on-stock-rom-without-gapps-custom-rom-withwithout-opengapps)
-      * [Installation on Stock ROM with GApps](#installation-on-stock-rom-with-gapps)
-      * [Upgrading NanoDroid](#upgrading-nanodroid)
-      * [Installation Logfiles](#installation-logfiles)
+* [Installation](#installation)
+  * [Installation Setup](#installation-setup)
+  * [Parallel Installations](#parallel-installations)
+  * [Installation on Stock ROM without GApps, custom ROM with/without OpenGApps](#installation-on-stock-rom-without-gapps-custom-rom-withwithout-opengapps)
+  * [Installation on Stock ROM with GApps](#installation-on-stock-rom-with-gapps)
+  * [Upgrading NanoDroid](#upgrading-nanodroid)
+  * [Installation Logfiles](#installation-logfiles)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
@@ -33,13 +33,13 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Parallel Installations
 
-Since the microG and F-Droid packages are subsets of the Full NanoDroid package, they can't be installed alongside.
+Given that **microG** and **F-Droid** packages are subsets of the **Full NanoDroid** package, they can't be installed alongside.
 
-The microG and F-Droid packages however can be installed in parallel, as they complement each other.
+The **microG** and **F-Droid** packages can however be installed in parallel, as they complement each other.
 
-## Installation on Stock ROM without GApps, custom ROM with/without OpenGApps
+## Installation on Stock/custom ROM without GApps/OpenGApps
 
-OpenGApps and GApps-less ROMs don't need further measurements, the Installer takes care of required steps.
+OpenGApps and GApps-less ROMs don't need further manual steps, the Installer takes care of required steps.
 
 * perform full wipe (/system, /data, /cache, Dalvik/ART cache)
   * recommended, but not required
@@ -59,7 +59,7 @@ OpenGApps and GApps-less ROMs don't need further measurements, the Installer tak
 
 ## Installation on Stock ROM with GApps
 
-Stock ROMs with GApps may not allow to switch from Google GmsCore to microG GmsCore in-place, thus the installation is slightly different.
+Stock ROMs with GApps may not allow to switch from **Google GmsCore** to **microG GmsCore** in-place, thus the installation is slightly different.
 
 * perform full wipe (/system, /data, /cache, Dalvik/ART cache)
   * recommended, but not required
@@ -100,11 +100,11 @@ When upgrading NanoDroid you may just:
 
 ## Installation Logfiles
 
-The recovery log and installation configuration is stored after installation, regardless with it succeeded or failed.
+The recovery log and installation configuration are stored after installation, regardless it succeeded or failed.
 
 You'll find the files in
 
-* `/data/media/0/nanodroid_logs/MODID_log_INSTALLDATE 
+* `/data/media/0/nanodroid_logs/MODID_log_INSTALLDATE`
 * `/data/media/0/nanodroid_logs/MODID_twrp_INSTALLDATE`
 
 where `MODID` is either
@@ -118,4 +118,4 @@ where `MODID` is either
 
 and `INSTALLDATE` is the date of installation in `%Y%m%D_%H.%M.%S` format (eg: `20180709_20.34.14`).
 
-In case of installation errors, issues or questions provide these files in your report for easier debugging.
+In case of installation errors, issues or questions, provide these files in your report for easier debugging.
