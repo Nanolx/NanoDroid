@@ -65,10 +65,11 @@ setup_busybox () {
 	unzip -oq "${ZIP}" busybox.arm -d "/dev/tmp"
 	unzip -oq "${ZIP}" busybox.x86 -d "/dev/tmp"
 
-	if [[ "$(uname -m)" == a* ]]; then
-		local bb_arch=arm
-	else	local bb_arch=x86
-	fi
+	case $(uname -m) in
+		arm* )	local bb_arch=arm ;;
+		x86* )	local bb_arch=x86 ;;
+		*    ) error "arch \"$(uname -m)\" is not supported"
+	esac
 
 	mkdir -p /dev/tmp/busybox
 	ln -s /dev/tmp/busybox.${bb_arch} /dev/tmp/busybox/busybox

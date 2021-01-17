@@ -332,10 +332,11 @@ detect_odex () {
 ##########################################################################################
 
 setup_busybox () {
-	if [[ "$(uname -m)" == a* ]]; then
-		local bb_arch=arm
-	else	local bb_arch=x86
-	fi
+	case $(uname -m) in
+		arm* )	local bb_arch=arm ;;
+		x86* )	local bb_arch=x86 ;;
+		*    ) error "arch \"$(uname -m)\" is not supported"
+	esac
 
 	if [ -f ${TMPDIR}/busybox.${bb_arch} ]; then
 		BUSY=${TMPDIR}/busybox.${bb_arch}

@@ -313,10 +313,11 @@ grep_cmdline() {
 }
 
 setup_busybox () {
-	if [[ "$(uname -m)" == a* ]]; then
-		local bb_arch=arm
-	else	local bb_arch=x86
-	fi
+	case $(uname -m) in
+		arm* )	local bb_arch=arm ;;
+		x86* )	local bb_arch=x86 ;;
+		*    ) error "arch \"$(uname -m)\" is not supported"
+	esac
 
 	mkdir -p ${TMPDIR}/busybox
 	ln -s ${TMPDIR}/busybox.${bb_arch} ${TMPDIR}/busybox/busybox
