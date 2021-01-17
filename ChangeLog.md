@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 23.1.2 in-dev
+
+## Bug Fixes
+
+* Installer, Uninstaller, SysTest, Patcher
+  * fix critial bug when running from TWRP that comes with busybox instead of toolbox
+
 ## 23.1.1.20210116 "[Zora](https://memory-alpha.fandom.com/wiki/Zora_(artificial_intelligence))"
 
 ## Bug Fixes
