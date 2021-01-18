@@ -142,14 +142,14 @@ mount_partitions () {
 			[ -z ${SLOT} ] || SLOT=_${SLOT}
 		fi
 		[ -z ${SLOT} ] && DEVICE_AB=FALSE || DEVICE_AB=TRUE
-		decho " INFO: #1 [SLOT] ${SLOT}"
+		echo " INFO: #1 [SLOT] ${SLOT}"
 
-		is_mounted /data || mount /data || decho "failed to mount /data!"
+		is_mounted /data || mount /data || echo "failed to mount /data!"
 
 		mount -o bind /dev/urandom /dev/random
 
 		SYSTEM_BLOCK=$(find_block system)
-		decho " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
+		echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
 
 		if is_mounted /system_root; then
 			umount /system 2&>/dev/null
