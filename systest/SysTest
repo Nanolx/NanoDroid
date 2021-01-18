@@ -86,7 +86,6 @@ mount_apex () {
 }
 
 # taken from Magisk, with modifications for NanoDroid
-
 toupper() {
 	echo "$@" | tr '[:lower:]' '[:upper:]'
 }
@@ -148,6 +147,11 @@ mount_partitions () {
 		is_mounted /data || mount /data || echo "failed to mount /data!"
 
 		mount -o bind /dev/urandom /dev/random
+
+		if is_mounted /system_root; then
+			umount /system 2&>/dev/null
+			umount /system_root 2&>/dev/null
+		fi
 
 		mkdir -p /system /system_root
 		mount -o rw ${SYSTEM_BLOCK} /system
