@@ -13,38 +13,38 @@
 #
 ##########################################################################################
 
-# nanodroid_microg:	whether to install microG
-# supported packages:	Full, microG
+# nanodroid_microg:	microG installation
+# supported packages: Full, microG
 # supported values:
-#	0 = don't install microG at all (Note: does not effect NanoDroid-microG package)
-#	1 = install microG GmsCore, GsfProxy and DroidGuard Helper and Nominatim Geocoder Backend
+#	0 = do not install microG microG (note: does not effect NanoDroid-microG package)
+#	1 = install microG GmsCore, GsfProxy, DroidGuard Helper and Nominatim Geocoder Backend
 #	2 = install microG GmsCore and Nominatim Geocoder Backend only
 nanodroid_microg=1
 
 # nanodroid_nlpbackend:	what uNlp backends to install
-# supported packages:	Full, microG
-# this setting is four digits long, each digit represents one uNlp backend:
-#	0 = for each digit means don't install the backend
-#	1 = for each digit means install the backend
+# supported packages: Full, microG
+# this setting is 4 digits long, each digit represents one uNlp backend:
+#	0 = don't install the backend
+#	1 = install the backend
 # digits represent the following backends:
 #	1st digit = Déjà Vu backend
 #	2nd digit = Ichnaea (Mozilla) backend
 #	3rd digit = Apple backend
 #	4th digit = Radiocells.org backend
 # examples:
-#	nanodroid_nlpbackend=1000 = install Déjà Vu backend
+#	nanodroid_nlpbackend=1000 = install Déjà Vu backend only
 #	nanodroid_nlpbackend=1010 = install Déjà Vu and Apple backends
 nanodroid_nlpbackend=1000
 
-# nanodroid_mapsv1:	whether to install Google Maps version 1 API support
-# supported packages:	Full, microG
+# nanodroid_mapsv1:	Google Maps version 1 API support
+# supported packages: Full, microG
 # supported values:
 #	0 = don't install Maps v1 API support
 #	1 = install Maps v1 API support
 nanodroid_mapsv1=1
 
-# nanodroid_play:	what app store to install
-# supported packages:	Full, microG
+# nanodroid_play: App store installation
+# supported packages: Full, microG
 # supported values:
 #	00 = install no app store
 #	10 = install Google Play (patched with microG (in-)app-purchase support)
@@ -54,8 +54,8 @@ nanodroid_mapsv1=1
 #	30 = install Google Play (patched with microG (in-)app-purchase support) and Aurora Store (alongside Aurora Services addon)
 nanodroid_play=21
 
-# nanodroid_fdroid:	whether to install F-Droid
-# supported packages:	Full, F-Droid
+# nanodroid_fdroid:	F-droid installation
+# supported packages: Full, F-Droid
 # supported values:
 #	0 = don't install F-Droid at all (Note: does not effect NanoDroid-FDroid package)
 #	1 = install official F-Droid client (alongside priviledged extension)
@@ -63,30 +63,31 @@ nanodroid_play=21
 #	3 = install both official and Aurora F-Droid clients (alongside their addons)
 nanodroid_fdroid=1
 
-# nanodroid_apps:	whether to install appliations
-# supported packages:	Full
+# nanodroid_apps: Apps installation
+# supported packages: Full
 # supported values:
-#	0 = don't install applications
-#	1 = install applications
+#	0 = don't install any applications
+#	1 = install all applications listed in .nanodroid-apps file
 # see:	https://gitlab.com/Nanolx/NanoDroid/-/blob/master/doc/Applications.md
 nanodroid_apps=1
 
-# nanodroid_overlay:	whether to utilize NanoDroid-Overlay
-# supported packages:	Full, microG
+# nanodroid_overlay: use NanoDroid-Overlay
+# supported packages: Full, microG
+# NanoDroid-Overlay can be used to pseudo-debloat `/system` applications in Magisk Mode, or force-debloat on System Mode
 # for more information:	https://gitlab.com/Nanolx/NanoDroid/-/blob/master/doc/NanoDroidOverlay.md
 # supported values:
-#	0 = don't utilize NanoDroid-Overlay
-#	1 = utilize NanoDroid-Overlay
+#	0 = don't use NanoDroid-Overlay
+#	1 = use NanoDroid-Overlay
 nanodroid_overlay=1
 
-# nanodroid_bash:	whether to install GNU Bash (alongside the less pager)
-# supported packages:	Full
+# nanodroid_bash: GNU Bash installation
+# supported packages: Full
 # supported values:
 #	0 = don't install GNU Bash
 #	1 = install GNU Bash
 nanodroid_bash=1
 
-# nanodroid_init:	whether and what init scripts to install
+# nanodroid_init: init scripts installation
 # supported packages:	Full
 # for more information:	https://gitlab.com/Nanolx/NanoDroid#init-scripts
 # this setting is a list of init scripts, each listed item will be installed, possible values
@@ -95,26 +96,27 @@ nanodroid_bash=1
 #	30_logcat
 #	40_external_sd
 #	50_logscleaner
-# leave empty (nanodroid_init="") to install no init scipts, "" are mandatory in any case
+# Empty quotes (nanodroid_init="") to not install any init scipts.
 nanodroid_init="10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner"
 
-# nanodroid_gsync:	whether to install Google Sync Adapters
-# supported packages:	Google
+# nanodroid_gsync: Google Sync Adapters installation
+# supported packages: Google
 # supported values:
 #	0 = don't install Google Sync Adapters
 #	1 = install Google Sync Adapters
 nanodroid_gsync=1
 
-# nanodroid_swipe:	whether to install Swipe libraries
-# supported packages:	Google
+# nanodroid_swipe: Swipe libraries installation
+# supported packages: Google
 # supported values:
 #	0 = don't install Swipe libraries
 #	1 = install Swipe libraries
 nanodroid_swipe=0
 
-# nanodroid_forcesystem: force direct /system installation (else NanoDroid will
-# autodetect whether Magisk is installed and will prefer Magisk Module installation)
-# supported packages:	Full, miroG, F-Droid, Bromite System WebView, OSM Android, Google
+# nanodroid_forcesystem: force direct /system installation
+# If not set to 1, if Magisk is installed, NanoDroid will prefer Magisk Module installation)
+# Note: You should keep this setting to 0 unless you really know what you are doing. 
+# supported packages: Full, miroG, F-Droid, Bromite System WebView, OSM Android, Google
 # supported values:
 #	0 = auto detect installation mode
 #	1 = force /system installation

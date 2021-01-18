@@ -28,13 +28,13 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 # NanoDroid
 
-NanoDroid is a installer for various OpenSource related things, most noticably microG and F-Droid. It supports direct /system installation, both devices with or without A/B partition scheme or system-as-root, aswell as Magisk Mode (module) installation. It also includes several tools (eg. GNU Bash, tools from util-linux/bsdmainutils and more) and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
+NanoDroid is an installer for various OpenSource projects, most noticably [microG](https://microg.org/) and [F-Droid](https://f-droid.org/). It supports all Android 4.4+ phones and all partition layouts (System-as-root, A/B) and can be installed as a Magisk module. NanoDroid also includes several tools (eg. GNU Bash, tools from util-linux/bsdmainutils and more) and additional features (system debloating, init scripts, automatic logcat creation), aswell as a companion F-Droid Repository.
 
-Furthermore it allows the user to do fine-graded installations using configuration files, which allow to choose what to install, or if several alternatives are available, which of them, see [Installation](#installation) below.
+Furthermore it allows the user to do fine-graded installations using configuration files to choose what to install, or if several alternatives are available, which of them. See [Installation](#installation) below.
 
-In order for full microG experience NanoDroid contains a modified Play Store which allows (in-)app-purchases with microG, which would normally not be possible. It also tries to remove all previously installed GApps on it's own. For ROMs without builtin signature spoofing support NanoDroid includes an on-device Patcher which tries to patch your ROM from either TWRP or Magisk Manager.
+The full microG experience NanoDroid contains a modified Play Store allowing (in-)app-purchases with microG, which would normally not be possible. It also tries to remove all previously installed GApps on its own. For ROMs without builtin signature spoofing support, NanoDroid includes an on-device Patcher which tries to patch your ROM from either TWRP or Magisk Manager.
 
-Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called **NanoDroid**.
+**NanoDroid** was previously called **NanoMod** (before version 16.0).
 
 ## Current Release
 
@@ -45,30 +45,29 @@ Versions until 15.1 were called **NanoMod**, starting with 16.0 they're called *
 
 ### Primary Mirror
 
-On Nanolx the latest stable and current beta releases are available, no previous releases.
+Only the latest stable and beta releases are maintained and are available on Nanolx:
 
 * Stable Downloads [> Nanolx](https://downloads.nanolx.org/NanoDroid/Stable)
 * Beta Downloads [> Nanolx](https://downloads.nanolx.org/NanoDroid/Beta)
 
 ### SHA256 Checksum and GPG Signature
 
-Since version 18.3.1 all releases hosted on nanolx.org contain a SHA256 checksum and GPG signature to check their validity. AFH does provide the SHA256 checksum on the downloads summary page, but does not allow to upload a GPG signature.
+Since version 18.3.1 all releases hosted on *nanolx.org* contain a SHA256 checksum and GPG signature to check their validity. AFH does provide the SHA256 checksum on the downloads summary page, but does not allow to upload a GPG signature.
 
-You can obtain the public part of my GPG key from:
+You can verify the checksum with the public GPG key:
 
 * download the public key from [photonic.asc](https://downloads.nanolx.org/NanoDroid/Stable/photonic.asc)
   * import it using `gpg --import photonic.asc`
 * download and import using `gpg` from pgp.mit.edu:
   * `gpg --keyserver pgp.mit.edu --recv B0ABCE622A077B584B81339E340FD70EFFC52B26`
 
-You can verify the checksum and signature like:
 
-```
+```bash
 gpg --verify NanoDroid-19.0.20181027.zip.sha256.sig
 sha256sum -c NanoDroid-19.0.20181027.zip.sha256
 ```
 
-Additionally you may want to ensure the signing date is close to the release date.
+Additionally, you may want to ensure the signing date is close to the release date.
 
 ### Snapshots
 
@@ -115,7 +114,7 @@ Earlier versions will never officially be supported (you may still report bugs, 
 
 ## Recommended Thirdparty Projects
 
-* [busybox](https://forum.xda-developers.com/showthread.php?t=2239421) by Osm0sis (highly recommended for all NanoDroid scripts properly working)
+* [Busybox](https://forum.xda-developers.com/showthread.php?t=2239421) by Osm0sis (highly recommended for all NanoDroid scripts properly working)
 * [GNU Nano editor](https://forum.xda-developers.com/showthread.php?t=2239421) by Osm0sis (simple, powerful commandline editor)
 
 ## Support
@@ -128,13 +127,13 @@ Full, user-readible [> ChangeLog](ChangeLog.md)
 
 ## Summary
 
-**NanoDroid** can be installed as a Magisk Module or directly to /system, most functionality is available, in System Mode, too.
+**NanoDroid** can be installed as a Magisk Module or directly to `/system`, most of the functionalities are available, in System Mode too.
 
 More information about Magisk [> XDA](https://forum.xda-developers.com/apps/magisk)
 
 NanoDroid includes
 
-* microG and it's companions
+* microG and its companions
   * GApps are auto-removed during installation
      * using [> NanoDroid-Overlay](doc/NanoDroidOverlay.md)
      * the Uninstaller will restore them in System Mode (or re-flash the ROM)
@@ -172,7 +171,7 @@ See the [Packages](doc/Packages.md) summary for information about the available 
 
 ### F-Droid Repository
 
-In order to ease updating NanoDroid's custom application builds you can use it's companion [F-Droid Repository](https://www.nanolx.org/fdroid/repo)
+In order to ease updating NanoDroid's custom application builds, you can use its companion [F-Droid Repository](https://www.nanolx.org/fdroid/repo).
 
 ## Details
 
@@ -180,11 +179,11 @@ See the [> Detail information](doc/Details.md) for full details on microG, F-Dro
 
 ## Installation
 
-See the [Installation](doc/Installation.md) docs for instructions
+See the [Installation](doc/Installation.md) docs for instructions.
 
 ## microG Setup
 
-See the [microG setup](doc/microGsetup.md) documentation
+See the [microG setup](doc/microGsetup.md) documentation.
 
 ## Issues
 
@@ -192,7 +191,7 @@ See [the list of known issues](doc/Issues.md) and their respective fixes or work
 
 ## License & Credits
 
-My own work (NanoDroid itself) is licensed under the GNU General Public License version 3 or newer [> GNU](https://www.gnu.org/licenses/gpl-3.0.txt)
+My own work (NanoDroid itself) is licensed under the GNU General Public License version 3 or newer [> GNU](https://www.gnu.org/licenses/gpl-3.0.txt).
 
 For more details (including authors and license) on every provided application or Software press the link next to it.
 
@@ -226,7 +225,7 @@ Special Thanks to the contributors (starting with most recent contribution)
   * fixes for x86_64 support
 * Vavun
   * OsmAnd package
-  * several contributions to NanoDroid (and it's former microG GmsCore fork)
+  * several contributions to NanoDroid (and its former microG GmsCore fork)
 
 Special Thanks to the beta testers
 
@@ -238,12 +237,12 @@ Special Thanks to the beta testers
 ## FAQ
 
 ```
-Q: will there be a GApps version, instead of microG?
-A: no. but you can choose not to populate microG.
+Q: Will there be a GApps version, instead of microG?
+A: No. But you can choose not to populate microG.
 
-Q: what devices is this tested on?
+Q: What devices is this tested on?
 A: OnePlus 5T, OnePlus 3T, Nexus 6
 
-Q: what ROMs was this tested on?
-A: AICP, OmniROM, NitrogenOS; should work on any LineageOS / AOSP based ROM and most Stock ROMs.
+Q: What ROMs was this tested on?
+A: AICP, OmniROM, NitrogenOS. It should work on any LineageOS / AOSP based ROM and on most Stock ROMs.
 ```

@@ -17,7 +17,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 # NanoDroid
 
-This lists features unique to NanoDroid.
+This lists unique NanoDroid features.
 
 ## NanoDroid-Overlay
 
@@ -80,13 +80,9 @@ The following init scripts are bundled with NanoDroid
 
 When in Magisk Mode the init scripts create their log files in
 
-  `/magisk/NanoDroid/logs/${script}.log.${date}`
+`/magisk/NanoDroid/logs/${script}.log.${date}`
 
-When installed to /system your ROM needs to support running scripts in
-
-  `/system/etc/init.d`
-
-or you can use **Kernel Adiutor's** init.d emulation.
+When installed to /system your ROM needs to support running scripts in `/system/etc/init.d` or you can use **Kernel Adiutor's** init.d emulation.
 
 ## GNU Bash
 
@@ -126,7 +122,7 @@ NanoDroid includes microG as follows
 
 ## F-Droid
 
-F-Droid [> Website](http://www.fdroid.org) is an app store for OpenSource applications.
+F-Droid [> Website](http://www.fdroid.org) is an app store for FOSS (Free and Open Source Software) applications only.
 
 NanoDroid includes both F-Droid and it's Privileged Extension [> F-Droid](https://f-droid.org/repository/browse/?fdfilter=f-droid&fdid=org.fdroid.fdroid.privileged), so you don't need to enable `Unknown Sources`. Alternatively (or additionally) you can install Aurora Droid [> F-Droid](https://f-droid.org/de/packages/com.aurora.adroid/).
 

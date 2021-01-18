@@ -36,40 +36,51 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ### Battery Drain
 
-* microG fails to register applications to GCM/FCM (Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered, to fix the battery drain issue the following command as root on your device (or via adb shell):
-  * `find /data/data/*/shared_prefs -name com.google.android.gms.*.xml -delete`
-      * alternatively `nutl -r`
-      * this will force un-register all your applications from GCM/FCM and they'll re-register on next start
+microG fails to register applications to GCM/FCM (Cloud Messaging) if they were installed **before** microG, but the apps keep trying to register and that causes the battery drain, all apps installed **after** microG are properly registered. 
+
+To fix the battery drain, issue the following shell command as root:
+
+```bash
+find /data/data/*/shared_prefs -name com.google.android.gms.*.xml -delete
+```
+Alternatively, use `nutl -r` to force un-register all your applications from GCM/FCM (they'll re-register on next start)
 
 ### microG lacks features
 
-* if you use AppOps, PrivacyGuard or the like you have to grant microG GmsCore **all** permissions, if you prevent some permissions, some apps or features might not work as expected or not at all. Note: some APIs/features are stubs in microG GmsCore, meaning they exist that apps don't complain, but they do nothing - thus blocking microG GmsCore is pretty much of no benefit.
+If you use `AppOps`, `PrivacyGuard` or the like you have to grant microG GmsCore **all** permissions. If you prevent some permissions, some apps or features might not work as expected or not at all. 
 
-### permissions not granted on Android 10 or newer
+**Note:** some APIs/features are stubs in microG GmsCore. They exist so that apps don't complain, but they do nothing so there is no benefit to block GmsCore.
 
-* in Magisk Mode it might happen on some ROMs that microG is not granted the `RECEIVE_SMS` and `ACCESS_BACKGROUND_LOCATION` permissions, the fix is to install microG as user-app addtionally to system-app, this is done automatically starting with version 23.0 of NanoDroid (and **not** required in System Mode installation), to do so issue the following command on-device as root (via adb shell or Termux):
+### permissions not granted on Android 10+
+
+On some ROMs, It might happen that microG (Magisk mode) is not granted the `RECEIVE_SMS` and `ACCESS_BACKGROUND_LOCATION` permissions. The fix is to install microG as user-app addtionally to system-app. This is done automatically starting with version 23.0 of NanoDroid (and **not** required in System Mode installation).
+
+FYI, to do so, issue the following command on-device as root (via adb shell or Termux):
   * Full package: `pm install -r /data/adb/modules/NanoDroid/system/priv-app/GmsCore/GmsCore.apk`
   * microG package: `pm install -r /data/adb/modules/NanoDroid_microG/system/priv-app/GmsCore/GmsCore.apk`
-* see [microG issue #1100](https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711088518) and [microG issue #1100](https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711141077) for background information
+
+See [microG issue #1100](https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711088518) and [microG issue #1100](https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711141077) for background information
 
 ### can't login to Google account on KitKat
 
-* updating microG to (at least) 0.2.7.17455 will fix the issue
+Updating microG to (at least) 0.2.7.17455 will fix the issue
 
 ### can't login to Goggle account with version 74.x of Chrome/WebView
 
-* updating microG to (at least) 0.2.7.17455 will fix the issue
+Updating microG to (at least) 0.2.7.17455 will fix the issue
 
 ## Google Play Services are missing
 
-* This misleading error message actually means 'Something is wrong with Play Store'
-  * ensure as mentioned above you properly [setup microG](#microg-setup) and reboot
-  * install either Fake Store or Play Store
-     * grant signature spoofing permission to Fake Store or Play Store
-         * go to System Settings > Apps > Permissions > Signature Spoofing for that
-         * on some ROMs you have to tap on the 3-dot-menu `Show System Apps` to see Fake Store
-             * or manually using `pm grant com.google.gms android.permission.FAKE_PACKAGE_SIGNATURE` as root on-device
-             * likewise `pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE` for Phonesky
+This misleading error message actually means *Something is wrong with Play Store*.
+
+Ensure as mentioned above you properly [setup microG](#microg-setup) and reboot.
+
+Then, install either **Fake Store** or **Play Store** 
+  * Grant signature spoofing permission to Fake Store or Play Store
+  * go to System Settings > Apps > Permissions > Signature Spoofing for that
+  * on some ROMs you have to tap on the 3-dot-menu `Show System Apps` to see Fake Store
+  * or manually using `pm grant com.google.gms android.permission.FAKE_PACKAGE_SIGNATURE` as root on-device
+  * likewise `pm grant com.android.vending android.permission.FAKE_PACKAGE_SIGNATURE` for Phonesky
 
 ## SafetyNet
 
@@ -97,8 +108,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ### Updating Play support libraries#
 
-* Play Store tries to update itself or the Play Services, both updates fail because you have microG and a modified Play Store installed
-  * you can disable the `GMSCoreUpdateService` service of the Play Store to prevent it from updating
+Play Store tries to update itself or the Play Services, both updates fail because you have microG and a modified Play Store installed. You can disable the `GMSCoreUpdateService` service of the Play Store to prevent it from updating.
 
 ### Can't install split APKs / extra data
 
@@ -108,7 +118,8 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ### Play Store does not show bought apps as bought
 
-If your Play Store doesn't show already bought apps as bought, you need to register the device ID to your Google Account, doing so will eliminate the "uncertified" status of Play Store and thus will allow you to re-download your already bought apps. Also remote installations using `https://play.google.com` will be working again afterwards.
+If your Play Store doesn't show already bought apps as bought, you need to register the device ID to your Google Account. Doing so will eliminate the "uncertified" status of Play Store and thus will allow you to re-download your already bought apps. Also, remote installations using `https://play.google.com` will work again afterwards.
+
 * Go to microG Settings > Google Device Registration and note the `Android ID`
 * Navigate to `https://www.google.com/android/uncertified/` and login using your Google Account
 * Enter the ID shown in microG settings into the `Android ID` box and tap register
@@ -117,7 +128,7 @@ If your Play Store doesn't show already bought apps as bought, you need to regis
 
 ### Play Store web interface can't install apps on my device
 
-See "Play Store does not show bought apps as bought" above, same fix.
+See *Play Store does not show bought apps as bought* above, same fix.
 
 ## Push Messages
 
@@ -132,7 +143,7 @@ See "Play Store does not show bought apps as bought" above, same fix.
 
 ## Unified Nlp
 
-**Note:** unified Nlp has known issues on Android 10.
+**Note:** unified Nlp has known issues on Android 10+.
 
 * unified Nlp is not registered in the system
   * some ROMs with native signature spoofing don't look for `com.google.android.gms` as location provider
@@ -153,9 +164,8 @@ See "Play Store does not show bought apps as bought" above, same fix.
 
 ## F-Droid
 
-* On some ROMs (most noticeably MIUI ROMs) F-Droid can't install applications
-  * this is because F-Droid's Priviledged Extension is not compatible with those ROMs, disable it from
-      * F-Droid > Settings > Expert Settings > Privileged Extension
+On some ROMs (most noticeably MIUI ROMs), F-Droid can't install applications. This is because F-Droid's Priviledged Extension is not compatible with those ROMs: 
+* Disable it from F-Droid > Settings > Expert Settings > Privileged Extension
 
 ## Aurora Store / Aurora Droid
 
@@ -204,8 +214,7 @@ See "Play Store does not show bought apps as bought" above, same fix.
 
 ### ROM lags after applying signature spoofing patch
 
-* some ROMs already have the patch built-in, if you patch those ROMs (again), it results in heavy lags
-  * recent Patcher versions check whether the ROM has the patch already applied and disallow double-patching
+Some ROMs already have the patch built-in. If you patch those ROMs (again), it results in heavy lags. Recent Patcher versions check whether the ROM has the patch already applied and disallow double-patching
 
 ### Applications can't access storage / permission issues
 

@@ -13,22 +13,20 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 For **microG** to work, your ROM needs to have signature spoofing enabled (or a **deodexed** ROM to patch yourself).
 
-If your ROM does **not** have signature spoofing support, you can manually patch it either
-  * flashing the on-device Patcher zip
-     * it also installs an addon.d script that auto re-patches the ROM upon update
+If your ROM does **not** have signature spoofing support, you can manually patch it by flashing the on-device Patcher zip. It also installs an `addon.d script` that auto re-patches the ROM upon update.
 
-If your ROM is **odexed** read [this instructions](DeodexServices.md) on how to deodex services.jar manually
+If your ROM is **odexed**, read [this instructions](DeodexServices.md) on how to deodex services.jar manually.
 
 The Patcher supports installing the patched `services.jar` into the following locations:
   * NanoDroid Magisk Module
   * NanoDroid-microG Magisk Module
   * directly into `/system`
 
-So you can use it regardless whether you're using NanoDroid or not.
+So you can use it regardless you're using NanoDroid or not.
 
 ## microG Setup
 
-Once your ROM supports signature spoofing, you need to setup microG like this
+Once your ROM supports signature spoofing, you need to setup microG like this:
   * go into **microG settings** and set up everything like:
      * check results in **Self-Check**, grant missing permissions (by tapping on them)
          * especially the **Battery Optimization** item

@@ -16,26 +16,21 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Purpose
 
-The `nanodroid-overlay` Script, respectively it's shortcut `novl` is used by NanoDroid to handle the
-
+The `nanodroid-overlay` Script (`novl` for short) is used by NanoDroid to handle the
   * Pseudo Debloat Feature (Magisk Mode)
   * Force Debloat Feature (System Mode)
 
 ### Pseudo Debloat Feature
 
-Magisk allows for apps to be magically removed upon runtime, they don't get actually removed from `/system` but they are pseudo-removed during runtime.
+Magisk allows apps to be magically removed upon runtime. They don't get actually removed from `/system` but they are pseudo-removed during runtime (replaced by a dummy file)
 
 ### Force Debloat Feature
 
-In System Mode apps can are moved to `/data/media/0/nanodroid_backups/` or restored from there.
+In **System Mode**, apps are moved to `/data/media/0/nanodroid_backups/` to be restored from there if necessary.
 
 ### Alter the list of pseudo-debloated applications
 
-You can pseudo-debloat applications by adding them to configuration file
-
-`.nanodroid-overlay`
-
-on your device, in one of the following directories
+You can pseudo-debloat applications by adding them to the `.nanodroid-overlay` configuration file on your device, in one of the following directories:
 
 * `/data/media/0` (internal storage (TWRP))
 * `/sdcard1` (internal storage (ORANGEFOX))
@@ -62,17 +57,15 @@ The following paths are searched for matching apps:
 
 After you've made your changes, issue the following command on your device, either using `adb shell` or **Termux** as root:
 
-`nanodroid-overlay --update`
+```bash
+nanodroid-overlay --update
+```
 
 ## Invocation
 
-From within a terminal on your device, for example `adb shell` or `Termux` invoke the script using either
+From a terminal on your device, for example `adb shell` or `Termux` invoke the script using either
 
-`nanodroid-overlay [switch] [parameter(s)]`
-
-or
-
-`novl [switch] [parameter(s)]`
+`nanodroid-overlay [switch] [parameter(s)]` or `novl [switch] [parameter(s)]`
 
 ## Overview
 
@@ -112,25 +105,4 @@ remove existing Overlays
 
 ## Default Settings
 
-The following applications are debloated by default
-
-* Basic Dreams
-* Calendar
-* CM File Manager
-* crDroid Filemanager and Music Player
-* Eleven, Phonograph (Audio Player)
-* E-Mail + Exchange2
-* Browser, Gello, Slimperience, Via Browser, Jelly (Browser)
-* PhotoTable
-* Sound Recorder, Recorder
-* messaging (SMS & MMS)
-* Wallpaper, WallpaperPickerGoogle (Google Wallpaper application)
-* Wallpaper Backup
-* mGerrit
-* FM Radio
-* Gallery2
-* OmniSwitch
-* Screencast
-* Snap, Snapdragon Camera (Camera)
-* Resurrection Remix Statistics
-* Sim Toolkit
+The applications listed in `.nanodroid-overlay` are debloated by default.

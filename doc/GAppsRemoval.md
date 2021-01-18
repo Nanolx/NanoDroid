@@ -1,22 +1,18 @@
-
 Table of Contents
 =================
 
-   * [GApps Removal](#gapps-removal)
-      * [List of removed GApps](#list-of-removed-gapps)
-      * [List of removed location services](#list-of-removed-location-services)
+* [GApps Removal](#gapps-removal)
+    * [List of removed GApps](#list-of-removed-gapps)
+    * [List of removed location services](#list-of-removed-location-services)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 # GApps Removal
 
-GApps and several location services conflict with microG and unified Nlp. Thus they are removed during NanoDroid installation
+GApps and several location services conflict with **microG** and **unified Nlp**. Thus they are removed during NanoDroid installation
+using **[NanoDroid-Overlay](NanoDroidOverlay.md)**. The Uninstaller will restore them (or re-flash the ROM)
 
-  * using [> NanoDroid-Overlay](NanoDroidOverlay.md)
-
-the Uninstaller will restore them (or re-flash the ROM)
-
-List of applications by ale5000
+List of applications by @ale5000
 
 ## List of removed GApps
 

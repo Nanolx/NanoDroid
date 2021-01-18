@@ -1,10 +1,10 @@
 Table of Contents
 =================
 
-   * [NanoDroid-Prop Script](#nanodroid-prop-script)
-      * [Purpose](#purpose)
-      * [Invocation](#invocation)
-      * [Overview](#overview)
+* [NanoDroid-Prop Script](#nanodroid-prop-script)
+    * [Purpose](#purpose)
+    * [Invocation](#invocation)
+    * [Overview](#overview)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
@@ -12,17 +12,11 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 ## Purpose
 
-The `nanodroid-prop` Script, respectively it's shortcut `nprp` is used by NanoDroid to utilize Magisk's `resetprop` feature for on-the-fly and permanently adjusting system properties. Properties set by this script survive NanoDroid updates
+The `nanodroid-prop` Script (`nprp` in short) is used by NanoDroid to utilize Magisk's `resetprop` feature for on-the-fly and permanently adjusting system properties. Properties set by this script survive NanoDroid updates.
 
 ## Invocation
 
-From within a terminal on your device, for example `adb shell` or `Termux` invoke the script using either
-
-`nanodroid-prop [switch] [parameter(s)]`
-
-or
-
-`nprp [switch] [parameter(s)]`
+From within a terminal on your device, for example `adb shell` or `Termux` invoke the script using either `nanodroid-prop [switch] [parameter(s)]` or `nprp [switch] [parameter(s)]`
 
 ## Overview
 

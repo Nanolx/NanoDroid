@@ -21,7 +21,7 @@ On GNU/Linux, MacOS or xBSD clone this repository and use the provided `build-pa
 download required files:
 * `build-package pull` to download all required apks and libraries for the Full, microG and F-Droid packages
 
-for apks downloaded from F-Droid repositories or from APK Mirror, `build-package` checks the SHA256 hash.
+For apks downloaded from F-Droid repositories or from APK Mirror, `build-package` checks the SHA256 hash.
 
 update required files:
 * `build-package u-microg` to update microG
@@ -62,14 +62,14 @@ The `build-package` script additionally supports the following parameters:
 
 If you want to use custom APKs in your build, place them into the `local` directory in the root of the NanoDroid tree.
 
-The name of your APK must match the targetname in the NanoDroid package, e. g. `GmsCore` for a custom microG build or `Phonesky` for a custom Play Store build.
+The name of your APK must match the targetname in the NanoDroid package, e.g. `GmsCore` for a custom microG build or `Phonesky` for a custom Play Store build.
 
 See the `file_database` in [build-package.database](../data/build-package.database).
 
-Note: sideloading libraries is currently not supported!
+**Note:** sideloading libraries is currently not supported!
 
 
 ## "Secret" parameters
 
 * `export BP_DEBUG=1` allows seeing debug messages when repos are fetched and APKs are downloaded
-* `export BP_USE_WGET=1` tells the script to use wget for downloading indices and APks
+* `export BP_USE_WGET=1` tells the script to use wget for downloading indices and APKs

@@ -1,27 +1,27 @@
 Table of Contents
 =================
 
-   * [Modules](#modules)
-   * [Extra Packages](#extra-packages)
+* [Modules](#modules)
+* [Extra Packages](#extra-packages)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 # Modules
 
-Module packages, flash through TWRP or Magisk Manager
+Module packages: flash through TWRP or Magisk Manager
 
 **NanoDroid**: includes
   * everything mentioned in the Summary
 
 **NanoDroid-microG**: includes (only)
-  * microG and it's companions
+  * microG and its companions
   * pseudo/force-debloat feature
   * app store(s)
   * GApps and location packages auto-removal
 
 **NanoDroid-fdroid**: includes (only)
-  * F-Droid and it's privileged extension
-  * Auroa Droid and it's privileged extension
+  * F-Droid and its privileged extension
+  * Aurora Droid and it's privileged extension
 
 **NanoDroid-BromiteWebView**: includes (only)
   * [Bromite WebView](https://www.bromite.org/system_web_view)
