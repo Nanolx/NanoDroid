@@ -21,7 +21,7 @@ nanodroid_all_init='"10_sqlite 20_fstrim 30_logcat 40_external_sd 50_logscleaner
 setup_installer () {
 	detect_bootmode
 	detect_outfd
-	#check_space
+	! ${BOOTMODE} && [ "${MODID}" = "NanoDroid" ] && check_space
 	show_progress 1.0 0
 
 	show_banner
