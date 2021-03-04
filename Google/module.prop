@@ -1,6 +1,6 @@
 id=NanoDroid
 name=NanoDroid_Google
-version=v23.1.2.20210117
+version=v23.2.99999999
 versionCode=88
 author=Nanolx
 description=NanoDroid: Google Sync Adapters and Swipe libraries sub-module.

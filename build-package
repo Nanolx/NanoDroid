@@ -1,7 +1,7 @@
 #!/bin/bash
 
-version_code=23.1.2
-version_date=20210117
+version_code=23.2
+version_date=99999999
 
 build_date=$(LANG='en_US' date +"%Y%m%d")
 

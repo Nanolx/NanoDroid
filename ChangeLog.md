@@ -1,8 +1,22 @@
 # ChangeLog
 
+## 23.2.in-dev
+
+### Bug Fixes
+
+* Installer
+  * update priv-app permission detection for some Android 11 ROMs
+  * abort with proper error message if detecting block devices fails (TWRP)
+  * re-add free space check (TWRP)
+
+### General Changes
+
+* Documentation
+  * various minor corrections, aswell as improved wording and layout @w1nst0n
+
 ## 23.1.2.20210117 "BusyCompat"
 
-## Bug Fixes
+### Bug Fixes
 
 * Installer, Uninstaller, SysTest, Patcher
   * fix critial bug when running from TWRP that comes with busybox instead of toolbox
@@ -12,7 +26,7 @@
 
 ## 23.1.1.20210116 "[Zora](https://memory-alpha.fandom.com/wiki/Zora_(artificial_intelligence))"
 
-## Bug Fixes
+### Bug Fixes
 
 * Installer, Uninstaller, SysTest, Patcher
   * fix bugs regarding mounting `/system` from TWRP
@@ -20,7 +34,7 @@
 * Patcher
   * fix a regression causing Patcher not to be properly executed
 
-## General Changes
+### General Changes
 
 * Installer, Uninstaller, SysTest, Patcher
   * improve mounting code `/system` from TWRP
@@ -28,7 +42,7 @@
 * NanoDroid-Overlay
   * check whether configuration file exists before doing anything (`-x`/`--create`)
 
-## Updates
+### Updates
 
 * automatic
   * microG GmsCore (0.2.17.204714)
@@ -43,7 +57,7 @@ NOTE: There's now a git repository as central place/navigational point for all c
 
 * https://gitlab.com/Nanolx/nanodroid-patches
 
-## Bug Fixes
+### Bug Fixes
 
 * Installer, Addon
   * read configuration files from `/system/addon.d` (fallback if TWRP can't mount `/data`)
@@ -59,7 +73,7 @@ NOTE: There's now a git repository as central place/navigational point for all c
 * Full, microG packages
   * fix that (in Magisk Mode) GmsCore was not automatically ensured to be a user app
 
-## General Changes
+### General Changes
 
 * CommonInstaller
   * resturctured, consolidated and cleaned-up code
