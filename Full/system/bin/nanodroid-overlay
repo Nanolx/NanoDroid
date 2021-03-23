@@ -183,13 +183,11 @@ overrides_list_non () {
 overrides_clear () {
 	if [ "${MODE}" = "MAGISK" -o "${MODE}" = "MAGISK_INSTALL" ]; then
 		echo "  removing Overlays from ${OVERLAY_PATH}"
-		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace" 2>/dev/null) \
-			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace" 2>/dev/null) \
-			   $(find "${OVERLAY_PATH}/system/reserve" -name "*.replace" 2>/dev/null) \
-			   $(find "${OVERLAY_PATH}/system/product/app" -name "*.replace" 2>/dev/null) \
-			   $(find "${OVERLAY_PATH}/system/product/priv-app" -name "*.replace" 2>/dev/null) ; do
-			echo "  removing override: $(basename $(dirname ${app}))"
-			rm -rf "$(dirname "${app}")"
+		for path in ${app_locations}; do
+			for app in $(find "${OVERLAY_PATH}/${path}" -name "*.replace" 2>/dev/null); do
+				echo "  removing override: $(basename $(dirname ${app}))"
+				rm -rf "$(dirname "${app}")"
+			done
 		done
 	else
 		echo "  overrides_clear() does nothing in System Mode!"
@@ -201,14 +199,12 @@ overrides_genconfig () {
 		rm -f ${config}
 		touch ${config}
 
-		for app in $(find "${OVERLAY_PATH}/system/app" -name "*.replace" 2>/dev/null) \
-			   $(find "${OVERLAY_PATH}/system/priv-app" -name "*.replace" 2>/dev/null) \
-			   $(find "${OVERLAY_PATH}/system/reserve" -name "*.replace" 2>/dev/null) \
-			   $(find "${OVERLAY_PATH}/system/product/app" -name "*.replace" 2>/dev/null) \
-			   $(find "${OVERLAY_PATH}/system/product/priv-app" -name "*.replace" 2>/dev/null); do
-			xapp=$(basename $(dirname ${app}))
-			echo "  adding ${xapp} to configuration"
-			grep -q "^${xapp}$" "${config}" 2>/dev/null || echo "${xapp}" >> "${config}"
+		for path in ${app_locations}; do
+			for app in $(find "${OVERLAY_PATH}/${path}" -name "*.replace" 2>/dev/null); do
+				xapp=$(basename $(dirname ${app}))
+				echo "  adding ${xapp} to configuration"
+				grep -q "^${xapp}$" "${config}" 2>/dev/null || echo "${xapp}" >> "${config}"
+			done
 		done
 	else
 		echo "  overrides_genconfig() does nothing in System Mode!"
@@ -226,7 +222,7 @@ ext_storage="/storage/${media_rw}"
 
 get_config .nanodroid-overlay
 
-app_locations="/system/app /system/priv-app /system/reserve /system/product/app /system/product/priv-app"
+app_locations="/system/app /system/priv-app /system/reserve /system/product/app /system/product/priv-app /system/system_ext/app /system/system_ext/priv-app"
 
 [[ -f ${config} ]] && export config || config=/data/media/0/.nanodroid-overlay
 
