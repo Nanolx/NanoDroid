@@ -101,33 +101,40 @@ toupper() {
 }
 
 find_block () {
-	local block tmp partname devname device
+	local block partname devname device
 
-	block=${1}${SLOT}
-	device=$(find /dev/block \( -type b -o -type c -o -type l \) -name ${block} | head -n 1)
+	for block in "${@}"; do
+		block=${block}${SLOT}
+		device=$(find /dev/block \( -type b -o -type c -o -type l \) -name ${block} | head -n 1)
 
-	if [ ! -z ${device} ]; then
-		readlink -f ${device}
-		return 0
-	fi
-
-	for uevent in /sys/dev/block/*/uevent; do
-		partname=$(awk -F= '/PARTNAME/{print $2}' ${uevent})
-		devname=$(awk -F= '/DEVNAME/{print $2}' ${uevent})
-		if [ "$(toupper ${block})" = "$(toupper ${partname})" ]; then
-			echo /dev/block/${devname}
+		if [ -n "$device" ]; then
+			readlink -f "$device"
 			return 0
 		fi
 	done
 
-	device=$(find /dev \( -type b -o -type c -o -type l \) -maxdepth 1 -iname ${block} | head -n 1)
-	if [ ! -z ${device} ]; then
-		readlink -f ${device}
-		return 0
-	fi
+	for block in "${@}"; do
+		block=${block}${SLOT}
+		for uevent in /sys/dev/block/*/uevent; do
+			partname=$(awk -F= '/PARTNAME/{print $2}' ${uevent})
+			devname=$(awk -F= '/DEVNAME/{print $2}' ${uevent})
+			if [ "$(toupper ${block})" = "$(toupper ${partname})" ]; then
+				echo /dev/block/${devname}
+				return 0
+			fi
+		done
+	done
+
+	for block in "${@}"; do
+		block=${block}${SLOT}
+		device=$(find /dev \( -type b -o -type c -o -type l \) -maxdepth 1 -iname ${block} | head -n 1)
+		if [ -n "$device" ]; then
+			readlink -f "$device"
+			return 0
+		fi
+	done
 
 	return 1
-
 }
 
 mount_partitions () {
@@ -147,7 +154,7 @@ mount_partitions () {
 
 		mount -o bind /dev/urandom /dev/random
 
-		SYSTEM_BLOCK=$(find_block system)
+		SYSTEM_BLOCK=$(find_block system app)
 		echo " INFO: #5 [SYSTEM_BLOCK] ${SYSTEM_BLOCK}"
 
 		if is_mounted /system_root; then
@@ -171,7 +178,7 @@ mount_partitions () {
 			mount -o bind /system_root/system /system
 		fi
 
-		VENDOR_BLOCK=$(find_block vendor)
+		VENDOR_BLOCK=$(find_block vendor vnr)
 		echo " INFO: #7 [VENDOR_BLOCK] ${VENDOR_BLOCK}"
 
 		! is_mounted /vendor && mount -o ro /vendor
