@@ -14,6 +14,9 @@
 * Installer, SysTest, Uninstaller, Patcher
   * when searching system/vendor partitions look for app/vnr aswell
 
+* Google Sync Adapters/Swipe Libraries
+  * use Android 10 Adapters/Libraries on Android 11
+
 * nanodroid-overlay
   * support (pseudo-)debloating apps from `/system/system_ext/`
 
