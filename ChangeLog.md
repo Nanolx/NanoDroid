@@ -11,6 +11,12 @@
 
 ### General Changes
 
+* Installer, SysTest, Uninstaller, Patcher
+  * when searching system/vendor partitions look for app/vnr aswell
+
+* nanodroid-overlay
+  * support (pseudo-)debloating apps from `/system/system_ext/`
+
 * Documentation
   * various minor corrections, aswell as improved wording and layout @w1nst0n
 
