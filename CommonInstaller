@@ -711,14 +711,14 @@ detect_arch () {
 		24 | 25 )	GSYNC_VER=N	;;
 		26 | 27 )	GSYNC_VER=O	;;
 		28 )		GSYNC_VER=P	;;
-		29 )		GSYNC_VER=Q	;;
+		29 | 30 )	GSYNC_VER=Q	;;
 		* )	GSYNC_UNSUPPORTED=1	;;
 	esac
 
 	case ${ARCH} in
 		arm )
 			case ${SDK_VERSION} in
-				29 )
+				29 | 30 )
 					LIBJNI_IME=libjni_latinimegoogle.so_28
 				;;
 				19 | 21 | 22 | 23 | 27 | 28 )
@@ -735,7 +735,7 @@ detect_arch () {
 
 		arm64 )
 			case ${SDK_VERSION} in
-				29 )
+				29 | 30 )
 					LIBJNI_IME=libjni_latinimegoogle.so_28
 				;;
 				21 | 22 | 23 | 27 | 28 )
@@ -755,7 +755,7 @@ detect_arch () {
 				19 | 21 | 22 )
 					SWIPE_UNSUPPORTED=1
 				;;
-				23 | 24 | 25 | 26 | 27 | 28 | 29 )
+				23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 )
 					LIBJNI_IME=libjni_latinimegoogle.so
 				;;
 				* )
