@@ -540,7 +540,7 @@ dump_system_privapp_permissions () {
 	for pattern in	"(type 0x11)0x[1357]2" "(type 0x11)0xc212" \
 			"(type 0x11)0x[02]" "(type 0x11)0x[13]02"  \
 			"(type 0x11)0x1[01]2" "(type 0x11)0x1001"  \
-			"(type 0x11)0x[15]2"; do
+			"(type 0x11)0x[15]2" "(type 0x11)0x1000072"; do
 		grep "${pattern}" "${tmp_list}" | \
 		awk -F\" '{print $2}' >> "${sys_list}"
 	done
