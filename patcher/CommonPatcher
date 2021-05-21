@@ -67,27 +67,29 @@ mount_apex_loop () {
 # taken from Magisk, with modifications for NanoDroid
 mount_apex () {
 	mkdir -p /apex
-
-	APEX_LD=""
+	local pattern='s/.*"name":[^"]*"\([^"]*\).*/\1/p'
+	mount -t tmpfs tmpfs /apex -o mode=755
 
 	for apex in /system/apex/*; do
-		apex_mount="/apex/$(basename ${apex} .apex)"
 		apex_loop="/dev/loop_apex_$(basename ${apex} .apex)"
-
-		[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
-		[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
-		[ "${apex_mount}" == /apex/com.android.art.release ] && apex_mount=/apex/com.android.art
-		[ "${apex_mount}" == /apex/com.android.art.debug ] && apex_mount=/apex/com.android.art
-
-		APEX_LD="${apex_mount}/lib:${APEX_LD}"
-		APEX_LD_64="${apex_mount}/lib64:${APEX_LD_64}"
-
-		mkdir -p "${apex_mount}"
 
 		if [ -f "${apex}" ]; then
 			unzip -oq "${apex}" apex_payload.img -d /apex
+			apex_mount=$(unzip -qp ${apex} apex_manifest.pb | strings | head -n 1)
+			[ -z ${apex_mount} ] && apex_mount=$(unzip -qp ${apex} apex_manifest.json | sed -n ${pattern})
+			[ -z ${apex_mount} ] && continue
+
+			mkdir -p "${apex_mount}"
 			mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
 		elif [ -d "${apex}" ]; then
+			if [ -f ${apex}/apex_manifest.json ]; then
+				apex_mount=/apex/$(sed -n ${pattern} ${apex}/apex_manifest.json)
+			elif [ -f ${apex}/apex_manifest.pb ]; then
+				apex_mount=/apex/$(strings ${apex}/apex_manifest.pb | head -n 1)
+			else
+				continue
+			fi
+			mkdir -p "${apex_mount}"
 			mount -o bind "${apex}" "${apex_mount}"
 		fi
 	done
@@ -202,14 +204,9 @@ mount_partitions () {
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
-	if [ -d /apex/com.android.art ]; then
-		export ANDROID_ART_ROOT=/apex/com.android.art
-		export ANDROID_RUNTIME_ROOT=${ANDROID_ART_ROOT}
-	elif [ -d /apex/com.android.runtime ]; then
-		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
-	fi
-
+	export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
 	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
+	export ANDROID_ART_ROOT=/apex/com.android.art
 	export ANDROID_I18N_ROOT=/apex/com.android.i18n
 }
 
@@ -225,8 +222,9 @@ umount_partitions () {
 	done
 
 	unset ANDROID_RUNTIME_ROOT
-	unset ANDROID_ART_ROOT
 	unset ANDROID_TZDATA_ROOT
+	unset ANDROID_ART_ROOT
+	unset ANDROID_I18N_ROOT
 	unset BOOTCLASSPATH
 
 	rm -rf /apex
@@ -523,14 +521,10 @@ call_dalvikvm  () {
 		DALVIKVM_OPTS=""
 
 		if ! ${BOOTMODE}; then
-			for jar in /system/framework/*.jar; do
-				ND_BOOTCLASSPATH="${jar}:${ND_BOOTCLASSPATH}"
-			done
-
-			for jar in /apex/*/javalib/*.jar; do
-				ND_BOOTCLASSPATH="${jar}:${ND_BOOTCLASSPATH}"
-			done
-
+			local apex_jars=$(find /apex -name '*.jar' | sort | tr '\n' ':')
+			local frame=/system/framework
+			ND_BOOTCLASSPATH="${apex_jars}:${frame}/framework.jar:${frame}/ext.jar:${frame}/telephony-common.jar:\
+${frame}/voip-common.jar:${frame}/ims-common.jar:$frame}/telephony-ext.jar"
 			export BOOTCLASSPATH=${ND_BOOTCLASSPATH}
 		fi
 
@@ -578,13 +572,13 @@ deodex_odex () {
 		MAIN=main
 		DEODEX="-x"
 		ASSEMBLE=
-		BOOTCLASSPATH="-c"
+		BOOTCLASS="-c"
 	else
 		MAIN=Main
 		DEODEX="x"
 		ASSEMBLE="a"
-		BOOTCLASSPATH="-b"
-		CLASSPATHDIR="-d"
+		BOOTCLASS="-b"
+		CLASSPATH="-d"
 	fi
 
 	ui_print "   [1] baksmali services.odex"
@@ -593,9 +587,9 @@ deodex_odex () {
 		-classpath "${BAKSMALI}" \
 		org.jf.baksmali.${MAIN} \
 		${DEODEX} \
-		${BOOTCLASSPATH} "/system/framework/${ARCH}/boot.oat" \
-		${CLASSPATHDIR} "/system/framework/${ARCH}" \
-		${CLASSPATHDIR} "/system/framework" \
+		${BOOTCLASS} "/system/framework/${ARCH}/boot.oat" \
+		${CLASSPATH} "/system/framework/${ARCH}" \
+		${CLASSPATH} "/system/framework" \
 		-o "${BASEDIR}/services.jar-deodex" \
 		"${BASEDIR}/services.odex" || \
 		  error "failed to deodex services.jar"
