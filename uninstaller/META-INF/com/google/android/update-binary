@@ -203,15 +203,9 @@ mount_partitions () {
 
 	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
-
-	if [ -d /apex/com.android.art ]; then
-		export ANDROID_ART_ROOT=/apex/com.android.art
-		export ANDROID_RUNTIME_ROOT=${ANDROID_ART_ROOT}
-	elif [ -d /apex/com.android.runtime ]; then
-		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
-	fi
-
+	export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
 	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
+	export ANDROID_ART_ROOT=/apex/com.android.art
 	export ANDROID_I18N_ROOT=/apex/com.android.i18n
 }
 
@@ -222,22 +216,29 @@ mount_partitions () {
 
 mount_apex () {
 	mkdir -p /apex
+	local pattern='s/.*"name":[^"]*"\([^"]*\).*/\1/p'
+	mount -t tmpfs tmpfs /apex -o mode=755
 
 	for apex in /system/apex/*; do
-		apex_mount="/apex/$(basename ${apex} .apex)"
 		apex_loop="/dev/loop_apex_$(basename ${apex} .apex)"
-
-		[ "${apex_mount}" == /apex/com.android.runtime.release ] && apex_mount=/apex/com.android.runtime
-		[ "${apex_mount}" == /apex/com.android.runtime.debug ] && apex_mount=/apex/com.android.runtime
-		[ "${apex_mount}" == /apex/com.android.art.release ] && apex_mount=/apex/com.android.art
-		[ "${apex_mount}" == /apex/com.android.art.debug ] && apex_mount=/apex/com.android.art
-
-		mkdir -p "${apex_mount}"
 
 		if [ -f "${apex}" ]; then
 			unzip -oq "${apex}" apex_payload.img -d /apex
+			apex_mount=$(unzip -qp ${apex} apex_manifest.pb | strings | head -n 1)
+			[ -z ${apex_mount} ] && apex_mount=$(unzip -qp ${apex} apex_manifest.json | sed -n ${pattern})
+			[ -z ${apex_mount} ] && continue
+
+			mkdir -p "${apex_mount}"
 			mount_apex_loop "${apex_mount}" || error "APEX loop setup failed!"
 		elif [ -d "${apex}" ]; then
+			if [ -f ${apex}/apex_manifest.json ]; then
+				apex_mount=/apex/$(sed -n ${pattern} ${apex}/apex_manifest.json)
+			elif [ -f ${apex}/apex_manifest.pb ]; then
+				apex_mount=/apex/$(strings ${apex}/apex_manifest.pb | head -n 1)
+			else
+				continue
+			fi
+			mkdir -p "${apex_mount}"
 			mount -o bind "${apex}" "${apex_mount}"
 		fi
 	done
@@ -297,6 +298,8 @@ umount_partitions () {
 
 	unset ANDROID_RUNTIME_ROOT
 	unset ANDROID_TZDATA_ROOT
+	unset ANDROID_ART_ROOT
+	unset ANDROID_I18N_ROOT
 }
 
 # check for configuration files
