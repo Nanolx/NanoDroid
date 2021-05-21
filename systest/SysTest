@@ -143,8 +143,6 @@ mount_partitions () {
 	VENDOR_BLOCK=$(find_block vendor vnr)
 
 	if ${BOOTMODE}; then
-		build_props=$(find /system /system_root /vendor -type f -name build.prop)
-
 		if [[ ! $(is_mounted /vendor) && -a /system/vendor ]]; then
 			VENDOR_COMPAT=TRUE
 		fi
@@ -188,17 +186,11 @@ mount_partitions () {
 		[ -d /system/apex ] && mount_apex
 	fi
 
-	build_props=$(find /system /system_root /vendor -type f -name build.prop)
-	[ -z "${build_props}" ] && error "failed to mount /system (unsupported A/B device?)"
+	[ ! -f /system/build.prop ] && error "failed to mount /system (unsupported A/B device?)"
 
-	if [ -d /apex/com.android.art ]; then
-		export ANDROID_ART_ROOT=/apex/com.android.art
-		export ANDROID_RUNTIME_ROOT=${ANDROID_ART_ROOT}
-	elif [ -d /apex/com.android.runtime ]; then
-		export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
-	fi
-
+	export ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
 	export ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
+	export ANDROID_ART_ROOT=/apex/com.android.art
 	export ANDROID_I18N_ROOT=/apex/com.android.i18n
 }
 
@@ -217,6 +209,8 @@ umount_partitions () {
 
 	unset ANDROID_RUNTIME_ROOT
 	unset ANDROID_TZDATA_ROOT
+	unset ANDROID_ART_ROOT
+	unset ANDROID_I18N_ROOT
 }
 
 error () {
@@ -313,8 +307,8 @@ detect_bootmode () {
 	${BOOTMODE} || ps -A | grep zygote | grep -qv grep && BOOTMODE=true
 }
 
-grep_prop() {
-	sed -n "s/^${1}=//p" ${build_props} ${2} | head -n 1
+grep_prop () {
+	sed -n "s/^${1}=//p" /system/build.prop ${2} | head -n 1
 }
 
 grep_cmdline() {
