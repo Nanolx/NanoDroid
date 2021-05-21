@@ -13,6 +13,11 @@
 
 * Installer, SysTest, Uninstaller, Patcher
   * when searching system/vendor partitions look for app/vnr aswell
+  * import improved apex mount code from Magisk
+
+* Patcher
+  * import improved bootclasspath detection from Magisk
+  * possibly improve support for Android older than 9
 
 * Google Sync Adapters/Swipe Libraries
   * use Android 10 Adapters/Libraries on Android 11
@@ -22,6 +27,36 @@
 
 * Documentation
   * various minor corrections, aswell as improved wording and layout @w1nst0n
+
+### Updates
+
+* automatic
+  * microG GmsCore (0.2.19.211515)
+  * Aurora Droid (1.0.8)
+  * Aurora Services (1.1.1)
+  * Aurora Store (4.0.5)
+  * Blokada 5 (5.10.1)
+  * Bromite SystemWebView (91.0.4472.50)
+  * F-Droid (1.13-alpha0)
+  * F-Droid Priviledged Extension (0.2.12)
+  * FreeOTP+ (2.3)
+  * Frost (3.0.0)
+  * K-9 Mail (5.734)
+  * KeePassDX (2.10.0)
+  * NewPipe (0.21.2)
+  * OAndBackupX (6.0.0)
+  * OsmAnd+ (3.9.10)
+  * OpenKeychain (5.7.5)
+  * OpenVPN (0.7.22)
+  * Orbot (16.4.1-RC2)
+  * Privacy Browser (3.7)
+  * QKSMS (3.9.4)
+  * Simple Calendar (6.14.0)
+  * Simple Gallery (6.20.1)
+  * SmartPack-Kernel Manager (16.5)
+  * Termux (0.113)
+  * Tor Browser (10.0.16)
+  * Twidere (4.1.8)
 
 ## 23.1.2.20210117 "BusyCompat"
 
