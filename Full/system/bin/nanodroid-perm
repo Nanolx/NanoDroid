@@ -5,6 +5,9 @@ perm_fake="android.permission.FAKE_PACKAGE_SIGNATURE"
 perm_floc="android.permission.ACCESS_FINE_LOCATION"
 perm_cloc="android.permission.ACCESS_COARSE_LOCATION"
 perm_bloc="android.permission.ACCESS_BACKGROUND_LOCATION"
+perm_phon="android.permission.READ_PHONE_STATE"
+perm_rext="android.permission.READ_EXTERNAL_STORAGE"
+perm_wext="android.permission.WRITE_EXTERNAL_STORAGE"
 perm_calr="android.permission.READ_CALENDAR"
 perm_calw="android.permission.WRITE_CALENDAR"
 perm_conr="android.permission.READ_CONTACTS"
@@ -15,6 +18,7 @@ perm_rsms="android.permission.RECEIVE_SMS"
 # Packages
 microG="com.google.android.gms"
 PlayStore="com.android.vending"
+DroidGuard="org.microg.gms.droidguard"
 GCalSync="com.google.android.syncadapters.calendar"
 GConSync="com.google.android.syncadapters.contacts"
 nlpIchnaea="org.microg.nlp.backend.ichnaea"
@@ -35,7 +39,7 @@ check_package () {
 }
 
 check_permission () {
-	[[ $(dumpsys package ${1} | grep -Eo "^[ ]+${2}: granted=true") ]] && return 0 || return 1
+	[[ $(dumpsys package ${1} | grep -Eo "^[ ]+${2}: granted=false") ]] && return 1 || return 0
 }
 
 grant_permission () {
@@ -58,7 +62,37 @@ permissions () {
 	fi
 }
 
+get_app_location () {
+	pm list packages -f ${1} | sed 's|package:\(.*\)=[^=]*|\1|g'
+}
+
+user_install_app () {
+	pm install -r ${1}
+}
+
+user_install () {
+	check_package ${1} || return
+	loc=$(get_app_location ${1})
+	case ${loc} in
+		/data/* ) echo "package ${1} already is user app" ;;
+		* )
+			user_install_app ${loc} && \
+			echo "package ${1} installed as user app" || \
+			echo "failed to install package ${1} as user app"
+		;;
+	esac
+}
+
 [[ $(whoami) = "root" ]] || [[ $(whoami) = "shell" ]] || error "not running as either ADB or root"
+
+if [ "$(getprop ro.build.version.sdk)" -ge 29 ]; then
+	# microG GmsCore needs to be installed as user app for all permissions to be granted
+	# see https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711088518
+	user_install ${microG}
+fi
+
+# microG DroidGuard Helper needs to be installed as user app to prevent crashes
+user_install ${DroidGuard}
 
 # Fake Package Signature
 permissions ${microG} ${perm_fake}
@@ -76,6 +110,12 @@ done
 # Restricted permissions
 permissions ${microG} ${perm_bloc} ${gms_uid}
 permissions ${microG} ${perm_rsms} ${gms_uid}
+
+# Misc. permissions
+permissions ${microG} ${perm_gacc}
+permissions ${microG} ${perm_phon}
+permissions ${microG} ${perm_rext}
+permissions ${microG} ${perm_wext}
 
 # Google Calendar Sync
 permissions ${GCalSync} ${perm_calr}
