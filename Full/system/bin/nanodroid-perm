@@ -18,7 +18,6 @@ perm_rsms="android.permission.RECEIVE_SMS"
 # Packages
 microG="com.google.android.gms"
 PlayStore="com.android.vending"
-DroidGuard="org.microg.gms.droidguard"
 GCalSync="com.google.android.syncadapters.calendar"
 GConSync="com.google.android.syncadapters.contacts"
 nlpIchnaea="org.microg.nlp.backend.ichnaea"
@@ -90,9 +89,6 @@ if [ "$(getprop ro.build.version.sdk)" -ge 29 ]; then
 	# see https://github.com/microg/android_packages_apps_GmsCore/issues/1100#issuecomment-711088518
 	user_install ${microG}
 fi
-
-# microG DroidGuard Helper needs to be installed as user app to prevent crashes
-user_install ${DroidGuard}
 
 # Fake Package Signature
 permissions ${microG} ${perm_fake}

@@ -33,7 +33,6 @@
     <app-link package="com.android.vending" />
 
     <!-- Optional microG components. -->
-    <app-link package="org.microg.gms.droidguard" />
     <app-link package="com.google.android.gsf" />
 
     <!-- Uncontrolled access to location for backends. -->
@@ -48,7 +47,6 @@
     <!-- Apps that have ability to run as system user. -->
     <system-user-whitelisted-app package="com.google.android.gms" />
     <system-user-whitelisted-app package="com.google.android.gsf" />
-    <system-user-whitelisted-app package="org.microg.gms.droidguard" />
     <system-user-whitelisted-app package="org.fdroid.fdroid.privileged" />
     <system-user-whitelisted-app package="com.aurora.services" />
     <system-user-whitelisted-app package="com.android.vending" />

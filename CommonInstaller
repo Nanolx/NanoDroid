@@ -1101,14 +1101,7 @@ install_microg () {
 		nanodroid_install_apk GmsCore
 		detect_migrate_apk com.google.android.gms GmsCore
 
-		if [ "${nanodroid_microg}" -ne 2 ]; then
-			for app in GsfProxy DroidGuard; do
-				nanodroid_install_apk ${app}
-			done
-
-			detect_migrate_apk org.microg.gms.droidguard DroidGuard
-			${NANODROID_BINDIR}/nanodroid-overlay --add GmsDroidGuard
-		fi
+		[ "${nanodroid_microg}" -ne 2 ] && nanodroid_install_apk GsfProxy
 
 		NLPBACKEND="nlpBackendNominatim"
 		print_info "   ++ Nominatim geocoder backend"

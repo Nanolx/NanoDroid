@@ -59,7 +59,6 @@ grab_microg () {
 	# applications managed in repositories
 	grab_apk_from_repo ${uG_GMSCORE[@]}
 	grab_apk_from_repo ${uG_GSFPROXY[@]}
-	grab_apk_from_repo ${nlx_DROIDGUARD[@]}
 	grab_apk_from_repo ${uG_FAKESTORE[@]}
 	grab_apk_from_repo ${fd_NLPDEJAVU[@]}
 	grab_apk_from_repo ${fd_NLPMOZILLA[@]}
