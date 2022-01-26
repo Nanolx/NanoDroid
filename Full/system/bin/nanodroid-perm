@@ -95,6 +95,10 @@ permissions ${microG} ${perm_fake}
 permissions ${PlayStore} ${perm_fake}
 
 # Location
+for app in ${nlpIchnaea} ${nlpDejavu} ${nlpApple} ${nlpBmap}; do
+	user_install ${app}
+done
+
 for app in ${microG} ${nlpIchnaea} ${nlpDejavu} ${nlpApple} ${nlpBmap}; do
 	permissions ${app} ${perm_cloc}
 done
