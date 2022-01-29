@@ -112,7 +112,6 @@ file_database=(
 	${appsfolder[3]}/AuroraDroid/AuroraDroid.apk.zst
 	${appsfolder[3]}/AuroraStore/AuroraStore.apk.zst
 	${appsfolder[3]}/Blokada/Blokada.apk.zst
-	${appsfolder[3]}/DroidGuard/DroidGuard.apk.zst
 	${appsfolder[3]}/FreeOTPPlus/FreeOTPPlus.apk.zst
 	${appsfolder[3]}/Frost/Frost.apk.zst
 	${appsfolder[3]}/FDroid/FDroid.apk.zst
