@@ -76,7 +76,7 @@ update_microg () {
 
 grab_gsync () {
 	#          KK LL M  N  O  P  Q
-	for API in 19 21 23 24 26 28 29; do
+	for API in 19 21 23 24 26 28 29 30; do
 		grab_apk_from_ogapps ${og_CALSYNC[@]} ${API}
 		grab_apk_from_ogapps ${og_CONSYNC[@]} ${API}
 		grab_apk_from_ogapps ${og_BTRANSP[@]} ${API}

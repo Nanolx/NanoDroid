@@ -309,14 +309,18 @@ grab_apk_from_ogapps () {
 		26 ) local api_letter=O ;;
 		28 ) local api_letter=P ;;
 		29 ) local api_letter=Q ;;
+		30 ) local api_letter=R ;;
 	esac
 
 	case "${1}" in
 		"com.google.android.syncadapters.calendar" )
 			# use SDK 19 Calendar Syncadapter for SDK 19
 			# use SDK 21 Calendar Syncadapter for SDK 21 - 29
+			# use SDK 30 Calendar Syncadapter for SDK 30
 			if [ "${4}" -eq 19 ]; then
 				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/15/nodpi/2015080710.apk"
+			elif [ "${4}" -eq 30 ]; then
+				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/30/nodpi/2017005136.apk"
 			else	local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/21/nodpi/2016267990.apk"
 			fi
 		;;
@@ -326,8 +330,8 @@ grab_apk_from_ogapps () {
 		;;
 
 		"com.google.android.backuptransport" )
-			# Use SDK 28 Backuptransport on SDK 29 aswell
-			if [ "${4}" -eq 29 ]; then
+			# Use SDK 28 Backuptransport on SDK 29 - 30
+			if [ "${4}" -ge 29 ]; then
 				local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/28/nodpi/28.apk"
 			else	local apk_url="${repo_ogapps}/all/raw/master/${2}/${1}/${4}/nodpi/${4}.apk"
 			fi
