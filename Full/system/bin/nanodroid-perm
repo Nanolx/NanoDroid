@@ -38,7 +38,10 @@ check_package () {
 }
 
 check_permission () {
-	[[ $(dumpsys package ${1} | grep -Eo "^[ ]+${2}: granted=false") ]] && return 1 || return 0
+	perm="$(dumpsys package ${1} | grep "^ *${2}: granted=")"
+	echo "$perm" | grep -q "granted=false" && return 1
+	echo "$perm" | grep -q "granted=true" && return 0
+	return 1
 }
 
 grant_permission () {
