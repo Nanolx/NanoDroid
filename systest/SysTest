@@ -269,21 +269,6 @@ check_fake_package_signature () {
 }
 
 ##########################################################################################
-# check if Bromite System WebView is supported
-##########################################################################################
-
-check_bromite_webview_support () {
-	WEBVIEW_PKG="com.android.webview"
-	HAS_WEBVIEW=false
-
-	${AAPT} dump xmltree /system/framework/framework-res.apk res/xml/config_webview_packages.xml | \
-		tr -d '\n' | sed -e 's/webviewprovider/\n/g' | grep com.android.webview | \
-		grep -q 'E: signature' || HAS_WEBVIEW=true
-
-	${HAS_WEBVIEW} && return 0 || return 1
-}
-
-##########################################################################################
 # Device Functions
 ##########################################################################################
 
@@ -489,12 +474,6 @@ store_results () {
 	else
 		add_log "NATIVE_SIGSPOOF=FALSE"
 	fi
-
-	add_log ""
-	add_log "Bromite System WebView support"
-	add_log "=============================="
-	add_log ""
-	check_bromite_webview_support && add_log "WEBVIEW_SUPPORT=TRUE" || add_log "WEBVIEW_SUPPORT=FALSE"
 
 	add_log ""
 	add_log "Magisk installation status"

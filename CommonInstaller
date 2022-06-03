@@ -513,18 +513,95 @@ check_fake_package_signature () {
 }
 
 ##########################################################################################
-# check if Bromite System WebView is supported
+# parse output from "aapt dump xmltree" back to xml
 ##########################################################################################
 
-check_bromite_webview_support () {
-	WEBVIEW_PKG="com.android.webview"
-	HAS_WEBVIEW=false
+parse_aapt_dump_xmltree(){
+	local i step indent prev_indent cur_type prev_type entity_stack key value tmp
+	while IFS=$'\n' read -r i; do
+		cur_type="$(echo "${i}" | awk '{print $1}')"
+		case "${cur_type}" in
+			E:)  # entity
+				indent="$(echo "${i}" | awk -F'[^ ]' '{print length($1)}')"
+				[ -z "${prev_type}" ] || [ "${prev_type}" = "C:" ] || echo -n ">"
+				[ -z "${prev_type}" ] || [ "$((${prev_indent:=0}-${indent}))" -lt 0 ] || for j in $(seq "$((${prev_indent:=0}-${indent}))" "-${step:=2}" "$((${indent}-${step}))"); do
+					echo -ne "\n</${entity_stack##* }>"
+					entity_stack="${entity_stack% *}"
+				done
+				echo -ne "\n<$(echo -n "${i}" | awk '{print $2}')"
+				entity_stack="${entity_stack} $(echo "${i}" | awk '{print $2}')"
+				prev_indent="${indent}"
+				;;
+			A:)  # attribute
+				key="$(echo "${i}" | awk '{print $2}' | awk -F= '{print $1}')"
+				value="${i#*=}"
+				case "${value}" in
+					"(type 0x12)"*) [ "${value#*)}" = "0x0" ] && value='"false"' || value='"true"';;
+					"(type 0x10)"*) value="$(printf '%d' "${value#*)}")";;
+					*) value="${value% \(Raw:*}"
+				esac
+				echo -n " ${key}=${value}"
+				unset key value
+				;;
+			C:)  # content
+				tmp="${i#*C: \"}"
+				echo -n ">${tmp%*\"}"
+				unset tmp
+				;;
+		esac
+		prev_type="${cur_type}"
+	done <&0
+	[ "${prev_type}" = "C:" ] || echo -n ">"
 
-	${AAPT} dump xmltree /system/framework/framework-res.apk res/xml/config_webview_packages.xml | \
-		tr -d '\n' | sed -e 's/webviewprovider/\n/g' | grep com.android.webview | \
-		grep -q 'E: signature' || HAS_WEBVIEW=true
+	until [ -z "${entity_stack}" ]; do
+		echo -ne "\n</${entity_stack##* }>"
+		entity_stack="${entity_stack% *}"
+	done
+}
 
-	${HAS_WEBVIEW} && return 0 || return 1
+##########################################################################################
+# sign package with test keys
+##########################################################################################
+
+hex2bin(){ for i in $(seq 0 2 $((${#1}-1))); do printf "\x${1:${i}:2}"; done; }
+apk_sign(){
+	local tmpdir="${TMPDIR}/$(tr -cd '0-9a-z' 2>/dev/null </dev/urandom | head -c8)" apk="${1}"
+
+	mkdir -p "${tmpdir}/META-INF"
+	cd "${tmpdir}"; echo A | unzip -qo "${apk}"
+	cat <<EOF >"${tmpdir}/META-INF/MANIFEST.MF"
+Manifest-Version: 1.0
+Built-By: NanoDroid
+Created-By: 1.0 (Android)
+
+EOF
+	for i in $(find "${tmpdir}" -type f); do
+		echo "${i}" | grep -qvE "^${tmpdir}/META-INF/" || continue
+		cat <<EOF >>"${tmpdir}/META-INF/MANIFEST.MF"
+Name: ${i#${tmpdir}/*}
+SHA1-Digest: $(hex2bin $(sha1sum ${i} | awk '{print $1}') | base64 | tr -d '\n')
+
+EOF
+	done
+
+	cat <<EOF >"${tmpdir}/META-INF/CERT.SF"
+Signature-Version: 1.0
+SHA1-Digest-Manifest: $(hex2bin $(sha1sum "${tmpdir}/META-INF/MANIFEST.MF" | awk '{print $1}') | base64 | tr -d '\n')
+Created-By: 1.0 (Android)
+
+EOF
+	for i in $(find "${tmpdir}" -type f); do
+		echo "${i}" | grep -qvE "^${tmpdir}/META-INF/" || continue
+		cat <<EOF >>"${tmpdir}/META-INF/CERT.SF"
+Name: ${i#${tmpdir}/*}
+SHA1-Digest: $(hex2bin $(sha1sum ${i} | awk '{print $1}') | base64 | tr -d '\n')
+
+EOF
+	done
+
+	"${OPENSSL}" smime -sign -binary -noattr -in "${tmpdir}/META-INF/CERT.SF" -outform der -out "${tmpdir}/META-INF/CERT.RSA" -signer "${INSTALLER}/testkey.crt" -md sha1 -inkey "${INSTALLER}/testkey.key"
+	"${ZIP}" -r "${apk}" ./META-INF
+	#"${ZIP}" -n resources.arsc "${apk}" ./resources.arsc
 }
 
 ##########################################################################################
@@ -705,6 +782,9 @@ detect_arch () {
 	UNZIP="${INSTALLER}/unzip.${BIN_ARCH}"
 	AAPT="${INSTALLER}/aapt.${BIN_ARCH}"
 	ZSTD="${INSTALLER}/zstd.${BIN_ARCH}"
+	OPENSSL="${INSTALLER}/openssl.${BIN_ARCH}"
+	ZIP="${INSTALLER}/zip.${BIN_ARCH}"
+	ZIPALIGN="${INSTALLER}/zipalign.${BIN_ARCH}"
 	chmod +x "${UNZIP}" "${AAPT}" "${ZSTD}"
 
 	case ${SDK_VERSION} in
@@ -1357,43 +1437,53 @@ install_initd () {
 
 install_bromite_webview () {
 	if [ "${MODID}" = "NanoDroid_BromiteWebView" ]; then
-		if ! check_bromite_webview_support; then
-			error "ROM does not support Bromite WebView installation!"
-		else
-			print_info " << with Bromite WebView"
+		local init_base overlaydir lib_suffix
+		[ "$(uname -m)" = "aarch64" ] && lib_suffix=64
+		[ "$(uname -m)" = "x86_64"  ] && lib_suffix=64
+		for i in system_ext/overlay product/overlay overlay; do
+			[ -d "/system/${i}" ] && overlaydir="${i}" && break
+		done
+		mkdir -p "${TMPDIR}/bromite/res/xml" "${INSTALLER}/system/${overlaydir}"
+		${AAPT} dump xmltree /system/framework/framework-res.apk res/xml/config_webview_packages.xml | \
+			parse_aapt_dump_xmltree | sed "s|</webviewproviders>|<webviewprovider availableByDefault=\"true\" description=\"${WEBVIEW_DESC:-Bromite Webview}\" packageName=\"${WEBVIEW_PKG:-org.bromite.webview}\"><signature>${WEBVIEW_SIG:-MIIDbTCCAlWgAwIBAgIEHcsmjjANBgkqhkiG9w0BAQsFADBmMQswCQYDVQQGEwJERTEQMA4GA1UECBMHVW5rbm93bjEPMA0GA1UEBxMGQmVybGluMRAwDgYDVQQKEwdCcm9taXRlMRAwDgYDVQQLEwdCcm9taXRlMRAwDgYDVQQDEwdjc2FnYW41MCAXDTE4MDExOTA3MjE1N1oYDzIwNjgwMTA3MDcyMTU3WjBmMQswCQYDVQQGEwJERTEQMA4GA1UECBMHVW5rbm93bjEPMA0GA1UEBxMGQmVybGluMRAwDgYDVQQKEwdCcm9taXRlMRAwDgYDVQQLEwdCcm9taXRlMRAwDgYDVQQDEwdjc2FnYW41MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtakjGj0eTavbBB2vWXj8KBixWn4zgXAKc+yGFu3SLEGF1VB5aJWwcMHxVI55yH/8M2eNnJP0BkSidfKgPVcm1sk/GrNEs9uk5sWod9byO5M5QWQmGP2REeTd6J0BVVVaMp2MZnqeR3Su3pwFzrSwTqIGyf8dkPSEz7ifj792+EeRNrov4oRQK7lIfqInzwc4d34wU069Lrw6m7J7HM0KbRYISsWMiYj025Qg+dTrtdWt7jbdcj7htW0eYyJoLd90+s43RWnOpENmWpcWv1EVPxUD4mCdV9idYwoHRIESpSu9IWvqDZp1VoRc43nLgsNfNBwmYdTkIaPiz1m7TBcr7QIDAQABoyEwHzAdBgNVHQ4EFgQUuWoGd7W7wMyQ1pOdjiMv10YHTR0wDQYJKoZIhvcNAQELBQADggEBAA7iw6eKz+T8HIpKDoDcX1Ywjn9JUzuCFu20LnsLzreO/Pog1xErYjdLAS7LTZokfbAnitBskO9QhV9BYkDiM0Qr5v2/HsJTtxa1mz9ywCcI36jblMyuXFj8tuwQI9/t9i+Fc3+bOFBV3t7djPo9qX1dIK0lZ6s8HcIhaCNdqm65fH+nWhC/H9djqC6qOtrkTiACKEcHQ4a/5dfROU0q0M4bS4YuiaAQWgjiGbik4LrZ8wZX1aqJCLt0Hs7MzXyyf0cRSO11FIOViHwzh6WTZGufq2J3YBFXPond8kLxkKL3LNezbi5yTcecxsbKQ6OS46CnIKcy/M8asSreLpoCDvw=}</signature></webviewprovider></webviewproviders>|g" > "${TMPDIR}/bromite/res/xml/config_webview_packages.xml"
+		mkdir -p "${INSTALLER}/system/${overlaydir}"
+		${AAPT} package -f -M "${INSTALLER}/AndroidManifest.xml" -I /system/framework/framework-res.apk -S "${TMPDIR}/bromite/res" -F "${TMPDIR}/BromiteOverlay.apk" --target-sdk-version "$(getprop ro.system.build.version.sdk)"
+		apk_sign "${TMPDIR}/BromiteOverlay.apk"
+		${ZIPALIGN} 4 "${TMPDIR}/BromiteOverlay.apk" "${INSTALLER}/system/${overlaydir}/BromiteOverlay.apk"
+		print_info " << with Bromite WebView"
 
-			case ${ARCH} in
-				arm | arm64 | x86 ) BROMITE_ARCH=${ARCH} ;;
-				x86_64 ) BROMITE_ARCH=x86 ;;
-			esac
+		case ${ARCH} in
+			arm | arm64 | x86 ) BROMITE_ARCH=${ARCH} ;;
+			x86_64 ) BROMITE_ARCH=x86 ;;
+		esac
 
-			WEBVIEW_REPLACE=BromiteWebView
-			WEBVIEW_DIR=""
+		WEBVIEW_REPLACE=BromiteWebView
+		WEBVIEW_DIR=""
 
-			for app in webview webviewstub WebViewStub Webview; do
-				if [ -d /system/app/${app} ]; then
-					WEBVIEW_REPLACE=${app}
-					break
-				elif [ -d /system/product/app/${app} ]; then
-					WEBVIEW_REPLACE=${app}
-					WEBVIEW_DIR="product/app"
-					break
-				fi
-			done
-
-			if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
-				for app in com.android.webview; do
-					rm -rf /data/data/${app}
-					rm -rf /data/user/*/${app}
-					rm -rf /data/user_de/*/${app}
-					rm -rf /data/app/${app}-*
-					rm -rf /mnt/asec/${app}-*
-					rm -rf ${STORAGE}/Android/data/${app}
-				done
+		for app in webview webviewstub WebViewStub Webview; do
+			if [ -d /system/app/${app} ]; then
+				WEBVIEW_REPLACE=${app}
+				break
+			elif [ -d /system/product/app/${app} ]; then
+				WEBVIEW_REPLACE=${app}
+				WEBVIEW_DIR="product/app"
+				break
 			fi
+		done
 
-			nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib ${WEBVIEW_REPLACE} ${WEBVIEW_DIR}
+		if [ "${NANODROID_UPGRADE}" -eq 0 ]; then
+			for app in org.bromite.webview; do
+				rm -rf /data/data/${app}
+				rm -rf /data/user/*/${app}
+				rm -rf /data/user_de/*/${app}
+				rm -rf /data/app/${app}-*
+				rm -rf /mnt/asec/${app}-*
+				rm -rf ${STORAGE}/Android/data/${app}
+			done
 		fi
+
+		nanodroid_install_apk BromiteWebView_${BROMITE_ARCH} multilib ${WEBVIEW_REPLACE} ${WEBVIEW_DIR}
+		nanodroid_install_file "${overlaydir}/BromiteOverlay.apk"
 	fi
 }
 
@@ -1766,7 +1856,6 @@ MAGISK_VER_CODE=${MAGISK_VER_CODE}
 NANODROID_UPGRADE=${NANODROID_UPGRADE}
 NANODROID_BINDIR=${NANODROID_BINDIR}
 HAS_FAKESIGN=${HAS_FAKESIGN}
-HAS_WEBVIEW=${HAS_WEBVIEW}
 
 ### MOUNTED PARTITIONS ###
 " >> ${nanodroid_logfile}
