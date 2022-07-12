@@ -234,7 +234,7 @@ grab_apk_from_repo () {
 	fi
 
 	case "${pkg_name}" in
-		com.android.webview )
+		org.bromite.webview )
 			local apk_dest="${appsfolder[12]}/${3}/${4}"
 		;;
 

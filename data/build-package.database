@@ -90,9 +90,9 @@ gl_AURORAWARDEN=(AuroraOSS/AppWarden app Warden)
 # Bromite WebView
 ###
 
-bm_WEBVIEW_arm64=(bromite com.android.webview app BromiteWebView_arm64 arm64-v8a)
-bm_WEBVIEW_arm=(bromite com.android.webview app BromiteWebView_arm armeabi-v7a)
-bm_WEBVIEW_x86=(bromite com.android.webview app BromiteWebView_x86 x86)
+bm_WEBVIEW_arm64=(bromite org.bromite.webview app BromiteWebView_arm64 arm64-v8a)
+bm_WEBVIEW_arm=(bromite org.bromite.webview app BromiteWebView_arm armeabi-v7a)
+bm_WEBVIEW_x86=(bromite org.bromite.webview app BromiteWebView_x86 x86)
 
 ###
 # OSM And+
