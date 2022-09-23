@@ -563,9 +563,10 @@ parse_aapt_dump_xmltree(){
 # sign package with test keys
 ##########################################################################################
 
-hex2bin(){ for i in $(seq 0 2 $((${#1}-1))); do printf "\x${1:${i}:2}"; done; }
-apk_sign(){
-	local tmpdir="${TMPDIR}/$(tr -cd '0-9a-z' 2>/dev/null </dev/urandom | head -c8)" apk="${1}"
+byte_split(){ local i; for i in $(seq 0 2 $((${#1}-1))); do echo "${1:${i}:2}"; done; }
+hex2bin(){ local i; for i in $(seq 0 2 $((${#1}-1))); do printf "\x${1:${i}:2}"; done; }
+jar_sign(){
+	local tmpdir="${TMPDIR}/$(tr -cd '0-9a-z' 2>/dev/null </dev/urandom | head -c8)" apk="${1}" i
 
 	mkdir -p "${tmpdir}/META-INF"
 	cd "${tmpdir}"; echo A | unzip -qo "${apk}"
@@ -579,29 +580,124 @@ EOF
 		echo "${i}" | grep -qvE "^${tmpdir}/META-INF/" || continue
 		cat <<EOF >>"${tmpdir}/META-INF/MANIFEST.MF"
 Name: ${i#${tmpdir}/*}
-SHA1-Digest: $(hex2bin $(sha1sum ${i} | awk '{print $1}') | base64 | tr -d '\n')
+SHA-256-Digest: $(hex2bin "$(sha256sum "${i}" | awk '{print $1}')" | base64 | tr -d '[:space:]')
 
 EOF
 	done
 
 	cat <<EOF >"${tmpdir}/META-INF/CERT.SF"
 Signature-Version: 1.0
-SHA1-Digest-Manifest: $(hex2bin $(sha1sum "${tmpdir}/META-INF/MANIFEST.MF" | awk '{print $1}') | base64 | tr -d '\n')
 Created-By: 1.0 (Android)
+SHA-256-Digest-Manifest: $(hex2bin "$(sha256sum "${tmpdir}/META-INF/MANIFEST.MF" | awk '{print $1}')" | base64 | tr -d '[:space:]')
+X-Android-APK-Signed: 2, 3
 
 EOF
 	for i in $(find "${tmpdir}" -type f); do
 		echo "${i}" | grep -qvE "^${tmpdir}/META-INF/" || continue
 		cat <<EOF >>"${tmpdir}/META-INF/CERT.SF"
 Name: ${i#${tmpdir}/*}
-SHA1-Digest: $(hex2bin $(sha1sum ${i} | awk '{print $1}') | base64 | tr -d '\n')
+SHA-256-Digest: $(hex2bin "$(sha256sum "${i}" | awk '{print $1}')" | base64 | tr -d '[:space:]')
 
 EOF
 	done
 
-	"${OPENSSL}" smime -sign -binary -noattr -in "${tmpdir}/META-INF/CERT.SF" -outform der -out "${tmpdir}/META-INF/CERT.RSA" -signer "${INSTALLER}/testkey.crt" -md sha1 -inkey "${INSTALLER}/testkey.key"
+	"${OPENSSL}" smime -sign -binary -noattr -in "${tmpdir}/META-INF/CERT.SF" -outform der -out "${tmpdir}/META-INF/CERT.RSA" -signer "${INSTALLER}/testkey.crt" -md sha256 -inkey "${INSTALLER}/testkey.key"
 	"${ZIP}" -r "${apk}" ./META-INF
-	#"${ZIP}" -n resources.arsc "${apk}" ./resources.arsc
+}
+
+generate_signed_data(){
+	local idx=0 apk="${1}" segment_sz=1048576 tmpfile="${INSTALLER}/tmpfile"
+	local apk_content="$(od -v -tx1 -An "${apk}" | tr -dc '[0-9a-fA-F]')"
+	local eocd_base="$(($(echo -n "${apk_content%504b0506*}" | wc -c)/2))"; unset apk_content
+	local cd_base="$(printf '%d' "0x$(od -v -tx1 -An -j$((${eocd_base}+16)) -N4 "${apk}" | tr -c '[0-9a-fA-F]' '\n' | tac | tr -dc '[0-9a-fA-F]')")"
+	local cd_size="$(printf '%d' "0x$(od -v -tx1 -An -j$((${eocd_base}+12)) -N4 "${apk}" | tr -c '[0-9a-fA-F]' '\n' | tac | tr -dc '[0-9a-fA-F]')")"
+
+	dd bs=1 count="${cd_base}" if="${apk}" of="${INSTALLER}/contents"
+	dd bs=1 skip="${cd_base}" count="${cd_size}" if="${apk}" of="${INSTALLER}/cd"
+	dd bs=1 skip="${eocd_base}" if="${apk}" of="${INSTALLER}/eocd"
+
+	echo -n >"${tmpfile}"; segment_sz=1048576; while [ $((${idx}*1048576)) -lt ${cd_base} ]; do
+		[ $(($((${idx}+1))*1048576)) -lt ${cd_base} ] || segment_sz=$((${cd_base}-$((${idx}*1048576))))
+		hex2bin "a5$(byte_split $(printf '%08x' ${segment_sz}) | tac | tr -dc '[0-9a-fA-F]')$(dd bs=1 skip="$((${idx}*1048576))" count="${segment_sz}" if="${INSTALLER}/contents" | sha512sum | awk '{print $1}')" >> "${tmpfile}"
+		idx=$((${idx}+1))
+	done
+
+	local cd_idx=0 segment_sz=1048576; while [ $((${cd_idx}*1048576)) -lt ${cd_size} ]; do
+		[ $(($((${cd_idx}+1))*1048576)) -lt ${cd_size} ] || segment_sz=$((${cd_size}-$((${cd_idx}*1048576))))
+		hex2bin "a5$(byte_split $(printf '%08x' ${segment_sz}) | tac | tr -dc '[0-9a-fA-F]')$(dd bs=1 skip="$((${cd_idx}*1048576))" count="${segment_sz}" if="${INSTALLER}/cd" | sha512sum | awk '{print $1}')" >> "${tmpfile}"
+		cd_idx=$((${cd_idx}+1))
+	done
+
+	local eocd_idx=0 eocd_sz="$(stat -c '%s' "${INSTALLER}/eocd")" segment_sz=1048576
+	while [ $((${eocd_idx}*1048576)) -lt ${eocd_sz} ]; do
+		[ $(($((${eocd_idx}+1))*1048576)) -lt ${eocd_sz} ] || segment_sz=$((${eocd_sz}-$((${eocd_idx}*1048576))))
+		hex2bin "a5$(byte_split $(printf '%08x' ${segment_sz}) | tac | tr -dc '[0-9a-fA-F]')$(dd bs=1 skip="$((${eocd_idx}*1048576))" count="${segment_sz}" if="${INSTALLER}/eocd" | sha512sum | awk '{print $1}')" >> "${tmpfile}"
+		eocd_idx=$((${eocd_idx}+1))
+	done
+
+	local digest_le="$(hex2bin "5a$(byte_split $(printf '%08x' $((${idx}+${cd_idx}+${eocd_idx}))) | tac | tr -dc '[0-9a-fA-F]')$(od -v -An -tx1 "${tmpfile}" | tr -dc '[0-9a-fA-F]')" | "${OPENSSL}" dgst -hex -c -sha512 | awk '{print $NF}' | tr ':' '\n' | tac | tr -dc '[0-9a-fA-F]')"
+	local digest_field="$(byte_split 00000104 | tac | tr -dc '[0-9a-fA-F]')$(byte_split $(printf '%08x' $((${#digest_le}/2))) | tac | tr -dc '[0-9a-fA-F]')${digest_le}"
+	local digest_record="$(byte_split $(printf '%08x' $((${#digest_field}/2))) | tac | tr -dc '[0-9a-fA-F]')${digest_field}"
+	local digest_seq="$(byte_split $(printf '%08x' $((${#digest_record}/2))) | tac | tr -dc '[0-9a-fA-F]')${digest_record}"
+
+	local cert_len="$("${OPENSSL}" x509 -in "${INSTALLER}/testkey.crt" -outform DER | wc -c)"
+	local cert_head="$(byte_split $(printf '%08x' ${cert_len}) | tac | tr -dc '[0-9a-fA-F]')"
+	local cert_seq_head="$(byte_split $(printf '%08x' $((${cert_len}+4))) | tac | tr -dc '[0-9a-fA-F]')"
+
+	hex2bin "${digest_seq}${cert_seq_head}${cert_head}" > "${INSTALLER}/signed_data"
+	"${OPENSSL}" x509 -in "${INSTALLER}/testkey.crt" -outform DER >> "${INSTALLER}/signed_data"
+}
+
+apk_sign(){
+	local apk="${1}" min_sdk="$(byte_split $(printf '%08x' 23) | tac | tr -dc '[0-9a-fA-F]')" max_sdk="ffffff7f" attrib_seq="00000000" sdk_spec i block_id
+
+	generate_signed_data "${apk}"
+
+	"${OPENSSL}" x509 -in "${INSTALLER}/testkey.crt" -pubkey -noout | tail -n+2 | head -n-1 | base64 -d >"${INSTALLER}/testkey.pub"
+	local pub_footer="$(byte_split $(printf '%08x' $(stat -c '%s' "${INSTALLER}/testkey.pub")) | tac | tr -dc '[0-9a-fA-F]')$(od -v -An -tx1 "${INSTALLER}/testkey.pub" | tr -dc '[0-9a-fA-F]')"
+	rm "${INSTALLER}/testkey.pub"
+
+	echo -n >"${INSTALLER}/sigblock"
+	for i in $(seq 2 3); do
+		case "${i}" in
+			2)
+				block_id="$(byte_split 7109871a | tac | tr -dc '[0-9a-fA-F]')"
+			;;
+			3)
+				block_id="$(byte_split f05368c0 | tac | tr -dc '[0-9a-fA-F]')"
+				sdk_spec="${min_sdk}${max_sdk}"
+			;;
+		esac
+
+		cat "${INSTALLER}/signed_data" > "${INSTALLER}/signed_data.v${i}"
+		hex2bin "${sdk_spec}${attrib_seq}" >> "${INSTALLER}/signed_data.v${i}"
+		local signed_data="$(byte_split "$(printf '%08x' "$(stat -c '%s' "${INSTALLER}/signed_data.v${i}")")" | tac | tr -dc '[0-9a-fA-F]')$(od -v -An -tx1 "${INSTALLER}/signed_data.v${i}" | tr -dc '[0-9a-fA-F]')"
+
+		"${OPENSSL}" dgst -sha512 -sign "${INSTALLER}/testkey.key" "${INSTALLER}/signed_data.v${i}" > "${INSTALLER}/signed_data.v${i}.sig"
+		local sig_len="$(stat -c '%s' "${INSTALLER}/signed_data.v${i}.sig")"
+		local sig_seq="${sdk_spec}$(byte_split $(printf '%08x' $((${sig_len}+12))) | tac | tr -dc '[0-9a-fA-F]')$(byte_split $(printf '%08x' $((${sig_len}+8))) | tac | tr -dc '[0-9a-fA-F]')$(byte_split 00000104 | tac | tr -dc '[0-9a-fA-F]')$(byte_split $(printf '%08x' ${sig_len}) | tac | tr -dc '[0-9a-fA-F]')$(od -v -An -tx1 "${INSTALLER}/signed_data.v${i}.sig" | tr -dc '[0-9a-fA-F]')"
+		rm "${INSTALLER}/signed_data.v${i}" "${INSTALLER}/signed_data.v${i}.sig"
+
+		local signer="${signed_data}${sig_seq}${pub_footer}"
+		local sigblock="${block_id}$(byte_split $(printf '%08x' $((${#signer}/2+4))) | tac | tr -dc '[0-9a-fA-F]')$(byte_split $(printf '%08x' $((${#signer}/2))) | tac | tr -dc '[0-9a-fA-F]')${signer}"
+		hex2bin "$(byte_split $(printf '%016x' $((${#sigblock}/2))) | tac | tr -dc '[0-9a-fA-F]')${sigblock}" >> "${INSTALLER}/sigblock"
+	done
+
+	rm "${INSTALLER}/signed_data"
+	local sigblock_len="$(byte_split $(printf '%016x' "$(($(stat -c '%s' "${INSTALLER}/sigblock")+24))") | tac | tr -dc '[0-9a-fA-F]')"
+	cat "${INSTALLER}/contents" >"${apk}.tmp"
+	hex2bin "${sigblock_len}" >>"${apk}.tmp"
+	cat "${INSTALLER}/sigblock" >>"${apk}.tmp"
+	hex2bin "${sigblock_len}" >>"${apk}.tmp"
+	echo -n "APK Sig Block 42" >>"${apk}.tmp"
+	sync
+
+	local new_cd_base="$(byte_split $(printf '%08x' "$(stat -c '%s' "${apk}.tmp")") | tac | tr -dc '[0-9a-fA-F]')"
+	cat "${INSTALLER}/cd" >>"${apk}.tmp"
+	dd bs=1 count=16 if="${INSTALLER}/eocd" >>"${apk}.tmp"
+	hex2bin "${new_cd_base}" >>"${apk}.tmp"
+	dd bs=1 skip=20 if="${INSTALLER}/eocd" >> "${apk}.tmp"
+	mv "${apk}.tmp" "${apk}"
 }
 
 ##########################################################################################
@@ -1437,7 +1533,7 @@ install_initd () {
 
 install_bromite_webview () {
 	if [ "${MODID}" = "NanoDroid_BromiteWebView" ]; then
-		local init_base overlaydir lib_suffix
+		local init_base overlaydir lib_suffix i
 		[ "$(uname -m)" = "aarch64" ] && lib_suffix=64
 		[ "$(uname -m)" = "x86_64"  ] && lib_suffix=64
 		for i in system_ext/overlay product/overlay overlay; do
@@ -1448,8 +1544,9 @@ install_bromite_webview () {
 			parse_aapt_dump_xmltree | sed "s|</webviewproviders>|<webviewprovider availableByDefault=\"true\" description=\"${WEBVIEW_DESC:-Bromite Webview}\" packageName=\"${WEBVIEW_PKG:-org.bromite.webview}\"><signature>${WEBVIEW_SIG:-MIIDbTCCAlWgAwIBAgIEHcsmjjANBgkqhkiG9w0BAQsFADBmMQswCQYDVQQGEwJERTEQMA4GA1UECBMHVW5rbm93bjEPMA0GA1UEBxMGQmVybGluMRAwDgYDVQQKEwdCcm9taXRlMRAwDgYDVQQLEwdCcm9taXRlMRAwDgYDVQQDEwdjc2FnYW41MCAXDTE4MDExOTA3MjE1N1oYDzIwNjgwMTA3MDcyMTU3WjBmMQswCQYDVQQGEwJERTEQMA4GA1UECBMHVW5rbm93bjEPMA0GA1UEBxMGQmVybGluMRAwDgYDVQQKEwdCcm9taXRlMRAwDgYDVQQLEwdCcm9taXRlMRAwDgYDVQQDEwdjc2FnYW41MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtakjGj0eTavbBB2vWXj8KBixWn4zgXAKc+yGFu3SLEGF1VB5aJWwcMHxVI55yH/8M2eNnJP0BkSidfKgPVcm1sk/GrNEs9uk5sWod9byO5M5QWQmGP2REeTd6J0BVVVaMp2MZnqeR3Su3pwFzrSwTqIGyf8dkPSEz7ifj792+EeRNrov4oRQK7lIfqInzwc4d34wU069Lrw6m7J7HM0KbRYISsWMiYj025Qg+dTrtdWt7jbdcj7htW0eYyJoLd90+s43RWnOpENmWpcWv1EVPxUD4mCdV9idYwoHRIESpSu9IWvqDZp1VoRc43nLgsNfNBwmYdTkIaPiz1m7TBcr7QIDAQABoyEwHzAdBgNVHQ4EFgQUuWoGd7W7wMyQ1pOdjiMv10YHTR0wDQYJKoZIhvcNAQELBQADggEBAA7iw6eKz+T8HIpKDoDcX1Ywjn9JUzuCFu20LnsLzreO/Pog1xErYjdLAS7LTZokfbAnitBskO9QhV9BYkDiM0Qr5v2/HsJTtxa1mz9ywCcI36jblMyuXFj8tuwQI9/t9i+Fc3+bOFBV3t7djPo9qX1dIK0lZ6s8HcIhaCNdqm65fH+nWhC/H9djqC6qOtrkTiACKEcHQ4a/5dfROU0q0M4bS4YuiaAQWgjiGbik4LrZ8wZX1aqJCLt0Hs7MzXyyf0cRSO11FIOViHwzh6WTZGufq2J3YBFXPond8kLxkKL3LNezbi5yTcecxsbKQ6OS46CnIKcy/M8asSreLpoCDvw=}</signature></webviewprovider></webviewproviders>|g" > "${TMPDIR}/bromite/res/xml/config_webview_packages.xml"
 		mkdir -p "${INSTALLER}/system/${overlaydir}"
 		${AAPT} package -f -M "${INSTALLER}/AndroidManifest.xml" -I /system/framework/framework-res.apk -S "${TMPDIR}/bromite/res" -F "${TMPDIR}/BromiteOverlay.apk" --target-sdk-version "$(getprop ro.system.build.version.sdk)"
-		apk_sign "${TMPDIR}/BromiteOverlay.apk"
 		${ZIPALIGN} 4 "${TMPDIR}/BromiteOverlay.apk" "${INSTALLER}/system/${overlaydir}/BromiteOverlay.apk"
+		jar_sign "${TMPDIR}/BromiteOverlay.apk"
+		apk_sign "${TMPDIR}/BromiteOverlay.apk"
 		print_info " << with Bromite WebView"
 
 		case ${ARCH} in
