@@ -24,7 +24,6 @@ Full list of included applications:
 * Alarmio (Alarm Clock) {Alarmio} [> F-Droid](https://f-droid.org/packages/me.jfenn.alarmio)
 * Amaze (File Manager) {Amaze} [> F-Droid](https://f-droid.org/packages/com.amaze.filemanager)
 * AnySoftKeyboard {AnysoftKeyboard} [> F-Droid](https://f-droid.org/packages/com.menny.android.anysoftkeyboard)
-* Blokada {Blokada} [> F-Droid](https://f-droid.org/en/packages/org.blokada.alarm)
 * FreeOTP+ (Two Factory Auth) {FreeOTPPlus} [> F-Droid](https://f-droid.org/en/packages/org.liberty.android.freeotpplus)
 * Frost (Facebook client) {Frost} [> F-Droid](https://f-droid.org/en/packages/com.pitchedapps.frost)
 * Hacker's Keyboard {HackersKeyboard} [> F-Droid](https://f-droid.org/de/packages/org.pocketworkstation.pckeyboard)

@@ -2218,9 +2218,6 @@ check_cfg_apps () {
 	# <= 18.1 has Orfox instead of TorBrowser, migrate
 	grep -q Orfox "${cfg_apps}" && sed -e 's/Orfox/TorBrowser/g' -i "${cfg_apps}"
 
-	# <= 18.4 has Adaway instead of Blockada, migrate
-	grep -q Adaway "${cfg_apps}" && sed -e 's/Adaway/Blokada/g' -i "${cfg_apps}"
-
 	# >= 20.7.92 no longer ships YahooWeatherProvider, remove
 	grep -q YahooWeatherProvider "${cfg_apps}" && sed -e '/YahooWeatherProvider/d' -i "${cfg_apps}"
 
@@ -2256,6 +2253,9 @@ check_cfg_apps () {
 
 	# >= 23.1 no longer ships XDA Labs, remove
 	grep -q XDALabs "${cfg_apps}" && sed -e '/XDALabs/d' -i "${cfg_apps}"
+
+	# >= 23.2 no longer ships Blokada, remove
+	grep -q Blokada "${cfg_apps}" && sed -e '/Blokada/d' -i "${cfg_apps}"
 
 }
 
